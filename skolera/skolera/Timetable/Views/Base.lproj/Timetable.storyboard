@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SFUIText-Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Timetable View Controller-->
+        <scene sceneID="HQ7-7j-8yr">
+            <objects>
+                <viewController storyboardIdentifier="TimetableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HSQ-DU-Mwc" customClass="TimetableViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8LS-Cv-phd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TF7-FZ-CPv">
+                                <rect key="frame" x="16" y="80" width="343" height="29"/>
+                                <segments>
+                                    <segment title="Today"/>
+                                    <segment title="Tomorrow"/>
+                                </segments>
+                                <color key="tintColor" red="0.15615364910000001" green="0.73169142009999999" blue="0.30433815720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="switchTimeTable:" destination="HSQ-DU-Mwc" eventType="valueChanged" id="ReB-ul-w4M"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HoN-5S-int" customClass="DayView" customModule="CalendarKit">
+                                <rect key="frame" x="16" y="124" width="343" height="543"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fob-IN-TNM" firstAttribute="trailing" secondItem="HoN-5S-int" secondAttribute="trailing" constant="16" id="5SS-pu-ANQ"/>
+                            <constraint firstItem="fob-IN-TNM" firstAttribute="trailing" secondItem="TF7-FZ-CPv" secondAttribute="trailing" constant="16" id="72W-a7-YiS"/>
+                            <constraint firstItem="HoN-5S-int" firstAttribute="leading" secondItem="fob-IN-TNM" secondAttribute="leading" constant="16" id="C8G-ro-CS7"/>
+                            <constraint firstItem="HoN-5S-int" firstAttribute="top" secondItem="TF7-FZ-CPv" secondAttribute="bottom" constant="16" id="Oqh-kn-OZO"/>
+                            <constraint firstItem="HoN-5S-int" firstAttribute="bottom" secondItem="fob-IN-TNM" secondAttribute="bottom" id="bd3-pp-TlA"/>
+                            <constraint firstItem="TF7-FZ-CPv" firstAttribute="leading" secondItem="fob-IN-TNM" secondAttribute="leading" constant="16" id="gOw-zw-Fal"/>
+                            <constraint firstItem="TF7-FZ-CPv" firstAttribute="top" secondItem="fob-IN-TNM" secondAttribute="top" constant="16" id="wHT-4I-AOW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fob-IN-TNM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="RGN-Fd-nj7">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="zF1-lF-cJu">
+                            <rect key="frame" x="138" y="0.0" width="99" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxX-8q-01q">
+                                    <rect key="frame" x="-12" y="8" width="121" height="29"/>
+                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="22"/>
+                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="kxX-8q-01q" firstAttribute="centerX" secondItem="zF1-lF-cJu" secondAttribute="centerX" id="CMB-Hq-B1a"/>
+                                <constraint firstItem="kxX-8q-01q" firstAttribute="centerY" secondItem="zF1-lF-cJu" secondAttribute="centerY" id="ekv-lb-4eS"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="tOx-ye-9e9">
+                            <view key="customView" contentMode="scaleToFill" id="dfX-Lf-1Lb">
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l8z-Vz-NlC">
+                                        <rect key="frame" x="51" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="Iyv-O2-ppK"/>
+                                            <constraint firstAttribute="height" constant="32" id="hkN-Ae-pvO"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="l8z-Vz-NlC" secondAttribute="trailing" id="7L4-I0-Snk"/>
+                                    <constraint firstItem="l8z-Vz-NlC" firstAttribute="centerY" secondItem="dfX-Lf-1Lb" secondAttribute="centerY" id="Nbi-LH-BMF"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="childImageView" destination="l8z-Vz-NlC" id="Pee-1n-Mhg"/>
+                        <outlet property="dayView" destination="HoN-5S-int" id="Ewn-3y-jd4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rMm-Zz-q65" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="149.59999999999999" y="112.89355322338831"/>
+        </scene>
+    </scenes>
+</document>

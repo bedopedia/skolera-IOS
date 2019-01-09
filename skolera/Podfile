@@ -1,0 +1,32 @@
+platform :ios, '10.0'
+
+target 'skolera' do
+  use_frameworks!
+  
+  #for loading screens
+  pod 'SVProgressHUD'
+  #for calling apis
+  pod 'Alamofire'
+  #scroll view to allow keyboard to appear correctly
+  pod 'TPKeyboardAvoiding'
+  #download and cache images
+  pod 'Kingfisher'
+  #saving key/value info like access token to the keychain
+  pod 'KeychainSwift'
+  #Custom Progress Bar
+  pod 'YLProgressBar'
+  #Calendar View For Attendance Screen
+  pod 'JTAppleCalendar'
+  #Timetable
+  pod 'CalendarKit', '0.3.1'
+  #Firebase
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  #Chat
+  pod 'Chatto', '= 3.3.1'
+  pod 'ChattoAdditions', '= 3.3.1'
+  #Device type
+  pod 'Device.swift'
+  #Check updats
+  pod 'NRAppUpdate'
+end

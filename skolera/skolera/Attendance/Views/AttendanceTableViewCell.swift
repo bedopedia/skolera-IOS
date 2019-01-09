@@ -1,0 +1,54 @@
+//
+//  AttendanceTableViewCell.swift
+//  skolera
+//
+//  Created by Ismail Ahmed on 3/12/18.
+//  Copyright © 2018 Skolera. All rights reserved.
+//
+
+import UIKit
+
+class AttendanceTableViewCell: UITableViewCell {
+
+    //MARK: - Outlets
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var borderView: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
+    
+    //MARK: - Variables
+    var borderColor: UIColor!{
+        didSet{
+            if borderColor != nil
+            {
+                borderView.backgroundColor = borderColor
+            }
+        }
+    }
+    var attendance: Attendance!{
+        didSet{
+            if attendance != nil{
+                let calendar = Calendar.current
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en")
+                formatter.dateFormat = "MMM"
+                let day = calendar.component(.day, from: attendance.date)
+                let month = formatter.string(from: attendance.date)
+                dayLabel.text = "\(day)"
+                monthLabel.text = month
+                messageLabel.text = attendance.comment
+            }
+        }
+    }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}
