@@ -147,11 +147,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             
                             self.present(nvc, animated: true, completion: nil)
                         } else {
-                            let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.actor = parent.data
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
 //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
                             let nvc = UINavigationController(rootViewController: childProfileVC)
                             

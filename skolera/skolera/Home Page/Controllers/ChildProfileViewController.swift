@@ -22,8 +22,7 @@ class ChildProfileViewController: UIViewController {
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     
     //MARK: - Variables
-    var child: Child?
-    var actor: Parent?
+    var child: Child!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
@@ -74,29 +73,12 @@ class ChildProfileViewController: UIViewController {
         childImageOuterView.layer.shadowRadius = 10
         childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect: childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
         //gets inner child image view
-        if isParent() {
-            let childImageView = UIImageView(frame: childImageOuterView.bounds)
-            childImageView.childImageView(url: child!.avatarUrl, placeholder: "\(child!.firstname.first!)\(child!.lastname.first!)", textSize: 32)
-            childImageOuterView.backgroundColor = nil
-            childImageOuterView.addSubview(childImageView)
-            //sets image frame to the outer frame
-            NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
-
-        } else {
-            let childImageView = UIImageView(frame: childImageOuterView.bounds)
-            childImageView.childImageView(url: actor!.avatarUrl, placeholder: "\(actor!.firstname.first!)\(actor!.lastname.first!)", textSize: 32)
-            childImageOuterView.backgroundColor = nil
-            childImageOuterView.addSubview(childImageView)
-            //sets image frame to the outer frame
-            NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
-
-        }
-//        let childImageView = UIImageView(frame: childImageOuterView.bounds)
-//        childImageView.childImageView(url: child!.avatarUrl, placeholder: "\(child!.firstname.first!)\(child!.lastname.first!)", textSize: 32)
-//        childImageOuterView.backgroundColor = nil
-//        childImageOuterView.addSubview(childImageView)
-//        //sets image frame to the outer frame
-//        NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
+        let childImageView = UIImageView(frame: childImageOuterView.bounds)
+        childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 32)
+        childImageOuterView.backgroundColor = nil
+        childImageOuterView.addSubview(childImageView)
+        //sets image frame to the outer frame
+        NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
     }
     
     

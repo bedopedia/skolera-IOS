@@ -34,7 +34,11 @@ class NotificationTableViewCell: UITableViewCell {
             //parsing date
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+            if isParent() {
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+            } else {
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000Z"
+            }
             let date = dateFormatter.date(from: notification.createdAt)!
             //showing date
             dateFormatter.dateStyle = .short

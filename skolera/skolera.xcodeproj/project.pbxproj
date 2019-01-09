@@ -191,6 +191,8 @@
 		8A7E305B20BABF7800BF2985 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305A20BABF7800BF2985 /* Course.swift */; };
 		8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */; };
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
+		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
+		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
 		9ABB6C41C1008FF693C9529C /* Pods_skolera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE9198FC5FA4A294142EECE /* Pods_skolera.framework */; };
@@ -394,6 +396,8 @@
 		8A7E305A20BABF7800BF2985 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+convertHTML.swift"; sourceTree = "<group>"; };
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
+		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
 		8AE5560F20DC03DD00800D7E /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		8AF4A5CB20D910BD003A1D31 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
@@ -586,6 +590,8 @@
 				5402CA0C2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift */,
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
+				8AA9307421E63ECD00F886F4 /* ActorViewController.swift */,
+				8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1208,6 +1214,7 @@
 				547A378620220A5900794441 /* NotificationsTableViewController.swift in Sources */,
 				8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */,
 				8A6D361720B5983500DD0445 /* BaseMessageHandler.swift in Sources */,
+				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
 				54230E06205DA17C00EA7E62 /* String+CapitalizeFirstLetter.swift in Sources */,
 				545BC0032018D4E800A1F858 /* Textfield+border.swift in Sources */,
 				543830B2204D711200ABF477 /* Label+Rounded.swift in Sources */,
@@ -1264,6 +1271,7 @@
 				8A5F42E820B1C5EA00FF93D1 /* ThreadTableViewCell.swift in Sources */,
 				5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */,
 				5402CA012045A2D4009F583A /* UIImageView+StudentImage.swift in Sources */,
+				8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */,
 				546356DD201F669B0072F066 /* Config.swift in Sources */,
 				8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */,
 				547A37962022153B00794441 /* Param.swift in Sources */,
