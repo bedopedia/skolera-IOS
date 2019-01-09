@@ -141,10 +141,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //                        }
                         self.emailTextField.text = ""
                         self.passwordTextField.text = ""
-                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        let nvc = UINavigationController(rootViewController: childrenTVC)
-                    
-                        self.present(nvc, animated: true, completion: nil)
+                        if isParent() {
+                            let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let nvc = UINavigationController(rootViewController: childrenTVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                        } else {
+                            let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            childProfileVC.actor = parent.data
+                            childProfileVC.assignmentsText = ""
+                            childProfileVC.quizzesText = ""
+                            childProfileVC.eventsText = ""
+//                            self.navigationController?.pushViewController(childProfileVC, animated: true)
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                        }
                         
                     }
                 }
