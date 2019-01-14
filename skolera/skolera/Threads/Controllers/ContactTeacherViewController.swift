@@ -15,21 +15,35 @@ import ChattoAdditions
 
 class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var threadsTableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var newThreadButton: UIBarButtonItem!
     
     var threads: [Threads] = []
     var child: Child!
-    
+    var actor: Parent!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
+        if child == nil {
+            titleLabel.text = "Messages".localized
+            newThreadButton.tintColor = UIColor.clear
+            newThreadButton.isEnabled = false
+        }
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getThreads()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if child == nil {
+            self.navigationController?.isNavigationBarHidden = true
+        }
     }
     
     func getThreads()

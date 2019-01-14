@@ -118,5 +118,5 @@ class Announcement : NSObject, NSCoding{
         }
         
     }
-    
 }
+
