@@ -9,7 +9,7 @@ import Foundation
 
 class Message : NSObject, NSCoding{
     
-    var attachmentUrl : AnyObject!
+    var attachmentUrl : String!
     var body : String!
     var createdAt : String!
     var ext : AnyObject!
@@ -24,7 +24,7 @@ class Message : NSObject, NSCoding{
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
-        attachmentUrl = dictionary["attachment_url"] as? AnyObject
+        attachmentUrl = dictionary["attachment_url"] as? String
         body = dictionary["body"] as? String
         createdAt = dictionary["created_at"] as? String
         ext = dictionary["ext"] as? AnyObject
@@ -79,7 +79,7 @@ class Message : NSObject, NSCoding{
      */
     @objc required init(coder aDecoder: NSCoder)
     {
-        attachmentUrl = aDecoder.decodeObject(forKey: "attachment_url") as? AnyObject
+        attachmentUrl = aDecoder.decodeObject(forKey: "attachment_url") as? String
         body = aDecoder.decodeObject(forKey: "body") as? String
         createdAt = aDecoder.decodeObject(forKey: "created_at") as? String
         ext = aDecoder.decodeObject(forKey: "ext") as? AnyObject

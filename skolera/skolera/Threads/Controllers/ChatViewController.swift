@@ -13,7 +13,7 @@ import SVProgressHUD
 import Alamofire
 
 class ChatViewController: BaseChatViewController {
-
+    
     var messageSender: DemoChatMessageSender!
     let messagesSelector = BaseMessagesSelector()
     
@@ -88,20 +88,30 @@ class ChatViewController: BaseChatViewController {
             viewModelBuilder: DemoTextMessageViewModelBuilder(),
             interactionHandler: DemoTextMessageHandler(baseHandler: self.baseMessageHandler)
         )
-//        textMessagePresenter.baseMessageStyle = BaseMessageCollectionViewCellAvatarStyle()
+        //        textMessagePresenter.baseMessageStyle = BaseMessageCollectionViewCellAvatarStyle()
         textMessagePresenter.baseMessageStyle = baseMessageStyle
         textMessagePresenter.textCellStyle = textCellStyle
+        
+        let photoMessagePresenter = PhotoMessagePresenterBuilder(
+            viewModelBuilder: DemoPhotoMessageViewModelBuilder(),
+            interactionHandler: DemoPhotoMessageHandler(baseHandler: self.baseMessageHandler)
+        )
+        photoMessagePresenter.baseCellStyle = BaseMessageCollectionViewCellAvatarStyle()
+        
+        
         
         return [
             DemoTextMessageModel.chatItemType: [textMessagePresenter],
             SendingStatusModel.chatItemType: [SendingStatusPresenterBuilder()],
-            TimeSeparatorModel.chatItemType: [TimeSeparatorPresenterBuilder()]
+            TimeSeparatorModel.chatItemType: [TimeSeparatorPresenterBuilder()],
+            DemoPhotoMessageModel.chatItemType: [photoMessagePresenter]
         ]
     }
     
     func createChatInputItems() -> [ChatInputItemProtocol] {
         var items = [ChatInputItemProtocol]()
         items.append(self.createTextInputItem())
+        items.append(self.createPhotoInputItem())
         return items
     }
     
@@ -113,6 +123,18 @@ class ChatViewController: BaseChatViewController {
         }
         return item
     }
+    
+    private func createPhotoInputItem() -> PhotosChatInputItem {
+        
+        let item = PhotosChatInputItem(presentingController: self)
+        item.photoInputHandler = { [weak self] image in
+            self?.dataSource.addPhotoMessage(image)
+            self?.scaleImage(image: image)
+        }
+        return item
+    }
+    
+    
     func send(message: String)
     {
         SVProgressHUD.show(withStatus: "Loading".localized)
@@ -202,13 +224,71 @@ class ChatViewController: BaseChatViewController {
         
     }
     
-    private func createPhotoInputItem() -> PhotosChatInputItem {
-        let item = PhotosChatInputItem(presentingController: self)
-        item.photoInputHandler = { [weak self] image in
-            self?.dataSource.addPhotoMessage(image)
-        }
-        return item
+
+    private func scaleImage(image: UIImage) {
+        let newWidth:CGFloat = 400.0
+        let scale = newWidth / (image.size.width)
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height:newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        let imageData = NSData(data:UIImagePNGRepresentation(scaledImage!)!)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let docs: String = paths[0]
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "yyyyMMddhhmmssSSSS"
+        df.string(from: d)
+        let fileName = df.string(from: d) + ".jpg"
+        let fullPath = docs.appendingFormat("/%@", fileName)
+        
+        _ = imageData.write(toFile: fullPath, atomically: true)
+        uploadImage(imageData: imageData as Data, imageName: fileName)
+        debugPrint(fullPath)
+        //        if let key = sendPhotoMessage() {
+        //            // 4
+        //            let imageFileURL = URL(string: "file://\(fullPath)")
+        //
+        //            // 5
+        ////            let path = "\(self.channel!.threadId)/\(fileName)"
+        //
+        //            // 6
+        //            DispatchQueue.global().async(execute: {
+        //
+        //                DispatchQueue.main.sync{
+        //                    print("main thread")
+        //
+        //                }
+        //            })
+        //
+        //        }
+        //
     }
+    
+    private func uploadImage(imageData: Data, imageName: String) {
+        let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append("message".data(using: .utf8)!, withName: "body")
+                multipartFormData.append("\(imageName)".data(using: .utf8)!, withName: "filename")
+                multipartFormData.append(imageData, withName: "attachment", fileName: imageName, mimeType: "image/jpeg")
+        },
+            to: url, method: .post, headers: getHeaders(),
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        }
+        )
+    }
+    
+    
 }
 
 extension ChatViewController: MessagesSelectorDelegate {
