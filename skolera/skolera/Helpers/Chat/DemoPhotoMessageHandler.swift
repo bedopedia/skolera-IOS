@@ -8,11 +8,14 @@
 
 import Foundation
 import ChattoAdditions
+import Lightbox
 
 class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
     private let baseHandler: BaseMessageHandler
-    init (baseHandler: BaseMessageHandler) {
+    private let viewController: ChatViewController
+    init (baseHandler: BaseMessageHandler, viewController: ChatViewController) {
         self.baseHandler = baseHandler
+        self.viewController = viewController
     }
     
     func userDidTapOnFailIcon(viewModel: DemoPhotoMessageViewModel, failIconView: UIView) {
@@ -24,6 +27,15 @@ class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
     }
     
     func userDidTapOnBubble(viewModel: DemoPhotoMessageViewModel) {
+        let images = [
+            LightboxImage(
+                image: viewModel.fakeImage,
+                text: ""
+            )
+        ]
+        let controller = LightboxController(images: images)
+        controller.dynamicBackground = true
+        viewController.present(controller, animated: true, completion: nil)
         self.baseHandler.userDidTapOnBubble(viewModel: viewModel)
     }
     

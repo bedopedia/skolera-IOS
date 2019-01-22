@@ -33,7 +33,9 @@ class BaseMessageHandler {
     }
     
     func userDidTapOnBubble(viewModel: DemoMessageViewModelProtocol) {
+        
         print("userDidTapOnBubble")
+       
     }
     
     func userDidBeginLongPressOnBubble(viewModel: DemoMessageViewModelProtocol) {
