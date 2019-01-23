@@ -134,17 +134,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         keychain.set(headers[UID] as! String, forKey: UID)
                         keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
                         keychain.set(String(parent.data.id), forKey: ID)
-                        keychain.set(parent.data.userType.elementsEqual("parent"), forKey: USER_TYPE)
+                        keychain.set(parent.data.userType, forKey: USER_TYPE)
                         
 //                        if let locale = parent.data.locale, locale  == "ar" {
 //                            UIView.appearance().semanticContentAttribute = .forceRightToLeft
 //                        }
                         self.emailTextField.text = ""
                         self.passwordTextField.text = ""
-                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        let nvc = UINavigationController(rootViewController: childrenTVC)
-                    
-                        self.present(nvc, animated: true, completion: nil)
+                        if isParent() {
+                            let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let nvc = UINavigationController(rootViewController: childrenTVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                        } else {
+                            let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            childProfileVC.actor = parent.data
+//                            self.navigationController?.pushViewController(childProfileVC, animated: true)
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                        }
                         
                     }
                 }

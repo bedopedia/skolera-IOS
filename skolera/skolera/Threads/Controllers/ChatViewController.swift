@@ -42,6 +42,10 @@ class ChatViewController: BaseChatViewController {
         UIView.appearance().semanticContentAttribute = .forceLeftToRight
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         if Language.language == .arabic {
             UIView.appearance().semanticContentAttribute = .forceRightToLeft

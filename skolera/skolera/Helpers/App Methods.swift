@@ -70,7 +70,12 @@ func getChildImageURL(urlString imageURL:String) -> URL!
 
 func isParent() -> Bool {
     let keychain = KeychainSwift()
-    return keychain.getBool(USER_TYPE)!
+    return keychain.get(USER_TYPE)!.elementsEqual("parent")
+}
+
+func getUserType() -> String {
+    let keychain = KeychainSwift()
+    return keychain.get(USER_TYPE)!
 }
 
 func isValidEmail(testStr:String) -> Bool {

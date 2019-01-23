@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Announcement Table View Controller-->
+        <scene sceneID="DNy-Xs-vBK">
+            <objects>
+                <tableViewController storyboardIdentifier="AnnouncementTableViewController" id="bHc-bt-ffm" customClass="AnnouncementTableViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3M2-Kd-qS9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AnnouncementTableViewCell" rowHeight="118" id="Z2n-kI-Lkd" customClass="AnnouncementTableViewCell" customModule="skolera" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="118"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z2n-kI-Lkd" id="URy-ju-PRA">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="117.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l3T-qS-nbH">
+                                            <rect key="frame" x="26" y="10" width="35" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="35" id="2iO-tV-Rxy"/>
+                                                <constraint firstAttribute="height" constant="35" id="ATp-Of-qU7"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HX8-iM-4aa">
+                                            <rect key="frame" x="276" y="11" width="65" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="65" id="sqD-dR-iaY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="0.5607843137254902" green="0.55686274509803924" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3NV-0F-80s">
+                                            <rect key="frame" x="72" y="17" width="127" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ha-ef-AaD">
+                                            <rect key="frame" x="26" y="51" width="297" height="56.5"/>
+                                            <string key="text">Dear Parents, MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will lear</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="0.50980392156862742" green="0.56470588235294117" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="HX8-iM-4aa" secondAttribute="trailing" id="3oq-vZ-q0B"/>
+                                        <constraint firstItem="7ha-ef-AaD" firstAttribute="leading" secondItem="l3T-qS-nbH" secondAttribute="leading" id="6cZ-VC-oHH"/>
+                                        <constraint firstItem="HX8-iM-4aa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3NV-0F-80s" secondAttribute="trailing" constant="8" id="Br0-Bp-4ts"/>
+                                        <constraint firstItem="3NV-0F-80s" firstAttribute="leading" secondItem="l3T-qS-nbH" secondAttribute="trailing" constant="11" id="H9I-dV-2hk"/>
+                                        <constraint firstItem="7ha-ef-AaD" firstAttribute="top" secondItem="l3T-qS-nbH" secondAttribute="bottom" constant="6" id="USC-kb-otQ"/>
+                                        <constraint firstItem="l3T-qS-nbH" firstAttribute="leading" secondItem="URy-ju-PRA" secondAttribute="leading" constant="26" id="cH4-EK-xqC"/>
+                                        <constraint firstAttribute="bottom" secondItem="7ha-ef-AaD" secondAttribute="bottom" constant="10" id="dHL-A4-gPD"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="7ha-ef-AaD" secondAttribute="trailing" constant="10" id="jsk-hz-ZKO"/>
+                                        <constraint firstItem="HX8-iM-4aa" firstAttribute="top" secondItem="URy-ju-PRA" secondAttribute="top" constant="11" id="sI2-c2-7uG"/>
+                                        <constraint firstItem="3NV-0F-80s" firstAttribute="centerY" secondItem="l3T-qS-nbH" secondAttribute="centerY" id="sYN-lU-61O"/>
+                                        <constraint firstItem="l3T-qS-nbH" firstAttribute="top" secondItem="URy-ju-PRA" secondAttribute="top" constant="10" id="zoU-z6-z15"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="itemBody" destination="7ha-ef-AaD" id="LIf-Aq-nAK"/>
+                                    <outlet property="itemDate" destination="HX8-iM-4aa" id="eX5-KO-x8m"/>
+                                    <outlet property="itemImage" destination="l3T-qS-nbH" id="DCE-Fo-Alp"/>
+                                    <outlet property="itemTitle" destination="3NV-0F-80s" id="gqD-FH-61D"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bHc-bt-ffm" id="4mX-Uv-dDg"/>
+                            <outlet property="delegate" destination="bHc-bt-ffm" id="nDg-Dd-bmW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Vmg-Fe-6xl">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="hgV-Hp-kXf">
+                            <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TkO-Lt-e4v">
+                                    <rect key="frame" x="-84" y="-14.5" width="168" height="29"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                    <color key="textColor" red="0.33300891519999998" green="0.333286792" blue="0.33305191989999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="TkO-Lt-e4v" firstAttribute="centerY" secondItem="hgV-Hp-kXf" secondAttribute="centerY" id="80m-Za-pRV"/>
+                                <constraint firstItem="TkO-Lt-e4v" firstAttribute="centerX" secondItem="hgV-Hp-kXf" secondAttribute="centerX" id="OZo-9w-kLk"/>
+                            </constraints>
+                        </view>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AGY-dY-du5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-111.2" y="-12.143928035982009"/>
+        </scene>
+        <!--Announcement View Controller-->
+        <scene sceneID="pT2-cm-2BZ">
+            <objects>
+                <viewController storyboardIdentifier="AnnouncementViewController" id="pI2-D3-z06" customClass="AnnouncementViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xz7-F4-nyR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1cb-Ro-eDu">
+                                <rect key="frame" x="0.0" y="64" width="375" height="192"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="192" id="yzY-tq-jad"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mr6-tb-h1h">
+                                <rect key="frame" x="16" y="272" width="127" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJC-xi-R73">
+                                <rect key="frame" x="16" y="301" width="351" height="67"/>
+                                <string key="text">Dear Parents, MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will lear</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aJC-xi-R73" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" constant="16" id="2k9-OE-e3n"/>
+                            <constraint firstItem="1cb-Ro-eDu" firstAttribute="top" secondItem="vD7-kI-mDD" secondAttribute="top" id="CN6-GM-yl4"/>
+                            <constraint firstItem="vD7-kI-mDD" firstAttribute="trailing" secondItem="aJC-xi-R73" secondAttribute="trailing" constant="8" id="IeR-fR-iy0"/>
+                            <constraint firstItem="Mr6-tb-h1h" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" constant="16" id="QL1-Wa-VID"/>
+                            <constraint firstItem="1cb-Ro-eDu" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" id="SlE-93-mkj"/>
+                            <constraint firstItem="aJC-xi-R73" firstAttribute="top" secondItem="Mr6-tb-h1h" secondAttribute="bottom" constant="8" id="fS5-i6-THe"/>
+                            <constraint firstItem="Mr6-tb-h1h" firstAttribute="top" secondItem="1cb-Ro-eDu" secondAttribute="bottom" constant="16" id="tcZ-s9-cTL"/>
+                            <constraint firstItem="vD7-kI-mDD" firstAttribute="trailing" secondItem="1cb-Ro-eDu" secondAttribute="trailing" id="wZO-Qo-Usm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vD7-kI-mDD"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NtM-RZ-QnX">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="DdO-P9-gc6">
+                            <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy new year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eB8-bZ-uMr">
+                                    <rect key="frame" x="-87.5" y="-14.5" width="175" height="29"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                    <color key="textColor" red="0.33300891519999998" green="0.333286792" blue="0.33305191989999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="eB8-bZ-uMr" firstAttribute="centerY" secondItem="DdO-P9-gc6" secondAttribute="centerY" id="CIa-dp-1b6"/>
+                                <constraint firstItem="eB8-bZ-uMr" firstAttribute="centerX" secondItem="DdO-P9-gc6" secondAttribute="centerX" id="EHY-QD-j6Q"/>
+                            </constraints>
+                        </view>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="annnouncementBody" destination="aJC-xi-R73" id="jc6-wM-9S7"/>
+                        <outlet property="announcementHeader" destination="Mr6-tb-h1h" id="h18-qS-xiv"/>
+                        <outlet property="announcementHeightConstraint" destination="yzY-tq-jad" id="0Ci-ue-U09"/>
+                        <outlet property="announcementImage" destination="1cb-Ro-eDu" id="gig-bQ-VGa"/>
+                        <outlet property="titleLabel" destination="eB8-bZ-uMr" id="FkN-YI-3Uh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yLX-10-N7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="609" y="-12"/>
+        </scene>
+    </scenes>
+</document>

@@ -26,7 +26,6 @@ class ChildrenTableViewController: UITableViewController {
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
-        debugPrint("isParent", isParent())
         NRAppUpdate.checkUpdate(for: "1346646110") // check if there is updates for app in store
         signOutButton.image = signOutButton.image?.flipIfNeeded()
         navigationController?.isNavigationBarHidden = false
@@ -38,7 +37,6 @@ class ChildrenTableViewController: UITableViewController {
         navigationItem.backBarButtonItem = backItem
         getChildren()
         setLocalization()
-        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
@@ -94,7 +92,7 @@ class ChildrenTableViewController: UITableViewController {
         } else {
             locale = "en"
         }
-        let parameters: Parameters = ["user": ["locale": locale]]
+        let parameters: Parameters = ["user": ["language": locale]]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -163,6 +161,7 @@ class ChildrenTableViewController: UITableViewController {
             }
         }
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

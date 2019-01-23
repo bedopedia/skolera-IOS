@@ -18,6 +18,7 @@ enum AppStoryboard : String {
     case BehaviorNotes
     case Timetable
     case Threads
+    case Announcements
     var instance : UIStoryboard {
         
         return UIStoryboard(name: self.rawValue, bundle: Bundle.main)

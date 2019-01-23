@@ -15,22 +15,36 @@ import ChattoAdditions
 
 class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var threadsTableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var newThreadButton: UIBarButtonItem!
     
     var threads: [Threads] = []
     var child: Child!
-    
+    var actor: Parent!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
+        if child == nil {
+            titleLabel.text = "Messages".localized
+            newThreadButton.tintColor = UIColor.clear
+            newThreadButton.isEnabled = false
+        }
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getThreads()
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        if child == nil {
+//            self.navigationController?.isNavigationBarHidden = true
+//        }
+//    }
     
     func getThreads()
     {
@@ -44,15 +58,17 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             switch response.result{
                 
             case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
+                if let result = response.result.value as? [String: AnyObject]
                 {
                     debugPrint(result)
-                    for thread in result
-                    {
-                        self.threads.append(Threads.init(fromDictionary: thread))
+                    if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
+                        for thread in threadsJson
+                        {
+                            self.threads.append(Threads.init(fromDictionary: thread))
+                        }
+                        self.threadsTableView.reloadData()
+                        
                     }
-//                    self.refreshControl?.endRefreshing()
-                    self.threadsTableView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -103,7 +119,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 
         }
         
-        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last! , placeholder: "\(fullNameArr![0].first!)\((fullNameArr?.last ?? " ").first!)", textSize: 20)
+
+        
+        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first!)\((fullNameArr?.last ?? " ").first!)", textSize: 20)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"

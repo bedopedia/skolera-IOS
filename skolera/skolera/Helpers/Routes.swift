@@ -85,3 +85,7 @@ func SEND_MESSAGE() -> String
 {
     return "\(BASE_URL!)/api/threads/%d"
 }
+//Announcements
+func GET_ANNOUNCEMENTS() -> String {
+    return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
+}
