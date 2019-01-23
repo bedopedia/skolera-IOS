@@ -58,16 +58,29 @@ class SplashScreenViewController: UIViewController {
                         let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
                         UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
                         
-                    }
+                    
                         if let headers = response.response?.allHeaderFields
                         {
                             let keychain = KeychainSwift()
                             keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                             keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
                         }
-                        let homeScreentvc = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        self.navigationController?.pushViewController(homeScreentvc, animated: false)
                     
+                    if isParent() {
+                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        let nvc = UINavigationController(rootViewController: childrenTVC)
+                        
+                        self.present(nvc, animated: true, completion: nil)
+                    } else {
+                        let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childProfileVC.actor = parent.data
+                        //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        
+                        self.present(nvc, animated: true, completion: nil)
+                    }
+                    
+                }
                 case .failure(let error):
                     print(error.localizedDescription)
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)

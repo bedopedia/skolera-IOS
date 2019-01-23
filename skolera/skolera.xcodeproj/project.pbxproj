@@ -185,6 +185,7 @@
 		8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */; };
 		8A6D363220B59B8900DD0445 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */; };
 		8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */; };
+		8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6F297B21F871650011CC4A /* Announcements.storyboard */; };
 		8A7E305520BABD7900BF2985 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305420BABD7900BF2985 /* Subject.swift */; };
 		8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305620BABF4F00BF2985 /* Teacher.swift */; };
 		8A7E305920BABF5D00BF2985 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305820BABF5D00BF2985 /* Stage.swift */; };
@@ -197,7 +198,6 @@
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
-		8AF3065F21EC8DE400B75736 /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AF3065E21EC8DE400B75736 /* Announcements.storyboard */; };
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
 		8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119C21E74D8600106EF2 /* Announcement.swift */; };
 		8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */; };
@@ -396,6 +396,8 @@
 		8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageHandler.swift; sourceTree = "<group>"; };
 		8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSeparatorPresenter.swift; path = "../../../../../../../../Desktop/Chatto-master/ChattoApp/ChattoApp/Source/Time Separator/TimeSeparatorPresenter.swift"; sourceTree = "<group>"; };
 		8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
+		8A6F297A21F871650011CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
+		8A6F297D21F871770011CC4A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		8A7E305420BABD7900BF2985 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		8A7E305620BABF4F00BF2985 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		8A7E305820BABF5D00BF2985 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
@@ -409,7 +411,6 @@
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
 		8AE5560F20DC03DD00800D7E /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
-		8AF3065E21EC8DE400B75736 /* Announcements.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Announcements.storyboard; sourceTree = "<group>"; };
 		8AF4A5CB20D910BD003A1D31 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		8AF5119C21E74D8600106EF2 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementReceiver.swift; sourceTree = "<group>"; };
@@ -952,7 +953,7 @@
 		8AF3065D21EC8DCC00B75736 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8AF3065E21EC8DE400B75736 /* Announcements.storyboard */,
+				8A6F297B21F871650011CC4A /* Announcements.storyboard */,
 				8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */,
 			);
 			path = Views;
@@ -1075,7 +1076,7 @@
 				5482DE662056DAB100647D57 /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				5482DE782056DAB100647D57 /* RobotoCondensed-Light.ttf in Resources */,
 				5482DE4D2056DAB100647D57 /* RobotoCondensed-Regular.ttf in Resources */,
-				8AF3065F21EC8DE400B75736 /* Announcements.storyboard in Resources */,
+				8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */,
 				5482DE8A2056DAB100647D57 /* Roboto-Light.ttf in Resources */,
 				8A298CDB2184D3B600A82FEA /* Localizable.strings in Resources */,
 				5482DE002056D50D00647D57 /* SFUIText-RegularG1.otf in Resources */,
@@ -1428,6 +1429,15 @@
 				8A298CDE2184D3B800A82FEA /* ar */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		8A6F297B21F871650011CC4A /* Announcements.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A6F297A21F871650011CC4A /* Base */,
+				8A6F297D21F871770011CC4A /* ar */,
+			);
+			name = Announcements.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

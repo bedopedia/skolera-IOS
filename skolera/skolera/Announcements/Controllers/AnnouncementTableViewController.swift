@@ -28,12 +28,6 @@ class AnnouncementTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
@@ -55,6 +49,7 @@ class AnnouncementTableViewController: UITableViewController {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
                         self.meta = Meta(fromDictionary: metaResponse)
                     }
+                    
                     if let announcementsResponse =  result["announcements"] as? [[String: AnyObject]] {
                         for item in announcementsResponse {
                             let announcement = Announcement(fromDictionary: item)

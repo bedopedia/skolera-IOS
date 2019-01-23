@@ -40,11 +40,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         getThreads()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        if child == nil {
-            self.navigationController?.isNavigationBarHidden = true
-        }
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        if child == nil {
+//            self.navigationController?.isNavigationBarHidden = true
+//        }
+//    }
     
     func getThreads()
     {
@@ -58,15 +58,17 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             switch response.result{
                 
             case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
+                if let result = response.result.value as? [String: AnyObject]
                 {
                     debugPrint(result)
-                    for thread in result
-                    {
-                        self.threads.append(Threads.init(fromDictionary: thread))
+                    if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
+                        for thread in threadsJson
+                        {
+                            self.threads.append(Threads.init(fromDictionary: thread))
+                        }
+                        self.threadsTableView.reloadData()
+                        
                     }
-//                    self.refreshControl?.endRefreshing()
-                    self.threadsTableView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -117,7 +119,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 
         }
         
-        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last! , placeholder: "\(fullNameArr![0].first!)\((fullNameArr?.last ?? " ").first!)", textSize: 20)
+
+        
+        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first!)\((fullNameArr?.last ?? " ").first!)", textSize: 20)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"

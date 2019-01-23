@@ -92,7 +92,7 @@ class ChildrenTableViewController: UITableViewController {
         } else {
             locale = "en"
         }
-        let parameters: Parameters = ["user": ["locale": locale]]
+        let parameters: Parameters = ["user": ["language": locale]]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in

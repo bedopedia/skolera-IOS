@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -18,6 +18,7 @@
 				54F795613424A751B422B7ECBBDCC31D /* PBXTargetDependency */,
 			);
 			name = Firebase;
+			productName = Firebase;
 		};
 		3FF80EEC49E384EA6C59061044C5891C /* GoogleAppMeasurement */ = {
 			isa = PBXAggregateTarget;
@@ -29,6 +30,7 @@
 				21251523B54423B498402E5A48288D37 /* PBXTargetDependency */,
 			);
 			name = GoogleAppMeasurement;
+			productName = GoogleAppMeasurement;
 		};
 		65D84FA2A65AE25E733FC7AAF3B8A124 /* FirebaseAnalytics */ = {
 			isa = PBXAggregateTarget;
@@ -43,6 +45,7 @@
 				FD281962B29DD6AA36777F75BE6BB813 /* PBXTargetDependency */,
 			);
 			name = FirebaseAnalytics;
+			productName = FirebaseAnalytics;
 		};
 		E43B613A8D45AD5140296422FC9249DF /* FirebaseInstanceID */ = {
 			isa = PBXAggregateTarget;
@@ -54,6 +57,7 @@
 				145EA337BBD8484D4A1425DED7FD6CD1 /* PBXTargetDependency */,
 			);
 			name = FirebaseInstanceID;
+			productName = FirebaseInstanceID;
 		};
 /* End PBXAggregateTarget section */
 
@@ -861,7 +865,7 @@
 		001941A61F8AB7A1ECDBD9375B812F62 /* DateToolsSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DateToolsSwift-dummy.m"; sourceTree = "<group>"; };
 		006BCD34E67C684891AC2111ADE4CAB5 /* TimePeriodChain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TimePeriodChain.swift; path = DateToolsSwift/DateTools/TimePeriodChain.swift; sourceTree = "<group>"; };
 		0086F9E2BDB94CA3F91262FE6419249D /* GULNetworkURLSession.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GULNetworkURLSession.m; path = GoogleUtilities/Network/GULNetworkURLSession.m; sourceTree = "<group>"; };
-		00D97643A3E7076287121B012A776BD1 /* Neon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Neon.framework; path = Neon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00D97643A3E7076287121B012A776BD1 /* Neon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Neon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0116C0C4A173D73A15ED25BB1606BA47 /* LiveCameraCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LiveCameraCell.swift; path = ChattoAdditions/Source/Input/Photos/Camera/LiveCameraCell.swift; sourceTree = "<group>"; };
 		018A80E4C6D4C92922646128921BC1C3 /* GULReachabilityChecker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULReachabilityChecker.h; path = GoogleUtilities/Reachability/Private/GULReachabilityChecker.h; sourceTree = "<group>"; };
 		0265CE5B3FCF57DDC8CE0C8F52D9BD06 /* FirebaseCore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseCore.h; path = Firebase/Core/Public/FirebaseCore.h; sourceTree = "<group>"; };
@@ -883,7 +887,7 @@
 		097D233D4201610394F63A52624AC154 /* FirebaseCore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FirebaseCore-dummy.m"; sourceTree = "<group>"; };
 		09C75809F7C37A2CC93D974A94AB2C25 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TPKeyboardAvoidingCollectionView.h; path = TPKeyboardAvoiding/TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
 		0AA58FC05B5553655F79DEE53DF2B4C5 /* FIRApp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRApp.h; path = Firebase/Core/Public/FIRApp.h; sourceTree = "<group>"; };
-		0C5421EFD95F54752DBEDD369DDB48A4 /* Chatto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Chatto.framework; path = Chatto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C5421EFD95F54752DBEDD369DDB48A4 /* Chatto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Chatto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA6F578432CC835056DCFEBCAC62FD3 /* Date+Format.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Format.swift"; path = "DateToolsSwift/DateTools/Date+Format.swift"; sourceTree = "<group>"; };
 		0DE437E210FC5EA0862214F212DCA1C2 /* FIRMessagingConnection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRMessagingConnection.m; path = Firebase/Messaging/FIRMessagingConnection.m; sourceTree = "<group>"; };
 		0DEC38682AF212B3C19D93D859FFE2FC /* CircleIconView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CircleIconView.h; path = "ChattoAdditions/Source/UI Components/CircleProgressIndicatorView/CircleIconView.h"; sourceTree = "<group>"; };
@@ -909,7 +913,7 @@
 		15459CEBE65B7FED1D58D3DACD3EF263 /* FIRComponentContainer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRComponentContainer.m; path = Firebase/Core/FIRComponentContainer.m; sourceTree = "<group>"; };
 		157C0C87A3A1DF5AE5F96BE7CACEA8E6 /* ChatLayoutConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatLayoutConfiguration.swift; path = Chatto/Source/ChatController/ChatLayoutConfiguration.swift; sourceTree = "<group>"; };
 		15E1E0D02A714EF9670070C0D35FD5A6 /* FIRMessagingRmq2PersistentStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingRmq2PersistentStore.h; path = Firebase/Messaging/FIRMessagingRmq2PersistentStore.h; sourceTree = "<group>"; };
-		1615EC509841628DDE3C8E71D513C748 /* KeychainSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeychainSwift.framework; path = KeychainSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1615EC509841628DDE3C8E71D513C748 /* KeychainSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeychainSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		167739FD27EE1B7C86B2E472ACEBF5D5 /* ChatItemCompanion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatItemCompanion.swift; path = "Chatto/Source/Chat Items/ChatItemCompanion.swift"; sourceTree = "<group>"; };
 		1734A748BBCE488CD75FD769A0172DFD /* GPBDictionary_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDictionary_PackagePrivate.h; path = objectivec/GPBDictionary_PackagePrivate.h; sourceTree = "<group>"; };
 		17647F35F43420113A675DED72C35033 /* NeonAnchorable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NeonAnchorable.swift; path = Source/NeonAnchorable.swift; sourceTree = "<group>"; };
@@ -936,7 +940,7 @@
 		1E428251AD78CC673FA9652FAC29815F /* SwipeLabelView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeLabelView.swift; path = Source/Header/SwipeLabelView.swift; sourceTree = "<group>"; };
 		1EBCD168770C39B8A72611DD8C84A094 /* ExpandableTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpandableTextView.swift; path = ChattoAdditions/Source/Input/ExpandableTextView.swift; sourceTree = "<group>"; };
 		1EC3304895985483B43082F7A40CBC09 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
-		1F117CD12F5D48E2374DB730C7CF20FC /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_decode.c; sourceTree = "<group>"; };
+		1F117CD12F5D48E2374DB730C7CF20FC /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_decode.c; sourceTree = "<group>"; };
 		2053830EF604FCD151434443A09823E5 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
 		21B5EA7547259E9034725608F5F13038 /* GoogleUtilities-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleUtilities-prefix.pch"; sourceTree = "<group>"; };
 		2235F6237605AA8E510F1328083120DB /* TimeChunk.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TimeChunk.swift; path = DateToolsSwift/DateTools/TimeChunk.swift; sourceTree = "<group>"; };
@@ -968,7 +972,7 @@
 		3053545D82E373FB62219E549B7AD353 /* KeyboardTracker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeyboardTracker.swift; path = Chatto/Source/ChatController/Collaborators/KeyboardTracker.swift; sourceTree = "<group>"; };
 		30A2EEC464B77CEDDA976B734A808ED2 /* GPBCodedOutputStream_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBCodedOutputStream_PackagePrivate.h; path = objectivec/GPBCodedOutputStream_PackagePrivate.h; sourceTree = "<group>"; };
 		310456EA797DC8571BED97C0523B1EC4 /* YLProgressBar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = YLProgressBar.xcconfig; sourceTree = "<group>"; };
-		323DC79922392951E8E99B0F04612F6D /* TPKeyboardAvoiding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TPKeyboardAvoiding.framework; path = TPKeyboardAvoiding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		323DC79922392951E8E99B0F04612F6D /* TPKeyboardAvoiding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TPKeyboardAvoiding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3253AA2662597EB9C5432475D5C88D35 /* FIRMessagingTopicsCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingTopicsCommon.h; path = Firebase/Messaging/FIRMessagingTopicsCommon.h; sourceTree = "<group>"; };
 		32D5C27895930AE50538B8B797BFA8D6 /* BaseMessageCollectionViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseMessageCollectionViewCell.swift; path = "ChattoAdditions/Source/Chat Items/BaseMessage/Views/BaseMessageCollectionViewCell.swift"; sourceTree = "<group>"; };
 		33445473C1DB79AA749A4AA1B7A24BCB /* Event.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Event.swift; path = Source/Timeline/Event.swift; sourceTree = "<group>"; };
@@ -1015,18 +1019,18 @@
 		43EC9A45A4A15B128E02C68A3AEEC62F /* Api.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Api.pbobjc.h; path = objectivec/google/protobuf/Api.pbobjc.h; sourceTree = "<group>"; };
 		43F8B742B4F12A239DFE7515C95EEF46 /* FIRMessagingPersistentSyncMessage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRMessagingPersistentSyncMessage.m; path = Firebase/Messaging/FIRMessagingPersistentSyncMessage.m; sourceTree = "<group>"; };
 		4403311865BDFE663145C4FED8E65D54 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		453782741F0385B78AA4EFDC2E1EB2C3 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Kingfisher.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		453782741F0385B78AA4EFDC2E1EB2C3 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45A9DC4314B38A3937B70BA617B296EB /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
 		4659C45D145280DB0AF28FFA5850F692 /* nanopb.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = nanopb.modulemap; sourceTree = "<group>"; };
 		477158CA3EC4208B00399A3DEC5486D7 /* KingfisherManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KingfisherManager.swift; path = Sources/KingfisherManager.swift; sourceTree = "<group>"; };
-		4792FA3FE79FAC759D2ECF9521B5103A /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GoogleUtilities.framework; path = GoogleUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4792FA3FE79FAC759D2ECF9521B5103A /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		486D64FE1291A00AC91D6242233D66FB /* FirebaseMessaging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseMessaging.h; path = Firebase/Messaging/Public/FirebaseMessaging.h; sourceTree = "<group>"; };
 		4871C33C6B83BDCBC11FA9434E5123E7 /* GULUserDefaults.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULUserDefaults.h; path = GoogleUtilities/UserDefaults/Private/GULUserDefaults.h; sourceTree = "<group>"; };
 		4876D094C7B601550C5A688CF502BAD8 /* Pods-skolera-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-skolera-acknowledgements.markdown"; sourceTree = "<group>"; };
 		48BB122713DEB4FC6945B1464859F705 /* PhotosInputWithPlaceholdersDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotosInputWithPlaceholdersDataProvider.swift; path = ChattoAdditions/Source/Input/Photos/PhotosInputWithPlaceholdersDataProvider.swift; sourceTree = "<group>"; };
 		491ACF1BF954C182C6B37F4FCDDE9297 /* AccessoryViewRevealer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AccessoryViewRevealer.swift; path = Chatto/Source/ChatController/Collaborators/AccessoryViewRevealer.swift; sourceTree = "<group>"; };
 		492BDE8A30C3CE4882082B2A1149BC95 /* PhotosInputPlaceholderCellProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotosInputPlaceholderCellProvider.swift; path = ChattoAdditions/Source/Input/Photos/Placeholder/PhotosInputPlaceholderCellProvider.swift; sourceTree = "<group>"; };
-		49E74D2EDA92ACD617A0537046B79EA8 /* ChattoAdditions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ChattoAdditions.framework; path = ChattoAdditions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E74D2EDA92ACD617A0537046B79EA8 /* ChattoAdditions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ChattoAdditions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A26729896F1B2777914CE429B23762C /* YLProgressBar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "YLProgressBar-dummy.m"; sourceTree = "<group>"; };
 		4AC9E384D14D55288F29E10FFF8B48CD /* YLProgressBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YLProgressBar.m; path = YLProgressBar/YLProgressBar.m; sourceTree = "<group>"; };
 		4AD570A9A2C38416F2F869AB70350B3D /* FirebaseInstanceID.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FirebaseInstanceID.xcconfig; sourceTree = "<group>"; };
@@ -1035,11 +1039,11 @@
 		4C16BF473A900798FF93D70CCFAF1566 /* PhotosChatInputItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotosChatInputItem.swift; path = ChattoAdditions/Source/Input/Photos/PhotosChatInputItem.swift; sourceTree = "<group>"; };
 		4C6907CDF04555E2328FBD2683595957 /* DayView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DayView.swift; path = Source/DayView.swift; sourceTree = "<group>"; };
 		4C739F3AC65C36EAE5B22A7472A9B7A8 /* FIRApp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRApp.m; path = Firebase/Core/FIRApp.m; sourceTree = "<group>"; };
-		4CCF580D8BA13C835FC6083C4655F954 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SVProgressHUD.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CCF580D8BA13C835FC6083C4655F954 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CD4C5711C9863D0F44F9ED72C76CD0B /* GULMutableDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULMutableDictionary.h; path = GoogleUtilities/Network/Private/GULMutableDictionary.h; sourceTree = "<group>"; };
 		4D1804B400E7B0F64498AB2B51EE701A /* Wrappers.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Wrappers.pbobjc.h; path = objectivec/google/protobuf/Wrappers.pbobjc.h; sourceTree = "<group>"; };
 		4D712C8F9833EC66B20C0A2CD462AADE /* HorizontalStackScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HorizontalStackScrollView.swift; path = ChattoAdditions/Source/Input/HorizontalStackScrollView.swift; sourceTree = "<group>"; };
-		4D83D60EBF1D0FFCA4B0735212C1CD5B /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_encode.c; sourceTree = "<group>"; };
+		4D83D60EBF1D0FFCA4B0735212C1CD5B /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_encode.c; sourceTree = "<group>"; };
 		4E9E435738ECF298FC3068E4C3F4F0B7 /* FIRMessagingPendingTopicsList.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingPendingTopicsList.h; path = Firebase/Messaging/FIRMessagingPendingTopicsList.h; sourceTree = "<group>"; };
 		4F9523DD182E23A9A97C27AA947159F4 /* FormatIndicatedCacheSerializer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FormatIndicatedCacheSerializer.swift; path = Sources/FormatIndicatedCacheSerializer.swift; sourceTree = "<group>"; };
 		4FDC64DA9578EC1B4D16451B8856574E /* SerialTaskQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SerialTaskQueue.swift; path = Chatto/Source/SerialTaskQueue.swift; sourceTree = "<group>"; };
@@ -1107,7 +1111,7 @@
 		72FC083ACBE51F3A9333F389C368F887 /* Protobuf-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Protobuf-umbrella.h"; sourceTree = "<group>"; };
 		73004D3E04DC2CC8F68ACE662DD484B9 /* CircleProgressIndicatorView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CircleProgressIndicatorView.m; path = "ChattoAdditions/Source/UI Components/CircleProgressIndicatorView/CircleProgressIndicatorView.m"; sourceTree = "<group>"; };
 		73D1A87DAEE70323A3911B72B121A673 /* PhotosInputPlaceholderDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotosInputPlaceholderDataProvider.swift; path = ChattoAdditions/Source/Input/Photos/Placeholder/PhotosInputPlaceholderDataProvider.swift; sourceTree = "<group>"; };
-		748DFB3C9D56ECD5854915FB8A4E374E /* Device_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Device_swift.framework; path = Device.swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		748DFB3C9D56ECD5854915FB8A4E374E /* Device_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Device_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74B57E32E9D468B6E030842CE6C65BEF /* UIImage+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Additions.swift"; path = "ChattoAdditions/Source/Common/UIImage+Additions.swift"; sourceTree = "<group>"; };
 		754AD342BCF23396EF6D8774F5181AA5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		75590DC7A96B5D6543DA0CE186F119E8 /* TegKeychainConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TegKeychainConstants.swift; path = Sources/TegKeychainConstants.swift; sourceTree = "<group>"; };
@@ -1117,7 +1121,7 @@
 		763FEA5A9D11710BA419B5D7027FC783 /* BaseMessageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseMessageViewModel.swift; path = "ChattoAdditions/Source/Chat Items/BaseMessage/BaseMessageViewModel.swift"; sourceTree = "<group>"; };
 		76BB854619B32CEFED7A06A2B954F369 /* nanopb-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-umbrella.h"; sourceTree = "<group>"; };
 		77522F111774FB63B13565ECBA756F75 /* NSError+FIRMessaging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+FIRMessaging.h"; path = "Firebase/Messaging/NSError+FIRMessaging.h"; sourceTree = "<group>"; };
-		788DC140CECA182311785E7B8DDE6488 /* NRAppUpdate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NRAppUpdate.framework; path = NRAppUpdate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		788DC140CECA182311785E7B8DDE6488 /* NRAppUpdate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NRAppUpdate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78A9A09404ACE640CCFDCA1249AA8C4A /* GPBDictionary.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBDictionary.m; path = objectivec/GPBDictionary.m; sourceTree = "<group>"; };
 		78AF6C533239C1A4F3BEAD8DADDE65F8 /* EventDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EventDataSource.swift; path = Source/EventDataSource.swift; sourceTree = "<group>"; };
 		78B75B2A7A80B41EFC0C79B279781108 /* FIRMessagingCodedInputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingCodedInputStream.h; path = Firebase/Messaging/FIRMessagingCodedInputStream.h; sourceTree = "<group>"; };
@@ -1134,7 +1138,7 @@
 		7F1E757CBFFFCB18B2654C9CEE22D074 /* DayHeaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DayHeaderView.swift; path = Source/Header/DayHeaderView.swift; sourceTree = "<group>"; };
 		7F2CDBF485039BCD14656DCE8321A170 /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
 		7F939ABDCE2887488A620EF067F2DCAA /* FIRCoreConfigurable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRCoreConfigurable.h; path = Firebase/Core/Private/FIRCoreConfigurable.h; sourceTree = "<group>"; };
-		7F9739A0D5F39C110E8463A8FA371DAD /* FirebaseMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FirebaseMessaging.framework; path = FirebaseMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F9739A0D5F39C110E8463A8FA371DAD /* FirebaseMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebaseMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8083D5E5467D837F5F4C347FFE0D7969 /* GoogleUtilities-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GoogleUtilities-Info.plist"; sourceTree = "<group>"; };
 		80D548C0A2813890BADC2C49C55D838C /* GPBDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDictionary.h; path = objectivec/GPBDictionary.h; sourceTree = "<group>"; };
 		81310A63B1D9574D5941B206750F8847 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -1160,7 +1164,7 @@
 		877CD124026CC8BF840634478DF96479 /* CircleProgressView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CircleProgressView.m; path = "ChattoAdditions/Source/UI Components/CircleProgressIndicatorView/CircleProgressView.m"; sourceTree = "<group>"; };
 		87BE7AFBD0AA7DE8F8AB16B534349B22 /* BaseChatViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseChatViewController.swift; path = Chatto/Source/ChatController/BaseChatViewController.swift; sourceTree = "<group>"; };
 		89677EB6FCC9AD1F0C4B1C4B4B07D5F9 /* FIRMessagingUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRMessagingUtilities.m; path = Firebase/Messaging/FIRMessagingUtilities.m; sourceTree = "<group>"; };
-		89CDB8904587A62094E80D537CC383D7 /* YLProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = YLProgressBar.framework; path = YLProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89CDB8904587A62094E80D537CC383D7 /* YLProgressBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YLProgressBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ACF3C029D1545CD22E00E4219B3FB7A /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Sources/Image.swift; sourceTree = "<group>"; };
 		8AD98CC11F6061A4A84F2D0BB39BAAC0 /* Device.swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Device.swift.modulemap; sourceTree = "<group>"; };
 		8C479A5988C221164F7D8A75A848446F /* Type.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Type.pbobjc.h; path = objectivec/google/protobuf/Type.pbobjc.h; sourceTree = "<group>"; };
@@ -1249,9 +1253,9 @@
 		AF0129AB9B30072E7F8058A17A834CE1 /* JTAppleCalendar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JTAppleCalendar-dummy.m"; sourceTree = "<group>"; };
 		AF25B44BD2C19DDD41C2F95A0E00DA48 /* Pods-skolera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-skolera.release.xcconfig"; sourceTree = "<group>"; };
 		AF2E22D1CC1F78A157D94F4CB11D3250 /* Neon-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Neon-dummy.m"; sourceTree = "<group>"; };
-		AFBD2B8420D1F08DD1C2EDD1D99E82EC /* JTAppleCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JTAppleCalendar.framework; path = JTAppleCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFBD2B8420D1F08DD1C2EDD1D99E82EC /* JTAppleCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JTAppleCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFF730F70D12AD0DBD2D3E78ED459830 /* FIRLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRLogger.h; path = Firebase/Core/Private/FIRLogger.h; sourceTree = "<group>"; };
-		B0CFC7392ABD5379B7CA34D4FC02C793 /* DateToolsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DateToolsSwift.framework; path = DateToolsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0CFC7392ABD5379B7CA34D4FC02C793 /* DateToolsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DateToolsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0D1277CE984EA4F36FA57371DE3106E /* GPBCodedOutputStream.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBCodedOutputStream.m; path = objectivec/GPBCodedOutputStream.m; sourceTree = "<group>"; };
 		B183A376AC68BC45E078F4B5F79040D5 /* TextBubbleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextBubbleView.swift; path = "ChattoAdditions/Source/Chat Items/TextMessages/Views/TextBubbleView.swift"; sourceTree = "<group>"; };
 		B1B8C781F7748C82C8B4BF24F84C5750 /* GPBDescriptor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDescriptor.h; path = objectivec/GPBDescriptor.h; sourceTree = "<group>"; };
@@ -1260,14 +1264,14 @@
 		B2BBD1E2F4A89012FBD58EFDFD9AF84B /* GULNetworkConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULNetworkConstants.h; path = GoogleUtilities/Network/Private/GULNetworkConstants.h; sourceTree = "<group>"; };
 		B2FDBBE590FCE00A962C2E2F450E618F /* BaseMessageAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = BaseMessageAssets.xcassets; path = "ChattoAdditions/Source/Chat Items/BaseMessage/Views/BaseMessageAssets.xcassets"; sourceTree = "<group>"; };
 		B32E6402FE212BF0481D83EF48421737 /* GtalkExtensions.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GtalkExtensions.pbobjc.m; path = Firebase/Messaging/Protos/GtalkExtensions.pbobjc.m; sourceTree = "<group>"; };
-		B36AB396275697EEE1A5B13BA8A38FE3 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B36AB396275697EEE1A5B13BA8A38FE3 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B37AE9FECC5A64C940B6E1E098E53FF0 /* NRAppUpdate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = NRAppUpdate.modulemap; sourceTree = "<group>"; };
 		B3A54BB6BC50B007AA37A9602F929661 /* TextMessageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextMessageViewModel.swift; path = "ChattoAdditions/Source/Chat Items/TextMessages/TextMessageViewModel.swift"; sourceTree = "<group>"; };
 		B4C63CBEF89EA5754045643F80D63BC7 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
 		B4D8351BD25F9791C99DFCF3DD61E1EE /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		B5D02F21D9C6F0B1798CA6B8F2CF13D4 /* Neon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Neon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F297A5E69DF84DF4077E1FBF0BB699 /* GPBArray.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBArray.m; path = objectivec/GPBArray.m; sourceTree = "<group>"; };
-		B63E4E9E64C490EAB3D699C86F797D33 /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_common.c; sourceTree = "<group>"; };
+		B63E4E9E64C490EAB3D699C86F797D33 /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_common.c; sourceTree = "<group>"; };
 		B673E1083DD8EB3014B01DEA2CB06715 /* GPBExtensionRegistry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBExtensionRegistry.m; path = objectivec/GPBExtensionRegistry.m; sourceTree = "<group>"; };
 		B693FDA9529F2C395EDDC490A9689AF9 /* FIRMessagingConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingConnection.h; path = Firebase/Messaging/FIRMessagingConnection.h; sourceTree = "<group>"; };
 		B69EE014CCB2BF33AC00F639D50D2A97 /* Neon.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Neon.modulemap; sourceTree = "<group>"; };
@@ -1278,7 +1282,7 @@
 		B8970A460BB25044DF9074D63F08E460 /* ChattoAdditions.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ChattoAdditions.xcconfig; sourceTree = "<group>"; };
 		B9371FA4A932B6490689E1565B70BF91 /* DeviceImagePicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeviceImagePicker.swift; path = ChattoAdditions/Source/Input/Photos/Camera/DeviceImagePicker.swift; sourceTree = "<group>"; };
 		B9F2EC866CA36C7296078C2BF5FB8277 /* Any.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Any.pbobjc.m; path = objectivec/google/protobuf/Any.pbobjc.m; sourceTree = "<group>"; };
-		BA05033783ABA95162F12C7EE41B0D2C /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Protobuf.framework; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA05033783ABA95162F12C7EE41B0D2C /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA522890DAE7A7E6C32B5AC6D3935B47 /* Chatto-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Chatto-dummy.m"; sourceTree = "<group>"; };
 		BA9EFFD8DF58A538F2E2911AC2BCF65F /* NRAppUpdate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NRAppUpdate-prefix.pch"; sourceTree = "<group>"; };
 		BB467F091FE34D76717E3D3D7D6EFA13 /* TextMessageModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextMessageModel.swift; path = "ChattoAdditions/Source/Chat Items/TextMessages/TextMessageModel.swift"; sourceTree = "<group>"; };
@@ -1307,7 +1311,7 @@
 		C336B8FEC9E5743EC1874936E20A6D6C /* Indicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Indicator.swift; path = Sources/Indicator.swift; sourceTree = "<group>"; };
 		C36AB37E6A817FAAE73E5E4AD0F4D508 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C3C05F3D4B647493BDDFB91AADAC8704 /* GoogleUtilities-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleUtilities-dummy.m"; sourceTree = "<group>"; };
-		C41C7D8308FCE1F7BB6A2672C995725A /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_skolera.framework; path = "Pods-skolera.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C41C7D8308FCE1F7BB6A2672C995725A /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4331115F04D5F8694584AB91BE51D19 /* GPBUtilities_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUtilities_PackagePrivate.h; path = objectivec/GPBUtilities_PackagePrivate.h; sourceTree = "<group>"; };
 		C4594081154935BE37773FBBE534A8A9 /* FIRMessagingRmqManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingRmqManager.h; path = Firebase/Messaging/FIRMessagingRmqManager.h; sourceTree = "<group>"; };
 		C4916EB40B19CAC5E3CF7A7394875E64 /* JTAppleCalendar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JTAppleCalendar-umbrella.h"; sourceTree = "<group>"; };
@@ -1333,7 +1337,7 @@
 		CCE9783C15718D496EBE0B61A82297DE /* Chatto-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Chatto-umbrella.h"; sourceTree = "<group>"; };
 		CD27DF3FF9F459932C883890B04C07AB /* KeychainSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainSwift-Info.plist"; sourceTree = "<group>"; };
 		CD39372774B147042E0BCB6567DC2472 /* FIRMessagingTopicOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingTopicOperation.h; path = Firebase/Messaging/FIRMessagingTopicOperation.h; sourceTree = "<group>"; };
-		CE2B7488D9F7D1D4D2C803A634C0FED4 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE2B7488D9F7D1D4D2C803A634C0FED4 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB739BCCEE466F0D86E3272E48B3767 /* FirebaseMessaging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseMessaging.h; path = Firebase/Messaging/FirebaseMessaging.h; sourceTree = "<group>"; };
 		CEE6DFEE3D8C3C46EDB87ECA5BA7A24A /* NRAppUpdate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NRAppUpdate-umbrella.h"; sourceTree = "<group>"; };
 		CF0EED309A07647AD8F90489B925E102 /* Generator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Generator.swift; path = Source/Timeline/Generator.swift; sourceTree = "<group>"; };
@@ -1371,7 +1375,7 @@
 		DDFBE2F47AD650C7334B5B1C5B96EFF1 /* ViewDefinitions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewDefinitions.swift; path = "ChattoAdditions/Source/Chat Items/BaseMessage/Views/ViewDefinitions.swift"; sourceTree = "<group>"; };
 		DF314C45964455E54C05A96B30791D7B /* Device.swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Device.swift-prefix.pch"; sourceTree = "<group>"; };
 		E09DB7080A499155ACB4911948D2461D /* Timestamp.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Timestamp.pbobjc.m; path = objectivec/google/protobuf/Timestamp.pbobjc.m; sourceTree = "<group>"; };
-		E139AD66513EC8A3022783F13095D3D1 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FirebaseCore.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E139AD66513EC8A3022783F13095D3D1 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D0B1F15876ACB6C3DFC9C01F6618AB /* FIRMessagingTopicOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRMessagingTopicOperation.m; path = Firebase/Messaging/FIRMessagingTopicOperation.m; sourceTree = "<group>"; };
 		E2627CD1A6E323BE8DE50B9CA44829C7 /* CalendarKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CalendarKit-umbrella.h"; sourceTree = "<group>"; };
 		E29D1B8A77B996112F09AF0A7DF45A8A /* Protobuf-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Protobuf-dummy.m"; sourceTree = "<group>"; };
@@ -1383,7 +1387,7 @@
 		E5786642B46FA20556CB2F4DDAC183FD /* FIRMessagingDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingDefines.h; path = Firebase/Messaging/FIRMessagingDefines.h; sourceTree = "<group>"; };
 		E5FFF069D062C70855AED32EBCF233FD /* BaseChatViewController+Scrolling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "BaseChatViewController+Scrolling.swift"; path = "Chatto/Source/ChatController/BaseChatViewController+Scrolling.swift"; sourceTree = "<group>"; };
 		E68B017908F0213109764FEEDD45E20C /* CacheSerializer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CacheSerializer.swift; path = Sources/CacheSerializer.swift; sourceTree = "<group>"; };
-		E6B5C21795CA2C7A0703FE1EF9209F6C /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = nanopb.framework; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6B5C21795CA2C7A0703FE1EF9209F6C /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E778217049052E763BED7A885886013C /* Date+Manipulations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Manipulations.swift"; path = "DateToolsSwift/DateTools/Date+Manipulations.swift"; sourceTree = "<group>"; };
 		E7A4DE56475048E50947322822F313FE /* GPBExtensionRegistry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBExtensionRegistry.h; path = objectivec/GPBExtensionRegistry.h; sourceTree = "<group>"; };
 		E7DCEBB0368073CE44DCCC1B824BF66C /* BaseMessageModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseMessageModel.swift; path = "ChattoAdditions/Source/Chat Items/BaseMessage/BaseMessageModel.swift"; sourceTree = "<group>"; };
@@ -1434,7 +1438,7 @@
 		FA91295D84D8E9B7BB2716706A09505B /* GPBUnknownField.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUnknownField.h; path = objectivec/GPBUnknownField.h; sourceTree = "<group>"; };
 		FAD57955B59A3378941498E5676C30C6 /* ImageDownloader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloader.swift; path = Sources/ImageDownloader.swift; sourceTree = "<group>"; };
 		FAFCD981756C13799E338335BE768C40 /* CalendarKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CalendarKit.modulemap; sourceTree = "<group>"; };
-		FBA3A540C094B1FFA6CC1A6F281F827D /* CalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CalendarKit.framework; path = CalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA3A540C094B1FFA6CC1A6F281F827D /* CalendarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CalendarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC4E7AD15BDB12AD1EC52E52805C7081 /* CGFloat+Additions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGFloat+Additions.swift"; path = "ChattoAdditions/Source/Common/CGFloat+Additions.swift"; sourceTree = "<group>"; };
 		FC7D1B7F04CEA53044B026A6B8B77AEF /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		FC8D5862039212EEE03F0246EE6AD1FD /* FIRMessagingDataMessageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingDataMessageManager.h; path = Firebase/Messaging/FIRMessagingDataMessageManager.h; sourceTree = "<group>"; };
@@ -1639,7 +1643,6 @@
 				08EB1B7480A6DF9E8BDC3174F59DC59D /* Validation.swift */,
 				8F993CE0BA1D1541877706BE75DB1BBD /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1678,7 +1681,6 @@
 				25F60AD453BB5E49F628AE3595333E0B /* Utils.swift */,
 				E0798412C70A7601B3EF40B44AB0242D /* Support Files */,
 			);
-			name = Chatto;
 			path = Chatto;
 			sourceTree = "<group>";
 		};
@@ -1772,7 +1774,6 @@
 				3FEED0C1166136561DABFD860B57E38D /* Wrappers.pbobjc.m */,
 				453EF684CA52839528FD1C2BAD55326D /* Support Files */,
 			);
-			name = Protobuf;
 			path = Protobuf;
 			sourceTree = "<group>";
 		};
@@ -1825,7 +1826,6 @@
 				4120B05F02B214C05D4A23DB442315EE /* Resources */,
 				81C4FD9828CE23BB83238DA15F41F5F2 /* Support Files */,
 			);
-			name = SVProgressHUD;
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
@@ -1890,7 +1890,6 @@
 				D498A4C00C450F655EDD97513C78C319 /* Frameworks */,
 				988D35DF8517DB9CE4116C29162037F8 /* Support Files */,
 			);
-			name = GoogleAppMeasurement;
 			path = GoogleAppMeasurement;
 			sourceTree = "<group>";
 		};
@@ -2001,7 +2000,6 @@
 				9594A19BCE41819428C14FC09163E930 /* NSError+FIRMessaging.m */,
 				B16C68C887C0BE9FA97C8D7BA5C7FEBE /* Support Files */,
 			);
-			name = FirebaseMessaging;
 			path = FirebaseMessaging;
 			sourceTree = "<group>";
 		};
@@ -2077,7 +2075,6 @@
 				1EBDDB604CBFFE4673ACDE63F48D8908 /* Resources */,
 				DF084D36F4F653EEF92D74D26C7C4E90 /* Support Files */,
 			);
-			name = ChattoAdditions;
 			path = ChattoAdditions;
 			sourceTree = "<group>";
 		};
@@ -2117,7 +2114,6 @@
 				A88D6F17E064188517FD8F1637276FB6 /* Frameworks */,
 				CAC7B8467785862DE7BBE74890E7FAEC /* Support Files */,
 			);
-			name = FirebaseAnalytics;
 			path = FirebaseAnalytics;
 			sourceTree = "<group>";
 		};
@@ -2127,7 +2123,6 @@
 				634A5AD44BF6E11096088C8A9AC2BEE8 /* NRAppUpdate.swift */,
 				150614CB3FB89667E4618B35CAAD2AD6 /* Support Files */,
 			);
-			name = NRAppUpdate;
 			path = NRAppUpdate;
 			sourceTree = "<group>";
 		};
@@ -2138,7 +2133,6 @@
 				4AC9E384D14D55288F29E10FFF8B48CD /* YLProgressBar.m */,
 				CD88035F1024E9C9569B8F6CE9667C28 /* Support Files */,
 			);
-			name = YLProgressBar;
 			path = YLProgressBar;
 			sourceTree = "<group>";
 		};
@@ -2148,7 +2142,6 @@
 				9EA839AA0B6E7E54B96468A6B20C02A6 /* Frameworks */,
 				AC92770B0A631E78323BC97EAFE2BD03 /* Support Files */,
 			);
-			name = FirebaseInstanceID;
 			path = FirebaseInstanceID;
 			sourceTree = "<group>";
 		};
@@ -2169,7 +2162,6 @@
 				B4CE63F4D98C98232A9581E14D3793D8 /* CoreOnly */,
 				1191487B8FF7268977E3048B00F3B95C /* Support Files */,
 			);
-			name = Firebase;
 			path = Firebase;
 			sourceTree = "<group>";
 		};
@@ -2277,7 +2269,6 @@
 				75590DC7A96B5D6543DA0CE186F119E8 /* TegKeychainConstants.swift */,
 				8DA5746A6582E43A1484E32883B98B42 /* Support Files */,
 			);
-			name = KeychainSwift;
 			path = KeychainSwift;
 			sourceTree = "<group>";
 		};
@@ -2331,7 +2322,6 @@
 				3A05E91A7CFE0221A67EBB35D8E641EE /* UserInteractionFunctions.swift */,
 				80D33A3B747899510DDAEE9C51297908 /* Support Files */,
 			);
-			name = JTAppleCalendar;
 			path = JTAppleCalendar;
 			sourceTree = "<group>";
 		};
@@ -2397,7 +2387,6 @@
 				9486019A916D32568F53C1E0260F11F3 /* UIButton+Kingfisher.swift */,
 				EC786C54040E80C07F26BAF25AC2A32B /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -2512,7 +2501,6 @@
 				DD8FFA1EFF96022E7D0D279EC0704DBE /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 				BCF87CDD61EB5732DDCA5196C3416FAB /* Support Files */,
 			);
-			name = TPKeyboardAvoiding;
 			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
@@ -2550,7 +2538,6 @@
 				EEFB4DF5ECC5ADA40A06912D6CC7F1B3 /* NeonGroupable.swift */,
 				0D24191F2C2868D58B76DDD9436A826B /* Support Files */,
 			);
-			name = Neon;
 			path = Neon;
 			sourceTree = "<group>";
 		};
@@ -2632,7 +2619,6 @@
 				823B21EA51B6B2D18076A71391460C2D /* TimelineView.swift */,
 				AE95BA475DD50FBEF4A006614C594DB7 /* Support Files */,
 			);
-			name = CalendarKit;
 			path = CalendarKit;
 			sourceTree = "<group>";
 		};
@@ -2649,7 +2635,6 @@
 				53923CBBA7DC2B5E633030C4279C8404 /* Support Files */,
 				DE3212E2F9D6E2D84B49ED60CF28E903 /* UserDefaults */,
 			);
-			name = GoogleUtilities;
 			path = GoogleUtilities;
 			sourceTree = "<group>";
 		};
@@ -2667,7 +2652,6 @@
 				BBC985DE34702163B15748B9DD1D8814 /* encode */,
 				FD1717806DB3D2CBE41DDEDFC05B2C06 /* Support Files */,
 			);
-			name = nanopb;
 			path = nanopb;
 			sourceTree = "<group>";
 		};
@@ -2725,7 +2709,6 @@
 				9C694A92D7FE48DF2CDBA7057023A411 /* FIRVersion.m */,
 				CA5262436E4EEF6ED61AEF7D878277AE /* Support Files */,
 			);
-			name = FirebaseCore;
 			path = FirebaseCore;
 			sourceTree = "<group>";
 		};
@@ -2735,7 +2718,6 @@
 				10546E9107543338E0B86F667741C450 /* UIDeviceExtension.swift */,
 				81A7F5C594F5376B43009F1649292287 /* Support Files */,
 			);
-			name = Device.swift;
 			path = Device.swift;
 			sourceTree = "<group>";
 		};
@@ -2760,7 +2742,6 @@
 				37BA2BE46B1C8B88DCD102452979878E /* Resources */,
 				66A3088790A8E1CBD74CEC4FF7103107 /* Support Files */,
 			);
-			name = DateToolsSwift;
 			path = DateToolsSwift;
 			sourceTree = "<group>";
 		};
@@ -5125,7 +5106,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -5219,7 +5200,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5356,8 +5337,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};

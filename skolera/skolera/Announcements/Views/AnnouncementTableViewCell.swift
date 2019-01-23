@@ -30,6 +30,10 @@ class AnnouncementTableViewCell: UITableViewCell {
             dateFormatter.dateFormat = "HH:MM a"
             //showing date
             itemDate.text = dateFormatter.string(from: date)
+            if announcement.imageURL != nil {
+                 itemImage.kf.setImage(with: URL(string: announcement.imageURL))
+            }
+           
         }
     }
     override func awakeFromNib() {

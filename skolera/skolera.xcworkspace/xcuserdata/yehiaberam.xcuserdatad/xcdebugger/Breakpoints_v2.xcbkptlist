@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "skolera/Helpers/Chat/DemoChatMessageSender.swift"
-            timestampString = "548780059.239732"
+            filePath = "skolera/Helpers/Chat/DemoChatMessageFactory.swift"
+            timestampString = "569772731.40714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "fakeMessageStatus(_:)"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "makePhotoMessage(_:image:size:isIncoming:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,77 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "skolera/Helpers/Chat/DemoChatMessageSender.swift"
-            timestampString = "548780059.240011"
+            filePath = "skolera/Helpers/Chat/DemoChatItemsDecorator.swift"
+            timestampString = "569773412.186475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "fakeMessageStatus(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Helpers/Chat/DemoChatMessageSender.swift"
-            timestampString = "548780059.24036"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "fakeMessageStatus(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "skolera.DemoChatMessageSender.(fakeMessageStatus in _63E799CC85D4154E47EB46B9B1450319)(skolera.DemoMessageModelProtocol) -&gt; ()"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yehiaberam/Documents/projects/github/skolera-IOS/skolera/skolera/Helpers/Chat/DemoChatMessageSender.swift"
-                  timestampString = "569241548.121021"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "936">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in skolera.DemoChatMessageSender.(fakeMessageStatus in _63E799CC85D4154E47EB46B9B1450319)(skolera.DemoMessageModelProtocol) -&gt; ()"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yehiaberam/Documents/projects/github/skolera-IOS/skolera/skolera/Helpers/Chat/DemoChatMessageSender.swift"
-                  timestampString = "569241548.123437"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Helpers/Chat/DemoChatMessageSender.swift"
-            timestampString = "548780059.24071"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "fakeMessageStatus(_:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "decorateItems(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,27 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "skolera/Home Page/Controllers/ChildProfileFeaturesTableViewController.swift"
-            timestampString = "566908482.541744"
+            timestampString = "569847276.986727"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "getCourseGroups()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ChildProfileFeaturesTableViewController.swift"
-            timestampString = "566908482.541814"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "getGrades()"
             landmarkType = "7">
          </BreakpointContent>
@@ -169,13 +89,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ActorFeaturesTableViewController.swift"
-            timestampString = "569176473.467093"
+            filePath = "skolera/Home Page/Controllers/ChildProfileFeaturesTableViewController.swift"
+            timestampString = "569847276.9869879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "getAnnouncements()"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "getBehaviorNotesCount()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Home Page/Controllers/ChildProfileFeaturesTableViewController.swift"
+            timestampString = "569847276.987132"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "getTimeTable()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Home Page/Controllers/ChildProfileFeaturesTableViewController.swift"
+            timestampString = "569847276.9872659"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "getCourseGroups()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

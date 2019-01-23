@@ -16,6 +16,7 @@ class Announcement : NSObject, NSCoding{
     var endAt: String!
     var adminId: Int!
     var createdAt: String!
+    var imageURL: String!
     var announcementReceivers : [AnnouncementReceiver]!
     
     
@@ -29,6 +30,7 @@ class Announcement : NSObject, NSCoding{
         endAt = dictionary["end_at"] as? String
         adminId = dictionary["admin_id"] as? Int
         createdAt = dictionary["created_at"] as? String
+        imageURL = dictionary["image_url"] as? String
         announcementReceivers = [AnnouncementReceiver]()
         if let announcementReceiversArray = dictionary["announcement_receivers"] as? [[String:Any]]{
             for dic in announcementReceiversArray{
@@ -63,6 +65,9 @@ class Announcement : NSObject, NSCoding{
         if createdAt != nil {
             dictionary["created_at"] = createdAt
         }
+        if imageURL != nil {
+            dictionary["image_url"] = imageURL
+        }
         if announcementReceivers != nil{
             var dictionaryElements = [[String:Any]]()
             for announcementReciverElement in announcementReceivers {
@@ -85,6 +90,7 @@ class Announcement : NSObject, NSCoding{
         endAt = aDecoder.decodeObject(forKey: "end_at") as? String
         adminId = aDecoder.decodeObject(forKey :"admin_id") as? Int
         createdAt = aDecoder.decodeObject(forKey: "created_at") as? String
+        imageURL = aDecoder.decodeObject(forKey: "image_url") as? String
         announcementReceivers = aDecoder.decodeObject(forKey :"announcement_receivers") as? [AnnouncementReceiver]
         
     }
@@ -112,6 +118,9 @@ class Announcement : NSObject, NSCoding{
         }
         if createdAt != nil{
             aCoder.encode(createdAt, forKey: "created_at")
+        }
+        if imageURL != nil {
+            aCoder.encode(imageURL, forKey: "image_url")
         }
         if announcementReceivers != nil{
             aCoder.encode(announcementReceivers, forKey: "announcement_receivers")

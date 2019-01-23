@@ -13,6 +13,8 @@ class AnnouncementViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var announcementHeader: UILabel!
     @IBOutlet weak var annnouncementBody: UILabel!
+    @IBOutlet weak var announcementImage: UIImageView!
+    @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
     
     var announcement: Announcement!
     
@@ -21,6 +23,15 @@ class AnnouncementViewController: UIViewController {
         titleLabel.text = announcement.title
         announcementHeader.text = announcement.title
         annnouncementBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
+        if announcement.imageURL == nil || announcement.imageURL.isEmpty {
+            self.announcementHeightConstraint.constant = 0
+            self.announcementImage.isHidden = true
+        } else {
+            self.announcementHeightConstraint.constant = 1
+            self.announcementImage.isHidden = false
+            let url = URL(string: announcement.imageURL)
+            announcementImage.kf.setImage(with: url)
+        }
         // Do any additional setup after loading the view.
     }
     
