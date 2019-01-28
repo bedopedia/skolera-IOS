@@ -73,7 +73,7 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
         }
         else
         {
-            getSchoolByCode(code: schoolcode)
+            getSchoolByCode(code: schoolcode.replacingOccurrences(of: " ", with: ""))
         }
     }
     

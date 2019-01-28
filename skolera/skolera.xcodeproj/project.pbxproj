@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21F9CDE5E9C5D5A49A98B7C3 /* Pods_skolera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */; };
 		5402CA012045A2D4009F583A /* UIImageView+StudentImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5402CA002045A2D4009F583A /* UIImageView+StudentImage.swift */; };
 		5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5402CA022045A658009F583A /* ChildProfileViewController.swift */; };
 		5402CA0D2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5402CA0C2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift */; };
@@ -201,7 +202,6 @@
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
 		8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119C21E74D8600106EF2 /* Announcement.swift */; };
 		8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */; };
-		9ABB6C41C1008FF693C9529C /* Pods_skolera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE9198FC5FA4A294142EECE /* Pods_skolera.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -422,7 +422,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE696AD6A86923FB306EA6A1 /* Pods_skolera.framework in Frameworks */,
+				21F9CDE5E9C5D5A49A98B7C3 /* Pods_skolera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

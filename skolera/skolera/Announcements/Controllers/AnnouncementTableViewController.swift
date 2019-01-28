@@ -20,6 +20,10 @@ class AnnouncementTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         getAnnouncements()
+        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

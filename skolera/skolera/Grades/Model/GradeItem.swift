@@ -14,12 +14,12 @@ class GradeItem {
     var maxGrade: Int
     var total: Double
     var grade: Double
-    var gradeView: Double
+    var gradeView: String
     var feedback: String
     var createdAt: String
     var periodId: Int
     
-    init(id: Int, name: String, maxGrade: Int, total: Double, grade: Double, gradeView: Double, feedback: String, createdAt: String, periodId: Int) {
+    init(id: Int, name: String, maxGrade: Int, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String, periodId: Int) {
         self.id = id
         self.name = name
         self.maxGrade = maxGrade

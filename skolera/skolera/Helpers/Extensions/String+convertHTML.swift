@@ -17,6 +17,6 @@ extension String {
         }
     }
     var htmlToString: String {
-        return htmlToAttributedString?.string ?? ""
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
     }
 }

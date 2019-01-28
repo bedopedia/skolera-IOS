@@ -40,6 +40,10 @@ class ChatViewController: BaseChatViewController {
         self.messagesSelector.delegate = self
         self.chatItemsDecorator = DemoChatItemsDecorator(messagesSelector: self.messagesSelector)
         UIView.appearance().semanticContentAttribute = .forceLeftToRight
+        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,8 +126,9 @@ class ChatViewController: BaseChatViewController {
     private func createTextInputItem() -> TextChatInputItem {
         let item = TextChatInputItem()
         item.textInputHandler = { [weak self] text in
-            self?.dataSource.addTextMessage(text)
+            
             self?.send(message: text)
+            self?.collectionView.scrollToLast()
         }
         return item
     }
@@ -134,6 +139,7 @@ class ChatViewController: BaseChatViewController {
         item.photoInputHandler = { [weak self] image in
             self?.dataSource.addPhotoMessage(image)
             self?.scaleImage(image: image)
+            self?.collectionView.scrollToLast()
         }
         return item
     }
@@ -158,15 +164,14 @@ class ChatViewController: BaseChatViewController {
                 "user_ids": ["\(teacherId)", "\(userId())"]
             ]
             
-            debugPrint(parameters)
-            
             let url = String(format: GET_THREADS())
             Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                 SVProgressHUD.dismiss()
                 switch response.result{
                     
                 case .success(_):
-                    debugPrint("success")
+                    debugPrint(response)
+                    self.dataSource.addTextMessage(message)
                     self.newThread = false
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -205,6 +210,7 @@ class ChatViewController: BaseChatViewController {
                     
                 case .success(_):
                     debugPrint("success")
+                     self.dataSource.addTextMessage(message)
                 case .failure(let error):
                     print(error.localizedDescription)
                     if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
@@ -271,25 +277,29 @@ class ChatViewController: BaseChatViewController {
     }
     
     private func uploadImage(imageData: Data, imageName: String) {
-        let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                multipartFormData.append("message".data(using: .utf8)!, withName: "body")
-                multipartFormData.append("\(imageName)".data(using: .utf8)!, withName: "filename")
-                multipartFormData.append(imageData, withName: "attachment", fileName: imageName, mimeType: "image/jpeg")
-        },
-            to: url, method: .post, headers: getHeaders(),
-            encodingCompletion: { encodingResult in
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseJSON { response in
-                        debugPrint(response)
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        if !newThread {
+            let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
+            Alamofire.upload(
+                multipartFormData: { multipartFormData in
+                    multipartFormData.append("file attached".data(using: .utf8)!, withName: "body")
+                    multipartFormData.append("\(imageName)".data(using: .utf8)!, withName: "filename")
+                    multipartFormData.append(imageData, withName: "attachment", fileName: imageName, mimeType: "image/jpeg")
+            },
+                to: url, method: .post, headers: getHeaders(),
+                encodingCompletion: { encodingResult in
+                    SVProgressHUD.dismiss()
+                    switch encodingResult {
+                    case .success(let upload, _, _):
+                        upload.responseJSON { response in
+                            debugPrint(response)
+                        }
+                    case .failure(let encodingError):
+                        print(encodingError)
                     }
-                case .failure(let encodingError):
-                    print(encodingError)
-                }
+            }
+            )
         }
-        )
     }
     
     
@@ -302,5 +312,23 @@ extension ChatViewController: MessagesSelectorDelegate {
     
     func messagesSelector(_ messagesSelector: MessagesSelectorProtocol, didDeselectMessage: MessageModelProtocol) {
         self.enqueueModelUpdate(updateType: .normal)
+    }
+}
+
+extension UICollectionView {
+    func scrollToLast() {
+        guard numberOfSections > 0 else {
+            return
+        }
+        
+        let lastSection = numberOfSections - 1
+        
+        guard numberOfItems(inSection: lastSection) > 0 else {
+            return
+        }
+        
+        let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1,
+                                          section: lastSection)
+        scrollToItem(at: lastItemIndexPath, at: .bottom, animated: true)
     }
 }

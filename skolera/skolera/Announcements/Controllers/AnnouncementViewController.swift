@@ -23,11 +23,15 @@ class AnnouncementViewController: UIViewController {
         titleLabel.text = announcement.title
         announcementHeader.text = announcement.title
         annnouncementBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
+        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
         if announcement.imageURL == nil || announcement.imageURL.isEmpty {
             self.announcementHeightConstraint.constant = 0
             self.announcementImage.isHidden = true
         } else {
-            self.announcementHeightConstraint.constant = 1
+            self.announcementHeightConstraint.constant = 192
             self.announcementImage.isHidden = false
             let url = URL(string: announcement.imageURL)
             announcementImage.kf.setImage(with: url)

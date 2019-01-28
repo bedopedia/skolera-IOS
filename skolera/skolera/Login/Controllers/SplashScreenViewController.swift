@@ -39,7 +39,7 @@ class SplashScreenViewController: UIViewController {
             {
                 if let password = keychain.get("password")
                 {
-                    parameters = ["email" : email, "password" : password]
+                    parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password]
                 }
             }
             else

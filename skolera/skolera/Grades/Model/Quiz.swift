@@ -14,11 +14,11 @@ class Quiz{
     var totalScore: Double
     var total: Double
     var grade: Double
-    var gradeView: Double
+    var gradeView: String
     var feedback: String
     var createdAt: String
     
-    init(id: Int, name: String, totalScore: Double, total: Double, grade: Double, gradeView: Double, feedback: String, createdAt: String) {
+    init(id: Int, name: String, totalScore: Double, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String) {
         self.id = id
         self.name = name
         self.totalScore = totalScore

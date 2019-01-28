@@ -173,7 +173,6 @@ class ActorFeaturesTableViewController: UITableViewController {
             case .success(_):
                 if let result = response.result.value as? [String: AnyObject]
                 {
-                    debugPrint(result)
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
                     if notificationResponse.notifications.isEmpty {
                         self.notificationSubTitleLabel.text = "No notifications".localized
@@ -185,7 +184,8 @@ class ActorFeaturesTableViewController: UITableViewController {
                         self.notificationBadge.isHidden = true
                     } else {
                         self.notificationBadge.isHidden = false
-                        self.notificationBadge.text = "\(self.actor.unseenNotifications)"
+                        debugPrint("\(self.actor.unseenNotifications!)")
+                        self.notificationBadge.text = "\(self.actor.unseenNotifications!)"
                     }
 //                    self.notifications.append(contentsOf: notificationResponse.notifications)
 //                    self.meta = notificationResponse.meta

@@ -28,6 +28,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
+        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
         if child == nil {
             titleLabel.text = "Messages".localized
             newThreadButton.tintColor = UIColor.clear
@@ -38,6 +42,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         getThreads()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        SVProgressHUD.dismiss()
     }
     
 //    override func viewWillDisappear(_ animated: Bool) {
@@ -121,7 +129,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         
 
         
-        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first!)\((fullNameArr?.last ?? " ").first!)", textSize: 20)
+        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first ?? Character(" "))\((fullNameArr?.last ?? " ").first ?? Character(" "))", textSize: 20)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -153,70 +161,84 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
-        var messages: [ChatItemProtocol] = []
-        let threadsMessages = self.threads[indexPath.row].messages.sorted(by: { getMessage(time: $0.createdAt).compare(getMessage(time: $1.createdAt)) == .orderedAscending })
-        
-        for item in threadsMessages {
-           
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
-            let date = dateFormatter.date(from: item.createdAt)!
-            if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
-                if "\(item.user.id!)".elementsEqual(userId()){
-                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
-                    let textModel: DemoTextMessageModel = DemoTextMessageModel.init(messageModel: messageModel, text: item.body.htmlToString.decode())
-                    messages.append(textModel)
+        DispatchQueue.global(qos: .userInitiated).async {
+            // Bounce back to the main thread to update the UI
+            let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
+            var messages: [ChatItemProtocol] = []
+            let threadsMessages = self.threads[indexPath.row].messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
+            
+            for item in threadsMessages {
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+                let date = dateFormatter.date(from: item.createdAt)!
+                if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
+                    if "\(item.user.id!)".elementsEqual(userId()){
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
+                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
+                        messages.append(textModel)
+                    } else {
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
+                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
+                        
+                        messages.append(textModel)
+                    }
                 } else {
-                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
-                    let textModel: DemoTextMessageModel = DemoTextMessageModel.init(messageModel: messageModel, text: item.body.htmlToString.decode())
-                    
-                    messages.append(textModel)
+                    if "\(item.user.id!)".elementsEqual(userId()){
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
+                        let imageUrlString = item.attachmentUrl
+                        
+                        let imageUrl = URL(string: imageUrlString!)!
+                        
+                        let imageData = try! Data(contentsOf: imageUrl)
+                        
+                        let image = UIImage(data: imageData)
+                        if image != nil {
+                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
+                            messages.append(photoModel)
+                        }
+                        
+                    } else {
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
+                        
+                        let imageUrlString = item.attachmentUrl
+                        
+                        let imageUrl = URL(string: imageUrlString!)!
+                        
+                        let imageData = try! Data(contentsOf: imageUrl)
+                        
+                        let image = UIImage(data: imageData)
+                        if image != nil {
+                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
+                            messages.append(photoModel)
+                        }
+                        
+                    }
                 }
-            } else {
-                if "\(item.user.id!)".elementsEqual(userId()){
-                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
-                    let imageUrlString = item.attachmentUrl
-                    
-                    let imageUrl = URL(string: imageUrlString!)!
-                    
-                    let imageData = try! Data(contentsOf: imageUrl)
-                    
-                    let image = UIImage(data: imageData)
-                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
-                    messages.append(photoModel)
-                } else {
-                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
-                    
-                    let imageUrlString = item.attachmentUrl
-                    
-                    let imageUrl = URL(string: imageUrlString!)!
-                    
-                    let imageData = try! Data(contentsOf: imageUrl)
-                    
-                    let image = UIImage(data: imageData)
-                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
-                    messages.append(photoModel)
-                }
+                
+                
             }
             
-        
+            //        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })
+            
+            
+            let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
+            chatVC.dataSource = dataSource
+            let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
+            var fullNameArr = fullName?.components(separatedBy: " ")
+            chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
+            
+            chatVC.thread = self.threads[indexPath.row]
+            
+           
+            
+            DispatchQueue.main.async {
+                SVProgressHUD.dismiss()
+                 self.navigationController?.pushViewController(chatVC, animated: true)
+            }
         }
-        
-//        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })
-
-        
-        let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
-        chatVC.dataSource = dataSource
-        let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
-        var fullNameArr = fullName?.components(separatedBy: " ")
-        chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
-        
-        chatVC.thread = self.threads[indexPath.row]
-        SVProgressHUD.dismiss()
-        self.navigationController?.pushViewController(chatVC, animated: true)
         
     }
     

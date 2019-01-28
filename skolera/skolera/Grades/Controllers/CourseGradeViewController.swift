@@ -147,7 +147,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                       name: assignDic["name"] as! String,
                                                       total: assignDic["total"] as! Double,
                                                       grade: assignDic["grade"] as! Double,
-                                                      gradeView: assignDic["grade_view"] as! Double,
+                                                      gradeView: assignDic["grade_view"] as? String ?? "\(assignDic["grade_view"] as? Double ?? 0)",
                                                       feedback: assignDic["feedback"] as? String ?? "",
                                                       createdAt: assignDic["end_date"] as! String))
                     }
@@ -162,7 +162,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                             totalScore: quizDic["total_score"] as! Double,
                                             total: quizDic["total"] as! Double,
                                             grade: quizDic["grade"] as! Double,
-                                            gradeView: quizDic["grade_view"] as! Double,
+                                            gradeView: quizDic["grade_view"] as? String ?? "\(quizDic["grade_view"] as? Double ?? 0)",
                                             feedback: quizDic["feedback"] as? String ?? "",
                                             createdAt: quizDic["end_date"] as! String))
                     }
@@ -177,7 +177,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                     maxGrade: gradeItemDic["max_grade"] as! Int,
                                                     total: gradeItemDic["total"] as! Double,
                                                     grade: gradeItemDic["grade"] as! Double,
-                                                    gradeView: gradeItemDic["grade_view"] as! Double,
+                                                    gradeView: gradeItemDic["grade_view"] as? String ?? "\(gradeItemDic["grade_view"] as? Double ?? 0)",
                                                     feedback: gradeItemDic["feedback"] as? String ?? "",
                                                     createdAt: gradeItemDic["end_date"] as! String,
                                                     periodId: gradeItemDic["grading_period_id"] as! Int))
