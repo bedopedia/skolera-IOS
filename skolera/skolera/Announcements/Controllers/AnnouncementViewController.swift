@@ -11,18 +11,20 @@ import UIKit
 class AnnouncementViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var announcementHeader: UILabel!
-    @IBOutlet weak var annnouncementBody: UILabel!
+//    @IBOutlet weak var announcementHeader: UILabel!
+//    @IBOutlet weak var annnouncementBody: UILabel!
     @IBOutlet weak var announcementImage: UIImageView!
     @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var announcementWebView: UIWebView!
     
     var announcement: Announcement!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = announcement.title
-        announcementHeader.text = announcement.title
-        annnouncementBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
+//        announcementHeader.text = announcement.title
+//        annnouncementBody.text = announcement.body.htmlToString
+        announcementWebView.loadHTMLString(announcement.body, baseURL: nil)
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
         let backItem = UIBarButtonItem()
         backItem.title = nil

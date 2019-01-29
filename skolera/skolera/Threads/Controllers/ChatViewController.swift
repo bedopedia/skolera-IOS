@@ -44,6 +44,7 @@ class ChatViewController: BaseChatViewController {
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
+        setThreadSeen()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -142,6 +143,37 @@ class ChatViewController: BaseChatViewController {
             self?.collectionView.scrollToLast()
         }
         return item
+    }
+    
+    func setThreadSeen(){
+        if !newThread {
+            SVProgressHUD.show(withStatus: "Loading".localized)
+            let parameters : Parameters? = ["thread_ids": [self.thread.id]]
+            let headers : HTTPHeaders? = getHeaders()
+            let url = String(format: SET_THREAD_IS_SEEN())
+            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                SVProgressHUD.dismiss()
+                switch response.result{
+                    
+                case .success(_):
+                    debugPrint(response)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+                    {
+                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+                    }
+                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
+                    {
+                        showReauthenticateAlert(viewController: self)
+                    }
+                    else
+                    {
+                        debugPrint(error)
+                    }
+                }
+            }
+        }
     }
     
     

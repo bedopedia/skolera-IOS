@@ -85,6 +85,9 @@ func SEND_MESSAGE() -> String
 {
     return "\(BASE_URL!)/api/threads/%d"
 }
+func SET_THREAD_IS_SEEN() -> String{
+    return "\(BASE_URL!)/api/thread_participants/bulk_mark_as_read"
+}
 //Announcements
 func GET_ANNOUNCEMENTS() -> String {
     return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"

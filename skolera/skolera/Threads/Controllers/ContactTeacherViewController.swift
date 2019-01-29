@@ -136,9 +136,18 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
         let date = dateFormatter.date(from: self.threads[indexPath.row].lastAddedDate)!
         if Calendar.current.isDateInToday(date){
-            cell.threadDate.text = "Today"
+            
+            if Locale.current.languageCode!.elementsEqual("ar") {
+                cell.threadDate.text = "اليوم"
+            } else {
+                cell.threadDate.text = "Today"
+            }
         } else if Calendar.current.isDateInYesterday(date){
-            cell.threadDate.text = "Yesterday"
+            if Locale.current.languageCode!.elementsEqual("ar") {
+                cell.threadDate.text = "الامس"
+            } else {
+                cell.threadDate.text = "Yesterday"
+            }
         } else {
             let formatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")

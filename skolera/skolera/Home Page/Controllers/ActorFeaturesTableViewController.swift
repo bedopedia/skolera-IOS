@@ -46,7 +46,7 @@ class ActorFeaturesTableViewController: UITableViewController {
         self.announccementBadge.isHidden = true
         self.announcementSubTitleLabel.text = ""
         
-        setLocalization()
+        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
@@ -56,6 +56,10 @@ class ActorFeaturesTableViewController: UITableViewController {
             }
         }
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setLocalization()
     }
     
     func sendFCM(token: String) {
@@ -102,11 +106,12 @@ class ActorFeaturesTableViewController: UITableViewController {
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+            self.getNotifcations()
             switch response.result{
             case .success(_):
                 //do nothing
                 debugPrint(response)
-                self.getNotifcations()
+                
             case .failure(let error):
                 print(error.localizedDescription)
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet

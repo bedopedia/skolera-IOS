@@ -122,29 +122,19 @@
                                     <constraint firstAttribute="height" constant="192" id="yzY-tq-jad"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mr6-tb-h1h">
-                                <rect key="frame" x="16" y="272" width="127" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJC-xi-R73">
-                                <rect key="frame" x="16" y="301" width="351" height="67"/>
-                                <string key="text">Dear Parents, MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will lear</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wZv-lW-rt8">
+                                <rect key="frame" x="0.0" y="256" width="375" height="411"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="aJC-xi-R73" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" constant="16" id="2k9-OE-e3n"/>
+                            <constraint firstItem="vD7-kI-mDD" firstAttribute="bottom" secondItem="wZv-lW-rt8" secondAttribute="bottom" id="2Y9-ro-aoh"/>
+                            <constraint firstItem="wZv-lW-rt8" firstAttribute="top" secondItem="1cb-Ro-eDu" secondAttribute="bottom" id="83X-a3-BV6"/>
                             <constraint firstItem="1cb-Ro-eDu" firstAttribute="top" secondItem="vD7-kI-mDD" secondAttribute="top" id="CN6-GM-yl4"/>
-                            <constraint firstItem="vD7-kI-mDD" firstAttribute="trailing" secondItem="aJC-xi-R73" secondAttribute="trailing" constant="8" id="IeR-fR-iy0"/>
-                            <constraint firstItem="Mr6-tb-h1h" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" constant="16" id="QL1-Wa-VID"/>
                             <constraint firstItem="1cb-Ro-eDu" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" id="SlE-93-mkj"/>
-                            <constraint firstItem="aJC-xi-R73" firstAttribute="top" secondItem="Mr6-tb-h1h" secondAttribute="bottom" constant="8" id="fS5-i6-THe"/>
-                            <constraint firstItem="Mr6-tb-h1h" firstAttribute="top" secondItem="1cb-Ro-eDu" secondAttribute="bottom" constant="16" id="tcZ-s9-cTL"/>
+                            <constraint firstItem="vD7-kI-mDD" firstAttribute="trailing" secondItem="wZv-lW-rt8" secondAttribute="trailing" id="Try-sd-5qS"/>
+                            <constraint firstItem="wZv-lW-rt8" firstAttribute="leading" secondItem="vD7-kI-mDD" secondAttribute="leading" id="aRm-Lh-E4x"/>
                             <constraint firstItem="vD7-kI-mDD" firstAttribute="trailing" secondItem="1cb-Ro-eDu" secondAttribute="trailing" id="wZO-Qo-Usm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vD7-kI-mDD"/>
@@ -174,10 +164,9 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="annnouncementBody" destination="aJC-xi-R73" id="jc6-wM-9S7"/>
-                        <outlet property="announcementHeader" destination="Mr6-tb-h1h" id="h18-qS-xiv"/>
                         <outlet property="announcementHeightConstraint" destination="yzY-tq-jad" id="0Ci-ue-U09"/>
                         <outlet property="announcementImage" destination="1cb-Ro-eDu" id="gig-bQ-VGa"/>
+                        <outlet property="announcementWebView" destination="wZv-lW-rt8" id="5HO-2n-s57"/>
                         <outlet property="titleLabel" destination="eB8-bZ-uMr" id="FkN-YI-3Uh"/>
                     </connections>
                 </viewController>
