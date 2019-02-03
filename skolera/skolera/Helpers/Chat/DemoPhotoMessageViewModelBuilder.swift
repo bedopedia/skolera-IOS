@@ -12,8 +12,10 @@ import ChattoAdditions
 class DemoPhotoMessageViewModel: PhotoMessageViewModel<DemoPhotoMessageModel> {
     
     let fakeImage: UIImage
+    let imageURL: String
     override init(photoMessage: DemoPhotoMessageModel, messageViewModel: MessageViewModelProtocol) {
         self.fakeImage = photoMessage.image
+        self.imageURL = photoMessage.url
         super.init(photoMessage: photoMessage, messageViewModel: messageViewModel)
 //        if photoMessage.isIncoming {
 //            self.image.value = nil

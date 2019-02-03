@@ -6,8 +6,9 @@
 //  Copyright © 2018 Skolera. All rights reserved.
 //
 
-import ChattoAdditions
 import Foundation
+import Chatto
+import ChattoAdditions
 
 public protocol MessagesSelectorDelegate: class {
     func messagesSelector(_ messagesSelector: MessagesSelectorProtocol, didSelectMessage: MessageModelProtocol)

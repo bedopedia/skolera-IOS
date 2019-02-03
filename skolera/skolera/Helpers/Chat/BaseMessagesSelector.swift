@@ -6,8 +6,9 @@
 //  Copyright © 2018 Skolera. All rights reserved.
 //
 
-import ChattoAdditions
 import Foundation
+import Chatto
+import ChattoAdditions
 
 public class BaseMessagesSelector: MessagesSelectorProtocol {
     

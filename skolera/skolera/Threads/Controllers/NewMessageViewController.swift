@@ -9,6 +9,8 @@
 import UIKit
 import SVProgressHUD
 import Alamofire
+import Chatto
+import ChattoAdditions
 
 class NewMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

@@ -12,6 +12,7 @@ import SVProgressHUD
 import Alamofire
 import Chatto
 import ChattoAdditions
+import AlamofireImage
 
 class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var threadsTableView: UITableView!
@@ -23,7 +24,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     var actor: Parent!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
@@ -48,11 +49,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         SVProgressHUD.dismiss()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        if child == nil {
-//            self.navigationController?.isNavigationBarHidden = true
-//        }
-//    }
+    //    override func viewWillDisappear(_ animated: Bool) {
+    //        if child == nil {
+    //            self.navigationController?.isNavigationBarHidden = true
+    //        }
+    //    }
     
     func getThreads()
     {
@@ -95,7 +96,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -124,10 +125,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             } else {
                 cell.threadLatestMessage.text = "\(self.threads[indexPath.row].messages.first!.user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
             }
-
+            
         }
         
-
+        
         
         cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first ?? Character(" "))\((fullNameArr?.last ?? " ").first ?? Character(" "))", textSize: 20)
         let dateFormatter = DateFormatter()
@@ -204,14 +205,50 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                         let imageData = try! Data(contentsOf: imageUrl)
                         
                         let image = UIImage(data: imageData)
+                        let size = CGSize(width: 2000.0, height: 1000.0)
                         if image != nil {
-                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
+                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!, url: "")
                             messages.append(photoModel)
+                        } else {
+                            if item.ext.elementsEqual("pdf") {
+                                let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("doc") {
+                                
+                                let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("pp") {
+                                let image = UIImage(named: "ppt-icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("xl") {
+                                let image = UIImage(named: "xlsx-icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
+                                let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
+                                let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
+                                let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else {
+                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            }
+
                         }
-                        
                     } else {
                         let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
-                        
+                        let size = CGSize(width: 2000.0, height: 1000.0)
                         let imageUrlString = item.attachmentUrl
                         
                         let imageUrl = URL(string: imageUrlString!)!
@@ -220,8 +257,43 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                         
                         let image = UIImage(data: imageData)
                         if image != nil {
-                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!)
+                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!, url: "")
                             messages.append(photoModel)
+                        } else {
+                            if item.ext.elementsEqual("pdf") {
+                                let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("doc") {
+                                
+                                let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("pp") {
+                                let image = UIImage(named: "ppt-icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.contains("xl") {
+                                let image = UIImage(named: "xlsx-icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
+                                let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
+                                let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
+                                let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            } else {
+                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
+                                messages.append(photoModel)
+                            }
                         }
                         
                     }
@@ -241,11 +313,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             
             chatVC.thread = self.threads[indexPath.row]
             
-           
+            
             
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
-                 self.navigationController?.pushViewController(chatVC, animated: true)
+                self.navigationController?.pushViewController(chatVC, animated: true)
             }
         }
         
@@ -257,15 +329,57 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.pushViewController(newMessageVC, animated: true)
     }
     
-
+    
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension UIImage {
+    func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIViewContentMode = .scaleAspectFit) -> UIImage {
+        var width: CGFloat
+        var height: CGFloat
+        var newImage: UIImage
+        
+        let size = self.size
+        let aspectRatio =  size.width/size.height
+        
+        switch contentMode {
+        case .scaleAspectFit:
+            if aspectRatio > 1 {                            // Landscape image
+                width = dimension
+                height = dimension / aspectRatio
+            } else {                                        // Portrait image
+                height = dimension
+                width = dimension * aspectRatio
+            }
+            
+        default:
+            fatalError("UIIMage.resizeToFit(): FATAL: Unimplemented ContentMode")
+        }
+        
+        if #available(iOS 10.0, *) {
+            let renderFormat = UIGraphicsImageRendererFormat.default()
+            renderFormat.opaque = opaque
+            let renderer = UIGraphicsImageRenderer(size: CGSize(width: width, height: height), format: renderFormat)
+            newImage = renderer.image {
+                (context) in
+                self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            }
+        } else {
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), opaque, 0)
+            self.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+            newImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+        }
+        
+        return newImage
     }
-    */
-
 }

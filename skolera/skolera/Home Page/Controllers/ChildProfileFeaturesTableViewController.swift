@@ -172,15 +172,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 if let result = response.result.value as? [[String : AnyObject]]
                 {
                     debugPrint(result)
-                    var courseGroups = [String: CourseGroup]()
+                    var courseGroups = [Int: CourseGroup]()
                     
                     for courseGroup in result{
                         let temp = CourseGroup.init(fromDictionary: courseGroup)
-                        courseGroups[temp.courseName] = temp
+                        courseGroups[temp.courseId] = temp
                     }
                     debugPrint(courseGroups)
                     for grade in self.grades{
-                        grade.courseGroup = courseGroups[grade.name]
+                        grade.courseGroup = courseGroups[grade.courseId]
                     }
                     print("finished course groups")
                 }

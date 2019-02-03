@@ -11,14 +11,14 @@ import UIKit
 class AnnouncementTableViewCell: UITableViewCell {
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var itemTitle: UILabel!
-    @IBOutlet weak var itemBody: UILabel!
+//    @IBOutlet weak var itemBody: UILabel!
     @IBOutlet weak var itemDate: UILabel!
     
     var announcement: Announcement! {
         didSet{
             //cell title and child name(if any)
             itemTitle.text = announcement.title
-            itemBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
+//            itemBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"

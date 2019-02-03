@@ -107,6 +107,10 @@ class AnnouncementTableViewController: UITableViewController {
         announcementsVc.announcement = announcements[indexPath.row]
         self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

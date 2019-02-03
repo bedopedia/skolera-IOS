@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Chatto
+import ChattoAdditions
 
 class TimeSeparatorModel: ChatItemProtocol {
     let uid: String

@@ -138,7 +138,6 @@
 		54EB92FE2015ED1D001DD93F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB92FD2015ED1D001DD93F /* AppDelegate.swift */; };
 		54EB93002015ED1D001DD93F /* SchoolCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB92FF2015ED1D001DD93F /* SchoolCodeViewController.swift */; };
 		54EB93032015ED1D001DD93F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54EB93012015ED1D001DD93F /* Login.storyboard */; };
-		54EB93052015ED1D001DD93F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54EB93042015ED1D001DD93F /* Assets.xcassets */; };
 		54EB93082015ED1D001DD93F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54EB93062015ED1D001DD93F /* LaunchScreen.storyboard */; };
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
@@ -187,6 +186,7 @@
 		8A6D363220B59B8900DD0445 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */; };
 		8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */; };
 		8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6F297B21F871650011CC4A /* Announcements.storyboard */; };
+		8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78A0182201F16B006A3E2D /* Assets.xcassets */; };
 		8A7E305520BABD7900BF2985 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305420BABD7900BF2985 /* Subject.swift */; };
 		8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305620BABF4F00BF2985 /* Teacher.swift */; };
 		8A7E305920BABF5D00BF2985 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305820BABF5D00BF2985 /* Stage.swift */; };
@@ -337,7 +337,6 @@
 		54EB92FD2015ED1D001DD93F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54EB92FF2015ED1D001DD93F /* SchoolCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolCodeViewController.swift; sourceTree = "<group>"; };
 		54EB93022015ED1D001DD93F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
-		54EB93042015ED1D001DD93F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54EB93072015ED1D001DD93F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54EB93092015ED1D001DD93F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54EB93122015F88E001DD93F /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
@@ -398,6 +397,7 @@
 		8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A6F297A21F871650011CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
 		8A6F297D21F871770011CC4A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
+		8A78A0182201F16B006A3E2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A7E305420BABD7900BF2985 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		8A7E305620BABF4F00BF2985 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		8A7E305820BABF5D00BF2985 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
@@ -835,9 +835,9 @@
 				8AF5119A21E74D4F00106EF2 /* Announcements */,
 				54EB93112015F878001DD93F /* Helpers */,
 				5482DDD92056D35900647D57 /* Fonts */,
-				54EB93042015ED1D001DD93F /* Assets.xcassets */,
 				54EB92FD2015ED1D001DD93F /* AppDelegate.swift */,
 				54EB93062015ED1D001DD93F /* LaunchScreen.storyboard */,
+				8A78A0182201F16B006A3E2D /* Assets.xcassets */,
 				54EB93092015ED1D001DD93F /* Info.plist */,
 				8A58B43F20D968B4002C766B /* GoogleService-Info.plist */,
 				8A298CDD2184D3B600A82FEA /* Localizable.strings */,
@@ -1101,11 +1101,11 @@
 				8A298CC52184CC9200A82FEA /* HomeScreen.storyboard in Resources */,
 				8A58B44020D968B4002C766B /* GoogleService-Info.plist in Resources */,
 				5482DE7D2056DAB100647D57 /* Roboto-BoldItalic.ttf in Resources */,
+				8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */,
 				5482DE552056DAB100647D57 /* Roboto Light.otf in Resources */,
 				5482DDF62056D4EE00647D57 /* SFUIText-HeavyItalic.otf in Resources */,
 				5462A5AD2058401F00C6F5EE /* CircularStd-BoldItalic.otf in Resources */,
 				5482DE862056DAB100647D57 /* RobotoCondensed-LightItalic.ttf in Resources */,
-				54EB93052015ED1D001DD93F /* Assets.xcassets in Resources */,
 				5482DE672056DAB100647D57 /* Roboto Condensed Bold Italic.otf in Resources */,
 				5482DDF82056D4F300647D57 /* SFUIText-ItalicG1.otf in Resources */,
 				5462A5A52058401F00C6F5EE /* CircularStd-Bold.otf in Resources */,
@@ -1189,6 +1189,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/CalendarKit/CalendarKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Chatto/Chatto.framework",
@@ -1212,6 +1213,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CalendarKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chatto.framework",

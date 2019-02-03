@@ -12,12 +12,12 @@ class Message : NSObject, NSCoding{
     var attachmentUrl : String!
     var body : String!
     var createdAt : String!
-    var ext : AnyObject!
-    var filename : AnyObject!
+    var ext : String!
+    var filename : String!
     var id : Int!
     var threadId : Int!
     var updatedAt : String!
-    var user : User!
+    var user: User!
     
     
     /**
@@ -27,8 +27,8 @@ class Message : NSObject, NSCoding{
         attachmentUrl = dictionary["attachment_url"] as? String
         body = dictionary["body"] as? String
         createdAt = dictionary["created_at"] as? String
-        ext = dictionary["ext"] as? AnyObject
-        filename = dictionary["filename"] as? AnyObject
+        ext = dictionary["ext"] as? String
+        filename = dictionary["filename"] as? String
         id = dictionary["id"] as? Int
         threadId = dictionary["thread_id"] as? Int
         updatedAt = dictionary["updated_at"] as? String
@@ -82,8 +82,8 @@ class Message : NSObject, NSCoding{
         attachmentUrl = aDecoder.decodeObject(forKey: "attachment_url") as? String
         body = aDecoder.decodeObject(forKey: "body") as? String
         createdAt = aDecoder.decodeObject(forKey: "created_at") as? String
-        ext = aDecoder.decodeObject(forKey: "ext") as? AnyObject
-        filename = aDecoder.decodeObject(forKey: "filename") as? AnyObject
+        ext = aDecoder.decodeObject(forKey: "ext") as? String
+        filename = aDecoder.decodeObject(forKey: "filename") as? String
         id = aDecoder.decodeObject(forKey: "id") as? Int
         threadId = aDecoder.decodeObject(forKey: "thread_id") as? Int
         updatedAt = aDecoder.decodeObject(forKey: "updated_at") as? String

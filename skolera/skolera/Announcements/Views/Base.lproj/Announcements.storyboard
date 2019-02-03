@@ -19,22 +19,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AnnouncementTableViewCell" rowHeight="118" id="Z2n-kI-Lkd" customClass="AnnouncementTableViewCell" customModule="skolera" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="118"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AnnouncementTableViewCell" rowHeight="56" id="Z2n-kI-Lkd" customClass="AnnouncementTableViewCell" customModule="skolera" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z2n-kI-Lkd" id="URy-ju-PRA">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="117.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l3T-qS-nbH">
-                                            <rect key="frame" x="26" y="10" width="35" height="35"/>
+                                            <rect key="frame" x="26" y="10.5" width="35" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="35" id="2iO-tV-Rxy"/>
                                                 <constraint firstAttribute="height" constant="35" id="ATp-Of-qU7"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HX8-iM-4aa">
-                                            <rect key="frame" x="276" y="11" width="65" height="18"/>
+                                            <rect key="frame" x="276" y="19" width="65" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="65" id="sqD-dR-iaY"/>
                                             </constraints>
@@ -43,35 +43,23 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3NV-0F-80s">
-                                            <rect key="frame" x="72" y="17" width="127" height="21"/>
+                                            <rect key="frame" x="72" y="17.5" width="127" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ha-ef-AaD">
-                                            <rect key="frame" x="26" y="51" width="297" height="56.5"/>
-                                            <string key="text">Dear Parents, MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will lear</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" red="0.50980392156862742" green="0.56470588235294117" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="HX8-iM-4aa" secondAttribute="trailing" id="3oq-vZ-q0B"/>
-                                        <constraint firstItem="7ha-ef-AaD" firstAttribute="leading" secondItem="l3T-qS-nbH" secondAttribute="leading" id="6cZ-VC-oHH"/>
                                         <constraint firstItem="HX8-iM-4aa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3NV-0F-80s" secondAttribute="trailing" constant="8" id="Br0-Bp-4ts"/>
                                         <constraint firstItem="3NV-0F-80s" firstAttribute="leading" secondItem="l3T-qS-nbH" secondAttribute="trailing" constant="11" id="H9I-dV-2hk"/>
-                                        <constraint firstItem="7ha-ef-AaD" firstAttribute="top" secondItem="l3T-qS-nbH" secondAttribute="bottom" constant="6" id="USC-kb-otQ"/>
+                                        <constraint firstItem="HX8-iM-4aa" firstAttribute="centerY" secondItem="URy-ju-PRA" secondAttribute="centerY" id="UpT-3q-x6p"/>
                                         <constraint firstItem="l3T-qS-nbH" firstAttribute="leading" secondItem="URy-ju-PRA" secondAttribute="leading" constant="26" id="cH4-EK-xqC"/>
-                                        <constraint firstAttribute="bottom" secondItem="7ha-ef-AaD" secondAttribute="bottom" constant="10" id="dHL-A4-gPD"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="7ha-ef-AaD" secondAttribute="trailing" constant="10" id="jsk-hz-ZKO"/>
-                                        <constraint firstItem="HX8-iM-4aa" firstAttribute="top" secondItem="URy-ju-PRA" secondAttribute="top" constant="11" id="sI2-c2-7uG"/>
+                                        <constraint firstItem="l3T-qS-nbH" firstAttribute="centerY" secondItem="URy-ju-PRA" secondAttribute="centerY" id="i2O-eD-jLF"/>
                                         <constraint firstItem="3NV-0F-80s" firstAttribute="centerY" secondItem="l3T-qS-nbH" secondAttribute="centerY" id="sYN-lU-61O"/>
-                                        <constraint firstItem="l3T-qS-nbH" firstAttribute="top" secondItem="URy-ju-PRA" secondAttribute="top" constant="10" id="zoU-z6-z15"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="itemBody" destination="7ha-ef-AaD" id="LIf-Aq-nAK"/>
                                     <outlet property="itemDate" destination="HX8-iM-4aa" id="eX5-KO-x8m"/>
                                     <outlet property="itemImage" destination="l3T-qS-nbH" id="DCE-Fo-Alp"/>
                                     <outlet property="itemTitle" destination="3NV-0F-80s" id="gqD-FH-61D"/>

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Chatto
+import ChattoAdditions
 
 public enum InsertPosition {
     case top

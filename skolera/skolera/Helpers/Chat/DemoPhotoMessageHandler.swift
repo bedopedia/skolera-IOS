@@ -27,15 +27,20 @@ class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
     }
     
     func userDidTapOnBubble(viewModel: DemoPhotoMessageViewModel) {
-        let images = [
-            LightboxImage(
-                image: viewModel.fakeImage,
-                text: ""
-            )
-        ]
-        let controller = LightboxController(images: images)
-        controller.dynamicBackground = true
-        viewController.present(controller, animated: true, completion: nil)
+        debugPrint(viewModel.imageURL)
+        if !viewModel.imageURL.isEmpty {
+            UIApplication.shared.openURL(URL(string: viewModel.imageURL)!)
+        } else {
+            let images = [
+                LightboxImage(
+                    image: viewModel.fakeImage,
+                    text: ""
+                )
+            ]
+            let controller = LightboxController(images: images)
+            controller.dynamicBackground = true
+            viewController.present(controller, animated: true, completion: nil)
+        }
         self.baseHandler.userDidTapOnBubble(viewModel: viewModel)
     }
     

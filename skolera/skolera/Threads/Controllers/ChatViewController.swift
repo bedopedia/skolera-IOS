@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import Chatto
-import ChattoAdditions
 import SVProgressHUD
 import Alamofire
+import Chatto
+import ChattoAdditions
 
 class ChatViewController: BaseChatViewController {
     

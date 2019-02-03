@@ -7,12 +7,20 @@
 //
 
 import Foundation
+import Chatto
 import ChattoAdditions
 
 public class DemoPhotoMessageModel: PhotoMessageModel<MessageModel>, DemoMessageModelProtocol {
+    var url: String!
     public override init(messageModel: MessageModel, imageSize: CGSize, image: UIImage) {
         super.init(messageModel: messageModel, imageSize: imageSize, image: image)
     }
+    
+    public init(messageModel: MessageModel, imageSize: CGSize, image: UIImage, url: String) {
+        super.init(messageModel: messageModel, imageSize: imageSize, image: image)
+        self.url = url
+    }
+    
     
     public var status: MessageStatus {
         get {

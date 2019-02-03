@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+import Chatto
 import ChattoAdditions
 
 public class DemoTextMessageViewModel: TextMessageViewModel<DemoTextMessageModel>, DemoMessageViewModelProtocol {

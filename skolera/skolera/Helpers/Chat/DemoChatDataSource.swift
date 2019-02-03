@@ -8,6 +8,7 @@
 
 import Foundation
 import Chatto
+import ChattoAdditions
 
 class DemoChatDataSource: ChatDataSourceProtocol {
     var nextMessageId: Int = 0
