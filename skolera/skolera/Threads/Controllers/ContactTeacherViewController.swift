@@ -196,110 +196,49 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                         messages.append(textModel)
                     }
                 } else {
-                    if "\(item.user.id!)".elementsEqual(userId()){
-                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
-                        let imageUrlString = item.attachmentUrl
-                        
-                        let imageUrl = URL(string: imageUrlString!)!
-                        
-                        let imageData = try! Data(contentsOf: imageUrl)
-                        
-                        let image = UIImage(data: imageData)
-                        let size = CGSize(width: 2000.0, height: 1000.0)
-                        if image != nil {
-                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!, url: "")
-                            messages.append(photoModel)
-                        } else {
-                            if item.ext.elementsEqual("pdf") {
-                                let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("doc") {
-                                
-                                let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("pp") {
-                                let image = UIImage(named: "ppt-icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("xl") {
-                                let image = UIImage(named: "xlsx-icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
-                                let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
-                                let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
-                                let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else {
-                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            }
-
-                        }
+                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user.id!)".elementsEqual(userId()), date: date, status: .success)
+                    let size = CGSize(width: 2000.0, height: 1000.0)
+                    if item.ext == nil {
+                        let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                        messages.append(photoModel)
+                    } else if item.ext.elementsEqual("pdf") {
+                        let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.contains("doc") {
+                        let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.contains("pp") {
+                        let image = UIImage(named: "ppt_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.contains("xl") {
+                        let image = UIImage(named: "xlsx_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
+                        let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
+                        let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
+                        let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                        messages.append(photoModel)
+                    } else if item.ext.elementsEqual("jpg") || item.ext.elementsEqual("jpeg") || item.ext.elementsEqual("png") {
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: CGSize(width: 1000, height: 1000), image: UIImage(), url: item.attachmentUrl, loadImage: true)
+                        messages.append(photoModel)
                     } else {
-                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
-                        let size = CGSize(width: 2000.0, height: 1000.0)
-                        let imageUrlString = item.attachmentUrl
-                        
-                        let imageUrl = URL(string: imageUrlString!)!
-                        
-                        let imageData = try! Data(contentsOf: imageUrl)
-                        
-                        let image = UIImage(data: imageData)
-                        if image != nil {
-                            let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image!.size, image: image!, url: "")
-                            messages.append(photoModel)
-                        } else {
-                            if item.ext.elementsEqual("pdf") {
-                                let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("doc") {
-                                
-                                let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("pp") {
-                                let image = UIImage(named: "ppt-icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("xl") {
-                                let image = UIImage(named: "xlsx-icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
-                                let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
-                                let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
-                                let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            } else {
-                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl)
-                                messages.append(photoModel)
-                            }
-                        }
-                        
+                        let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                        let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                        messages.append(photoModel)
                     }
                 }
-                
-                
             }
             
             //        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })

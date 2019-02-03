@@ -27,15 +27,12 @@ class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
     }
     
     func userDidTapOnBubble(viewModel: DemoPhotoMessageViewModel) {
-        debugPrint(viewModel.imageURL)
-        if !viewModel.imageURL.isEmpty {
+        if !viewModel.isImage {
             UIApplication.shared.openURL(URL(string: viewModel.imageURL)!)
         } else {
             let images = [
-                LightboxImage(
-                    image: viewModel.fakeImage,
-                    text: ""
-                )
+                LightboxImage(imageURL: URL(string: viewModel.imageURL)!)
+
             ]
             let controller = LightboxController(images: images)
             controller.dynamicBackground = true

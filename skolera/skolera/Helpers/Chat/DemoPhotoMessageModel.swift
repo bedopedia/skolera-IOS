@@ -12,13 +12,15 @@ import ChattoAdditions
 
 public class DemoPhotoMessageModel: PhotoMessageModel<MessageModel>, DemoMessageModelProtocol {
     var url: String!
-    public override init(messageModel: MessageModel, imageSize: CGSize, image: UIImage) {
-        super.init(messageModel: messageModel, imageSize: imageSize, image: image)
-    }
+    var loadImage: Bool!
+//    public override init(messageModel: MessageModel, imageSize: CGSize, image: UIImage) {
+//        super.init(messageModel: messageModel, imageSize: imageSize, image: image)
+//    }
     
-    public init(messageModel: MessageModel, imageSize: CGSize, image: UIImage, url: String) {
+    public init(messageModel: MessageModel, imageSize: CGSize, image: UIImage, url: String, loadImage: Bool) {
         super.init(messageModel: messageModel, imageSize: imageSize, image: image)
         self.url = url
+        self.loadImage = loadImage
     }
     
     
