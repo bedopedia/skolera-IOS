@@ -76,7 +76,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                             self.threads.append(Threads.init(fromDictionary: thread))
                         }
                         self.threadsTableView.reloadData()
-                        
                     }
                 }
             case .failure(let error):
@@ -127,8 +126,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             }
             
         }
-        
-        
         
         cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first ?? Character(" "))\((fullNameArr?.last ?? " ").first ?? Character(" "))", textSize: 20)
         let dateFormatter = DateFormatter()
