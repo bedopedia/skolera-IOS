@@ -35,6 +35,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 getGrades()
                 getBehaviorNotesCount()
                 getTimeTable()
+                getWeeklyReport()
                 let presentDays = child.attendances.filter({ attendance -> Bool in
                     return attendance.status == "present"
                 }).count
@@ -85,6 +86,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             showTimetable()
         case "mainBehaviorNotesCell":
             showBehaviorNotes()
+        case "mainWeeklyPlannerCell":
+            showWeeklyPlanner()
         default:
             return
         }
@@ -239,6 +242,40 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         }
 
     }
+    private func getWeeklyReport()
+    {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        let parameters : Parameters? = nil
+        let headers : HTTPHeaders? = getHeaders()
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "d/M/y"
+        
+        let url = String(format: GET_WEEKLY_PLANNER(),formatter.string(from: Date()))
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(_):
+                if let result = response.result.value as? [String : AnyObject]
+                {
+                    let weeklyPlanResponse = WeeklyPlanResponse.init(fromDictionary: result)
+                }
+
+            case .failure(let error):
+                print(error.localizedDescription)
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+                {
+                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+                }
+                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
+                {
+                    showReauthenticateAlert(viewController: self)
+                }
+                else
+                {
+                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion : nil)
+                }
+            }
+        }
+    }
     private func getTimeTable()
     {
         SVProgressHUD.show(withStatus: "Loading".localized)
@@ -348,6 +385,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
         bvc.child = child
         self.navigationController?.pushViewController(bvc, animated: true)
+    }
+    
+    func showWeeklyPlanner()
+    {
+        let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
+        wvc.child = child
+        self.navigationController?.pushViewController(wvc, animated: true)
     }
     func showTimetable()
     {
