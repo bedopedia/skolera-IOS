@@ -23,6 +23,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
+    @IBOutlet weak var weeklyPlannerDate: UILabel!
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
@@ -46,7 +47,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 } else {
                     presentDaysLabel.text = "present \(presentDays) out of \(child.attendances.count) days"
                 }
-                
+                weeklyPlannerDate.text = ""
                 setProgressBarColor(absentDays: child.attendances.count - presentDays)
             }
         }
@@ -258,6 +259,16 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 if let result = response.result.value as? [String : AnyObject]
                 {
                     let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd"
+                    let startDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.startDate)
+                    let endDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.endDate)
+                    formatter.dateFormat = "eee"
+                    let startDay = formatter.string(from: startDate!)
+                    let endDay = formatter.string(from: endDate!)
+                    formatter.dateFormat = "dd/MM"
+                    
+                    self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
                     self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                 }
 
@@ -391,10 +402,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     func showWeeklyPlanner()
     {
-        let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
-        wvc.child = child
-        wvc.weeklyPlanner = self.weeklyPlans.first!
-        self.navigationController?.pushViewController(wvc, animated: true)
+        if !self.weeklyPlans.isEmpty {
+            let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
+            wvc.child = child
+            wvc.weeklyPlanner = self.weeklyPlans.first!
+            self.navigationController?.pushViewController(wvc, animated: true)
+        }
+        
     }
     func showTimetable()
     {

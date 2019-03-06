@@ -11,6 +11,9 @@ import UIKit
 class WeeklyInfoTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var itemImage: UIImageView!
+    @IBOutlet weak var itemTitle: UILabel!
+    @IBOutlet weak var itemText: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

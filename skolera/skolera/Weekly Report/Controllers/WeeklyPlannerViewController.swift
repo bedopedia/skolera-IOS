@@ -26,9 +26,18 @@ class WeeklyPlannerViewController: UIViewController {
     var maxHeaderHeight: CGFloat = 395
     let minHeaderHeight: CGFloat = 50
     var previousScrollOffset: CGFloat = 0
-    
     var weeklyPlanner: WeeklyPlan!
     
+    var dailyNotes: [String: [DailyNote]] = ["Saturday":[],
+                                             "Sunday": [],
+                                             "Monday": [],
+                                             "Tuesday": [],
+                                             "Wednesday": [],
+                                             "Thursday": [],
+                                             "Friday": []]
+    
+    var activeDays: [String] = []
+    var selectedDay: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +56,7 @@ class WeeklyPlannerViewController: UIViewController {
                 weeklyNoteImage.isHidden = true
             }
             weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
-            weeklyNoteLabel.text = weeklyPlanner.weeklyNotes.first?.descriptionField ?? ""
+            weeklyNoteLabel.text = (weeklyPlanner.weeklyNotes.first?.descriptionField ?? "").replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
             weeklyNoteLabel.sizeToFit()
             
             if weeklyNoteLabel.frame.height >= 84 {
@@ -62,13 +71,50 @@ class WeeklyPlannerViewController: UIViewController {
         contianerView.layer.shadowOffset = CGSize(width: 0, height: 2);
         contianerView.layer.shadowOpacity = 0.08
         
-        tableView.delegate = self
-        tableView.dataSource  = self
+        
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
+        customView.backgroundColor = UIColor.clear
+        tableView.tableFooterView = customView
         
         collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
+        
+        for dailyNote in self.weeklyPlanner.dailyNotes {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            let date = formatter.date(from: dailyNote.date)
+            formatter.dateFormat = "EEEE"
+            let dayInWeek = formatter.string(from: date!)
+            dailyNotes[dayInWeek]?.append(dailyNote)
+        }
+        
+        if !dailyNotes["Saturday"]!.isEmpty {
+            self.activeDays.append("Saturday")
+        }
+        if !dailyNotes["Sunday"]!.isEmpty {
+            self.activeDays.append("Sunday")
+        }
+        if !dailyNotes["Monday"]!.isEmpty {
+            self.activeDays.append("Monday")
+        }
+        if !dailyNotes["Tuesday"]!.isEmpty {
+            self.activeDays.append("Tuesday")
+        }
+        if !dailyNotes["Wednesday"]!.isEmpty {
+            self.activeDays.append("Wednesday")
+        }
+        if !dailyNotes["Thursday"]!.isEmpty {
+            self.activeDays.append("Thursday")
+        }
+        if !dailyNotes["Friday"]!.isEmpty {
+            self.activeDays.append("Friday")
+        }
+        self.collectionView.reloadData()
+        
+        tableView.delegate = self
+        tableView.dataSource  = self
     }
     
     @IBAction func seeMore(){
@@ -78,12 +124,28 @@ class WeeklyPlannerViewController: UIViewController {
 
 extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.dailyNotes[self.activeDays[selectedDay]]!.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
+        let item = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
+        cell.courseNameLabel.text = item.title
+        cell.courseGradeLabel.isHidden = true
         
-//        cell.grade = grades[indexPath.row]
+        cell.courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+        //                courseImageView.image = getCourseImage(courseName: grade.name)
+        cell.courseImageView.isHidden = false
+        cell.subjectImageLabel.clipsToBounds = false
+        
+        cell.courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
+        cell.courseImageView.layer.shadowOpacity = 0.3
+        cell.courseImageView.layer.shadowOffset = CGSize.zero
+        cell.courseImageView.layer.shadowRadius = 10
+        cell.courseImageView.layer.shadowPath = UIBezierPath(roundedRect: cell.courseImageView.bounds, cornerRadius: cell.courseImageView.frame.height/2 ).cgPath
+        cell.subjectImageLabel.textAlignment = .center
+        cell.subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+        cell.subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
+        cell.subjectImageLabel.text = cell.getText(name: item.title)
         
         return cell
     }
@@ -92,7 +154,9 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
         return 72
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(SubjectWeeklyPlanViewController.instantiate(fromAppStoryboard: .WeeklyReport), animated: true)
+        let vc = SubjectWeeklyPlanViewController.instantiate(fromAppStoryboard: .WeeklyReport)
+        vc.dailyNote = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -185,12 +249,13 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
 
 extension WeeklyPlannerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return self.activeDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCollectionViewCell", for: indexPath) as! TabCollectionViewCell
-        if indexPath.row == 0 {
+        cell.dayLabel.text = self.activeDays[indexPath.row]
+        if indexPath.row == selectedDay {
             cell.selectDay()
         } else {
             cell.deSelectDay()
@@ -202,6 +267,11 @@ extension WeeklyPlannerViewController: UICollectionViewDelegate, UICollectionVie
         return CGSize(width: 90, height: 50)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedDay = indexPath.row
+        self.collectionView.reloadData()
+        self.tableView.reloadData()
+    }
     
     
 }
