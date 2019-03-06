@@ -209,6 +209,9 @@
 		8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */; };
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
 		8ABACE84222EC33A00EBC1F0 /* CustomGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */; };
+		8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */; };
+		8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */; };
+		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
@@ -432,6 +435,9 @@
 		8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientView.swift; sourceTree = "<group>"; };
+		8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectWeeklyPlanViewController.swift; sourceTree = "<group>"; };
+		8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
+		8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
 		8AE5560F20DC03DD00800D7E /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
@@ -985,6 +991,8 @@
 				8A6A7C25222EAE9100F3EB85 /* TabsTableViewCell.xib */,
 				8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */,
 				8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */,
+				8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */,
+				8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -993,6 +1001,7 @@
 			isa = PBXGroup;
 			children = (
 				8A8A738A222C57F300972BE6 /* WeeklyPlannerViewController.swift */,
+				8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1159,6 +1168,7 @@
 				5482DE042056D51700647D57 /* SFUIText-SemiboldItalic.otf in Resources */,
 				5482DDFC2056D4FE00647D57 /* SFUIText-LightItalic.otf in Resources */,
 				5482DE702056DAB100647D57 /* RobotoMono-BoldItalic.ttf in Resources */,
+				8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */,
 				5482DE692056DAB100647D57 /* RobotoBoldCondensed.ttf in Resources */,
 				5482DE4A2056DAB100647D57 /* Roboto Medium Italic.otf in Resources */,
 				5482DE512056DAB100647D57 /* Roboto Condensed Italic.otf in Resources */,
@@ -1324,6 +1334,7 @@
 				543830B4204DA07D00ABF477 /* SplashScreenViewController.swift in Sources */,
 				8A6D362320B59A0C00DD0445 /* DemoTextMessageViewModelBuilder.swift in Sources */,
 				8A5F42F020B1CB7600FF93D1 /* User.swift in Sources */,
+				8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */,
 				8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */,
 				54970683208CECB50070CE46 /* TimeSlot.swift in Sources */,
 				546356EC201F68E90072F066 /* Role.swift in Sources */,
@@ -1400,6 +1411,7 @@
 				8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */,
 				547A37942022153B00794441 /* Notification.swift in Sources */,
 				8A8A7393222C5BAF00972BE6 /* Level.swift in Sources */,
+				8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */,
 				8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
 				544216E7204C604000BEB167 /* GradesTableViewController.swift in Sources */,

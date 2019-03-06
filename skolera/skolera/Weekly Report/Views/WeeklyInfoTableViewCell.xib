@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeeklyInfoTableViewCell" rowHeight="292" id="KGk-i7-Jjw" customClass="WeeklyInfoTableViewCell" customModule="skolera" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="356" height="292"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="356" height="291.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhe-c3-9eY">
+                        <rect key="frame" x="12" y="8" width="332" height="275.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jw9-bI-lRR">
+                                <rect key="frame" x="0.0" y="45" width="332" height="1"/>
+                                <color key="backgroundColor" red="0.91764705882352937" green="0.92941176470588238" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="K52-GD-M74"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="knowledge1" translatesAutoresizingMaskIntoConstraints="NO" id="aKM-cf-c7Q">
+                                <rect key="frame" x="12" y="12" width="24" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="2Xd-P7-EQK"/>
+                                    <constraint firstAttribute="height" constant="23" id="VWu-aa-NOk"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classwork" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIc-Kj-jPs">
+                                <rect key="frame" x="44" y="12.5" width="88" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Updated 23 Oct" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0p-Ah-SCh">
+                                <rect key="frame" x="199" y="16" width="121" height="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                <color key="textColor" red="0.42352941176470588" green="0.4823529411764706" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUG-kf-L7v">
+                                <rect key="frame" x="16" y="54" width="300" height="205.5"/>
+                                <string key="text">Dear Parents,MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will learn about "Healthy Food" on Thursday October 11, 2018.We encourage you to pack some healthy food to share with their friends. And they will also participate in activity consists of information centered on hygiene and prevention of spreading common illnesses. Students </string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="e0p-Ah-SCh" firstAttribute="centerY" secondItem="xIc-Kj-jPs" secondAttribute="centerY" id="7Mr-Ec-wGe"/>
+                            <constraint firstItem="aKM-cf-c7Q" firstAttribute="leading" secondItem="lhe-c3-9eY" secondAttribute="leading" constant="12" id="8Cv-QB-833"/>
+                            <constraint firstAttribute="trailing" secondItem="e0p-Ah-SCh" secondAttribute="trailing" constant="12" id="Jwf-jp-IVb"/>
+                            <constraint firstItem="hUG-kf-L7v" firstAttribute="top" secondItem="Jw9-bI-lRR" secondAttribute="bottom" constant="8" id="Llf-nS-7lb"/>
+                            <constraint firstItem="Jw9-bI-lRR" firstAttribute="top" secondItem="aKM-cf-c7Q" secondAttribute="bottom" constant="10" id="QcU-QP-1ph"/>
+                            <constraint firstItem="hUG-kf-L7v" firstAttribute="leading" secondItem="lhe-c3-9eY" secondAttribute="leading" constant="16" id="Wrg-U8-Vi5"/>
+                            <constraint firstItem="aKM-cf-c7Q" firstAttribute="top" secondItem="lhe-c3-9eY" secondAttribute="top" constant="12" id="cLY-4d-iOL"/>
+                            <constraint firstAttribute="trailing" secondItem="hUG-kf-L7v" secondAttribute="trailing" constant="16" id="cP3-te-PkJ"/>
+                            <constraint firstAttribute="trailing" secondItem="Jw9-bI-lRR" secondAttribute="trailing" id="ntT-Iz-HcA"/>
+                            <constraint firstItem="Jw9-bI-lRR" firstAttribute="leading" secondItem="lhe-c3-9eY" secondAttribute="leading" id="uNY-eP-Wg1"/>
+                            <constraint firstItem="xIc-Kj-jPs" firstAttribute="centerY" secondItem="aKM-cf-c7Q" secondAttribute="centerY" id="vb2-Fh-fAC"/>
+                            <constraint firstItem="xIc-Kj-jPs" firstAttribute="leading" secondItem="aKM-cf-c7Q" secondAttribute="trailing" constant="8" id="wzw-bd-gIo"/>
+                            <constraint firstAttribute="bottom" secondItem="hUG-kf-L7v" secondAttribute="bottom" constant="16" id="xUn-a1-Ntl"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="lhe-c3-9eY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="J0X-8m-oZy"/>
+                    <constraint firstItem="lhe-c3-9eY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="b5N-Wc-AO8"/>
+                    <constraint firstAttribute="bottom" secondItem="lhe-c3-9eY" secondAttribute="bottom" constant="8" id="dif-65-21I"/>
+                    <constraint firstAttribute="trailing" secondItem="lhe-c3-9eY" secondAttribute="trailing" constant="12" id="him-lf-BGn"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="containerView" destination="lhe-c3-9eY" id="v1b-v5-aPP"/>
+            </connections>
+            <point key="canvasLocation" x="166.40000000000001" y="257.27136431784112"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="knowledge1" width="26" height="25"/>
+    </resources>
+</document>

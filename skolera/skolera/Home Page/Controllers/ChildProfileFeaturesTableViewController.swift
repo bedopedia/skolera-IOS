@@ -28,6 +28,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     /// courses grades for this child, segued to grades screen
     var grades = [CourseGrade]()
     var timeslots = [TimeSlot]()
+    var weeklyPlans: [WeeklyPlan] = []
     /// Once set, get grades for this child
     var child : Child!{
         didSet{
@@ -256,7 +257,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             case .success(_):
                 if let result = response.result.value as? [String : AnyObject]
                 {
-                    let weeklyPlanResponse = WeeklyPlanResponse.init(fromDictionary: result)
+                    let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
+                    self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                 }
 
             case .failure(let error):
@@ -391,6 +393,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     {
         let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
         wvc.child = child
+        wvc.weeklyPlanner = self.weeklyPlans.first!
         self.navigationController?.pushViewController(wvc, animated: true)
     }
     func showTimetable()

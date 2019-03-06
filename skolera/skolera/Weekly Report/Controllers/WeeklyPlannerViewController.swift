@@ -15,17 +15,47 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var weeklyNoteImage: UIImageView!
+    @IBOutlet weak var weeklyNoteTitleLabel: UILabel!
+    @IBOutlet weak var weeklyNoteLabel: UILabel!
+    @IBOutlet weak var weeklyNoteBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var seeMoreFrame: CustomGradientView!
     
     var child : Child!
     
-    let maxHeaderHeight: CGFloat = 395
+    var maxHeaderHeight: CGFloat = 395
     let minHeaderHeight: CGFloat = 50
     var previousScrollOffset: CGFloat = 0
     
+    var weeklyPlanner: WeeklyPlan!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        navigationController?.navigationBar.barTintColor = .white
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        }
+        if weeklyPlanner.weeklyNotes.isEmpty {
+            maxHeaderHeight = 50
+            headerHeightConstraint.constant = 50
+        } else {
+            if let url = URL(string: weeklyPlanner.weeklyNotes.first?.imageUrl ?? "") {
+                weeklyNoteImage.kf.setImage(with: url)
+            } else {
+                weeklyNoteImage.isHidden = true
+            }
+            weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
+            weeklyNoteLabel.text = weeklyPlanner.weeklyNotes.first?.descriptionField ?? ""
+            weeklyNoteLabel.sizeToFit()
+            
+            if weeklyNoteLabel.frame.height >= 84 {
+                seeMoreFrame.isHidden = false
+            } else {
+                seeMoreFrame.isHidden = true
+            }
+            
         }
         contianerView.layer.masksToBounds = false
         contianerView.layer.shadowColor = UIColor.black.cgColor
@@ -39,7 +69,10 @@ class WeeklyPlannerViewController: UIViewController {
         collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func seeMore(){
+        
     }
 }
 
@@ -57,6 +90,9 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 72
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(SubjectWeeklyPlanViewController.instantiate(fromAppStoryboard: .WeeklyReport), animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
