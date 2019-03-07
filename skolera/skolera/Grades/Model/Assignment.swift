@@ -16,9 +16,11 @@ class Assignment{
     var gradeView: String
     var feedback: String
     var createdAt: String
+    var hideGrade: Bool
     
     
-    init(id: Int, name: String, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String) {
+    
+    init(id: Int, name: String, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String, hideGrade: Bool) {
         self.id = id
         self.name = name
         self.total = total
@@ -26,5 +28,7 @@ class Assignment{
         self.gradeView = gradeView
         self.feedback = feedback
         self.createdAt = createdAt
+        
+        self.hideGrade = hideGrade
     }
 }

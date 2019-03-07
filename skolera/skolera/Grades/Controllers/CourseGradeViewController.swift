@@ -149,7 +149,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                       grade: assignDic["grade"] as! Double,
                                                       gradeView: assignDic["grade_view"] as? String ?? "\(assignDic["grade_view"] as? Double ?? 0)",
                                                       feedback: assignDic["feedback"] as? String ?? "",
-                                                      createdAt: assignDic["end_date"] as! String))
+                                                      createdAt: assignDic["end_date"] as! String,
+                                                      hideGrade: assignDic["hide_grade"] as? Bool ?? false))
                     }
                     // parse quizzes
                     let quizzesJson = studentDic["quizzes"] as! [String: AnyObject]
@@ -164,7 +165,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                             grade: quizDic["grade"] as! Double,
                                             gradeView: quizDic["grade_view"] as? String ?? "\(quizDic["grade_view"] as? Double ?? 0)",
                                             feedback: quizDic["feedback"] as? String ?? "",
-                                            createdAt: quizDic["end_date"] as! String))
+                                            createdAt: quizDic["end_date"] as! String,
+                                            hideGrade: quizDic["hide_grade"] as? Bool ?? false))
                     }
                     // parse gradeItems
                     let gradeItemsJson = studentDic["grade_items"] as! [String: AnyObject]
@@ -180,7 +182,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                     gradeView: gradeItemDic["grade_view"] as? String ?? "\(gradeItemDic["grade_view"] as? Double ?? 0)",
                                                     feedback: gradeItemDic["feedback"] as? String ?? "",
                                                     createdAt: gradeItemDic["end_date"] as! String,
-                                                    periodId: gradeItemDic["grading_period_id"] as! Int))
+                                                    periodId: gradeItemDic["grading_period_id"] as! Int,
+                                                    hideGrade: gradeItemDic["hide_grade"] as? Bool ?? false))
                     }
                     
                     
@@ -581,7 +584,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             if item is Assignment {
                 cell.TitleLabel.text = (item as! Assignment).name
                 cell.avgGradeLabel.text = ""
-                cell.gradeLabel.text = "\(round2Digits((item as! Assignment).grade))/\(round2Digits((item as! Assignment).total))"
+                if (item as! Assignment).hideGrade {
+                    cell.gradeLabel.text = "****"
+                } else {
+                    cell.gradeLabel.text = "\(round2Digits((item as! Assignment).grade))/\(round2Digits((item as! Assignment).total))"
+                }
+                
                 cell.gradeWorldLabel.text = (item as! Assignment).feedback
                 if Language.language == .arabic {
                     cell.avgGradeLabel.text = "الدرجه المتوسطه \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
@@ -592,7 +600,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             } else if item is Quiz {
                 cell.TitleLabel.text = (item as! Quiz).name
                 cell.avgGradeLabel.text = ""
-                cell.gradeLabel.text = "\(round2Digits((item as! Quiz).grade))/\(round2Digits((item as! Quiz).total))"
+                if (item as! Quiz).hideGrade {
+                    cell.gradeLabel.text = "****"
+                } else {
+                    cell.gradeLabel.text = "\(round2Digits((item as! Quiz).grade))/\(round2Digits((item as! Quiz).total))"
+                }
+                
                 cell.gradeWorldLabel.text = (item as! Quiz).feedback
                 if Language.language == .arabic {
                     cell.avgGradeLabel.text = "الدرجه المتوسطه\(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
@@ -603,7 +616,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             } else if item is GradeItem {
                 cell.TitleLabel.text = (item as! GradeItem).name
                 cell.avgGradeLabel.text = ""
-                cell.gradeLabel.text = "\(round2Digits((item as! GradeItem).grade))/\(round2Digits((item as! GradeItem).total))"
+                if (item as! GradeItem).hideGrade {
+                    cell.gradeLabel.text = "****"
+                } else {
+                    cell.gradeLabel.text = "\(round2Digits((item as! GradeItem).grade))/\(round2Digits((item as! GradeItem).total))"
+                }
                 cell.gradeWorldLabel.text = (item as! GradeItem).feedback
                 
                 if Language.language == .arabic {

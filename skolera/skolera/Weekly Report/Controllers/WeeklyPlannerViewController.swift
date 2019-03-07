@@ -133,7 +133,11 @@ class WeeklyPlannerViewController: UIViewController {
 
 extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dailyNotes[self.activeDays[selectedDay]]!.count
+        if self.activeDays.isEmpty {
+            return 0
+        } else {
+            return self.dailyNotes[self.activeDays[selectedDay]]!.count
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell

@@ -18,8 +18,9 @@ class GradeItem {
     var feedback: String
     var createdAt: String
     var periodId: Int
+    var hideGrade: Bool
     
-    init(id: Int, name: String, maxGrade: Int, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String, periodId: Int) {
+    init(id: Int, name: String, maxGrade: Int, total: Double, grade: Double, gradeView: String, feedback: String, createdAt: String, periodId: Int, hideGrade: Bool) {
         self.id = id
         self.name = name
         self.maxGrade = maxGrade
@@ -29,5 +30,6 @@ class GradeItem {
         self.feedback = feedback
         self.createdAt = createdAt
         self.periodId = periodId
+        self.hideGrade = hideGrade
     }
 }
