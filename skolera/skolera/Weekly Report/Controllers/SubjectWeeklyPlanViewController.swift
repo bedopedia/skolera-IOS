@@ -16,6 +16,9 @@ class SubjectWeeklyPlanViewController: UIViewController {
     var dailyNote: DailyNote!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
         titleLabel.text = dailyNote.title
         tableView.register(UINib(nibName: "WeeklyInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyInfoTableViewCell")
         tableView.delegate = self
@@ -34,29 +37,29 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyInfoTableViewCell", for: indexPath) as! WeeklyInfoTableViewCell
         if indexPath.row == 0 {
             cell.itemImage.image = #imageLiteral(resourceName: "knowledge1")
-            cell.itemTitle.text = "Classwork"
+            cell.itemTitle.text = "Classwork".localized
             if !dailyNote.classWork.isEmpty {
                 cell.itemText.text = dailyNote.classWork.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
             } else {
-                cell.itemText.text = "No classwork"
+                cell.itemText.text = "No classwork".localized
             }
             
         } else if indexPath.row == 1 {
             cell.itemImage.image = #imageLiteral(resourceName: "2")
-            cell.itemTitle.text = "Homework"
+            cell.itemTitle.text = "Homework".localized
             if !dailyNote.homework.isEmpty {
                 cell.itemText.text = dailyNote.homework.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
             } else {
-                cell.itemText.text = "No Homework"
+                cell.itemText.text = "No Homework".localized
             }
             
         } else if indexPath.row == 2 {
             cell.itemImage.image = #imageLiteral(resourceName: "3")
-            cell.itemTitle.text = "Activity"
+            cell.itemTitle.text = "Activity".localized
             if !dailyNote.activities.isEmpty {
                 cell.itemText.text = dailyNote.activities.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
             } else {
-                cell.itemText.text = "No Activity"
+                cell.itemText.text = "No Activity".localized
             }
             
         }

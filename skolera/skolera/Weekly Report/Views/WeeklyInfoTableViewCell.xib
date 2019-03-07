@@ -42,15 +42,11 @@
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Updated 23 Oct" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0p-Ah-SCh">
-                                <rect key="frame" x="199" y="16" width="121" height="15"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                                <color key="textColor" red="0.42352941176470588" green="0.4823529411764706" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUG-kf-L7v">
                                 <rect key="frame" x="16" y="54" width="300" height="205.5"/>
-                                <string key="text">Dear Parents,MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will learn about "Healthy Food" on Thursday October 11, 2018.We encourage you to pack some healthy food to share with their friends. And they will also participate in activity consists of information centered on hygiene and prevention of spreading common illnesses. Students </string>
+                                <string key="text">Dear Parents,
+MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will learn about "Healthy Food" on Thursday October 11, 2018.
+We encourage you to pack some healthy food to share with their friends. And they will also participate in activity consists of information centered on hygiene and prevention of spreading common illnesses. Students </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -58,9 +54,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="e0p-Ah-SCh" firstAttribute="centerY" secondItem="xIc-Kj-jPs" secondAttribute="centerY" id="7Mr-Ec-wGe"/>
                             <constraint firstItem="aKM-cf-c7Q" firstAttribute="leading" secondItem="lhe-c3-9eY" secondAttribute="leading" constant="12" id="8Cv-QB-833"/>
-                            <constraint firstAttribute="trailing" secondItem="e0p-Ah-SCh" secondAttribute="trailing" constant="12" id="Jwf-jp-IVb"/>
                             <constraint firstItem="hUG-kf-L7v" firstAttribute="top" secondItem="Jw9-bI-lRR" secondAttribute="bottom" constant="8" id="Llf-nS-7lb"/>
                             <constraint firstItem="Jw9-bI-lRR" firstAttribute="top" secondItem="aKM-cf-c7Q" secondAttribute="bottom" constant="10" id="QcU-QP-1ph"/>
                             <constraint firstItem="hUG-kf-L7v" firstAttribute="leading" secondItem="lhe-c3-9eY" secondAttribute="leading" constant="16" id="Wrg-U8-Vi5"/>

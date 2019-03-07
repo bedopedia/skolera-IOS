@@ -239,6 +239,7 @@ class ChildrenTableViewController: UITableViewController {
             {
                 SVProgressHUD.dismiss()
             }
+            self.sendFCM(token: "")
             let keychain = KeychainSwift()
             keychain.clear()
             let nvc = UINavigationController()

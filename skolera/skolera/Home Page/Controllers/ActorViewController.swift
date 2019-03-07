@@ -19,6 +19,7 @@ class ActorViewController: UIViewController {
 
     
     var actor: Parent!
+    var actorTableViewController: ActorFeaturesTableViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +32,7 @@ class ActorViewController: UIViewController {
         for child in childViewControllers {
             if let actorTableViewController = child as? ActorFeaturesTableViewController {
                 actorTableViewController.actor = self.actor
+                self.actorTableViewController = actorTableViewController
             }
         }
         // Do any additional setup after loading the view.
@@ -74,6 +76,7 @@ class ActorViewController: UIViewController {
             {
                 SVProgressHUD.dismiss()
             }
+            self.actorTableViewController.sendFCM(token: "")
             let keychain = KeychainSwift()
             keychain.clear()
             let nvc = UINavigationController()

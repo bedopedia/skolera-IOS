@@ -142,6 +142,7 @@
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
+		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
 		8A298CBB2184CB9700A82FEA /* Timetable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A298CBD2184CB9700A82FEA /* Timetable.storyboard */; };
 		8A298CC02184CBE500A82FEA /* BehaviorNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A298CC22184CBE500A82FEA /* BehaviorNotes.storyboard */; };
 		8A298CC52184CC9200A82FEA /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A298CC72184CC9200A82FEA /* HomeScreen.storyboard */; };
@@ -193,7 +194,6 @@
 		8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305620BABF4F00BF2985 /* Teacher.swift */; };
 		8A7E305920BABF5D00BF2985 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305820BABF5D00BF2985 /* Stage.swift */; };
 		8A7E305B20BABF7800BF2985 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305A20BABF7800BF2985 /* Course.swift */; };
-		8A8A7389222C562C00972BE6 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A8A7388222C562C00972BE6 /* WeeklyReport.storyboard */; };
 		8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A738A222C57F300972BE6 /* WeeklyPlannerViewController.swift */; };
 		8A8A738F222C5A4400972BE6 /* WeeklyPlanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A738E222C5A4400972BE6 /* WeeklyPlanResponse.swift */; };
 		8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A7390222C5B9C00972BE6 /* WeeklyPlan.swift */; };
@@ -358,6 +358,8 @@
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A1BB72F22301474009F7738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WeeklyReport.storyboard; sourceTree = "<group>"; };
+		8A1BB7322230147A009F7738 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WeeklyReport.strings; sourceTree = "<group>"; };
 		8A298CB92184CB2100A82FEA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Login.strings; sourceTree = "<group>"; };
 		8A298CBA2184CB2200A82FEA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8A298CBC2184CB9700A82FEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Timetable.storyboard; sourceTree = "<group>"; };
@@ -419,7 +421,6 @@
 		8A7E305620BABF4F00BF2985 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		8A7E305820BABF5D00BF2985 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		8A7E305A20BABF7800BF2985 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		8A8A7388222C562C00972BE6 /* WeeklyReport.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeeklyReport.storyboard; sourceTree = "<group>"; };
 		8A8A738A222C57F300972BE6 /* WeeklyPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlannerViewController.swift; sourceTree = "<group>"; };
 		8A8A738E222C5A4400972BE6 /* WeeklyPlanResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanResponse.swift; sourceTree = "<group>"; };
 		8A8A7390222C5B9C00972BE6 /* WeeklyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlan.swift; sourceTree = "<group>"; };
@@ -986,7 +987,7 @@
 		8A8A7387222C561E00972BE6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A8A7388222C562C00972BE6 /* WeeklyReport.storyboard */,
+				8A1BB73022301474009F7738 /* WeeklyReport.storyboard */,
 				8A6A7C24222EAE9100F3EB85 /* TabsTableViewCell.swift */,
 				8A6A7C25222EAE9100F3EB85 /* TabsTableViewCell.xib */,
 				8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */,
@@ -1222,7 +1223,7 @@
 				8A6D361E20B5999100DD0445 /* SendingStatusCollectionViewCell.xib in Resources */,
 				5482DE592056DAB100647D57 /* Roboto-LightItalic.ttf in Resources */,
 				5482DE4E2056DAB100647D57 /* RobotoMono-LightItalic.ttf in Resources */,
-				8A8A7389222C562C00972BE6 /* WeeklyReport.storyboard in Resources */,
+				8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */,
 				5482DE652056DAB100647D57 /* Roboto Bold Italic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1466,6 +1467,15 @@
 				8A298CBA2184CB2200A82FEA /* ar */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8A1BB73022301474009F7738 /* WeeklyReport.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A1BB72F22301474009F7738 /* Base */,
+				8A1BB7322230147A009F7738 /* ar */,
+			);
+			name = WeeklyReport.storyboard;
 			sourceTree = "<group>";
 		};
 		8A298CBD2184CB9700A82FEA /* Timetable.storyboard */ = {

@@ -267,8 +267,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                     let startDay = formatter.string(from: startDate!)
                     let endDay = formatter.string(from: endDate!)
                     formatter.dateFormat = "dd/MM"
+                    if Language.language == .arabic {
+                        self.weeklyPlannerDate.text = "يبدأ من: \(startDay) \(formatter.string(from: startDate!)) الي \(endDay) \(formatter.string(from: endDate!))"
+                    } else {
+                        self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
+                    }
                     
-                    self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
                     self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                 }
 

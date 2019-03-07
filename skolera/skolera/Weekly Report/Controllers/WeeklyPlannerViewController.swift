@@ -18,7 +18,9 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var weeklyNoteImage: UIImageView!
     @IBOutlet weak var weeklyNoteTitleLabel: UILabel!
     @IBOutlet weak var weeklyNoteLabel: UILabel!
+    @IBOutlet weak var weeklyNoteImageConstraint: NSLayoutConstraint!
     @IBOutlet weak var weeklyNoteBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var seeMoreFrame: CustomGradientView!
     
     var child : Child!
@@ -54,6 +56,10 @@ class WeeklyPlannerViewController: UIViewController {
                 weeklyNoteImage.kf.setImage(with: url)
             } else {
                 weeklyNoteImage.isHidden = true
+                weeklyNoteImageConstraint.constant = 0
+                containerViewHeightConstraint.constant = 159
+                maxHeaderHeight = 249
+                headerHeightConstraint.constant = 249
             }
             weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
             weeklyNoteLabel.text = (weeklyPlanner.weeklyNotes.first?.descriptionField ?? "").replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
@@ -83,6 +89,7 @@ class WeeklyPlannerViewController: UIViewController {
         
         for dailyNote in self.weeklyPlanner.dailyNotes {
             let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "yyyy-MM-dd"
             let date = formatter.date(from: dailyNote.date)
             formatter.dateFormat = "EEEE"
@@ -118,7 +125,9 @@ class WeeklyPlannerViewController: UIViewController {
     }
     
     @IBAction func seeMore(){
-        
+        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
+        self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
 }
 
@@ -254,7 +263,7 @@ extension WeeklyPlannerViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCollectionViewCell", for: indexPath) as! TabCollectionViewCell
-        cell.dayLabel.text = self.activeDays[indexPath.row]
+        cell.dayLabel.text = self.activeDays[indexPath.row].localized
         if indexPath.row == selectedDay {
             cell.selectDay()
         } else {
