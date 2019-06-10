@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -250,14 +250,22 @@
                                 <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6KN-Gz-C86">
+                                <rect key="frame" x="158.66666666666666" y="691" width="97" height="45"/>
+                                <connections>
+                                    <action selector="openAssignments" destination="gLf-a4-ZMc" eventType="touchUpInside" id="MxN-fX-mah"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Iqv-JB-ekG" firstAttribute="centerX" secondItem="dFx-AX-hwH" secondAttribute="centerX" id="1rZ-aL-l0m"/>
+                            <constraint firstItem="6KN-Gz-C86" firstAttribute="centerY" secondItem="ABG-xN-IN3" secondAttribute="centerY" id="2DZ-Xu-Wnj"/>
                             <constraint firstItem="jOw-Gy-H72" firstAttribute="trailing" secondItem="1uc-Fa-v4H" secondAttribute="trailing" constant="16" id="2RK-Yk-kgC"/>
                             <constraint firstItem="Iqv-JB-ekG" firstAttribute="top" secondItem="dBV-5M-8Rr" secondAttribute="bottom" constant="20" id="8DD-QD-Lcy"/>
                             <constraint firstItem="jOw-Gy-H72" firstAttribute="bottom" secondItem="fzF-yO-4CB" secondAttribute="bottom" id="FSu-v6-nWD"/>
                             <constraint firstItem="ABG-xN-IN3" firstAttribute="centerX" secondItem="dFx-AX-hwH" secondAttribute="centerX" id="H16-0A-T6x"/>
+                            <constraint firstItem="6KN-Gz-C86" firstAttribute="centerX" secondItem="ABG-xN-IN3" secondAttribute="centerX" id="Ive-iY-tvv"/>
                             <constraint firstItem="DO9-pp-kuK" firstAttribute="centerX" secondItem="dFx-AX-hwH" secondAttribute="centerX" id="LxZ-re-Eg6"/>
                             <constraint firstItem="Iqv-JB-ekG" firstAttribute="trailing" secondItem="jOw-Gy-H72" secondAttribute="trailing" id="PJz-1V-syL"/>
                             <constraint firstItem="dBV-5M-8Rr" firstAttribute="top" secondItem="DO9-pp-kuK" secondAttribute="bottom" constant="5" id="SWc-a9-wcc"/>
@@ -272,12 +280,14 @@
                             <constraint firstItem="tqj-68-hho" firstAttribute="top" secondItem="jOw-Gy-H72" secondAttribute="top" constant="25" id="dw2-35-Q4k"/>
                             <constraint firstItem="tqj-68-hho" firstAttribute="centerX" secondItem="jOw-Gy-H72" secondAttribute="centerX" id="eJz-KO-c8a"/>
                             <constraint firstItem="jOw-Gy-H72" firstAttribute="trailing" secondItem="DO9-pp-kuK" secondAttribute="trailing" constant="8" id="ev7-ai-p07"/>
+                            <constraint firstItem="6KN-Gz-C86" firstAttribute="width" secondItem="ABG-xN-IN3" secondAttribute="width" id="fUA-mN-bja"/>
                             <constraint firstItem="tqj-68-hho" firstAttribute="height" secondItem="dFx-AX-hwH" secondAttribute="height" multiplier="0.1" constant="22.399999999999991" id="gVZ-fD-h3K"/>
                             <constraint firstItem="DO9-pp-kuK" firstAttribute="top" secondItem="tqj-68-hho" secondAttribute="bottom" constant="30" id="hck-e5-9Eb"/>
                             <constraint firstItem="fzF-yO-4CB" firstAttribute="top" secondItem="Iqv-JB-ekG" secondAttribute="bottom" id="nBE-JT-tyZ"/>
                             <constraint firstItem="dBV-5M-8Rr" firstAttribute="centerX" secondItem="dFx-AX-hwH" secondAttribute="centerX" id="qKy-SE-hWY"/>
                             <constraint firstItem="1uc-Fa-v4H" firstAttribute="height" secondItem="ABG-xN-IN3" secondAttribute="height" id="qQM-Z0-mEB"/>
                             <constraint firstItem="ABG-xN-IN3" firstAttribute="height" secondItem="fzF-yO-4CB" secondAttribute="height" id="r0O-w5-2s5"/>
+                            <constraint firstItem="6KN-Gz-C86" firstAttribute="height" secondItem="ABG-xN-IN3" secondAttribute="height" id="uCU-nK-aA8"/>
                             <constraint firstItem="zOd-BT-SRW" firstAttribute="top" secondItem="9e8-Fg-Lc8" secondAttribute="bottom" constant="4" id="uH1-8V-BhD"/>
                             <constraint firstItem="DO9-pp-kuK" firstAttribute="leading" secondItem="jOw-Gy-H72" secondAttribute="leading" constant="8" id="yqu-gX-Rrz"/>
                         </constraints>
@@ -846,7 +856,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v9H-oG-2FN">
-                                                    <rect key="frame" x="95" y="15" width="113.66666666666669" height="21"/>
+                                                    <rect key="frame" x="95" y="15" width="100.66666666666669" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -897,7 +907,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96l-SM-2i0">
-                                                    <rect key="frame" x="95" y="15" width="89" height="21"/>
+                                                    <rect key="frame" x="95" y="15" width="82.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -948,13 +958,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imk-hZ-S2u">
-                                                    <rect key="frame" x="95" y="15" width="135" height="21"/>
+                                                    <rect key="frame" x="95" y="15" width="122.33333333333331" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Announcement: 21 days ago" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="723-T2-Mm7">
-                                                    <rect key="frame" x="95" y="46" width="281" height="17"/>
+                                                    <rect key="frame" x="95" y="46" width="281" height="16.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
                                                     <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1008,7 +1018,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Cover_photo" width="992" height="182"/>
+        <image name="Cover_photo" width="330.66665649414062" height="60.666667938232422"/>
         <image name="actorMessage" width="48" height="48"/>
         <image name="actorNotification" width="48" height="48"/>
         <image name="announcementNew" width="48" height="48"/>
@@ -1018,7 +1028,7 @@
         <image name="messages" width="60" height="60"/>
         <image name="negativeIcon" width="24" height="24"/>
         <image name="notifications" width="32" height="32"/>
-        <image name="otherIcon" width="388" height="424"/>
+        <image name="otherIcon" width="129.33332824707031" height="141.33332824707031"/>
         <image name="positiveIcon" width="24" height="24"/>
         <image name="profileattendanceIco" width="33" height="30"/>
         <image name="settings" width="32" height="32"/>

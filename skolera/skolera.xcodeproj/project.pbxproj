@@ -164,6 +164,13 @@
 		8A5F42EC20B1CB3300FF93D1 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42EB20B1CB3300FF93D1 /* Participant.swift */; };
 		8A5F42EE20B1CB5C00FF93D1 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42ED20B1CB5C00FF93D1 /* Message.swift */; };
 		8A5F42F020B1CB7600FF93D1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42EF20B1CB7600FF93D1 /* User.swift */; };
+		8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FA5226DD27A00E800AE /* AssignmentsViewController.swift */; };
+		8A680FA8226DD28A00E800AE /* Assignments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A680FA7226DD28A00E800AE /* Assignments.storyboard */; };
+		8A680FAA226DD2E400E800AE /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FA9226DD2E400E800AE /* AssignmentTableViewCell.swift */; };
+		8A680FAC226DD3EB00E800AE /* AssignmentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FAB226DD3EB00E800AE /* AssignmentsResponse.swift */; };
+		8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FAD226DD4F800E800AE /* FullAssignment.swift */; };
+		8A680FB0226DD58700E800AE /* StudentSubmissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FAF226DD58700E800AE /* StudentSubmissions.swift */; };
+		8A680FB2226DD67700E800AE /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A680FB1226DD67700E800AE /* FileModel.swift */; };
 		8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6A7C24222EAE9100F3EB85 /* TabsTableViewCell.swift */; };
 		8A6A7C27222EAE9100F3EB85 /* TabsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A6A7C25222EAE9100F3EB85 /* TabsTableViewCell.xib */; };
 		8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D35EF20B5848000DD0445 /* ChatViewController.swift */; };
@@ -206,6 +213,7 @@
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
+		8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB5276D226DC77F006EA7FB /* CardView.swift */; };
 		8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */; };
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
 		8ABACE84222EC33A00EBC1F0 /* CustomGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */; };
@@ -390,6 +398,13 @@
 		8A5F42EB20B1CB3300FF93D1 /* Participant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
 		8A5F42ED20B1CB5C00FF93D1 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		8A5F42EF20B1CB7600FF93D1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8A680FA5226DD27A00E800AE /* AssignmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsViewController.swift; sourceTree = "<group>"; };
+		8A680FA7226DD28A00E800AE /* Assignments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Assignments.storyboard; sourceTree = "<group>"; };
+		8A680FA9226DD2E400E800AE /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		8A680FAB226DD3EB00E800AE /* AssignmentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsResponse.swift; sourceTree = "<group>"; };
+		8A680FAD226DD4F800E800AE /* FullAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullAssignment.swift; sourceTree = "<group>"; };
+		8A680FAF226DD58700E800AE /* StudentSubmissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentSubmissions.swift; sourceTree = "<group>"; };
+		8A680FB1226DD67700E800AE /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		8A6A7C24222EAE9100F3EB85 /* TabsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsTableViewCell.swift; sourceTree = "<group>"; };
 		8A6A7C25222EAE9100F3EB85 /* TabsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabsTableViewCell.xib; sourceTree = "<group>"; };
 		8A6D35EF20B5848000DD0445 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -433,6 +448,7 @@
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
 		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
+		8AB5276D226DC77F006EA7FB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientView.swift; sourceTree = "<group>"; };
@@ -865,6 +881,7 @@
 				5402CA062045CDE4009F583A /* Grades */,
 				8A5F42DB20B1A58000FF93D1 /* Threads */,
 				8AF5119A21E74D4F00106EF2 /* Announcements */,
+				8A680FA1226DD24F00E800AE /* Assignments */,
 				54EB93112015F878001DD93F /* Helpers */,
 				5482DDD92056D35900647D57 /* Fonts */,
 				54EB92FD2015ED1D001DD93F /* AppDelegate.swift */,
@@ -890,6 +907,7 @@
 				8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */,
 				547DD3E4208D0C2A008EED15 /* Time.swift */,
 				8AA44CD621904975007DB9C5 /* Localizable.swift */,
+				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -944,6 +962,44 @@
 				8A5F42E720B1C5EA00FF93D1 /* ThreadTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8A680FA1226DD24F00E800AE /* Assignments */ = {
+			isa = PBXGroup;
+			children = (
+				8A680FA4226DD26B00E800AE /* Model */,
+				8A680FA3226DD26600E800AE /* Controllers */,
+				8A680FA2226DD25C00E800AE /* Views */,
+			);
+			path = Assignments;
+			sourceTree = "<group>";
+		};
+		8A680FA2226DD25C00E800AE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A680FA7226DD28A00E800AE /* Assignments.storyboard */,
+				8A680FA9226DD2E400E800AE /* AssignmentTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8A680FA3226DD26600E800AE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A680FA5226DD27A00E800AE /* AssignmentsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8A680FA4226DD26B00E800AE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8A680FAB226DD3EB00E800AE /* AssignmentsResponse.swift */,
+				8A680FAD226DD4F800E800AE /* FullAssignment.swift */,
+				8A680FAF226DD58700E800AE /* StudentSubmissions.swift */,
+				8A680FB1226DD67700E800AE /* FileModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8A6D360520B5964D00DD0445 /* Chat */ = {
@@ -1136,6 +1192,7 @@
 				5482DDFE2056D50600647D57 /* SFUIText-MediumItalic.otf in Resources */,
 				5482DE022056D51200647D57 /* SFUIText-RegularG3.otf in Resources */,
 				5482DE562056DAB100647D57 /* Roboto Condensed Light Italic.otf in Resources */,
+				8A680FA8226DD28A00E800AE /* Assignments.storyboard in Resources */,
 				8A298CCF2184CD6F00A82FEA /* Grades.storyboard in Resources */,
 				5482DE642056DAB100647D57 /* Roboto Bold.otf in Resources */,
 				5482DE522056DAB100647D57 /* Roboto Italic.otf in Resources */,
@@ -1359,6 +1416,7 @@
 				545BBFFB2018BC0E00A1F858 /* LoginViewController.swift in Sources */,
 				8A8A738F222C5A4400972BE6 /* WeeklyPlanResponse.swift in Sources */,
 				547A378620220A5900794441 /* NotificationsTableViewController.swift in Sources */,
+				8A680FB2226DD67700E800AE /* FileModel.swift in Sources */,
 				8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */,
 				8A6D361720B5983500DD0445 /* BaseMessageHandler.swift in Sources */,
 				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
@@ -1371,6 +1429,7 @@
 				8A6D361F20B5999100DD0445 /* SendingStatusCollectionViewCell.swift in Sources */,
 				540890742068259100CC59A0 /* AttendanceViewController+CalendarDelegates.swift in Sources */,
 				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,
+				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
@@ -1378,6 +1437,8 @@
 				543830B0204D634500ABF477 /* CourseGrade.swift in Sources */,
 				8A6D360F20B5975700DD0445 /* SlidingDataSource.swift in Sources */,
 				547A3788202210CB00794441 /* NotificationTableViewCell.swift in Sources */,
+				8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */,
+				8A680FAA226DD2E400E800AE /* AssignmentTableViewCell.swift in Sources */,
 				54EB93002015ED1D001DD93F /* SchoolCodeViewController.swift in Sources */,
 				8A6D360920B5967D00DD0445 /* BaseMessagesSelector.swift in Sources */,
 				546356ED201F68E90072F066 /* ParentResponse.swift in Sources */,
@@ -1396,6 +1457,7 @@
 				547A37912022153B00794441 /* NotifcationResponse.swift in Sources */,
 				546356EA201F68E90072F066 /* Parent.swift in Sources */,
 				8A3A217520D9121900539E1C /* Assignment.swift in Sources */,
+				8A680FAC226DD3EB00E800AE /* AssignmentsResponse.swift in Sources */,
 				54EB93132015F88E001DD93F /* Routes.swift in Sources */,
 				54CCF400206BEBA600824A3D /* BehaviorNotesResponse.swift in Sources */,
 				54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */,
@@ -1431,10 +1493,12 @@
 				546356DD201F669B0072F066 /* Config.swift in Sources */,
 				8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */,
 				547A37962022153B00794441 /* Param.swift in Sources */,
+				8A680FB0226DD58700E800AE /* StudentSubmissions.swift in Sources */,
 				8A6D363220B59B8900DD0445 /* TimeSeparatorPresenter.swift in Sources */,
 				8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */,
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
+				8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */,
 				546356EB201F68E90072F066 /* Child.swift in Sources */,
 				54CCF401206BEBA600824A3D /* BehaviorNotesOwner.swift in Sources */,
 				8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */,

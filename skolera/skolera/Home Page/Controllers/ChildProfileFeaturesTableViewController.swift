@@ -259,21 +259,25 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 if let result = response.result.value as? [String : AnyObject]
                 {
                     let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyy-MM-dd"
-                    let startDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.startDate)
-                    let endDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.endDate)
-                    formatter.dateFormat = "eee"
-                    let startDay = formatter.string(from: startDate!)
-                    let endDay = formatter.string(from: endDate!)
-                    formatter.dateFormat = "dd/MM"
-                    if Language.language == .arabic {
-                        self.weeklyPlannerDate.text = "يبدأ من: \(startDay) \(formatter.string(from: startDate!)) الي \(endDay) \(formatter.string(from: endDate!))"
+                    if weeklyPlanResponse.weeklyPlans.isEmpty {
+                        self.weeklyPlannerDate.text = "No weekly planner".localized
                     } else {
-                        self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        let startDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.startDate)
+                        let endDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.endDate)
+                        formatter.dateFormat = "eee"
+                        let startDay = formatter.string(from: startDate!)
+                        let endDay = formatter.string(from: endDate!)
+                        formatter.dateFormat = "dd/MM"
+                        if Language.language == .arabic {
+                            self.weeklyPlannerDate.text = "يبدأ من: \(startDay) \(formatter.string(from: startDate!)) الي \(endDay) \(formatter.string(from: endDate!))"
+                        } else {
+                            self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
+                        }
+                        
+                        self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                     }
-                    
-                    self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                 }
 
             case .failure(let error):

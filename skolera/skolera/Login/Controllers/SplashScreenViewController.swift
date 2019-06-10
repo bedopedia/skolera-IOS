@@ -39,7 +39,7 @@ class SplashScreenViewController: UIViewController {
             {
                 if let password = keychain.get("password")
                 {
-                    parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password]
+                    parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
                 }
             }
             else
@@ -72,12 +72,16 @@ class SplashScreenViewController: UIViewController {
                         
                         self.present(nvc, animated: true, completion: nil)
                     } else {
-                        let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        childProfileVC.actor = parent.data
-                        //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
-                        let nvc = UINavigationController(rootViewController: childProfileVC)
-                        
-                        self.present(nvc, animated: true, completion: nil)
+                        if parent.data.userType.elementsEqual("student") {
+                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                        } else {
+                            let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            childProfileVC.actor = parent.data
+                            //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                        }
                     }
                     
                 }
@@ -97,4 +101,55 @@ class SplashScreenViewController: UIViewController {
             self.navigationController?.pushViewController(schoolCodevc, animated: false)
         }
     }
+    func getChildren(parentId: Int, childId: Int)
+    {
+        let parameters : Parameters = ["parent_id" : parentId]
+        let headers : HTTPHeaders? = getHeaders()
+        let url = String(format: GET_CHILDREN(),"\(parentId)")
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            switch response.result{
+                
+            case .success(_):
+                if let result = response.result.value as? [[String : AnyObject]]
+                {
+                    for childJson in result
+                    {
+                        var child = Child.init(fromDictionary: childJson)
+                        if child.id == childId {
+                            let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            childProfileVC.child = child
+                            childProfileVC.quizzesText = "\(child.todayWorkloadStatus.quizzesCount!) \("Quizzes".localized)".localizedCapitalized
+                            childProfileVC.assignmentsText = "\(child.todayWorkloadStatus.assignmentsCount!) \("Assignments".localized)".localizedCapitalized
+                            childProfileVC.eventsText = "\(child.todayWorkloadStatus.eventsCount!) \("Events".localized)".localizedCapitalized
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            
+                            self.present(nvc, animated: true, completion: nil)
+                            break
+                        }
+                        
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+                {
+                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
+                        
+                        
+                    })
+                }
+                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
+                {
+                    showReauthenticateAlert(viewController: self)
+                }
+                else
+                {
+                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
+                    })
+                }
+            }
+        }
+    }
+
+    
 }

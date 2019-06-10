@@ -30,6 +30,7 @@ class Parent : NSObject, NSCoding{
 	var locale : String!
 	var middlename : AnyObject!
 	var name : String!
+    var parentId: Int!
 	var password : AnyObject!
 	var phone : AnyObject!
 	var realtimeIp : String!
@@ -73,6 +74,7 @@ class Parent : NSObject, NSCoding{
 		locale = dictionary["locale"] as? String
 		middlename = dictionary["middlename"] as AnyObject
 		name = dictionary["name"] as? String
+        parentId = dictionary["parent_id"] as? Int
 		password = dictionary["password"] as AnyObject
 		phone = dictionary["phone"] as AnyObject
 		realtimeIp = dictionary["realtime_ip"] as? String
@@ -158,6 +160,9 @@ class Parent : NSObject, NSCoding{
 		if name != nil{
 			dictionary["name"] = name
 		}
+        if parentId != nil {
+            dictionary["parent_id"] = parentId
+        }
 		if password != nil{
 			dictionary["password"] = password
 		}
@@ -220,6 +225,7 @@ class Parent : NSObject, NSCoding{
          locale = aDecoder.decodeObject(forKey: "locale") as? String
          middlename = aDecoder.decodeObject(forKey: "middlename") as AnyObject
          name = aDecoder.decodeObject(forKey: "name") as? String
+         parentId = aDecoder.decodeObject(forKey: "parent_id") as? Int
          password = aDecoder.decodeObject(forKey: "password") as AnyObject
          phone = aDecoder.decodeObject(forKey: "phone") as AnyObject
          realtimeIp = aDecoder.decodeObject(forKey: "realtime_ip") as? String
@@ -300,6 +306,9 @@ class Parent : NSObject, NSCoding{
 		if name != nil{
 			aCoder.encode(name, forKey: "name")
 		}
+        if name != nil{
+            aCoder.encode(parentId, forKey: "parent_id")
+        }
 		if password != nil{
 			aCoder.encode(password, forKey: "password")
 		}

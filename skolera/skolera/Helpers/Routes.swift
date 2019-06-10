@@ -97,3 +97,7 @@ func SET_THREAD_IS_SEEN() -> String{
 func GET_ANNOUNCEMENTS() -> String {
     return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
 }
+//Assignments
+func GET_ASSINGMENTS() -> String {
+    return "\(BASE_URL!)/api/students/%d/assignments"
+}
