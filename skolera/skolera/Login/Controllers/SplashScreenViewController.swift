@@ -134,17 +134,16 @@ class SplashScreenViewController: UIViewController {
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
                 {
                     showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        
+                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
                         
                     })
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
+                } else if response.response?.statusCode == 401 || response.response?.statusCode == 500 {
                     showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
+                } else {
                     showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
+                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
                     })
                 }
             }

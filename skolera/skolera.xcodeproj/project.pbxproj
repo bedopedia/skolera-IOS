@@ -155,6 +155,9 @@
 		8A3A217920D9186B00539E1C /* GradeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217820D9186B00539E1C /* GradeItem.swift */; };
 		8A3DE99320BED37C00BACD0E /* GradeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3DE99220BED37C00BACD0E /* GradeHeaderTableViewCell.swift */; };
 		8A3DE99520BED3C300BACD0E /* GradeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3DE99420BED3C300BACD0E /* GradeDetailTableViewCell.swift */; };
+		8A48DA5722B1509500260C7D /* AssignmentCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5622B1509500260C7D /* AssignmentCoursesViewController.swift */; };
+		8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */; };
+		8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */; };
 		8A58B44020D968B4002C766B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A58B43F20D968B4002C766B /* GoogleService-Info.plist */; };
 		8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42D920B1805900FF93D1 /* CourseGradingPeriods.swift */; };
 		8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */; };
@@ -389,6 +392,9 @@
 		8A3A217820D9186B00539E1C /* GradeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeItem.swift; sourceTree = "<group>"; };
 		8A3DE99220BED37C00BACD0E /* GradeHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		8A3DE99420BED3C300BACD0E /* GradeDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailTableViewCell.swift; sourceTree = "<group>"; };
+		8A48DA5622B1509500260C7D /* AssignmentCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCoursesViewController.swift; sourceTree = "<group>"; };
+		8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourseTableViewCell.swift; sourceTree = "<group>"; };
+		8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourse.swift; sourceTree = "<group>"; };
 		8A58B43F20D968B4002C766B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A5F42D920B1805900FF93D1 /* CourseGradingPeriods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseGradingPeriods.swift; sourceTree = "<group>"; };
 		8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
@@ -979,6 +985,7 @@
 			children = (
 				8A680FA7226DD28A00E800AE /* Assignments.storyboard */,
 				8A680FA9226DD2E400E800AE /* AssignmentTableViewCell.swift */,
+				8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -986,6 +993,7 @@
 		8A680FA3226DD26600E800AE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8A48DA5622B1509500260C7D /* AssignmentCoursesViewController.swift */,
 				8A680FA5226DD27A00E800AE /* AssignmentsViewController.swift */,
 			);
 			path = Controllers;
@@ -998,6 +1006,7 @@
 				8A680FAD226DD4F800E800AE /* FullAssignment.swift */,
 				8A680FAF226DD58700E800AE /* StudentSubmissions.swift */,
 				8A680FB1226DD67700E800AE /* FileModel.swift */,
+				8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1426,6 +1435,7 @@
 				547A37922022153B00794441 /* AdditionalParam.swift in Sources */,
 				8A6D360B20B5969E00DD0445 /* MessagesSelectorProtocol.swift in Sources */,
 				54D3EDDB207FF98D00BCDA80 /* CourseGroup.swift in Sources */,
+				8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */,
 				8A6D361F20B5999100DD0445 /* SendingStatusCollectionViewCell.swift in Sources */,
 				540890742068259100CC59A0 /* AttendanceViewController+CalendarDelegates.swift in Sources */,
 				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,
@@ -1478,6 +1488,7 @@
 				8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
 				544216E7204C604000BEB167 /* GradesTableViewController.swift in Sources */,
+				8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */,
 				547DD3E7208D0C43008EED15 /* Date+Time.swift in Sources */,
 				8A7E305920BABF5D00BF2985 /* Stage.swift in Sources */,
 				8A5F42E620B1B5C300FF93D1 /* ContactTeacherViewController.swift in Sources */,
@@ -1500,6 +1511,7 @@
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
 				8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */,
 				546356EB201F68E90072F066 /* Child.swift in Sources */,
+				8A48DA5722B1509500260C7D /* AssignmentCoursesViewController.swift in Sources */,
 				54CCF401206BEBA600824A3D /* BehaviorNotesOwner.swift in Sources */,
 				8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */,
 				547A37932022153B00794441 /* Meta.swift in Sources */,

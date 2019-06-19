@@ -101,3 +101,8 @@ func GET_ANNOUNCEMENTS() -> String {
 func GET_ASSINGMENTS() -> String {
     return "\(BASE_URL!)/api/students/%d/assignments"
 }
+
+//AssignmentsCourses
+func GET_ASSINGMENTS_COURSES() -> String {
+    return "\(BASE_URL!)/api/students/%d/course_groups_with_assignments_number"
+}

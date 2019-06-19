@@ -114,7 +114,7 @@ class ChildProfileViewController: UIViewController {
     }
     
     @IBAction func openAssignments(){
-        let assignmentsVC = AssignmentsViewController.instantiate(fromAppStoryboard: .Assignments)
+        let assignmentsVC = AssignmentCoursesViewController.instantiate(fromAppStoryboard: .Assignments)
         assignmentsVC.child = self.child
         self.navigationController?.pushViewController(assignmentsVC, animated: true)
     }
