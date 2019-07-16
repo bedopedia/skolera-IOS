@@ -82,5 +82,13 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 108
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let assignmentsVC = AssignmentsViewController.instantiate(fromAppStoryboard: .Assignments)
+        assignmentsVC.child = self.child
+        assignmentsVC.courseName = courses[indexPath.row].courseName
+        assignmentsVC.courseId = courses[indexPath.row].courseId
+        self.navigationController?.pushViewController(assignmentsVC, animated: true)
+    }
 
 }

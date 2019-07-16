@@ -33,28 +33,35 @@ class AssignmentCourseTableViewCell: UITableViewCell {
             subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            assignmentName.text = course.assignmentName
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-            let assignDate = dateFormatter.date(from: course.nextAssignmentDate)
-            let newDateFormat = DateFormatter()
-            newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
-            assignmentDateLabel.text = newDateFormat.string(from: assignDate!)
-            if course.assignmentState.elementsEqual("running") {
-                assignmentDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                assignmentDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                assignmentClockImage.image = #imageLiteral(resourceName: "greenHour")
+            assignmentName.text = course.assignmentName == nil ? "No Assignment".localized : course.assignmentName
+            if let assignStringDate = course.nextAssignmentDate {
+                assignmentDateView.isHidden = false
+                assignmentDateLabel.isHidden = false
+                assignmentClockImage.isHidden = false
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                let assignDate = dateFormatter.date(from: course.nextAssignmentDate)
+                let newDateFormat = DateFormatter()
+                newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
+                assignmentDateLabel.text = newDateFormat.string(from: assignDate!)
+                if course.assignmentState.elementsEqual("running") {
+                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
+                    assignmentDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "greenHour")
+                } else {
+                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+                    assignmentDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "1")
+                }
             } else {
-                assignmentDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                assignmentDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                assignmentClockImage.image = #imageLiteral(resourceName: "1")
+                assignmentDateView.isHidden = true
+                assignmentDateLabel.isHidden = true
+                assignmentClockImage.isHidden = true
             }
-            if course.assignmentsCount > 3 {
-                numberOfAssignmentLabel.text = "+3"
-            } else {
-                numberOfAssignmentLabel.text = "\(course.assignmentsCount ?? 0)"
-            }
+            
+            
+            numberOfAssignmentLabel.text = "\(course.assignmentsCount ?? 0)"
         }
     }
     
@@ -79,5 +86,7 @@ class AssignmentCourseTableViewCell: UITableViewCell {
         }
         
     }
+    
+    
 
 }

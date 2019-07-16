@@ -14,14 +14,17 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     
     var child : Child!
+    var courseName: String = ""
+    var courseId: Int = 0
     var assignments = [FullAssignment]()
     
     var meta: Meta!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
@@ -32,22 +35,20 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
 
-    func getAssignments(page: Int = 1){
+    func getAssignments(){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = ["page": page, "per_page" : 20]
+        let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_ASSINGMENTS(), child.id)
+        let url = String(format: GET_ASSINGMENTS(), courseId)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.dismiss()
             switch response.result{
                 
             case .success(_):
                 //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [String : AnyObject]
+                if let result = response.result.value as? [[String : AnyObject]]
                 {
-                    let assignmentsResponse = AssignmentsResponse(result)
-                    self.assignments = assignmentsResponse.assignments ?? []
-                    self.meta = assignmentsResponse.meta
+                    self.assignments = result.map({ FullAssignment($0) })
                     self.tableView.reloadData()
                 }
             case .failure(let error):
@@ -69,17 +70,17 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return assignments.count
+        return self.assignments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
-        if indexPath.row == assignments.count - 1{
-            if meta.currentPage != meta.totalPages{
-                getAssignments(page: (meta.currentPage)! + 1)
-            }
-        }
+        cell.nameLabel.text = courseName
+        cell.assignment = assignments[indexPath.row]
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 105
+    }
 }
