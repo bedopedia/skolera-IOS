@@ -55,22 +55,8 @@ class ChildProfileViewController: UIViewController {
                 }
             }
         }
-        addChildImage()
-        if let child = child{
-            childNameLabel.text = child.name
-            childGradeLabel.text = child.levelName
-        }
-        if let assignmentsText = assignmentsText{
-            assignmentsLabel.text = assignmentsText
-        }
-        if let quizzesText = quizzesText{
-            quizzesLabel.text = quizzesText
-        }
-        if let eventsText = eventsText{
-            eventsLabel.text = eventsText
-        }
-        let featureTVC = childViewControllers[0] as! ChildProfileFeaturesTableViewController
-        featureTVC.child = child
+//        addChildImage()
+        
         
         
     }
@@ -82,7 +68,7 @@ class ChildProfileViewController: UIViewController {
     //MARK: - methods
     
     /// draws the child image with rounded green glow
-    private func addChildImage()
+    func addChildImage()
     {
         //sets outer view to generate the green glow
         childImageOuterView.clipsToBounds = false
@@ -98,6 +84,24 @@ class ChildProfileViewController: UIViewController {
         childImageOuterView.addSubview(childImageView)
         //sets image frame to the outer frame
         NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
+    }
+    
+    func addChildData() {
+        if let child = child{
+            childNameLabel.text = child.name
+            childGradeLabel.text = child.levelName
+        }
+//        if let assignmentsText = assignmentsText{
+//            assignmentsLabel.text = assignmentsText
+//        }
+//        if let quizzesText = quizzesText{
+//            quizzesLabel.text = quizzesText
+//        }
+//        if let eventsText = eventsText{
+//            eventsLabel.text = eventsText
+//        }
+        let featureTVC = childViewControllers[0] as! ChildProfileFeaturesTableViewController
+        featureTVC.child = child
     }
     
     

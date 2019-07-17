@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         UIApplication.shared.applicationIconBadgeNumber = 0
         Messaging.messaging().delegate = self
-
+        UINavigationBar.appearance().barTintColor = .white
         
         return true
     }

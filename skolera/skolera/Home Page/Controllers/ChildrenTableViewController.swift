@@ -193,7 +193,7 @@ class ChildrenTableViewController: UITableViewController {
     ///   - indexPath: cell row and section
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
-        let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
         childProfileVC.child = cell.child
         childProfileVC.assignmentsText = cell.assignmentsLabel.text
         childProfileVC.quizzesText = cell.quizzesLabel.text

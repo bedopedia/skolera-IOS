@@ -216,6 +216,7 @@
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
+		8AAF1D7822DE035200B89A6D /* ChildHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */; };
 		8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB5276D226DC77F006EA7FB /* CardView.swift */; };
 		8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */; };
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
@@ -455,6 +456,7 @@
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
 		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
+		8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeViewController.swift; sourceTree = "<group>"; };
 		8AB5276D226DC77F006EA7FB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 		5476059D2020810500369BE0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */,
 				547605A0202083ED00369BE0 /* ChildrenTableViewController.swift */,
 				5402CA0C2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift */,
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
@@ -1431,6 +1434,7 @@
 				8A6D361720B5983500DD0445 /* BaseMessageHandler.swift in Sources */,
 				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
 				54230E06205DA17C00EA7E62 /* String+CapitalizeFirstLetter.swift in Sources */,
+				8AAF1D7822DE035200B89A6D /* ChildHomeViewController.swift in Sources */,
 				545BC0032018D4E800A1F858 /* Textfield+border.swift in Sources */,
 				543830B2204D711200ABF477 /* Label+Rounded.swift in Sources */,
 				547A37922022153B00794441 /* AdditionalParam.swift in Sources */,

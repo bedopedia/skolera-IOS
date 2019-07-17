@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,10 +34,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HX8-iM-4aa">
-                                            <rect key="frame" x="276" y="19" width="65" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="65" id="sqD-dR-iaY"/>
-                                            </constraints>
+                                            <rect key="frame" x="278.5" y="19" width="62.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.5607843137254902" green="0.55686274509803924" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -127,17 +124,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vD7-kI-mDD"/>
                     </view>
-                    <navigationItem key="navigationItem" id="NtM-RZ-QnX">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="NtM-RZ-QnX">
                         <nil key="title"/>
-                        <barButtonItem key="backBarButtonItem" title=" " id="ZNX-rV-8EI"/>
+                        <barButtonItem key="backBarButtonItem" title="baaaaack" image="Advisement" style="done" id="s4u-Lj-wQT">
+                            <color key="tintColor" red="0.14915576580000001" green="0.49646049739999998" blue="0.89938241240000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="DdO-P9-gc6">
                             <rect key="frame" x="187.5" y="22" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy new year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="eB8-bZ-uMr">
-                                    <rect key="frame" x="-160" y="-14.5" width="320" height="29"/>
+                                    <rect key="frame" x="-100" y="-14.5" width="200" height="29"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="320" id="Qua-gh-oYm"/>
+                                        <constraint firstAttribute="width" constant="200" id="fwn-FF-4Rz"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                     <color key="textColor" red="0.33300891519999998" green="0.333286792" blue="0.33305191989999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -163,4 +162,7 @@
             <point key="canvasLocation" x="609" y="-12"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Advisement" width="512" height="512"/>
+    </resources>
 </document>

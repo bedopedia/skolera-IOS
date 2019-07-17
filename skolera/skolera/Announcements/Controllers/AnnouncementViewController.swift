@@ -22,6 +22,7 @@ class AnnouncementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        titleLabel.backgroundColor = .red
         if weeklyNote != nil {
             titleLabel.text = weeklyNote.title
             //        announcementHeader.text = announcement.title
