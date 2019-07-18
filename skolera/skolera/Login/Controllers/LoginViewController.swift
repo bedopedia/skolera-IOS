@@ -195,7 +195,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 {
                     for childJson in result
                     {
-                        var child = Child.init(fromDictionary: childJson)
+                        let child = Child(fromDictionary: childJson)
                         if child.id == childId {
                             let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.child = child

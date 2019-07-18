@@ -109,3 +109,12 @@ func GET_ASSINGMENTS() -> String {
 func GET_ASSINGMENTS_COURSES() -> String {
     return "\(BASE_URL!)/api/students/%d/course_groups_with_assignments_number"
 }
+
+func GET_POSTS_COURSES() -> String {
+    return "\(BASE_URL!)/api/students/%d/course_groups_recent_posts"
+}
+
+func GET_STUDENT_POSTS() -> String {
+    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d"
+}
+

@@ -62,7 +62,7 @@ class ChildProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
+//        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
     }
 
     //MARK: - methods

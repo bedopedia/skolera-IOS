@@ -13,17 +13,13 @@ import YLProgressBar
 class ChildProfileFeaturesTableViewController: UITableViewController {
 
     //MARK: - Outlets
-    @IBOutlet weak var averageGradeLabel: UILabel!
-    
     @IBOutlet weak var presentDaysLabel: UILabel!
     @IBOutlet weak var attendanceProgressBar: YLProgressBar!
-    @IBOutlet weak var timetableLabel: UILabel!
     
     @IBOutlet weak var positiveBehaviorNotesLabel: UILabel!
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
-    @IBOutlet weak var weeklyPlannerDate: UILabel!
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
@@ -47,7 +43,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 } else {
                     presentDaysLabel.text = "present \(presentDays) out of \(child.attendances.count) days"
                 }
-                weeklyPlannerDate.text = ""
                 setProgressBarColor(absentDays: child.attendances.count - presentDays)
             }
         }
@@ -71,12 +66,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorStyle = .none
-//        tableView.isScrollEnabled = false
         SVProgressHUD.setDefaultMaskType(.clear)
         setProgressBarProperties()
         
+        let backItem = UIBarButtonItem()
+        backItem.title = nil
+        navigationItem.backBarButtonItem = backItem
+        
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         switch cell?.reuseIdentifier{
@@ -90,10 +88,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             showBehaviorNotes()
         case "mainWeeklyPlannerCell":
             showWeeklyPlanner()
+        case "mainAssignmentsCell":
+            openAssignments()
+        case "mainPostsCell":
+            openPosts()
         default:
             return
         }
     }
+    
     //MARK: - Methods
     /// set the progressBar colors, rounded corners
     fileprivate func setProgressBarProperties() {
@@ -105,89 +108,45 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         attendanceProgressBar.progressTintColors = [UIColor.appColors.progressBarColor1,UIColor.appColors.progressBarColor2]
     }
     
+    private func openPosts(){
+        let postsVC = PostsViewController.instantiate(fromAppStoryboard: .Posts)
+        postsVC.child = self.child
+        self.navigationController?.pushViewController(postsVC, animated: true)
+    }
+    
+    private func openAssignments(){
+        let assignmentsVC = AssignmentCoursesViewController.instantiate(fromAppStoryboard: .Assignments)
+        assignmentsVC.child = self.child
+        self.navigationController?.pushViewController(assignmentsVC, animated: true)
+    }
+    
     /// service call to get total courses grades, average grade is set on completion
-    private func getGrades()
-    {
+    private func getGrades() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_GRADES(),child.actableId!)
-        debugPrint(userId())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             switch response.result{
-                
             case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let res = response.result.value as? [String : AnyObject]
-                {
-//                    debugPrint(res)
+                if let res = response.result.value as? [String : AnyObject] {
                     let result = res["courses_grades"] as! [[String: AnyObject]]
-                    debugPrint(result)
-                    for grade in result
-                    {
-                        var gradeItem = CourseGrade.init(fromDictionary: grade)
+                    for grade in result {
+                        let gradeItem = CourseGrade.init(fromDictionary: grade)
                         let gradeingPeriods = grade["grading_periods_grades"] as! [[String: AnyObject]]
                         var hideGrade: Bool = false
                         for item in  gradeingPeriods{
                             if let publish = item["publish"] as? Bool, publish {
-                                debugPrint("PIBLISH", publish)
                                 hideGrade = false
                             } else {
                                 hideGrade = true
                                 break
                             }
-                            
                         }
                         gradeItem.hideGrade = hideGrade
                         self.grades.append(gradeItem)
                     }
-                    
-                    self.averageGradeLabel.text = "\(self.averageGradeLabel.text!) \(res["grade"]!["letter"]! ?? "-")"
-                    print("finished grades")
                     self.getCourseGroups()
-                    
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
-            }
-        }
-    }
-    private func getCourseGroups()
-    {
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_COURSE_GROUPS(),child.id!)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.popActivity()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
-                    debugPrint(result)
-                    var courseGroups = [Int: CourseGroup]()
-                    
-                    for courseGroup in result{
-                        let temp = CourseGroup.init(fromDictionary: courseGroup)
-                        courseGroups[temp.courseId] = temp
-                    }
-                    debugPrint(courseGroups)
-                    for grade in self.grades{
-                        grade.courseGroup = courseGroups[grade.courseId]
-                    }
-                    print("finished course groups")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -207,8 +166,43 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         }
     }
     
-    private func getBehaviorNotesCount()
-    {
+    private func getCourseGroups() {
+        let parameters : Parameters? = nil
+        let headers : HTTPHeaders? = getHeaders()
+        let url = String(format: GET_COURSE_GROUPS(),child.id!)
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            SVProgressHUD.popActivity()
+            switch response.result{
+            case .success(_):
+                if let result = response.result.value as? [[String : AnyObject]] {
+                    var courseGroups = [Int: CourseGroup]()
+                    for courseGroup in result{
+                        let temp = CourseGroup.init(fromDictionary: courseGroup)
+                        courseGroups[temp.courseId] = temp
+                    }
+                    for grade in self.grades{
+                        grade.courseGroup = courseGroups[grade.courseId]
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+                {
+                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+                }
+                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
+                {
+                    showReauthenticateAlert(viewController: self)
+                }
+                else
+                {
+                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
+                }
+            }
+        }
+    }
+    
+    private func getBehaviorNotesCount() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = ["student_id" : child.actableId,"user_type" : "Parents"]
         let headers : HTTPHeaders? = getHeaders()
@@ -216,11 +210,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.dismiss()
             switch response.result{
-                
             case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [String : AnyObject]
-                {
+                if let result = response.result.value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
@@ -242,44 +233,24 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 }
             }
         }
-
     }
-    private func getWeeklyReport()
-    {
+    
+    private func getWeeklyReport() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "d/M/y"
-        
         let url = String(format: GET_WEEKLY_PLANNER(),formatter.string(from: Date()))
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { (response) in
             switch response.result {
             case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
-                {
+                if let result = response.result.value as? [String : AnyObject] {
                     let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
-                    if weeklyPlanResponse.weeklyPlans.isEmpty {
-                        self.weeklyPlannerDate.text = "No weekly planner".localized
-                    } else {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd"
-                        let startDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.startDate)
-                        let endDate = formatter.date(from: weeklyPlanResponse.weeklyPlans.first!.endDate)
-                        formatter.dateFormat = "eee"
-                        let startDay = formatter.string(from: startDate!)
-                        let endDay = formatter.string(from: endDate!)
-                        formatter.dateFormat = "dd/MM"
-                        if Language.language == .arabic {
-                            self.weeklyPlannerDate.text = "يبدأ من: \(startDay) \(formatter.string(from: startDate!)) الي \(endDay) \(formatter.string(from: endDate!))"
-                        } else {
-                            self.weeklyPlannerDate.text = "Start from: \(startDay) \(formatter.string(from: startDate!)) to \(endDay) \(formatter.string(from: endDate!))"
-                        }
-                        
+                    if !weeklyPlanResponse.weeklyPlans.isEmpty {
                         self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                     }
                 }
-
             case .failure(let error):
                 print(error.localizedDescription)
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
@@ -297,23 +268,18 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             }
         }
     }
-    private func getTimeTable()
-    {
+    
+    private func getTimeTable() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_TIME_TABLE(),child.actableId!)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            
             switch response.result{
-                
             case .success(_):
                 //change next line into [[String : AnyObject]] if parsing Json array
-                debugPrint(response)
-                if let result = response.result.value as? [[String : AnyObject]], result.count > 0
-                {
-                    for timeslotDictionary in result
-                    {
+                if let result = response.result.value as? [[String : AnyObject]], result.count > 0 {
+                    for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
                         //next line is important so that we can sort by weekdays
                         timeslot.day.capitalizeFirstLetter()
@@ -323,12 +289,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                     dateFormatter.locale = Locale.init(identifier: "en")
                     //sort timeslots according to day variable first, and then by from variable
                     self.timeslots.sort(by: { (a, b) -> Bool in
-                        if dateFormatter.weekdaySymbols.index(of: a.day)! == dateFormatter.weekdaySymbols.index(of: b.day)!
-                        {
+                        if dateFormatter.weekdaySymbols.index(of: a.day)! == dateFormatter.weekdaySymbols.index(of: b.day)! {
                            return a.from.time < b.from.time
-                        }
-                        else
-                        {
+                        } else {
                             return dateFormatter.weekdaySymbols.index(of: a.day)! < dateFormatter.weekdaySymbols.index(of: b.day)!
                         }
                     })
@@ -337,33 +300,19 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                     var next = self.timeslots.first(where: { (a) -> Bool in
                         return a.day == dateFormatter.string(from: now) && now.time < a.from.time
                     })
-                    if next == nil
-                    {
+                    if next == nil {
                         if let lasttimeSlottoday = self.timeslots.filter({ (a) -> Bool in
                             return a.day == dateFormatter.string(from: now)
-                        }).last
-                        {
+                        }).last {
                             next = self.timeslots[(self.timeslots.index(of: lasttimeSlottoday)! + 1) % self.timeslots.count]
                         }
                     }
-                    if next == nil
-                    {
+                    if next == nil {
                         next = self.timeslots.first!
                     }
-                        dateFormatter.dateFormat = "HH:mm a"
-                    if Language.language == .arabic {
-                        self.timetableLabel.text = "التالي: \((next?.courseName!)!), \((next?.day)!) \(dateFormatter.string(from: (next?.from)!))"
-                    } else {
-                        self.timetableLabel.text = "Next: \((next?.courseName!)!), \((next?.day)!) \(dateFormatter.string(from: (next?.from)!))"
-                    }
-                    
-
                     self.disableTimeTable = false
-                    
                 } else {
                     self.disableTimeTable = true
-                    self.timetableLabel.text = Language.language == .arabic ? "لا يوجد جدول مواعيد" : "There is no timetable"
-                    
                 }
                 SVProgressHUD.popActivity()
             case .failure(let error):
@@ -386,40 +335,35 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     //MARK: - Actions
     
     /// move to grades screen to show courses grades
-    func showCoursesGrades()
-    {
+    func showCoursesGrades() {
         let gtvc = GradesTableViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
         gtvc.grades = self.grades
         self.navigationController?.pushViewController(gtvc, animated: true)
     }
     
-    func showAttendance()
-    {
+    func showAttendance() {
         let avc = AttendanceViewController.instantiate(fromAppStoryboard: .Attendance)
         avc.child = child
         self.navigationController?.pushViewController(avc, animated: true)
     }
     
-    func showBehaviorNotes()
-    {
+    func showBehaviorNotes() {
         let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
         bvc.child = child
         self.navigationController?.pushViewController(bvc, animated: true)
     }
     
-    func showWeeklyPlanner()
-    {
+    func showWeeklyPlanner() {
         if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
             wvc.weeklyPlanner = self.weeklyPlans.first!
             self.navigationController?.pushViewController(wvc, animated: true)
         }
-        
     }
-    func showTimetable()
-    {
+    
+    func showTimetable() {
         if !disableTimeTable {
             let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
             ttvc.child = child

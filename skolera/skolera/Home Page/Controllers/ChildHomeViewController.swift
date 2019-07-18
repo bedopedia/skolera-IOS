@@ -53,7 +53,6 @@ class ChildHomeViewController: UIViewController {
     @IBAction func selectMessages(){
         unSelectAllTabs()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newMessage))
-
         threadsView.isHidden = false
     }
     @IBAction func selectNotification(){

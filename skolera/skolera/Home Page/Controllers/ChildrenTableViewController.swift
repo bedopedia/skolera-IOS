@@ -61,8 +61,7 @@ class ChildrenTableViewController: UITableViewController {
             SVProgressHUD.dismiss()
             switch response.result{
             case .success(_):
-                //do nothing
-                debugPrint("success")
+                debugPrint("UPDATED_FCM_SUCCESSFULLY")
             case .failure(let error):
                 print(error.localizedDescription)
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
@@ -86,12 +85,7 @@ class ChildrenTableViewController: UITableViewController {
     //service call to change localization
     func setLocalization() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        var locale = ""
-        if Locale.current.languageCode!.elementsEqual("ar") {
-            locale = "ar"
-        } else {
-            locale = "en"
-        }
+        let locale = Locale.current.languageCode!.elementsEqual("ar") ? "ar" : "en"
         let parameters: Parameters = ["user": ["language": locale]]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
@@ -99,8 +93,7 @@ class ChildrenTableViewController: UITableViewController {
             SVProgressHUD.dismiss()
             switch response.result{
             case .success(_):
-                //do nothing
-                debugPrint("success")
+                debugPrint("USER_LANGUAGE_CHANGED_SUCCESSFULLY")
             case .failure(let error):
                 print(error.localizedDescription)
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
@@ -122,8 +115,7 @@ class ChildrenTableViewController: UITableViewController {
     }
     
     /// service call to get parent children, it adds them to the children array
-    func getChildren()
-    {
+    func getChildren() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = ["parent_id" : parentId()]
         let headers : HTTPHeaders? = getHeaders()
@@ -131,12 +123,9 @@ class ChildrenTableViewController: UITableViewController {
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.dismiss()
             switch response.result{
-            
             case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
-                    for child in result
-                    {
+                if let result = response.result.value as? [[String : AnyObject]] {
+                    for child in result {
                         self.kids.append(Child.init(fromDictionary: child))
                     }
                     self.refreshControl?.endRefreshing()
@@ -179,10 +168,7 @@ class ChildrenTableViewController: UITableViewController {
     /// - Returns: ChildrenTableViewCell filled with its contents
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
-        
-        let child = kids[indexPath.row]
-        cell.child = child
-        
+        cell.child = kids[indexPath.row]
         return cell
     }
     
@@ -195,9 +181,9 @@ class ChildrenTableViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
         let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
         childProfileVC.child = cell.child
-        childProfileVC.assignmentsText = cell.assignmentsLabel.text
-        childProfileVC.quizzesText = cell.quizzesLabel.text
-        childProfileVC.eventsText = cell.eventsLabel.text
+        childProfileVC.assignmentsText = ""
+        childProfileVC.quizzesText = ""
+        childProfileVC.eventsText = ""
         self.navigationController?.pushViewController(childProfileVC, animated: true)
     }
     
@@ -207,9 +193,7 @@ class ChildrenTableViewController: UITableViewController {
             Language.language = language
             exit(0);
         }))
-        alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
-            // do nothing
-        }))
+        alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -224,7 +208,6 @@ class ChildrenTableViewController: UITableViewController {
     /// - Parameter sender: logout button
     @IBAction func logout(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-        
         alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
             if Language.language == .arabic {
                 self.showChangeLanguageConfirmation(language: .english)
@@ -235,8 +218,7 @@ class ChildrenTableViewController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible())
-            {
+            if(SVProgressHUD.isVisible()) {
                 SVProgressHUD.dismiss()
             }
             self.sendFCM(token: "")
@@ -247,19 +229,16 @@ class ChildrenTableViewController: UITableViewController {
             nvc.pushViewController(schoolCodeVC, animated: true)
             self.present(nvc, animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler:{ (UIAlertAction)in
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
         
-        self.present(alert, animated: true, completion: {
-        })
+        self.present(alert, animated: true, completion: nil)
     }
     
     /// shows notification screen modally
     ///
     /// - Parameter sender: notification button
     @IBAction func showNotifications(_ sender: UIBarButtonItem) {
-        if(SVProgressHUD.isVisible())
-        {
+        if(SVProgressHUD.isVisible()){
             SVProgressHUD.dismiss()
         }
         let notificationsTVC = NotificationsTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
@@ -275,6 +254,4 @@ class ChildrenTableViewController: UITableViewController {
         kids.removeAll()
         getChildren()
     }
-    
-    
 }

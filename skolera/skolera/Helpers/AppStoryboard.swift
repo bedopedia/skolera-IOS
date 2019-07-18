@@ -21,6 +21,7 @@ enum AppStoryboard : String {
     case Announcements
     case WeeklyReport
     case Assignments
+    case Posts
     
     var instance : UIStoryboard {
         
