@@ -197,11 +197,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     {
                         let child = Child(fromDictionary: childJson)
                         if child.id == childId {
-                            let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.child = child
-                            childProfileVC.quizzesText = "\(child.todayWorkloadStatus.quizzesCount!) \("Quizzes".localized)".localizedCapitalized
-                            childProfileVC.assignmentsText = "\(child.todayWorkloadStatus.assignmentsCount!) \("Assignments".localized)".localizedCapitalized
-                            childProfileVC.eventsText = "\(child.todayWorkloadStatus.eventsCount!) \("Events".localized)".localizedCapitalized
+                            childProfileVC.assignmentsText = ""
+                            childProfileVC.quizzesText = ""
+                            childProfileVC.eventsText = ""
                             self.navigationController?.pushViewController(childProfileVC, animated: true)
                             break
                         }

@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qYh-qE-4y3">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentTableViewCell" rowHeight="105" id="yOg-rm-j9w" customClass="AssignmentTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -165,12 +165,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yIl-1p-QEz">
+                                <rect key="frame" x="16" y="104" width="382" height="29"/>
+                                <segments>
+                                    <segment title="Open"/>
+                                    <segment title="Closed"/>
+                                </segments>
+                                <color key="tintColor" red="0.01857026853" green="0.75378018619999998" blue="0.78506046529999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="changeDataSource:" destination="J8I-P0-4ra" eventType="valueChanged" id="RRS-ia-bZN"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qYh-qE-4y3" firstAttribute="leading" secondItem="5Nl-RS-vTa" secondAttribute="leading" id="0S7-8m-p2O"/>
-                            <constraint firstItem="qYh-qE-4y3" firstAttribute="top" secondItem="5Nl-RS-vTa" secondAttribute="top" id="6jO-Ao-Gv8"/>
+                            <constraint firstItem="5Nl-RS-vTa" firstAttribute="trailing" secondItem="yIl-1p-QEz" secondAttribute="trailing" constant="16" id="C23-Nj-1Er"/>
                             <constraint firstItem="5Nl-RS-vTa" firstAttribute="trailing" secondItem="qYh-qE-4y3" secondAttribute="trailing" id="MMZ-RH-4os"/>
+                            <constraint firstItem="yIl-1p-QEz" firstAttribute="top" secondItem="5Nl-RS-vTa" secondAttribute="top" constant="16" id="Poy-po-GQT"/>
+                            <constraint firstItem="yIl-1p-QEz" firstAttribute="leading" secondItem="5Nl-RS-vTa" secondAttribute="leading" constant="16" id="Ru1-3e-KeA"/>
+                            <constraint firstItem="qYh-qE-4y3" firstAttribute="top" secondItem="yIl-1p-QEz" secondAttribute="bottom" constant="16" id="mq0-VG-IkE"/>
                             <constraint firstItem="5Nl-RS-vTa" firstAttribute="bottom" secondItem="qYh-qE-4y3" secondAttribute="bottom" id="yaY-yi-2gs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Nl-RS-vTa"/>
@@ -216,6 +230,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="childImageView" destination="ldg-h7-FPZ" id="vJZ-Ex-xpP"/>
+                        <outlet property="statusSegmentControl" destination="yIl-1p-QEz" id="Bma-0a-9Qq"/>
                         <outlet property="tableView" destination="qYh-qE-4y3" id="fJt-HZ-OSY"/>
                         <outlet property="titleLabel" destination="Qz0-ex-007" id="WZH-mo-aXa"/>
                     </connections>

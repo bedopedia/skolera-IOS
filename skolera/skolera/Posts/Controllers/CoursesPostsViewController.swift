@@ -33,10 +33,14 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.rowHeight = UITableViewAutomaticDimension
-        getPosts()
+       
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+         getPosts()
     }
     
     func getPosts(){
@@ -91,6 +95,14 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             self.navigationController?.pushViewController(filesVC, animated: true)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let postVC = PostDetailsViewController.instantiate(fromAppStoryboard: .Posts)
+        postVC.child = self.child
+        postVC.courseName = self.courseName
+        postVC.post = posts[indexPath.row]
+        self.navigationController?.pushViewController(postVC, animated: true)
     }
 
 }

@@ -23,6 +23,7 @@ class TimetableViewController: UIViewController, EventDataSource{
     //MARK: - Outlets
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var dayView: DayView!
+    @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,12 @@ class TimetableViewController: UIViewController, EventDataSource{
         calendarStyle.timeline.timeIndicator.dateStyle = .twelveHour
         dayView.updateStyle(calendarStyle)
         dayView.scrollToFirstEventIfNeeded()
+        
+        if isParent() {
+            statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+        } else {
+            statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+        }
 
     }
 

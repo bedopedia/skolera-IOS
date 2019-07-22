@@ -31,7 +31,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getCourses()
         
         let backItem = UIBarButtonItem()
+        backItem.tintColor = #colorLiteral(red: 0.3196239769, green: 0.3798563778, blue: 0.4216277599, alpha: 1)
         backItem.title = nil
+        navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3196239769, green: 0.3798563778, blue: 0.4216277599, alpha: 1)
         navigationItem.backBarButtonItem = backItem
     }
     

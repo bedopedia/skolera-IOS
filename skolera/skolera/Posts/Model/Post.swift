@@ -17,7 +17,7 @@ class Post {
     let createdAt: String?
     let updatedAt: String?
     let videoPreview: String?
-    let comments: [PostComment]?
+    var comments: [PostComment]?
     let owner: PostOwner?
     let uploadedFiles: [UploadedFile]?
     

@@ -116,13 +116,12 @@ class SplashScreenViewController: UIViewController {
                     {
                         let child = Child.init(fromDictionary: childJson)
                         if child.id == childId {
-                            let childProfileVC = ChildProfileViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.child = child
-                            childProfileVC.quizzesText = "\(child.todayWorkloadStatus.quizzesCount!) \("Quizzes".localized)".localizedCapitalized
-                            childProfileVC.assignmentsText = "\(child.todayWorkloadStatus.assignmentsCount!) \("Assignments".localized)".localizedCapitalized
-                            childProfileVC.eventsText = "\(child.todayWorkloadStatus.eventsCount!) \("Events".localized)".localizedCapitalized
+                            childProfileVC.assignmentsText = ""
+                            childProfileVC.quizzesText = ""
+                            childProfileVC.eventsText = ""
                             let nvc = UINavigationController(rootViewController: childProfileVC)
-                            
                             self.present(nvc, animated: true, completion: nil)
                             break
                         }

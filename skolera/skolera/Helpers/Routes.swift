@@ -118,3 +118,6 @@ func GET_STUDENT_POSTS() -> String {
     return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d"
 }
 
+func COMMENTS_URL() -> String {
+    return "\(BASE_URL!)/api/comments"
+}

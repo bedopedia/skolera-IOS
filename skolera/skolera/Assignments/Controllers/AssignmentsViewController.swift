@@ -15,6 +15,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     
     var child : Child!
     var courseName: String = ""
@@ -30,8 +31,28 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
+        
+        if isParent() {
+            statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+        } else {
+            statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+        }
         tableView.rowHeight = UITableViewAutomaticDimension
         getAssignments()
+    }
+    
+    @IBAction func changeDataSource(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            debugPrint("open assignments")
+            //todo show open assignments
+        case 1:
+            debugPrint("closed assignments")
+            //todo show closed assignments
+        default:
+            debugPrint("somthing else")
+            //todo show open assignments
+        }
     }
     
 

@@ -69,7 +69,7 @@ class PostTableViewCell: UITableViewCell {
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "dd MMM YYYY"
                 if Language.language == .arabic {
-                    postDate.text = "اخر تعديل" + newDateFormat.string(from: postUpdateDate!)
+                    postDate.text = "اخر تعديل " + newDateFormat.string(from: postUpdateDate!)
                 } else {
                     postDate.text = "Last Updated \(newDateFormat.string(from: postUpdateDate!))"
                 }

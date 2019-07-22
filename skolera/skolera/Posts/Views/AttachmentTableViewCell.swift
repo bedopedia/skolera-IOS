@@ -39,6 +39,13 @@ class AttachmentTableViewCell: UITableViewCell {
                 }
                 attachmentImage.image = image
                 attachmentTitle.text = uploadedFile.name
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                let fileDate = dateFormatter.date(from: uploadedFile.updatedAt!)
+                let newDateFormat = DateFormatter()
+                newDateFormat.dateFormat = "dd MMM YYYY"
+                attachmentDate.text = newDateFormat.string(from: fileDate!)
                 
             }
         }
