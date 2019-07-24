@@ -135,13 +135,13 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="assignmentClockImage" destination="1GX-np-F4f" id="aIs-Lb-jsr"/>
-                                            <outlet property="assignmentDateLabel" destination="vCf-N3-7oL" id="oHf-BN-YYO"/>
-                                            <outlet property="assignmentDateView" destination="vxz-3U-ODf" id="ggp-tJ-ulS"/>
-                                            <outlet property="assignmentName" destination="9QF-3u-2HU" id="zgm-Zq-rgG"/>
                                             <outlet property="courseImageView" destination="oWP-da-ySH" id="4sO-jU-X2w"/>
                                             <outlet property="courseTitle" destination="7bq-lP-a4h" id="d3V-q1-igh"/>
-                                            <outlet property="numberOfAssignmentLabel" destination="RB0-zP-7Ya" id="Xqa-kp-8q0"/>
+                                            <outlet property="numberOfQuizLabel" destination="RB0-zP-7Ya" id="xpH-eW-dbn"/>
+                                            <outlet property="quizClockImage" destination="1GX-np-F4f" id="lrR-av-f0J"/>
+                                            <outlet property="quizDateLabel" destination="vCf-N3-7oL" id="Hui-ij-Ios"/>
+                                            <outlet property="quizDateView" destination="vxz-3U-ODf" id="MSj-EV-FcA"/>
+                                            <outlet property="quizName" destination="9QF-3u-2HU" id="u44-iI-dxX"/>
                                             <outlet property="subjectImageLabel" destination="Vco-W7-Fc5" id="Q3l-hi-Uja"/>
                                         </connections>
                                     </tableViewCell>
@@ -163,8 +163,8 @@
                             <rect key="frame" x="157.5" y="0.0" width="99" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd9-6C-3p9">
-                                    <rect key="frame" x="-21" y="9" width="141" height="26"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quizzes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd9-6C-3p9">
+                                    <rect key="frame" x="6.5" y="8.5" width="86.5" height="27"/>
                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="22"/>
                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>

@@ -144,6 +144,7 @@
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
+		8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A253D5E22E87BE900AFB27E /* QuizCourse.swift */; };
 		8A255BE622E5F5D8007A0766 /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A255BE522E5F5D8007A0766 /* Quizzes.storyboard */; };
 		8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */; };
 		8A255BEA22E5F777007A0766 /* QuizCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */; };
@@ -394,6 +395,7 @@
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1BB72F22301474009F7738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WeeklyReport.storyboard; sourceTree = "<group>"; };
 		8A1BB7322230147A009F7738 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WeeklyReport.strings; sourceTree = "<group>"; };
+		8A253D5E22E87BE900AFB27E /* QuizCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourse.swift; sourceTree = "<group>"; };
 		8A255BE522E5F5D8007A0766 /* Quizzes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Quizzes.storyboard; sourceTree = "<group>"; };
 		8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesCoursesViewController.swift; sourceTree = "<group>"; };
 		8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourseTableViewCell.swift; sourceTree = "<group>"; };
@@ -1007,6 +1009,7 @@
 		8A255BE422E5F5C4007A0766 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8A253D5E22E87BE900AFB27E /* QuizCourse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1583,6 +1586,7 @@
 				8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */,
 				8A6D361F20B5999100DD0445 /* SendingStatusCollectionViewCell.swift in Sources */,
 				540890742068259100CC59A0 /* AttendanceViewController+CalendarDelegates.swift in Sources */,
+				8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */,
 				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,

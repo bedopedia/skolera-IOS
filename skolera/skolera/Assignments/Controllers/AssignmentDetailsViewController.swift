@@ -45,22 +45,27 @@ class AssignmentDetailsViewController: UIViewController {
 
 extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 1 + self.assignment.uploadedFiles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentContentTableViewCell") as! AssignmentContentTableViewCell
-            cell.label.text = self.assignment.description
+            cell.label.attributedText = self.assignment.content.htmlToAttributedString
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell
+            cell.uploadedFile = self.assignment.uploadedFiles[indexPath.row - 1]
             return cell
         }
-        
     }
     
-    
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row > 0 {
+            if let url = URL(string: self.assignment.uploadedFiles[indexPath.row - 1].url ?? "") {
+                UIApplication.shared.open(url)
+            }
+        }
+    }
     
 }

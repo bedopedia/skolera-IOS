@@ -45,7 +45,7 @@ class AssignmentCourseTableViewCell: UITableViewCell {
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
                 assignmentDateLabel.text = newDateFormat.string(from: assignDate!)
-                if course.assignmentState.elementsEqual("running") {
+                if let status = course.assignmentState, status.elementsEqual("running") {
                     assignmentDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
                     assignmentDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
                     assignmentClockImage.image = #imageLiteral(resourceName: "greenHour")

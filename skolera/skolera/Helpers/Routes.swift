@@ -110,6 +110,10 @@ func GET_ASSINGMENTS_COURSES() -> String {
     return "\(BASE_URL!)/api/students/%d/course_groups_with_assignments_number"
 }
 
+func GET_QUIZZES_COURSES() -> String {
+    return "\(BASE_URL!)/api/students/%d/course_groups_with_quizzes_number"
+}
+
 func GET_POSTS_COURSES() -> String {
     return "\(BASE_URL!)/api/students/%d/course_groups_recent_posts"
 }
@@ -120,4 +124,8 @@ func GET_STUDENT_POSTS() -> String {
 
 func COMMENTS_URL() -> String {
     return "\(BASE_URL!)/api/comments"
+}
+
+func GET_ASSIGNMENT_DETAILS_URL() -> String {
+    return "\(BASE_URL!)/api/courses/%d/assignments/%d"
 }

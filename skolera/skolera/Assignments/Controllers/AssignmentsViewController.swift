@@ -99,6 +99,45 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    private func getAssignmentDetails(assignmentId: Int) {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        let parameters : Parameters? = nil
+        let headers : HTTPHeaders? = getHeaders()
+        let url = String(format: GET_ASSIGNMENT_DETAILS_URL(), courseId, assignmentId)
+        debugPrint(url)
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            SVProgressHUD.dismiss()
+            switch response.result{
+                
+            case .success(_):
+                //change next line into [[String : AnyObject]] if parsing Json array
+                if let result = response.result.value as? [String : AnyObject] {
+                    let assignment = FullAssignment(result)
+                    if let description = assignment.description, !description.isEmpty {
+                        let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
+                        assignmentDetailsVC.child = self.child
+                        assignmentDetailsVC.assignment = assignment
+                        self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+                {
+                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+                }
+                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
+                {
+                    showReauthenticateAlert(viewController: self)
+                }
+                else
+                {
+                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
+                }
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredAssignments.count
     }
@@ -115,9 +154,6 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
-        assignmentDetailsVC.child = self.child
-        assignmentDetailsVC.assignment = filteredAssignments[indexPath.row]
-        self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+        getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
     }
 }
