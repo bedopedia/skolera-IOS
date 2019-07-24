@@ -92,6 +92,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             openAssignments()
         case "mainPostsCell":
             openPosts()
+        case "mainQuizzesCell":
+            openQuizzes()
         default:
             return
         }
@@ -118,6 +120,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         let assignmentsVC = AssignmentCoursesViewController.instantiate(fromAppStoryboard: .Assignments)
         assignmentsVC.child = self.child
         self.navigationController?.pushViewController(assignmentsVC, animated: true)
+    }
+    
+    private func openQuizzes(){
+        let quizVC = QuizzesCoursesViewController.instantiate(fromAppStoryboard: .Quizzes)
+        quizVC.child = self.child
+        self.navigationController?.pushViewController(quizVC, animated: true)
     }
     
     /// service call to get total courses grades, average grade is set on completion

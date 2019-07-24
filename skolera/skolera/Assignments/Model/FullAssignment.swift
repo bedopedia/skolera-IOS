@@ -24,6 +24,7 @@ class FullAssignment {
     let studentSubmissions: StudentSubmissions?
     
     init(_ dict: [String: Any]) {
+        debugPrint(dict)
         id = dict["id"] as? Int
         name = dict["name"] as? String
         description = dict["description"] as? String

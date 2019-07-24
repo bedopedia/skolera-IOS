@@ -21,6 +21,7 @@ enum AppStoryboard : String {
     case Announcements
     case WeeklyReport
     case Assignments
+    case Quizzes
     case Posts
     
     var instance : UIStoryboard {
@@ -55,7 +56,6 @@ extension UIViewController {
     }
     
     static func instantiate(fromAppStoryboard appStoryboard: AppStoryboard) -> Self {
-        
         return appStoryboard.viewController(viewControllerClass: self)
     }
 }

@@ -17,10 +17,12 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     
+    
     var child : Child!
     var courseName: String = ""
     var courseId: Int = 0
-    var assignments = [FullAssignment]()
+    var assignments: [FullAssignment] = []
+    var filteredAssignments: [FullAssignment] = []
     
     var meta: Meta!
     override func viewDidLoad() {
@@ -44,15 +46,22 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            debugPrint("open assignments")
-            //todo show open assignments
+            setOpenedAssignments()
         case 1:
-            debugPrint("closed assignments")
-            //todo show closed assignments
+            setClosedAssignments()
         default:
-            debugPrint("somthing else")
-            //todo show open assignments
+            setOpenedAssignments()
         }
+    }
+    
+    private func setOpenedAssignments() {
+        filteredAssignments = assignments.filter({ $0.state.elementsEqual("running") })
+        self.tableView.reloadData()
+    }
+    
+    private func setClosedAssignments() {
+        filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
+        self.tableView.reloadData()
     }
     
 
@@ -70,7 +79,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 if let result = response.result.value as? [[String : AnyObject]]
                 {
                     self.assignments = result.map({ FullAssignment($0) })
-                    self.tableView.reloadData()
+                    self.setOpenedAssignments()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -91,17 +100,24 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.assignments.count
+        return self.filteredAssignments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
         cell.nameLabel.text = courseName
-        cell.assignment = assignments[indexPath.row]
+        cell.assignment = filteredAssignments[indexPath.row]
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105
+        return 140
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
+        assignmentDetailsVC.child = self.child
+        assignmentDetailsVC.assignment = filteredAssignments[indexPath.row]
+        self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
     }
 }
