@@ -217,7 +217,7 @@
                                 <rect key="frame" x="0.0" y="148" width="414" height="714"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentTableViewCell" rowHeight="140" id="V4h-dJ-u3S" customClass="AssignmentTableViewCell" customModule="skolera" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuizTableViewCell" rowHeight="140" id="V4h-dJ-u3S" customClass="QuizTableViewCell" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V4h-dJ-u3S" id="DBD-X5-3M6">
@@ -379,13 +379,13 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="assignmentClockImage" destination="3eR-dZ-WGr" id="uy0-5U-JQO"/>
-                                            <outlet property="assignmentDateLabel" destination="YMk-2m-59W" id="Z8o-9q-wLA"/>
-                                            <outlet property="assignmentDateView" destination="NZP-wZ-IfB" id="zUU-Ca-3aV"/>
                                             <outlet property="dueDayLabel" destination="C5R-fp-2s9" id="mM4-al-CPS"/>
                                             <outlet property="dueMonthLabel" destination="Y0y-xN-wSS" id="Deh-HC-jSK"/>
                                             <outlet property="nameLabel" destination="KBj-QR-KLR" id="lfg-rh-08x"/>
                                             <outlet property="publishDateLabel" destination="kZm-Gb-zFk" id="5iL-lL-BsU"/>
+                                            <outlet property="quizClockImage" destination="3eR-dZ-WGr" id="fgS-sb-EdG"/>
+                                            <outlet property="quizDateLabel" destination="YMk-2m-59W" id="5rT-Dd-MXH"/>
+                                            <outlet property="quizDateView" destination="NZP-wZ-IfB" id="Ka0-j7-Ana"/>
                                             <outlet property="titleLabel" destination="Gxh-a0-Ku4" id="qyl-Rq-Rll"/>
                                         </connections>
                                     </tableViewCell>
@@ -796,6 +796,7 @@
                         <outlet property="quizDateView" destination="e3B-pp-1r8" id="ukF-5e-VPh"/>
                         <outlet property="quizGradeLabel" destination="P3R-gd-Mno" id="khu-Ld-as2"/>
                         <outlet property="quizNoteLabel" destination="dwz-LA-VWk" id="GoV-GF-onl"/>
+                        <outlet property="quizTotalGradeLabel" destination="2ib-6D-UmE" id="5Bn-Cn-jdX"/>
                         <outlet property="titleLabel" destination="YRM-0y-pxt" id="6lb-Kj-TWD"/>
                     </connections>
                 </viewController>

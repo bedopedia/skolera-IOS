@@ -88,8 +88,8 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let quizVC = QuizzesViewController.instantiate(fromAppStoryboard: .Quizzes)
         quizVC.child = self.child
-        quizVC.courseName = "English"
-//        assignmentsVC.courseId = courses[indexPath.row].courseId
+        quizVC.courseName = courses[indexPath.row].courseName
+        quizVC.courseId = courses[indexPath.row].courseId
         self.navigationController?.pushViewController(quizVC, animated: true)
     }
 }

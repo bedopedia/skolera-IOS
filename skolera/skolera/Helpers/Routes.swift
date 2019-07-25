@@ -129,3 +129,8 @@ func COMMENTS_URL() -> String {
 func GET_ASSIGNMENT_DETAILS_URL() -> String {
     return "\(BASE_URL!)/api/courses/%d/assignments/%d"
 }
+
+
+func GET_QUIZZES() -> String {
+    return "\(BASE_URL!)/api/students/%d/quizzes?course_group_ids=[%d]"
+}
