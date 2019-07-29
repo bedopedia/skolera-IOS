@@ -144,8 +144,8 @@
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
+		8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */; };
 		8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A253D5E22E87BE900AFB27E /* QuizCourse.swift */; };
-		8A255BE622E5F5D8007A0766 /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A255BE522E5F5D8007A0766 /* Quizzes.storyboard */; };
 		8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */; };
 		8A255BEA22E5F777007A0766 /* QuizCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */; };
 		8A255BEC22E6053E007A0766 /* QuizzesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BEB22E6053E007A0766 /* QuizzesViewController.swift */; };
@@ -399,8 +399,9 @@
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1BB72F22301474009F7738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WeeklyReport.storyboard; sourceTree = "<group>"; };
 		8A1BB7322230147A009F7738 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WeeklyReport.strings; sourceTree = "<group>"; };
+		8A1DDB5B22E9FE4F00DF9B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Quizzes.storyboard; sourceTree = "<group>"; };
+		8A1DDB5E22E9FE8100DF9B9A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Quizzes.strings; sourceTree = "<group>"; };
 		8A253D5E22E87BE900AFB27E /* QuizCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourse.swift; sourceTree = "<group>"; };
-		8A255BE522E5F5D8007A0766 /* Quizzes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Quizzes.storyboard; sourceTree = "<group>"; };
 		8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesCoursesViewController.swift; sourceTree = "<group>"; };
 		8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8A255BEB22E6053E007A0766 /* QuizzesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesViewController.swift; sourceTree = "<group>"; };
@@ -1008,7 +1009,7 @@
 		8A255BE322E5F5BE007A0766 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A255BE522E5F5D8007A0766 /* Quizzes.storyboard */,
+				8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */,
 				8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */,
 				8A456CAD22E9EE4700E854DD /* QuizTableViewCell.swift */,
 			);
@@ -1403,7 +1404,7 @@
 				5482DE862056DAB100647D57 /* RobotoCondensed-LightItalic.ttf in Resources */,
 				5482DE672056DAB100647D57 /* Roboto Condensed Bold Italic.otf in Resources */,
 				5482DDF82056D4F300647D57 /* SFUIText-ItalicG1.otf in Resources */,
-				8A255BE622E5F5D8007A0766 /* Quizzes.storyboard in Resources */,
+				8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */,
 				5462A5A52058401F00C6F5EE /* CircularStd-Bold.otf in Resources */,
 				5482DE6F2056DAB100647D57 /* Roboto-MediumItalic.ttf in Resources */,
 				5482DE8C2056DAB100647D57 /* RobotoMono-Regular.ttf in Resources */,
@@ -1728,6 +1729,15 @@
 				8A1BB7322230147A009F7738 /* ar */,
 			);
 			name = WeeklyReport.storyboard;
+			sourceTree = "<group>";
+		};
+		8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A1DDB5B22E9FE4F00DF9B9A /* Base */,
+				8A1DDB5E22E9FE8100DF9B9A /* ar */,
+			);
+			name = Quizzes.storyboard;
 			sourceTree = "<group>";
 		};
 		8A298CBD2184CB9700A82FEA /* Timetable.storyboard */ = {

@@ -32,7 +32,7 @@ class QuizTableViewCell: UITableViewCell {
             if Language.language == .arabic {
                 publishDateLabel.text = "نشر " + newDateFormat.string(from: quizDate!)
             } else {
-                publishDateLabel.text = "publish \(newDateFormat.string(from: quizDate!))"
+                publishDateLabel.text = "published \(newDateFormat.string(from: quizDate!))"
             }
             newDateFormat.dateFormat = "dd"
             dueDayLabel.text = newDateFormat.string(from: endDate!)

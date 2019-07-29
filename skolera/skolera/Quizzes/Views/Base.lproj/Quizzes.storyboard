@@ -164,7 +164,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quizzes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd9-6C-3p9">
-                                    <rect key="frame" x="6.5" y="8.5" width="86.5" height="27"/>
+                                    <rect key="frame" x="10.5" y="9" width="78" height="26"/>
                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="22"/>
                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -631,16 +631,16 @@
                                 <rect key="frame" x="0.0" y="208" width="414" height="654"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3" translatesAutoresizingMaskIntoConstraints="NO" id="USQ-bQ-L6N">
-                                        <rect key="frame" x="122" y="64" width="170" height="170"/>
+                                        <rect key="frame" x="199" y="64" width="16" height="16"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz not started yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PJ-A6-WGj">
-                                        <rect key="frame" x="133.5" y="250" width="147.5" height="19.5"/>
+                                        <rect key="frame" x="133.5" y="96" width="147.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will be able to solve quiz when it started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uET-7H-Wy2">
-                                        <rect key="frame" x="81.5" y="277.5" width="251" height="14.5"/>
+                                        <rect key="frame" x="81.5" y="123.5" width="251" height="14.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14.5" id="lIw-In-X2O"/>
                                         </constraints>
@@ -688,8 +688,8 @@
                                                 <color key="textColor" red="0.73717361690000005" green="0.73730176690000004" blue="0.73716557029999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep a good work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwz-LA-VWk">
-                                                <rect key="frame" x="88.5" y="133" width="133" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep a good work" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwz-LA-VWk">
+                                                <rect key="frame" x="12" y="133" width="286" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="NNy-oo-wq0"/>
                                                 </constraints>
@@ -705,6 +705,8 @@
                                             <constraint firstItem="ory-vw-2W7" firstAttribute="centerX" secondItem="4Xq-KM-Hb7" secondAttribute="centerX" id="88e-ik-JZU"/>
                                             <constraint firstItem="2ib-6D-UmE" firstAttribute="top" secondItem="P3R-gd-Mno" secondAttribute="bottom" constant="8" id="HwN-bC-274"/>
                                             <constraint firstItem="dwz-LA-VWk" firstAttribute="top" secondItem="2ib-6D-UmE" secondAttribute="bottom" constant="16" id="IYA-G8-ueJ"/>
+                                            <constraint firstItem="dwz-LA-VWk" firstAttribute="leading" secondItem="4Xq-KM-Hb7" secondAttribute="leading" constant="12" id="Icm-Sd-wfy"/>
+                                            <constraint firstAttribute="trailing" secondItem="dwz-LA-VWk" secondAttribute="trailing" constant="12" id="dLN-7v-GhC"/>
                                             <constraint firstItem="2ib-6D-UmE" firstAttribute="centerX" secondItem="4Xq-KM-Hb7" secondAttribute="centerX" id="i3G-Nq-xzT"/>
                                             <constraint firstItem="ory-vw-2W7" firstAttribute="top" secondItem="4Xq-KM-Hb7" secondAttribute="top" constant="24" id="ok4-QP-4fh"/>
                                             <constraint firstItem="P3R-gd-Mno" firstAttribute="centerX" secondItem="4Xq-KM-Hb7" secondAttribute="centerX" id="p8C-vs-fPE"/>

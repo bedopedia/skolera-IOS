@@ -80,7 +80,7 @@ class QuizStatusViewController: UIViewController {
                 quizClockImage.image = #imageLiteral(resourceName: "1")
                 notStartedQuizView.isHidden = true
                 finishedQuizView.isHidden = false
-                quizTotalGradeLabel.text = "Out of \(quiz.totalScore ?? 0)"
+                quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
                 if let grade = quiz.studentSubmissions.score{
                     quizGradeLabel.text = "\(grade)"
                     if let note = quiz.studentSubmissions.feedback{
@@ -90,7 +90,7 @@ class QuizStatusViewController: UIViewController {
                     }
                 } else {
                     quizGradeLabel.text = "--"
-                    quizNoteLabel.text = "No Submission"
+                    quizNoteLabel.text = "No Submission".localized
                 }
                
                 

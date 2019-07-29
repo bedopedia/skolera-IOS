@@ -32,7 +32,7 @@ class AssignmentTableViewCell: UITableViewCell {
             if Language.language == .arabic {
                 publishDateLabel.text = "نشر " + newDateFormat.string(from: assignDate!)
             } else {
-                publishDateLabel.text = "publish \(newDateFormat.string(from: assignDate!))"
+                publishDateLabel.text = "published \(newDateFormat.string(from: assignDate!))"
             }
             newDateFormat.dateFormat = "dd"
             dueDayLabel.text = newDateFormat.string(from: endDate!)
