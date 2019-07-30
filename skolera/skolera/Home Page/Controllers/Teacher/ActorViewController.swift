@@ -18,28 +18,37 @@ class ActorViewController: UIViewController {
     @IBOutlet weak var notificationButton: UIBarButtonItem!
 
     
-    var actor: Parent!
     var actorTableViewController: ActorFeaturesTableViewController!
+    
+    var actor: Actor! {
+        didSet {
+            if actor != nil {
+                addActorImage()
+                childNameLabel.text = actor.name
+                childGradeLabel.text = actor.actableType
+                for child in childViewControllers {
+                    if let actorTableViewController = child as? ActorFeaturesTableViewController {
+                        actorTableViewController.actor = self.actor
+                        self.actorTableViewController = actorTableViewController
+                    }
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addActorImage()
         
-        if let actor = actor{
-            childNameLabel.text = actor.name
-            childGradeLabel.text = actor.actableType
-        }
-        for child in childViewControllers {
-            if let actorTableViewController = child as? ActorFeaturesTableViewController {
-                actorTableViewController.actor = self.actor
-                self.actorTableViewController = actorTableViewController
-            }
-        }
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    public func setActorData(actor: Actor) {
+        self.actor = actor
     }
     
     private func addActorImage() {

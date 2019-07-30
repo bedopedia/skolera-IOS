@@ -86,3 +86,11 @@ func isValidEmail(testStr:String) -> Bool {
     return emailTest.evaluate(with: testStr)
 }
 
+func image( _ image:UIImage, withSize newSize:CGSize) -> UIImage {
+    
+    UIGraphicsBeginImageContext(newSize)
+    image.draw(in: CGRect(x: 0,y: 0,width: newSize.width,height: newSize.height))
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return newImage!.withRenderingMode(.automatic)
+}

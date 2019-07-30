@@ -151,7 +151,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             if parent.data.userType.elementsEqual("student") {
                                 self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                             } else {
-                                let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                                let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                                 childProfileVC.actor = parent.data
                                 //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
                                 let nvc = UINavigationController(rootViewController: childProfileVC)

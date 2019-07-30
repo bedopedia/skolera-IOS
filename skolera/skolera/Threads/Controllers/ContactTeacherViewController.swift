@@ -21,7 +21,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     var threads: [Threads] = []
     var child: Child!
-    var actor: Parent!
+    var actor: Actor!
     override func viewDidLoad() {
         super.viewDidLoad()
         

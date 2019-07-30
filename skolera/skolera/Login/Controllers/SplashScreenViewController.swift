@@ -64,6 +64,8 @@ class SplashScreenViewController: UIViewController {
                             let keychain = KeychainSwift()
                             keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                             keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
+                            keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
+                            keychain.set(String(parent.data.id), forKey: ID)
                         }
                     
                     if isParent() {
@@ -75,7 +77,7 @@ class SplashScreenViewController: UIViewController {
                         if parent.data.userType.elementsEqual("student") {
                             self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                         } else {
-                            let childProfileVC = ActorViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.actor = parent.data
                             //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
                             let nvc = UINavigationController(rootViewController: childProfileVC)

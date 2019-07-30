@@ -134,3 +134,7 @@ func GET_ASSIGNMENT_DETAILS_URL() -> String {
 func GET_QUIZZES() -> String {
     return "\(BASE_URL!)/api/students/%d/quizzes?course_group_ids=[%d]"
 }
+
+func GET_TEACHER_COURSES() -> String {
+    return "\(BASE_URL!)/api/teachers/%d/courses"
+}

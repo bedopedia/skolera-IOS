@@ -10,7 +10,7 @@ import Foundation
 
 class ParentResponse : NSObject, NSCoding{
 
-	var data : Parent!
+	var data : Actor!
 
 
 	/**
@@ -18,7 +18,7 @@ class ParentResponse : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: [String:Any]){
 		if let dataData = dictionary["data"] as? [String:Any]{
-			data = Parent(fromDictionary: dataData)
+			data = Actor(fromDictionary: dataData)
 		}
 	}
 
@@ -40,7 +40,7 @@ class ParentResponse : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         data = aDecoder.decodeObject(forKey: "data") as? Parent
+         data = aDecoder.decodeObject(forKey: "data") as? Actor
 
 	}
 

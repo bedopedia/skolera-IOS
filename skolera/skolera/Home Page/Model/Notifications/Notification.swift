@@ -19,7 +19,7 @@ class Notification : NSObject, NSCoding{
 	var params : Param!
 	var seen : Bool!
 	var text : String!
-	var to : Parent!
+	var to : Actor!
 
 
 	/**
@@ -40,7 +40,7 @@ class Notification : NSObject, NSCoding{
 		seen = dictionary["seen"] as? Bool
 		text = dictionary["text"] as? String
 		if let toData = dictionary["to"] as? [String:Any]{
-			to = Parent(fromDictionary: toData)
+			to = Actor(fromDictionary: toData)
 		}
 	}
 
@@ -98,7 +98,7 @@ class Notification : NSObject, NSCoding{
          params = aDecoder.decodeObject(forKey: "params") as? Param
          seen = aDecoder.decodeObject(forKey: "seen") as? Bool
          text = aDecoder.decodeObject(forKey: "text") as? String
-         to = aDecoder.decodeObject(forKey: "to") as? Parent
+         to = aDecoder.decodeObject(forKey: "to") as? Actor
 
 	}
 

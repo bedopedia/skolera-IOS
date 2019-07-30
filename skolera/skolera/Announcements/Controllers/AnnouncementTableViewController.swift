@@ -16,7 +16,7 @@ class AnnouncementTableViewController: UITableViewController {
     var meta: Meta?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
+//        self.navigationController?.isNavigationBarHidden = false
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         getAnnouncements()
@@ -33,7 +33,7 @@ class AnnouncementTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+//        self.navigationController?.isNavigationBarHidden = false
     }
 
     // MARK: - Table view data source

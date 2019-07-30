@@ -8,7 +8,7 @@
 import Foundation
 
 
-class Parent : NSObject, NSCoding{
+class Actor : NSObject, NSCoding{
 
 	var actableId : Int!
 	var actableType : String!
