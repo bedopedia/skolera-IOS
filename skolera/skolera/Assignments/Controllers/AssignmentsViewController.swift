@@ -19,6 +19,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     var child : Child!
+    var isTeacher: Bool = false
     var courseName: String = ""
     var courseId: Int = 0
     var assignments: [FullAssignment] = []
@@ -30,14 +31,25 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        if isTeacher {
+            self.navigationController?.isNavigationBarHidden = false
+            childImageView.isHidden = true
+        } else {
+            if let child = child{
+                childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            }
         }
+        
         
         if isParent() {
             statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
         } else {
-            statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            if isTeacher {
+                statusSegmentControl.tintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
+            } else {
+                statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            }
+            
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getAssignments()
@@ -154,6 +166,9 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
+        if !isTeacher {
+            getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
+        }
+            
     }
 }

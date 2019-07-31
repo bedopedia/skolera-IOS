@@ -66,6 +66,7 @@ extension TeacherCourseGroupViewController: UITableViewDelegate, UITableViewData
         
         let courseGroupsVC: TeacherCourseDetailsViewController = TeacherCourseDetailsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         courseGroupsVC.courseGroup = course.courseGroups[indexPath.row]
+        courseGroupsVC.course = course
         self.navigationController?.pushViewController(courseGroupsVC, animated: true)
     }
   

@@ -12,13 +12,22 @@ class TeacherCourseDetailsViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     
+    var course: TeacherCourse!
     var courseGroup: CourseGroup!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = courseGroup.name
-
-        // Do any additional setup after loading the view.
+        for child in childViewControllers {
+            if let teacherCourseDetailsTableViewController = child as? TeacherCourseDetailsTableViewController {
+                teacherCourseDetailsTableViewController.course = self.course
+                teacherCourseDetailsTableViewController.courseGroup = self.courseGroup
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func back(){

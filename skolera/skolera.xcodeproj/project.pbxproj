@@ -144,6 +144,7 @@
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
+		8A1C370E22F1B82700041BAE /* URL+QueryParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */; };
 		8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */; };
 		8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A253D5E22E87BE900AFB27E /* QuizCourse.swift */; };
 		8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */; };
@@ -406,6 +407,7 @@
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1BB72F22301474009F7738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WeeklyReport.storyboard; sourceTree = "<group>"; };
 		8A1BB7322230147A009F7738 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WeeklyReport.strings; sourceTree = "<group>"; };
+		8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryParams.swift"; sourceTree = "<group>"; };
 		8A1DDB5B22E9FE4F00DF9B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Quizzes.storyboard; sourceTree = "<group>"; };
 		8A1DDB5E22E9FE8100DF9B9A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Quizzes.strings; sourceTree = "<group>"; };
 		8A253D5E22E87BE900AFB27E /* QuizCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourse.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				543830B1204D711200ABF477 /* Label+Rounded.swift */,
 				547DD3E6208D0C43008EED15 /* Date+Time.swift */,
 				8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */,
+				8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1591,6 +1594,7 @@
 				8A842F5C22F0592E000BA70B /* TeacherCourseTableViewCell.swift in Sources */,
 				543830B4204DA07D00ABF477 /* SplashScreenViewController.swift in Sources */,
 				8A6D362320B59A0C00DD0445 /* DemoTextMessageViewModelBuilder.swift in Sources */,
+				8A1C370E22F1B82700041BAE /* URL+QueryParams.swift in Sources */,
 				8A5F42F020B1CB7600FF93D1 /* User.swift in Sources */,
 				8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */,
 				8A6CA5EF22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift in Sources */,
