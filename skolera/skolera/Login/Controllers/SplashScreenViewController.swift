@@ -18,7 +18,6 @@ class SplashScreenViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         getMainScreen()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,97 +25,47 @@ class SplashScreenViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:- Methods
-    
     /// acts as Launch Screen till the system either auto login the user if his credentials are saved, or shows the SchoolCode screen to login otherwise
-    private func getMainScreen()
-    {
+    private func getMainScreen() {
         let keychain = KeychainSwift()
-        if keychain.get(ACCESS_TOKEN) != nil
-        {
+        if keychain.get(ACCESS_TOKEN) != nil {
             BASE_URL = keychain.get("BASE_URL")
-            var parameters : Parameters? = nil
-            if let email = keychain.get("email")
-            {
-                if let password = keychain.get("password")
-                {
+            var parameters : Parameters = [:]
+            if let email = keychain.get("email") {
+                if let password = keychain.get("password") {
                     parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
                 }
-            }
-            else
-            {
+            } else {
                 parameters = [:]
             }
-            
-            let headers : HTTPHeaders? = nil
-            let url = SIGN_IN()
-            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-                switch response.result{
-                    
-                case .success(_):
-                    if let result = response.result.value as? [String : AnyObject]
-                    {
+            loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
+                if isSuccess {
+                    if let result = value as? [String : AnyObject] {
                         let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
                         UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                        
-                    
-                        if let headers = response.response?.allHeaderFields
-                        {
-                            let keychain = KeychainSwift()
-                            keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                            keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
-                            keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
-                            keychain.set(String(parent.data.id), forKey: ID)
-                        }
-                    
-                    if isParent() {
-                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        let nvc = UINavigationController(rootViewController: childrenTVC)
-                        
-                        self.present(nvc, animated: true, completion: nil)
-                    } else {
-                        if parent.data.userType.elementsEqual("student") {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                        } else {
-                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.actor = parent.data
-                            //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            
-                            self.present(nvc, animated: true, completion: nil)
-                        }
+                        let keychain = KeychainSwift()
+                        keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                        keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
+                        keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
+                        keychain.set(String(parent.data.id), forKey: ID)
+                        self.updateLocale(parent: parent)
                     }
-                    
-                }
-                case .failure(let error):
-                    print(error.localizedDescription)
+                } else {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                    
-                    
                 }
             }
-            
-        }
-        else
-        {
+        } else {
             let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             self.navigationController?.pushViewController(schoolCodevc, animated: false)
         }
     }
-    func getChildren(parentId: Int, childId: Int)
-    {
-        let parameters : Parameters = ["parent_id" : parentId]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_CHILDREN(),"\(parentId)")
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
-                    for childJson in result
-                    {
+    
+    func getChildren(parentId: Int, childId: Int) {
+        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
+                    for childJson in result {
                         let child = Child.init(fromDictionary: childJson)
                         if child.id == childId {
                             let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
@@ -128,29 +77,46 @@ class SplashScreenViewController: UIViewController {
                             self.present(nvc, animated: true, completion: nil)
                             break
                         }
-                        
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                        
-                    })
-                } else if response.response?.statusCode == 401 || response.response?.statusCode == 500 {
-                    showReauthenticateAlert(viewController: self)
-                } else {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                    })
-                }
+            } else {
+                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                })
             }
         }
     }
-
     
+    private func updateLocale(parent: ParentResponse) {
+        var locale = ""
+        if Locale.current.languageCode!.elementsEqual("ar") {
+            locale = "ar"
+        } else {
+            locale = "en"
+        }
+        setLocaleAPI(locale) { (isSuccess, statusCode, error) in
+            if isSuccess {
+                if isParent() {
+                    let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let nvc = UINavigationController(rootViewController: childrenTVC)
+                    self.present(nvc, animated: true, completion: nil)
+                } else {
+                    if parent.data.userType.elementsEqual("student") {
+                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                    } else {
+                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childProfileVC.actor = parent.data
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        self.present(nvc, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                })
+            }
+        }
+    }
 }

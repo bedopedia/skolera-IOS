@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import KeychainSwift
+import Alamofire
 //alert messages
 func showAlert(viewController: UIViewController, title: String, message: String,completion : ((UIAlertAction)->Void)?) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -17,8 +18,8 @@ func showAlert(viewController: UIViewController, title: String, message: String,
     alertController.addAction(okAction)
     viewController.present(alertController, animated: true, completion: nil)
 }
-func showReauthenticateAlert(viewController: UIViewController)
-{
+
+func showReauthenticateAlert(viewController: UIViewController) {
     let alertController = UIAlertController(title: "Session ended", message: "Please login again", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default, handler: {(ACTION: UIAlertAction) -> Void in
         let keychain = KeychainSwift()
@@ -31,6 +32,20 @@ func showReauthenticateAlert(viewController: UIViewController)
     alertController.addAction(okAction)
     viewController.present(alertController, animated: true, completion: {() -> Void in
     })
+}
+
+func showNetworkFailureError(viewController: UIViewController, statusCode: Int, error: Error, errorAction: @escaping(() -> ()) = {}) {
+    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
+        showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
+            errorAction()
+        })
+    } else if statusCode == 401 || statusCode == 500 {
+        showReauthenticateAlert(viewController: viewController)
+    } else {
+        showAlert(viewController: viewController, title: ERROR, message: SOMETHING_WRONG, completion: {action in
+            errorAction()
+        })
+    }
 }
 //request helpers
 func getHeaders() -> [String : String]

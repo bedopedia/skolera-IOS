@@ -256,6 +256,7 @@
 		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
+		8AE8D62122F7000400409CCD /* LoginApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE8D62022F7000400409CCD /* LoginApiManager.swift */; };
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
 		8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119C21E74D8600106EF2 /* Announcement.swift */; };
 		8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */; };
@@ -533,6 +534,7 @@
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
 		8AE5560F20DC03DD00800D7E /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
+		8AE8D62022F7000400409CCD /* LoginApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApiManager.swift; sourceTree = "<group>"; };
 		8AF4A5CB20D910BD003A1D31 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		8AF5119C21E74D8600106EF2 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementReceiver.swift; sourceTree = "<group>"; };
@@ -619,6 +621,7 @@
 		5459D188201610D4003F5223 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				8AE8D61F22F6FFF500409CCD /* Network */,
 				5459D18B201613F8003F5223 /* Model */,
 				5459D18A201613EF003F5223 /* Views */,
 				5459D189201613DF003F5223 /* Controllers */,
@@ -1281,6 +1284,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		8AE8D61F22F6FFF500409CCD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8AE8D62022F7000400409CCD /* LoginApiManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		8AF3065D21EC8DCC00B75736 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1682,6 +1693,7 @@
 				8A680FAC226DD3EB00E800AE /* AssignmentsResponse.swift in Sources */,
 				54EB93132015F88E001DD93F /* Routes.swift in Sources */,
 				54CCF400206BEBA600824A3D /* BehaviorNotesResponse.swift in Sources */,
+				8AE8D62122F7000400409CCD /* LoginApiManager.swift in Sources */,
 				54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */,
 				8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */,
 				8A6CA5E922EEFC3A00DBE205 /* TeacherContainerViewController.swift in Sources */,
