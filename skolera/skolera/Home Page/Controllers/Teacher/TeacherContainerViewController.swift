@@ -11,7 +11,7 @@ import SVProgressHUD
 import KeychainSwift
 import Alamofire
 
-class TeacherContainerViewController: UIViewController {
+class TeacherContainerViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var coursesButton: UIButton!
     @IBOutlet weak var coursesLabel: UILabel!
@@ -35,6 +35,10 @@ class TeacherContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
         
         selectMenu()
         

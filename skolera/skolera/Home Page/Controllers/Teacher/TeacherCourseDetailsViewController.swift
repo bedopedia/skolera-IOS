@@ -10,6 +10,7 @@ import UIKit
 
 class TeacherCourseDetailsViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     var course: TeacherCourse!
@@ -17,6 +18,7 @@ class TeacherCourseDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseGroup.name
         for child in childViewControllers {
             if let teacherCourseDetailsTableViewController = child as? TeacherCourseDetailsTableViewController {

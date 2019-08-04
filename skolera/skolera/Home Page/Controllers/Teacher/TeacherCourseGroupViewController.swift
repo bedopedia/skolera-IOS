@@ -10,6 +10,7 @@ import UIKit
 
 class TeacherCourseGroupViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var courseGroupTableView: UITableView!
     
@@ -17,6 +18,7 @@ class TeacherCourseGroupViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = course.name 
         courseGroupTableView.delegate = self
         courseGroupTableView.dataSource = self

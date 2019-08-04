@@ -12,10 +12,10 @@ import SVProgressHUD
 import Alamofire
 import Kingfisher
 import Firebase
-import NRAppUpdate
 
 
-class ChildrenTableViewController: UITableViewController {
+
+class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDelegate {
     //MARK: - Variables
     
     /// children array acts as the data source for the tableView
@@ -26,7 +26,8 @@ class ChildrenTableViewController: UITableViewController {
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
-        NRAppUpdate.checkUpdate(for: "1346646110") // check if there is updates for app in store
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         signOutButton.image = signOutButton.image?.flipIfNeeded()
         navigationController?.isNavigationBarHidden = false
         self.tableView.estimatedRowHeight = 100;

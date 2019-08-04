@@ -19,10 +19,6 @@ class ActorFeaturesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NRAppUpdate.checkUpdate(for: "1346646110") // check if there is
-
-        
-        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
