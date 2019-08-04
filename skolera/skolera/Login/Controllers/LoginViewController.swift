@@ -95,7 +95,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenTableViewController. Alert message is shown for wrong credentials on failure
+    /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenListViewController. Alert message is shown for wrong credentials on failure
     ///
     /// - Parameters:
     ///   - email: entered user email
@@ -143,6 +143,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             childProfileVC.quizzesText = ""
                             childProfileVC.eventsText = ""
                             let nvc = UINavigationController(rootViewController: childProfileVC)
+                            nvc.isNavigationBarHidden = true
                             self.present(nvc, animated: true, completion: nil)
                             break
                         }
@@ -168,8 +169,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if isSuccess {
                 if isParent() {
                     SVProgressHUD.dismiss()
-                    let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     let nvc = UINavigationController(rootViewController: childrenTVC)
+                    nvc.isNavigationBarHidden = true
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
@@ -179,6 +181,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         childProfileVC.actor = parent.data
                         let nvc = UINavigationController(rootViewController: childProfileVC)
+                        nvc.isNavigationBarHidden = true
                         self.present(nvc, animated: true, completion: nil)
                     }
                 }

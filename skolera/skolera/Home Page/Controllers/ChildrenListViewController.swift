@@ -15,12 +15,16 @@ import Firebase
 
 
 
-class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDelegate {
+class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate {
     //MARK: - Variables
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var refreshControl: UIRefreshControl!
+    
     /// children array acts as the data source for the tableView
-    @IBOutlet weak var notificationButton: UIBarButtonItem!
-    @IBOutlet weak var signOutButton: UIBarButtonItem!
+    @IBOutlet weak var notificationButton: UIButton!
+//    @IBOutlet weak var signOutButton: UIBarButtonItem!
     var kids = [Child]()
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
@@ -28,14 +32,20 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        signOutButton.image = signOutButton.image?.flipIfNeeded()
-        navigationController?.isNavigationBarHidden = false
+        
+//        signOutButton.image = signOutButton.image?.flipIfNeeded()
+//        navigationController?.isNavigationBarHidden = false
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 100;
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
+//        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
+//        let backItem = UIBarButtonItem()
+//        backItem.title = nil
+//        navigationItem.backBarButtonItem = backItem
         getChildren()
         setLocalization()
         InstanceID.instanceID().instanceID { (result, error) in
@@ -48,7 +58,7 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
         }
     }
     override func viewWillAppear(_ animated: Bool) {
-        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
+        notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
     // MARK: - Table view settings
     
@@ -116,7 +126,8 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
     }
     
     /// service call to get parent children, it adds them to the children array
-    func getChildren() {
+    @objc func getChildren() {
+        self.refreshControl.endRefreshing()
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = ["parent_id" : parentId()]
         let headers : HTTPHeaders? = getHeaders()
@@ -126,10 +137,10 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
             switch response.result{
             case .success(_):
                 if let result = response.result.value as? [[String : AnyObject]] {
+                    self.kids = []
                     for child in result {
                         self.kids.append(Child.init(fromDictionary: child))
                     }
-                    self.refreshControl?.endRefreshing()
                     self.tableView.reloadData()
                 }
             case .failure(let error):
@@ -137,7 +148,7 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
                 if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
                 {
                     showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        self.refreshControl?.endRefreshing()})
+                        })
                 }
                 else if response.response?.statusCode == 401 || response.response?.statusCode == 500
                 {
@@ -146,47 +157,13 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
                 else
                 {
                     showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        self.refreshControl?.endRefreshing()})
+                        })
                 }
             }
         }
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return kids.count
-    }
-    
-    
-    /// picks a child from children array by its index and fill a cell with his data
-    ///
-    /// - Parameters:
-    ///   - tableView: the screen tableviw
-    ///   - indexPath: the section and row of the cell
-    /// - Returns: ChildrenTableViewCell filled with its contents
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
-        cell.child = kids[indexPath.row]
-        return cell
-    }
-    
-    /// navigate to the child profile screen for the selected child
-    ///
-    /// - Parameters:
-    ///   - tableView: the screen tableview
-    ///   - indexPath: cell row and section
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
-        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        childProfileVC.child = cell.child
-        childProfileVC.assignmentsText = ""
-        childProfileVC.quizzesText = ""
-        childProfileVC.eventsText = ""
-        self.navigationController?.pushViewController(childProfileVC, animated: true)
-    }
     
     func showChangeLanguageConfirmation(language: Language){
         let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
@@ -198,16 +175,13 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
         self.present(alert, animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-        
-    }
+    
     // MARK: - Actions
     
     /// logs out user by clearing his date from keychain, navigate to the school code screen
     ///
     /// - Parameter sender: logout button
-    @IBAction func logout(_ sender: UIBarButtonItem) {
+    @IBAction func logout() {
         let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
             if Language.language == .arabic {
@@ -238,7 +212,7 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
     /// shows notification screen modally
     ///
     /// - Parameter sender: notification button
-    @IBAction func showNotifications(_ sender: UIBarButtonItem) {
+    @IBAction func showNotifications() {
         if(SVProgressHUD.isVisible()){
             SVProgressHUD.dismiss()
         }
@@ -254,5 +228,48 @@ class ChildrenTableViewController: UITableViewController, UIGestureRecognizerDel
         self.refreshControl?.beginRefreshing()
         kids.removeAll()
         getChildren()
+    }
+}
+
+extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return kids.count
+    }
+    
+    
+    /// picks a child from children array by its index and fill a cell with his data
+    ///
+    /// - Parameters:
+    ///   - tableView: the screen tableviw
+    ///   - indexPath: the section and row of the cell
+    /// - Returns: ChildrenTableViewCell filled with its contents
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
+        cell.child = kids[indexPath.row]
+        return cell
+    }
+    
+    /// navigate to the child profile screen for the selected child
+    ///
+    /// - Parameters:
+    ///   - tableView: the screen tableview
+    ///   - indexPath: cell row and section
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
+        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        childProfileVC.child = cell.child
+        childProfileVC.assignmentsText = ""
+        childProfileVC.quizzesText = ""
+        childProfileVC.eventsText = ""
+        self.navigationController?.pushViewController(childProfileVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+        
     }
 }

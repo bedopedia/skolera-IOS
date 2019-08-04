@@ -45,7 +45,7 @@
 		546356ED201F68E90072F066 /* ParentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546356E9201F68E80072F066 /* ParentResponse.swift */; };
 		54640B0A20559A9800A13CCB /* AttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54640B0920559A9800A13CCB /* AttendanceViewController.swift */; };
 		547117D52016225F00F28CEA /* HerukoSchoolInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547117D42016225E00F28CEA /* HerukoSchoolInfo.swift */; };
-		547605A2202083ED00369BE0 /* ChildrenTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547605A0202083ED00369BE0 /* ChildrenTableViewController.swift */; };
+		547605A2202083ED00369BE0 /* ChildrenListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547605A0202083ED00369BE0 /* ChildrenListViewController.swift */; };
 		547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547605A4202088C900369BE0 /* ChildrenTableViewCell.swift */; };
 		547605AA202091E100369BE0 /* TodayWorkloadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547605A8202091E100369BE0 /* TodayWorkloadStatus.swift */; };
 		547605AB202091E100369BE0 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547605A9202091E100369BE0 /* Attendance.swift */; };
@@ -305,7 +305,7 @@
 		546356E9201F68E80072F066 /* ParentResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentResponse.swift; sourceTree = "<group>"; };
 		54640B0920559A9800A13CCB /* AttendanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceViewController.swift; sourceTree = "<group>"; };
 		547117D42016225E00F28CEA /* HerukoSchoolInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HerukoSchoolInfo.swift; sourceTree = "<group>"; };
-		547605A0202083ED00369BE0 /* ChildrenTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTableViewController.swift; sourceTree = "<group>"; };
+		547605A0202083ED00369BE0 /* ChildrenListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenListViewController.swift; sourceTree = "<group>"; };
 		547605A4202088C900369BE0 /* ChildrenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenTableViewCell.swift; sourceTree = "<group>"; };
 		547605A8202091E100369BE0 /* TodayWorkloadStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWorkloadStatus.swift; sourceTree = "<group>"; };
 		547605A9202091E100369BE0 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
@@ -733,7 +733,7 @@
 			children = (
 				8A6CA5E722EEFBC600DBE205 /* Teacher */,
 				8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */,
-				547605A0202083ED00369BE0 /* ChildrenTableViewController.swift */,
+				547605A0202083ED00369BE0 /* ChildrenListViewController.swift */,
 				5402CA0C2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift */,
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
@@ -1697,7 +1697,7 @@
 				54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */,
 				8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */,
 				8A6CA5E922EEFC3A00DBE205 /* TeacherContainerViewController.swift in Sources */,
-				547605A2202083ED00369BE0 /* ChildrenTableViewController.swift in Sources */,
+				547605A2202083ED00369BE0 /* ChildrenListViewController.swift in Sources */,
 				8A94E45922DF826300A01B0C /* PostCourse.swift in Sources */,
 				545BBFFF2018CEC600A1F858 /* SchoolInfo.swift in Sources */,
 				545977DB202676B900263794 /* Label+KingfisherPlaceholder.swift in Sources */,

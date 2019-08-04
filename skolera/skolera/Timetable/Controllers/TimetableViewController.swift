@@ -21,12 +21,14 @@ class TimetableViewController: UIViewController, EventDataSource{
     var timeslots: [TimeSlot]!
     
     //MARK: - Outlets
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var dayView: DayView!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
@@ -52,6 +54,10 @@ class TimetableViewController: UIViewController, EventDataSource{
             statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
         }
 
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
 
     //MARK :- Actions

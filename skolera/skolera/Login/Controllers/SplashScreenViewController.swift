@@ -74,6 +74,7 @@ class SplashScreenViewController: UIViewController {
                             childProfileVC.quizzesText = ""
                             childProfileVC.eventsText = ""
                             let nvc = UINavigationController(rootViewController: childProfileVC)
+                            nvc.isNavigationBarHidden = true
                             self.present(nvc, animated: true, completion: nil)
                             break
                         }
@@ -98,8 +99,9 @@ class SplashScreenViewController: UIViewController {
         setLocaleAPI(locale) { (isSuccess, statusCode, error) in
             if isSuccess {
                 if isParent() {
-                    let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     let nvc = UINavigationController(rootViewController: childrenTVC)
+                    nvc.isNavigationBarHidden = true
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
@@ -108,6 +110,7 @@ class SplashScreenViewController: UIViewController {
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         childProfileVC.actor = parent.data
                         let nvc = UINavigationController(rootViewController: childProfileVC)
+                        nvc.isNavigationBarHidden = true
                         self.present(nvc, animated: true, completion: nil)
                     }
                 }

@@ -29,6 +29,8 @@ class ChildHomeViewController: UIViewController {
     @IBOutlet weak var thirdLabel: UILabel!
     @IBOutlet weak var fourthLabel: UILabel!
     
+    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var leftButton: UIButton!
     
     
     //MARK: - Variables
@@ -41,6 +43,11 @@ class ChildHomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if !isParent() {
+            leftButton.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
+            rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
+        }
+        leftButton.setImage(leftButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let childVc = childViewControllers[0] as? ChildProfileViewController {
             childVc.child = self.child
             childVc.assignmentsText = self.assignmentsText
@@ -61,8 +68,7 @@ class ChildHomeViewController: UIViewController {
             secondLabel.text = "Messages".localized
             thirdLabel.text = "Notifications".localized
             fourthLabel.text = "Announcments".localized
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(openSettings))
-            self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
+            
         }
         let backItem = UIBarButtonItem()
         backItem.title = nil
@@ -71,7 +77,23 @@ class ChildHomeViewController: UIViewController {
         navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
     }
     
-    @objc func openSettings() {
+    @IBAction func leftAction() {
+        if isParent() {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            openNewMessage()
+        }
+    }
+    
+    @IBAction func rightAction() {
+        if isParent() {
+            openNewMessage()
+        } else {
+            openSettings()
+        }
+    }
+    
+    private func openSettings() {
         let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
             if Language.language == .arabic {
@@ -99,8 +121,18 @@ class ChildHomeViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func openNewMessage() {
+        let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
+        newMessageVC.child = self.child
+        self.navigationController?.pushViewController(newMessageVC, animated: true)
+    }
+    
     private func unSelectAllTabs(){
-        navigationItem.rightBarButtonItem = nil
+        if isParent() {
+            rightButton.isHidden = true
+        } else {
+            leftButton.isHidden = true
+        }
         moreView.isHidden = true
         notificationView.isHidden = true
         threadsView.isHidden = true
@@ -140,8 +172,11 @@ class ChildHomeViewController: UIViewController {
     
     @IBAction func selectSecondTab(){
         unSelectAllTabs()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newMessage))
-        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
+        if isParent() {
+            rightButton.isHidden = false
+        } else {
+            leftButton.isHidden = false
+        }
         threadsView.isHidden = false
         if isParent() {
             secondLabel.textColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
@@ -183,11 +218,7 @@ class ChildHomeViewController: UIViewController {
         
     }
     
-    @objc func newMessage() {
-        let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        newMessageVC.child = self.child
-        self.navigationController?.pushViewController(newMessageVC, animated: true)
-    }
+    
     
     func sendFCM(token: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
