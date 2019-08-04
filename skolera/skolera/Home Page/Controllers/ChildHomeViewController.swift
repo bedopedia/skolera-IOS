@@ -12,7 +12,7 @@ import Alamofire
 import KeychainSwift
 import Firebase
 
-class ChildHomeViewController: UIViewController {
+class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var moreView: UIView!
     @IBOutlet weak var notificationView: UIView!
@@ -43,6 +43,8 @@ class ChildHomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if !isParent() {
             leftButton.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
             rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)

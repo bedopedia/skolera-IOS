@@ -22,6 +22,7 @@ class BehaviorNotesViewController: UIViewController{
     var meta: BehaviorNotesResponseMeta!
     //MARK: - Outlets
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
@@ -29,6 +30,7 @@ class BehaviorNotesViewController: UIViewController{
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
@@ -56,6 +58,10 @@ class BehaviorNotesViewController: UIViewController{
         default:
             loadPositiveNotes()
         }
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
