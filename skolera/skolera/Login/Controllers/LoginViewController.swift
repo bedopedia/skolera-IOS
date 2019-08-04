@@ -34,11 +34,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
-        
-        
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
-                
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
@@ -89,16 +86,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func login(_ sender: UIButton) {
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
-        if email == ""
-        {
+        if email.isEmpty {
             showAlert(viewController: self, title: MISSING_FIELD, message: MISSING_EMAIL, completion: nil)
-        }
-        else if password == ""
-        {
+        } else if password.isEmpty {
             showAlert(viewController: self, title: MISSING_FIELD, message: MISSING_PASSWORD, completion: nil)
-        }
-        else
-        {
+        } else {
             authenticate(email: email, password: password)
         }
     }
@@ -108,127 +100,75 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     /// - Parameters:
     ///   - email: entered user email
     ///   - password: entered user password
-    func authenticate( email: String, password: String)
-    {
+    func authenticate( email: String, password: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
-        let headers : HTTPHeaders? = nil
-        debugPrint(SIGN_IN(), parameters)
-        Alamofire.request(SIGN_IN(), method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
-                {
-                    debugPrint(result)
+        loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
                     UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    if let headers = response.response?.allHeaderFields
-                    {
-                        let keychain = KeychainSwift()
-                        keychain.set(email, forKey: "email")
-                        keychain.set(password, forKey: "password")
-                        keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                        keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
-                        keychain.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
-                        keychain.set(headers[UID] as! String, forKey: UID)
-                        keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
-                        keychain.set(String(parent.data.id), forKey: ID)
-                        keychain.set(parent.data.userType, forKey: USER_TYPE)
-                        
-//                        if let locale = parent.data.locale, locale  == "ar" {
-//                            UIView.appearance().semanticContentAttribute = .forceRightToLeft
-//                        }
-                        self.emailTextField.text = ""
-                        self.passwordTextField.text = ""
-                        if isParent() {
-                            let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            let nvc = UINavigationController(rootViewController: childrenTVC)
-                            
-                            self.present(nvc, animated: true, completion: nil)
+                    let keychain = KeychainSwift()
+                    keychain.set(email, forKey: "email")
+                    keychain.set(password, forKey: "password")
+                    keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                    keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
+                    keychain.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
+                    keychain.set(headers[UID] as! String, forKey: UID)
+                    keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
+                    keychain.set(String(parent.data.id), forKey: ID)
+                    keychain.set(parent.data.userType, forKey: USER_TYPE)
+                    self.emailTextField.text = ""
+                    self.passwordTextField.text = ""
+                    if isParent() {
+                        SVProgressHUD.dismiss()
+                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        let nvc = UINavigationController(rootViewController: childrenTVC)
+                        self.present(nvc, animated: true, completion: nil)
+                    } else {
+                        if parent.data.userType.elementsEqual("student") {
+                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                         } else {
-                            if parent.data.userType.elementsEqual("student") {
-                                self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                            } else {
-                                let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                                childProfileVC.actor = parent.data
-                                //                            self.navigationController?.pushViewController(childProfileVC, animated: true)
-                                let nvc = UINavigationController(rootViewController: childProfileVC)
-                                
-                                self.present(nvc, animated: true, completion: nil)
-                            }
+                            SVProgressHUD.dismiss()
+                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            childProfileVC.actor = parent.data
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            self.present(nvc, animated: true, completion: nil)
                         }
-                        
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401
-                {
-                    showAlert(viewController: self, title: INVALID, message: INVALID_USER_INFO, completion: nil)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                SVProgressHUD.dismiss()
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
             }
         }
     }
     
-    func getChildren(parentId: Int, childId: Int)
-    {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters = ["parent_id" : parentId]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_CHILDREN(),"\(parentId)")
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+    func getChildren(parentId: Int, childId: Int) {
+        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
-                    for childJson in result
-                    {
-                        let child = Child(fromDictionary: childJson)
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
+                    for childJson in result {
+                        let child = Child.init(fromDictionary: childJson)
                         if child.id == childId {
                             let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.child = child
                             childProfileVC.assignmentsText = ""
                             childProfileVC.quizzesText = ""
                             childProfileVC.eventsText = ""
-                            self.navigationController?.pushViewController(childProfileVC, animated: true)
+                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            self.present(nvc, animated: true, completion: nil)
                             break
                         }
-                        
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                       
-                        
-                    })
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        })
-                }
+            } else {
+                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                })
             }
         }
     }
-
-    
 }

@@ -34,13 +34,17 @@ func showReauthenticateAlert(viewController: UIViewController) {
     })
 }
 
-func showNetworkFailureError(viewController: UIViewController, statusCode: Int, error: Error, errorAction: @escaping(() -> ()) = {}) {
+func showNetworkFailureError(viewController: UIViewController, statusCode: Int, error: Error, isLoginError: Bool = false, errorAction: @escaping(() -> ()) = {}) {
     if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
     } else if statusCode == 401 || statusCode == 500 {
-        showReauthenticateAlert(viewController: viewController)
+        if isLoginError {
+            showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
+        } else {
+            showReauthenticateAlert(viewController: viewController)
+        }
     } else {
         showAlert(viewController: viewController, title: ERROR, message: SOMETHING_WRONG, completion: {action in
             errorAction()
