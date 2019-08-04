@@ -9,6 +9,28 @@
 import Foundation
 import Alamofire
 
+func getSchoolurlAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    Alamofire.request(GET_SCHOOL_LINK, method: .get, parameters: parameters, headers: nil).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
+func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    Alamofire.request(GET_SCHOOL_BY_CODE(), method: .get, parameters: parameters, headers: nil).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
 func setLocaleAPI(_ locale: String, completion: @escaping ((Bool, Int, Error?) -> ())) {
     let parameters: Parameters = ["user": ["language": locale]]
     let headers : HTTPHeaders? = getHeaders()
@@ -48,4 +70,3 @@ func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error
         }
     }
 }
-

@@ -120,22 +120,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     keychain.set(parent.data.userType, forKey: USER_TYPE)
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
-                    if isParent() {
-                        SVProgressHUD.dismiss()
-                        let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        let nvc = UINavigationController(rootViewController: childrenTVC)
-                        self.present(nvc, animated: true, completion: nil)
-                    } else {
-                        if parent.data.userType.elementsEqual("student") {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                        } else {
-                            SVProgressHUD.dismiss()
-                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.actor = parent.data
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            self.present(nvc, animated: true, completion: nil)
-                        }
-                    }
+                    self.updateLocale(parent: parent)
                 }
             } else {
                 SVProgressHUD.dismiss()
@@ -164,6 +149,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             } else {
+                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                })
+            }
+        }
+    }
+    
+    private func updateLocale(parent: ParentResponse) {
+        var locale = ""
+        if Locale.current.languageCode!.elementsEqual("ar") {
+            locale = "ar"
+        } else {
+            locale = "en"
+        }
+        setLocaleAPI(locale) { (isSuccess, statusCode, error) in
+            if isSuccess {
+                if isParent() {
+                    SVProgressHUD.dismiss()
+                    let childrenTVC = ChildrenTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let nvc = UINavigationController(rootViewController: childrenTVC)
+                    self.present(nvc, animated: true, completion: nil)
+                } else {
+                    if parent.data.userType.elementsEqual("student") {
+                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                    } else {
+                        SVProgressHUD.dismiss()
+                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childProfileVC.actor = parent.data
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        self.present(nvc, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                SVProgressHUD.dismiss()
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)

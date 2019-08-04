@@ -14,7 +14,6 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Outlets
     @IBOutlet weak var schoolCodeTextField: UITextField!
     
-    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +26,7 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
         SVProgressHUD.setDefaultMaskType(.clear)
         schoolCodeTextField.underlined()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -67,53 +67,33 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
     /// - Parameter sender: continue button
     @IBAction func pressContinue(_ sender: UIButton) {
         guard let schoolcode = schoolCodeTextField.text else { return}
-        if schoolcode == ""
-        {
+        if schoolcode == "" {
             showAlert(viewController: self, title: MISSING_FIELD , message: MISSING_SCHOOL_CODE, completion: nil)
-        }
-        else
-        {
-            getSchoolByCode(code: schoolcode.replacingOccurrences(of: " ", with: ""))
+        } else {
+            getSchoolBy(code: schoolcode.replacingOccurrences(of: " ", with: ""))
         }
     }
     
     /// service call to get the school base url, shows alert messages on errors, otherwise saves base url on keychain and calls moveToLoginVC
     ///
     /// - Parameter code: schoolCode
-    fileprivate func getSchoolByCode(code: String){
+    private func getSchoolBy(code: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = ["code" : code]
-        let headers : HTTPHeaders? = nil
-        Alamofire.request(GET_SCHOOL_LINK, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.popActivity()
-            switch response.result{
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
-                {
+        getSchoolurlAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
                     BASE_URL = herukoSchoolInfo.url!
                     let keychain = KeychainSwift()
                     keychain.set(BASE_URL, forKey: "BASE_URL")
                     self.moveToLoginVC(schoolInfo: herukoSchoolInfo)
-                }
-                else
-                {
+                } else {
                     showAlert(viewController: self, title: INVALID, message: INVALID_SCHOOL_CODE, completion: nil)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
@@ -121,18 +101,13 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
     /// navigates to LoginViewController, passes the school name and image url
     ///
     /// - Parameter schoolInfo: school Information come from heruko
-    func moveToLoginVC(schoolInfo : HerukoSchoolInfo)
-    {
+    func moveToLoginVC(schoolInfo : HerukoSchoolInfo) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = ["code" : schoolInfo.code]
-        let headers : HTTPHeaders? = nil
-        Alamofire.request(GET_SCHOOL_BY_CODE(), method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getSchoolInfoAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String: Any]
-                {
+            if isSuccess {
+                if let result = value as? [String: Any] {
                     self.schoolCodeTextField.text = ""
                     let schoolInfo: SchoolInfo = SchoolInfo(fromDictionary: result)
                     let loginVC = LoginViewController.instantiate(fromAppStoryboard: .Login)
@@ -140,20 +115,8 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
                     loginVC.imageURL = schoolInfo.avatarUrl
                     self.navigationController?.pushViewController(loginVC, animated: true)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
