@@ -14,6 +14,7 @@ import ChattoAdditions
 
 class NewMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var selectTeacherView: UIView!
     @IBOutlet weak var resultTableView: UITableView!
     @IBOutlet weak var selectCourseTextField: UITextField!
@@ -32,6 +33,11 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
         getSubjects()
         resultTableView.delegate = self
         resultTableView.dataSource = self
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     
@@ -41,7 +47,9 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func getSubjects()
     {
