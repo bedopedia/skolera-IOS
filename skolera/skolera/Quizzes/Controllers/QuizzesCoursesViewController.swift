@@ -14,6 +14,7 @@ class QuizzesCoursesViewController: UIViewController {
     
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backButton: UIButton!
     
     
     var child : Child!
@@ -23,7 +24,7 @@ class QuizzesCoursesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
@@ -32,6 +33,10 @@ class QuizzesCoursesViewController: UIViewController {
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getCourses()
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func getCourses(){

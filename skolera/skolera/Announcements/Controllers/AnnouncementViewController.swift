@@ -11,7 +11,8 @@ import UIKit
 class AnnouncementViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
-//    @IBOutlet weak var announcementHeader: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    //    @IBOutlet weak var announcementHeader: UILabel!
 //    @IBOutlet weak var annnouncementBody: UILabel!
     @IBOutlet weak var announcementImage: UIImageView!
     @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
@@ -22,6 +23,7 @@ class AnnouncementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
 //        titleLabel.backgroundColor = .red
         if weeklyNote != nil {
             titleLabel.text = weeklyNote.title
@@ -54,13 +56,11 @@ class AnnouncementViewController: UIViewController {
                 announcementImage.kf.setImage(with: url)
             }
         }
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
-        
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
     
 

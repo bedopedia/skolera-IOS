@@ -10,6 +10,7 @@ import UIKit
 
 class QuizStatusViewController: UIViewController {
    
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -32,6 +33,7 @@ class QuizStatusViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
@@ -102,6 +104,10 @@ class QuizStatusViewController: UIViewController {
         }
 
         
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
     
 

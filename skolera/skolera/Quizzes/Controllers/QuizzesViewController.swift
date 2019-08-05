@@ -23,16 +23,16 @@ class QuizzesViewController: UIViewController {
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
-
+    @IBOutlet weak var backButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
         if isTeacher {
-            self.navigationController?.isNavigationBarHidden = false
             childImageView.isHidden = true
         } else {
             if let child = child{
@@ -57,6 +57,10 @@ class QuizzesViewController: UIViewController {
             getQuizzes()
         }
         
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
