@@ -44,6 +44,7 @@ class AttendanceViewController: UIViewController {
     @IBOutlet weak var currentMonthLabel: UILabel!
     
     //NavBar Image View
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     
     //Numbers for different attendance type
@@ -62,8 +63,7 @@ class AttendanceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        menuView.backgroundColor = nil
-//        calendarView.backgroundColor = nil
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension
         loadLateDays()
         loadExcusedDays()
@@ -85,6 +85,11 @@ class AttendanceViewController: UIViewController {
         }
        
     }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo)
     {
         let date = visibleDates.monthDates.first?.date

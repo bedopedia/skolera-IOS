@@ -18,7 +18,7 @@
 		543830B0204D634500ABF477 /* CourseGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543830AF204D634500ABF477 /* CourseGrade.swift */; };
 		543830B2204D711200ABF477 /* Label+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543830B1204D711200ABF477 /* Label+Rounded.swift */; };
 		543830B4204DA07D00ABF477 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543830B3204DA07D00ABF477 /* SplashScreenViewController.swift */; };
-		544216E7204C604000BEB167 /* GradesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544216E6204C604000BEB167 /* GradesTableViewController.swift */; };
+		544216E7204C604000BEB167 /* GradesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544216E6204C604000BEB167 /* GradesListViewController.swift */; };
 		544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544216E8204C77B500BEB167 /* CourseGradeCell.swift */; };
 		545977DB202676B900263794 /* Label+KingfisherPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545977DA202676B900263794 /* Label+KingfisherPlaceholder.swift */; };
 		545BBFFB2018BC0E00A1F858 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BBFFA2018BC0E00A1F858 /* LoginViewController.swift */; };
@@ -279,7 +279,7 @@
 		543830AF204D634500ABF477 /* CourseGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseGrade.swift; sourceTree = "<group>"; };
 		543830B1204D711200ABF477 /* Label+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+Rounded.swift"; sourceTree = "<group>"; };
 		543830B3204DA07D00ABF477 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashScreenViewController.swift; path = skolera/Login/Controllers/SplashScreenViewController.swift; sourceTree = SOURCE_ROOT; };
-		544216E6204C604000BEB167 /* GradesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesTableViewController.swift; sourceTree = "<group>"; };
+		544216E6204C604000BEB167 /* GradesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesListViewController.swift; sourceTree = "<group>"; };
 		544216E8204C77B500BEB167 /* CourseGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseGradeCell.swift; sourceTree = "<group>"; };
 		545977DA202676B900263794 /* Label+KingfisherPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+KingfisherPlaceholder.swift"; sourceTree = "<group>"; };
 		545BBFFA2018BC0E00A1F858 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -599,7 +599,7 @@
 		5402CA0A2045CE03009F583A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				544216E6204C604000BEB167 /* GradesTableViewController.swift */,
+				544216E6204C604000BEB167 /* GradesListViewController.swift */,
 				54D3EDDC2080097A00BCDA80 /* CourseGradeViewController.swift */,
 			);
 			path = Controllers;
@@ -1724,7 +1724,7 @@
 				8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */,
 				8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
-				544216E7204C604000BEB167 /* GradesTableViewController.swift in Sources */,
+				544216E7204C604000BEB167 /* GradesListViewController.swift in Sources */,
 				8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */,
 				8A93357922E0BC58007B287D /* PostResourcesViewController.swift in Sources */,
 				547DD3E7208D0C43008EED15 /* Date+Time.swift in Sources */,

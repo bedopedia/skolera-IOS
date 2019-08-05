@@ -12,18 +12,21 @@ class SubjectWeeklyPlanViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backButton: UIButton!
     
     var dailyNote: DailyNote!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = dailyNote.title
         tableView.register(UINib(nibName: "WeeklyInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyInfoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
         
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
 
 }

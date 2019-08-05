@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GradesTableViewController: UITableViewController {
+class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //TODO:- REMAINING SCREEN FOR GRADES DETAILS
     //MARK: - Variables
     var child : Child!
@@ -17,40 +17,49 @@ class GradesTableViewController: UITableViewController {
     var grades = [CourseGrade]()
     //MARK: - Outlets
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-       tableView.rowHeight = 80
+        tableView.rowHeight = 80
+        tableView.delegate = self
+        tableView.dataSource = self
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return grades.count
     }
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Subjects".localized
     }
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
         
         cell.grade = grades[indexPath.row]
 
         return cell
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CourseGradeCell
         let cgVC = CourseGradeViewController.instantiate(fromAppStoryboard: .Grades)
         cgVC.child = child

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uct-pS-T91">
-                                <rect key="frame" x="0.0" y="459" width="375" height="208"/>
+                                <rect key="frame" x="0.0" y="475" width="375" height="192"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -107,7 +107,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anv-IM-0JI">
-                                <rect key="frame" x="0.0" y="64" width="375" height="395"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="395"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I7L-X3-4H9">
                                         <rect key="frame" x="4" y="345" width="367" height="50"/>
@@ -208,60 +208,74 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                     <constraint firstAttribute="trailing" secondItem="I7L-X3-4H9" secondAttribute="trailing" constant="4" id="zKf-4y-4cC"/>
                                 </constraints>
                             </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.72549019607843135" green="0.72549019607843135" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="anv-IM-0JI" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="1Wd-At-tCa"/>
-                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="uct-pS-T91" secondAttribute="trailing" id="6Qv-8C-762"/>
-                            <constraint firstItem="uct-pS-T91" firstAttribute="top" secondItem="anv-IM-0JI" secondAttribute="bottom" id="GNU-Ay-sZ1"/>
-                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="anv-IM-0JI" secondAttribute="trailing" id="Hdw-nQ-dxN"/>
-                            <constraint firstItem="anv-IM-0JI" firstAttribute="top" secondItem="FNQ-9L-PzD" secondAttribute="top" id="XKC-yd-PaO"/>
-                            <constraint firstItem="uct-pS-T91" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="gwm-UY-Und"/>
-                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="bottom" secondItem="uct-pS-T91" secondAttribute="bottom" id="ong-ri-Weo"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="FNQ-9L-PzD"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="BGk-NW-pzH">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="AD8-Ut-rU1">
-                            <rect key="frame" x="167.5" y="7" width="40" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acE-Md-k2z">
-                                    <rect key="frame" x="-63.5" y="1.5" width="167" height="27"/>
-                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="22"/>
-                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="acE-Md-k2z" firstAttribute="centerX" secondItem="AD8-Ut-rU1" secondAttribute="centerX" id="pB0-0q-Blw"/>
-                                <constraint firstItem="acE-Md-k2z" firstAttribute="centerY" secondItem="AD8-Ut-rU1" secondAttribute="centerY" id="pGV-Sa-mUq"/>
-                            </constraints>
-                        </view>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="ALP-66-t1r">
-                            <view key="customView" contentMode="scaleToFill" id="w8P-Qy-xfz">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEr-Ns-Ki8">
+                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lAz-c2-LhJ">
-                                        <rect key="frame" x="51" y="0.5" width="32" height="32"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uQ-EC-8Bh">
+                                        <rect key="frame" x="0.0" y="59" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="D0d-z3-HdT"/>
-                                            <constraint firstAttribute="height" constant="32" id="VcS-s9-pEJ"/>
+                                            <constraint firstAttribute="height" constant="1" id="0oh-G3-xhT"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gY-pp-U7y">
+                                        <rect key="frame" x="18" y="22" width="30" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="gN4-fm-pXC"/>
+                                            <constraint firstAttribute="width" constant="30" id="oOn-Gg-tUg"/>
+                                        </constraints>
+                                        <state key="normal" image="chevronLeft"/>
+                                        <connections>
+                                            <action selector="back" destination="zgi-5O-OXQ" eventType="touchUpInside" id="lrR-QB-6Pa"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOh-eT-UgF">
+                                        <rect key="frame" x="100.5" y="15.5" width="174" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EgB-HE-NNw">
+                                        <rect key="frame" x="325" y="14" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="1j0-fZ-TCz"/>
+                                            <constraint firstAttribute="height" constant="32" id="k11-vT-Rgy"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="lAz-c2-LhJ" secondAttribute="trailing" id="WQF-Bh-KeC"/>
-                                    <constraint firstItem="lAz-c2-LhJ" firstAttribute="centerY" secondItem="w8P-Qy-xfz" secondAttribute="centerY" id="erh-kg-X4u"/>
+                                    <constraint firstAttribute="trailing" secondItem="0uQ-EC-8Bh" secondAttribute="trailing" id="4RK-mr-23J"/>
+                                    <constraint firstItem="EgB-HE-NNw" firstAttribute="centerY" secondItem="BOh-eT-UgF" secondAttribute="centerY" id="H7V-j0-f8x"/>
+                                    <constraint firstAttribute="bottom" secondItem="0uQ-EC-8Bh" secondAttribute="bottom" id="Iph-Pc-lvo"/>
+                                    <constraint firstItem="BOh-eT-UgF" firstAttribute="centerY" secondItem="9gY-pp-U7y" secondAttribute="centerY" id="W7g-2F-dj1"/>
+                                    <constraint firstItem="9gY-pp-U7y" firstAttribute="centerY" secondItem="ZEr-Ns-Ki8" secondAttribute="centerY" id="atG-l3-B0A"/>
+                                    <constraint firstItem="0uQ-EC-8Bh" firstAttribute="leading" secondItem="ZEr-Ns-Ki8" secondAttribute="leading" id="dK3-xP-aOV"/>
+                                    <constraint firstItem="9gY-pp-U7y" firstAttribute="leading" secondItem="ZEr-Ns-Ki8" secondAttribute="leading" constant="18" id="hEl-uk-Cyk"/>
+                                    <constraint firstAttribute="height" constant="60" id="iy6-XC-DBy"/>
+                                    <constraint firstAttribute="trailing" secondItem="EgB-HE-NNw" secondAttribute="trailing" constant="18" id="nqW-tg-pEX"/>
+                                    <constraint firstItem="BOh-eT-UgF" firstAttribute="centerX" secondItem="ZEr-Ns-Ki8" secondAttribute="centerX" id="qse-6j-Zzh"/>
                                 </constraints>
                             </view>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="anv-IM-0JI" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="1Wd-At-tCa"/>
+                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="uct-pS-T91" secondAttribute="trailing" id="6Qv-8C-762"/>
+                            <constraint firstItem="anv-IM-0JI" firstAttribute="top" secondItem="ZEr-Ns-Ki8" secondAttribute="bottom" id="7lG-CT-yiu"/>
+                            <constraint firstItem="uct-pS-T91" firstAttribute="top" secondItem="anv-IM-0JI" secondAttribute="bottom" id="GNU-Ay-sZ1"/>
+                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="anv-IM-0JI" secondAttribute="trailing" id="Hdw-nQ-dxN"/>
+                            <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="SSp-GX-6yn"/>
+                            <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="trailing" secondItem="FNQ-9L-PzD" secondAttribute="trailing" id="aX8-Ty-VwC"/>
+                            <constraint firstItem="uct-pS-T91" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="gwm-UY-Und"/>
+                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="bottom" secondItem="uct-pS-T91" secondAttribute="bottom" id="ong-ri-Weo"/>
+                            <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="top" secondItem="FNQ-9L-PzD" secondAttribute="top" id="sAT-g8-5IP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FNQ-9L-PzD"/>
+                    </view>
                     <connections>
-                        <outlet property="childImageView" destination="lAz-c2-LhJ" id="0e4-z0-p9L"/>
+                        <outlet property="backButton" destination="9gY-pp-U7y" id="jGQ-u1-2r4"/>
+                        <outlet property="childImageView" destination="EgB-HE-NNw" id="ejK-8G-K6u"/>
                         <outlet property="collectionView" destination="I7L-X3-4H9" id="cTE-fw-lZj"/>
                         <outlet property="containerViewHeightConstraint" destination="ndU-hu-Go3" id="5fG-PE-99U"/>
                         <outlet property="contianerView" destination="gMf-sf-6Fj" id="dB6-AL-4B9"/>
@@ -288,49 +302,68 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uYb-kv-RdR">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXF-Ba-tQY">
+                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oky-Rv-0jH">
+                                        <rect key="frame" x="0.0" y="59" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="IbC-Bh-Jcu"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCz-5a-s2Y">
+                                        <rect key="frame" x="18" y="22" width="30" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="BIM-xd-ehz"/>
+                                            <constraint firstAttribute="height" constant="16" id="xKW-zQ-Fu2"/>
+                                        </constraints>
+                                        <state key="normal" image="chevronLeft"/>
+                                        <connections>
+                                            <action selector="back" destination="KE7-9z-WJ1" eventType="touchUpInside" id="8sK-10-7Lm"/>
+                                            <action selector="back" destination="zgi-5O-OXQ" eventType="touchUpInside" id="BDS-R6-DQS"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ve0-5E-zm3">
+                                        <rect key="frame" x="100.5" y="15.5" width="174" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="cCz-5a-s2Y" firstAttribute="centerY" secondItem="aXF-Ba-tQY" secondAttribute="centerY" id="4cH-Qy-nOi"/>
+                                    <constraint firstAttribute="trailing" secondItem="oky-Rv-0jH" secondAttribute="trailing" id="Ivz-qf-bMR"/>
+                                    <constraint firstItem="Ve0-5E-zm3" firstAttribute="centerY" secondItem="cCz-5a-s2Y" secondAttribute="centerY" id="PNb-GZ-xeB"/>
+                                    <constraint firstItem="oky-Rv-0jH" firstAttribute="leading" secondItem="aXF-Ba-tQY" secondAttribute="leading" id="VXi-h2-JxV"/>
+                                    <constraint firstItem="Ve0-5E-zm3" firstAttribute="centerX" secondItem="aXF-Ba-tQY" secondAttribute="centerX" id="c6r-4d-PJ1"/>
+                                    <constraint firstAttribute="bottom" secondItem="oky-Rv-0jH" secondAttribute="bottom" id="mwI-MJ-VDv"/>
+                                    <constraint firstAttribute="height" constant="60" id="sXH-Uc-Ygn"/>
+                                    <constraint firstItem="cCz-5a-s2Y" firstAttribute="leading" secondItem="aXF-Ba-tQY" secondAttribute="leading" constant="18" id="yrD-LC-x9S"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.72549019609999998" green="0.72549019609999998" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qsc-6l-IDk" firstAttribute="bottom" secondItem="uYb-kv-RdR" secondAttribute="bottom" id="CBl-cC-qU3"/>
+                            <constraint firstItem="uYb-kv-RdR" firstAttribute="top" secondItem="aXF-Ba-tQY" secondAttribute="bottom" id="M9K-iK-kpf"/>
                             <constraint firstItem="uYb-kv-RdR" firstAttribute="leading" secondItem="Qsc-6l-IDk" secondAttribute="leading" id="cG0-1U-3AH"/>
+                            <constraint firstItem="aXF-Ba-tQY" firstAttribute="top" secondItem="Qsc-6l-IDk" secondAttribute="top" id="lSh-WM-zNI"/>
+                            <constraint firstItem="Qsc-6l-IDk" firstAttribute="trailing" secondItem="aXF-Ba-tQY" secondAttribute="trailing" id="mv8-da-fA4"/>
                             <constraint firstItem="Qsc-6l-IDk" firstAttribute="trailing" secondItem="uYb-kv-RdR" secondAttribute="trailing" id="nuK-05-eJA"/>
-                            <constraint firstItem="uYb-kv-RdR" firstAttribute="top" secondItem="Qsc-6l-IDk" secondAttribute="top" id="wsT-MX-Xf8"/>
+                            <constraint firstItem="aXF-Ba-tQY" firstAttribute="leading" secondItem="es1-kR-yRU" secondAttribute="leading" id="wzb-cS-1vT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Qsc-6l-IDk"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dMq-Cy-74p">
-                        <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="ck4-BS-nEb">
-                            <rect key="frame" x="167.5" y="7" width="40" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly Planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IC5-wR-P4y">
-                                    <rect key="frame" x="-63.5" y="1.5" width="167" height="27"/>
-                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="22"/>
-                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="IC5-wR-P4y" firstAttribute="centerX" secondItem="ck4-BS-nEb" secondAttribute="centerX" id="P4d-eO-F5d"/>
-                                <constraint firstItem="IC5-wR-P4y" firstAttribute="centerY" secondItem="ck4-BS-nEb" secondAttribute="centerY" id="sXJ-rH-IYQ"/>
-                            </constraints>
-                        </view>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="9et-1N-Qg5">
-                            <view key="customView" contentMode="scaleToFill" id="qXf-vs-Qcr">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </view>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="backButton" destination="cCz-5a-s2Y" id="af7-E8-3eG"/>
                         <outlet property="tableView" destination="uYb-kv-RdR" id="but-Dk-eMd"/>
-                        <outlet property="titleLabel" destination="IC5-wR-P4y" id="5Zp-UK-421"/>
+                        <outlet property="titleLabel" destination="Ve0-5E-zm3" id="hba-o6-8K0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gu8-gM-7Kd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -339,6 +372,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
         </scene>
     </scenes>
     <resources>
+        <image name="chevronLeft" width="11" height="16"/>
         <image name="logo" width="131" height="24"/>
     </resources>
 </document>

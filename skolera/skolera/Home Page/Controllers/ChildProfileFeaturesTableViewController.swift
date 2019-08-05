@@ -264,7 +264,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     /// move to grades screen to show courses grades
     func showCoursesGrades() {
-        let gtvc = GradesTableViewController.instantiate(fromAppStoryboard: .Grades)
+        let gtvc = GradesListViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
         gtvc.grades = self.grades
         self.navigationController?.pushViewController(gtvc, animated: true)

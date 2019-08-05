@@ -10,6 +10,7 @@ import UIKit
 
 class WeeklyPlannerViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var contianerView: UIView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -42,9 +43,7 @@ class WeeklyPlannerViewController: UIViewController {
     var selectedDay: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        navigationController?.navigationBar.barTintColor = .white
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -122,6 +121,10 @@ class WeeklyPlannerViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource  = self
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func seeMore(){

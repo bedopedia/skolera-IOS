@@ -15,6 +15,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: - Outlets
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
@@ -42,6 +43,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -63,13 +65,15 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func segmentedControlValueChanged(segment: UISegmentedControl) {
         if segment.selectedSegmentIndex == 0 {
