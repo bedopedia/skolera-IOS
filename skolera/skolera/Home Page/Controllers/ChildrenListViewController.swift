@@ -47,7 +47,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
 //        backItem.title = nil
 //        navigationItem.backBarButtonItem = backItem
         getChildren()
-        setLocalization()
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
@@ -66,99 +65,33 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     func sendFCM(token: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
+            if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
-    //service call to change localization
-    func setLocalization() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        let locale = Locale.current.languageCode!.elementsEqual("ar") ? "ar" : "en"
-        let parameters: Parameters = ["user": ["language": locale]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
-                debugPrint("USER_LANGUAGE_CHANGED_SUCCESSFULLY")
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-            }
-        }
-    }
     
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
         self.refreshControl.endRefreshing()
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters = ["parent_id" : parentId()]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_CHILDREN(),parentId())
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]] {
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     self.kids = []
                     for child in result {
                         self.kids.append(Child.init(fromDictionary: child))
                     }
                     self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        })
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        })
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }

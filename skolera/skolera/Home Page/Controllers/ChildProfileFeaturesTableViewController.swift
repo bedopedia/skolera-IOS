@@ -131,13 +131,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     /// service call to get total courses grades, average grade is set on completion
     private func getGrades() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_GRADES(),child.actableId!)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            switch response.result{
-            case .success(_):
-                if let res = response.result.value as? [String : AnyObject] {
+        getGradesAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+            if isSuccess {
+                if let res = value as? [String : AnyObject] {
                     let result = res["courses_grades"] as! [[String: AnyObject]]
                     for grade in result {
                         let gradeItem = CourseGrade.init(fromDictionary: grade)
@@ -156,33 +152,18 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                     }
                     self.getCourseGroups()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                SVProgressHUD.dismiss()
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     private func getCourseGroups() {
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_COURSE_GROUPS(),child.id!)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.popActivity()
-            switch response.result{
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]] {
+        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     var courseGroups = [Int: CourseGroup]()
                     for courseGroup in result{
                         let temp = CourseGroup.init(fromDictionary: courseGroup)
@@ -192,113 +173,65 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                         grade.courseGroup = courseGroups[grade.courseId]
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     private func getBehaviorNotesCount() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = ["student_id" : child.actableId,"user_type" : "Parents"]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = GET_BEHAVIOR_NOTES_COUNT()
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
+        getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject] {
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
                     self.otherBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.other!)"
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     private func getWeeklyReport() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "d/M/y"
-        let url = String(format: GET_WEEKLY_PLANNER(),formatter.string(from: Date()))
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { (response) in
-            switch response.result {
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject] {
+        getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
                     if !weeklyPlanResponse.weeklyPlans.isEmpty {
                         self.weeklyPlans = weeklyPlanResponse.weeklyPlans
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion : nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     private func getTimeTable() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_TIME_TABLE(),child.actableId!)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            switch response.result{
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [[String : AnyObject]], result.count > 0 {
+        getTimeTableAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]], result.count > 0 {
                     for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
-                        //next line is important so that we can sort by weekdays
                         timeslot.day.capitalizeFirstLetter()
                         self.timeslots.append(timeslot)
                     }
                     let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale.init(identifier: "en")
-                    //sort timeslots according to day variable first, and then by from variable
+                    dateFormatter.locale = Locale(identifier: "en")
                     self.timeslots.sort(by: { (a, b) -> Bool in
                         if dateFormatter.weekdaySymbols.index(of: a.day)! == dateFormatter.weekdaySymbols.index(of: b.day)! {
-                           return a.from.time < b.from.time
+                            return a.from.time < b.from.time
                         } else {
                             return dateFormatter.weekdaySymbols.index(of: a.day)! < dateFormatter.weekdaySymbols.index(of: b.day)!
                         }
@@ -322,21 +255,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                 } else {
                     self.disableTimeTable = true
                 }
-                SVProgressHUD.popActivity()
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion : nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }

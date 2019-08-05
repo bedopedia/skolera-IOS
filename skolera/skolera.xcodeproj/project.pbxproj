@@ -247,6 +247,7 @@
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
 		8AAF1D7822DE035200B89A6D /* ChildHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */; };
+		8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB3E10D22F83CD600D3F76F /* HomeApiManager.swift */; };
 		8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB5276D226DC77F006EA7FB /* CardView.swift */; };
 		8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */; };
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
@@ -524,6 +525,7 @@
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
 		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
 		8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeViewController.swift; sourceTree = "<group>"; };
+		8AB3E10D22F83CD600D3F76F /* HomeApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeApiManager.swift; sourceTree = "<group>"; };
 		8AB5276D226DC77F006EA7FB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -928,6 +930,7 @@
 		54B62C36201E279E00FB60BB /* Home Page */ = {
 			isa = PBXGroup;
 			children = (
+				8AB3E10C22F83CCA00D3F76F /* Network */,
 				546356D1201F62A40072F066 /* Model */,
 				5476059C202080EF00369BE0 /* Views */,
 				5476059D2020810500369BE0 /* Controllers */,
@@ -1273,6 +1276,14 @@
 				8A8A7396222D92F300972BE6 /* WeeklyNote.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8AB3E10C22F83CCA00D3F76F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8AB3E10D22F83CD600D3F76F /* HomeApiManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		8ACB900621EC942E00CE2473 /* Controllers */ = {
@@ -1744,6 +1755,7 @@
 				8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */,
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,
+				8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
 				8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */,
 				546356EB201F68E90072F066 /* Child.swift in Sources */,

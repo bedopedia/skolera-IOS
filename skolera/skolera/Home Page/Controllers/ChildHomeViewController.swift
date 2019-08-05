@@ -225,60 +225,17 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     func sendFCM(token: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
+            if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     //service call to change localization
-    func setLocalization() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        let locale = Locale.current.languageCode!.elementsEqual("ar") ? "ar" : "en"
-        let parameters: Parameters = ["user": ["language": locale]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
-                debugPrint("USER_LANGUAGE_CHANGED_SUCCESSFULLY")
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
-            }
-        }
-    }
     
     func showChangeLanguageConfirmation(language: Language){
         let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)

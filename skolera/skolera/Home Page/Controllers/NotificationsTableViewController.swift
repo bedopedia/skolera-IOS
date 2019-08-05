@@ -31,79 +31,31 @@ class NotificationsTableViewController: UITableViewController {
     
     func setNotificationsSeen(){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: SET_SEEN_NOTIFICATIONS(), userId())
-        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                debugPrint(response)
-//                if let result = response.result.value as? [String: AnyObject]
-//                {
-//                    debugPrint(result)
-//                    let notificationResponse = NotifcationResponse.init(fromDictionary: result)
-//                    self.notifications.append(contentsOf: notificationResponse.notifications)
-//                    self.meta = notificationResponse.meta
-//                    self.tableView.reloadData()
-//                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-            }
+        setNotificationSeenAPI { (isSuccess, statusCode, error) in
+            debugPrint("Notification is Seen")
         }
     }
     
     /// service call to get notification given current page for pagination
     ///
     /// - Parameter page: page number
-    func getNotifcations(page: Int = 1)
-    {
+    func getNotifcations(page: Int = 1) {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_NOTIFCATIONS(),userId(),page)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String: AnyObject]
-                {
+            if isSuccess {
+                if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
                     self.notifications.append(contentsOf: notificationResponse.notifications)
                     self.meta = notificationResponse.meta
                     self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

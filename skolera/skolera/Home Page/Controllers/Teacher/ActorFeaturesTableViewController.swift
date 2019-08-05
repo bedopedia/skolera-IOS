@@ -30,75 +30,15 @@ class ActorFeaturesTableViewController: UITableViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        setLocalization()
-    }
-    
     func sendFCM(token: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-            case .success(_):
-                //do nothing
-                debugPrint("success")
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-            }
-        }
-    }
-    
-    //service call to change localization
-    func setLocalization() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        var locale = ""
-        if Locale.current.languageCode!.elementsEqual("ar") {
-            locale = "ar"
-        } else {
-            locale = "en"
-        }
-        let parameters: Parameters = ["user": ["language": locale]]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: EDIT_USER(), userId())
-        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            switch response.result{
-            case .success(_):
-                //do nothing
-                debugPrint(response)
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        self.refreshControl?.endRefreshing()})
-                }
+            if isSuccess {
+                debugPrint("UPDATED_FCM_SUCCESSFULLY")
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }

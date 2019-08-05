@@ -72,42 +72,19 @@ class TeacherCoursesTableViewController: UITableViewController {
     
     func getCourses() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let headers : HTTPHeaders? = getHeaders()
-        // parentId is mapping to actable Id of teacher
-        let url = String(format: GET_TEACHER_COURSES(), actor.actableId)
-        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        getCoursesForTeacherAPI(teacherActableId: actor.actableId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
-                    debugPrint(result)
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     let teacherCourses: [TeacherCourse] = result.map({ TeacherCourse($0) })
                     self.courses = teacherCourses
                     self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
-    
-
-    
 
     func getText(name: String) -> String {
         let shortcut = name.replacingOccurrences(of: "&", with: "")
