@@ -17,6 +17,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var replyTextField: UITextField!
     @IBOutlet weak var replyView: UIView!
+    @IBOutlet weak var backButton: UIButton!
     
     var child : Child!
     var courseName: String = ""
@@ -39,8 +40,13 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
         replyTextField.delegate = self
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        
     }
     
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
+    }
     @IBAction func send(){
         if let text = replyTextField.text, !text.isEmpty {
             SVProgressHUD.show(withStatus: "Loading".localized)

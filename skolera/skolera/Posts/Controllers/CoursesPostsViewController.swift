@@ -15,6 +15,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    
     
     var child : Child!
     var courseName: String = ""
@@ -26,6 +28,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
@@ -33,14 +36,15 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.rowHeight = UITableViewAutomaticDimension
-       
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
          getPosts()
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     func getPosts(){

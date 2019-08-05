@@ -13,14 +13,15 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-
+    @IBOutlet weak var backButton: UIButton!
+    
     var child : Child!
     var courseName: String = ""
     var attachments: [UploadedFile] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
@@ -29,9 +30,12 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        
+        
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

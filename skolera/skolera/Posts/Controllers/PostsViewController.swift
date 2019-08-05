@@ -14,14 +14,14 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     
     var child : Child!
 
     var courses: [PostCourse] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
@@ -29,12 +29,10 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getCourses()
-        
-        let backItem = UIBarButtonItem()
-        backItem.tintColor = #colorLiteral(red: 0.3196239769, green: 0.3798563778, blue: 0.4216277599, alpha: 1)
-        backItem.title = nil
-        navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3196239769, green: 0.3798563778, blue: 0.4216277599, alpha: 1)
-        navigationItem.backBarButtonItem = backItem
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
     
 
