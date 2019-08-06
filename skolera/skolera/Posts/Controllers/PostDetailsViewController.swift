@@ -51,33 +51,16 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         if let text = replyTextField.text, !text.isEmpty {
             SVProgressHUD.show(withStatus: "Loading".localized)
             let parameters : Parameters = ["comment": ["content": text, "owner_id": userId(), "post_id": self.post.id!]]
-            debugPrint(parameters)
-            let headers : HTTPHeaders? = getHeaders()
-            let url = COMMENTS_URL()
-            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            addPostReplyApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
                 SVProgressHUD.dismiss()
-                switch response.result{
-                case .success(_):
-                    if let result = response.result.value  as? [String: AnyObject] {
-                        debugPrint(result)
+                if isSuccess {
+                    if let result = value as? [String: AnyObject] {
                         let comment: PostComment = PostComment(result)
                         self.post.comments?.append(comment)
                         self.tableView.reloadData()
                     }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                    {
-                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                    }
-                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                    {
-                        showReauthenticateAlert(viewController: self)
-                    }
-                    else
-                    {
-                        UIApplication.shared.applicationIconBadgeNumber = 0
-                    }
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
         }
