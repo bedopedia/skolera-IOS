@@ -41,35 +41,17 @@ class QuizzesCoursesViewController: UIViewController {
     
     func getCourses(){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_QUIZZES_COURSES(), child.id)
-        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        getQuizzesCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
                     let quizCourses: [QuizCourse] = result.map({ QuizCourse($0) })
                     self.courses = quizCourses
                     self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }

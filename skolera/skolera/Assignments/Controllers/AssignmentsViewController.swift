@@ -173,6 +173,12 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isTeacher {
             getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
+        } else {
+            
+            let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
+//            assignmentDetailsVC.child = self.child
+//            assignmentDetailsVC.assignment = assignment
+            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
         }
             
     }

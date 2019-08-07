@@ -86,80 +86,31 @@ class QuizzesViewController: UIViewController {
     
     func getTeacherQuizzes() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let url = URL(string: GET_TEACHER_QUIZZES())!
-                    .appending("fields%5Bend_date%5D", value: "true")
-                    .appending("fields%5Bgrading_period_lock%5D", value: "true")
-                    .appending("fields%5Bid%5D", value: "true")
-                    .appending("fields%5Blesson_id%5D", value: "true")
-                    .appending("fields%5Bname%5D", value: "true")
-                    .appending("fields%5Bstart_date%5D", value: "true")
-                    .appending("fields%5Bstate%5D", value: "true")
-                    .appending("fields%5Bstudent_solve%5D", value: "true")
-                    .appending("course_group_ids[]", value: "68")
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getQuizzesForTeacherApi { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     self.quizzes = result.map({ FullQuiz($0) })
                     self.setOpenedQuizzes()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
-        
-        
     }
     
     func getQuizzes(){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let url = String(format: GET_QUIZZES(), child.id, courseId)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getQuizzesForChildApi(childId: child.id, courseId: courseId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [String : AnyObject]
-                {
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
                     self.quizzes = quizResponse.quizzes
                     self.setOpenedQuizzes()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
@@ -189,6 +140,10 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
             quizVC.child = self.child
             quizVC.courseName = courseName
             quizVC.quiz = filteredQuizzes[indexPath.row]
+            self.navigationController?.pushViewController(quizVC, animated: true)
+        } else {
+            let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
+            quizVC.quizName = courseName
             self.navigationController?.pushViewController(quizVC, animated: true)
         }
     }

@@ -36,24 +36,15 @@ class AnnouncementTableViewController: UITableViewController {
 //        self.navigationController?.isNavigationBarHidden = false
     }
 
-    // MARK: - Table view data source
-    func getAnnouncements(page: Int = 1)
-    {
+    func getAnnouncements(page: Int = 1) {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_ANNOUNCEMENTS(),page,10)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String: AnyObject]
-                {
+            if isSuccess {
+                if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
                         self.meta = Meta(fromDictionary: metaResponse)
                     }
-                    
                     if let announcementsResponse =  result["announcements"] as? [[String: AnyObject]] {
                         for item in announcementsResponse {
                             let announcement = Announcement(fromDictionary: item)
@@ -62,23 +53,12 @@ class AnnouncementTableViewController: UITableViewController {
                     }
                     self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
