@@ -9,21 +9,28 @@
 import UIKit
 import KMPlaceholderTextView
 
-class FeedbackDialogViewController: UIViewController{
+class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var gradeTextField: UITextField!
     @IBOutlet weak var feedbackTextView: KMPlaceholderTextView!
+    
+    var didSubmitGrade: ((String, String) -> ())!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         gradeTextField.layer.borderWidth = 1
         gradeTextField.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
         gradeTextField.layer.cornerRadius = 6
+        gradeTextField.delegate = self
         
         feedbackTextView.layer.borderWidth = 1
         feedbackTextView.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
         feedbackTextView.layer.cornerRadius = 6
         
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        gradeTextField.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
     }
 
     @IBAction func close(){
@@ -31,7 +38,17 @@ class FeedbackDialogViewController: UIViewController{
     }
     
     @IBAction func submit(){
-        close()
+        if let grade = gradeTextField.text, isNumric(string: grade) {
+            didSubmitGrade(grade, feedbackTextView.text ?? "")
+            close()
+        } else {
+           gradeTextField.layer.borderColor = UIColor.red.cgColor
+        }
+       
+    }
+    
+    private func isNumric(string: String) -> Bool {
+        return !string.isEmpty && string.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
 
 }

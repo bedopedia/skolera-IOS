@@ -57,7 +57,11 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentContentTableViewCell") as! AssignmentContentTableViewCell
-            cell.label.attributedText = self.assignment.content.htmlToAttributedString
+            if let content = self.assignment.content {
+                cell.label.attributedText = content.htmlToAttributedString
+            } else {
+                cell.label.text = "No content".localized
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell

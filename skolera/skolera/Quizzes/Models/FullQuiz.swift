@@ -22,7 +22,7 @@ class FullQuiz {
     let totalScore: Double!
     let lessonId: Int!
     let gradingPeriodLock: Bool!
-    let studentSubmissions: StudentSubmission!
+    let studentSubmissions: QuizStudentSubmission!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -39,9 +39,9 @@ class FullQuiz {
         gradingPeriodLock = dict["grading_period_lock"] as? Bool
         
         if let studentSubmissionsDict = dict["student_submissions"] as? [String: Any] {
-            studentSubmissions = StudentSubmission(studentSubmissionsDict)
+            studentSubmissions = QuizStudentSubmission(studentSubmissionsDict)
         } else {
-            studentSubmissions = StudentSubmission([:])
+            studentSubmissions = QuizStudentSubmission([:])
         }
     }
     

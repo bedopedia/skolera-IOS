@@ -47,6 +47,7 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
             assignmentsVC.isTeacher = true
             assignmentsVC.courseName = course.name
             assignmentsVC.courseId = course.id
+            assignmentsVC.courseGroupId = courseGroup.id
             self.navigationController?.pushViewController(assignmentsVC, animated: true)
         }
     }

@@ -1,47 +1,37 @@
 //
-//  StudentSubmissions.swift
+//  StudentSubmission.swift
 //  skolera
 //
-//  Created by Yehia Beram on 4/22/19.
+//  Created by Yehia Beram on 7/25/19.
 //  Copyright © 2019 Skolera. All rights reserved.
 //
 
 import Foundation
-class StudentSubmissions {
+
+class QuizStudentSubmission {
     
     let id: Int!
-    let grade: Int!
-    let graded: Bool!
-    let assignmentId: Int!
+    let score: Double!
     let studentId: Int!
     let createdAt: String!
     let updatedAt: String!
-    let answers: String!
-    let file: FileModel?
-    let feedback: String!
+    let quizId: Int!
     let courseGroupId: Int!
-    let downloadsNumber: Int!
+    let feedback: String!
+    let isSubmitted: Bool!
     let deletedAt: String!
     let studentStatus: String!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
-        grade = dict["grade"] as? Int
-        graded = dict["graded"] as? Bool
-        assignmentId = dict["assignment_id"] as? Int
+        score = dict["score"] as? Double
         studentId = dict["student_id"] as? Int
         createdAt = dict["created_at"] as? String
         updatedAt = dict["updated_at"] as? String
-        answers = dict["answers"] as? String
-        
-        if let fileDict = dict["file"] as? [String: Any] {
-            file = FileModel(fileDict)
-        } else {
-            file = nil
-        }
-        feedback = dict["feedback"] as? String
+        quizId = dict["quiz_id"] as? Int
         courseGroupId = dict["course_group_id"] as? Int
-        downloadsNumber = dict["downloads_number"] as? Int
+        feedback = dict["feedback"] as? String
+        isSubmitted = dict["is_submitted"] as? Bool
         deletedAt = dict["deleted_at"] as? String
         studentStatus = dict["student_status"] as? String
     }
@@ -49,20 +39,18 @@ class StudentSubmissions {
     func toDictionary() -> [String: Any] {
         var jsonDict = [String: Any]()
         jsonDict["id"] = id
-        jsonDict["grade"] = grade
-        jsonDict["graded"] = graded
-        jsonDict["assignment_id"] = assignmentId
+        jsonDict["score"] = score
         jsonDict["student_id"] = studentId
         jsonDict["created_at"] = createdAt
         jsonDict["updated_at"] = updatedAt
-        jsonDict["answers"] = answers
-        jsonDict["file"] = file?.toDictionary()
-        jsonDict["feedback"] = feedback
+        jsonDict["quiz_id"] = quizId
         jsonDict["course_group_id"] = courseGroupId
-        jsonDict["downloads_number"] = downloadsNumber
+        jsonDict["feedback"] = feedback
+        jsonDict["is_submitted"] = isSubmitted
         jsonDict["deleted_at"] = deletedAt
         jsonDict["student_status"] = studentStatus
         return jsonDict
     }
+
     
 }

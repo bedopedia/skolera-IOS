@@ -23,6 +23,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     var isTeacher: Bool = false
     var courseName: String = ""
     var courseId: Int = 0
+    var courseGroupId: Int = 0
     var assignments: [FullAssignment] = []
     var filteredAssignments: [FullAssignment] = []
     
@@ -80,77 +81,46 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
         self.tableView.reloadData()
     }
-    
 
     func getAssignments(){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_ASSINGMENTS(), courseId)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
                     self.setOpenedAssignments()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     private func getAssignmentDetails(assignmentId: Int) {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_ASSIGNMENT_DETAILS_URL(), courseId, assignmentId)
-        debugPrint(url)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
-            switch response.result{
-                
-            case .success(_):
-                //change next line into [[String : AnyObject]] if parsing Json array
-                if let result = response.result.value as? [String : AnyObject] {
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
                     let assignment = FullAssignment(result)
-                    if let description = assignment.description, !description.isEmpty {
-                        let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
-                        assignmentDetailsVC.child = self.child
+                    if !self.isTeacher {
+                        if let description = assignment.description, !description.isEmpty {
+                            let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
+                            assignmentDetailsVC.child = self.child
+                            assignmentDetailsVC.assignment = assignment
+                            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+                        }
+                    } else {
+                        let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
+                        assignmentDetailsVC.courseId = self.courseId
+                        assignmentDetailsVC.courseGroupId = self.courseGroupId
                         assignmentDetailsVC.assignment = assignment
                         self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
@@ -171,15 +141,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isTeacher {
-            getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
-        } else {
-            
-            let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
-//            assignmentDetailsVC.child = self.child
-//            assignmentDetailsVC.assignment = assignment
-            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
-        }
+        getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
             
     }
 }

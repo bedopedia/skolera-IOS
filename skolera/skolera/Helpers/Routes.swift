@@ -142,3 +142,16 @@ func GET_TEACHER_QUIZZES() -> String {
 func GET_TEACHER_COURSES() -> String {
     return "\(BASE_URL!)/api/teachers/%d/courses"
 }
+
+
+func GET_ASSIGNMENT_SUBMISSIONS_URL() -> String {
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/assignments/%d/submissions"
+}
+
+func SUBMIT_STUDENT_ASSIGNMENT_GRADE_URL() -> String {
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/assignments/%d/student_grade"
+}
+
+func SUBMIT_FEEDBACK_URL() -> String {
+    return "\(BASE_URL!)/api/feedbacks"
+}
