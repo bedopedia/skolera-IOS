@@ -61,7 +61,12 @@ class AssignmentGradesViewController: UIViewController {
         ]
         submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
-                self.submitFeedback(submissionId: self.assignment.id!, studentId: submission.studentId, feedback: feedback)
+                if feedback.isEmpty {
+                    SVProgressHUD.dismiss()
+                    self.getSubmissions()
+                } else {
+                    self.submitFeedback(submissionId: self.assignment.id!, studentId: submission.studentId, feedback: feedback)
+                }
             } else {
                 SVProgressHUD.dismiss()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -98,7 +103,6 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentSubmissionTableViewCell", for: indexPath) as! StudentSubmissionTableViewCell
         cell.studentSubmission = self.submissions[indexPath.row]
-        
         return cell
     }
     

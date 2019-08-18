@@ -16,6 +16,8 @@ class StudentSubmissionTableViewCell: UITableViewCell {
     @IBOutlet weak var gradeLabel: UILabel!
     @IBOutlet weak var feedbackLabel: UILabel!
     
+    var isQuiz = false
+    
     var studentSubmission: AssignmentStudentSubmission! {
         didSet {
             if studentSubmission != nil {
@@ -32,24 +34,29 @@ class StudentSubmissionTableViewCell: UITableViewCell {
                 subjectImageLabel.text = getText(name: studentSubmission.studentName)
                 itemNameLabel.text = studentSubmission.studentName
                 if let graded = studentSubmission.graded, graded {
-                    gradeLabel.text = "\(studentSubmission.grade ?? 0)"
+                    if !isQuiz {
+                        gradeLabel.text = "\(studentSubmission.grade ?? 0)"
+                    } else {
+                        gradeLabel.text = "\(studentSubmission.score ?? 0)"
+                    }
                     gradeLabel.textColor = #colorLiteral(red: 0.333293438, green: 0.3333562911, blue: 0.3332894742, alpha: 1)
                     if let feedback = studentSubmission.feedback, let content = feedback.content, !content.isEmpty {
                         feedbackLabel.text = content
                         feedbackLabel.textColor = #colorLiteral(red: 0.333293438, green: 0.3333562911, blue: 0.3332894742, alpha: 1)
                     } else {
-                        feedbackLabel.text = "Not feedback"
+                        feedbackLabel.text = "Not feedback".localized
                         feedbackLabel.textColor = #colorLiteral(red: 0.741094768, green: 0.7412235737, blue: 0.7410866618, alpha: 1)
                     }
                 } else {
-                    gradeLabel.text = "Not set yet"
+                    gradeLabel.text = "Not set yet".localized
                     gradeLabel.textColor = #colorLiteral(red: 0.741094768, green: 0.7412235737, blue: 0.7410866618, alpha: 1)
-                    feedbackLabel.text = "Not feedback"
+                    feedbackLabel.text = "Not feedback".localized
                     feedbackLabel.textColor = #colorLiteral(red: 0.741094768, green: 0.7412235737, blue: 0.7410866618, alpha: 1)
                 }
             }
         }
     }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

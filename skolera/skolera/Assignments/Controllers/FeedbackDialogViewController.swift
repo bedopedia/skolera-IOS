@@ -26,6 +26,7 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
         feedbackTextView.layer.borderWidth = 1
         feedbackTextView.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
         feedbackTextView.layer.cornerRadius = 6
+        feedbackTextView.placeholder = "Write a feedback".localized
         
     }
     

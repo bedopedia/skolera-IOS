@@ -41,6 +41,7 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
             quizVC.isTeacher = true
             quizVC.courseName = course.name
             quizVC.courseId = course.id
+            quizVC.courseGroupId = courseGroup.id
             self.navigationController?.pushViewController(quizVC, animated: true)
         } else if indexPath.row == 1 {
             let assignmentsVC = AssignmentsViewController.instantiate(fromAppStoryboard: .Assignments)

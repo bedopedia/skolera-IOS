@@ -155,3 +155,11 @@ func SUBMIT_STUDENT_ASSIGNMENT_GRADE_URL() -> String {
 func SUBMIT_FEEDBACK_URL() -> String {
     return "\(BASE_URL!)/api/feedbacks"
 }
+
+func GET_QUIZZES_SUBMISSIONS_URL() -> String {
+    return "\(BASE_URL!)/api/quizzes/%d/submissions?course_group_id=%d"
+}
+
+func SUBMIT_STUDENT_QUIZ_GRADE_URL() -> String {
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/quizzes/%d/student_grade"
+}

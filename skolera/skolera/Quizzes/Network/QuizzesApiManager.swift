@@ -57,3 +57,44 @@ func getQuizzesForTeacherApi(completion: @escaping ((Bool, Int, Any?, Error?) ->
     }
 }
 
+func getQuizSubmissionsApi(courseGroupId: Int, quizId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: GET_QUIZZES_SUBMISSIONS_URL(), quizId, courseGroupId)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
+
+func submitQuizGradeApi(courseId: Int, courseGroupId: Int, quizId: Int, parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    var headers : HTTPHeaders = getHeaders()
+    headers["Accept"] = "application/vnd.skolera.v1"
+    let url = String(format: SUBMIT_STUDENT_QUIZ_GRADE_URL(), courseId, courseGroupId, quizId)
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+func submitQuizFeedbackApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: SUBMIT_FEEDBACK_URL())
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
+

@@ -553,7 +553,7 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofJ-ax-NYt">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofJ-ax-NYt">
                                                     <rect key="frame" x="374" y="24" width="24" height="24"/>
                                                     <state key="normal" image="downloadAssignmentIcon"/>
                                                     <connections>
@@ -582,7 +582,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is any text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1V-N4-Tka">
-                                                    <rect key="frame" x="160.5" y="85.5" width="237.5" height="18.5"/>
+                                                    <rect key="frame" x="160.5" y="85.5" width="97" height="18.5"/>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                                     <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -603,7 +603,7 @@
                                                 <constraint firstItem="wj6-wY-r6O" firstAttribute="centerY" secondItem="MjI-Or-YLT" secondAttribute="centerY" id="U77-FL-kOu"/>
                                                 <constraint firstItem="plX-mu-zKa" firstAttribute="top" secondItem="J8L-hZ-nYd" secondAttribute="top" constant="16" id="bLY-WL-4Vc"/>
                                                 <constraint firstItem="fU1-fs-0Kj" firstAttribute="width" secondItem="plX-mu-zKa" secondAttribute="width" id="fxf-Ni-U2I"/>
-                                                <constraint firstAttribute="trailing" secondItem="m1V-N4-Tka" secondAttribute="trailing" constant="16" id="hMY-dK-NMn"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m1V-N4-Tka" secondAttribute="trailing" constant="16" id="hMY-dK-NMn"/>
                                                 <constraint firstAttribute="trailing" secondItem="ofJ-ax-NYt" secondAttribute="trailing" constant="16" id="i8s-no-zv6"/>
                                                 <constraint firstItem="MjI-Or-YLT" firstAttribute="top" secondItem="7RQ-0p-SVT" secondAttribute="bottom" constant="16" id="jw6-Ts-XH4"/>
                                                 <constraint firstItem="m1V-N4-Tka" firstAttribute="top" secondItem="wj6-wY-r6O" secondAttribute="bottom" constant="8" id="ne1-QE-yT4"/>
@@ -656,16 +656,16 @@
                                 <rect key="frame" x="16" y="255.5" width="382" height="395"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blueIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YcM-MS-TgK">
-                                        <rect key="frame" x="138.5" y="-53" width="105" height="105"/>
+                                        <rect key="frame" x="151" y="-53" width="80" height="80"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4U2-lQ-Ujf">
-                                        <rect key="frame" x="24" y="76" width="47" height="21"/>
+                                        <rect key="frame" x="24" y="51" width="47" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zTE-wL-LtE">
-                                        <rect key="frame" x="24" y="105" width="334" height="48"/>
+                                        <rect key="frame" x="24" y="80" width="334" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="5at-hq-1LE"/>
                                         </constraints>
@@ -674,7 +674,7 @@
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwL-bh-5dx">
-                                        <rect key="frame" x="24" y="169" width="76" height="21"/>
+                                        <rect key="frame" x="24" y="144" width="76" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -699,7 +699,7 @@
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fp-U69" customClass="KMPlaceholderTextView" customModule="KMPlaceholderTextView">
-                                        <rect key="frame" x="24" y="206" width="334" height="109"/>
+                                        <rect key="frame" x="24" y="181" width="334" height="134"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -978,7 +978,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="blueIcon" width="105" height="105"/>
+        <image name="blueIcon" width="80" height="80"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="downloadAssignmentIcon" width="24" height="24"/>
         <image name="yellowHour" width="16" height="16"/>

@@ -11,7 +11,8 @@ import Foundation
 class AssignmentStudentSubmission {
     
     let id: Int!
-    let grade: Int!
+    let grade: Double!
+    let score: Double!
     let graded: Bool!
     let assignmentId: Int!
     let studentId: Int!
@@ -28,7 +29,8 @@ class AssignmentStudentSubmission {
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
-        grade = dict["grade"] as? Int
+        grade = dict["grade"] as? Double
+        score = dict["score"] as? Double
         graded = dict["graded"] as? Bool
         assignmentId = dict["assignment_id"] as? Int
         studentId = dict["student_id"] as? Int

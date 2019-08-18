@@ -18,6 +18,7 @@ class QuizzesViewController: UIViewController {
     var quizzes: [FullQuiz] = []
     var filteredQuizzes: [FullQuiz] = []
     var isTeacher: Bool = false
+    var courseGroupId = 0
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -144,6 +145,9 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName
+            quizVC.courseId = courseId
+            quizVC.courseGroupId = courseGroupId
+            quizVC.quiz = filteredQuizzes[indexPath.row]
             self.navigationController?.pushViewController(quizVC, animated: true)
         }
     }
