@@ -144,6 +144,9 @@
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
+		8A02C53C23097296005BBA04 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A02C53B23097296005BBA04 /* Events.storyboard */; };
+		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
+		8A02C54023098169005BBA04 /* EventTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */; };
 		8A06B6D622F98B5100F5F85C /* BehaviorNotesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */; };
 		8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */; };
 		8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */; };
@@ -418,6 +421,9 @@
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
+		8A02C53B23097296005BBA04 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
+		8A02C53D23097E2A005BBA04 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorNotesApiManager.swift; sourceTree = "<group>"; };
 		8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsApiManager.swift; sourceTree = "<group>"; };
 		8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentGradesViewController.swift; sourceTree = "<group>"; };
@@ -985,6 +991,7 @@
 				5481BEFE20694AE800001A94 /* Behavior Notes */,
 				5459D188201610D4003F5223 /* Login */,
 				54B62C36201E279E00FB60BB /* Home Page */,
+				8A02C53623097233005BBA04 /* Events */,
 				8A47B38722DF31DA004857DC /* Posts */,
 				54640B002055709400A13CCB /* Attendance */,
 				8A8A7386222C55F100972BE6 /* Weekly Report */,
@@ -1029,6 +1036,48 @@
 				74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A02C53623097233005BBA04 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				8A02C53A23097286005BBA04 /* Models */,
+				8A02C5392309727A005BBA04 /* Controllers */,
+				8A02C5382309726E005BBA04 /* Views */,
+				8A02C53723097264005BBA04 /* Network */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		8A02C53723097264005BBA04 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		8A02C5382309726E005BBA04 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A02C53B23097296005BBA04 /* Events.storyboard */,
+				8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8A02C5392309727A005BBA04 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A02C53D23097E2A005BBA04 /* EventsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8A02C53A23097286005BBA04 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		8A06B6D422F98B3F00F5F85C /* Network */ = {
@@ -1507,6 +1556,7 @@
 				5482DE7C2056DAB100647D57 /* RobotoCondensed-Bold.ttf in Resources */,
 				5482DE892056DAB100647D57 /* RobotoMono-Italic.ttf in Resources */,
 				5482DE722056DAB100647D57 /* RobotoBoldCondensedItalic.ttf in Resources */,
+				8A02C53C23097296005BBA04 /* Events.storyboard in Resources */,
 				5462A5A72058401F00C6F5EE /* CircularStd-Book.otf in Resources */,
 				5482DE6B2056DAB100647D57 /* Roboto Condensed Light.otf in Resources */,
 				8A298CD42184CDB900A82FEA /* Threads.storyboard in Resources */,
@@ -1721,6 +1771,7 @@
 				8A6D361B20B598D400DD0445 /* SendingStatusModel.swift in Sources */,
 				54CCF402206BEBA600824A3D /* BehaviorNotesResponseMeta.swift in Sources */,
 				8A97C2C722E5C98B00D72D33 /* AssignmentDetailsViewController.swift in Sources */,
+				8A02C54023098169005BBA04 /* EventTypeCollectionViewCell.swift in Sources */,
 				8A6CA5F122EF4E5600DBE205 /* TeacherCourseDetailsViewController.swift in Sources */,
 				545BBFFB2018BC0E00A1F858 /* LoginViewController.swift in Sources */,
 				8A8A738F222C5A4400972BE6 /* WeeklyPlanResponse.swift in Sources */,
@@ -1814,6 +1865,7 @@
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
+				8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */,
 				8A93357122E0930E007B287D /* PostTableViewCell.swift in Sources */,
 				8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */,
 				8A5F42E820B1C5EA00FF93D1 /* ThreadTableViewCell.swift in Sources */,

@@ -94,6 +94,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             openPosts()
         case "mainQuizzesCell":
             openQuizzes()
+        case "mainCalendarCell":
+            openCalendar()
         default:
             return
         }
@@ -126,6 +128,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         let quizVC = QuizzesCoursesViewController.instantiate(fromAppStoryboard: .Quizzes)
         quizVC.child = self.child
         self.navigationController?.pushViewController(quizVC, animated: true)
+    }
+    
+    private func openCalendar(){
+        let eventsVC = EventsViewController.instantiate(fromAppStoryboard: .Events)
+        //eventsVC.child = self.child
+        self.navigationController?.pushViewController(eventsVC, animated: true)
     }
     
     /// service call to get total courses grades, average grade is set on completion

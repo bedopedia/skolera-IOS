@@ -23,6 +23,7 @@ enum AppStoryboard : String {
     case Assignments
     case Quizzes
     case Posts
+    case Events
     
     var instance : UIStoryboard {
         

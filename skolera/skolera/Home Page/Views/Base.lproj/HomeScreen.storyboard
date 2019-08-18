@@ -956,6 +956,35 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="mainCalendarCell" rowHeight="80" id="AIt-Ww-psD">
+                                        <rect key="frame" x="0.0" y="640" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIt-Ww-psD" id="d6X-yh-k4u">
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="79.666666666666671"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendarIco" translatesAutoresizingMaskIntoConstraints="NO" id="QsS-bb-hIJ">
+                                                    <rect key="frame" x="16" y="25" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="4nY-rb-SNU"/>
+                                                        <constraint firstAttribute="height" constant="32" id="e0J-8k-hY9"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calendar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oob-2C-i0a">
+                                                    <rect key="frame" x="73" y="30" width="79.666666666666686" height="22"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Oob-2C-i0a" firstAttribute="leading" secondItem="QsS-bb-hIJ" secondAttribute="trailing" constant="25" id="P1N-mz-lOe"/>
+                                                <constraint firstItem="Oob-2C-i0a" firstAttribute="centerY" secondItem="QsS-bb-hIJ" secondAttribute="centerY" id="Qie-d4-nag"/>
+                                                <constraint firstItem="QsS-bb-hIJ" firstAttribute="leading" secondItem="d6X-yh-k4u" secondAttribute="leading" constant="16" id="VGe-OQ-jwc"/>
+                                                <constraint firstItem="QsS-bb-hIJ" firstAttribute="top" secondItem="d6X-yh-k4u" secondAttribute="top" constant="25" id="eIq-Bg-uiM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1540,7 +1569,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imk-hZ-S2u">
-                                                    <rect key="frame" x="89" y="29" width="88.333333333333314" height="21.666666666666671"/>
+                                                    <rect key="frame" x="89" y="29.333333333333329" width="79.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1742,6 +1771,7 @@
         <image name="announcmentsNormal" width="48" height="34"/>
         <image name="assignmentsIco" width="38" height="32"/>
         <image name="behaviorNotesIco" width="32" height="32"/>
+        <image name="calendarIco" width="32" height="32"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="gradesIco" width="32" height="32"/>
         <image name="logo" width="131" height="24"/>
