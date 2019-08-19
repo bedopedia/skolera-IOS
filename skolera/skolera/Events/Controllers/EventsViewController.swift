@@ -69,7 +69,8 @@ class EventsViewController: UIViewController {
     }
     
     @IBAction func createNewEvent() {
-        
+        let createEventVC = CreateEventViewController.instantiate(fromAppStoryboard: .Events)
+        self.navigationController?.pushViewController(createEventVC, animated: true)
     }
     
     func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo) {

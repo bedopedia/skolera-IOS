@@ -147,6 +147,7 @@
 		8A02C53C23097296005BBA04 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A02C53B23097296005BBA04 /* Events.storyboard */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
 		8A02C54023098169005BBA04 /* EventTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */; };
+		8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */; };
 		8A06B6D622F98B5100F5F85C /* BehaviorNotesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */; };
 		8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */; };
 		8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */; };
@@ -424,6 +425,7 @@
 		8A02C53B23097296005BBA04 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8A02C53D23097E2A005BBA04 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorNotesApiManager.swift; sourceTree = "<group>"; };
 		8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsApiManager.swift; sourceTree = "<group>"; };
 		8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentGradesViewController.swift; sourceTree = "<group>"; };
@@ -1069,6 +1071,7 @@
 			isa = PBXGroup;
 			children = (
 				8A02C53D23097E2A005BBA04 /* EventsViewController.swift */,
+				8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1817,6 +1820,7 @@
 				54E0A7842095320300D02F19 /* BehaviorNotesNumbersResponse.swift in Sources */,
 				54847C63205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift in Sources */,
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
+				8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */,
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,
 				8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */,
 				8A5F42EA20B1CB1800FF93D1 /* Threads.swift in Sources */,
