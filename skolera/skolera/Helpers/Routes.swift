@@ -163,3 +163,7 @@ func GET_QUIZZES_SUBMISSIONS_URL() -> String {
 func SUBMIT_STUDENT_QUIZ_GRADE_URL() -> String {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/quizzes/%d/student_grade"
 }
+
+func GET_STUDENT_EVENTS(uid: Int, startDate: String, endDate: String) -> String {
+    return "\(BASE_URL!)/api/events?by_listener%5Blistener_id%5D=\(uid)&by_listener%5Blistener_type%5D=user&start_date_between%5Bend_date%5D=\(endDate)&start_date_between%5Bstart_date%5D=\(startDate)"
+}

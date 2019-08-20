@@ -270,6 +270,8 @@
 		8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */; };
 		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
+		8ADABB78230AE400001509EF /* EventsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB77230AE400001509EF /* EventsApiManager.swift */; };
+		8ADABB7A230AEAF7001509EF /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB79230AEAF7001509EF /* Event.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
 		8AE8D62122F7000400409CCD /* LoginApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE8D62022F7000400409CCD /* LoginApiManager.swift */; };
 		8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4A5CB20D910BD003A1D31 /* Student.swift */; };
@@ -562,6 +564,8 @@
 		8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
+		8ADABB77230AE400001509EF /* EventsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsApiManager.swift; sourceTree = "<group>"; };
+		8ADABB79230AEAF7001509EF /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
 		8AE5560F20DC03DD00800D7E /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		8AE8D62022F7000400409CCD /* LoginApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApiManager.swift; sourceTree = "<group>"; };
@@ -1054,6 +1058,7 @@
 		8A02C53723097264005BBA04 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				8ADABB77230AE400001509EF /* EventsApiManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1079,6 +1084,7 @@
 		8A02C53A23097286005BBA04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8ADABB79230AEAF7001509EF /* Event.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1820,6 +1826,7 @@
 				54E0A7842095320300D02F19 /* BehaviorNotesNumbersResponse.swift in Sources */,
 				54847C63205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift in Sources */,
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
+				8ADABB7A230AEAF7001509EF /* Event.swift in Sources */,
 				8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */,
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,
 				8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */,
@@ -1840,6 +1847,7 @@
 				8A06B6D622F98B5100F5F85C /* BehaviorNotesApiManager.swift in Sources */,
 				8AE8D62122F7000400409CCD /* LoginApiManager.swift in Sources */,
 				54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */,
+				8ADABB78230AE400001509EF /* EventsApiManager.swift in Sources */,
 				8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */,
 				8A6CA5E922EEFC3A00DBE205 /* TeacherContainerViewController.swift in Sources */,
 				547605A2202083ED00369BE0 /* ChildrenListViewController.swift in Sources */,

@@ -40,6 +40,21 @@ class AttendanceTableViewCell: UITableViewCell {
             }
         }
     }
+    var event: StudentEvent! {
+        didSet{
+            if event != nil{
+                let calendar = Calendar.current
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en")
+                formatter.dateFormat = "MMM"
+                let day = calendar.component(.day, from: Date(timeIntervalSince1970: TimeInterval(event.startDate!)))
+                let month = formatter.string(from: Date(timeIntervalSince1970: TimeInterval(event.startDate!)))
+                dayLabel.text = "\(day)"
+                monthLabel.text = month
+                messageLabel.text = event.description
+            }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

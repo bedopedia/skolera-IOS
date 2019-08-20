@@ -132,7 +132,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     private func openCalendar(){
         let eventsVC = EventsViewController.instantiate(fromAppStoryboard: .Events)
-        //eventsVC.child = self.child
+        eventsVC.child = self.child
         self.navigationController?.pushViewController(eventsVC, animated: true)
     }
     

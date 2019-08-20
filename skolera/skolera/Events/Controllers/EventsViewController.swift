@@ -8,6 +8,8 @@
 
 import UIKit
 import JTAppleCalendar
+import Alamofire
+import SVProgressHUD
 
 class EventsViewController: UIViewController {
     
@@ -18,6 +20,7 @@ class EventsViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var eventsCollectionView: UICollectionView!
     @IBOutlet weak var createEventButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     enum weekDays : Int{
         case sunday = 0
@@ -31,12 +34,15 @@ class EventsViewController: UIViewController {
     
     var child : Child!
     let calendar = Calendar.current
-    var currentBorderColor: UIColor!
+    var currentBorderColor: UIColor = .black
     let today = Date()
     
     
     var oldSelectedEventsPosition: Int = -1
     var selectedEventsPosition: Int = 0
+    
+    var events: [StudentEvent] = []
+    var filteredEvents: [StudentEvent] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +64,9 @@ class EventsViewController: UIViewController {
         eventsCollectionView.dataSource = self
         createEventButton.layer.borderColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
         createEventButton.layer.borderWidth = 1
+        tableView.delegate = self
+        tableView.dataSource = self
+        getEvents()
     }
     
     @IBAction func back(){
@@ -90,6 +99,23 @@ class EventsViewController: UIViewController {
 //            }
         }
     }
+    
+    func getEvents() {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
+                    self.events = result.map{ StudentEvent($0) }
+                    self.filteredEvents = self.events
+                    self.calendarView.reloadData()
+                    self.tableView.reloadData()
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
 }
 
 extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -112,8 +138,24 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
 //        selectedEventsPosition = indexPath.row
         oldSelectedEventsPosition = selectedEventsPosition
         selectedEventsPosition = indexPath.row
+        filteredEvents = events
+        if indexPath.row == 0 {
+            currentBorderColor = .black
+        } else if indexPath.row == 1 {
+            filteredEvents = events.filter{ $0.type.elementsEqual("academic") }
+            currentBorderColor = #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
+        } else if indexPath.row == 2 {
+            filteredEvents = events.filter{ $0.type.elementsEqual("event") }
+            currentBorderColor = #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
+        } else if indexPath.row == 3 {
+            filteredEvents = events.filter{ $0.type.elementsEqual("vacations") }
+            currentBorderColor = #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
+        } else {
+            filteredEvents = events.filter{ $0.type.elementsEqual("personal") }
+            currentBorderColor = #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
+        }
+        self.tableView.reloadData()
         collectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
-//        collectionView.reloadData()
     }
     
 }
@@ -130,7 +172,7 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let parameters = ConfigurationParameters(startDate: Date(), endDate: today, generateInDates: .forAllMonths, generateOutDates: .off)
+        let parameters = ConfigurationParameters(startDate: Date(dateString: "1-1-2000", format: "d-M-y"), endDate: Date(dateString: "1-1-2026", format: "d-M-y"), generateInDates: .forAllMonths, generateOutDates: .off)
         return parameters
     }
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
@@ -146,4 +188,18 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
 //        }
 //        return days.first
 //    }
+}
+
+extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredEvents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "attendanceCell") as! AttendanceTableViewCell
+        cell.borderColor = currentBorderColor
+        cell.event = filteredEvents[indexPath.row]
+//        cell.attendance = currentDataSource[indexPath.row]
+        return cell
+    }
 }
