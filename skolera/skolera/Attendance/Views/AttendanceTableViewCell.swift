@@ -51,7 +51,7 @@ class AttendanceTableViewCell: UITableViewCell {
                 let month = formatter.string(from: Date(timeIntervalSince1970: TimeInterval(event.startDate!)))
                 dayLabel.text = "\(day)"
                 monthLabel.text = month
-                messageLabel.text = event.description
+                messageLabel.text = event.title
             }
         }
     }

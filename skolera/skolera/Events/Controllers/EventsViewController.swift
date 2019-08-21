@@ -22,6 +22,7 @@ class EventsViewController: UIViewController {
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    
     enum weekDays : Int{
         case sunday = 0
         case monday = 1
@@ -43,6 +44,11 @@ class EventsViewController: UIViewController {
     
     var events: [StudentEvent] = []
     var filteredEvents: [StudentEvent] = []
+    
+    var academicCount = 0
+    var eventsCount = 0
+    var vacationsCount = 0
+    var personalCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,8 +114,13 @@ class EventsViewController: UIViewController {
                 if let result = value as? [[String : AnyObject]] {
                     self.events = result.map{ StudentEvent($0) }
                     self.filteredEvents = self.events
+                    self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
+                    self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
+                    self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
+                    self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
                     self.calendarView.reloadData()
                     self.tableView.reloadData()
+                    self.eventsCollectionView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -127,6 +138,18 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EventTypeCollectionViewCell", for: indexPath) as! EventTypeCollectionViewCell
         cell.bottomBar.isHidden = indexPath.row != selectedEventsPosition
         cell.cellNumber = indexPath.row
+        if indexPath.row == 1 {
+            cell.numberLabel.text = "\(academicCount)"
+        } else if indexPath.row == 2 {
+            cell.numberLabel.text = "\(eventsCount)"
+        } else if indexPath.row == 3 {
+            cell.numberLabel.text = "\(vacationsCount)"
+        } else if indexPath.row == 4 {
+            cell.numberLabel.text = "\(personalCount)"
+        } else {
+            cell.numberLabel.text = "\(events.count)"
+        }
+        
         return cell
     }
     
