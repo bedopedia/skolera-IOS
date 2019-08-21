@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SVProgressHUD
 
 class CreateEventViewController: UIViewController {
 
@@ -19,11 +21,13 @@ class CreateEventViewController: UIViewController {
     @IBOutlet weak var toButtomBar: UIView!
     @IBOutlet weak var subjectBottomBar: UIView!
     @IBOutlet weak var notesBottomBar: UIView!
+    @IBOutlet weak var childImageView: UIImageView!
     
     let whenDatePickerView: UIDatePicker = UIDatePicker()
     let toDatePickerView: UIDatePicker = UIDatePicker()
     var whenISODate: String = ""
     var toISODate: String = ""
+    var child : Child!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +52,10 @@ class CreateEventViewController: UIViewController {
         dateFormatter.dateFormat = "d/M/y hh:mm a"
         whenDateTextField.placeholder = dateFormatter.string(from: Date())
         toDateTextField.placeholder = dateFormatter.string(from: Date())
+        
+        if let child = child{
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        }
         
         
     }
@@ -109,7 +117,21 @@ class CreateEventViewController: UIViewController {
         }
         
         if !isMissingData {
-            //todo: call backend to create event
+            eventsParameters["type"] = "personal"
+            eventsParameters["all_day"] = false
+            eventsParameters["cancel"] = false
+            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId]]
+            var parameters = [ "event": eventsParameters ]
+            SVProgressHUD.show(withStatus: "Loading".localized)
+            createEventsAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
+                SVProgressHUD.dismiss()
+                if isSuccess {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                }
+            }
+            
         }
     }
 }

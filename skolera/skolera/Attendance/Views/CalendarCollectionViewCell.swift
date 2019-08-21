@@ -59,9 +59,7 @@ class CalendarCollectionViewCell: JTAppleCell {
             }
         }
     }
-    func setupDotMarker(attendance: Attendance?, forCellState cellState: CellState)
-    {
-        
+    func setupDotMarker(attendance: Attendance?, forCellState cellState: CellState) {
         dotMarkerView.isHidden = true
         dotMarkerView.layer.masksToBounds = false
         dotMarkerView.layer.cornerRadius = dotMarkerView.frame.height / 2
@@ -82,6 +80,29 @@ class CalendarCollectionViewCell: JTAppleCell {
                     dotMarkerView.backgroundColor = UIColor.appColors.orange
                 default:
                     dotMarkerView.backgroundColor = UIColor.appColors.greyNotTaken
+                }
+            }
+        }
+    }
+    
+    func setupDotMarkerFor(event: StudentEvent?, forCellState cellState: CellState) {
+        dotMarkerView.isHidden = true
+        dotMarkerView.layer.masksToBounds = false
+        dotMarkerView.layer.cornerRadius = dotMarkerView.frame.height / 2
+        if cellState.dateBelongsTo == .thisMonth {
+            if let day = event {
+                dotMarkerView.isHidden = false
+                switch day.type {
+                case "academic":
+                    dotMarkerView.backgroundColor = #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
+                case "event":
+                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
+                case "vacations":
+                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
+                case "personal":
+                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
+                default:
+                    dotMarkerView.backgroundColor = .black
                 }
             }
         }

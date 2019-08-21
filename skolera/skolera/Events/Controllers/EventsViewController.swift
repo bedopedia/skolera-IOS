@@ -72,6 +72,9 @@ class EventsViewController: UIViewController {
         createEventButton.layer.borderWidth = 1
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         getEvents()
     }
     
@@ -85,6 +88,7 @@ class EventsViewController: UIViewController {
     
     @IBAction func createNewEvent() {
         let createEventVC = CreateEventViewController.instantiate(fromAppStoryboard: .Events)
+        createEventVC.child = child
         self.navigationController?.pushViewController(createEventVC, animated: true)
     }
     
@@ -190,7 +194,7 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
         cell.setupDayLabel(cellState: cellState)
-//        cell.setupDotMarker(attendance: getAttendanceForDate(date: date), forCellState: cellState)
+        cell.setupDotMarkerFor(event: getEventForDate(date: date), forCellState: cellState)
         return cell
     }
     
@@ -211,6 +215,17 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
 //        }
 //        return days.first
 //    }
+    
+    func getEventForDate(date: Date) -> StudentEvent?
+    {
+        let days = events.filter { (event) -> Bool in
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en")
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: Date(timeIntervalSince1970: TimeInterval(event.startDate!))) == formatter.string(from: date)
+        }
+        return days.first
+    }
 }
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
