@@ -22,9 +22,9 @@ func getPostsCoursesApi(childId: Int, completion: @escaping ((Bool, Int, Any?, E
     }
 }
 
-func getPostsForCourseApi(courseId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func getPostsForCourseApi(page: Int, courseId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
-    let url = String(format: GET_STUDENT_POSTS(), courseId)
+    let url = String(format: GET_STUDENT_POSTS(), courseId, page)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

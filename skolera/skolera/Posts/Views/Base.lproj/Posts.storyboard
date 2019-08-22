@@ -248,7 +248,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qmd-gr-m5G">
-                                                            <rect key="frame" x="16" y="50" width="358" height="125"/>
+                                                            <rect key="frame" x="16" y="50" width="358" height="121"/>
                                                             <string key="text">Last Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days ago</string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.3663078248500824" green="0.36279395222663879" blue="0.36657610535621643" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -394,7 +394,7 @@
                                                         <constraint firstItem="Lhw-1M-3QA" firstAttribute="centerY" secondItem="0j0-Tc-ILC" secondAttribute="centerY" id="XcE-Zj-Hwm"/>
                                                         <constraint firstAttribute="trailing" secondItem="fMF-Av-BQm" secondAttribute="trailing" id="aZm-Nv-BUR"/>
                                                         <constraint firstAttribute="trailing" secondItem="Lhw-1M-3QA" secondAttribute="trailing" constant="12" id="e17-1W-zFh"/>
-                                                        <constraint firstItem="TE2-rl-pID" firstAttribute="top" secondItem="Qmd-gr-m5G" secondAttribute="bottom" id="etM-q4-ee8"/>
+                                                        <constraint firstItem="TE2-rl-pID" firstAttribute="top" secondItem="Qmd-gr-m5G" secondAttribute="bottom" constant="4" id="etM-q4-ee8"/>
                                                         <constraint firstItem="0j0-Tc-ILC" firstAttribute="leading" secondItem="O9F-Ph-WOR" secondAttribute="leading" constant="16" id="t6E-CP-LSp"/>
                                                         <constraint firstAttribute="trailing" secondItem="TE2-rl-pID" secondAttribute="trailing" id="zNW-Mo-s9B"/>
                                                     </constraints>
@@ -677,7 +677,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9T-7C-iz2">
-                                                            <rect key="frame" x="16" y="50" width="358" height="103"/>
+                                                            <rect key="frame" x="16" y="50" width="358" height="99"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="ahA-ie-XoK"/>
                                                             </constraints>
@@ -821,7 +821,7 @@
                                                         <constraint firstItem="Fmv-uA-FQE" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" id="GBT-7B-rU5"/>
                                                         <constraint firstItem="Vyf-xC-i3V" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jhT-w7-I9s" secondAttribute="trailing" constant="12" id="I8j-a3-IaQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="Fmv-uA-FQE" secondAttribute="trailing" id="L3h-V1-EdO"/>
-                                                        <constraint firstItem="322-lD-R0C" firstAttribute="top" secondItem="w9T-7C-iz2" secondAttribute="bottom" id="T3a-LH-2Xy"/>
+                                                        <constraint firstItem="322-lD-R0C" firstAttribute="top" secondItem="w9T-7C-iz2" secondAttribute="bottom" constant="4" id="T3a-LH-2Xy"/>
                                                         <constraint firstItem="w9T-7C-iz2" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" constant="16" id="YHw-Me-k0y"/>
                                                         <constraint firstAttribute="bottom" secondItem="322-lD-R0C" secondAttribute="bottom" id="brp-H4-wll"/>
                                                         <constraint firstAttribute="trailing" secondItem="w9T-7C-iz2" secondAttribute="trailing" constant="16" id="c9y-B2-yrQ"/>

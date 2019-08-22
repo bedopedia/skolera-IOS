@@ -23,6 +23,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var courseId: Int = 0
     
     var posts: [Post] = []
+    var meta: Meta!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +41,23 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(_ animated: Bool) {
-         getPosts()
+        self.posts = []
+        getPosts()
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    func getPosts(){
+    func getPosts(page: Int = 1){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getPostsForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
+        getPostsForCourseApi(page: page,courseId: courseId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
-                        self.posts = postsArray.map({ Post($0) })
+                        self.posts.append(contentsOf: postsArray.map({ Post($0) }))
+                        self.meta = Meta(fromDictionary: result["meta"] as! [String : Any])
                         self.tableView.reloadData()
                     }
                 }
@@ -72,6 +75,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
         cell.post = posts[indexPath.row]
+        if indexPath.row == posts.count - 1{
+            if meta.currentPage != meta.totalPages{
+                getPosts(page: (meta.currentPage)! + 1)
+            }
+        }
         cell.openAttachment = {
             let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
             filesVC.child = self.child
