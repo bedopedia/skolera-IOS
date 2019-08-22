@@ -144,7 +144,6 @@
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
-		8A02C53C23097296005BBA04 /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A02C53B23097296005BBA04 /* Events.storyboard */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
 		8A02C54023098169005BBA04 /* EventTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */; };
 		8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */; };
@@ -263,6 +262,7 @@
 		8AAF1D7822DE035200B89A6D /* ChildHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */; };
 		8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB3E10D22F83CD600D3F76F /* HomeApiManager.swift */; };
 		8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB5276D226DC77F006EA7FB /* CardView.swift */; };
+		8AB8386C230EB55B00BF831B /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AB8386E230EB55B00BF831B /* Events.storyboard */; };
 		8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */; };
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
 		8ABACE84222EC33A00EBC1F0 /* CustomGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */; };
@@ -424,7 +424,6 @@
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
-		8A02C53B23097296005BBA04 /* Events.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8A02C53D23097E2A005BBA04 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
@@ -557,6 +556,8 @@
 		8AAF1D7722DE035200B89A6D /* ChildHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeViewController.swift; sourceTree = "<group>"; };
 		8AB3E10D22F83CD600D3F76F /* HomeApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeApiManager.swift; sourceTree = "<group>"; };
 		8AB5276D226DC77F006EA7FB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		8AB8386D230EB55B00BF831B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Events.storyboard; sourceTree = "<group>"; };
+		8AB83870230EB56E00BF831B /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Events.strings; sourceTree = "<group>"; };
 		8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabCollectionViewCell.swift; sourceTree = "<group>"; };
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientView.swift; sourceTree = "<group>"; };
@@ -1066,7 +1067,7 @@
 		8A02C5382309726E005BBA04 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A02C53B23097296005BBA04 /* Events.storyboard */,
+				8AB8386E230EB55B00BF831B /* Events.storyboard */,
 				8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -1565,7 +1566,7 @@
 				5482DE7C2056DAB100647D57 /* RobotoCondensed-Bold.ttf in Resources */,
 				5482DE892056DAB100647D57 /* RobotoMono-Italic.ttf in Resources */,
 				5482DE722056DAB100647D57 /* RobotoBoldCondensedItalic.ttf in Resources */,
-				8A02C53C23097296005BBA04 /* Events.storyboard in Resources */,
+				8AB8386C230EB55B00BF831B /* Events.storyboard in Resources */,
 				5462A5A72058401F00C6F5EE /* CircularStd-Book.otf in Resources */,
 				5482DE6B2056DAB100647D57 /* Roboto Condensed Light.otf in Resources */,
 				8A298CD42184CDB900A82FEA /* Threads.storyboard in Resources */,
@@ -2037,6 +2038,15 @@
 				8A998E7D22BA9E5E001906BA /* ar */,
 			);
 			name = Assignments.storyboard;
+			sourceTree = "<group>";
+		};
+		8AB8386E230EB55B00BF831B /* Events.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AB8386D230EB55B00BF831B /* Base */,
+				8AB83870230EB56E00BF831B /* ar */,
+			);
+			name = Events.storyboard;
 			sourceTree = "<group>";
 		};
 		8AFD9EB822E354C80084FD45 /* Posts.storyboard */ = {
