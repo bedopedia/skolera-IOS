@@ -221,7 +221,6 @@
 		8A6D362720B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362620B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift */; };
 		8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362820B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift */; };
 		8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */; };
-		8A6D363220B59B8900DD0445 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */; };
 		8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */; };
 		8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6F297B21F871650011CC4A /* Announcements.storyboard */; };
 		8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78A0182201F16B006A3E2D /* Assets.xcassets */; };
@@ -239,6 +238,7 @@
 		8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A7396222D92F300972BE6 /* WeeklyNote.swift */; };
 		8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */; };
 		8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */; };
+		8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */; };
 		8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */; };
 		8A93357122E0930E007B287D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A93357022E0930E007B287D /* PostTableViewCell.swift */; };
 		8A93357522E0B1B9007B287D /* UploadedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A93357422E0B1B9007B287D /* UploadedFile.swift */; };
@@ -512,7 +512,6 @@
 		8A6D362620B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageCollectionViewCellAvatarStyle.swift; sourceTree = "<group>"; };
 		8A6D362820B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageViewModelBuilder.swift; sourceTree = "<group>"; };
 		8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageHandler.swift; sourceTree = "<group>"; };
-		8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeSeparatorPresenter.swift; path = "../../../../../../../../Desktop/Chatto-master/ChattoApp/ChattoApp/Source/Time Separator/TimeSeparatorPresenter.swift"; sourceTree = "<group>"; };
 		8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A6F297A21F871650011CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
 		8A6F297D21F871770011CC4A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
@@ -531,6 +530,7 @@
 		8A8A7396222D92F300972BE6 /* WeeklyNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNote.swift; sourceTree = "<group>"; };
 		8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorPresenter.swift; sourceTree = "<group>"; };
 		8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+convertHTML.swift"; sourceTree = "<group>"; };
 		8A93357022E0930E007B287D /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A93357422E0B1B9007B287D /* UploadedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedFile.swift; sourceTree = "<group>"; };
@@ -1292,7 +1292,7 @@
 				8A6D361C20B5999100DD0445 /* SendingStatusCollectionViewCell.xib */,
 				8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */,
 				8A6D362020B599CF00DD0445 /* TimeSeparatorModel.swift */,
-				8A6D362F20B59B8800DD0445 /* TimeSeparatorPresenter.swift */,
+				8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */,
 				8A6D362220B59A0C00DD0445 /* DemoTextMessageViewModelBuilder.swift */,
 				8A6D362420B59A4200DD0445 /* DemoTextMessageHandler.swift */,
 				8A6D362620B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift */,
@@ -1751,6 +1751,7 @@
 				8A6D362320B59A0C00DD0445 /* DemoTextMessageViewModelBuilder.swift in Sources */,
 				8A1C370E22F1B82700041BAE /* URL+QueryParams.swift in Sources */,
 				8A5F42F020B1CB7600FF93D1 /* User.swift in Sources */,
+				8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */,
 				8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */,
 				8A6CA5EF22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift in Sources */,
 				8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */,
@@ -1898,7 +1899,6 @@
 				8A680FB0226DD58700E800AE /* AssignmentStudentSubmission.swift in Sources */,
 				8A255BEC22E6053E007A0766 /* QuizzesViewController.swift in Sources */,
 				8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */,
-				8A6D363220B59B8900DD0445 /* TimeSeparatorPresenter.swift in Sources */,
 				8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */,
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,

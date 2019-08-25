@@ -222,7 +222,16 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "yyyy-MM-dd"
-            return formatter.string(from: Date(timeIntervalSince1970: TimeInterval(event.startDate!))) == formatter.string(from: date)
+            formatter.string(from: )
+            
+            let start: Date = Date(timeIntervalSince1970: TimeInterval(event.startDate!))
+            let end: Date = Date(timeIntervalSince1970: TimeInterval(event.endDate!))
+            
+            let dateInterval: DateInterval = DateInterval(start: start, end: end)
+            
+//            let dateIsInInterval: Bool = dateInterval.contains(date) // true
+            
+            return dateInterval.contains(date)
         }
         return days.first
     }

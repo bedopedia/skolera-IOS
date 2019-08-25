@@ -63,8 +63,10 @@ class CreateEventViewController: UIViewController {
     @objc func whenDatePickerFromValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d/M/y hh:mm a"
+        dateFormatter.locale = Locale(identifier: "en")
         whenDateTextField.text = dateFormatter.string(from: sender.date)
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        dateFormatter.locale = Locale(identifier: "en")
         whenISODate = dateFormatter.string(from: sender.date)
         whenBottomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
     }
@@ -72,8 +74,10 @@ class CreateEventViewController: UIViewController {
     @objc func toDatePickerFromValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d/M/y hh:mm a"
+        dateFormatter.locale = Locale(identifier: "en")
         toDateTextField.text = dateFormatter.string(from: sender.date)
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        dateFormatter.locale = Locale(identifier: "en")
         toISODate = dateFormatter.string(from: sender.date)
         toButtomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
     }
@@ -120,7 +124,7 @@ class CreateEventViewController: UIViewController {
             eventsParameters["type"] = "personal"
             eventsParameters["all_day"] = false
             eventsParameters["cancel"] = false
-            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId]]
+            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId!]]
             var parameters = [ "event": eventsParameters ]
             SVProgressHUD.show(withStatus: "Loading".localized)
             createEventsAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in

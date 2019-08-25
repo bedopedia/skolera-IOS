@@ -209,6 +209,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "d/M/y"
+        formatter.locale = Locale(identifier: "en")
         getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
