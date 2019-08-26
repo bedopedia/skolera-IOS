@@ -50,6 +50,48 @@ class AttachmentTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    var chosenFile: URL! {
+        didSet {
+            if chosenFile != nil {
+                var image = UIImage()
+                if chosenFile.pathExtension == nil {
+                    image = UIImage(named: "file_icon")!
+                } else if chosenFile.pathExtension.elementsEqual("pdf") {
+                    image = UIImage(named: "pdf_icon")!
+                } else if chosenFile.pathExtension.contains("doc") {
+                    image = UIImage(named: "doc_icon")!
+                } else if chosenFile.pathExtension.contains("pp") {
+                    image = UIImage(named: "ppt_icon")!
+                } else if chosenFile.pathExtension.contains("xl") {
+                    image = UIImage(named: "xlsx_icon")!
+                } else if chosenFile.pathExtension.elementsEqual("rar") || chosenFile.pathExtension.elementsEqual("zip") {
+                    image = UIImage(named: "zip_icon")!
+                } else if chosenFile.pathExtension.elementsEqual("mp3") || chosenFile.pathExtension.elementsEqual("wav") {
+                    image = UIImage(named: "audio_icon")!
+                } else if chosenFile.pathExtension.elementsEqual("mp4") || chosenFile.pathExtension.elementsEqual("3gp") {
+                    image = UIImage(named: "video_icon")!
+                } else {
+                    image = UIImage(named: "file_icon")!
+                    debugPrint("other file type") ////////////
+                }
+            
+                if attachmentImage != nil {
+                    attachmentImage.image = image
+                } else {
+                    debugPrint("attachment image = nil")
+                }
+                attachmentTitle.text = chosenFile.lastPathComponent
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+//                let fileDate = dateFormatter.date(from: uploadedFile.updatedAt!)
+                let newDateFormat = DateFormatter()
+                newDateFormat.dateFormat = "dd MMM YYYY"
+                attachmentDate.text = newDateFormat.string(from: Date())
+            }
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

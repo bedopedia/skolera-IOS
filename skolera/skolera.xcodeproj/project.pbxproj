@@ -154,6 +154,7 @@
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1688AA22FAF46900900AA6 /* AssignmentsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */; };
 		8A1688AE22FB1D9200900AA6 /* SubmissionFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1688AD22FB1D9200900AA6 /* SubmissionFeedback.swift */; };
+		8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B1B6F2313D50C007EC17B /* CreatePostViewController.swift */; };
 		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
 		8A1C370E22F1B82700041BAE /* URL+QueryParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */; };
 		8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */; };
@@ -170,6 +171,8 @@
 		8A298CD42184CDB900A82FEA /* Threads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A298CD62184CDB900A82FEA /* Threads.storyboard */; };
 		8A298CDB2184D3B600A82FEA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A298CDD2184D3B600A82FEA /* Localizable.strings */; };
 		8A30E10422E0CF730030EE5D /* PostDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A30E10322E0CF730030EE5D /* PostDetailsTableViewCell.swift */; };
+		8A32B7FC2312DF6C00317A79 /* QuizDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32B7FB2312DF6C00317A79 /* QuizDetailsViewController.swift */; };
+		8A32B7FE2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A32B7FD2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift */; };
 		8A3A217520D9121900539E1C /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217420D9121900539E1C /* Assignment.swift */; };
 		8A3A217720D913F500539E1C /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217620D913F500539E1C /* Quiz.swift */; };
 		8A3A217920D9186B00539E1C /* GradeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217820D9186B00539E1C /* GradeItem.swift */; };
@@ -434,6 +437,7 @@
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsApiManager.swift; sourceTree = "<group>"; };
 		8A1688AD22FB1D9200900AA6 /* SubmissionFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionFeedback.swift; sourceTree = "<group>"; };
+		8A1B1B6F2313D50C007EC17B /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		8A1BB72F22301474009F7738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WeeklyReport.storyboard; sourceTree = "<group>"; };
 		8A1BB7322230147A009F7738 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WeeklyReport.strings; sourceTree = "<group>"; };
 		8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryParams.swift"; sourceTree = "<group>"; };
@@ -461,6 +465,8 @@
 		8A298CDC2184D3B600A82FEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A298CDE2184D3B800A82FEA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A30E10322E0CF730030EE5D /* PostDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		8A32B7FB2312DF6C00317A79 /* QuizDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDetailsViewController.swift; sourceTree = "<group>"; };
+		8A32B7FD2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDetailsViewControllerTableViewCell.swift; sourceTree = "<group>"; };
 		8A3A217420D9121900539E1C /* Assignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		8A3A217620D913F500539E1C /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 		8A3A217820D9186B00539E1C /* GradeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeItem.swift; sourceTree = "<group>"; };
@@ -1132,6 +1138,8 @@
 				8A255BEB22E6053E007A0766 /* QuizzesViewController.swift */,
 				8A255BED22E61119007A0766 /* QuizStatusViewController.swift */,
 				8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */,
+				8A32B7FB2312DF6C00317A79 /* QuizDetailsViewController.swift */,
+				8A32B7FD2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1333,6 +1341,7 @@
 				8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */,
 				8A93357822E0BC58007B287D /* PostResourcesViewController.swift */,
 				8A93357C22E0CD83007B287D /* PostDetailsViewController.swift */,
+				8A1B1B6F2313D50C007EC17B /* CreatePostViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1506,7 +1515,13 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -1810,6 +1825,7 @@
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
+				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
 				5482DDD62056D01300647D57 /* AttendanceTableViewCell.swift in Sources */,
 				543830B0204D634500ABF477 /* CourseGrade.swift in Sources */,
@@ -1904,11 +1920,13 @@
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,
 				8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
+				8A32B7FC2312DF6C00317A79 /* QuizDetailsViewController.swift in Sources */,
 				8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */,
 				546356EB201F68E90072F066 /* Child.swift in Sources */,
 				8A48DA5722B1509500260C7D /* AssignmentCoursesViewController.swift in Sources */,
 				54CCF401206BEBA600824A3D /* BehaviorNotesOwner.swift in Sources */,
 				8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */,
+				8A32B7FE2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift in Sources */,
 				8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */,
 				547A37932022153B00794441 /* Meta.swift in Sources */,
 				8A3DE99320BED37C00BACD0E /* GradeHeaderTableViewCell.swift in Sources */,

@@ -32,7 +32,7 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -50,6 +50,12 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
             assignmentsVC.courseId = course.id
             assignmentsVC.courseGroupId = courseGroup.id
             self.navigationController?.pushViewController(assignmentsVC, animated: true)
+        } else if indexPath.row == 2 {
+            let postsVC = CoursesPostsViewController.instantiate(fromAppStoryboard: .Posts)
+            postsVC.courseName = course.name ?? ""
+            postsVC.courseId = course.id!
+            postsVC.isTeacher = true
+            self.navigationController?.pushViewController(postsVC, animated: true)
         }
     }
 }

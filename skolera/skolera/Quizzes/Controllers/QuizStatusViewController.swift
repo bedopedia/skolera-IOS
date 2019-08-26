@@ -23,6 +23,7 @@ class QuizStatusViewController: UIViewController {
     @IBOutlet weak var courseNameLabel: UILabel!
     @IBOutlet weak var notStartedQuizView: UIView!
     @IBOutlet weak var finishedQuizView: UIView!
+    @IBOutlet weak var studentFinishedQuizView: UIView!
     @IBOutlet weak var quizGradeLabel: UILabel!
     @IBOutlet weak var quizTotalGradeLabel: UILabel!
     @IBOutlet weak var quizNoteLabel: UILabel!
@@ -75,13 +76,23 @@ class QuizStatusViewController: UIViewController {
                 quizClockImage.image = #imageLiteral(resourceName: "greenHour")
                 notStartedQuizView.isHidden = false
                 finishedQuizView.isHidden = true
+                studentFinishedQuizView.isHidden = true
                 
-            } else {
+            }
+//            else if getUserType().elementsEqual("student") {
+//                debugPrint("open quiz details for student")
+//                notStartedQuizView.isHidden = true
+//                finishedQuizView.isHidden = true
+//                studentFinishedQuizView.isHidden = false
+//                
+//            }
+            else {
                 quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
                 quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
                 quizClockImage.image = #imageLiteral(resourceName: "1")
                 notStartedQuizView.isHidden = true
                 finishedQuizView.isHidden = false
+                studentFinishedQuizView.isHidden = true
                 quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
                 if let grade = quiz.studentSubmissions.score{
                     quizGradeLabel.text = "\(grade)"
@@ -110,15 +121,9 @@ class QuizStatusViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func openQuizDetails() {
+        debugPrint("open quiz details")
     }
-    */
+    
 
 }

@@ -58,6 +58,7 @@ func GET_STUDENT_GRADE_AVG() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade"
 }
+
 //Behavior Notes
 func GET_BEHAVIOR_NOTES_COUNT() -> String
 {

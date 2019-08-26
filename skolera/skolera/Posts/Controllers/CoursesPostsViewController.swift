@@ -16,6 +16,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var createPostButton: UIButton!
     
     
     var child : Child!
@@ -25,6 +26,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var posts: [Post] = []
     var meta: Meta!
 
+    var isTeacher: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,8 +36,14 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        
+        if isTeacher {
+            childImageView.isHidden = true
+        } else {
+            createPostButton.isHidden = true
+            if let child = child{
+                childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            }
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -42,11 +51,18 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         self.posts = []
+        tableView.reloadData()
         getPosts()
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func createPost() {
+        debugPrint("create post")
+        let createPost = CreatePostViewController.instantiate(fromAppStoryboard: .Posts)
+        self.present(createPost, animated: true, completion: nil)
     }
     
     func getPosts(page: Int = 1){

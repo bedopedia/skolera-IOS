@@ -641,7 +641,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ChildProfileFeaturesTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iXz-Wj-3Op" customClass="ChildProfileFeaturesTableViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rQo-Ga-5eZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
@@ -993,6 +993,7 @@
                             <outlet property="delegate" destination="iXz-Wj-3Op" id="M0o-jc-7F1"/>
                         </connections>
                     </tableView>
+                    <size key="freeformSize" width="414" height="800"/>
                     <connections>
                         <outlet property="attendanceProgressBar" destination="hZK-jn-QKH" id="wtp-Al-qRF"/>
                         <outlet property="negativeBehaviorNotesLabel" destination="FhW-S7-4tV" id="aRi-pT-seP"/>
@@ -1569,7 +1570,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imk-hZ-S2u">
-                                                    <rect key="frame" x="89" y="29.333333333333329" width="79.333333333333314" height="21"/>
+                                                    <rect key="frame" x="89" y="29.333333333333329" width="88.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1749,6 +1750,35 @@
                                                 <constraint firstItem="Phm-Ov-DO6" firstAttribute="centerY" secondItem="w1C-8k-hbk" secondAttribute="centerY" id="W52-68-xLb"/>
                                                 <constraint firstItem="w1C-8k-hbk" firstAttribute="leading" secondItem="qWk-nM-e0l" secondAttribute="leading" constant="16" id="XrR-G6-FXb"/>
                                                 <constraint firstItem="w1C-8k-hbk" firstAttribute="centerY" secondItem="qWk-nM-e0l" secondAttribute="centerY" id="hh9-vg-EFh"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="mainPostsCell" rowHeight="80" id="VJf-yB-N3k">
+                                        <rect key="frame" x="0.0" y="160" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VJf-yB-N3k" id="SQy-jD-IXV">
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="79.666666666666671"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postsIco" translatesAutoresizingMaskIntoConstraints="NO" id="9pU-3K-u7O">
+                                                    <rect key="frame" x="16" y="25" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="32" id="aS0-j1-Djw"/>
+                                                        <constraint firstAttribute="width" constant="32" id="nrQ-H0-P0h"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkm-x0-08B">
+                                                    <rect key="frame" x="73" y="30" width="49.333333333333343" height="22"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mkm-x0-08B" firstAttribute="centerY" secondItem="9pU-3K-u7O" secondAttribute="centerY" id="8lr-78-4vC"/>
+                                                <constraint firstItem="9pU-3K-u7O" firstAttribute="leading" secondItem="SQy-jD-IXV" secondAttribute="leading" constant="16" id="GDb-Cn-GfU"/>
+                                                <constraint firstItem="mkm-x0-08B" firstAttribute="leading" secondItem="9pU-3K-u7O" secondAttribute="trailing" constant="25" id="U3o-1i-taI"/>
+                                                <constraint firstItem="9pU-3K-u7O" firstAttribute="top" secondItem="SQy-jD-IXV" secondAttribute="top" constant="25" id="gfE-A8-Sbv"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
