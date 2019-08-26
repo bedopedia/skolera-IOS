@@ -9,23 +9,24 @@
 import UIKit
 import KMPlaceholderTextView
 import MobileCoreServices
+import SVProgressHUD
+import Alamofire
 
 class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var postContentTextView: KMPlaceholderTextView!
     @IBOutlet weak var addAttachmentsView: UIView!
     @IBOutlet weak var tableView: UITableView!
+  
+    
     
     var attachments: [URL] = []
+    var courseGroup: CourseGroup!
+    var createdPost: Post!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        addAttachmentsView.isHidden = true
-        
-//        postContentTextView.layer.borderWidth = 1
-//        postContentTextView.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
-//        postContentTextView.layer.cornerRadius = 6
         postContentTextView.placeholder = "This is a text editor. Add and edit as you wish".localized
         tableView.delegate = self
         tableView.dataSource = self
@@ -39,6 +40,23 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     
     @IBAction func post() {
         debugPrint("create post")
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.courseId, "postable_type": "CourseGroup","video_preview": "",
+                                                "videoURL": ""]]
+        createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                debugPrint("createPostApi success")
+                if let result = value as? [String : AnyObject] {
+                    self.createdPost = Post(result)
+                    
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+            self.close()
+        }
+        
     }
     
     @IBAction func uploadFile() {

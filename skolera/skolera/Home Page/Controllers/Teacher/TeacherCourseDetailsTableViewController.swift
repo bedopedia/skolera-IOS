@@ -54,6 +54,7 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
             let postsVC = CoursesPostsViewController.instantiate(fromAppStoryboard: .Posts)
             postsVC.courseName = course.name ?? ""
             postsVC.courseId = course.id!
+            postsVC.courseGroup = courseGroup
             postsVC.isTeacher = true
             self.navigationController?.pushViewController(postsVC, animated: true)
         }

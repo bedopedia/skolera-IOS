@@ -173,4 +173,8 @@ func CREATE_STUDENT_EVENTS() -> String {
     return "\(BASE_URL!)/api/events"
 }
 
+func CREATE_POST() -> String {
+    return "\(BASE_URL!)/api/posts"
+}
+
 

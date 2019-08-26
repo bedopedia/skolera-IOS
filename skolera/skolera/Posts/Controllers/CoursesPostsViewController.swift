@@ -22,7 +22,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var child : Child!
     var courseName: String = ""
     var courseId: Int = 0
-    
+    var courseGroup: CourseGroup!
     var posts: [Post] = []
     var meta: Meta!
 
@@ -62,6 +62,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func createPost() {
         debugPrint("create post")
         let createPost = CreatePostViewController.instantiate(fromAppStoryboard: .Posts)
+        createPost.courseGroup = courseGroup
         self.present(createPost, animated: true, completion: nil)
     }
     
