@@ -33,7 +33,7 @@ class QuizCourseTableViewCell: UITableViewCell {
             subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            quizName.text = course.quizName == nil ? "No Quiz".localized : course.quizName
+            quizName.text = course.quizName == nil ? "No active quizzes currently".localized : course.quizName
             if let assignStringDate = course.nextQuizDate {
                 quizDateView.isHidden = false
                 quizDateLabel.isHidden = false

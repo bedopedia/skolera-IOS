@@ -33,7 +33,7 @@ class AssignmentCourseTableViewCell: UITableViewCell {
             subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            assignmentName.text = course.assignmentName == nil ? "No Assignment".localized : course.assignmentName
+            assignmentName.text = course.assignmentName == nil ? "No active assignments currently".localized : course.assignmentName
             if let assignStringDate = course.nextAssignmentDate {
                 assignmentDateView.isHidden = false
                 assignmentDateLabel.isHidden = false

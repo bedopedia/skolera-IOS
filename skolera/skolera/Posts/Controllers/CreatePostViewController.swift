@@ -59,8 +59,8 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
             }
         } else {
             debugPrint("empty content")
-            let alert = UIAlertController(title: "Skolera", message: "Post is empty", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            let alert = UIAlertController(title: "Skolera", message: "Post is empty".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
@@ -105,8 +105,8 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                 tableView.isHidden = false
                 tableView.reloadData()
             } else {
-                let alert = UIAlertController(title: "Cannot select file", message: "You must select a file with size less than 10 MB.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                let alert = UIAlertController(title: "Cannot select file".localized, message: "You must select a file with size less than 10 MB.".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
                 }))
                 self.present(alert, animated: true, completion: nil)
@@ -158,14 +158,19 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell
         cell.cancelAction = {
-                                let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this attachment?", preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                                let alert = UIAlertController(title: "Delete Entry".localized, message: "Are you sure you want to delete this attachment?".localized, preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                                     NSLog("The \"OK\" alert occured.")
                                     debugPrint("cancel action")
                                     self.attachments.remove(at: indexPath.row)
-                                    self.tableView.reloadData()
+                                    if self.attachments.isEmpty {
+                                        self.tableView.isHidden = true
+                                        self.addAttachmentsView.isHidden = false
+                                    } else {
+                                        self.tableView.reloadData()
+                                    }
                                 }))
-                                alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+                                alert.addAction(UIAlertAction(title: "CANCEL".localized, style: .cancel, handler: { _ in
                                     NSLog("The \"Cancel\" alert occured.")
                                 }))
                                 self.present(alert, animated: true, completion: nil)
