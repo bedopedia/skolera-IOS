@@ -102,6 +102,9 @@ class ChildProfileViewController: UIViewController {
 //        }
         let featureTVC = childViewControllers[0] as! ChildProfileFeaturesTableViewController
         featureTVC.child = child
+        featureTVC.scrollHandler = { y in
+            debugPrint(y)
+        }
     }
     
     

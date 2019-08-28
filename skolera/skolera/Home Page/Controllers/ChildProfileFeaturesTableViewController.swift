@@ -47,6 +47,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             }
         }
     }
+    
+    var scrollHandler: ( (CGFloat) -> ())!
+    
     func setProgressBarColor(absentDays: Int){
         switch absentDays {
         case ..<15:
@@ -99,6 +102,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         default:
             return
         }
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let y: CGFloat = scrollView.contentOffset.y
+        scrollHandler(y)
+        
     }
     
     //MARK: - Methods
@@ -290,22 +299,32 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         bvc.child = child
         self.navigationController?.pushViewController(bvc, animated: true)
     }
-    
     func showWeeklyPlanner() {
         if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
             wvc.weeklyPlanner = self.weeklyPlans.first!
             self.navigationController?.pushViewController(wvc, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
-    
     func showTimetable() {
         if !disableTimeTable {
             let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
             ttvc.child = child
             ttvc.timeslots = timeslots
             self.navigationController?.pushViewController(ttvc, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
