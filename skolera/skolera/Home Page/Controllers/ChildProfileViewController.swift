@@ -24,6 +24,7 @@ class ChildProfileViewController: UIViewController {
     @IBOutlet weak var assignmentsLabel: UILabel!
     @IBOutlet weak var eventsLabel: UILabel!
     @IBOutlet weak var notificationButton: UIBarButtonItem!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
     var child: Child!
@@ -31,6 +32,8 @@ class ChildProfileViewController: UIViewController {
     var quizzesText : String!
     var eventsText : String!
     
+    let maxHeight: CGFloat = 138
+    let minHeight: CGFloat = 12
     
     //MARK: - Life Cycle
     
@@ -104,6 +107,17 @@ class ChildProfileViewController: UIViewController {
         featureTVC.child = child
         featureTVC.scrollHandler = { y in
             debugPrint(y)
+            ///////////////////
+            let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
+            if newHeaderViewHeight > self.maxHeight {
+                self.heightConstraint.constant = self.maxHeight
+            } else if newHeaderViewHeight < self.minHeight{
+                self.heightConstraint.constant = self.minHeight
+            } else {
+                self.heightConstraint.constant = newHeaderViewHeight
+            }
+            ////////////////////
+            
         }
     }
     

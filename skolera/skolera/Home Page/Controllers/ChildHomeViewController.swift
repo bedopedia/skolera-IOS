@@ -32,6 +32,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
     var child: Child!
@@ -76,6 +77,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         
         navigationItem.backBarButtonItem = backItem
         navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
+        
+        headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
     }
     
     @IBAction func leftAction() {
