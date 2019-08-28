@@ -12,19 +12,16 @@ import MobileCoreServices
 import SVProgressHUD
 import Alamofire
 
-class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet weak var postContentTextView: KMPlaceholderTextView!
     @IBOutlet weak var addAttachmentsView: UIView!
     @IBOutlet weak var tableView: UITableView!
   
-    
-    
     var attachments: [URL] = []
     var courseGroup: CourseGroup!
     var createdPost: Post!
-    
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         postContentTextView.placeholder = "This is a text editor. Add and edit as you wish".localized
@@ -40,26 +37,40 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     
     @IBAction func post() {
         debugPrint("create post")
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.courseId, "postable_type": "CourseGroup","video_preview": "",
-                                                "videoURL": ""]]
-        createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
-            if isSuccess {
-                debugPrint("createPostApi success")
-                if let result = value as? [String : AnyObject] {
-                    self.createdPost = Post(result)
-                    
+        if !postContentTextView.text.isEmpty {
+            SVProgressHUD.show(withStatus: "Loading".localized)
+            let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.courseId, "postable_type": "CourseGroup","video_preview": "",
+                                                    "videoURL": ""]]
+            createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+                SVProgressHUD.dismiss()
+                if isSuccess {
+                    debugPrint("createPostApi success")
+                    if let result = value as? [String : AnyObject] {
+                        self.createdPost = Post(result)
+                        //                    self.uploadFile(file: self.attachments.first!, fileName: self.attachments.first?.lastPathComponent ?? "cannot get file name")
+                        if !self.attachments.isEmpty {
+                            self.uploadAllFiles()
+                        }
+                    }
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                self.close()
             }
-            self.close()
+        } else {
+            debugPrint("empty content")
+            let alert = UIAlertController(title: "Skolera", message: "Post is empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+
         }
+        
         
     }
     
-    @IBAction func uploadFile() {
+    @IBAction func uploadFileButton() {
         debugPrint("upload file")
         let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypePDF), String(kUTTypePresentation), String(kUTTypeMP3), String(kUTTypeImage), String(kUTTypeVideo), String(kUTTypeData), String(kUTTypeArchive)], in: .import)
         importMenu.delegate = self
@@ -81,31 +92,58 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
         var fileSize : UInt64
 
         do {
-            //return [FileAttributeKey : Any]
             let attr = try FileManager.default.attributesOfItem(atPath: filePath)
             fileSize = attr[FileAttributeKey.size] as! UInt64
             let dict = attr as NSDictionary
             fileSize = dict.fileSize()
             debugPrint("fileSize: \(fileSize)")
-            if fileSize / (1024 * 1024) < UInt64(0.8) {
-                attachments.append(myURL)
+            if fileSize / (1024 * 1024) < UInt64(10) {
+                if !attachments.contains(myURL) {
+                    attachments.append(myURL)
+                }
                 addAttachmentsView.isHidden = true
                 tableView.isHidden = false
                 tableView.reloadData()
             } else {
                 let alert = UIAlertController(title: "Cannot select file", message: "You must select a file with size less than 10 MB.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
             
         } catch {
-            print("Error: \(error)")
+            print("Error openning the chosen file: \(error)")
         }
+        
+    }
     
-        
-        
+    func uploadFile(file: URL, fileName: String) {
+            uploadFileApi(file: file,postId: createdPost.id!, fileName: fileName) { (isSuccess, statusCode, error) in
+                if isSuccess {
+                    debugPrint("file upload success")
+                    
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                }
+            }
+    }
+    
+    func uploadAllFiles() {
+        let attachment = attachments.removeFirst()
+        uploadFileApi(file: attachment,postId: createdPost.id!, fileName: attachment.lastPathComponent) { (isSuccess, statusCode, error) in
+            if isSuccess {
+                debugPrint("file upload success")
+                
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+        if attachments.isEmpty {
+            return
+        } else {
+            uploadAllFiles()
+        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -119,6 +157,19 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell
+        cell.cancelAction = {
+                                let alert = UIAlertController(title: "Delete Entry", message: "Are you sure you want to delete this attachment?", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                                    NSLog("The \"OK\" alert occured.")
+                                    debugPrint("cancel action")
+                                    self.attachments.remove(at: indexPath.row)
+                                    self.tableView.reloadData()
+                                }))
+                                alert.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+                                    NSLog("The \"Cancel\" alert occured.")
+                                }))
+                                self.present(alert, animated: true, completion: nil)
+                            }
         cell.chosenFile = attachments[indexPath.row]
 //        cell.attachmentTitle.text = "new title"
         return cell
@@ -127,8 +178,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
-    
-
+   
 }
 
 

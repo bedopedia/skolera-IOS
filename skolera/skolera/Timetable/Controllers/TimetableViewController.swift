@@ -14,11 +14,11 @@ class TimetableViewController: UIViewController, EventDataSource{
     let calendar = Calendar.current
     var today : Date!
     var tomorrow : Date!
-    var todayEvents : [EventDescriptor]!
-    
+    var todayEvents : [EventDescriptor]!    
     var tomorrowEvents : [EventDescriptor]!
     var child : Child!
     var timeslots: [TimeSlot]!
+    var actor: Actor!
     
     //MARK: - Outlets
     @IBOutlet weak var backButton: UIButton!
@@ -29,10 +29,14 @@ class TimetableViewController: UIViewController, EventDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        
+        //////////////
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        } else {
+            childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first!)\(actor.lastname.first!)", textSize: 14)
         }
         if (timeslots) != nil{
             todayEvents = getTodayEvents()
@@ -90,13 +94,14 @@ class TimetableViewController: UIViewController, EventDataSource{
         return dayInWeek
     }
     //MARK:- methods:
-    private func getTodayEvents() -> [EventDescriptor]
+    private func getTodayEvents() -> [EventDescriptor]  //sets ui
     {
         var result =  [EventDescriptor]()
         if timeslots != nil
         {
             let slots = timeslots.filter { (timeslot) -> Bool in
                 timeslot.day == getTodayName()
+
             }
             //random index to start from
             var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))
@@ -158,7 +163,8 @@ class TimetableViewController: UIViewController, EventDataSource{
         return result.attributedSubstring(from: NSMakeRange(0, result.string.count))
     }
     //MARK:- Delegates
-    func eventsForDate(_ date: Date) -> [EventDescriptor] {
+    func eventsForDate(_ date: Date) -> [EventDescriptor] { //ui setting
+        
         if (date.isToday)
         {
             return todayEvents

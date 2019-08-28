@@ -158,6 +158,7 @@
 		8A1BB72E22301474009F7738 /* WeeklyReport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1BB73022301474009F7738 /* WeeklyReport.storyboard */; };
 		8A1C370E22F1B82700041BAE /* URL+QueryParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */; };
 		8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A1DDB5C22E9FE4F00DF9B9A /* Quizzes.storyboard */; };
+		8A20A7EC23155DF30052A662 /* AttachmentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20A7EB23155DF30052A662 /* AttachmentCellDelegate.swift */; };
 		8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A253D5E22E87BE900AFB27E /* QuizCourse.swift */; };
 		8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */; };
 		8A255BEA22E5F777007A0766 /* QuizCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */; };
@@ -443,6 +444,7 @@
 		8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+QueryParams.swift"; sourceTree = "<group>"; };
 		8A1DDB5B22E9FE4F00DF9B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Quizzes.storyboard; sourceTree = "<group>"; };
 		8A1DDB5E22E9FE8100DF9B9A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Quizzes.strings; sourceTree = "<group>"; };
+		8A20A7EB23155DF30052A662 /* AttachmentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCellDelegate.swift; sourceTree = "<group>"; };
 		8A253D5E22E87BE900AFB27E /* QuizCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourse.swift; sourceTree = "<group>"; };
 		8A255BE722E5F728007A0766 /* QuizzesCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesCoursesViewController.swift; sourceTree = "<group>"; };
 		8A255BE922E5F777007A0766 /* QuizCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCourseTableViewCell.swift; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				8A7F77C822DF3243009DA15F /* Views */,
 				8A7F77C922DF324B009DA15F /* Controllers */,
 				8A7F77C722DF323B009DA15F /* Model */,
+				8A20A7EB23155DF30052A662 /* AttachmentCellDelegate.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -1824,6 +1827,7 @@
 				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
+				8A20A7EC23155DF30052A662 /* AttachmentCellDelegate.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
 				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,

@@ -13,6 +13,9 @@ class AttachmentTableViewCell: UITableViewCell {
     @IBOutlet weak var attachmentImage: UIImageView!
     @IBOutlet weak var attachmentTitle: UILabel!
     @IBOutlet weak var attachmentDate: UILabel!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    var cancelAction: (() -> ())!
     
     var uploadedFile: UploadedFile! {
         didSet {
@@ -22,7 +25,7 @@ class AttachmentTableViewCell: UITableViewCell {
                     image = UIImage(named: "file_icon")!
                 } else if uploadedFile.extensionField!.elementsEqual("pdf") {
                     image = UIImage(named: "pdf_icon")!
-                } else if uploadedFile.extensionField!.contains("doc") {
+                } else if uploadedFile.extensionField!.contains("doc") || uploadedFile.extensionField!.contains("rtf")  {
                     image = UIImage(named: "doc_icon")!
                 } else if uploadedFile.extensionField!.contains("pp") {
                     image = UIImage(named: "ppt_icon")!
@@ -55,11 +58,11 @@ class AttachmentTableViewCell: UITableViewCell {
         didSet {
             if chosenFile != nil {
                 var image = UIImage()
-                if chosenFile.pathExtension == nil {
+                if chosenFile.pathExtension.isEmpty {
                     image = UIImage(named: "file_icon")!
                 } else if chosenFile.pathExtension.elementsEqual("pdf") {
                     image = UIImage(named: "pdf_icon")!
-                } else if chosenFile.pathExtension.contains("doc") {
+                } else if chosenFile.pathExtension.contains("doc") || chosenFile.pathExtension.contains("rtf") {
                     image = UIImage(named: "doc_icon")!
                 } else if chosenFile.pathExtension.contains("pp") {
                     image = UIImage(named: "ppt_icon")!
@@ -71,9 +74,10 @@ class AttachmentTableViewCell: UITableViewCell {
                     image = UIImage(named: "audio_icon")!
                 } else if chosenFile.pathExtension.elementsEqual("mp4") || chosenFile.pathExtension.elementsEqual("3gp") {
                     image = UIImage(named: "video_icon")!
-                } else {
+                } 
+                else {
                     image = UIImage(named: "file_icon")!
-                    debugPrint("other file type") ////////////
+                    debugPrint("other file type")
                 }
             
                 if attachmentImage != nil {
@@ -92,6 +96,11 @@ class AttachmentTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    @IBAction func cancelSelection() {
+        cancelAction()
+    }
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

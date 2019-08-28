@@ -61,3 +61,48 @@ func createPostApi(parameters: Parameters, completion: @escaping ((Bool, Int, An
         }
     }
 }
+
+func uploadFileApi(file: URL, postId: Int, fileName: String, completion: @escaping ((Bool, Int, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = UPLOAD_FILE_FOR_POST()
+    Alamofire.upload(
+        multipartFormData: { multipartFormData in
+            
+            multipartFormData.append(fileName.data(using:.utf8)!, withName: "name")
+            multipartFormData.append(file, withName: "file[file]" )
+            multipartFormData.append(String(postId).data(using: .utf8)!, withName: "post_ids[]")
+    },
+        to: url,
+        method: .post,
+        headers: headers,
+        encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.uploadProgress { progress in
+                    debugPrint(progress.fractionCompleted)
+                }
+                upload.responseJSON { response in
+                    debugPrint(response)
+                    if (response.response != nil) {
+                        let status = response.response!.statusCode
+                        switch status {
+                        case 200...299 :
+                            if response.data != nil {
+                                completion(true, status, nil)
+                            }
+                        default :
+                            if response.data != nil {
+                                completion(false, -1, nil)
+                            }
+                        }
+                    }
+                }
+            case .failure(let encodingError):
+                print(encodingError)
+                completion(false, -1, nil)
+                
+            }
+        }
+    )
+    
+}

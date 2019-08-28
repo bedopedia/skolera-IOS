@@ -259,7 +259,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <state key="normal" title="+ Upload file"/>
                                 <connections>
-                                    <action selector="uploadFile" destination="ol9-4m-4og" eventType="touchUpInside" id="5Tw-En-WSE"/>
+                                    <action selector="uploadFileButton" destination="ol9-4m-4og" eventType="touchUpInside" id="SCE-Mb-VOq"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhC-Nu-gpo">
@@ -313,7 +313,7 @@ attachment.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Numbers - Multiplication &amp; Division" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="697-er-wqf">
-                                                    <rect key="frame" x="90" y="27" width="288" height="17"/>
+                                                    <rect key="frame" x="90" y="27" width="256" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.36466276650000001" green="0.36473065609999999" blue="0.3646585047" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -324,22 +324,38 @@ attachment.</string>
                                                     <color key="textColor" red="0.65292328600000005" green="0.71725344660000001" blue="0.75491112469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v32-BJ-xOX">
+                                                    <rect key="frame" x="344" y="5" width="30" height="49"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="49" id="Xws-fg-TzM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                    <state key="normal" title="X">
+                                                        <color key="titleColor" red="0.36466276650000001" green="0.36473065609999999" blue="0.3646585047" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="cancelSelection" destination="7T5-ng-bHs" eventType="touchUpInside" id="CxN-iY-YcO"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.99963921310000003" green="1" blue="0.99975615740000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="697-er-wqf" firstAttribute="top" secondItem="yII-1Q-Hie" secondAttribute="topMargin" constant="16" id="3SE-rY-jkg"/>
                                                 <constraint firstItem="3Ow-1C-UuA" firstAttribute="centerY" secondItem="yII-1Q-Hie" secondAttribute="centerY" id="86f-Zm-D4R"/>
                                                 <constraint firstItem="RdM-kV-uhF" firstAttribute="top" secondItem="697-er-wqf" secondAttribute="bottom" constant="4" id="Bg2-VJ-Mjp"/>
+                                                <constraint firstAttribute="trailing" secondItem="v32-BJ-xOX" secondAttribute="trailing" constant="8" id="PoH-EG-Kqn"/>
                                                 <constraint firstItem="697-er-wqf" firstAttribute="leading" secondItem="3Ow-1C-UuA" secondAttribute="trailing" constant="16" id="b4M-T2-LOa"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="697-er-wqf" secondAttribute="trailing" constant="16" id="okP-r0-XEP"/>
                                                 <constraint firstItem="3Ow-1C-UuA" firstAttribute="leading" secondItem="yII-1Q-Hie" secondAttribute="leading" constant="34" id="p1Y-Ne-die"/>
                                                 <constraint firstItem="RdM-kV-uhF" firstAttribute="leading" secondItem="697-er-wqf" secondAttribute="leading" id="pzp-UB-xV3"/>
+                                                <constraint firstItem="v32-BJ-xOX" firstAttribute="top" secondItem="yII-1Q-Hie" secondAttribute="top" constant="5" id="vp1-vV-tpb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="attachmentDate" destination="RdM-kV-uhF" id="9n7-uT-pay"/>
                                             <outlet property="attachmentImage" destination="3Ow-1C-UuA" id="z9G-rn-mNh"/>
                                             <outlet property="attachmentTitle" destination="697-er-wqf" id="Kef-MX-Rwi"/>
+                                            <outlet property="cancelButton" destination="v32-BJ-xOX" id="dSK-Hx-wCq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

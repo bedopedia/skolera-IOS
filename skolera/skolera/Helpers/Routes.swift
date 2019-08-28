@@ -64,6 +64,7 @@ func GET_BEHAVIOR_NOTES_COUNT() -> String
 {
     return "\(BASE_URL!)/api/behavior_notes/count_types"
 }
+
 func GET_BEHAVIOR_NOTES() -> String
 {
     return "\(BASE_URL!)/api/behavior_notes"
@@ -77,6 +78,11 @@ func GET_WEEKLY_PLANNER() -> String
 func GET_TIME_TABLE() -> String
 {
     return "\(BASE_URL!)/api/students/%d/timetable"
+}
+
+func GET_TEACHER_TIME_TABLE() -> String
+{
+    return "\(BASE_URL!)/api/teachers/%d/timetable"
 }
 //Chat
 func GET_THREADS() -> String
@@ -175,6 +181,10 @@ func CREATE_STUDENT_EVENTS() -> String {
 
 func CREATE_POST() -> String {
     return "\(BASE_URL!)/api/posts"
+}
+
+func UPLOAD_FILE_FOR_POST() -> String {
+    return "\(BASE_URL!)/api/posts/create_uploaded_file_for_posts"
 }
 
 

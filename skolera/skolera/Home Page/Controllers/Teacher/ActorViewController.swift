@@ -29,6 +29,7 @@ class ActorViewController: UIViewController {
                 for child in childViewControllers {
                     if let actorTableViewController = child as? ActorFeaturesTableViewController {
                         actorTableViewController.actor = self.actor
+                        actorTableViewController.getTimeTable()
                         self.actorTableViewController = actorTableViewController
                     }
                 }

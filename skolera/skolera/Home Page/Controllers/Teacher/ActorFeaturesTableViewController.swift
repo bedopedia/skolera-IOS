@@ -15,10 +15,11 @@ import NRAppUpdate
 class ActorFeaturesTableViewController: UITableViewController {
     
     var actor: Actor!
+    var timeslots = [TimeSlot]()
+    var disableTimeTable: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
                 print("Error fetching remote instange ID: \(error)")
@@ -42,6 +43,57 @@ class ActorFeaturesTableViewController: UITableViewController {
             }
         }
     }
+    
+    func getTimeTable() {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        getTeacherTimeTableAPI(teacherActableId: actor.actableId!) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]], result.count > 0 {
+                    for timeslotDictionary in result {
+                        let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
+                        timeslot.day.capitalizeFirstLetter()
+                        self.timeslots.append(timeslot)
+                    }
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: "en")
+                    self.timeslots.sort(by: { (a, b) -> Bool in
+                        if dateFormatter.weekdaySymbols.index(of: a.day)! == dateFormatter.weekdaySymbols.index(of: b.day)! {
+                            return a.from.time < b.from.time
+                        } else {
+                            return dateFormatter.weekdaySymbols.index(of: a.day)! < dateFormatter.weekdaySymbols.index(of: b.day)!
+                        }
+                    })
+                    dateFormatter.dateFormat = "EEEE"
+                    /////////////////////////////////////
+//                    let now = Date()
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyy/MM/dd"
+                    let now = formatter.date(from: "2019/07/01")!
+                    ///////////////////////////////////////
+                    var next = self.timeslots.first(where: { (a) -> Bool in
+                        return a.day == dateFormatter.string(from: now) && now.time < a.from.time
+                    })
+                    if next == nil {
+                        if let lasttimeSlottoday = self.timeslots.filter({ (a) -> Bool in
+                            return a.day == dateFormatter.string(from: now)
+                        }).last {
+                            next = self.timeslots[(self.timeslots.index(of: lasttimeSlottoday)! + 1) % self.timeslots.count]
+                        }
+                    }
+                    if next == nil {
+                        next = self.timeslots.first!
+                    }
+                    self.disableTimeTable = false
+                } else {
+                    self.disableTimeTable = true
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -56,11 +108,18 @@ class ActorFeaturesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.row == 0 {
-//            let notificationsTVC = NotificationsTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-//            let nvc = UINavigationController(rootViewController: notificationsTVC)
-//            self.present(nvc, animated: true, completion: nil)
-//        } else if indexPath.row == 1 {
+        if indexPath.row == 0 {
+            debugPrint("open timetable")
+            if !disableTimeTable {
+                let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
+                ttvc.actor = actor
+                ttvc.timeslots = timeslots
+                self.navigationController?.pushViewController(ttvc, animated: true)
+            }
+
+            
+        }
+//        else if indexPath.row == 1 {
 //            let threadsVC = ContactTeacherViewController.instantiate(fromAppStoryboard: .Threads)
 ////            threadsVC.child = self.child
 //            
@@ -71,5 +130,7 @@ class ActorFeaturesTableViewController: UITableViewController {
 //            self.navigationController?.pushViewController(announcementsVc, animated: true)
 //        }
     }
+    
+    
     
 }

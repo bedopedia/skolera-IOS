@@ -203,7 +203,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                         let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
                         let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
                         messages.append(photoModel)
-                    } else if item.ext.contains("doc") {
+                    } else if item.ext.contains("doc") || item.ext.contains("rtf") {
                         let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
                         let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
                         messages.append(photoModel)
