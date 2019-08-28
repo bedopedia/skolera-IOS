@@ -12,6 +12,7 @@ import Alamofire
 import Firebase
 import UserNotifications
 import IQKeyboardManager
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {

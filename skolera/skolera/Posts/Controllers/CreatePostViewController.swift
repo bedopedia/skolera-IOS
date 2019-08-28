@@ -25,6 +25,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     override func viewDidLoad() {
         super.viewDidLoad()
         postContentTextView.placeholder = "This is a text editor. Add and edit as you wish".localized
+//        debugPrint(postContentTextView.placeholder)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true

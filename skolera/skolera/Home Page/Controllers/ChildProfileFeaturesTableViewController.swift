@@ -308,7 +308,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         } else {
             let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         }
@@ -322,7 +321,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         } else {
             let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         }
