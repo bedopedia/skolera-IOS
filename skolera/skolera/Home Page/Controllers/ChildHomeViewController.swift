@@ -39,6 +39,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +80,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
         
         headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func leftAction() {

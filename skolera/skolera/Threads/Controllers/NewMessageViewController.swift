@@ -126,6 +126,7 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
             chatVC.courseId = self.subjects[selectedCoursePos].courseId
             chatVC.teacherId = self.subjects[selectedCoursePos].teachers[indexPath.row].actableId
             chatVC.newThread = true
+            self.navigationController?.isNavigationBarHidden = false
             self.navigationController?.pushViewController(chatVC, animated: true)
         } else {
             selectedCoursePos = indexPath.row

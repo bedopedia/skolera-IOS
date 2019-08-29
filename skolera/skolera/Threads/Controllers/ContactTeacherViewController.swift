@@ -249,10 +249,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             
             chatVC.thread = self.threads[indexPath.row]
             
-            
-            
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
+                self.navigationController?.isNavigationBarHidden = false
                 self.navigationController?.pushViewController(chatVC, animated: true)
             }
         }
