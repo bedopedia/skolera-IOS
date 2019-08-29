@@ -250,8 +250,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfd-OK-d4G">
-                                <rect key="frame" x="16" y="68" width="26" height="26"/>
-                                <state key="normal" image="3"/>
+                                <rect key="frame" x="16" y="68" width="24" height="24"/>
+                                <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="close" destination="ol9-4m-4og" eventType="touchUpInside" id="rTt-Gm-QBA"/>
                                 </connections>
@@ -270,17 +270,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhC-Nu-gpo">
                                 <rect key="frame" x="16" y="401.5" width="382" height="166"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bubble-incoming-border-tail" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-c2-cgj">
-                                        <rect key="frame" x="172.5" y="24" width="37" height="33"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3-1" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-c2-cgj">
+                                        <rect key="frame" x="148.5" y="24" width="85" height="85"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start adding your attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d3-RBD">
-                                        <rect key="frame" x="93.5" y="73" width="195" height="17"/>
+                                        <rect key="frame" x="93.5" y="125" width="195" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-I3-se3">
-                                        <rect key="frame" x="62" y="102" width="258.5" height="29"/>
+                                        <rect key="frame" x="62" y="154" width="258.5" height="29"/>
                                         <string key="text">By clicking the add button you will add a new 
 attachment.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -1239,10 +1239,10 @@ attachment.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="3" width="26" height="26"/>
         <image name="arrowUp" width="13" height="15"/>
-        <image name="bubble-incoming-border-tail" width="37" height="33"/>
         <image name="chevronLeft" width="11" height="16"/>
+        <image name="close" width="24" height="24"/>
+        <image name="group3-1" width="85" height="85"/>
         <image name="multipleFileIco" width="16" height="18"/>
     </resources>
 </document>

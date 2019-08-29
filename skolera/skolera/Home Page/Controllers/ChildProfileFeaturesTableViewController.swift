@@ -313,11 +313,28 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         }
     }
     func showTimetable() {
+        var flag = false
+        for slot in timeslots {
+            if let dateInSlot = slot.from, Calendar.current.isDateInToday(dateInSlot), Calendar.current.isDateInTomorrow(dateInSlot) {
+                flag = true
+                break;
+            }
+        }
         if !disableTimeTable {
-            let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
-            ttvc.child = child
-            ttvc.timeslots = timeslots
-            self.navigationController?.pushViewController(ttvc, animated: true)
+            if flag {
+                let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
+                ttvc.child = child
+                ttvc.timeslots = timeslots
+                self.navigationController?.pushViewController(ttvc, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                }))
+                self.present(alert, animated: true, completion: nil)
+
+            }
+            
         } else {
             let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in

@@ -108,16 +108,30 @@ class ActorFeaturesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var flag = false
         if indexPath.row == 0 {
             debugPrint("open timetable")
-            if !disableTimeTable {
-                let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
-                ttvc.actor = actor
-                ttvc.timeslots = timeslots
-                self.navigationController?.pushViewController(ttvc, animated: true)
+            for slot in timeslots {
+                if let dateInSlot = slot.from, Calendar.current.isDateInToday(dateInSlot), Calendar.current.isDateInTomorrow(dateInSlot) {
+                    flag = true
+                    break;
+                }
             }
-
             
+            if !disableTimeTable {
+                if flag {
+                    let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
+                    ttvc.actor = actor
+                    ttvc.timeslots = timeslots
+                    self.navigationController?.pushViewController(ttvc, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                        NSLog("The \"OK\" alert occured.")
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
 //        else if indexPath.row == 1 {
 //            let threadsVC = ContactTeacherViewController.instantiate(fromAppStoryboard: .Threads)
