@@ -213,18 +213,27 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Post" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sC2-8a-7jw">
                                 <rect key="frame" x="16" y="130" width="131.5" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="PGb-wu-3sn"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.4941176471" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a post and share it with classes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMJ-k9-MBV">
                                 <rect key="frame" x="16" y="175" width="279" height="19.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19.5" id="xOj-7z-Dcn"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.6470588235294118" green="0.67843137254901964" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFA-wn-esq">
                                 <rect key="frame" x="16" y="210.5" width="58.5" height="19.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19.5" id="aOA-PI-5go"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -234,6 +243,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="106" id="Jwd-nP-0na"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="106" id="rfO-vy-clF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -245,6 +255,9 @@
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Attachments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZD-Xr-QXL">
                                 <rect key="frame" x="16" y="366" width="92.5" height="19.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19.5" id="shU-aT-qyl"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.090196078430000007" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -268,19 +281,19 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhC-Nu-gpo">
-                                <rect key="frame" x="16" y="401.5" width="382" height="166"/>
+                                <rect key="frame" x="16" y="401.5" width="382" height="374.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3-1" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-c2-cgj">
-                                        <rect key="frame" x="148.5" y="24" width="85" height="85"/>
+                                        <rect key="frame" x="148.5" y="90" width="85" height="85"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start adding your attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d3-RBD">
-                                        <rect key="frame" x="93.5" y="125" width="195" height="17"/>
+                                        <rect key="frame" x="93.5" y="191" width="195" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-I3-se3">
-                                        <rect key="frame" x="62" y="154" width="258.5" height="29"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-I3-se3" userLabel="By clicking the add button you will add a new  attachment.">
+                                        <rect key="frame" x="62" y="218" width="258.5" height="29"/>
                                         <string key="text">By clicking the add button you will add a new 
 attachment.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -290,13 +303,12 @@ attachment.</string>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="dB8-I3-se3" firstAttribute="top" secondItem="6M6-d3-RBD" secondAttribute="bottom" constant="12" id="8bj-sD-YQb"/>
                                     <constraint firstItem="6M6-d3-RBD" firstAttribute="top" secondItem="jZm-c2-cgj" secondAttribute="bottom" constant="16" id="Auh-Ac-aWQ"/>
-                                    <constraint firstItem="jZm-c2-cgj" firstAttribute="top" secondItem="hhC-Nu-gpo" secondAttribute="top" constant="24" id="HV8-QE-2to"/>
                                     <constraint firstItem="jZm-c2-cgj" firstAttribute="centerX" secondItem="hhC-Nu-gpo" secondAttribute="centerX" id="Q7A-XO-4uC"/>
                                     <constraint firstItem="6M6-d3-RBD" firstAttribute="centerX" secondItem="hhC-Nu-gpo" secondAttribute="centerX" id="bpw-62-uYt"/>
-                                    <constraint firstAttribute="height" constant="166" id="eYM-YP-nyA"/>
+                                    <constraint firstItem="6M6-d3-RBD" firstAttribute="centerY" secondItem="hhC-Nu-gpo" secondAttribute="centerY" constant="12" id="elo-vn-vBY"/>
                                     <constraint firstItem="dB8-I3-se3" firstAttribute="centerX" secondItem="hhC-Nu-gpo" secondAttribute="centerX" id="itS-LK-5mO"/>
+                                    <constraint firstItem="dB8-I3-se3" firstAttribute="top" secondItem="6M6-d3-RBD" secondAttribute="bottom" constant="10" id="q4S-bg-PUf"/>
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="24e-5Y-EDk">
@@ -397,6 +409,7 @@ attachment.</string>
                             <constraint firstItem="hhC-Nu-gpo" firstAttribute="leading" secondItem="IZD-Xr-QXL" secondAttribute="leading" id="Hd3-hp-52T"/>
                             <constraint firstItem="IZD-Xr-QXL" firstAttribute="leading" secondItem="i2B-7c-407" secondAttribute="leading" id="It6-7Q-AOf"/>
                             <constraint firstItem="IZD-Xr-QXL" firstAttribute="top" secondItem="i2B-7c-407" secondAttribute="bottom" constant="24" id="LXI-1Y-bwG"/>
+                            <constraint firstItem="7gj-VK-iWl" firstAttribute="top" secondItem="hhC-Nu-gpo" secondAttribute="bottom" constant="16" id="P4P-gM-uHb"/>
                             <constraint firstItem="hFA-wn-esq" firstAttribute="top" secondItem="iMJ-k9-MBV" secondAttribute="bottom" constant="16" id="RHx-Er-oaG"/>
                             <constraint firstItem="JsS-jc-y6E" firstAttribute="trailing" secondItem="i2B-7c-407" secondAttribute="trailing" constant="16" id="TCN-bZ-gAf"/>
                             <constraint firstItem="24e-5Y-EDk" firstAttribute="top" secondItem="IZD-Xr-QXL" secondAttribute="bottom" constant="12" id="UDy-gz-HGP"/>
@@ -414,6 +427,11 @@ attachment.</string>
                             <constraint firstItem="i2B-7c-407" firstAttribute="top" secondItem="hFA-wn-esq" secondAttribute="bottom" constant="6" id="rZl-pb-IzV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JsS-jc-y6E"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="24e-5Y-EDk"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="addAttachmentsView" destination="hhC-Nu-gpo" id="K1q-qU-nuz"/>
@@ -471,6 +489,9 @@ attachment.</string>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qmd-gr-m5G">
                                                             <rect key="frame" x="16" y="50" width="358" height="121"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="08R-ny-2jI"/>
+                                                            </constraints>
                                                             <string key="text">Last Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days ago</string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.3663078248500824" green="0.36279395222663879" blue="0.36657610535621643" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
