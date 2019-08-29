@@ -65,7 +65,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                         thirdAttachment.text = "\(files.count - 2)"
                     }
                 } else {
-                    attachmentHeightConstraint.constant = 0
+                    attachmentHeightConstraint.constant = 40
                     attachmentView.isHidden = true
                 }
                 

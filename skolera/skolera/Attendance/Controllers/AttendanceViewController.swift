@@ -74,6 +74,10 @@ class AttendanceViewController: UIViewController {
         calendarView.calendarDataSource = self
         calendarView.calendarDelegate = self
         calendarView.semanticContentAttribute = .forceLeftToRight
+  
+        
+        
+        
         offDays.insert(.friday)
         offDays.insert(.saturday)
         setupWeekDaysLabels()
