@@ -88,13 +88,13 @@
                                 <rect key="frame" x="0.0" y="80" width="375" height="267"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSP-9H-yyC">
-                                        <rect key="frame" x="16" y="8" width="187.5" height="20.5"/>
+                                        <rect key="frame" x="16" y="8" width="187.5" height="20"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI  Text" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtN-oF-JX4">
-                                        <rect key="frame" x="307" y="2" width="52" height="33"/>
+                                        <rect key="frame" x="313" y="2" width="46" height="32"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI  Text" pointSize="17"/>
                                         <state key="normal" title="Today">
                                             <color key="titleColor" red="0.15615364910000001" green="0.73169142009999999" blue="0.30433815720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -104,7 +104,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Hbd-qS-Jv6">
-                                        <rect key="frame" x="16" y="43" width="343" height="15"/>
+                                        <rect key="frame" x="16" y="42" width="343" height="15"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyQ-ZC-QUa">
                                                 <rect key="frame" x="0.0" y="0.0" width="49" height="15"/>
@@ -154,7 +154,7 @@
                                         </constraints>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F56-g3-hbf" customClass="JTAppleCalendarView" customModule="JTAppleCalendar">
-                                        <rect key="frame" x="16" y="58" width="343" height="209"/>
+                                        <rect key="frame" x="16" y="57" width="343" height="210"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ocl-Cd-2do">
                                             <size key="itemSize" width="50" height="54"/>
@@ -248,7 +248,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rdj-kX-yYI">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7" height="14"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -293,7 +293,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuh-dC-iNz">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7" height="14"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -338,7 +338,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXb-tY-j2I">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7" height="14"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -378,7 +378,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NrM-S8-iks">
-                                                            <rect key="frame" x="33" y="17" width="10" height="23"/>
+                                                            <rect key="frame" x="33" y="18" width="10" height="21"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="18"/>
                                                             <color key="textColor" red="0.32156862745098036" green="0.38039215686274508" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -401,7 +401,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8C-Eg-vwW">
-                                                            <rect key="frame" x="101" y="29.5" width="259" height="18"/>
+                                                            <rect key="frame" x="101" y="30" width="259" height="16.5"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                             <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -548,6 +548,9 @@
                                                 <state key="normal" title="Slot attendance">
                                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="slotAttendanceButtonAction" destination="ULG-ht-a7h" eventType="touchUpInside" id="N3m-tk-elf"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.5725490196078431" green="0.63529411764705879" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -568,7 +571,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-zM-s1c">
-                                        <rect key="frame" x="187.5" y="53" width="187.5" height="4"/>
+                                        <rect key="frame" x="187.5" y="49" width="187.5" height="4"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="lvh-Sf-wVa"/>
@@ -580,14 +583,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60q-iC-Fj7">
-                                        <rect key="frame" x="0.0" y="57" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="53" width="375" height="1"/>
                                         <color key="backgroundColor" red="0.72549019607843135" green="0.72549019607843135" blue="0.72549019607843135" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="FOy-Od-OpS"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="LKY-nk-a8b">
-                                        <rect key="frame" x="0.0" y="76" width="375" height="51"/>
+                                        <rect key="frame" x="0.0" y="72" width="375" height="51"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0H-NZ-WyD">
                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="51"/>
@@ -632,7 +635,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NqM-na-xm7">
-                                        <rect key="frame" x="0.0" y="143" width="375" height="444"/>
+                                        <rect key="frame" x="0.0" y="139" width="375" height="448"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="teacherAttendanceCell" rowHeight="156" id="bSu-Lz-8TX" customClass="TeacherAttendanceTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -780,12 +783,11 @@
                                     <constraint firstItem="LKY-nk-a8b" firstAttribute="top" secondItem="60q-iC-Fj7" secondAttribute="bottom" constant="18" id="5DS-jX-Uz2"/>
                                     <constraint firstItem="NqM-na-xm7" firstAttribute="top" secondItem="LKY-nk-a8b" secondAttribute="bottom" constant="16" id="8Dz-1k-ysB"/>
                                     <constraint firstItem="lvG-zM-s1c" firstAttribute="width" secondItem="uoN-LV-4Iw" secondAttribute="width" id="9dV-mk-dne"/>
-                                    <constraint firstItem="lvG-zM-s1c" firstAttribute="top" secondItem="2aN-yk-Jnh" secondAttribute="bottom" id="EbQ-Ux-6cN"/>
+                                    <constraint firstItem="lvG-zM-s1c" firstAttribute="top" secondItem="Y1h-Lo-eDI" secondAttribute="bottom" id="CFA-01-Sv0"/>
                                     <constraint firstItem="2aN-yk-Jnh" firstAttribute="top" secondItem="Y1h-Lo-eDI" secondAttribute="bottom" id="HxW-kL-YZ4"/>
                                     <constraint firstItem="Y1h-Lo-eDI" firstAttribute="leading" secondItem="j2H-mr-TXN" secondAttribute="leading" id="NCP-vf-Hdk"/>
                                     <constraint firstItem="2aN-yk-Jnh" firstAttribute="width" secondItem="Yc5-E9-JhH" secondAttribute="width" id="Qcc-nI-h4e"/>
                                     <constraint firstItem="60q-iC-Fj7" firstAttribute="leading" secondItem="Yc5-E9-JhH" secondAttribute="leading" id="SG8-9e-md2"/>
-                                    <constraint firstItem="60q-iC-Fj7" firstAttribute="top" secondItem="Y1h-Lo-eDI" secondAttribute="bottom" constant="8" id="Yvi-tJ-xlx"/>
                                     <constraint firstAttribute="trailing" secondItem="NqM-na-xm7" secondAttribute="trailing" id="gJB-5S-gW4"/>
                                     <constraint firstAttribute="trailing" secondItem="LKY-nk-a8b" secondAttribute="trailing" id="i4K-UU-xkN"/>
                                     <constraint firstItem="Y1h-Lo-eDI" firstAttribute="top" secondItem="j2H-mr-TXN" secondAttribute="top" id="lmg-ty-vh9"/>
@@ -794,6 +796,7 @@
                                     <constraint firstItem="NqM-na-xm7" firstAttribute="leading" secondItem="j2H-mr-TXN" secondAttribute="leading" id="mly-VW-dmq"/>
                                     <constraint firstItem="2aN-yk-Jnh" firstAttribute="leading" secondItem="Yc5-E9-JhH" secondAttribute="leading" id="tKN-Dl-V3t"/>
                                     <constraint firstItem="LKY-nk-a8b" firstAttribute="leading" secondItem="j2H-mr-TXN" secondAttribute="leading" id="uo1-F0-5gC"/>
+                                    <constraint firstItem="60q-iC-Fj7" firstAttribute="top" secondItem="lvG-zM-s1c" secondAttribute="bottom" id="y7h-KC-Z8m"/>
                                     <constraint firstAttribute="bottom" secondItem="NqM-na-xm7" secondAttribute="bottom" id="zvx-JC-o9H"/>
                                 </constraints>
                             </view>
