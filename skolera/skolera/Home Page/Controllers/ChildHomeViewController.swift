@@ -52,6 +52,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         leftButton.setImage(leftButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let childVc = childViewControllers[0] as? ChildProfileViewController {
+//            debugPrint("::::::::::::::::::\(childViewControllers)")
             childVc.child = self.child
             childVc.assignmentsText = self.assignmentsText
             childVc.quizzesText = self.quizzesText
