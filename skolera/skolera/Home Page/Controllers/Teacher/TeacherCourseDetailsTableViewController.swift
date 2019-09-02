@@ -37,9 +37,9 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let attendanceVC = TeacherAttendanceViewController.instantiate(fromAppStoryboard: .Attendance)
-            self.navigationController?.pushViewController(attendanceVC, animated: true)
-            debugPrint("open attendance")
+//            let attendanceVC = TeacherAttendanceViewController.instantiate(fromAppStoryboard: .Attendance)
+//            self.navigationController?.pushViewController(attendanceVC, animated: true)
+            debugPrint("Open the attendance view controller")
         } else if indexPath.row == 1 {
             let quizVC = QuizzesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.isTeacher = true
