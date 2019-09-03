@@ -56,10 +56,10 @@ func getHeaders() -> [String : String]
 {
     let keychain = KeychainSwift()
     var headers = [String : String]()
-    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN) ?? "ADOtA3W4QYeywv4p4PpX9A"
-    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE) ?? "Bearer"
-    headers[UID] = keychain.get(UID) ?? "pnps0002@skolera.com"
-    headers[CLIENT] = keychain.get(CLIENT) ?? "2VVwRr4VNHAzHygJcV13tw"
+    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN)
+    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE)
+    headers[UID] = keychain.get(UID) 
+    headers[CLIENT] = keychain.get(CLIENT)
     return headers
 }
 func parentId() -> String

@@ -17,7 +17,7 @@ class skoleraTests: XCTestCase {
 //    let schoolCodevc = UIStoryboard(name: "Login", bundle: nil)
 //    .instantiateInitialViewController() as? SchoolCodeViewController
     let schoolCode = "edu"
-    let chosenLocale = "en"
+    let chosenLocale = "ar"
     let userEmail = "NP0017"
 //    let parentEmail = "pNPS0002"
     let userPassword = "#testpro123S"
@@ -83,22 +83,31 @@ class skoleraTests: XCTestCase {
         XCTAssertNotNil(schoolInfo, "couldn't parse response")
     }
     
-//    setLocaleAPI
-    func testSetLocaleAPI() {   // for a specific user setLocalApi gets the user id from the keychain
+    func testSetLocaleAPI() {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
-        setLocaleAPI(chosenLocale) { (isSuccess, statusCode, error) in
-            success = isSuccess
+        let parameters: Parameters = ["user": ["language": chosenLocale]]
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "enRwAelHwn8H_VITSNz4fg"
+        headers[TOKEN_TYPE] = "Bearer"
+        headers[UID] = "pnps0002@skolera.com"
+        headers[CLIENT] = "wsNWS2qtkwJs6jJgiaVrog"
+        let url = String(format: EDIT_USER(), "416") //341 for student, 416 parent
+        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
-            if !isSuccess {
-                XCTFail("Error: \(error!)")
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
             }
         }
-        wait(for: [promise], timeout: 5)
+        wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
     
-    func testLoginApi() { 
+    func testLoginApi() {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         var dataValues = ["firstname", "lastname", "id", "avatar_url", "user_type", "name", "actable_id", "actable_type", "unseen_notifications"]
