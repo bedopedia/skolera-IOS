@@ -19,11 +19,11 @@ class skoleraTests: XCTestCase {
     let schoolCode = "edu"
     let chosenLocale = "en"
     let userEmail = "NP0017"
-    let parentEmail = "pNPS0002"
+//    let parentEmail = "pNPS0002"
     let userPassword = "#testpro123S"
     let loginKey = "username" //or email
     let parentId = 416
-    let timeOutDuration: TimeInterval = 5
+    let timeOutDuration: TimeInterval = 100
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -98,27 +98,95 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testLoginApi() {  //sign in
+    func testLoginApi() { 
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
-        let dataValues = ["firstname", "lastname", "id", "avatar_url", "user_type", "name", "actable_id", "actable_type", "unseen_notifications"]
-        let parameters : [String: Any] = [loginKey : parentEmail, "password" : userPassword, "mobile": true]
+        var dataValues = ["firstname", "lastname", "id", "avatar_url", "user_type", "name", "actable_id", "actable_type", "unseen_notifications"]
+        let parameters : [String: Any] = [loginKey : userEmail, "password" : userPassword, "mobile": true]
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
             success = isSuccess
-            promise.fulfill()
             if isSuccess {
+                promise.fulfill()
                 if let result = value as? [String: [String: Any]] {
-                    if result["data"]?.count != 33 {
+                    let data = result["data"]
+                    if data?.count != 33 {
                         XCTFail("Error: \(error!)")
-                    }
-                    else {
-                        // handle value types
-                        // "parent_id" is added to the data values incase the login is for students
-                        
+                    } else {
+                        if self.userEmail == "NPS0002" {
+                            dataValues.append("parent_id")
+                        }
+                        for value in dataValues {
+                            switch value {
+                            case "firstname":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: firstname must be string")
+                                }
+                                
+                            case "lastname":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: lastname must be string")
+                                }
+                            case "id":
+                                if let _ = data?[value] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("Error: id must be int")
+                                }
+                            case "avatar_url":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: avatar_url must be string")
+                                }
+                            case "user_type":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                     XCTFail("Error: user_type must be string")
+                                }
+                            case "name":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: name must be string")
+                                }
+                            case "actable_id":
+                                if let _ = data?[value] as? Int {
+                                    continue
+                                } else {
+                                   XCTFail("Error: actable_id must be int")
+                                }
+                            case "actable_type":
+                                if let _ = data?[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: actable_type must be string")
+                                }
+                            case "unseen_notifications":
+                                if let _ = data?[value] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("Error: unseen_notifications must be int")
+                                }
+                            case "parent_id":
+                                if let _ = data?[value] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("Error: parent_id must be int")
+                                }
+                            default:
+                                debugPrint("default")
+                            }
+                        }
                     }
                 }
             } else {
+                promise.fulfill()
                 XCTFail("Error: \(error!)")
             }
         }
