@@ -103,6 +103,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func authenticate( email: String, password: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
+        debugPrint(parameters)
         loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
             if isSuccess {
                 if let result = value as? [String : AnyObject] {

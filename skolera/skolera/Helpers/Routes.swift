@@ -12,6 +12,7 @@ let GET_SCHOOL_LINK = "https://bedopedia-schools.herokuapp.com/schools/get_by_co
 var BASE_URL : String!
 //Login
 func GET_SCHOOL_BY_CODE() -> String{
+    debugPrint(BASE_URL)
   return "\(BASE_URL!)/api/get_school_by_code"
 }
 func SIGN_IN() -> String {

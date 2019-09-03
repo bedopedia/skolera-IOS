@@ -36,4 +36,12 @@ target 'skolera' do
   pod 'IQKeyboardManager'
   #textView with placeholder
   pod 'KMPlaceholderTextView', '~> 1.4.0'
+  target 'skoleraTests' do
+    inherit! :complete
+    pod 'Firebase'
+  end
 end
+
+
+
+

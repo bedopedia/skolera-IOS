@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "54EB92F92015ED1D001DD93F"
-               BuildableName = "skolera.app"
-               BlueprintName = "skolera"
-               ReferencedContainer = "container:skolera.xcodeproj">
+               BlueprintIdentifier = "2EEBE1F8BC4C934C73CA3463690409BC"
+               BuildableName = "Pods_skolera_skoleraTests.framework"
+               BlueprintName = "Pods-skolera-skoleraTests"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A07C839231D1BC70003B4C9"
-               BuildableName = "skoleraTests.xctest"
-               BlueprintName = "skoleraTests"
-               ReferencedContainer = "container:skolera.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "54EB92F92015ED1D001DD93F"
-            BuildableName = "skolera.app"
-            BlueprintName = "skolera"
-            ReferencedContainer = "container:skolera.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -61,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "54EB92F92015ED1D001DD93F"
-            BuildableName = "skolera.app"
-            BlueprintName = "skolera"
-            ReferencedContainer = "container:skolera.xcodeproj">
+            BlueprintIdentifier = "2EEBE1F8BC4C934C73CA3463690409BC"
+            BuildableName = "Pods_skolera_skoleraTests.framework"
+            BlueprintName = "Pods-skolera-skoleraTests"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,16 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "54EB92F92015ED1D001DD93F"
-            BuildableName = "skolera.app"
-            BlueprintName = "skolera"
-            ReferencedContainer = "container:skolera.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
