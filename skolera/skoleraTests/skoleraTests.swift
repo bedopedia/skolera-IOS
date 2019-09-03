@@ -21,6 +21,7 @@ class skoleraTests: XCTestCase {
     let userPassword = "#testpro123S"
     let loginKey = "username" //or email
     let parentId = 416
+    let parentActableId = 150
     let timeOutDuration: TimeInterval = 100
  
     func testGetSchoolUrlApi() {
@@ -203,14 +204,26 @@ class skoleraTests: XCTestCase {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
-        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
-            success = isSuccess
+        let parameters : Parameters = ["parent_id" : parentId]
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "GVBck-FgwcfkkfFhvWFvmQ"
+        headers[TOKEN_TYPE] = "Bearer"
+        headers[UID] = "pnps0002@skolera.com"
+        headers[CLIENT] = "jiNuOidO5KOYQf6eNpwqHQ"
+        let url = String(format: GET_CHILDREN(),"\(parentActableId)")
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
-            if !isSuccess {
-              XCTFail("Error: \(error!)")
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
             }
         }
-        wait(for: [promise], timeout: 5)
+        
+        
+        wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
     
