@@ -200,33 +200,149 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testGetChildrenApi() { //uses getHeaders()
+    func testGetChildrenApi() { 
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
-        let parameters : Parameters = ["parent_id" : parentId]
+        let parameters : Parameters = ["parent_id" : parentActableId]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "GVBck-FgwcfkkfFhvWFvmQ"
+        headers[ACCESS_TOKEN] = "fJmBEelPcvXbk4Hjlm5kLA"
         headers[TOKEN_TYPE] = "Bearer"
         headers[UID] = "pnps0002@skolera.com"
-        headers[CLIENT] = "jiNuOidO5KOYQf6eNpwqHQ"
+        headers[CLIENT] = "1V1C3k-VoCmq5RmfwQIQUA"
         let url = String(format: GET_CHILDREN(),"\(parentActableId)")
+        let usedParameters = ["actable_id", "attendances", "avatar_url", "firstname", "lastname", "id", "level_name", "name", "today_workload_status"]
+        let attendanceParameters = ["comment", "status", "date"]
+        let todayWorkLoadParameters = ["attendance_status", "assignments_count", "quizzes_count", "events_count"]
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
             switch response.result{
             case .success(_):
                 success = true
+                if let result = response.result.value as? [[String: Any]] {
+                    for child in result {
+                        for value in usedParameters {
+                            switch value {
+                            case "firstname":
+                                if let _ = child[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: firstname must be string")
+                                }
+                            case "lastname":
+                                if let _ = child[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: lastname must be string")
+                                }
+                            case "id":
+                                if let _ = child[value] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("Error: id must be int")
+                                }
+                            case "avatar_url":
+                                if let _ = child[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: avatar_url must be string")
+                                }
+                            case "level_name":
+                                if let _ = child[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: level_name must be string")
+                                }
+                            case "name":
+                                if let _ = child[value] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Error: name must be string")
+                                }
+                            case "actable_id":
+                                if let _ = child[value] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("Error: actable_id must be int")
+                                }
+                            case "today_workload_status":
+                                if let workLoad = child[value] as? [String: Any] {
+                                    for param in todayWorkLoadParameters {
+                                        switch param {
+                                        case "assignments_count" :
+                                            if let _ = workLoad[param] as? Int {
+                                                continue
+                                            } else {
+                                                XCTFail("Error: assignments_count must be int")
+                                            }
+                                        case "attendance_status" :
+                                            if let _ = workLoad[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("Error: attendance_status must be string")
+                                            }
+                                        case "quizzes_count" :
+                                            if let _ = workLoad[param] as? Int {
+                                                continue
+                                            } else {
+                                                XCTFail("Error: quizzes_count must be int")
+                                            }
+                                        case "events_count" :
+                                            if let _ = workLoad[param] as? Int {
+                                                continue
+                                            } else {
+                                                XCTFail("Error: events_count must be int")
+                                            }
+                                        default:
+                                            debugPrint("unlisted")
+                                        }
+                                    }
+                                } else {
+                                    XCTFail("Error: actable_type must be string")
+                                }
+                            case "attendances":
+                                if let attendances = child[value] as? [[String: Any]] {
+                                    for attendance in attendances {
+                                        for param in attendanceParameters {
+                                            switch param {
+                                            case "comment":
+                                                if let _ = attendance[param] as? String {
+                                                    continue
+                                                } else {
+                                                    XCTFail("Error: comment must be string")
+                                                }
+                                            case "status":
+                                                if let _ = attendance[param] as? String {
+                                                    continue
+                                                } else {
+                                                    XCTFail("Error: status must be string")
+                                                }
+                                            case "date":
+                                                if let _ = attendance[param] as? Int64 {
+                                                    continue
+                                                } else {
+                                                    XCTFail("Error: date must be Date")
+                                                }
+                                            default:
+                                                debugPrint("unlisted")
+                                            }
+                                        }
+                                    }
+                                }
+                            default:
+                                debugPrint("default")
+                            }
+                        }
+                    }
+                }
             case .failure(let error):
                 success = false
                 XCTFail("Error: \(error)")
             }
         }
-        
-        
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
     
     
-
 }
