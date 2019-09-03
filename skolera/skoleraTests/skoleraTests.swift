@@ -13,9 +13,7 @@ import XCTest
 
 
 class skoleraTests: XCTestCase {
-   
-//    let schoolCodevc = UIStoryboard(name: "Login", bundle: nil)
-//    .instantiateInitialViewController() as? SchoolCodeViewController
+
     let schoolCode = "edu"
     let chosenLocale = "ar"
     let userEmail = "NP0017"
@@ -24,16 +22,8 @@ class skoleraTests: XCTestCase {
     let loginKey = "username" //or email
     let parentId = 416
     let timeOutDuration: TimeInterval = 100
-    
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testSchoolUrlApi() {
+ 
+    func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
         let parameters : [String: Any] = ["code" : schoolCode]
         var possibleError: Error!
@@ -42,16 +32,21 @@ class skoleraTests: XCTestCase {
             success = isSuccess
             promise.fulfill()
             if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
-                    BASE_URL = herukoSchoolInfo.url!
-//                    XCTAssertNotNil(herukoSchoolInfo.url, "no school code available")
-                } else {
-                    XCTFail("no school code available")
+                if let result = value as? [String: Any] {
+                    if let _ = result["code"] as? String {
+                        print("code is a string")
+                    } else {
+                        XCTFail("Error: school code must be string")
+                    }
+                    if let _ = result["url"] as? String {
+                        print("url is a string")
+                    } else {
+                        XCTFail("Error: school url must be string")
+                    }
                 }
             } else {
                 possibleError = error
-                    XCTFail("Error: \(error!)")
+                XCTFail("Error: \(error!)")
             }
         }
         wait(for: [promise], timeout: 5)
