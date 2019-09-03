@@ -64,23 +64,24 @@ class skoleraTests: XCTestCase {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         let parameters : [String: Any] = ["code" : schoolCode]
-        var schoolInfo: SchoolInfo!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         getSchoolInfoAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             success = isSuccess
             promise.fulfill()
             if isSuccess {
                 if let result = value as? [String: Any] {
-                    schoolInfo = SchoolInfo(fromDictionary: result)
+                    if let _ = result["avatar_url"] as? String {
+                        print("avatar_url is a string")
+                    } else {
+                        XCTFail("Error: avatar_url must be string")
+                    }
                 }
-
             } else {
                 XCTFail("Error: \(error!)")
             }
         }
-        wait(for: [promise], timeout: 5)
+        wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
-        XCTAssertNotNil(schoolInfo, "couldn't parse response")
     }
     
     func testSetLocaleAPI() {
