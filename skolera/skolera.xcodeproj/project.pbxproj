@@ -243,6 +243,7 @@
 		8A8A7393222C5BAF00972BE6 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A7392222C5BAF00972BE6 /* Level.swift */; };
 		8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A7394222C5BC300972BE6 /* DailyNote.swift */; };
 		8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A7396222D92F300972BE6 /* WeeklyNote.swift */; };
+		8A8C5DD4231FB41500867187 /* skoleraHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C5DD3231FB41500867187 /* skoleraHomeTests.swift */; };
 		8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */; };
 		8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */; };
 		8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */; };
@@ -558,6 +559,7 @@
 		8A8A7392222C5BAF00972BE6 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		8A8A7394222C5BC300972BE6 /* DailyNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyNote.swift; sourceTree = "<group>"; };
 		8A8A7396222D92F300972BE6 /* WeeklyNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNote.swift; sourceTree = "<group>"; };
+		8A8C5DD3231FB41500867187 /* skoleraHomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skoleraHomeTests.swift; sourceTree = "<group>"; };
 		8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorPresenter.swift; sourceTree = "<group>"; };
@@ -1155,6 +1157,7 @@
 		8A07C83B231D1BC70003B4C9 /* skoleraTests */ = {
 			isa = PBXGroup;
 			children = (
+				8A8C5DD3231FB41500867187 /* skoleraHomeTests.swift */,
 				8A07C83C231D1BC70003B4C9 /* skoleraTests.swift */,
 				8A07C83E231D1BC70003B4C9 /* Info.plist */,
 			);
@@ -2123,6 +2126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A8C5DD4231FB41500867187 /* skoleraHomeTests.swift in Sources */,
 				8A07C83D231D1BC70003B4C9 /* skoleraTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

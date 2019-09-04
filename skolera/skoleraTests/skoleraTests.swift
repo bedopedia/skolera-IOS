@@ -344,5 +344,30 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testSendFcmTokenApi() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        let parameters: Parameters = ["user": ["mobile_device_token": "token"]]
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "9-UBM7EfYDph11jEbCcbTQ"
+        headers[TOKEN_TYPE] = "Bearer"
+        headers[UID] = "pnps0002@skolera.com"
+        headers[CLIENT] = "GawMGXQa9YtTRRQ9TU076g"
+        let url = String(format: EDIT_USER(), "416")
+        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
     
 }
