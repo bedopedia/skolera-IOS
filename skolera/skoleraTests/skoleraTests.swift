@@ -925,7 +925,84 @@ class skoleraTests: XCTestCase {
                             XCTFail("parameter unavailable")
                         }
                     }
-                    
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetCoursesForTeacherAPI() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        let usedParameters = ["id", "name", "course_groups"]
+        let courseGroupParameters = ["id", "name", "course_id"]
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "J3Z1hPMwNB1FIvH_wVCYwA"
+        headers[UID] = "np0017@skolera.com"
+        headers[CLIENT] = "UtTjphQIZAXtFn23ADH37g"
+        let url = String(format: GET_TEACHER_COURSES(), teacherActableId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let teacherCourses = response.result.value as? [[String : AnyObject]] {
+                    for teacherCourse in teacherCourses {
+                        for param in usedParameters {
+                            switch param {
+                            case "id":
+                                if let _ = teacherCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "name":
+                                if let _ = teacherCourse[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("name must be string")
+                                }
+                            case "course_groups":
+                                if let courseGroups = teacherCourse[param] as? [[String: Any]], courseGroups.count > 0 {
+                                    for courseGroup in courseGroups {
+                                        for courseParam in courseGroupParameters {
+                                            switch courseParam {
+                                            case "id":
+                                                if let _ = courseGroup[courseParam] as? Int {
+                                                    continue
+                                                } else {
+                                                    XCTFail("id must be int")
+                                                }
+                                            case "name":
+                                                if let _ = courseGroup[courseParam] as? String {
+                                                    continue
+                                                } else {
+                                                    XCTFail("name must be string")
+                                                }
+                                            case "course_id":
+                                                if let _ = courseGroup[courseParam] as? Int {
+                                                    continue
+                                                } else {
+                                                    XCTFail("course id must be int")
+                                                }
+                                            default:
+                                                XCTFail("unavailable params")
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    XCTFail("course groups empty array")
+                                }
+                            default:
+                                XCTFail("unavailable params")
+                            }
+                        }
+                    }
                 }
             case .failure(let error):
                 success = false
