@@ -21,6 +21,7 @@ class skoleraTests: XCTestCase {
     let userPassword = "#testpro123S"
     let loginKey = "username" //or email
     let parentId = 416
+    let childId = 150
     let parentActableId = 150
     let childActableId = 150
     let timeOutDuration: TimeInterval = 100
@@ -426,6 +427,60 @@ class skoleraTests: XCTestCase {
             } else {
                 XCTFail("invalid response")
             }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testgetCourseGroupsAPI() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "AN4iNyuo9B8JB0h3ZV_9YQ"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "Mb63oChX2V_7A2EhSJD5tw"
+        let usedParameters = ["course_id", "id", "name"]
+        let url = String(format: GET_COURSE_GROUPS(), childId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let courseGroups = response.result.value as? [[String: Any]] {
+                    for courseGroup in courseGroups {
+                        for param in usedParameters {
+                            switch param {
+                            case "course_id":
+                                if let _ = courseGroup[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("course id must be int")
+                                }
+                            case "id":
+                                if let _ = courseGroup[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "name":
+                                if let _ = courseGroup[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("course name must be String")
+                                }
+                            default:
+                                debugPrint("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("Invalid response")
+                }
             case .failure(let error):
                 success = false
                 XCTFail("Error: \(error)")
