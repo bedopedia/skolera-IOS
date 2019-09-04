@@ -24,6 +24,7 @@ class skoleraTests: XCTestCase {
     let childId = 150
     let parentActableId = 150
     let childActableId = 150
+    let teacherActableId = 41
     let timeOutDuration: TimeInterval = 100
  
     func testGetSchoolUrlApi() {
@@ -741,13 +742,86 @@ class skoleraTests: XCTestCase {
                             }
                         }
                     }
-                    
                 } else {
                     XCTFail("Empty array")
                 }
             case .failure(let error):
                 success = false
                 XCTFail("Errror:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetTeacherTimeTableAPI() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        let usedParameters = ["course_name", "from", "to", "day"]
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "0RK_bUuUMq6usi68w50a8Q"
+        headers[UID] = "np0017@skolera.com"
+        headers[CLIENT] = "U4klzGrRDOTx5I1aG9AlRg"
+        let url = String(format: GET_TEACHER_TIME_TABLE(), teacherActableId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [[String: Any]], result.count > 0 {
+                    for timeSlot in result {
+                        for param in usedParameters {
+                            switch param {
+                            case "course_name":
+                                if let _ = timeSlot[param] as? String {
+                                    continue
+                                } else{
+                                    XCTFail("course name must be string")
+                                }
+                            case "day":
+                                if let _ = timeSlot[param] as? String {
+                                    continue
+                                } else{
+                                    XCTFail("day must be string")
+                                }
+                            case "from":
+                                if let from = timeSlot[param] as? String {
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.locale = Locale(identifier: "en")
+                                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                                    if let _ = dateFormatter.date(from: (from)) {
+                                        continue
+                                    } else {
+                                        XCTFail("from must be a date object")
+                                    }
+                                } else{
+                                    XCTFail("from must be string")
+                                }
+                            case "to":
+                                if let to = timeSlot[param] as? String {
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.locale = Locale(identifier: "en")
+                                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                                    if let _ = dateFormatter.date(from: (to)) {
+                                        continue
+                                    } else {
+                                        XCTFail("to must be a date object")
+                                    }
+                                } else{
+                                    XCTFail("to must be string")
+                                }
+                            default:
+                                debugPrint("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("Empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
             }
         }
         wait(for: [promise], timeout: timeOutDuration)
