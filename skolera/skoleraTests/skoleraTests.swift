@@ -828,4 +828,136 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testGetNotificationsAPI() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        let page = 1
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "IdVEchCBEccjdfopf2AJFQ"
+        headers[TOKEN_TYPE] = "Bearer"
+        headers[UID] = "pnps0002@skolera.com"
+        headers[CLIENT] = "zNy4oaugPTIPVYPkE6oNcQ"
+        let usedParams = ["meta", "notifications"]
+        let metaParams = ["current_page", "total_pages"]
+        let notificationParams = ["additional_params", "created_at", "message", "text"]
+        let url = String(format: GET_NOTIFCATIONS(),"\(parentId)", page)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: Any] {
+                    for usedParam in usedParams {
+                        switch usedParam {
+                        case "meta":
+                            if let meta = result[usedParam] as? [String: Any] {
+                                for param in metaParams {
+                                    switch param {
+                                    case "current_page":
+                                        if let _ = meta[param] as? Int {
+                                            
+                                        } else {
+                                            XCTFail("current_page must be int")
+                                        }
+                                    case "total_pages":
+                                        if let _ = meta[param] as? Int {
+                                            
+                                        } else {
+                                            XCTFail("total_pages must be int")
+                                        }
+                                    default:
+                                        debugPrint("unlisted")
+                                    }
+                                }
+                            } else {
+                                XCTFail("meta data not availabele")
+                            }
+                        case  "notifications":
+                            if let notifications = result[usedParam] as? [[String: Any]], notifications.count > 0 {
+                                for notification in notifications {
+                                    for param in notificationParams {
+                                        switch param { // ["additional_params", "created_at", "message", "text"]
+                                        case "message":
+                                            if let _ = notification[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("message must be string")
+                                            }
+                                        case "text":
+                                            if let _ = notification[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("text must be string")
+                                            }
+                                        case "created_at":
+                                            if let at = notification[param] as? String {
+                                                let dateFormatter = DateFormatter()
+                                                dateFormatter.locale = Locale(identifier: "en")
+                                                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                                                if let _ = dateFormatter.date(from: (at)) {
+                                                    continue
+                                                } else {
+                                                    XCTFail("created_at must be a date object")
+                                                }
+                                            } else {
+                                                XCTFail("created_at must be string")
+                                            }
+                                        case "additional_params":
+                                            if let additionalParams = notification[param] as? [String: Any] {
+                                                if let studentNames = additionalParams["studentNames"] as? [String], studentNames.count > 0 {
+                                                    continue
+                                                } else {
+                                                    XCTFail("no student names or names are not strings")
+                                                }
+                                            } else {
+                                                XCTFail("additional params are unavailable ")
+                                            }
+                                        default:
+                                            XCTFail("unavailable param")
+                                        }
+                                    }
+                                }
+                            } else {
+                                XCTFail("parameter unavailable")
+                            }
+                        default:
+                            XCTFail("parameter unavailable")
+                        }
+                    }
+                    
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+
+    
+//    func testSetNotificationSeenAPI() {
+//        let promise = expectation(description: "Completion handler invoked")
+//        var success: Bool!
+//        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+//        var headers = [String : String]()
+//        headers[ACCESS_TOKEN] = "fJmBEelPcvXbk4Hjlm5kLA"
+//        headers[TOKEN_TYPE] = "Bearer"
+//        headers[UID] = "pnps0002@skolera.com"
+//        headers[CLIENT] = "1V1C3k-VoCmq5RmfwQIQUA"
+//        let url = String(format: SET_SEEN_NOTIFICATIONS(), parentId)
+//        Alamofire.request(url, method: .post, parameters: nil, headers: headers).validate().responseJSON { response in
+//            promise.fulfill()
+//            switch response.result{
+//            case .success(_):
+//                
+//            case .failure(let error):
+//                
+//            }
+//        }
+//        wait(for: [promise], timeout: timeOutDuration)
+//        XCTAssertTrue(success)
+//    }
+    
 }
