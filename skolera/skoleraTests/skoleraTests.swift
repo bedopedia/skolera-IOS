@@ -222,6 +222,9 @@ class skoleraTests: XCTestCase {
             case .success(_):
                 success = true
                 if let result = response.result.value as? [[String: Any]] {
+                    if result.isEmpty {
+                        XCTFail("Empty Array")
+                    }
                     for child in result {
                         for value in usedParameters {
                             switch value {
@@ -304,6 +307,9 @@ class skoleraTests: XCTestCase {
                                 }
                             case "attendances":
                                 if let attendances = child[value] as? [[String: Any]] {
+                                    if attendances.isEmpty {
+                                        XCTFail("Empty array")
+                                    }
                                     for attendance in attendances {
                                         for param in attendanceParameters {
                                             switch param {
@@ -391,36 +397,41 @@ class skoleraTests: XCTestCase {
                 success = true
                 if let res = response.result.value as? [String : AnyObject] {
                     if let result = res["courses_grades"] as? [[String: AnyObject]] {
-                        for courseGrade in result {
-                            for param in usedParameters {
-                                switch param {
-                                case "name":
-                                    if let _ = courseGrade[param] as? String {
-                                        continue
-                                    } else {
-                                        XCTFail("Error: name must be string")
-                                    }
-                                case "course_id":
-                                    if let _ = courseGrade[param] as? Int {
-                                        continue
-                                    } else {
-                                        XCTFail("Error: course id must be int")
-                                    }
-                                case "grade":
-                                    if let grade = courseGrade["grade"] as? [String: Any] {
-                                        if let _ = grade["letter"] as? String {
+                        if result.isEmpty {
+                            XCTFail("empty array")
+                        } else {
+                            for courseGrade in result {
+                                for param in usedParameters {
+                                    switch param {
+                                    case "name":
+                                        if let _ = courseGrade[param] as? String {
                                             continue
                                         } else {
-                                            XCTFail("Error: grade letter must be string")
+                                            XCTFail("Error: name must be string")
                                         }
-                                    } else {
-                                        XCTFail("grade object invalid format")
+                                    case "course_id":
+                                        if let _ = courseGrade[param] as? Int {
+                                            continue
+                                        } else {
+                                            XCTFail("Error: course id must be int")
+                                        }
+                                    case "grade":
+                                        if let grade = courseGrade["grade"] as? [String: Any] {
+                                            if let _ = grade["letter"] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("Error: grade letter must be string")
+                                            }
+                                        } else {
+                                            XCTFail("grade object invalid format")
+                                        }
+                                    default:
+                                        debugPrint("default")
                                     }
-                                default:
-                                    debugPrint("default")
                                 }
                             }
                         }
+                        
                     } else {
                         XCTFail("invalid courses grades format")
                     }
@@ -441,9 +452,9 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "AN4iNyuo9B8JB0h3ZV_9YQ"
+        headers[ACCESS_TOKEN] = "UwcYggO_GgXjCaU_yBF38Q"
         headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "Mb63oChX2V_7A2EhSJD5tw"
+        headers[CLIENT] = "7bJeDuRTSd170FxBiyCBsw"
         let usedParameters = ["course_id", "id", "name"]
         let url = String(format: GET_COURSE_GROUPS(), childId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -452,6 +463,9 @@ class skoleraTests: XCTestCase {
             case .success(_):
                 success = true
                 if let courseGroups = response.result.value as? [[String: Any]] {
+                    if courseGroups.isEmpty {
+                        XCTFail("Empty array")
+                    }
                     for courseGroup in courseGroups {
                         for param in usedParameters {
                             switch param {
@@ -542,4 +556,125 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testGetWeeklyReportsAPI() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "qZHGOhhUwBjj1qPtZ7cbZQ"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "zRrNWOJOaUw5TyGnWyCbvw"
+        let formatter: DateFormatter = DateFormatter()
+        formatter.dateFormat = "d/M/y"
+        formatter.locale = Locale(identifier: "en")
+        let url = String(format: GET_WEEKLY_PLANNER(), formatter.string(from: Date()))
+        let dailyNotesParameters = ["activities", "class_work", "date", "homework", "title"]
+        let weeklyNotesParameters = ["description", "image_url", "title"]
+        
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { (response) in
+            promise.fulfill()
+            switch response.result {
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String : AnyObject] {
+                    if let weaklyPlans = result["weekly_plans"] as? [[String: Any]] {
+                        if weaklyPlans.isEmpty {
+                            XCTFail("empty weekly plans array ")
+                        }
+                        for weaklyPlan in weaklyPlans {
+                            if let dailyNotes = weaklyPlan["daily_notes"] as? [[String: Any]] {
+                                if dailyNotes.isEmpty {
+                                    XCTFail("Empty daily notes array")
+                                }
+                                for dailyNote in dailyNotes {
+                                    for param in dailyNotesParameters {
+                                        switch param {
+                                        case "activities":
+                                            if let _ = dailyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("activities must be string")
+                                            }
+                                        case "class_work":
+                                            if let _ = dailyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("class_work must be string")
+                                            }
+                                        case "date":
+                                            if let _ = dailyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("date must be string")
+                                            }
+                                        case "homework":
+                                            if let _ = dailyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("homework must be string")
+                                            }
+                                        case "title":
+                                            if let _ = dailyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("title must be string")
+                                            }
+                                        default:
+                                            debugPrint("unlisted")
+                                        }
+                                    }
+                                }
+                                
+                            } else {
+                                XCTFail("invalid json")
+                            }
+                            if let weaklyNotes = weaklyPlan["weekly_notes"] as? [[String: Any]] {
+                                if weaklyNotes.isEmpty {
+                                    XCTFail("Empty weekly notes array")
+                                }
+                                for weeklyNote in weaklyNotes {
+                                    for param in weeklyNotesParameters {
+                                        switch param {
+                                        case "description":
+                                            if let _ = weeklyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("description must be string")
+                                            }
+                                        case "image_url":
+                                            if let _ = weeklyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("image_url must be string")
+                                            }
+                                        case "title":
+                                            if let _ = weeklyNote[param] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("title must be string")
+                                            }
+                                        default:
+                                            debugPrint("unlisted")
+                                        }
+                                    }
+                                }
+                            } else {
+                                XCTFail("Invalid response")
+                            }
+                        }
+                    } else {
+                        XCTFail("Invalid response")
+                    }
+                } else {
+                    XCTFail("Invalid response")
+                }
+            case .failure(let error):
+                success = false
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
 }
