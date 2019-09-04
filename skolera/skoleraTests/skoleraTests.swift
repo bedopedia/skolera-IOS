@@ -22,6 +22,7 @@ class skoleraTests: XCTestCase {
     let loginKey = "username" //or email
     let parentId = 416
     let parentActableId = 150
+    let childActableId = 150
     let timeOutDuration: TimeInterval = 100
  
     func testGetSchoolUrlApi() {
@@ -298,7 +299,7 @@ class skoleraTests: XCTestCase {
                                         }
                                     }
                                 } else {
-                                    XCTFail("Error: actable_type must be string")
+                                    XCTFail("Error: invalid response")
                                 }
                             case "attendances":
                                 if let attendances = child[value] as? [[String: Any]] {
@@ -328,6 +329,8 @@ class skoleraTests: XCTestCase {
                                             }
                                         }
                                     }
+                                } else {
+                                    XCTFail("Error: invalid response")
                                 }
                             default:
                                 debugPrint("default")
@@ -369,5 +372,66 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    
+    func testGetGradesApi() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "ZU9_39pvtY2lioHhC1QCFw"
+//        headers[TOKEN_TYPE] = "Bearer"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "WNcOpe-9doCWggxzwsyVLA"
+        let usedParameters = ["name", "grade", "course_id"]
+        let url = String(format: GET_GRADES(), childActableId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let res = response.result.value as? [String : AnyObject] {
+                    if let result = res["courses_grades"] as? [[String: AnyObject]] {
+                        for courseGrade in result {
+                            for param in usedParameters {
+                                switch param {
+                                case "name":
+                                    if let _ = courseGrade[param] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("Error: name must be string")
+                                    }
+                                case "course_id":
+                                    if let _ = courseGrade[param] as? Int {
+                                        continue
+                                    } else {
+                                        XCTFail("Error: course id must be int")
+                                    }
+                                case "grade":
+                                    if let grade = courseGrade["grade"] as? [String: Any] {
+                                        if let _ = grade["letter"] as? String {
+                                            continue
+                                        } else {
+                                            XCTFail("Error: grade letter must be string")
+                                        }
+                                    } else {
+                                        XCTFail("grade object invalid format")
+                                    }
+                                default:
+                                    debugPrint("default")
+                                }
+                            }
+                        }
+                    } else {
+                        XCTFail("invalid courses grades format")
+                    }
+            } else {
+                XCTFail("invalid response")
+            }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 }
