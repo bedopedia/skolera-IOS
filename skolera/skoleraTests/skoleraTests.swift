@@ -489,4 +489,57 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testGetBehaviourNotesCountAPI() {
+        let parameters : Parameters = ["student_id" : childActableId,"user_type" : "Parents"]
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "UwcYggO_GgXjCaU_yBF38Q"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "7bJeDuRTSd170FxBiyCBsw"
+        let usedParams = ["good", "bad", "other"]
+        let url = GET_BEHAVIOR_NOTES_COUNT()
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: Any] {
+                    for param in usedParams {
+                        switch param {
+                        case "good":
+                            if let _ = result[param] as? Int {
+                                continue
+                            } else {
+                                XCTFail("good count must be int")
+                            }
+                        case "bad":
+                            if let _ = result[param] as? Int {
+                                continue
+                            } else {
+                                XCTFail("bad count must be int")
+                            }
+                        case "other":
+                            if let _ = result[param] as? Int {
+                                continue
+                            } else {
+                                XCTFail("other count must be int")
+                            }
+                        default:
+                            debugPrint("unlisted")
+                        }
+                    }
+                } else {
+                    XCTFail("invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 }
