@@ -1985,6 +1985,134 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testGetThreads() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "oZyOiSd1QEL_RbGsylXBUw"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "cHa9tgPMXB8lZwFQ-8EFzg"
+        let threadParams = ["course_name", "id", "last_added_date", "messages", "name", "others_avatars", "others_names"]
+        let messagesParams = ["body", "created_at", "ext" ,"attachment_url" ,"user"]
+        let userParams = ["id", "name"]
+        let url = String(format: GET_THREADS())
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: AnyObject] {
+                    if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
+                        for thread in threadsJson {
+                            for threadParam in threadParams {
+                                switch threadParam {
+                                case "course_name":
+//                                    if let _ = thread[threadParam] as? String{
+//                                        continue
+//                                    } else {
+//                                        XCTFail("invalid response")
+//                                    }
+                                    continue
+                                case "id":
+                                    if let _ = thread[threadParam] as? Int{
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "last_added_date":
+                                    if let _ = thread[threadParam] as? String{
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "messages":
+                                    if let messages = thread[threadParam] as? [[String: Any]] {
+                                        for message in messages {
+                                            for messageParam in messagesParams {
+                                                switch messageParam {
+                                                case "body":
+                                                    if let _ = message[messageParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("invalid response")
+                                                    }
+                                                case "created_at":
+                                                    if let _ = message[messageParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("invalid response")
+                                                    }
+                                                case "ext":
+                                                    continue
+                                                case "attachment_url":
+                                                    continue
+                                                case "user":
+                                                    if let user = message[messageParam] as? [String: Any] {
+                                                        for userParam in userParams {
+                                                            switch userParam {
+                                                            case "id":
+                                                                if let _ = user[userParam] as? Int {
+                                                                    continue
+                                                                } else {
+                                                                    XCTFail("invalid response")
+                                                                }
+                                                            case "name":
+                                                                if let _ = user[userParam] as? String {
+                                                                    continue
+                                                                } else {
+                                                                    XCTFail("invalid response")
+                                                                }
+                                                            default:
+                                                                XCTFail("unlisted")
+                                                            }
+                                                        }
+                                                    } else {
+                                                        XCTFail("invalid response")
+                                                    }
+                                                default:
+                                                    XCTFail("unlisted")
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "name":
+                                    if let _ = thread[threadParam] as? String{
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "others_avatars":
+                                    if let _ = thread[threadParam] as? [String]{
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "others_names":
+                                    if let _ = thread[threadParam] as? String{
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                default:
+                                    XCTFail("unlisted")
+                                
+                                }
+                            }
+                        }
+                    }
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
