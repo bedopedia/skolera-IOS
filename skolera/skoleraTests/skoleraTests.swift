@@ -27,6 +27,7 @@ class skoleraTests: XCTestCase {
     let teacherActableId = 41
     let timeOutDuration: TimeInterval = 100
     let userId = 341
+    let courseId = 68
  
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
@@ -1277,6 +1278,165 @@ class skoleraTests: XCTestCase {
                     }
                     
                 }
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetPostsForCourse() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "TilVvOvSl19OII_KPt-XtA"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "v-zyetppupVKZywVtF_e1g"
+//        let usedParams = ["posts", "meta"]
+        let metaParams = ["current_page", "total_pages"]
+        let postParams = ["id", "content", "updated_at", "comments", "uploaded_files"]
+        let commentsParams = ["content", "updated_at", "owner"]
+        let uploadedFileParams = ["name", "updated_at", "extension", "url"]
+//        let ownerParams = ["name_with_title"]
+        let url = String(format: GET_STUDENT_POSTS(), courseId, 1)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: Any] {
+                    if let posts = result["posts"] as? [[String: Any]], posts.count > 0 {
+                        for post in posts {
+                            for detail in postParams {
+                                switch detail {
+                                case "id":
+                                    if let _ = post[detail] as? Int {
+                                        continue
+                                    } else {
+                                        XCTFail("id must be int")
+                                    }
+                                case "content":
+                                    if let _ = post[detail] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("content must be string")
+                                    }
+                                case "updated_at":
+                                    if let _ = post[detail] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("updated_at must be string")
+                                    }
+                                case "uploaded_files":
+                                    if let uploadedFiles = post[detail] as? [[String: Any]] {
+                                        for file in uploadedFiles {
+                                            for fileParam in uploadedFileParams {
+                                                switch fileParam {
+                                                case "name":
+                                                    if let _ = file[fileParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("name must be string")
+                                                    }
+                                                case "updated_at":
+                                                    if let _ = file[fileParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("updated_at must be string")
+                                                    }
+                                                case "extension":
+                                                    if let _ = file[fileParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("extension must be string")
+                                                    }
+                                                case "url":
+                                                    if let _ = file[fileParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("url must be string")
+                                                    }
+                                                default:
+                                                    XCTFail("unlisted")
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        debugPrint("no uploaded_files")
+                                    }
+                                case "comments":
+                                    if let comments = post[detail] as? [[String: Any]] {
+                                        for comment in comments {
+                                            for commentParam in commentsParams {
+                                                switch commentParam {
+                                                case "content":
+                                                    if let _ = comment[commentParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("content must be string")
+                                                    }
+                                                case "updated_at":
+                                                    if let _ = comment[commentParam] as? String {
+                                                        continue
+                                                    } else {
+                                                        XCTFail("updated_at must be string")
+                                                    }
+                                                case "owner":
+                                                    if let owner = comment[commentParam] as? [String: Any] {
+                                                        if let _ = owner["name_with_title"] as? String {
+                                                            continue
+                                                        } else {
+                                                            XCTFail("owner must be string")
+                                                        }
+                                                    } else {
+                                                        XCTFail("no owner")
+                                                    }
+                                                default:
+                                                    XCTFail("unlisted")
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                      XCTFail("empty") //debugPrint
+                                    }
+                                    
+                                default:
+                                    XCTFail("unlisted")
+                                }
+                            }
+                        }
+                    } else {
+                        XCTFail("invalid response")
+                    }
+                    if let metaData = result["meta"] as? [String: Any] {
+                        for param in metaParams {
+                            switch param {
+                            case "current_page":
+                                if let _ = metaData[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("current_page must be int")
+                                }
+                            case "total_pages":
+                                if let _ = metaData[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("total_pages must be int")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    } else {
+                        XCTFail("Empty meta data")
+                    }
+                } else {
+                    XCTFail("invalid response")
+                }
+                
             case .failure(let error):
                 success = false
                 XCTFail("Error:\(error)")
