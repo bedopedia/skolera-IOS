@@ -1501,6 +1501,39 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testCreatePost() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        let parameters : Parameters = ["post": ["content": "content", "owner_id": userId, "postable_id": courseId, "postable_type": "CourseGroup","video_preview": "","videoURL": ""]]
+//        let postParams = ["id"]
+        let url = CREATE_POST()
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                if let post = response.result.value as? [String: Any]{
+                    if let _ = post["id"] as? Int{
+                        success = true
+                    } else {
+                        XCTFail("id must be string")
+                    }
+                } else {
+                    XCTFail("empty reponse")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
