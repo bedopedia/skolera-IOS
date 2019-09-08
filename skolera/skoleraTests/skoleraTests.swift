@@ -1900,6 +1900,91 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testGetThreadsForCourseGroup() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "sjnFnaesZHMBI33iYthWUg"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "nSUdrnlqrIaIs5TIt2WO_g"
+        let parameters : Parameters = ["source" : "home"]
+        let subjectParameters = ["course", "course_id", "teachers"]
+        let teacherParameters = ["user_id", "firstname", "lastname"]
+        let url = String(format: GET_THREADS_COURSE_GROUPS(),childActableId)
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [[String : AnyObject]] {
+                    for subject in result {
+                        for subjectParam in subjectParameters {
+                            switch subjectParam {
+                            case "course":
+                                if let course = subject[subjectParam] as? [String: Any] {
+                                    if let _ = course["name"] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "course_id":
+                                if let _ = subject[subjectParam] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "teachers":
+                                if let teachers = subject[subjectParam] as? [[String: Any]] {
+                                    for teacher in teachers {
+                                        for teacherParam in teacherParameters {
+                                            switch teacherParam {
+                                            case "user_id":
+                                                if let _ = teacher[teacherParam] as? Int {
+                                                    continue
+                                                } else {
+                                                    XCTFail("invalid response")
+                                                }
+                                            case "firstname":
+                                                if let _ = teacher[teacherParam] as? String {
+                                                    continue
+                                                } else {
+                                                    XCTFail("invalid response")
+                                                }
+                                            case "lastname":
+                                                if let _ = teacher[teacherParam] as? String {
+                                                    continue
+                                                } else {
+                                                    XCTFail("invalid response")
+                                                }
+                                            default:
+                                                XCTFail("invalid response")
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            default:
+                                XCTFail("unlisted ")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("Invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
