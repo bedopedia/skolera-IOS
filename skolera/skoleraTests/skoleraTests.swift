@@ -28,7 +28,7 @@ class skoleraTests: XCTestCase {
     let timeOutDuration: TimeInterval = 100
     let userId = 341
     let courseId = 68
- 
+    let postId = 187
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
         let parameters : [String: Any] = ["code" : schoolCode]
@@ -1437,6 +1437,61 @@ class skoleraTests: XCTestCase {
                     XCTFail("invalid response")
                 }
                 
+            case .failure(let error):
+                success = false
+                XCTFail("Error:\(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testAddPostReply() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        let commentsParams = ["content", "updated_at", "owner"]
+        let url = COMMENTS_URL()
+        let parameters : Parameters = ["comment": ["content": "text", "owner_id": userId, "post_id": postId]] //post id is variable
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let comment = response.result.value as? [String: Any] {
+                    for commentParam in commentsParams {
+                        switch commentParam {
+                        case "content":
+                            if let _ = comment[commentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("content must be string")
+                            }
+                        case "updated_at":
+                            if let _ = comment[commentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("updated_at must be string")
+                            }
+                        case "owner":
+                            if let owner = comment[commentParam] as? [String: Any] {
+                                if let _ = owner["name_with_title"] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("owner must be string")
+                                }
+                            } else {
+                                XCTFail("no owner")
+                            }
+                        default:
+                            XCTFail("unlisted")
+                        }
+                    }
+                }
             case .failure(let error):
                 success = false
                 XCTFail("Error:\(error)")
