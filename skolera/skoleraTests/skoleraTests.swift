@@ -28,6 +28,7 @@ class skoleraTests: XCTestCase {
     let timeOutDuration: TimeInterval = 100
     let userId = 341
     let courseId = 68
+    let courseGroupId = 68
     let postId = 187
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
@@ -1534,6 +1535,105 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testUploadFileForPost() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        let url = UPLOAD_FILE_FOR_POST()
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append("image".data(using:.utf8)!, withName: "name")
+                let imageData = #imageLiteral(resourceName: "absentSelected")
+                let data = UIImagePNGRepresentation(imageData)
+                multipartFormData.append(data!, withName: "file[file]" )
+                multipartFormData.append(String(self.postId).data(using: .utf8)!, withName: "post_ids[]")
+        },
+            to: url,
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                promise.fulfill()
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    success = true
+                    upload.uploadProgress { progress in
+                        debugPrint(progress.fractionCompleted)
+                    }
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                        if (response.response != nil) {
+                            let status = response.response!.statusCode
+                            switch status {
+                            case 200...299 :
+                                if response.data != nil {
+                                   success = true
+                                }
+                            default :
+                                if response.data != nil {
+                                    success = false
+                                    XCTFail("Error")
+                                }
+                            }
+                        }
+                    }
+                case .failure(let encodingError):
+                    success = false
+                    XCTFail("Error: \(encodingError)")
+                    
+                }
+            }
+            )
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetGradeForStudent() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "vZyxZo-7PuycQ9khYX1Vgg"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "_Hko9iaar-5ziJwIXlZ2Ng"
+        let parameters : Parameters? = ["student_id" : childActableId]
+        let url = String(format: GET_STUDENT_GRADE_AVG(),courseId, courseGroupId)
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String : AnyObject] {
+                    if let _ = result["assignments_averages"] as? [String: Double] {
+                        debugPrint("success")
+                    } else {
+                        XCTFail("invalid response")
+                    }
+                    if let _ = result["quizzes_averages"] as? [String: Double] {
+                        debugPrint("success")
+                    } else {
+                        XCTFail("invalid response")
+                    }
+                    if let _ = result["grades_averages"] as? [String: Double] {
+                        debugPrint("success")
+                    } else {
+                        XCTFail("invalid response")
+                    }
+                } else {
+                    XCTFail("invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+                
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
