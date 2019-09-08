@@ -143,7 +143,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     let assignmentsDic = studentDic["assignments"] as! [String: AnyObject]
                     var assignments: [Assignment] = []
                     // parse assignments
-                    for assignJson in assignmentsDic {
+                    for assignJson in assignmentsDic { //for every key-value
                         var assignDic = assignJson.value as! [String: AnyObject]
                         debugPrint(assignDic)
                         assignments.append(Assignment(id: assignDic["id"] as! Int,

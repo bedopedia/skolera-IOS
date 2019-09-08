@@ -1634,6 +1634,272 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testGetStudentGradingPeriods() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "TubPGoNKnPZYBve2wpW7kg"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "VRX0R2mdLFATtUPdELQmdA"
+        let parameters : Parameters? = ["course_id" : courseId]
+        let usedParameters = ["end_date", "start_date", "name", "id"]
+        let url = String(format: GET_COURSE_GRADING_PERIODS())
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [[String : AnyObject]] {
+                    for value in result {
+                        for param in usedParameters {
+                            switch param {
+                            case "end_date":
+                                if let _ = value[param] as? String {
+                                    continue
+                                } else {
+                                   XCTFail("end_date must be string")
+                                }
+                            case "start_date":
+                                if let _ = value[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("start_date must be string")
+                                }
+                            case "name":
+                                if let _ = value[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("name must be string")
+                                }
+                            case "id":
+                                if let _ = value[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                    
+                } else {
+                    XCTFail("Invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error.localizedDescription)")
+               
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetStudentGradebook() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "LspFPoS9ILPWkxF6KcZscQ"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "CgsPC2mR7mZICDX7cjPNwg"
+        let assignmentParams = ["id", "name", "total", "grade", "grade_view", "feedback", "end_date", "hide_grade"]
+        let quizParams = ["id", "name", "total", "grade", "feedback", "end_date", "hide_grade"]
+        let parameters : Parameters? = ["student_id" : childActableId]
+        let url = String(format: GET_STUDENT_GRADE_BOOK(), courseId, courseGroupId)
+        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+                
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String : AnyObject] {
+                    let studentDic = (result["students"] as! [[String: AnyObject]])[0]
+                    let assignmentsDic = studentDic["assignments"] as! [String: AnyObject]
+                    // parse assignments
+                    for assignJson in assignmentsDic {
+                        var assignDic = assignJson.value as! [String: AnyObject]
+                        for param in assignmentParams {
+                            switch param {
+                            case "id":
+                                if let _ = assignDic["id"] as? Int {
+                                    
+                                } else {
+                                   XCTFail("id is invalid")
+                                }
+                            case "name":
+                                if let _ = assignDic["name"] as? String {
+                                    
+                                } else {
+                                    XCTFail("name is invalid")
+                                }
+                            case "total":
+                                if let _ = assignDic["total"] as? Double {
+                                    
+                                } else {
+                                    XCTFail("total is invalid")
+                                }
+                            case "grade_view":
+                                if let _ = assignDic["grade_view"] as? Double {
+                                    continue
+                                } else {
+                                    if let _ = assignDic["grade_view"] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("grade view is invalid")
+                                    }
+                                }
+                            case "grade":
+                                if let _ = assignDic["grade"] as? Double {
+                                   continue
+                                } else {
+                                    XCTFail("grade's invalid")
+                                }
+                            case "feedback":
+                                continue
+                            case "end_date":
+                                if let _ = assignDic["end_date"] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("end_date invalid")
+                                }
+                            case "hide_grade":
+                                if let _ = assignDic["hide_grade"] as? Bool {
+                                    continue
+                                } else {
+                                    XCTFail("hide_grade invalid")
+                                }
+                            default:
+                                XCTFail("invalid response")
+                            }
+                        }
+                    }
+                    // parse quizzes
+                    let quizzesJson = studentDic["quizzes"] as! [String: AnyObject]
+                    for quizJson in quizzesJson {
+                        var quizDic = quizJson.value as! [String: AnyObject]
+                        for param in quizParams {
+                            switch param {
+                            case "id":
+                                if let _ = quizDic[param] as? Int {
+                                   continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "name":
+                                if let _ = quizDic[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "total":
+                                if let _ = quizDic[param] as? Double {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "grade":
+                                if let _ = quizDic[param] as? Double {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "feedback":
+//                                if let _ = quizDic[param] as? String {
+//                                    continue
+//                                } else {
+//                                    XCTFail("feedback must be feedback")
+//                                }
+                                continue
+                            case "end_date":
+                                if let _ = quizDic[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "hide_grade":
+                                if let _ = quizDic[param] as? Bool {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                   
+                    
+                    // parse gradeItems
+                    let gradeItemsJson = studentDic["grade_items"] as! [String: AnyObject]
+                    for gradeItemJson in gradeItemsJson {
+                        debugPrint(gradeItemsJson)
+                        var gradeItemDic = gradeItemJson.value as! [String: AnyObject]
+                        let gradeParameters = ["id", "name", "total", "grade", "feedback", "grading_period_id", "hide_grade" ]
+                        for param in gradeParameters {
+                            switch param {
+                            case "id":
+                                if let _ = gradeItemDic[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("id must be int")
+                                }
+                            case "name":
+                                if let _ = gradeItemDic[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("name must be string")
+                                }
+                            case "total":
+                                if let _ = gradeItemDic[param] as? Double {
+                                    continue
+                                } else {
+                                    XCTFail("total must be double")
+                                }
+                            case "grade":
+                                if let _ = gradeItemDic[param] as? Double {
+                                    continue
+                                } else {
+                                    XCTFail("grade must be double")
+                                }
+                            case "feedback":
+                                if let _ = gradeItemDic[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("feedback must be string")
+                                }
+                            case "grading_period_id":
+                                if let _ = gradeItemDic[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("grading_period_id must be int")
+                                }
+                            case "hide_grade":
+                                if let _ = gradeItemDic[param] as? Bool {
+                                    continue
+                                } else {
+                                    XCTFail("hide_grade must be boolean")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                        
+                    }
+                } else {
+                    XCTFail("invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
