@@ -104,6 +104,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             case .success(_):
                 if let result = response.result.value as? [String : AnyObject]
                 {
+                    //can't be empty
                     self.assignAvg = (result["assignments_averages"] as! [String: Double])
                     self.quizAvg = (result["quizzes_averages"] as! [String: Double])
                     self.gradeItemAvg = (result["grades_averages"] as! [String: Double])
@@ -222,6 +223,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     private func getCourseGradingPeriods(){
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = ["course_id" : grade.courseId]
+        debugPrint(grade.courseId)
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_COURSE_GRADING_PERIODS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in

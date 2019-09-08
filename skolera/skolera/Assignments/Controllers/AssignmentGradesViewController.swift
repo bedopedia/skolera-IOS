@@ -59,6 +59,7 @@ class AssignmentGradesViewController: UIViewController {
                                       "student_status": "present",
                                       "course_id": courseId
         ]
+        debugPrint(parameters)
         submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if feedback.isEmpty {
@@ -83,6 +84,7 @@ class AssignmentGradesViewController: UIViewController {
             "to_id": studentId,
             "to_type": "Student"
         ]]
+        debugPrint(parameters)
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {

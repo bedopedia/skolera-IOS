@@ -84,6 +84,7 @@ class QuizzesGradesViewController: UIViewController {
             "to_id": studentId,
             "to_type": "Student"
             ]]
+        debugPrint(parameters)
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {

@@ -28,6 +28,7 @@ func getPostsForCourseApi(page: Int, courseId: Int, completion: @escaping ((Bool
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
+            debugPrint(response.result.value)
            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
            completion(false, response.response?.statusCode ?? 0, nil, error)
@@ -67,7 +68,6 @@ func uploadFileApi(file: URL, postId: Int, fileName: String, completion: @escapi
     let url = UPLOAD_FILE_FOR_POST()
     Alamofire.upload(
         multipartFormData: { multipartFormData in
-            
             multipartFormData.append(fileName.data(using:.utf8)!, withName: "name")
             multipartFormData.append(file, withName: "file[file]" )
             multipartFormData.append(String(postId).data(using: .utf8)!, withName: "post_ids[]")

@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 
-
 func getBehaviorNotesAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = GET_BEHAVIOR_NOTES()

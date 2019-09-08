@@ -195,7 +195,7 @@ class ChatViewController: BaseChatViewController {
                 ],
                 "user_ids": ["\(teacherId)", "\(userId())"]
             ]
-            
+            debugPrint(parameters)
             let url = String(format: GET_THREADS())
             Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
                 SVProgressHUD.dismiss()
@@ -235,6 +235,7 @@ class ChatViewController: BaseChatViewController {
                         ]]
                 ]
             ]
+            debugPrint(parameters)
             let url = String(format: SEND_MESSAGE(),thread.id)
             Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
                 SVProgressHUD.dismiss()
