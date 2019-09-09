@@ -30,6 +30,7 @@ class skoleraTests: XCTestCase {
     let courseId = 68
     let courseGroupId = 68
     let postId = 187
+    let threadId = 150
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
         let parameters : [String: Any] = ["code" : schoolCode]
@@ -1511,6 +1512,7 @@ class skoleraTests: XCTestCase {
         headers[UID] = "nps0002@skolera.com"
         headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
         let parameters : Parameters = ["post": ["content": "content", "owner_id": userId, "postable_id": courseId, "postable_type": "CourseGroup","video_preview": "","videoURL": ""]]
+        
 //        let postParams = ["id"]
         let url = CREATE_POST()
         Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -2113,6 +2115,266 @@ class skoleraTests: XCTestCase {
         wait(for: [promise], timeout: timeOutDuration)
         XCTAssertTrue(success)
     }
+    
+    func testSetThreadSeen() { //not supported
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "VTom-Iquz3XQNkEyQJRHRA"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "oyZE0Ziz7q1A28HVqdj2Lg"
+        let parameters : Parameters? = ["thread_ids": threadId]
+        let url = String(format: SET_THREAD_IS_SEEN())
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testSendMessage() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "VTom-Iquz3XQNkEyQJRHRA"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "oyZE0Ziz7q1A28HVqdj2Lg"
+        let parameters : Parameters = [
+            "message_thread": [
+                "course_id": courseId,
+                "tag": ".",
+                "name": ".",
+                "messages_attributes": [[
+                    "body": "message. body",
+                    "user_id": userId
+                    ]]
+            ],
+            "user_ids": ["398", "341"]
+        ]
+        let url = String(format: GET_THREADS())
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+                
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testSendMessageReply() { //not supported
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "rXMYoucQyYOgwLdGvzDuLQ"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "J4uN-DEX-s9tDiVbRNbn3w"
+        let parameters : Parameters = [
+            "message_thread": [
+                "Id": "\(threadId)",
+                "title": "new message",
+                "messages_attributes": [[
+                    "body": "message body",
+                    "messageThreadId": "\(threadId)",
+                    "user_id": userId
+                    ]]
+            ]
+        ]
+        let url = String(format: SEND_MESSAGE(),threadId)
+        Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+                
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+
+    }
+    
+    func testGetAnnouncements() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "fCcqp_Y1Qxowb8b13WP-XA"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "8g8aCcPhu43abMfwypZ2ZQ"
+        let metaParams = ["current_page", "total_pages"]
+        let annoncementParams = ["title", "body", "created_at", "image_url"]
+        let url = String(format: GET_ANNOUNCEMENTS(),1,10)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: Any] {
+                    if let metaData = result["meta"] as? [String: Any] {
+                        for param in metaParams {
+                            switch param {
+                            case "current_page":
+                                if let _ = metaData[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("current_page must be int")
+                                }
+                            case "total_pages":
+                                if let _ = metaData[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("total_pages must be int")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    } else {
+                        XCTFail("empty meta data")
+                    }
+                    if let announcementsResponse =  result["announcements"] as? [[String: Any]],  announcementsResponse.count > 0 {
+                        for item in announcementsResponse {
+                            for param in annoncementParams {
+                                switch param {
+                                case "title":
+                                    if let _ = item[param] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("Invalid response")
+                                    }
+                                case "body":
+                                    if let _ = item[param] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("Invalid response")
+                                    }
+                                case "created_at":
+                                    if let _ = item[param] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("Invalid response")
+                                    }
+                                case "image_url":
+                                    if let _ = item[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("Invalid response")
+                                    }
+                                default:
+                                    XCTFail("Invalid response")
+                                }
+                            }
+                        }
+                    } else {
+                        XCTFail("empty announcements array")
+                    }
+                } else {
+                    XCTFail("Invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetQuizzesCourses() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = "fCcqp_Y1Qxowb8b13WP-XA"
+        headers[UID] = "nps0002@skolera.com"
+        headers[CLIENT] = "8g8aCcPhu43abMfwypZ2ZQ"
+        let url = String(format: GET_QUIZZES_COURSES(), childId)
+        let quizCourseParams = ["course_name", "course_id", "quizzes_count", "next_quiz_start_date", "quiz_name", "quiz_state"]
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [[String : Any]] {
+                    for quizCourse in result {
+                        for param in quizCourseParams {
+                            switch param {
+                            case "course_name":
+                                if let _ = quizCourse[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "course_id":
+                                if let _ = quizCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "quizzes_count":
+                                if let _ = quizCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "next_quiz_start_date":
+//                                if let _ = quizCourse[param] as? String {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
+                            case "quiz_name":
+//                                if let _ = quizCourse[param] as? String {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
+                            case "quiz_state":
+                                if let _ = quizCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    
+    
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
 //        var success: Bool!
