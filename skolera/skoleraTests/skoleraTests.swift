@@ -31,10 +31,11 @@ class skoleraTests: XCTestCase {
     let courseGroupId = 68
     let postId = 187
     let threadId = 190
-    let client = "zlAL4SgG17OC2sj-X_SKgw"
-    let accessToken = "gZSci0dHFhmX1dmSns8XGg"
+    let client = "OOSzjQCNKgTf6D-s1YXWrw"
+    let accessToken = "Lvkj_THrk1SV2Ji51nUH_g"
     let uid = "np0017@skolera.com" //"np0017@skolera.com"  "nps0002@skolera.com"
     let quizId = 10
+    let assignmentId = 45
 
     let tokenType = "Bearer"
     func testGetSchoolUrlApi() {
@@ -2626,7 +2627,7 @@ class skoleraTests: XCTestCase {
                         for assignmentStudentSubmissionParam in assignmentStudentSubmissionParams {
                             switch assignmentStudentSubmissionParam {
                             case "score":
-                                if let score = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Double {
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Double {
                                     continue
                                 }
                             case "graded":
@@ -2650,13 +2651,12 @@ class skoleraTests: XCTestCase {
                                     for submissionFeedbackParam in submissionFeedbackParams {
                                         switch submissionFeedbackParam {
                                         case "content":
-                                            if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? String {
+                                            if let _ = submissionFeedback[assignmentStudentSubmissionParam] as? String {
                                                 continue
                                             }
                                         default:
                                             XCTFail("invalid response")
                                         }
-                                       
                                     }
                                 }
                             default:
@@ -2676,6 +2676,474 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testSubmitQuizGrade() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        headers["Accept"] = "application/vnd.skolera.v1"
+        let parameters: Parameters = ["score": 20,
+                                      "student_id": 151,
+                                      "quiz_id": 49,
+                                      "course_group_id": courseId,
+                                      "student_status": "present",
+                                      "course_id": courseId
+        ]
+        let url = String(format: SUBMIT_STUDENT_QUIZ_GRADE_URL(), courseId, courseGroupId, quizId)
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testSubmitQuizFeedback() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let parameters: Parameters = ["feedback": [
+            "content": "feedback",
+            "owner_id": "404",
+            "on_id": 48,
+            "on_type": "Quiz",
+            "to_id": 158,
+            "to_type": "Student"
+            ]]
+        let url = String(format: SUBMIT_FEEDBACK_URL())
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetAssignmentsCourses() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let url = String(format: GET_ASSINGMENTS_COURSES(), childId)
+//        courseName = dict["course_name"] as? String
+//        courseId = dict["course_id"] as? Int
+//        assignmentsCount = dict["assignments_count"] as? Int
+//        nextAssignmentDate = dict["next_assignment_date"] as? String
+//        assignmentName = dict["assignment_name"] as? String
+//        assignmentState = dict["assignment_state"] as? String
+//        nextAssignmentStartDate = dict ["next_assignment_start_date"] as? String
+        let assignmentCourseParams = ["course_name", "course_id", "assignments_count", "next_assignment_date", "assignment_name", "assignment_state", "next_assignment_start_date"]
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [[String : Any]] {
+                    for assignmentCourse in result {
+                        for param in assignmentCourseParams {
+                            switch param {
+                            case "course_name":
+                                if let _ = assignmentCourse[param] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "course_id":
+                                if let _ = assignmentCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "assignments_count":
+                                if let _ = assignmentCourse[param] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "next_assignment_date":
+//                                if let _ = quizCourse[param] as? String {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
+                            case "assignment_name":
+//                                if let _ = quizCourse[param] as? String {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
+                            case "assignment_state":
+//                                if let _ = quizCourse[param] as? Int {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
+                            case "next_assignment_start_date":
+                                continue
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetAssignmentsForCourse() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let url = String(format: GET_ASSINGMENTS(), courseId)
+        let assignmentParams = ["id", "name", "start_at", "end_at", "state", "description"]
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                 if let assignments = response.result.value as? [[String : AnyObject]] {
+                    for assignment in assignments {
+                        for assignmentParam in assignmentParams {
+                            switch assignmentParam {
+                            case "id":
+                                if let _ = assignment[assignmentParam] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "name":
+                                if let _ = assignment[assignmentParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "description":
+                                continue
+                            case "state":
+                                if let _ = assignment[assignmentParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "end_at":
+                                if let _ = assignment[assignmentParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "start_at":
+                                if let _ = assignment[assignmentParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                 } else {
+                    XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetAssignmentDetails() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let assignmentParams = ["id", "name", "start_at", "end_at", "state", "description", "content", "uploaded_files"]
+        let uploadedFileParams = ["name", "updated_at", "extension", "url"]
+        let url = String(format: GET_ASSIGNMENT_DETAILS_URL(), courseId, assignmentId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let assignment = response.result.value as? [String: Any] {
+                    for assignmentParam in assignmentParams {
+                        switch assignmentParam {
+                        case "id":
+                            if let _ = assignment[assignmentParam] as? Int {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "name":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "description":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "state":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "end_at":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "start_at":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "content":
+                            if let _ = assignment[assignmentParam] as? String {
+                                continue
+                            } else {
+                                XCTFail("invalid response")
+                            }
+                        case "uploaded_files":
+                            if let files = assignment[assignmentParam] as? [[String: Any]] {
+                                for file in files {
+                                    for fileParam in uploadedFileParams {
+                                        switch fileParam {
+                                        case "name":
+                                            if let _ = file[fileParam] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("invalid response")
+                                            }
+                                        case "updated_at":
+                                            if let _ = file[fileParam] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("invalid response")
+                                            }
+                                        case "extension":
+                                            if let _ = file[fileParam] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("invalid response")
+                                            }
+                                        case "url":
+                                            if let _ = file[fileParam] as? String {
+                                                continue
+                                            } else {
+                                                XCTFail("invalid response")
+                                            }
+                                        default:
+                                            XCTFail("unlisted")
+                                        }
+                                    }
+                                }
+                            } else {
+                                continue
+                            }
+                        default:
+                            XCTFail("unlisted")
+                            
+                        }
+                    }
+                } else {
+                    XCTFail("invalid response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetAssignmentSubmissions() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let assignmentStudentSubmissionParams = ["grade", "graded", "student_id", "student_name", "feedback"]
+        let submissionFeedbackParams = ["content"]
+        let url = String(format: GET_ASSIGNMENT_SUBMISSIONS_URL(), courseId, courseGroupId, assignmentId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_): //assignmentstudentsubmission
+                success = true
+                if let submissions = response.result.value as? [[String: Any]] {
+                    for assignmentStudentSubmission in submissions {
+                        for assignmentStudentSubmissionParam in assignmentStudentSubmissionParams {
+                            switch assignmentStudentSubmissionParam {
+                            case "grade":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Double {
+                                    continue
+                                }
+                            case "graded":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Bool {
+                                    continue
+                                }
+                            case "student_id":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "student_name":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "feedback":
+                                if let submissionFeedback = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? [String: Any] {
+                                    for submissionFeedbackParam in submissionFeedbackParams {
+                                        switch submissionFeedbackParam {
+                                        case "content":
+                                            if let _ = submissionFeedback[assignmentStudentSubmissionParam] as? String {
+                                                continue
+                                            }
+                                        default:
+                                            XCTFail("invalid response")
+                                        }
+                                    }
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("Empty response")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testSubmitAssignmentGrade() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        headers["Accept"] = "application/vnd.skolera.v1"
+        let parameters: Parameters = ["grade": "10",
+                                      "student_id": 160,
+                                      "assignment_id": 17,
+                                      "course_group_id": courseGroupId,
+                                      "student_status": "present",
+                                      "course_id": courseId
+        ]
+        let url = String(format: SUBMIT_STUDENT_ASSIGNMENT_GRADE_URL(), courseId, courseGroupId, assignmentId)
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testSubmitAssignmentFeedback() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let url = String(format: SUBMIT_FEEDBACK_URL())
+        let parameters: Parameters = ["feedback": [
+            "content": "feedback",
+            "owner_id": "404",
+            "on_id": 48,
+            "on_type": "Assignment",
+            "to_id": 156,
+            "to_type": "Student"
+            ]]
+        Alamofire.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
     
 //    func testSetNotificationSeenAPI() {
 //        let promise = expectation(description: "Completion handler invoked")
