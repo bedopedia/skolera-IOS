@@ -30,10 +30,11 @@ class skoleraTests: XCTestCase {
     let courseId = 68
     let courseGroupId = 68
     let postId = 187
-    let threadId = 150
-    let client = "bpmcd1lcDp6qR5nUfQS-tQ"
-    let accessToken = "BbkBAwTxOJN4qev8Z94SHA"
-    let uid = "nps0002@skolera.com"
+    let threadId = 190
+    let client = "7fM0W6ifOQz4p6PqDhiR7w"
+    let accessToken = "S9k3WXo2t0xgA_wT_XpaMw"
+    let uid = "np0017@skolera.com" //"np0017@skolera.com"  "nps0002@skolera.com"
+
     let tokenType = "Bearer"
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
@@ -2139,7 +2140,7 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testSetThreadSeen() { //not supported
+    func testSetThreadSeen() {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
@@ -2201,7 +2202,7 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testSendMessageReply() { //not supported
+    func testSendMessageReply() {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
@@ -2326,7 +2327,7 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testGetQuizzesCourses() { //remote unavailable
+    func testGetQuizzesCourses() {
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
@@ -2379,11 +2380,12 @@ class skoleraTests: XCTestCase {
 //                                }
                                 continue
                             case "quiz_state":
-                                if let _ = quizCourse[param] as? Int {
-                                    continue
-                                } else {
-                                    XCTFail("invalid response")
-                                }
+//                                if let _ = quizCourse[param] as? Int {
+//                                    continue
+//                                } else {
+//                                    XCTFail("invalid response")
+//                                }
+                                continue
                             default:
                                 XCTFail("unlisted")
                             }
@@ -2501,6 +2503,106 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
+    func testGetQuizzesForTeacher() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let studentSubmissionsParams = ["feedback", "score"]
+        let fullQuizParams = ["id", "name", "start_date", "end_date", "state", "total_score", "student_submissions"]
+        let url = URL(string: GET_TEACHER_QUIZZES())!
+            .appending("fields%5Bend_date%5D", value: "true")
+            .appending("fields%5Bgrading_period_lock%5D", value: "true")
+            .appending("fields%5Bid%5D", value: "true")
+            .appending("fields%5Blesson_id%5D", value: "true")
+            .appending("fields%5Bname%5D", value: "true")
+            .appending("fields%5Bstart_date%5D", value: "true")
+            .appending("fields%5Bstate%5D", value: "true")
+            .appending("fields%5Bstudent_solve%5D", value: "true")
+            .appending("course_group_ids[]", value: "68")
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let quizzes = response.result.value as? [[String : AnyObject]] {
+                    for fullQuiz in quizzes {
+                        for fullQuizParam in fullQuizParams {
+                            switch fullQuizParam {
+                            case "id":
+                                if let _ = fullQuiz[fullQuizParam] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "name":
+                                if let _ = fullQuiz[fullQuizParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "start_date":
+                                if let _ = fullQuiz[fullQuizParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "end_date":
+                                if let _ = fullQuiz[fullQuizParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "state":
+                                if let _ = fullQuiz[fullQuizParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "total_score":
+                                if let _ = fullQuiz[fullQuizParam] as? Double {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "student_submissions":
+                                if let studentSubmissions = fullQuiz[fullQuizParam] as? [String: Any] {
+                                    for studentSubmissionsParam in studentSubmissionsParams {
+                                        switch studentSubmissionsParam {
+                                        case "score":
+                                            if let _ = studentSubmissions[studentSubmissionsParam] as? Double {
+                                                continue
+                                            } else {
+                                                XCTFail("invalid response")
+                                            }
+                                        case "feedback":
+                                            continue
+                                        default:
+                                            XCTFail("unlisted")
+                                        }
+                                    }
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                   
+                } else {
+                    XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
     
     
 //    func testSetNotificationSeenAPI() {
