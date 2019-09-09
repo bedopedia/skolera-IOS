@@ -31,6 +31,10 @@ class skoleraTests: XCTestCase {
     let courseGroupId = 68
     let postId = 187
     let threadId = 150
+    let client = "bpmcd1lcDp6qR5nUfQS-tQ"
+    let accessToken = "BbkBAwTxOJN4qev8Z94SHA"
+    let uid = "nps0002@skolera.com"
+    let tokenType = "Bearer"
     func testGetSchoolUrlApi() {
         let promise = expectation(description: "Completion handler invoked")
         let parameters : [String: Any] = ["code" : schoolCode]
@@ -92,10 +96,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         let parameters: Parameters = ["user": ["language": chosenLocale]]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "enRwAelHwn8H_VITSNz4fg"
-        headers[TOKEN_TYPE] = "Bearer"
-        headers[UID] = "pnps0002@skolera.com"
-        headers[CLIENT] = "wsNWS2qtkwJs6jJgiaVrog"
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: EDIT_USER(), "416") //341 for student, 416 parent
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
@@ -213,10 +217,10 @@ class skoleraTests: XCTestCase {
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         let parameters : Parameters = ["parent_id" : parentActableId]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "fJmBEelPcvXbk4Hjlm5kLA"
-        headers[TOKEN_TYPE] = "Bearer"
-        headers[UID] = "pnps0002@skolera.com"
-        headers[CLIENT] = "1V1C3k-VoCmq5RmfwQIQUA"
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: GET_CHILDREN(),"\(parentActableId)")
         let usedParameters = ["actable_id", "attendances", "avatar_url", "firstname", "lastname", "id", "level_name", "name", "today_workload_status"]
         let attendanceParameters = ["comment", "status", "date"]
@@ -365,10 +369,10 @@ class skoleraTests: XCTestCase {
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         let parameters: Parameters = ["user": ["mobile_device_token": "token"]]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "9-UBM7EfYDph11jEbCcbTQ"
-        headers[TOKEN_TYPE] = "Bearer"
-        headers[UID] = "pnps0002@skolera.com"
-        headers[CLIENT] = "GawMGXQa9YtTRRQ9TU076g"
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: EDIT_USER(), "416")
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
@@ -389,10 +393,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "ZU9_39pvtY2lioHhC1QCFw"
-//        headers[TOKEN_TYPE] = "Bearer"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "WNcOpe-9doCWggxzwsyVLA"
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let usedParameters = ["name", "grade", "course_id"]
         let url = String(format: GET_GRADES(), childActableId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -457,9 +461,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "UwcYggO_GgXjCaU_yBF38Q"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "7bJeDuRTSd170FxBiyCBsw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let usedParameters = ["course_id", "id", "name"]
         let url = String(format: GET_COURSE_GROUPS(), childId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -515,9 +520,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "UwcYggO_GgXjCaU_yBF38Q"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "7bJeDuRTSd170FxBiyCBsw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let usedParams = ["good", "bad", "other"]
         let url = GET_BEHAVIOR_NOTES_COUNT()
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -567,9 +573,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "qZHGOhhUwBjj1qPtZ7cbZQ"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "zRrNWOJOaUw5TyGnWyCbvw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "d/M/y"
         formatter.locale = Locale(identifier: "en")
@@ -687,9 +694,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "-ZtD5rfH7eAZKXjKDqj6QQ"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "1AgWbVfZuAJfDEciyuTu0w"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let usedParameters = ["course_name", "from", "to", "day"]
         let url = String(format: GET_TIME_TABLE(), childActableId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -763,9 +771,10 @@ class skoleraTests: XCTestCase {
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         let usedParameters = ["course_name", "from", "to", "day"]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "0RK_bUuUMq6usi68w50a8Q"
-        headers[UID] = "np0017@skolera.com"
-        headers[CLIENT] = "U4klzGrRDOTx5I1aG9AlRg"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: GET_TEACHER_TIME_TABLE(), teacherActableId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
             promise.fulfill()
@@ -837,10 +846,10 @@ class skoleraTests: XCTestCase {
         let page = 1
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "IdVEchCBEccjdfopf2AJFQ"
-        headers[TOKEN_TYPE] = "Bearer"
-        headers[UID] = "pnps0002@skolera.com"
-        headers[CLIENT] = "zNy4oaugPTIPVYPkE6oNcQ"
+        headers[ACCESS_TOKEN] = accessToken
+        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let usedParams = ["meta", "notifications"]
         let metaParams = ["current_page", "total_pages"]
         let notificationParams = ["additional_params", "created_at", "message", "text"]
@@ -945,9 +954,10 @@ class skoleraTests: XCTestCase {
         let usedParameters = ["id", "name", "course_groups"]
         let courseGroupParameters = ["id", "name", "course_id"]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "J3Z1hPMwNB1FIvH_wVCYwA"
-        headers[UID] = "np0017@skolera.com"
-        headers[CLIENT] = "UtTjphQIZAXtFn23ADH37g"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: GET_TEACHER_COURSES(), teacherActableId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
             promise.fulfill()
@@ -1024,9 +1034,10 @@ class skoleraTests: XCTestCase {
         let behaviorNotesParams = ["category", "note", "type", "owner"]
         let metaParams = ["current_page", "total_pages"]
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "CtE21gs_ANWUVS908OAfEA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "eszKDN2CjKMEi03CTfwmDw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters = ["student_id" : childActableId,"user_type" : "Parents", "page": 1, "per_page" : 20]
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             promise.fulfill()
@@ -1115,9 +1126,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "CtE21gs_ANWUVS908OAfEA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "eszKDN2CjKMEi03CTfwmDw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let eventParams = ["type", "end_date", "start_date", "title"]
         let url = GET_STUDENT_EVENTS(uid: userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z")
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -1174,9 +1186,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "CtE21gs_ANWUVS908OAfEA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "eszKDN2CjKMEi03CTfwmDw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = CREATE_STUDENT_EVENTS()
         var eventsParameters: [String: Any] = [:]
         eventsParameters["description"] = "notesText"
@@ -1207,9 +1220,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "XMufeYQCukrEkeD1ZMsyWA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "OJCGXfcbSUuzPqFLJRrnuQ"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: GET_POSTS_COURSES(), childId)
         let usedParams = ["course_id", "course_name", "posts_count", "posts"]
 //        let postParams = ["id", "content", "updated_at", "comments", "uploaded_files"]
@@ -1294,9 +1308,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "TilVvOvSl19OII_KPt-XtA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "v-zyetppupVKZywVtF_e1g"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
 //        let usedParams = ["posts", "meta"]
         let metaParams = ["current_page", "total_pages"]
         let postParams = ["id", "content", "updated_at", "comments", "uploaded_files"]
@@ -1453,9 +1468,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let commentsParams = ["content", "updated_at", "owner"]
         let url = COMMENTS_URL()
         let parameters : Parameters = ["comment": ["content": "text", "owner_id": userId, "post_id": postId]] //post id is variable
@@ -1508,9 +1524,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters = ["post": ["content": "content", "owner_id": userId, "postable_id": courseId, "postable_type": "CourseGroup","video_preview": "","videoURL": ""]]
         
 //        let postParams = ["id"]
@@ -1542,9 +1559,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "zg3TMOEKP5IJu9VA2N0_tw"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "DlnQxN5NJzL0b-HRsjfhTw"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = UPLOAD_FILE_FOR_POST()
         Alamofire.upload(
             multipartFormData: { multipartFormData in
@@ -1598,9 +1616,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "vZyxZo-7PuycQ9khYX1Vgg"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "_Hko9iaar-5ziJwIXlZ2Ng"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters? = ["student_id" : childActableId]
         let url = String(format: GET_STUDENT_GRADE_AVG(),courseId, courseGroupId)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -1642,9 +1661,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "TubPGoNKnPZYBve2wpW7kg"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "VRX0R2mdLFATtUPdELQmdA"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters? = ["course_id" : courseId]
         let usedParameters = ["end_date", "start_date", "name", "id"]
         let url = String(format: GET_COURSE_GRADING_PERIODS())
@@ -1705,9 +1725,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "LspFPoS9ILPWkxF6KcZscQ"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "CgsPC2mR7mZICDX7cjPNwg"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let assignmentParams = ["id", "name", "total", "grade", "grade_view", "feedback", "end_date", "hide_grade"]
         let quizParams = ["id", "name", "total", "grade", "feedback", "end_date", "hide_grade"]
         let parameters : Parameters? = ["student_id" : childActableId]
@@ -1908,9 +1929,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "sjnFnaesZHMBI33iYthWUg"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "nSUdrnlqrIaIs5TIt2WO_g"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters = ["source" : "home"]
         let subjectParameters = ["course", "course_id", "teachers"]
         let teacherParameters = ["user_id", "firstname", "lastname"]
@@ -1993,9 +2015,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "oZyOiSd1QEL_RbGsylXBUw"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "cHa9tgPMXB8lZwFQ-8EFzg"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let threadParams = ["course_name", "id", "last_added_date", "messages", "name", "others_avatars", "others_names"]
         let messagesParams = ["body", "created_at", "ext" ,"attachment_url" ,"user"]
         let userParams = ["id", "name"]
@@ -2121,9 +2144,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "VTom-Iquz3XQNkEyQJRHRA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "oyZE0Ziz7q1A28HVqdj2Lg"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters? = ["thread_ids": threadId]
         let url = String(format: SET_THREAD_IS_SEEN())
         Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -2145,9 +2169,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "VTom-Iquz3XQNkEyQJRHRA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "oyZE0Ziz7q1A28HVqdj2Lg"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters = [
             "message_thread": [
                 "course_id": courseId,
@@ -2181,9 +2206,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "rXMYoucQyYOgwLdGvzDuLQ"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "J4uN-DEX-s9tDiVbRNbn3w"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let parameters : Parameters = [
             "message_thread": [
                 "Id": "\(threadId)",
@@ -2217,9 +2243,10 @@ class skoleraTests: XCTestCase {
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "fCcqp_Y1Qxowb8b13WP-XA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "8g8aCcPhu43abMfwypZ2ZQ"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let metaParams = ["current_page", "total_pages"]
         let annoncementParams = ["title", "body", "created_at", "image_url"]
         let url = String(format: GET_ANNOUNCEMENTS(),1,10)
@@ -2299,14 +2326,15 @@ class skoleraTests: XCTestCase {
         XCTAssertTrue(success)
     }
     
-    func testGetQuizzesCourses() {
+    func testGetQuizzesCourses() { //remote unavailable
         let promise = expectation(description: "Completion handler invoked")
         var success: Bool!
         skolera.BASE_URL = "https://\(schoolCode).skolera.com"
         var headers = [String : String]()
-        headers[ACCESS_TOKEN] = "fCcqp_Y1Qxowb8b13WP-XA"
-        headers[UID] = "nps0002@skolera.com"
-        headers[CLIENT] = "8g8aCcPhu43abMfwypZ2ZQ"
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
         let url = String(format: GET_QUIZZES_COURSES(), childId)
         let quizCourseParams = ["course_name", "course_id", "quizzes_count", "next_quiz_start_date", "quiz_name", "quiz_state"]
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
@@ -2363,6 +2391,106 @@ class skoleraTests: XCTestCase {
                     }
                 } else {
                     XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetQuizzesForChild() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+//        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let url = String(format: GET_QUIZZES(), childId, courseId)
+        let studentSubmissionsParams = ["feedback", "score"]
+        let fullQuizParams = ["id", "name", "start_date", "end_date", "state", "total_score", "student_submissions"]
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let result = response.result.value as? [String: Any] {
+                    if let quizzes = result["quizzes"] as? [[String: Any]] {
+                        for fullQuiz in quizzes {
+                            for fullQuizParam in fullQuizParams {
+                                switch fullQuizParam {
+                                case "id":
+                                    if let _ = fullQuiz[fullQuizParam] as? Int {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "name":
+                                    if let _ = fullQuiz[fullQuizParam] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "start_date":
+                                    if let _ = fullQuiz[fullQuizParam] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "end_date":
+                                    if let _ = fullQuiz[fullQuizParam] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "state":
+                                    if let _ = fullQuiz[fullQuizParam] as? String {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "total_score":
+                                    if let _ = fullQuiz[fullQuizParam] as? Double {
+                                        continue
+                                    } else {
+                                        XCTFail("invalid response")
+                                    }
+                                case "student_submissions":
+                                    if let studentSubmissions = fullQuiz[fullQuizParam] as? [String: Any] {
+                                        for studentSubmissionsParam in studentSubmissionsParams {
+                                            switch studentSubmissionsParam {
+                                            case "score":
+                                                if let _ = studentSubmissions[studentSubmissionsParam] as? Double {
+                                                    continue
+                                                } else {
+                                                    XCTFail("invalid response")
+                                                }
+                                            case "feedback":
+//                                                if let _ = studentSubmissions[studentSubmissionsParam] as? String {
+//                                                    continue
+//                                                } else {
+//                                                    XCTFail("invalid response")
+//                                                }
+                                                continue
+                                            default:
+                                                XCTFail("unlisted")
+                                            }
+                                        }
+                                    } 
+                                default:
+                                    XCTFail("unlisted")
+                                }
+                            }
+                        }
+                    } else {
+                        XCTFail("empty quizzesarray")
+                    }
+                } else {
+                    XCTFail("invalid response")
                 }
             case .failure(let error):
                 success = false
