@@ -41,7 +41,7 @@ class QuizzesGradesViewController: UIViewController {
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
-                    
+                    debugPrint(result)
                     self.submissions = result.map { AssignmentStudentSubmission($0) }
                     self.tableView.reloadData()
                 }

@@ -31,9 +31,10 @@ class skoleraTests: XCTestCase {
     let courseGroupId = 68
     let postId = 187
     let threadId = 190
-    let client = "7fM0W6ifOQz4p6PqDhiR7w"
-    let accessToken = "S9k3WXo2t0xgA_wT_XpaMw"
+    let client = "zlAL4SgG17OC2sj-X_SKgw"
+    let accessToken = "gZSci0dHFhmX1dmSns8XGg"
     let uid = "np0017@skolera.com" //"np0017@skolera.com"  "nps0002@skolera.com"
+    let quizId = 10
 
     let tokenType = "Bearer"
     func testGetSchoolUrlApi() {
@@ -2591,9 +2592,80 @@ class skoleraTests: XCTestCase {
                             }
                         }
                     }
-                   
                 } else {
                     XCTFail("empty array")
+                }
+            case .failure(let error):
+                success = false
+                XCTFail("Error: \(error)")
+            }
+        }
+        wait(for: [promise], timeout: timeOutDuration)
+        XCTAssertTrue(success)
+    }
+    
+    func testGetQuizSubmissions() {
+        let promise = expectation(description: "Completion handler invoked")
+        var success: Bool!
+        skolera.BASE_URL = "https://\(schoolCode).skolera.com"
+        var headers = [String : String]()
+        headers[ACCESS_TOKEN] = accessToken
+        //        headers[TOKEN_TYPE] = tokenType
+        headers[UID] = uid
+        headers[CLIENT] = client
+        let assignmentStudentSubmissionParams = ["score", "graded", "student_id", "student_name", "feedback"]
+        let submissionFeedbackParams = ["content"]
+        let url = String(format: GET_QUIZZES_SUBMISSIONS_URL(), quizId, courseGroupId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            promise.fulfill()
+            switch response.result{
+            case .success(_):
+                success = true
+                if let assignmentStudentSubmissions = response.result.value as? [[String: Any]] {
+                    for assignmentStudentSubmission in assignmentStudentSubmissions {
+                        for assignmentStudentSubmissionParam in assignmentStudentSubmissionParams {
+                            switch assignmentStudentSubmissionParam {
+                            case "score":
+                                if let score = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Double {
+                                    continue
+                                }
+                            case "graded":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Bool {
+                                    continue
+                                }
+                            case "student_id":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? Int {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "student_name":
+                                if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? String {
+                                    continue
+                                } else {
+                                    XCTFail("invalid response")
+                                }
+                            case "feedback":
+                                if let submissionFeedback = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? [String: Any] {
+                                    for submissionFeedbackParam in submissionFeedbackParams {
+                                        switch submissionFeedbackParam {
+                                        case "content":
+                                            if let _ = assignmentStudentSubmission[assignmentStudentSubmissionParam] as? String {
+                                                continue
+                                            }
+                                        default:
+                                            XCTFail("invalid response")
+                                        }
+                                       
+                                    }
+                                }
+                            default:
+                                XCTFail("unlisted")
+                            }
+                        }
+                    }
+                } else {
+                    XCTFail("Empty array")
                 }
             case .failure(let error):
                 success = false
