@@ -53,6 +53,7 @@ func addPostReplyApi(parameters: Parameters, completion: @escaping ((Bool, Int, 
 func createPostApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = CREATE_POST()
+    debugPrint(parameters)
     Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

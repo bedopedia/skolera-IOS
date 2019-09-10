@@ -221,7 +221,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     private func getCourseGradingPeriods(){
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = ["course_id" : grade.courseId]
-        debugPrint(grade.courseId)
+        debugPrint("course id: \(grade.courseId!)")
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_COURSE_GRADING_PERIODS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
