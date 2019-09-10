@@ -26,7 +26,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.navigationController?.isNavigationBarHidden = false
+//        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -42,8 +42,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.threads = []
-        self.threadsTableView.reloadData()
+        super.viewDidAppear(animated)
+//        self.threads = []
+//        self.threadsTableView.reloadData()
         getThreads()
     }
     
@@ -152,9 +153,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             let formatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "dd/MM/yyyy"
-            
             cell.threadDate.text = formatter.string(from: date)
-            
         }
         return cell
     }
@@ -172,7 +171,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         SVProgressHUD.show(withStatus: "Loading".localized)
         DispatchQueue.global(qos: .userInitiated).async {
             // Bounce back to the main thread to update the UI
-            
+            guard self.threads.count > 0 else {
+                return
+            }
             let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
             var messages: [ChatItemProtocol] = []
             let threadsMessages = self.threads[indexPath.row].messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
@@ -253,7 +254,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
-                self.navigationController?.isNavigationBarHidden = false
+//                self.navigationController?.isNavigationBarHidden = false
 //                self.navigationController?.pushViewController(chatVC, animated: true)
                 self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
             }
@@ -268,7 +269,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 //            newMessageVC.child = self.child
 //            childNvc.pushViewController(newMessageVC, animated: true)
 //        }
-        
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
         newMessageVC.child = self.child
         self.navigationController?.pushViewController(newMessageVC, animated: true)

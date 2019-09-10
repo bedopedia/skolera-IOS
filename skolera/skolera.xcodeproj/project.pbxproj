@@ -186,6 +186,8 @@
 		8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */; };
 		8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */; };
 		8A58B44020D968B4002C766B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A58B43F20D968B4002C766B /* GoogleService-Info.plist */; };
+		8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5BBB062327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift */; };
+		8A5BBB092327FD220056B157 /* ActorNvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5BBB082327FD220056B157 /* ActorNvc.swift */; };
 		8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42D920B1805900FF93D1 /* CourseGradingPeriods.swift */; };
 		8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */; };
 		8A5F42E620B1B5C300FF93D1 /* ContactTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F42E520B1B5C300FF93D1 /* ContactTeacherViewController.swift */; };
@@ -228,7 +230,6 @@
 		8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362820B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift */; };
 		8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */; };
 		8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */; };
-		8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A6F297B21F871650011CC4A /* Announcements.storyboard */; };
 		8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78A0182201F16B006A3E2D /* Assets.xcassets */; };
 		8A7C4A372327DADA00984A53 /* AnnouncementsTableViewNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7C4A362327DADA00984A53 /* AnnouncementsTableViewNVC.swift */; };
 		8A7C4A3A2327DCC900984A53 /* ContactTeacherNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7C4A392327DCC900984A53 /* ContactTeacherNVC.swift */; };
@@ -279,6 +280,7 @@
 		8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */; };
 		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
+		8AD548E823280FA500730B76 /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD548E623280FA500730B76 /* Announcements.storyboard */; };
 		8ADABB78230AE400001509EF /* EventsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB77230AE400001509EF /* EventsApiManager.swift */; };
 		8ADABB7A230AEAF7001509EF /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB79230AEAF7001509EF /* Event.swift */; };
 		8AE5561020DC03DD00800D7E /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE5560F20DC03DD00800D7E /* Grade.swift */; };
@@ -486,6 +488,8 @@
 		8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourse.swift; sourceTree = "<group>"; };
 		8A58B43F20D968B4002C766B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8A5BBB062327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCoursesTableViewNVC.swift; sourceTree = "<group>"; };
+		8A5BBB082327FD220056B157 /* ActorNvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorNvc.swift; sourceTree = "<group>"; };
 		8A5F42D920B1805900FF93D1 /* CourseGradingPeriods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseGradingPeriods.swift; sourceTree = "<group>"; };
 		8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		8A5F42E520B1B5C300FF93D1 /* ContactTeacherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTeacherViewController.swift; sourceTree = "<group>"; };
@@ -528,8 +532,6 @@
 		8A6D362820B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageViewModelBuilder.swift; sourceTree = "<group>"; };
 		8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageHandler.swift; sourceTree = "<group>"; };
 		8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
-		8A6F297A21F871650011CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
-		8A6F297D21F871770011CC4A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		8A78A0182201F16B006A3E2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A7C4A362327DADA00984A53 /* AnnouncementsTableViewNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewNVC.swift; sourceTree = "<group>"; };
 		8A7C4A392327DCC900984A53 /* ContactTeacherNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTeacherNVC.swift; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 		8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
+		8AD548E723280FA500730B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
 		8ADABB77230AE400001509EF /* EventsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsApiManager.swift; sourceTree = "<group>"; };
 		8ADABB79230AEAF7001509EF /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		8AE5560E20DBC46F00800D7E /* skolera.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = skolera.entitlements; sourceTree = "<group>"; };
@@ -1468,6 +1471,8 @@
 			isa = PBXGroup;
 			children = (
 				8A7EFF7A2327D2AB007D4842 /* ChildProfileFeaturesNVC.swift */,
+				8A5BBB062327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift */,
+				8A5BBB082327FD220056B157 /* ActorNvc.swift */,
 			);
 			path = "Nav Controllers";
 			sourceTree = "<group>";
@@ -1493,7 +1498,7 @@
 		8AF3065D21EC8DCC00B75736 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A6F297B21F871650011CC4A /* Announcements.storyboard */,
+				8AD548E623280FA500730B76 /* Announcements.storyboard */,
 				8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */,
 			);
 			path = Views;
@@ -1615,6 +1620,7 @@
 				5482DE842056DAB100647D57 /* Roboto-Italic.ttf in Resources */,
 				54EB93082015ED1D001DD93F /* LaunchScreen.storyboard in Resources */,
 				8A298CBB2184CB9700A82FEA /* Timetable.storyboard in Resources */,
+				8AD548E823280FA500730B76 /* Announcements.storyboard in Resources */,
 				5482DE582056DAB100647D57 /* RobotoMono-MediumItalic.ttf in Resources */,
 				5482DE7B2056DAB100647D57 /* Roboto Condensed Bold.otf in Resources */,
 				5482DDF12056D4DF00647D57 /* SFUIText-Bold.otf in Resources */,
@@ -1624,7 +1630,6 @@
 				5482DE662056DAB100647D57 /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				5482DE782056DAB100647D57 /* RobotoCondensed-Light.ttf in Resources */,
 				5482DE4D2056DAB100647D57 /* RobotoCondensed-Regular.ttf in Resources */,
-				8A6F297921F871650011CC4A /* Announcements.storyboard in Resources */,
 				5482DE8A2056DAB100647D57 /* Roboto-Light.ttf in Resources */,
 				8A298CDB2184D3B600A82FEA /* Localizable.strings in Resources */,
 				5482DE002056D50D00647D57 /* SFUIText-RegularG1.otf in Resources */,
@@ -1822,6 +1827,7 @@
 				8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */,
 				8A93357D22E0CD83007B287D /* PostDetailsViewController.swift in Sources */,
 				54970683208CECB50070CE46 /* TimeSlot.swift in Sources */,
+				8A5BBB092327FD220056B157 /* ActorNvc.swift in Sources */,
 				8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */,
 				546356EC201F68E90072F066 /* Role.swift in Sources */,
 				8AF8F73722E9EA0800544744 /* QuizzesResponse.swift in Sources */,
@@ -1876,6 +1882,7 @@
 				8A7EFF7B2327D2AB007D4842 /* ChildProfileFeaturesNVC.swift in Sources */,
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
+				8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
 				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
@@ -2096,15 +2103,6 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		8A6F297B21F871650011CC4A /* Announcements.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8A6F297A21F871650011CC4A /* Base */,
-				8A6F297D21F871770011CC4A /* ar */,
-			);
-			name = Announcements.storyboard;
-			sourceTree = "<group>";
-		};
 		8A998E7B22BA9E46001906BA /* Assignments.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2121,6 +2119,14 @@
 				8AB83870230EB56E00BF831B /* ar */,
 			);
 			name = Events.storyboard;
+			sourceTree = "<group>";
+		};
+		8AD548E623280FA500730B76 /* Announcements.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD548E723280FA500730B76 /* Base */,
+			);
+			name = Announcements.storyboard;
 			sourceTree = "<group>";
 		};
 		8AFD9EB822E354C80084FD45 /* Posts.storyboard */ = {

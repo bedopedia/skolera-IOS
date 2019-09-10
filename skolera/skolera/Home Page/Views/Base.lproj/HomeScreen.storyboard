@@ -1083,11 +1083,12 @@
                             <outlet property="delegate" destination="3ee-Wh-iXm" id="6PB-Sb-siG"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="ugo-Az-2FP"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kzh-at-M2q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1036" y="1403"/>
+            <point key="canvasLocation" x="-128.98550724637681" y="1402.5815217391305"/>
         </scene>
         <!--Teacher Course Group View Controller-->
         <scene sceneID="TH2-cR-dQy">
@@ -1224,7 +1225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l64-gI-pHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="93" y="1453"/>
+            <point key="canvasLocation" x="1000.0000000000001" y="1452.717391304348"/>
         </scene>
         <!--Teacher Container View Controller-->
         <scene sceneID="pZ6-eA-UDQ">
@@ -1373,7 +1374,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzq-qo-Azt">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="Z4O-kc-n7U" kind="embed" id="KMy-XN-qtd"/>
+                                    <segue destination="ikF-tN-SxR" kind="embed" id="KMy-XN-qtd"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVG-Xx-yiT">
@@ -1404,7 +1405,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJa-ki-8D5">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="3ee-Wh-iXm" kind="embed" id="kJV-qH-b1c"/>
+                                    <segue destination="Bk9-iX-KFO" kind="embed" id="kJV-qH-b1c"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1464,10 +1465,10 @@
             </objects>
             <point key="canvasLocation" x="-1035" y="413"/>
         </scene>
-        <!--ContactTeacherViewController-->
+        <!--ContactTeacherNVC-->
         <scene sceneID="mHb-x8-tTW">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="Threads" storyboardName="Threads" referencedIdentifier="ContactTeacherViewController" id="GRi-4O-qKc" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="Threads" storyboardName="Threads" referencedIdentifier="ContactTeacherNVC" id="GRi-4O-qKc" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-it-RsH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-130" y="340"/>
@@ -1538,7 +1539,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GWn-DV-S3g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="29" y="773"/>
+            <point key="canvasLocation" x="936.23188405797111" y="772.41847826086962"/>
         </scene>
         <!--Actor Features Table View Controller-->
         <scene sceneID="knP-w4-kfx">
@@ -1597,12 +1598,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dc4-86-DCE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="861" y="477"/>
+            <point key="canvasLocation" x="1768.1159420289857" y="476.49456521739137"/>
         </scene>
-        <!--AnnouncementTableViewController-->
+        <!--AnnouncementsTableViewNVC-->
         <scene sceneID="vRc-zo-whv">
             <objects>
-                <viewControllerPlaceholder storyboardName="Announcements" referencedIdentifier="AnnouncementTableViewController" id="pQa-vU-io2" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Announcements" referencedIdentifier="AnnouncementsTableViewNVC" id="pQa-vU-io2" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="szU-UY-ng3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-101" y="194"/>
@@ -1684,7 +1685,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lhu-GH-gBP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="1455.9782608695652"/>
+            <point key="canvasLocation" x="1949.2753623188407" y="1455.9782608695652"/>
         </scene>
         <!--Teacher Course Details Table View Controller-->
         <scene sceneID="rTk-Vz-jDV">
@@ -1836,7 +1837,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yht-Dy-CFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1962" y="1456"/>
+            <point key="canvasLocation" x="2868.115942028986" y="1455.9782608695652"/>
         </scene>
         <!--Child Profile FeaturesNVC-->
         <scene sceneID="GsW-7h-Zx3">
@@ -1855,6 +1856,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pqd-gT-635" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="802.89855072463774" y="-525"/>
+        </scene>
+        <!--Teacher Courses Table ViewNVC-->
+        <scene sceneID="fBk-pd-2Zl">
+            <objects>
+                <navigationController storyboardIdentifier="TeacherCoursesTableViewNVC" automaticallyAdjustsScrollViewInsets="NO" id="Bk9-iX-KFO" customClass="TeacherCoursesTableViewNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ALf-fY-0c3">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3ee-Wh-iXm" kind="relationship" relationship="rootViewController" id="QdW-e2-gVu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mdA-PI-RQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1036.231884057971" y="1402.9891304347827"/>
+        </scene>
+        <!--Actor Nvc-->
+        <scene sceneID="0nE-s6-jZm">
+            <objects>
+                <navigationController storyboardIdentifier="ActorNvc" automaticallyAdjustsScrollViewInsets="NO" id="ikF-tN-SxR" customClass="ActorNvc" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bBv-pe-qjU">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Z4O-kc-n7U" kind="relationship" relationship="rootViewController" id="vij-U3-qUF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dcd-lZ-zEi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="28.985507246376812" y="772.82608695652175"/>
         </scene>
     </scenes>
     <resources>

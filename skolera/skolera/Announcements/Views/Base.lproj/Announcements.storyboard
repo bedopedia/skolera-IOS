@@ -91,7 +91,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGY-dY-du5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="828" y="-12.143928035982009"/>
+            <point key="canvasLocation" x="1767.2" y="-12.143928035982009"/>
         </scene>
         <!--Announcement View Controller-->
         <scene sceneID="pT2-cm-2BZ">
@@ -178,25 +178,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yLX-10-N7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1548" y="-12.143928035982009"/>
+            <point key="canvasLocation" x="2487.1999999999998" y="-12.143928035982009"/>
         </scene>
         <!--Announcements Table ViewNVC-->
-        <scene sceneID="mEp-H7-oaG">
+        <scene sceneID="xqL-ek-ClV">
             <objects>
-                <navigationController storyboardIdentifier="AnnouncementsTableViewNVC" automaticallyAdjustsScrollViewInsets="NO" id="Dze-J6-UwZ" customClass="AnnouncementsTableViewNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AnnouncementsTableViewNVC" automaticallyAdjustsScrollViewInsets="NO" id="lqj-jo-ELb" customClass="AnnouncementsTableViewNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="N1U-EO-qEj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EmI-Yx-fw9">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="bHc-bt-ffm" kind="relationship" relationship="rootViewController" id="Kom-Sg-AZO"/>
+                        <segue destination="bHc-bt-ffm" kind="relationship" relationship="rootViewController" id="gpz-M9-KCg"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aeW-Sw-pJA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6tb-ZK-skj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-111.2" y="-12.143928035982009"/>
+            <point key="canvasLocation" x="828" y="-12.143928035982009"/>
         </scene>
     </scenes>
     <resources>

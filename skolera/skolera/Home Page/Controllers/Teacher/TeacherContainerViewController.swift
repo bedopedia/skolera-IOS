@@ -35,18 +35,25 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-
-        
         selectMenu()
         
+//        for child in childViewControllers {
+//            if let actorViewController = child as? ActorViewController {
+//                actorViewController.actor = self.actor
+//            } else if let coursesViewController = child as? TeacherCoursesTableViewController {
+//                coursesViewController.actor = self.actor
+//            }
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         for child in childViewControllers {
-            if let actorViewController = child as? ActorViewController {
-                actorViewController.actor = self.actor
-            } else if let coursesViewController = child as? TeacherCoursesTableViewController {
+            if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesTableViewController {
                 coursesViewController.actor = self.actor
+            } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
+                actorViewController.actor = self.actor
             }
         }
     }

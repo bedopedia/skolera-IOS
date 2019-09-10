@@ -35,7 +35,7 @@ class ChatViewController: BaseChatViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false    //contact teacher nvc
         self.title = chatName
         self.messagesSelector.delegate = self
         self.chatItemsDecorator = DemoChatItemsDecorator(messagesSelector: self.messagesSelector)
@@ -45,6 +45,11 @@ class ChatViewController: BaseChatViewController {
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
         setThreadSeen()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false    //contact teacher nvc
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,6 +65,7 @@ class ChatViewController: BaseChatViewController {
         
     }
     
+   
     var chatInputPresenter: BasicChatInputBarPresenter!
     override func createChatInputView() -> UIView {
         let chatInputView = ChatInputBar.loadNib()

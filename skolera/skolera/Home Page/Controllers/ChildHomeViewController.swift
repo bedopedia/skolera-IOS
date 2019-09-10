@@ -14,7 +14,7 @@ import Firebase
 
 class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var moreView: UIView!
+    @IBOutlet weak var moreView: UIView!    //home
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var threadsView: UIView!
     @IBOutlet weak var announcementsView: UIView!
@@ -193,6 +193,13 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectSecondTab(){
+        if threadsView.isHidden == false {
+            for child in childViewControllers {
+                if let threadsNvc = child as? ContactTeacherNVC {
+                    threadsNvc.popToRootViewController(animated: false)
+                }
+            }
+        }
         unSelectAllTabs()
         if isParent() {
             rightButton.isHidden = false
