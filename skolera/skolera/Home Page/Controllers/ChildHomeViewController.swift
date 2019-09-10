@@ -51,15 +51,6 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
         }
         leftButton.setImage(leftButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let childVc = childViewControllers[0] as? ChildProfileViewController {
-//            debugPrint("::::::::::::::::::\(childViewControllers)")
-            childVc.child = self.child
-            childVc.assignmentsText = self.assignmentsText
-            childVc.quizzesText = self.quizzesText
-            childVc.eventsText = self.eventsText
-            childVc.addChildImage()
-            childVc.addChildData()
-        }
         if isParent() {
             selectFourthTab()
             firstLabel.text = "Announcments".localized
@@ -85,6 +76,15 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        if let childNvc = childViewControllers[0] as? ChildProfileFeaturesNVC, let childVc = childNvc.viewControllers[0] as? ChildProfileViewController{
+            //            debugPrint("::::::::::::::::::\(childViewControllers)")
+            childVc.child = self.child
+            childVc.assignmentsText = self.assignmentsText
+            childVc.quizzesText = self.quizzesText
+            childVc.eventsText = self.eventsText
+            childVc.addChildImage()
+            childVc.addChildData()
+        }
     }
     
     @IBAction func leftAction() {

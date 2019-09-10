@@ -139,7 +139,7 @@ class ActorFeaturesTableViewController: UITableViewController {
 //            
 //            self.navigationController?.pushViewController(threadsVC, animated: true)
 //        } else {
-//            let announcementsVc = AnnouncementTableViewController.instantiate(fromAppStoryboard: .Announcements)
+//            let announcementsVc = AnnouncementTableViewController.instantiate(fromAppStoryboard: .Announcements) //might need to be changed to open from the AnncouncementsTableViewNVC
 //            
 //            self.navigationController?.pushViewController(announcementsVc, animated: true)
 //        }

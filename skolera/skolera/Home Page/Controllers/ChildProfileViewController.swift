@@ -79,7 +79,7 @@ class ChildProfileViewController: UIViewController {
         childImageOuterView.layer.shadowOpacity = 0.5
         childImageOuterView.layer.shadowOffset = CGSize.zero
         childImageOuterView.layer.shadowRadius = 10
-        childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect: childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
+        childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect:  childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
         //gets inner child image view
         let childImageView = UIImageView(frame: childImageOuterView.bounds)
         childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 32)
@@ -142,10 +142,13 @@ class ChildProfileViewController: UIViewController {
     
     @IBAction func openThreads(){
         
-        let threadsVC = ContactTeacherViewController.instantiate(fromAppStoryboard: .Threads)
-        threadsVC.child = self.child
-        
-        self.navigationController?.pushViewController(threadsVC, animated: true)
+        if let threadsNvc = childViewControllers[0] as? ContactTeacherNVC {
+            let threadsVC = ContactTeacherViewController.instantiate(fromAppStoryboard: .Threads)
+            threadsVC.child = self.child
+//            self.navigationController?.pushViewController(threadsVC, animated: true)
+            threadsNvc.pushViewController(threadsVC, animated: true)
+        }
+  
     }
     
     func showChangeLanguageConfirmation(language: Language){
