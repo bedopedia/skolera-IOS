@@ -42,6 +42,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.threads = []
+        self.threadsTableView.reloadData()
         getThreads()
     }
     
@@ -170,6 +172,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         SVProgressHUD.show(withStatus: "Loading".localized)
         DispatchQueue.global(qos: .userInitiated).async {
             // Bounce back to the main thread to update the UI
+            
             let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
             var messages: [ChatItemProtocol] = []
             let threadsMessages = self.threads[indexPath.row].messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
@@ -240,7 +243,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             
             //        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })
             
-            
             let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
             chatVC.dataSource = dataSource
             let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
@@ -252,13 +254,21 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             DispatchQueue.main.async {
                 SVProgressHUD.dismiss()
                 self.navigationController?.isNavigationBarHidden = false
-                self.navigationController?.pushViewController(chatVC, animated: true)
+//                self.navigationController?.pushViewController(chatVC, animated: true)
+                self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
             }
         }
         
     }
     
     @IBAction func createNewThread(){
+        debugPrint(childViewControllers)
+//        if let childNvc = childViewControllers[0] as? ContactTeacherNVC {
+//            let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
+//            newMessageVC.child = self.child
+//            childNvc.pushViewController(newMessageVC, animated: true)
+//        }
+        
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
         newMessageVC.child = self.child
         self.navigationController?.pushViewController(newMessageVC, animated: true)

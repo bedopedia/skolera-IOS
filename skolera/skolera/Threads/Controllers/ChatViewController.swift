@@ -35,7 +35,7 @@ class ChatViewController: BaseChatViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         self.title = chatName
         self.messagesSelector.delegate = self
         self.chatItemsDecorator = DemoChatItemsDecorator(messagesSelector: self.messagesSelector)

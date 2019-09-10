@@ -132,9 +132,14 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func openNewMessage() {
-        let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        newMessageVC.child = self.child
-        self.navigationController?.pushViewController(newMessageVC, animated: true)
+        for child in childViewControllers {
+            if let contactTeacherNvc = child as? ContactTeacherNVC {
+                let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
+                newMessageVC.child = self.child
+                contactTeacherNvc.pushViewController(newMessageVC, animated: true)
+            }
+        }
+        
     }
     
     private func unSelectAllTabs(){
@@ -167,6 +172,13 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectFirstTab(){
+        if moreView.isHidden == false {
+            for child in childViewControllers {
+                if let childProfileNvc = child as? ChildProfileFeaturesNVC {
+                    childProfileNvc.popToRootViewController(animated: false)
+                }
+            }
+        }
         unSelectAllTabs()
         if isParent() {
             announcementsView.isHidden = false

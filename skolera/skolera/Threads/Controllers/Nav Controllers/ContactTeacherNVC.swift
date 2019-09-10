@@ -13,6 +13,7 @@ class ContactTeacherNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.isHidden = true
+        debugPrint("contact teacher nvc")
         // Do any additional setup after loading the view.
     }
     
