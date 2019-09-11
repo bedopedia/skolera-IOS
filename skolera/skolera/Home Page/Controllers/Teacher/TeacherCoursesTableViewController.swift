@@ -38,7 +38,19 @@ class TeacherCoursesTableViewController: UITableViewController {
         if actor != nil {
             getCourses()
         }
-        
+        super.viewWillAppear(animated)
+        if let parentVC = parent?.parent as? TeacherContainerViewController {
+            parentVC.headerHeightConstraint.constant = 60
+            parentVC.headerView.isHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let parentVc = parent?.parent as? TeacherContainerViewController {
+            parentVc.headerHeightConstraint.constant = 0
+            parentVc.headerView.isHidden = true
+        }
     }
 
     // MARK: - Table view data source

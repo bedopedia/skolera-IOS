@@ -15,6 +15,9 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        debugPrint(parent)
+        debugPrint(parent?.parent)
+        debugPrint(parent?.parent?.parent)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

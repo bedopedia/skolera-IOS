@@ -28,6 +28,8 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var menuLabel: UILabel!
     @IBOutlet weak var menuContainer: UIView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
 
     
@@ -58,6 +60,10 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        debugPrint("view will disappear")
+    }
+
     private func unSelectTabs(){
         coursesButton.setImage(#imageLiteral(resourceName: "studentBookIcon"), for: .normal)
         coursesLabel.textColor = .black

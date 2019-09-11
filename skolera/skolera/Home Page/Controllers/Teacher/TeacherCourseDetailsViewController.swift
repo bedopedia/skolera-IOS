@@ -28,9 +28,23 @@ class TeacherCourseDetailsViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.navigationController?.isNavigationBarHidden = true
+//        if let parentVc = parent?.parent as? TeacherContainerViewController {
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
+//        }
+//    }
+//   
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        if let parentVC = parent?.parent as? TeacherContainerViewController {
+//            parentVC.headerHeightConstraint.constant = 60
+//            parentVC.headerView.isHidden = false
+//        }
+//    }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)

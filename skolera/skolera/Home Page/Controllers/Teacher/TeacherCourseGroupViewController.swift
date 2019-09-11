@@ -25,6 +25,23 @@ class TeacherCourseGroupViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        debugPrint("parent: \(parent), \(parent?.parent)")
+//        if let parentVc = parent?.parent as? TeacherContainerViewController {
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
+//        }
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        debugPrint(parent?.parent)
+//        if let parentVC = parent?.parent as? TeacherContainerViewController {
+//            parentVC.headerHeightConstraint.constant = 60
+//            parentVC.headerView.isHidden = false
+//        }
+//    }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
@@ -54,6 +71,7 @@ extension TeacherCourseGroupViewController: UITableViewDelegate, UITableViewData
         let courseGroupsVC: TeacherCourseDetailsViewController = TeacherCourseDetailsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         courseGroupsVC.courseGroup = course.courseGroups[indexPath.row]
         courseGroupsVC.course = course
+//        debugPrint(self.navigationController)
         self.navigationController?.pushViewController(courseGroupsVC, animated: true)
     }
   
