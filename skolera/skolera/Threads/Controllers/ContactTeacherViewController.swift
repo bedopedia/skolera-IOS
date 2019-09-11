@@ -61,15 +61,14 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     func getThreads()
     {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        self.threads = []
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_THREADS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.dismiss()
             switch response.result{
-                
             case .success(_):
+                self.threads = []
                 if let result = response.result.value as? [String: AnyObject]
                 {
                     debugPrint(result)
