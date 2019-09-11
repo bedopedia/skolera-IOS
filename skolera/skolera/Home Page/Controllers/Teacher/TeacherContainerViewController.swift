@@ -77,7 +77,13 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectCourses() {
-        
+        if coursesContainer.isHidden == false {
+            for child in childViewControllers {
+                if let teacherCoursesTableViewNvc = child as? TeacherCoursesTableViewNVC {
+                    teacherCoursesTableViewNvc.popToRootViewController(animated: false)
+                }
+            }
+        }
         unSelectTabs()
         coursesButton.setImage(#imageLiteral(resourceName: "teacherActiveCourse"), for: .normal)
         coursesLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)
@@ -85,6 +91,13 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectAnnouncements() {
+        if announcmentContainer.isHidden == false {
+            for child in childViewControllers {
+                if let announcementsNvc = child as? AnnouncementsTableViewNVC {
+                    announcementsNvc.popToRootViewController(animated: false)
+                }
+            }
+        }
         unSelectTabs()
         announcmentsButton.setImage(#imageLiteral(resourceName: "teacherActiveAnnouncment"), for: .normal)
         announcmentsLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)
@@ -106,6 +119,13 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectMenu() {
+        if menuContainer.isHidden == false {
+            for child in childViewControllers {
+                if let actorNvc = child as? ActorNvc {
+                    actorNvc.popToRootViewController(animated: false)
+                }
+            }
+        }
         unSelectTabs()
         menuButton.setImage(#imageLiteral(resourceName: "teacherActiveMenu"), for: .normal)
         menuLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)
