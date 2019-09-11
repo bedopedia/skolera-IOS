@@ -28,9 +28,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var menuLabel: UILabel!
     @IBOutlet weak var menuContainer: UIView!
-    
 
-    
     var actor: Actor!
     
     override func viewDidLoad() {
