@@ -77,6 +77,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectCourses() {
+        
         unSelectTabs()
         coursesButton.setImage(#imageLiteral(resourceName: "teacherActiveCourse"), for: .normal)
         coursesLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)

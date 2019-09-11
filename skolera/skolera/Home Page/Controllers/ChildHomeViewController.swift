@@ -179,8 +179,17 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                         childProfileNvc.popToRootViewController(animated: false)
                     }
                 }
-            } else {
-                // announcements ncv pop to root
+            }
+        }
+        if announcementsView.isHidden == false {
+            if isParent() {
+                if announcementsView.isHidden == false {
+                    for child in childViewControllers {
+                        if let announcementsNvc = child as? AnnouncementsTableViewNVC {
+                            announcementsNvc.popToRootViewController(animated: false)
+                        }
+                    }
+                }
             }
         }
         unSelectAllTabs()
@@ -242,8 +251,15 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                         childProfileNvc.popToRootViewController(animated: false)
                     }
                 }
-            } else {
-                // child announcements ncv pop to root
+            }
+        }
+        if announcementsView.isHidden == false {
+            if !isParent() {
+                for child in childViewControllers {
+                    if let announcementsNvc = child as? AnnouncementsTableViewNVC {
+                        announcementsNvc.popToRootViewController(animated: false)
+                    }
+                }
             }
         }
         unSelectAllTabs()
