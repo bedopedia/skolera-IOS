@@ -59,13 +59,27 @@ class ChildProfileViewController: UIViewController {
             }
         }
 //        addChildImage()
-        
-        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let parentVC = parent?.parent as? ChildHomeViewController {
+            parentVC.headerHeightConstraint.constant = 0
+            parentVC.headerView.isHidden = true
+        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
+        super.viewWillAppear(animated)
+        debugPrint(parent?.parent)
+        if let parentVC = parent?.parent as? ChildHomeViewController {
+            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+            parentVC.headerView.isHidden = false
+        }
+        
+        
+        //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
     }
 
     //MARK: - methods

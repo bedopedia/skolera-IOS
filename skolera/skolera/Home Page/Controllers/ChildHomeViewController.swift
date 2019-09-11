@@ -32,6 +32,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
