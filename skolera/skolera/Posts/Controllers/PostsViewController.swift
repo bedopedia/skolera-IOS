@@ -65,7 +65,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let postsVC = CoursesPostsViewController.instantiate(fromAppStoryboard: .Posts)
         postsVC.child = self.child
         postsVC.courseName = courses[indexPath.row].courseName ?? ""
-        postsVC.courseId = courses[indexPath.row].courseId!
+        postsVC.courseId = courses[indexPath.row].id!
         self.navigationController?.pushViewController(postsVC, animated: true)
     }
 
