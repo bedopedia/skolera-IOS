@@ -227,6 +227,9 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
             let start: Date = Date(timeIntervalSince1970: TimeInterval(event.startDate!))
             let end: Date = Date(timeIntervalSince1970: TimeInterval(event.endDate!))
             
+            guard start < end else {
+                return false
+            }
             let dateInterval: DateInterval = DateInterval(start: start, end: end)
             
 //            let dateIsInInterval: Bool = dateInterval.contains(date) // true

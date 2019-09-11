@@ -119,8 +119,12 @@ class CreateEventViewController: UIViewController {
             isMissingData = true
             notesBottomBar.backgroundColor = .red
         }
-        
-        if !isMissingData {
+        if !isMissingData{
+            guard whenISODate < toISODate else {
+                whenBottomBar.backgroundColor = .red
+                toButtomBar.backgroundColor = .red
+                return
+            }
             eventsParameters["type"] = "personal"
             eventsParameters["all_day"] = false
             eventsParameters["cancel"] = false
