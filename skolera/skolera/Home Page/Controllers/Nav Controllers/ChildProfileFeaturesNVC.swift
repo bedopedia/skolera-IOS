@@ -12,10 +12,9 @@ class ChildProfileFeaturesNVC: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.isNavigationBarHidden = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+//        self.interactivePopGestureRecognizer?.isEnabled = true
+//        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
     }
     
 
