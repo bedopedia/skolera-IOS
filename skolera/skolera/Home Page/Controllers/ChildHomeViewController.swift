@@ -173,10 +173,14 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func selectFirstTab(){
         if moreView.isHidden == false {
-            for child in childViewControllers {
-                if let childProfileNvc = child as? ChildProfileFeaturesNVC {
-                    childProfileNvc.popToRootViewController(animated: false)
+            if !isParent() {
+                for child in childViewControllers {
+                    if let childProfileNvc = child as? ChildProfileFeaturesNVC {
+                        childProfileNvc.popToRootViewController(animated: false)
+                    }
                 }
+            } else {
+                // announcements ncv pop to root
             }
         }
         unSelectAllTabs()
@@ -227,12 +231,21 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         } else {
             thirdLabel.textColor = #colorLiteral(red: 0.8744605184, green: 0.4455567598, blue: 0.3585537672, alpha: 1)
             thirdButton.setImage(#imageLiteral(resourceName: "studentActiveNotificationIcon"), for: .normal)
-            
         }
-        
     }
     
     @IBAction func selectFourthTab(){
+        if moreView.isHidden == false {
+            if isParent() {
+                for child in childViewControllers {
+                    if let childProfileNvc = child as? ChildProfileFeaturesNVC {
+                        childProfileNvc.popToRootViewController(animated: false)
+                    }
+                }
+            } else {
+                // child announcements ncv pop to root
+            }
+        }
         unSelectAllTabs()
         fourthLabel.isHidden = false
         if isParent() {
