@@ -14,8 +14,6 @@ class ChildProfileFeaturesNVC: UINavigationController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.isNavigationBarHidden = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
     }
     
 

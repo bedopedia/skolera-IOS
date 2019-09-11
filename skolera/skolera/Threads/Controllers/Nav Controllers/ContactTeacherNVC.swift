@@ -13,8 +13,7 @@ class ContactTeacherNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.isHidden = true
-        self.interactivePopGestureRecognizer?.isEnabled = true
-        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        debugPrint("contact teacher nvc")
         // Do any additional setup after loading the view.
     }
     

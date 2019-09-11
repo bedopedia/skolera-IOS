@@ -13,8 +13,7 @@ class TeacherCoursesTableViewNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isNavigationBarHidden = true
-        self.interactivePopGestureRecognizer?.isEnabled = true
-        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        // Do any additional setup after loading the view.
     }
     
 
