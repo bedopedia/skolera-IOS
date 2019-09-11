@@ -77,8 +77,6 @@ class ChildProfileViewController: UIViewController {
             parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
             parentVC.headerView.isHidden = false
         }
-        
-        
         //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
     }
 
