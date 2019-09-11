@@ -112,7 +112,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         postVC.child = self.child
         postVC.courseName = self.courseName
         postVC.post = posts[indexPath.row]
-        self.navigationController?.pushViewController(postVC, animated: true)
+        self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
+//        self.navigationController?.pushViewController(postVC, animated: true)
     }
 
 }
