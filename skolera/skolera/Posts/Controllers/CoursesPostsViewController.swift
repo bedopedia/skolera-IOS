@@ -66,7 +66,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         let createPost = CreatePostViewController.instantiate(fromAppStoryboard: .Posts)
         createPost.courseGroup = courseGroup
 //        self.present(createPost, animated: true, completion: nil)
-        self.navigationController?.navigationController?.pushViewController(createPost, animated: true)
+        self.navigationController?.pushViewController(createPost, animated: true)
     }
     
     func getPosts(page: Int = 1){

@@ -35,7 +35,12 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
     }
 
     @IBAction func close(){
-        self.dismiss(animated: true, completion: nil)
+        if gradeTextField.isFirstResponder || feedbackTextView.isFirstResponder {
+            self.view.endEditing(true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func submit(){

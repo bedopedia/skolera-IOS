@@ -48,7 +48,7 @@ class ActorViewController: UIViewController {
         super.viewDidAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
         if let parentVC = parent?.parent as? TeacherContainerViewController {
-            parentVC.headerHeightConstraint.constant = 60
+            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
             parentVC.headerView.isHidden = false
         }
     }

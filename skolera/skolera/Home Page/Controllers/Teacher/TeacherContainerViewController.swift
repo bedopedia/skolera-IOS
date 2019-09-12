@@ -83,6 +83,17 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectCourses() {
+        for child in childViewControllers {
+            if let nvc = child as? TeacherCoursesTableViewNVC {
+                if nvc.viewControllers.count == 1 {
+                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                    self.headerView.isHidden = false
+                } else {
+                    self.headerHeightConstraint.constant = 0
+                    self.headerView.isHidden = true
+                }
+            }
+        }
         if coursesContainer.isHidden == false {
             for child in childViewControllers {
                 if let teacherCoursesTableViewNvc = child as? TeacherCoursesTableViewNVC {
@@ -97,6 +108,17 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectAnnouncements() {
+        for child in childViewControllers {
+            if let nvc = child as? AnnouncementsTableViewNVC {
+                if nvc.viewControllers.count == 1 {
+                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                    self.headerView.isHidden = false
+                } else {
+                    self.headerHeightConstraint.constant = 0
+                    self.headerView.isHidden = true
+                }
+            }
+        }
         if announcmentContainer.isHidden == false {
             for child in childViewControllers {
                 if let announcementsNvc = child as? AnnouncementsTableViewNVC {
@@ -111,6 +133,17 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectMessages() {
+        for child in childViewControllers {
+            if let nvc = child as? ContactTeacherNVC {
+                if nvc.viewControllers.count == 1 {
+                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                    self.headerView.isHidden = false
+                } else {
+                    self.headerHeightConstraint.constant = 0
+                    self.headerView.isHidden = true
+                }
+            }
+        }
         unSelectTabs()
         messagesButton.setImage(#imageLiteral(resourceName: "teacherActiveMessage"), for: .normal)
         messagesLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)
@@ -118,6 +151,8 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectNotification() {
+        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+        self.headerView.isHidden = false
         for child in childViewControllers {
             if let notificationsTableViewController = child as? NotificationsTableViewController {
                 notificationsTableViewController.setNotificationsSeen()
@@ -131,6 +166,17 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectMenu() {
+        for child in childViewControllers {
+            if let nvc = child as? ActorNvc {
+                if nvc.viewControllers.count == 1 {
+                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                    self.headerView.isHidden = false
+                } else {
+                    self.headerHeightConstraint.constant = 0
+                    self.headerView.isHidden = true
+                }
+            }
+        }
         if menuContainer.isHidden == false {
             for child in childViewControllers {
                 if let actorNvc = child as? ActorNvc {

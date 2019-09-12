@@ -163,6 +163,33 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectFirstTab(){
+        
+        for child in childViewControllers {
+            
+            if isParent() {
+                if let nvc = child as? AnnouncementsTableViewNVC {
+                    if nvc.viewControllers.count == 1 {
+                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                        self.headerView.isHidden = false
+                    } else {
+                        self.headerHeightConstraint.constant = 0
+                        self.headerView.isHidden = true
+                    }
+                }
+            } else {
+                if let nvc = child as? ChildProfileFeaturesNVC {
+                    if nvc.viewControllers.count == 1 {
+                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                        self.headerView.isHidden = false
+                    } else {
+                        self.headerHeightConstraint.constant = 0
+                        self.headerView.isHidden = true
+                    }
+                }
+            }
+            
+        }
+        
         if !moreView.isHidden {
             for child in childViewControllers {
                 if let childProfileNvc = child as? ChildProfileFeaturesNVC {
@@ -191,6 +218,17 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectSecondTab(){
+        for child in childViewControllers {
+            if let nvc = child as? ContactTeacherNVC {
+                if nvc.viewControllers.count == 1 {
+                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                    self.headerView.isHidden = false
+                } else {
+                    self.headerHeightConstraint.constant = 0
+                    self.headerView.isHidden = true
+                }
+            }
+        }
         if !threadsView.isHidden {
             for child in childViewControllers {
                 if let threadsNvc = child as? ContactTeacherNVC {
@@ -217,6 +255,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     @IBAction func selectThirdTab(){
+        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+        self.headerView.isHidden = false
         unSelectAllTabs()
         notificationView.isHidden = false
         for child in childViewControllers {
@@ -235,6 +275,32 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectFourthTab(){
+        
+        for child in childViewControllers {
+            
+            if !isParent() {
+                if let nvc = child as? AnnouncementsTableViewNVC {
+                    if nvc.viewControllers.count == 1 {
+                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                        self.headerView.isHidden = false
+                    } else {
+                        self.headerHeightConstraint.constant = 0
+                        self.headerView.isHidden = true
+                    }
+                }
+            } else {
+                if let nvc = child as? ChildProfileFeaturesNVC {
+                    if nvc.viewControllers.count == 1 {
+                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+                        self.headerView.isHidden = false
+                    } else {
+                        self.headerHeightConstraint.constant = 0
+                        self.headerView.isHidden = true
+                    }
+                }
+            }
+            
+        }
         if moreView.isHidden == false {
             if isParent() {
                 for child in childViewControllers {
