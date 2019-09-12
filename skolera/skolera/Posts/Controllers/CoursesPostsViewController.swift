@@ -36,9 +36,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
-        
         if isTeacher {
             childImageView.isHidden = true
+            let footerView = UIView.init(frame: .init(x: 0, y: 0, width: 10, height: 60))
+            footerView.backgroundColor = .clear
+            tableView.tableFooterView = footerView
         } else {
             createPostButton.isHidden = true
             if let child = child{
