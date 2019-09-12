@@ -36,9 +36,8 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        debugPrint("parent: \(parent), \(parent?.parent)")
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let parentVc = parent?.parent as? ChildHomeViewController {
             parentVc.headerHeightConstraint.constant = 0
             parentVc.headerView.isHidden = true
@@ -46,9 +45,8 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
 //        self.navigationController?.isNavigationBarHidden = true
     }
  
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        debugPrint(parent?.parent)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
             parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
             parentVC.headerView.isHidden = false

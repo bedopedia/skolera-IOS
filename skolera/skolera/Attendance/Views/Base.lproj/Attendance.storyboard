@@ -248,7 +248,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rdj-kX-yYI">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7.5" height="9"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -267,6 +267,7 @@
                                                     <constraint firstItem="LP2-Zd-stY" firstAttribute="leading" secondItem="QpS-j6-39R" secondAttribute="leading" id="Qho-Pm-sgO"/>
                                                     <constraint firstItem="LP2-Zd-stY" firstAttribute="height" secondItem="QpS-j6-39R" secondAttribute="height" id="Z8k-sT-Acv"/>
                                                     <constraint firstItem="rdj-kX-yYI" firstAttribute="top" secondItem="QpS-j6-39R" secondAttribute="top" constant="13" id="a1v-PK-p2v"/>
+                                                    <constraint firstItem="LP2-Zd-stY" firstAttribute="centerY" secondItem="rdj-kX-yYI" secondAttribute="bottom" constant="2" id="pJa-eF-UnS"/>
                                                     <constraint firstItem="rdj-kX-yYI" firstAttribute="centerX" secondItem="QpS-j6-39R" secondAttribute="centerX" id="yik-c9-BPW"/>
                                                     <constraint firstItem="LP2-Zd-stY" firstAttribute="top" secondItem="QpS-j6-39R" secondAttribute="top" id="zQV-0S-EbB"/>
                                                 </constraints>
@@ -293,7 +294,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuh-dC-iNz">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7.5" height="9"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -306,6 +307,7 @@
                                                 <constraints>
                                                     <constraint firstItem="iuh-dC-iNz" firstAttribute="centerX" secondItem="a8s-YA-vfL" secondAttribute="centerX" id="4YK-TA-v5S"/>
                                                     <constraint firstItem="bdv-GZ-81e" firstAttribute="top" secondItem="a8s-YA-vfL" secondAttribute="top" id="7LY-wI-uqW"/>
+                                                    <constraint firstItem="bdv-GZ-81e" firstAttribute="centerY" secondItem="iuh-dC-iNz" secondAttribute="bottom" constant="2" id="8Ep-Vl-joo"/>
                                                     <constraint firstAttribute="bottom" secondItem="6rb-80-0ei" secondAttribute="bottom" id="8GT-7w-oyP"/>
                                                     <constraint firstItem="6rb-80-0ei" firstAttribute="height" secondItem="a8s-YA-vfL" secondAttribute="height" multiplier="0.1" id="XsS-Vd-MHk"/>
                                                     <constraint firstItem="bdv-GZ-81e" firstAttribute="width" secondItem="a8s-YA-vfL" secondAttribute="width" id="ZR6-V2-pAU"/>
@@ -338,7 +340,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXb-tY-j2I">
-                                                        <rect key="frame" x="59" y="13" width="7.5" height="15.5"/>
+                                                        <rect key="frame" x="59" y="13" width="7.5" height="9"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                         </accessibility>
@@ -359,6 +361,7 @@
                                                     <constraint firstItem="cT5-7h-f4r" firstAttribute="top" secondItem="Pjq-Op-2ko" secondAttribute="top" id="XJx-dx-Z7X"/>
                                                     <constraint firstAttribute="bottom" secondItem="tKG-s1-J3s" secondAttribute="bottom" id="ZyE-UZ-cxk"/>
                                                     <constraint firstItem="cT5-7h-f4r" firstAttribute="width" secondItem="Pjq-Op-2ko" secondAttribute="width" id="gx4-V6-Kx0"/>
+                                                    <constraint firstItem="cT5-7h-f4r" firstAttribute="centerY" secondItem="UXb-tY-j2I" secondAttribute="bottom" constant="2" id="kp8-wO-ecm"/>
                                                 </constraints>
                                             </view>
                                         </subviews>

@@ -44,9 +44,6 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if !isParent() {
             leftButton.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
             rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
@@ -66,19 +63,11 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             fourthLabel.text = "Announcments".localized
             
         }
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        
-        navigationItem.backBarButtonItem = backItem
-        navigationItem.backBarButtonItem?.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
-        
         headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
         if let childNvc = childViewControllers[0] as? ChildProfileFeaturesNVC, let childVc = childNvc.viewControllers[0] as? ChildProfileViewController{
-            //            debugPrint("::::::::::::::::::\(childViewControllers)")
             childVc.child = self.child
             childVc.assignmentsText = self.assignmentsText
             childVc.quizzesText = self.quizzesText
@@ -173,23 +162,17 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectFirstTab(){
-        if moreView.isHidden == false {
-            if !isParent() {
-                for child in childViewControllers {
-                    if let childProfileNvc = child as? ChildProfileFeaturesNVC {
-                        childProfileNvc.popToRootViewController(animated: false)
-                    }
+        if !moreView.isHidden {
+            for child in childViewControllers {
+                if let childProfileNvc = child as? ChildProfileFeaturesNVC {
+                    childProfileNvc.popToRootViewController(animated: false)
                 }
             }
         }
-        if announcementsView.isHidden == false {
-            if isParent() {
-                if announcementsView.isHidden == false {
-                    for child in childViewControllers {
-                        if let announcementsNvc = child as? AnnouncementsTableViewNVC {
-                            announcementsNvc.popToRootViewController(animated: false)
-                        }
-                    }
+        if !announcementsView.isHidden {
+            for child in childViewControllers {
+                if let announcementsNvc = child as? AnnouncementsTableViewNVC {
+                    announcementsNvc.popToRootViewController(animated: false)
                 }
             }
         }
@@ -207,7 +190,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func selectSecondTab(){
-        if threadsView.isHidden == false {
+        if !threadsView.isHidden {
             for child in childViewControllers {
                 if let threadsNvc = child as? ContactTeacherNVC {
                     threadsNvc.popToRootViewController(animated: false)

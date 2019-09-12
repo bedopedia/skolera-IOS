@@ -41,6 +41,8 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         if isParent() {
             let backItem = UIBarButtonItem()
             navigationItem.backBarButtonItem = backItem
@@ -61,8 +63,8 @@ class ChildProfileViewController: UIViewController {
 //        addChildImage()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
             parentVC.headerHeightConstraint.constant = 0
             parentVC.headerView.isHidden = true
@@ -70,9 +72,8 @@ class ChildProfileViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        debugPrint(parent?.parent)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
             parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
             parentVC.headerView.isHidden = false

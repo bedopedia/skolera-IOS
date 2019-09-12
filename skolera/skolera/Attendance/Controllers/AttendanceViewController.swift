@@ -63,11 +63,13 @@ class AttendanceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layoutIfNeeded()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension
         loadLateDays()
         loadExcusedDays()
         loadAbsentDays()
+        
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         calendarView.scrollToDate(today, animateScroll: false)
@@ -75,9 +77,6 @@ class AttendanceViewController: UIViewController {
         calendarView.calendarDelegate = self
         calendarView.semanticContentAttribute = .forceLeftToRight
   
-        
-        
-        
         offDays.insert(.friday)
         offDays.insert(.saturday)
         setupWeekDaysLabels()
@@ -87,7 +86,6 @@ class AttendanceViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-       
     }
     
     @IBAction func back(){

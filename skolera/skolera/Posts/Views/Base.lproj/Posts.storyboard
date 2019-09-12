@@ -90,7 +90,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-8Y-Hx3">
-                                                    <rect key="frame" x="83" y="81.5" width="273" height="12.5"/>
+                                                    <rect key="frame" x="83" y="81.5" width="253" height="12.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -106,7 +106,7 @@
                                                 <constraint firstItem="zTY-LY-3Ic" firstAttribute="top" secondItem="xyX-Ws-iua" secondAttribute="top" constant="16" id="KRh-hp-gE3"/>
                                                 <constraint firstItem="tGp-Ur-h1v" firstAttribute="leading" secondItem="vnV-nx-HM3" secondAttribute="leading" id="NFn-kw-zrl"/>
                                                 <constraint firstItem="Uhg-Hj-8x2" firstAttribute="centerY" secondItem="xyX-Ws-iua" secondAttribute="centerY" id="Nwt-jj-D5d"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="PgI-8Y-Hx3" secondAttribute="trailing" constant="12" id="VW5-nR-HPL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="PgI-8Y-Hx3" secondAttribute="trailing" constant="32" id="VW5-nR-HPL"/>
                                                 <constraint firstItem="2Ug-fF-cLe" firstAttribute="height" secondItem="zTY-LY-3Ic" secondAttribute="height" id="Vxw-bE-NbE"/>
                                                 <constraint firstItem="2Ug-fF-cLe" firstAttribute="width" secondItem="zTY-LY-3Ic" secondAttribute="width" id="ZbQ-fu-Uvg"/>
                                                 <constraint firstItem="vnV-nx-HM3" firstAttribute="leading" secondItem="zTY-LY-3Ic" secondAttribute="trailing" constant="12" id="a9Z-AU-hCC"/>
@@ -427,11 +427,6 @@ attachment.</string>
                             <constraint firstItem="i2B-7c-407" firstAttribute="top" secondItem="hFA-wn-esq" secondAttribute="bottom" constant="6" id="rZl-pb-IzV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JsS-jc-y6E"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="24e-5Y-EDk"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="addAttachmentsView" destination="hhC-Nu-gpo" id="K1q-qU-nuz"/>

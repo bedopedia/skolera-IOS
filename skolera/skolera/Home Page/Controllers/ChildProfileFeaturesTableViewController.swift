@@ -72,6 +72,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         SVProgressHUD.setDefaultMaskType(.clear)
         setProgressBarProperties()
         
+        
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
@@ -321,19 +322,18 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
             }
         }
         if !disableTimeTable {
-            if flag {
+//            if flag {
                 let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
                 ttvc.child = child
                 ttvc.timeslots = timeslots
                 self.navigationController?.pushViewController(ttvc, animated: true)
-            } else {
-                let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-                    NSLog("The \"OK\" alert occured.")
-                }))
-                self.present(alert, animated: true, completion: nil)
-
-            }
+//            } else {
+//                let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+//                    NSLog("The \"OK\" alert occured.")
+//                }))
+//                self.present(alert, animated: true, completion: nil)
+//            }
             
         } else {
             let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)

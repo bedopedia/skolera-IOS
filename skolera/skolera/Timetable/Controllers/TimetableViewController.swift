@@ -97,16 +97,13 @@ class TimetableViewController: UIViewController, EventDataSource{
     private func getTodayEvents() -> [EventDescriptor]  //sets ui
     {
         var result =  [EventDescriptor]()
-        if timeslots != nil
-        {
+        if timeslots != nil {
             let slots = timeslots.filter { (timeslot) -> Bool in
                 timeslot.day == getTodayName()
-
             }
             //random index to start from
             var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))
-            for timeslot in slots
-            {
+            for timeslot in slots {
                 let event = Event()
                 event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today) + 1)))
                 event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today) + 1)))

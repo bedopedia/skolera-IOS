@@ -87,7 +87,7 @@ class QuizzesViewController: UIViewController {
     
     func getTeacherQuizzes() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getQuizzesForTeacherApi { (isSuccess, statusCode, value, error) in
+        getQuizzesForTeacherApi(courseGroupId: courseGroupId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {

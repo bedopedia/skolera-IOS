@@ -63,12 +63,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         debugPrint("create post")
         let createPost = CreatePostViewController.instantiate(fromAppStoryboard: .Posts)
         createPost.courseGroup = courseGroup
-        self.present(createPost, animated: true, completion: nil)
+//        self.present(createPost, animated: true, completion: nil)
+        self.navigationController?.navigationController?.pushViewController(createPost, animated: true)
     }
     
     func getPosts(page: Int = 1){
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getPostsForCourseApi(page: page,courseId: courseId) { (isSuccess, statusCode, value, error) in
+        getPostsForCourseApi(page: page,courseId: courseGroup.id) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {

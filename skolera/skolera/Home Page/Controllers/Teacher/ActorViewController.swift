@@ -43,20 +43,17 @@ class ActorViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    
+  
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         if let parentVC = parent?.parent as? TeacherContainerViewController {
             parentVC.headerHeightConstraint.constant = 60
             parentVC.headerView.isHidden = false
         }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if let parentVc = parent?.parent as? TeacherContainerViewController {
             parentVc.headerHeightConstraint.constant = 0
             parentVc.headerView.isHidden = true

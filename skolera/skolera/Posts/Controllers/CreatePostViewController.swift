@@ -33,14 +33,15 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     }
     
     @IBAction func close() {
-        self.dismiss(animated: true, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func post() {
         debugPrint("create post")
         if !postContentTextView.text.isEmpty {
             SVProgressHUD.show(withStatus: "Loading".localized)
-            let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.courseId, "postable_type": "CourseGroup","video_preview": "",
+            let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.id, "postable_type": "CourseGroup","video_preview": "",
                                                     "videoURL": ""]]
             createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
                 SVProgressHUD.dismiss()
@@ -65,10 +66,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                 NSLog("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
-
         }
-        
-        
     }
     
     @IBAction func uploadFileButton() {

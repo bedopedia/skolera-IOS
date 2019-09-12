@@ -35,7 +35,7 @@ func getQuizzesForChildApi(childId: Int, courseId: Int, completion: @escaping ((
     }
 }
 
-func getQuizzesForTeacherApi(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func getQuizzesForTeacherApi(courseGroupId: Int,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = URL(string: GET_TEACHER_QUIZZES())!
         .appending("fields%5Bend_date%5D", value: "true")
@@ -46,7 +46,7 @@ func getQuizzesForTeacherApi(completion: @escaping ((Bool, Int, Any?, Error?) ->
         .appending("fields%5Bstart_date%5D", value: "true")
         .appending("fields%5Bstate%5D", value: "true")
         .appending("fields%5Bstudent_solve%5D", value: "true")
-        .appending("course_group_ids[]", value: "68")
+        .appending("course_group_ids[]", value: "(\(courseGroupId)")
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

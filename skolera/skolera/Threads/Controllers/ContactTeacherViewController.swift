@@ -43,21 +43,22 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        self.threads = []
-//        self.threadsTableView.reloadData()
+        if let parentVC = parent?.parent as? ChildHomeViewController {
+            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+            parentVC.headerView.isHidden = false
+        }
         getThreads()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         SVProgressHUD.dismiss()
+        if let parentVc = parent?.parent as? ChildHomeViewController {
+            parentVc.headerHeightConstraint.constant = 0
+            parentVc.headerView.isHidden = true
+        }
     }
-    
-    //    override func viewWillDisappear(_ animated: Bool) {
-    //        if child == nil {
-    //            self.navigationController?.isNavigationBarHidden = true
-    //        }
-    //    }
-    
+
     func getThreads()
     {
         SVProgressHUD.show(withStatus: "Loading".localized)

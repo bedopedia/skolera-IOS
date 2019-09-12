@@ -38,15 +38,19 @@ class TeacherCoursesTableViewController: UITableViewController {
         if actor != nil {
             getCourses()
         }
-        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        debugPrint(parent, parent?.parent)
         if let parentVC = parent?.parent as? TeacherContainerViewController {
             parentVC.headerHeightConstraint.constant = 60
             parentVC.headerView.isHidden = false
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if let parentVc = parent?.parent as? TeacherContainerViewController {
             parentVc.headerHeightConstraint.constant = 0
             parentVc.headerView.isHidden = true
