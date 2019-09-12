@@ -123,13 +123,18 @@ class CreateEventViewController: UIViewController {
             guard whenISODate < toISODate else {
                 whenBottomBar.backgroundColor = .red
                 toButtomBar.backgroundColor = .red
+                let alert = UIAlertController(title: "Skolera".localized, message: "Please enter correct dates".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                }))
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             eventsParameters["type"] = "personal"
             eventsParameters["all_day"] = false
             eventsParameters["cancel"] = false
             eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId!]]
-            var parameters = [ "event": eventsParameters ]
+            let parameters = [ "event": eventsParameters ]
             SVProgressHUD.show(withStatus: "Loading".localized)
             createEventsAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
                 SVProgressHUD.dismiss()

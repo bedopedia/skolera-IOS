@@ -18,7 +18,7 @@ let MISSING_PASSWORD = "Please enter password"
 let INVALID_USER_INFO = "Invalid email/password"
 let ERROR = "Error"
 let NO_INTERNET = "No internet connection"
-let SOMETHING_WRONG = "Something went wrong, please try again"
+let SOMETHING_WRONG = "Something went wrong, please try again".localized
 
 //Request Headers
 let ACCESS_TOKEN = "access-token"
