@@ -30,8 +30,8 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var menuContainer: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var notificationsDotView: UIView!
     
-
     
     var actor: Actor!
     
@@ -118,6 +118,12 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectNotification() {
+        for child in childViewControllers {
+            if let notificationsTableViewController = child as? NotificationsTableViewController {
+                notificationsTableViewController.setNotificationsSeen()
+            }
+        }
+        notificationsDotView.isHidden = true
         unSelectTabs()
         notificationsButton.setImage(#imageLiteral(resourceName: "teacherActiveNotification"), for: .normal)
         notificationsLabel.textColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8988257051, alpha: 1)

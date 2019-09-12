@@ -34,6 +34,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var notiificationsDotView: UIView!
     
     //MARK: - Variables
     var child: Child!
@@ -218,6 +219,12 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func selectThirdTab(){
         unSelectAllTabs()
         notificationView.isHidden = false
+        for child in childViewControllers {
+            if let notificationsTableViewController = child as? NotificationsTableViewController {
+                notificationsTableViewController.setNotificationsSeen()
+            }
+        }
+        notiificationsDotView.isHidden = true
         if isParent() {
             thirdLabel.textColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
             thirdButton.setImage(#imageLiteral(resourceName: "parentActiveNotificationIcon"), for: .normal)

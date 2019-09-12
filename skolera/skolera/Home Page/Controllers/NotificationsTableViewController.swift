@@ -23,7 +23,7 @@ class NotificationsTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         getNotifcations()
-        setNotificationsSeen()
+//        setNotificationsSeen()
     }
 
     // MARK: - Table view data source
@@ -32,6 +32,7 @@ class NotificationsTableViewController: UITableViewController {
     func setNotificationsSeen(){
         SVProgressHUD.show(withStatus: "Loading".localized)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
+            SVProgressHUD.dismiss()
             debugPrint("Notification is Seen")
         }
     }
