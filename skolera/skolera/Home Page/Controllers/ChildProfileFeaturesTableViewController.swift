@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Alamofire
 import YLProgressBar
+import DateToolsSwift
 class ChildProfileFeaturesTableViewController: UITableViewController {
 
     //MARK: - Outlets
@@ -26,6 +27,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     var grades = [CourseGrade]()
     var timeslots = [TimeSlot]()
     var weeklyPlans: [WeeklyPlan] = []
+    var today: Date!
+    var tomorrow: Date!
     /// Once set, get grades for this child
     var child : Child!{
         didSet{
@@ -314,27 +317,33 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         }
     }
     func showTimetable() {
+        today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
+        tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         var flag = false
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let todayString = dateFormatter.string(from: today)
+        let tomorrowString = dateFormatter.string(from: tomorrow)
         for slot in timeslots {
-            if let dateInSlot = slot.from, Calendar.current.isDateInToday(dateInSlot), Calendar.current.isDateInTomorrow(dateInSlot) {
+            if slot.day.localized.elementsEqual(todayString) || slot.day.localized.elementsEqual(tomorrowString) {
                 flag = true
-                break;
+                break
             }
         }
         if !disableTimeTable {
-//            if flag {
+            if flag {
                 let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
                 ttvc.child = child
                 ttvc.timeslots = timeslots
                 self.navigationController?.pushViewController(ttvc, animated: true)
-//            } else {
-//                let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-//                    NSLog("The \"OK\" alert occured.")
-//                }))
-//                self.present(alert, animated: true, completion: nil)
-//            }
-            
+            } else {
+                let alert = UIAlertController(title: "Skolera".localized, message: "No timetable available".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        
         } else {
             let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in

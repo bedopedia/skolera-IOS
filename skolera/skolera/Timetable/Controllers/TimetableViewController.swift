@@ -99,7 +99,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         var result =  [EventDescriptor]()
         if timeslots != nil {
             let slots = timeslots.filter { (timeslot) -> Bool in
-                timeslot.day == getTodayName()
+                timeslot.day == getTodayName()  //filters on the name of week not the whole date
             }
             //random index to start from
             var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))

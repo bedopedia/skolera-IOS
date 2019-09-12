@@ -11,12 +11,14 @@ import SVProgressHUD
 import Alamofire
 import Firebase
 import NRAppUpdate
-
+import DateToolsSwift
 class ActorFeaturesTableViewController: UITableViewController {
     
     var actor: Actor!
     var timeslots = [TimeSlot]()
     var disableTimeTable: Bool = false
+    var today: Date!
+    var tomorrow: Date!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,16 +110,20 @@ class ActorFeaturesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var flag = false
         if indexPath.row == 0 {
-            debugPrint("open timetable")
+           var flag = false
+            today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
+            tomorrow = today.add(TimeChunk.dateComponents(days: 1))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let todayString = dateFormatter.string(from: today)
+            let tomorrowString = dateFormatter.string(from: tomorrow)
             for slot in timeslots {
-                if let dateInSlot = slot.from, Calendar.current.isDateInToday(dateInSlot), Calendar.current.isDateInTomorrow(dateInSlot) {
+                if slot.day.localized.elementsEqual(todayString) || slot.day.localized.elementsEqual(tomorrowString) {
                     flag = true
-                    break;
+                    break
                 }
             }
-            
             if !disableTimeTable {
                 if flag {
                     let ttvc = TimetableViewController.instantiate(fromAppStoryboard: .Timetable)
