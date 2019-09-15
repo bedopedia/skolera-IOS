@@ -267,6 +267,7 @@
 		8A97DFAA22FAE87700B646CA /* AnnouncementsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A97DFA922FAE87700B646CA /* AnnouncementsApiManager.swift */; };
 		8A97DFAD22FAECC000B646CA /* QuizzesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A97DFAC22FAECC000B646CA /* QuizzesApiManager.swift */; };
 		8A998E7922BA9E46001906BA /* Assignments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A998E7B22BA9E46001906BA /* Assignments.storyboard */; };
+		8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */; };
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
@@ -572,6 +573,7 @@
 		8A97DFAC22FAECC000B646CA /* QuizzesApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesApiManager.swift; sourceTree = "<group>"; };
 		8A998E7A22BA9E46001906BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Assignments.storyboard; sourceTree = "<group>"; };
 		8A998E7D22BA9E5E001906BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Assignments.strings; sourceTree = "<group>"; };
+		8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceNVC.swift; sourceTree = "<group>"; };
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
 		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 		54640B01205570AF00A13CCB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8A583B3F232E75CD00F6A71E /* Nav Controllers */,
 				8A119503231BEAD500691398 /* Teacher */,
 				54640B0920559A9800A13CCB /* AttendanceViewController.swift */,
 				54847C62205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift */,
@@ -1204,6 +1207,14 @@
 				8A7F77C722DF323B009DA15F /* Model */,
 			);
 			path = Posts;
+			sourceTree = "<group>";
+		};
+		8A583B3F232E75CD00F6A71E /* Nav Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */,
+			);
+			path = "Nav Controllers";
 			sourceTree = "<group>";
 		};
 		8A5F42DB20B1A58000FF93D1 /* Threads */ = {
@@ -1848,6 +1859,7 @@
 				8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */,
 				8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */,
 				8A7C4A372327DADA00984A53 /* AnnouncementsTableViewNVC.swift in Sources */,
+				8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */,
 				8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */,
 				547117D52016225F00F28CEA /* HerukoSchoolInfo.swift in Sources */,
 				540890722067E1E100CC59A0 /* CalendarCollectionViewCell.swift in Sources */,

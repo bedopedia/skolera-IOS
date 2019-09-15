@@ -28,6 +28,23 @@ class TeacherAttendanceViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        debugPrint(parent, parent?.parent)
+//        if let parentVC = parent?.parent as? TeacherContainerViewController {
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
+//        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        if let parentVc = parent?.parent as? TeacherContainerViewController {
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
+//        }
+    }
+    
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -49,7 +66,8 @@ class TeacherAttendanceViewController: UIViewController {
 //        self.navigationController?.pushViewController(selectSlotsVc, animated: true)
         let storyBoard : UIStoryboard = UIStoryboard(name: "Attendance", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "SelectSlotsViewController") as! SelectSlotsViewController
-        self.present(nextViewController, animated:true, completion:nil)
+        self.navigationController?.pushViewController(nextViewController, animated:true)
+//        self.present(nextViewController, animated:true, completion:nil)
     }
     
     @IBAction func assignForAllButtonAction() {
