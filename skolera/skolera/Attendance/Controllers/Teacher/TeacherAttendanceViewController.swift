@@ -44,6 +44,12 @@ class TeacherAttendanceViewController: UIViewController {
         slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+        debugPrint(self.navigationController)
+//        let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
+//        self.navigationController?.pushViewController(selectSlotsVc, animated: true)
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Attendance", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "SelectSlotsViewController") as! SelectSlotsViewController
+        self.present(nextViewController, animated:true, completion:nil)
     }
     
     @IBAction func assignForAllButtonAction() {
@@ -94,8 +100,6 @@ class TeacherAttendanceViewController: UIViewController {
             print("completion block")
         })
     }
-
-    
 }
 
 extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource {

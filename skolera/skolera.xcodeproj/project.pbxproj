@@ -185,6 +185,7 @@
 		8A48DA5722B1509500260C7D /* AssignmentCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5622B1509500260C7D /* AssignmentCoursesViewController.swift */; };
 		8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */; };
 		8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */; };
+		8A583B3E232E6B9700F6A71E /* SelectSlotsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A583B3D232E6B9700F6A71E /* SelectSlotsViewController.swift */; };
 		8A58B44020D968B4002C766B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8A58B43F20D968B4002C766B /* GoogleService-Info.plist */; };
 		8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5BBB062327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift */; };
 		8A5BBB092327FD220056B157 /* ActorNvc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5BBB082327FD220056B157 /* ActorNvc.swift */; };
@@ -487,6 +488,7 @@
 		8A48DA5622B1509500260C7D /* AssignmentCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCoursesViewController.swift; sourceTree = "<group>"; };
 		8A48DA5822B1563000260C7D /* AssignmentCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8A48DA5A22B1583A00260C7D /* AssignmentCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentCourse.swift; sourceTree = "<group>"; };
+		8A583B3D232E6B9700F6A71E /* SelectSlotsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSlotsViewController.swift; sourceTree = "<group>"; };
 		8A58B43F20D968B4002C766B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A5BBB062327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCoursesTableViewNVC.swift; sourceTree = "<group>"; };
 		8A5BBB082327FD220056B157 /* ActorNvc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorNvc.swift; sourceTree = "<group>"; };
@@ -1135,6 +1137,7 @@
 			isa = PBXGroup;
 			children = (
 				8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */,
+				8A583B3D232E6B9700F6A71E /* SelectSlotsViewController.swift */,
 			);
 			path = Teacher;
 			sourceTree = "<group>";
@@ -1886,6 +1889,7 @@
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
 				8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
+				8A583B3E232E6B9700F6A71E /* SelectSlotsViewController.swift in Sources */,
 				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
 				5482DDD62056D01300647D57 /* AttendanceTableViewCell.swift in Sources */,
