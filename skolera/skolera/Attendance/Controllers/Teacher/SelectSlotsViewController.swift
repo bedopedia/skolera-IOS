@@ -33,14 +33,18 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "slotCell")!
-        cell.textLabel?.text = "slot"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "slotCell") as! AttendanceSlotTableViewCell
+        cell.slotLabel.text = "Slot \(indexPath.row + 1)"
+        cell.selectionView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+        cell.selectionView.layer.borderWidth = 1
+        cell.selectionView.layer.cornerRadius = 12
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+    
     
     // implementation of protocol requirements goes here
 }

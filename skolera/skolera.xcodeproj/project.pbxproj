@@ -268,6 +268,7 @@
 		8A97DFAD22FAECC000B646CA /* QuizzesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A97DFAC22FAECC000B646CA /* QuizzesApiManager.swift */; };
 		8A998E7922BA9E46001906BA /* Assignments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A998E7B22BA9E46001906BA /* Assignments.storyboard */; };
 		8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */; };
+		8A9C396D232E846400E40501 /* AttendanceSlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C396C232E846400E40501 /* AttendanceSlotTableViewCell.swift */; };
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
 		8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */; };
@@ -574,6 +575,7 @@
 		8A998E7A22BA9E46001906BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Assignments.storyboard; sourceTree = "<group>"; };
 		8A998E7D22BA9E5E001906BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Assignments.strings; sourceTree = "<group>"; };
 		8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceNVC.swift; sourceTree = "<group>"; };
+		8A9C396C232E846400E40501 /* AttendanceSlotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceSlotTableViewCell.swift; sourceTree = "<group>"; };
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
 		8AA9307621E6507A00F886F4 /* ActorFeaturesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorFeaturesTableViewController.swift; sourceTree = "<group>"; };
@@ -776,6 +778,7 @@
 				5482DDD52056D01300647D57 /* AttendanceTableViewCell.swift */,
 				540890712067E1E100CC59A0 /* CalendarCollectionViewCell.swift */,
 				8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */,
+				8A9C396C232E846400E40501 /* AttendanceSlotTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1860,6 +1863,7 @@
 				8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */,
 				8A7C4A372327DADA00984A53 /* AnnouncementsTableViewNVC.swift in Sources */,
 				8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */,
+				8A9C396D232E846400E40501 /* AttendanceSlotTableViewCell.swift in Sources */,
 				8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */,
 				547117D52016225F00F28CEA /* HerukoSchoolInfo.swift in Sources */,
 				540890722067E1E100CC59A0 /* CalendarCollectionViewCell.swift in Sources */,
