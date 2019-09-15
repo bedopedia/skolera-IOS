@@ -12,6 +12,9 @@ class SelectSlotsViewController: UIViewController{
 
     @IBOutlet weak var tableView: UITableView!
     
+    var didSelectSlot: ( (Int) -> () )!
+    var selectedIndex: Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -19,14 +22,21 @@ class SelectSlotsViewController: UIViewController{
     }
     
     @IBAction func close() {
-//        self.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
- 
+    
+    @IBAction func submit() {
+        if let index = selectedIndex {
+            didSelectSlot(index)
+            close()
+        } else {
+            //present dialogue slot selection or close
+            close()
+        }
+    }
 }
 
 extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource {
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -45,8 +55,10 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
         return 60
     }
     
-    
-    // implementation of protocol requirements goes here
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+    }
+
 }
 
 

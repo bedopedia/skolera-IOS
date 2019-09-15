@@ -553,9 +553,9 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoN-LV-4Iw">
                                                 <rect key="frame" x="187.5" y="0.0" width="187.5" height="49"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <state key="normal" title="Slot attendance">
-                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleColor" red="0.72549019607843135" green="0.72549019607843135" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="slotAttendanceButtonAction" destination="ULG-ht-a7h" eventType="touchUpInside" id="N3m-tk-elf"/>
@@ -581,7 +581,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-zM-s1c">
                                         <rect key="frame" x="187.5" y="49" width="187.5" height="4"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="4" id="lvh-Sf-wVa"/>
                                         </constraints>
@@ -830,6 +830,7 @@
                         <outlet property="backButton" destination="dQc-Fz-L43" id="bd2-R9-NbE"/>
                         <outlet property="fullDayAttendanceBottomBorder" destination="2aN-yk-Jnh" id="Gz3-9C-wKo"/>
                         <outlet property="fullDayAttendanceButton" destination="Yc5-E9-JhH" id="3dU-I7-q6n"/>
+                        <outlet property="leftLabel" destination="kx8-C0-zgw" id="6P2-Yv-8Zc"/>
                         <outlet property="slotAttendanceBottomBar" destination="lvG-zM-s1c" id="rBi-IK-Sd1"/>
                         <outlet property="slotAttendanceButton" destination="uoN-LV-4Iw" id="HEV-Sc-tZR"/>
                         <outlet property="tableView" destination="NqM-na-xm7" id="BJd-Ci-5vd"/>
@@ -948,7 +949,7 @@
                                 <color key="textColor" red="0.0" green="0.49411764705882355" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nU1-KG-eFM">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nU1-KG-eFM">
                                 <rect key="frame" x="8" y="163" width="359" height="440"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -1002,6 +1003,9 @@
                                         <integer key="value" value="6"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="submit" destination="P6C-Pq-5G2" eventType="touchUpInside" id="xJU-7T-jVw"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

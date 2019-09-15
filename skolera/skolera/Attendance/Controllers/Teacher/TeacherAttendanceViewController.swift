@@ -17,6 +17,7 @@ class TeacherAttendanceViewController: UIViewController {
     @IBOutlet weak var fullDayAttendanceBottomBorder: UIView!
     @IBOutlet weak var slotAttendanceBottomBar: UIView!
     @IBOutlet weak var slotAttendanceButton: UIButton!
+    @IBOutlet weak var leftLabel: UILabel!
     
     var students: [Student]!
     override func viewDidLoad() {
@@ -25,24 +26,8 @@ class TeacherAttendanceViewController: UIViewController {
         tableView.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         students = []
-
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        debugPrint(parent, parent?.parent)
-//        if let parentVC = parent?.parent as? TeacherContainerViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-//        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-//        if let parentVc = parent?.parent as? TeacherContainerViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-//        }
+        fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
+        fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
     }
     
     @IBAction func backButtonAction() {
@@ -54,20 +39,22 @@ class TeacherAttendanceViewController: UIViewController {
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+        leftLabel.text = "Monday 23"
     }
     
     @IBAction func slotAttendanceButtonAction() {
-        slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-        slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-        fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-        fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
-        debugPrint(self.navigationController)
-//        let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
-//        self.navigationController?.pushViewController(selectSlotsVc, animated: true)
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Attendance", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "SelectSlotsViewController") as! SelectSlotsViewController
-        self.navigationController?.pushViewController(nextViewController, animated:true)
-//        self.present(nextViewController, animated:true, completion:nil)
+        
+        let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
+        selectSlotsVc.didSelectSlot = { (index) in
+            debugPrint("Slot Index is:",index)
+            self.leftLabel.text = "Slot \(index + 1)"
+            self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
+            self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+            self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+            self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+            
+        }
+        self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
     
     @IBAction func assignForAllButtonAction() {
@@ -78,7 +65,6 @@ class TeacherAttendanceViewController: UIViewController {
         let absentString = "Absent"
         let removeStatusString = "Remove all status"
         let alert = UIAlertController(title: "", message: "Assign action for all students", preferredStyle: .actionSheet)
-//        let presentImage = UIImage(named: "presentSelected")
         let font = UIFont.systemFont(ofSize: 18)
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .font: font,
@@ -124,7 +110,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,6 +121,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             if self.students.indices.contains(indexPath.row) { //student is being unselected
                 cell.studentSelectButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+                cell.resetAll()
             } else {
                 cell.studentSelectButton.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
                 cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
@@ -146,74 +133,18 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             // nw calls, should check if this student had been assigned a state
             switch state {
             case .present:
-                cell.lateButton.setImage(#imageLiteral(resourceName: "late"), for: .normal)
-                cell.lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.presentButton.setImage(#imageLiteral(resourceName: "presentSelected"), for: .normal)
-                cell.presentButton.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 1)
-                cell.presentButton.setTitleColor(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), for: .normal)
-                
-                cell.excusedButton.setImage(#imageLiteral(resourceName: "excused"), for: .normal)
-                cell.excusedButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.excusedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.absentButton.setImage(#imageLiteral(resourceName: "absent"), for: .normal)
-                cell.absentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.absentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
+                cell.presentSelected()
                 
             case .late:
-                cell.lateButton.setImage(#imageLiteral(resourceName: "lateSelected"), for: .normal)
-                cell.lateButton.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9098039216, blue: 0.737254902, alpha: 1)
-                cell.lateButton.setTitleColor(#colorLiteral(red: 0.9843137255, green: 0.7529411765, blue: 0.1764705882, alpha: 1), for: .normal)
-                
-                cell.presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
-                cell.presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.excusedButton.setImage(#imageLiteral(resourceName: "excused"), for: .normal)
-                cell.excusedButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.excusedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.absentButton.setImage(#imageLiteral(resourceName: "absent"), for: .normal)
-                cell.absentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.absentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
+                cell.lateSelected()
             case .absent:
-                cell.lateButton.setImage(#imageLiteral(resourceName: "late"), for: .normal)
-                cell.lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
-                cell.presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.excusedButton.setImage(#imageLiteral(resourceName: "excused"), for: .normal)
-                cell.excusedButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.excusedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.absentButton.setImage(#imageLiteral(resourceName: "absentSelected"), for: .normal)
-                cell.absentButton.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 1)
-                cell.absentButton.setTitleColor(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), for: .normal)
+                cell.absentSelected()
             case .excused:
-                cell.lateButton.setImage(#imageLiteral(resourceName: "late"), for: .normal)
-                cell.lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
-                cell.presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-                
-                cell.excusedButton.setImage(#imageLiteral(resourceName: "excusedSelected"), for: .normal)
-                cell.excusedButton.backgroundColor = #colorLiteral(red: 0.7333333333, green: 0.8705882353, blue: 0.9803921569, alpha: 1)
-                cell.excusedButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-                
-                cell.absentButton.setImage(#imageLiteral(resourceName: "absent"), for: .normal)
-                cell.absentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
-                cell.absentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
-         
+                cell.excusedSelected()
+                //display dialogue
             }
         }
+//        cell.
         return cell
     }
     
