@@ -53,14 +53,14 @@ class TeacherAttendanceViewController: UIViewController {
         let lateString = "Late"
         let absentString = "Absent"
         let removeStatusString = "Remove all status"
-        let alert = UIAlertController(title: "Assign action for all students", message: "", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "Assign action for all students", preferredStyle: .actionSheet)
 //        let presentImage = UIImage(named: "presentSelected")
         let font = UIFont.systemFont(ofSize: 18)
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .foregroundColor: #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1),
         ]
-        alert.setValue(NSAttributedString(string: title, attributes: titleAttributes), forKey: "attributedTitle")
+        alert.setValue(NSAttributedString(string: title, attributes: titleAttributes), forKey: "attributedMessage")
         
         let presentImage = #imageLiteral(resourceName: "presentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
         let presentAction = UIAlertAction(title: presentString, style: .default, handler: { (_) in
