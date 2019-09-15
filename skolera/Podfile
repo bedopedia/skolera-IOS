@@ -36,4 +36,12 @@ target 'skolera' do
   pod 'IQKeyboardManager'
   #textView with placeholder
   pod 'KMPlaceholderTextView', '~> 1.4.0'
+  pod 'XLActionController'
+  # Uncomment depending on the examples that you want to install
+  #pod 'XLActionController/Periscope'
+  #pod 'XLActionController/Skype'
+  #pod 'XLActionController/Spotify'
+  #pod 'XLActionController/Tweetbot'
+  #pod 'XLActionController/Twitter'
+  pod 'XLActionController/Youtube'
 end

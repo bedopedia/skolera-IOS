@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import XLActionController
 
 class TeacherAttendanceViewController: UIViewController {
 
@@ -47,6 +48,38 @@ class TeacherAttendanceViewController: UIViewController {
     
     @IBAction func assignForAllButtonAction() {
         
+        let alert = UIAlertController(title: "Assign action for all students", message: "", preferredStyle: .actionSheet)
+//        let presentImage = UIImage(named: "presentSelected")
+        let presentImage = #imageLiteral(resourceName: "presentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
+
+
+        let presentAction = UIAlertAction(title: "Present", style: .default, handler: { (_) in
+            print("User click present button")
+        })
+        presentAction.setValue(presentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        alert.addAction(presentAction)
+        
+        let lateImage = #imageLiteral(resourceName: "lateSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
+        let lateAction = UIAlertAction(title: "Late", style: .default, handler: { (_) in
+            print("User click late button")
+        })
+        lateAction.setValue(lateImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        alert.addAction(lateAction)
+        
+        let absentImage = #imageLiteral(resourceName: "absentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
+        let absentAction = UIAlertAction(title: "Absent", style: .default, handler: { (_) in
+            print("User click absent button")
+        })
+        absentAction.setValue(absentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        alert.addAction(absentAction)
+        
+        alert.addAction(UIAlertAction(title: "Remove all status", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
 
     
