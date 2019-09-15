@@ -44,6 +44,10 @@ class TeacherAttendanceViewController: UIViewController {
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
     }
+    
+    @IBAction func assignForAllButtonAction() {
+        
+    }
 
     
 }
