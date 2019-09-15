@@ -48,32 +48,45 @@ class TeacherAttendanceViewController: UIViewController {
     
     @IBAction func assignForAllButtonAction() {
         
+        let title = "Assign action for all students"
+        let presentString = "Present"
+        let lateString = "Late"
+        let absentString = "Absent"
+        let removeStatusString = "Remove all status"
         let alert = UIAlertController(title: "Assign action for all students", message: "", preferredStyle: .actionSheet)
 //        let presentImage = UIImage(named: "presentSelected")
+        let font = UIFont.systemFont(ofSize: 18)
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1),
+        ]
+        alert.setValue(NSAttributedString(string: title, attributes: titleAttributes), forKey: "attributedTitle")
+        
         let presentImage = #imageLiteral(resourceName: "presentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
-
-
-        let presentAction = UIAlertAction(title: "Present", style: .default, handler: { (_) in
+        let presentAction = UIAlertAction(title: presentString, style: .default, handler: { (_) in
             print("User click present button")
         })
         presentAction.setValue(presentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        presentAction.setValue(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), forKey: "titleTextColor")
         alert.addAction(presentAction)
         
         let lateImage = #imageLiteral(resourceName: "lateSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
-        let lateAction = UIAlertAction(title: "Late", style: .default, handler: { (_) in
+        let lateAction = UIAlertAction(title: lateString, style: .default, handler: { (_) in
             print("User click late button")
         })
         lateAction.setValue(lateImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        lateAction.setValue(#colorLiteral(red: 0.9843137255, green: 0.7529411765, blue: 0.1764705882, alpha: 1), forKey: "titleTextColor")
         alert.addAction(lateAction)
         
         let absentImage = #imageLiteral(resourceName: "absentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
-        let absentAction = UIAlertAction(title: "Absent", style: .default, handler: { (_) in
+        let absentAction = UIAlertAction(title: absentString, style: .default, handler: { (_) in
             print("User click absent button")
         })
         absentAction.setValue(absentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        absentAction.setValue(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), forKey: "titleTextColor")
         alert.addAction(absentAction)
         
-        alert.addAction(UIAlertAction(title: "Remove all status", style: .cancel, handler: { (_) in
+        alert.addAction(UIAlertAction(title: removeStatusString, style: .cancel, handler: { (_) in
             print("User click Dismiss button")
         }))
         
