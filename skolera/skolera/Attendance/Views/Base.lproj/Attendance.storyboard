@@ -681,7 +681,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egl-rV-eW7">
-                                                            <rect key="frame" x="97" y="34.5" width="116.5" height="21.5"/>
+                                                            <rect key="frame" x="97" y="34.5" width="255" height="21.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -764,6 +764,7 @@
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="egl-rV-eW7" secondAttribute="trailing" constant="8" id="8s0-0L-XNG"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="trailing" constant="10" id="A9w-fM-wFD"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="leading" secondItem="kwJ-Ee-jtl" secondAttribute="trailing" constant="8" id="AbJ-ex-XPr"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="centerY" secondItem="wsn-JX-mTg" secondAttribute="centerY" id="AoD-Fg-aH9"/>

@@ -14,7 +14,7 @@ class Attendances {
     let date: Int!
     let comment: Any!
     let status: String!
-    let timetableSlotId: Any!
+    let timetableSlotId: Int!
     let studentId: Int!
     let student: AttendanceStudent!
     
@@ -23,7 +23,7 @@ class Attendances {
         date = dict["date"] as? Int
         comment = dict["comment"]
         status = dict["status"] as? String
-        timetableSlotId = dict["timetable_slot_id"] 
+        timetableSlotId = dict["timetable_slot_id"] as? Int
         studentId = dict["student_id"] as? Int
         
         if let studentDict = dict["student"] as? [String: Any] {

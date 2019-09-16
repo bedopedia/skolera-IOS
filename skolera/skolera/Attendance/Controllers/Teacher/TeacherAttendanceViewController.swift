@@ -141,6 +141,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var flag = false
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.studentSelectButton.layer.borderWidth = 1
         cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
@@ -172,6 +173,33 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             }
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
+        cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
+        flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
+            self.students[indexPath.row].childId == attendanceStudent.childId
+        })
+        
+        if let cellAttendance = self.attedances.first(where: { $0.student.childId == self.students[indexPath.row].childId}) {
+            debugPrint("<#T##items: Any...##Any#>")
+            if let _ = cellAttendance.timetableSlotId {
+                flag = false
+            } else {
+                flag = true
+                //present the state for this student
+                switch cellAttendance.status!  {
+                case "present":
+                    cell.presentSelected()
+                case "late":
+                    cell.lateSelected()
+                case "absent":
+                    cell.absentSelected()
+                case "excused":
+                    cell.excusedSelected()
+                default:
+                    debugPrint("<#T##items: Any...##Any#>")
+                }
+            }
+        }
+
         return cell
     }
     
