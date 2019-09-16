@@ -267,7 +267,6 @@
 		8A97DFAA22FAE87700B646CA /* AnnouncementsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A97DFA922FAE87700B646CA /* AnnouncementsApiManager.swift */; };
 		8A97DFAD22FAECC000B646CA /* QuizzesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A97DFAC22FAECC000B646CA /* QuizzesApiManager.swift */; };
 		8A998E7922BA9E46001906BA /* Assignments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A998E7B22BA9E46001906BA /* Assignments.storyboard */; };
-		8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */; };
 		8A9C396D232E846400E40501 /* AttendanceSlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9C396C232E846400E40501 /* AttendanceSlotTableViewCell.swift */; };
 		8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA44CD621904975007DB9C5 /* Localizable.swift */; };
 		8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA9307421E63ECD00F886F4 /* ActorViewController.swift */; };
@@ -283,6 +282,10 @@
 		8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */; };
 		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
+		8AD1C6C4232F9B05006DA3A0 /* AttendanceApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */; };
+		8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */; };
+		8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C8232FA7A0006DA3A0 /* Attendances.swift */; };
+		8AD1C6CD232FA974006DA3A0 /* AttendanceStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6CC232FA974006DA3A0 /* AttendanceStudent.swift */; };
 		8AD548E823280FA500730B76 /* Announcements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD548E623280FA500730B76 /* Announcements.storyboard */; };
 		8ADABB78230AE400001509EF /* EventsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB77230AE400001509EF /* EventsApiManager.swift */; };
 		8ADABB7A230AEAF7001509EF /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADABB79230AEAF7001509EF /* Event.swift */; };
@@ -574,7 +577,6 @@
 		8A97DFAC22FAECC000B646CA /* QuizzesApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesApiManager.swift; sourceTree = "<group>"; };
 		8A998E7A22BA9E46001906BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Assignments.storyboard; sourceTree = "<group>"; };
 		8A998E7D22BA9E5E001906BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Assignments.strings; sourceTree = "<group>"; };
-		8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceNVC.swift; sourceTree = "<group>"; };
 		8A9C396C232E846400E40501 /* AttendanceSlotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceSlotTableViewCell.swift; sourceTree = "<group>"; };
 		8AA44CD621904975007DB9C5 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		8AA9307421E63ECD00F886F4 /* ActorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorViewController.swift; sourceTree = "<group>"; };
@@ -591,6 +593,10 @@
 		8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
+		8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceApiManager.swift; sourceTree = "<group>"; };
+		8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullDayAttendances.swift; sourceTree = "<group>"; };
+		8AD1C6C8232FA7A0006DA3A0 /* Attendances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendances.swift; sourceTree = "<group>"; };
+		8AD1C6CC232FA974006DA3A0 /* AttendanceStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceStudent.swift; sourceTree = "<group>"; };
 		8AD548E723280FA500730B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Announcements.storyboard; sourceTree = "<group>"; };
 		8ADABB77230AE400001509EF /* EventsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsApiManager.swift; sourceTree = "<group>"; };
 		8ADABB79230AEAF7001509EF /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -753,6 +759,8 @@
 		54640B002055709400A13CCB /* Attendance */ = {
 			isa = PBXGroup;
 			children = (
+				8AD1C6C5232FA766006DA3A0 /* Model */,
+				8AD1C6C2232F9A99006DA3A0 /* Network */,
 				54640B02205570B700A13CCB /* Views */,
 				54640B01205570AF00A13CCB /* Controllers */,
 			);
@@ -762,7 +770,6 @@
 		54640B01205570AF00A13CCB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8A583B3F232E75CD00F6A71E /* Nav Controllers */,
 				8A119503231BEAD500691398 /* Teacher */,
 				54640B0920559A9800A13CCB /* AttendanceViewController.swift */,
 				54847C62205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift */,
@@ -1212,14 +1219,6 @@
 			path = Posts;
 			sourceTree = "<group>";
 		};
-		8A583B3F232E75CD00F6A71E /* Nav Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				8A9C396A232E762200E40501 /* TeacherAttendanceNVC.swift */,
-			);
-			path = "Nav Controllers";
-			sourceTree = "<group>";
-		};
 		8A5F42DB20B1A58000FF93D1 /* Threads */ = {
 			isa = PBXGroup;
 			children = (
@@ -1502,6 +1501,32 @@
 				8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8AD1C6C2232F9A99006DA3A0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		8AD1C6C5232FA766006DA3A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8AD1C6CE232FAB15006DA3A0 /* Teacher */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8AD1C6CE232FAB15006DA3A0 /* Teacher */ = {
+			isa = PBXGroup;
+			children = (
+				8AD1C6C8232FA7A0006DA3A0 /* Attendances.swift */,
+				8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */,
+				8AD1C6CC232FA974006DA3A0 /* AttendanceStudent.swift */,
+			);
+			path = Teacher;
 			sourceTree = "<group>";
 		};
 		8AE8D61F22F6FFF500409CCD /* Network */ = {
@@ -1860,9 +1885,9 @@
 				8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */,
 				54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */,
 				8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */,
+				8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */,
 				8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */,
 				8A7C4A372327DADA00984A53 /* AnnouncementsTableViewNVC.swift in Sources */,
-				8A9C396B232E762200E40501 /* TeacherAttendanceNVC.swift in Sources */,
 				8A9C396D232E846400E40501 /* AttendanceSlotTableViewCell.swift in Sources */,
 				8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */,
 				547117D52016225F00F28CEA /* HerukoSchoolInfo.swift in Sources */,
@@ -1958,10 +1983,12 @@
 				5402CA0D2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift in Sources */,
 				8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */,
 				8A3A217720D913F500539E1C /* Quiz.swift in Sources */,
+				8AD1C6C4232F9B05006DA3A0 /* AttendanceApiManager.swift in Sources */,
 				8A6D361920B5985A00DD0445 /* DemoChatItemsDecorator.swift in Sources */,
 				8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */,
 				8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */,
 				547A37942022153B00794441 /* Notification.swift in Sources */,
+				8AD1C6CD232FA974006DA3A0 /* AttendanceStudent.swift in Sources */,
 				8A8A7393222C5BAF00972BE6 /* Level.swift in Sources */,
 				8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */,
 				8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */,
@@ -1977,6 +2004,7 @@
 				8A5F42E620B1B5C300FF93D1 /* ContactTeacherViewController.swift in Sources */,
 				8A5F42EE20B1CB5C00FF93D1 /* Message.swift in Sources */,
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
+				8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
 				8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */,

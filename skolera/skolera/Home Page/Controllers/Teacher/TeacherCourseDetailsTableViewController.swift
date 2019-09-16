@@ -58,6 +58,7 @@ class TeacherCourseDetailsTableViewController: UITableViewController {
         
         if indexPath.row == 0 {
             let attendanceVC = TeacherAttendanceViewController.instantiate(fromAppStoryboard: .Attendance)
+            attendanceVC.courseGroupId = courseGroup.id
             self.navigationController?.pushViewController(attendanceVC, animated: true)
 //            debugPrint("Open the attendance view controller")
         } else if indexPath.row == 1 {

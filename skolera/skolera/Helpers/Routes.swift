@@ -187,4 +187,7 @@ func UPLOAD_FILE_FOR_POST() -> String {
     return "\(BASE_URL!)/api/posts/create_uploaded_file_for_posts"
 }
 
+func GET_FULL_DAY_ATTENDANCES(courseGroupId: Int, startDate: String, endDate: String) -> String {
+    return "\(BASE_URL!)/api/course_groups/\(courseGroupId)/attendances?by_period%5Bend_date%5D=\(endDate)&by_period%5Bstart_date%5D=\(startDate)"
+}
 

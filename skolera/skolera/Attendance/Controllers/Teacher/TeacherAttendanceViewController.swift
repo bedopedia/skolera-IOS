@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import XLActionController
+import SVProgressHUD
+import Alamofire
 
 class TeacherAttendanceViewController: UIViewController {
 
@@ -19,7 +20,12 @@ class TeacherAttendanceViewController: UIViewController {
     @IBOutlet weak var slotAttendanceButton: UIButton!
     @IBOutlet weak var leftLabel: UILabel!
     
-    var students: [Student]!
+    var courseGroupId: Int!
+    var students: [AttendanceStudent]!
+    var attedances: [Attendances]!
+    var attendanceStudents: [AttendanceStudent]!
+    var fullDayAttendance: FullDayAttendances!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -28,6 +34,29 @@ class TeacherAttendanceViewController: UIViewController {
         students = []
         fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+        getFullDayAttendanceStudents()
+        attendanceStudents = []
+    }
+    func getFullDayAttendanceStudents() {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en")
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+//        dateFormatter.string(from: Date())
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "16%2F9%2F2019", endDate: "16%2F9%2F2019") { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                self.fullDayAttendance = value.map{FullDayAttendances($0 as! [String : Any])}
+                self.students = self.fullDayAttendance.students
+                self.attedances = self.fullDayAttendance?.attendances
+                for attendance in self.attedances {
+                   self.attendanceStudents.append(attendance.student)
+                }
+                self.tableView.reloadData()
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
     }
     
     @IBAction func backButtonAction() {
@@ -43,7 +72,6 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     @IBAction func slotAttendanceButtonAction() {
-        
         let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
         selectSlotsVc.didSelectSlot = { (index) in
             debugPrint("Slot Index is:",index)
@@ -52,7 +80,6 @@ class TeacherAttendanceViewController: UIViewController {
             self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
             self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
             self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
-            
         }
         self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
@@ -110,7 +137,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.students.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -144,7 +171,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 //display dialogue
             }
         }
-//        cell.
+        cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
         return cell
     }
     

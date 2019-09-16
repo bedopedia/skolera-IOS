@@ -11,7 +11,7 @@ import Foundation
 class FullDayAttendances {
     
     let attendances: [Attendances]!
-    let students: [Students]!
+    let students: [AttendanceStudent]!
     
     init(_ dict: [String: Any]) {
         if let attendancesDictArray = dict["attendances"] as? [[String: Any]] {
@@ -20,7 +20,7 @@ class FullDayAttendances {
             attendances = nil
         }
         if let studentsDictArray = dict["students"] as? [[String: Any]] {
-            students = studentsDictArray.map { Students($0) }
+            students = studentsDictArray.map { AttendanceStudent($0) }
         } else {
             students = nil
         }
