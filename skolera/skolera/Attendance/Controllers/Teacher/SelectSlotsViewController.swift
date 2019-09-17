@@ -13,7 +13,7 @@ class SelectSlotsViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var didSelectSlot: ( (Int) -> () )!
-    var cancel: (() -> ())!
+//    var cancel: (() -> ())!
     var selectedIndex: Int!
     var timeTableSlots: [TimetableSlots]! {
         didSet{
@@ -27,7 +27,7 @@ class SelectSlotsViewController: UIViewController{
     }
     
     @IBAction func close() {
-        cancel()
+//        cancel()
         self.navigationController?.popViewController(animated: true)
     }
     

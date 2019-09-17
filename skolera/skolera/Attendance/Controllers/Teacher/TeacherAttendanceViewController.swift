@@ -111,11 +111,11 @@ class TeacherAttendanceViewController: UIViewController {
             self.isFullDay = false
             self.tableView.reloadData()
         }
-        selectSlotsVc.cancel = {
-//            self.getFullDayAttendanceStudents()
-//            self.isFullDay = true
-            debugPrint("should display the same data")
-        }
+//        selectSlotsVc.cancel = {
+////            self.getFullDayAttendanceStudents()
+////            self.isFullDay = true
+//            debugPrint("should display the same data")
+//        }
         
         self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
