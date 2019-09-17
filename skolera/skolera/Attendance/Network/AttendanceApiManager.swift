@@ -38,4 +38,18 @@ func createFullDayAttendanceApi(parameters: Parameters, completion: @escaping ((
     }
 }
 
+func updateAttendanceApi(attendanceId: Int, parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = UPDATE_ATTENDANCE(attendanceId: attendanceId)
+    Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        debugPrint(response)
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
 

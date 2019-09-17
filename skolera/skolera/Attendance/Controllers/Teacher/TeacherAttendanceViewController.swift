@@ -50,7 +50,6 @@ class TeacherAttendanceViewController: UIViewController {
         
     }
     func getFullDayAttendanceStudents() {
-        debugPrint(day, month, year)
         SVProgressHUD.show(withStatus: "Loading".localized)
         getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
@@ -68,20 +67,39 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func createAttendance(type: AttendanceRequestType, parameters: Parameters) {
-        debugPrint(day, month, year)
+    func createAttendance(childId: Int, type: AttendanceRequestType, parameters: Parameters) {
+        var attendanceId: Int!
+        if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
+            debugPrint(" ")
+            attendanceId = attendanceIndex
+        }
         switch (type) {
         case .post:
             createNewAttendance(parameters)
         case .put:
             debugPrint("put")
+            guard let id = attendanceId else {
+                return
+            }
+            updateAttendance(id, parameters)
         }
-        
     }
     
     func createNewAttendance(_ parameters: Parameters) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                debugPrint("success")
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func updateAttendance(_ attendanceId: Int, _ parameters: Parameters) {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 debugPrint("success")
@@ -208,7 +226,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             case .present:
                 attendance["status"] = "present"
                 if flag {
-                    debugPrint(flag)
+                    type = .put
                 } else {
                     type = .post
                 }
@@ -216,7 +234,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             case .late:
                 attendance["status"] = "late"
                 if flag {
-                    debugPrint(flag)
+                    type = .put
                 } else {
                     type = .post
                 }
@@ -224,7 +242,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             case .absent:
                 attendance["status"] = "absent"
                 if flag {
-                    debugPrint(flag)
+                    type = .put
                 } else {
                     type = .post
                 }
@@ -232,7 +250,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             case .excused:
                 attendance["status"] = "excused"
                 if flag {
-                    debugPrint(flag)
+                    type = .put
                 } else {
                     type = .post
                 }
@@ -241,7 +259,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             attendancesKey.append(attendance)
             parameters["attendance"] = ["attendances": attendancesKey]
             debugPrint(parameters)
-            self.createAttendance(type: type, parameters: parameters)
+            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, parameters: parameters)
             
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
