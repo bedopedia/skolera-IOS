@@ -191,6 +191,10 @@ func GET_FULL_DAY_ATTENDANCES(courseGroupId: Int, startDate: String, endDate: St
     return "\(BASE_URL!)/api/course_groups/\(courseGroupId)/attendances?by_period%5Bend_date%5D=\(endDate)&by_period%5Bstart_date%5D=\(startDate)"
 }
 
+func GET_SLOT_ATTENDANCES(courseGroupId: Int, date: String) -> String {
+    return "\(BASE_URL!)/api/course_groups/\(courseGroupId)/attendances?by_slots=\(date)"
+}
+
 func CREATE_ATTENDANCE() -> String {
     return "\(BASE_URL!)/api/attendances/batch_create"
 }

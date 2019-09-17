@@ -147,6 +147,8 @@
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
 		8A02C54023098169005BBA04 /* EventTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */; };
 		8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */; };
+		8A0607F823312AC4003E6DE7 /* TimeTableSlots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0607F723312AC4003E6DE7 /* TimeTableSlots.swift */; };
+		8A0607FA23312B7F003E6DE7 /* SlotAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0607F923312B7F003E6DE7 /* SlotAttendance.swift */; };
 		8A06B6D622F98B5100F5F85C /* BehaviorNotesApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */; };
 		8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */; };
 		8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */; };
@@ -445,6 +447,8 @@
 		8A02C53D23097E2A005BBA04 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		8A02C53F23098169005BBA04 /* EventTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A02C5412309AE9E005BBA04 /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
+		8A0607F723312AC4003E6DE7 /* TimeTableSlots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableSlots.swift; sourceTree = "<group>"; };
+		8A0607F923312B7F003E6DE7 /* SlotAttendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAttendance.swift; sourceTree = "<group>"; };
 		8A06B6D522F98B5100F5F85C /* BehaviorNotesApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorNotesApiManager.swift; sourceTree = "<group>"; };
 		8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsApiManager.swift; sourceTree = "<group>"; };
 		8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentGradesViewController.swift; sourceTree = "<group>"; };
@@ -1528,6 +1532,8 @@
 				8AD1C6C8232FA7A0006DA3A0 /* Attendances.swift */,
 				8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */,
 				8AD1C6CC232FA974006DA3A0 /* AttendanceStudent.swift */,
+				8A0607F723312AC4003E6DE7 /* TimeTableSlots.swift */,
+				8A0607F923312B7F003E6DE7 /* SlotAttendance.swift */,
 			);
 			path = Teacher;
 			sourceTree = "<group>";
@@ -1944,6 +1950,7 @@
 				8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */,
 				8A30E10422E0CF730030EE5D /* PostDetailsTableViewCell.swift in Sources */,
 				8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */,
+				8A0607F823312AC4003E6DE7 /* TimeTableSlots.swift in Sources */,
 				8A680FAA226DD2E400E800AE /* AssignmentTableViewCell.swift in Sources */,
 				54EB93002015ED1D001DD93F /* SchoolCodeViewController.swift in Sources */,
 				8A6D360920B5967D00DD0445 /* BaseMessagesSelector.swift in Sources */,
@@ -2030,6 +2037,7 @@
 				8A255BEE22E61119007A0766 /* QuizStatusViewController.swift in Sources */,
 				8A680FB0226DD58700E800AE /* AssignmentStudentSubmission.swift in Sources */,
 				8A255BEC22E6053E007A0766 /* QuizzesViewController.swift in Sources */,
+				8A0607FA23312B7F003E6DE7 /* SlotAttendance.swift in Sources */,
 				8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */,
 				8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */,
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,

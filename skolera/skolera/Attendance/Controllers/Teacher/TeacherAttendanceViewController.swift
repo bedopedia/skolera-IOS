@@ -22,12 +22,17 @@ class TeacherAttendanceViewController: UIViewController {
     
     var courseGroupId: Int!
     var students: [AttendanceStudent]!
+    var slotStudents: [AttendanceStudent]!
     var attedances: [Attendances]!
+    var slotAttendances: [Attendances]!
+    var timeTableSlots: [TimetableSlots]!
     var attendanceStudents: [AttendanceStudent]!
-    var fullDayAttendance: FullDayAttendances!
+    var slotAttendanceStudents: [AttendanceStudent]!
+    var slotAttendance: FullDayAttendances!
     var day = Date().day
     var month = Date().month
     var year = Date().year
+    var isFullDay: Bool!
     
     enum AttendanceRequestType: String {
         case post = "post"
@@ -44,19 +49,25 @@ class TeacherAttendanceViewController: UIViewController {
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         getFullDayAttendanceStudents()
         attendanceStudents = []
+        timeTableSlots = []
+        slotStudents = []
+        slotAttendances = []
+        slotAttendanceStudents = []
         day = Date().day
         month = Date().month
         year = Date().year
+        isFullDay = true
         
     }
     func getFullDayAttendanceStudents() {
+        isFullDay = true
         SVProgressHUD.show(withStatus: "Loading".localized)
         getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
-                self.fullDayAttendance = value.map{FullDayAttendances($0 as! [String : Any])}
-                self.students = self.fullDayAttendance.students
-                self.attedances = self.fullDayAttendance?.attendances
+                self.slotAttendance = value.map{FullDayAttendances($0 as! [String : Any])}
+                self.students = self.slotAttendance.students
+                self.attedances = self.slotAttendance?.attendances
                 for attendance in self.attedances {
                    self.attendanceStudents.append(attendance.student)
                 }
@@ -65,6 +76,48 @@ class TeacherAttendanceViewController: UIViewController {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
+    }
+    
+    func getSlotAttendanceStudents() {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                self.slotAttendance = value.map{FullDayAttendances($0 as! [String : Any])}
+                self.slotStudents = self.slotAttendance.students
+                self.slotAttendances = self.slotAttendance?.attendances
+                self.timeTableSlots = self.slotAttendance?.timetableSlots
+                for attendance in self.slotAttendances {
+                    self.slotAttendanceStudents.append(attendance.student)
+                }
+                self.presentSlotsViewController()
+                
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func presentSlotsViewController() {
+        let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
+        selectSlotsVc.timeTableSlots = self.timeTableSlots
+        selectSlotsVc.didSelectSlot = { (index) in
+            debugPrint("Slot Index is:",self.timeTableSlots[index].slotNo!)
+            self.leftLabel.text = "Slot \(self.timeTableSlots[index].slotNo!)"
+            self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
+            self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+            self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+            self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+            self.isFullDay = false
+            self.tableView.reloadData()
+        }
+        selectSlotsVc.cancel = {
+//            self.getFullDayAttendanceStudents()
+//            self.isFullDay = true
+            debugPrint("should display the same data")
+        }
+        
+        self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
     
     func createAttendance(childId: Int, type: AttendanceRequestType, status: String, comment: String = "") {
@@ -133,19 +186,11 @@ class TeacherAttendanceViewController: UIViewController {
         slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
         leftLabel.text = "Monday 23"
+        getFullDayAttendanceStudents()
     }
     
     @IBAction func slotAttendanceButtonAction() {
-        let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
-        selectSlotsVc.didSelectSlot = { (index) in
-            debugPrint("Slot Index is:",index)
-            self.leftLabel.text = "Slot \(index + 1)"
-            self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-            self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-            self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-            self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
-        }
-        self.navigationController?.pushViewController(selectSlotsVc, animated:true)
+        self.getSlotAttendanceStudents()
     }
     
     @IBAction func assignForAllButtonAction() {
@@ -200,14 +245,22 @@ class TeacherAttendanceViewController: UIViewController {
 extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.students.count
+        if isFullDay {
+            return self.students.count
+        } else {
+            return self.slotStudents.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var flag = false
-        flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
-            self.students[indexPath.row].childId == attendanceStudent.childId
-        })
+        if isFullDay {
+            flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
+                self.students[indexPath.row].childId == attendanceStudent.childId
+            })
+        } else {
+            debugPrint(flag)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
         cell.studentSelectButton.layer.borderWidth = 1
@@ -225,8 +278,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         }
         cell.didSelectAttendanceState = { state in
             var status = ""
-            var comment = ""
-//            debugPrint("state is selected is \(state)")
             var type: AttendanceRequestType!
             if flag {
                 type = .put
@@ -236,47 +287,71 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             switch state {
             case .present:
                 status = "present"
-                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                if self.isFullDay {
+                  self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                } else {
+                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                }
             case .late:
                 status = "late"
-                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                if self.isFullDay {
+                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                } else {
+                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                }
             case .absent:
                 status = "absent"
-                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                if self.isFullDay {
+                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+                } else {
+                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                }
             case .excused:
                 status = "excused"
                 let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
                 submitExcuse.didSubmit = { comment in
-                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
+                    if self.isFullDay {
+                         self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
+                    } else {
+                         self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
+                    }
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 self.present(submitExcuse, animated: true, completion: nil)
                 
             }
         }
-        cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
-        cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
-//        flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
-//            self.students[indexPath.row].childId == attendanceStudent.childId
-//        })
-        if let cellAttendance = self.attedances.first(where: { $0.student.childId == self.students[indexPath.row].childId}) {
-            if let _ = cellAttendance.timetableSlotId {
-//                flag = false
-                cell.resetAll()
-            } else {
-//                flag = true
-                //present the state for this student
-                switch cellAttendance.status!  {
-                case "present":
-                    cell.presentSelected()
-                case "late":
-                    cell.lateSelected()
-                case "absent":
-                    cell.absentSelected()
-                case "excused":
-                    cell.excusedSelected()
-                default:
-                    debugPrint("default case")
+        if self.isFullDay == true {
+            cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
+            cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
+        } else {
+            cell.studentNameLabel.text = self.slotStudents[indexPath.row].name ?? ""
+            cell.studentImageView.childImageView(url: self.slotStudents[indexPath.row].avatarUrl, placeholder: "\(self.slotStudents[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
+        }
+        
+        if isFullDay {
+            if let cellAttendance = self.attedances.first(where: { $0.student.childId == self.students[indexPath.row].childId}) {
+                if let _ = cellAttendance.timetableSlotId {
+                    cell.resetAll()
+                } else {
+                    switch cellAttendance.status!  {
+                    case "present":
+                        cell.presentSelected()
+                    case "late":
+                        cell.lateSelected()
+                    case "absent":
+                        cell.absentSelected()
+                    case "excused":
+                        cell.excusedSelected()
+                    default:
+                        debugPrint("default case")
+                    }
+                }
+            }
+        } else {
+            if let cellAttendance = self.slotAttendances.first(where: { $0.student.childId == self.slotStudents[indexPath.row].childId}) {
+                if let _ = cellAttendance.timetableSlotId {
+                    cell.resetAll()
                 }
             }
         }

@@ -13,8 +13,13 @@ class SelectSlotsViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var didSelectSlot: ( (Int) -> () )!
+    var cancel: (() -> ())!
     var selectedIndex: Int!
-    
+    var timeTableSlots: [TimetableSlots]! {
+        didSet{
+            self.tableView?.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -22,29 +27,25 @@ class SelectSlotsViewController: UIViewController{
     }
     
     @IBAction func close() {
+        cancel()
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func submit() {
-        if let index = selectedIndex {
-            didSelectSlot(index)
-            close()
-        } else {
-            //present dialogue slot selection or close
-            close()
-        }
+        didSelectSlot(selectedIndex)
+        close()
     }
 }
 
 extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return timeTableSlots.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "slotCell") as! AttendanceSlotTableViewCell
-        cell.slotLabel.text = "Slot \(indexPath.row + 1)"
+        cell.slotLabel.text = "Slot \(timeTableSlots[indexPath.row].slotNo!)"
         cell.selectionView.layer.borderWidth = 1
         cell.selectionView.layer.cornerRadius = 12
         if selectedIndex == indexPath.row {

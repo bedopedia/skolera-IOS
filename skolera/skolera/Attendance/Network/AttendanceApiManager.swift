@@ -23,6 +23,19 @@ func getFullDayAttendanceStudentsApi(courseGroupId: Int,startDate: String, endDa
     }
 }
 
+func getSlotAttendanceStudentsApi(courseGroupId: Int,date: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = GET_SLOT_ATTENDANCES(courseGroupId: courseGroupId, date: date)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
 func createFullDayAttendanceApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = CREATE_ATTENDANCE()
