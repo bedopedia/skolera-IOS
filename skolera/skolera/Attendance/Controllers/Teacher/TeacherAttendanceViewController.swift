@@ -25,6 +25,14 @@ class TeacherAttendanceViewController: UIViewController {
     var attedances: [Attendances]!
     var attendanceStudents: [AttendanceStudent]!
     var fullDayAttendance: FullDayAttendances!
+    var day = Date().day
+    var month = Date().month
+    var year = Date().year
+    
+    enum AttendanceRequestType: String {
+        case post = "post"
+        case put = "put"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +44,15 @@ class TeacherAttendanceViewController: UIViewController {
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         getFullDayAttendanceStudents()
         attendanceStudents = []
+        day = Date().day
+        month = Date().month
+        year = Date().year
+        
     }
     func getFullDayAttendanceStudents() {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en")
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-//        dateFormatter.string(from: Date())
+        debugPrint(day, month, year)
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "16%2F9%2F2019", endDate: "16%2F9%2F2019") { (isSuccess, statusCode, value, error) in
+        getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 self.fullDayAttendance = value.map{FullDayAttendances($0 as! [String : Any])}
@@ -58,6 +67,30 @@ class TeacherAttendanceViewController: UIViewController {
             }
         }
     }
+    
+    func createAttendance(type: AttendanceRequestType, parameters: Parameters) {
+        debugPrint(day, month, year)
+        switch (type) {
+        case .post:
+            createNewAttendance(parameters)
+        case .put:
+            debugPrint("put")
+        }
+        
+    }
+    
+    func createNewAttendance(_ parameters: Parameters) {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                debugPrint("success")
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
     
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
@@ -140,7 +173,10 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        var flag = false
+        var flag = false
+        flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
+            self.students[indexPath.row].childId == attendanceStudent.childId
+        })
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
         cell.studentSelectButton.layer.borderWidth = 1
@@ -158,18 +194,55 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         }
         cell.didSelectAttendanceState = { state in
             debugPrint("state is selected is \(state)")
-            // nw calls, should check if this student had been assigned a state
+            // nw calls, should check if this student had been assigned a state, post or update
+            var parameters: Parameters = [:]
+            var type: AttendanceRequestType!
+            var attendancesKey: [[String: Any]] = []
+            var attendance: [String: Any] = [:]
+            attendance["date"] = "\(self.day)%2F\(self.month)%2F\(self.year)"
+            attendance["student_id"] = self.students[indexPath.row].childId!
+            debugPrint(self.students[indexPath.row].childId)
+            attendance["timetable_slot_id"] = ""
+            attendance["comment"] = ""
             switch state {
             case .present:
+                attendance["status"] = "present"
+                if flag {
+                    debugPrint(flag)
+                } else {
+                    type = .post
+                }
                 cell.presentSelected()
             case .late:
+                attendance["status"] = "late"
+                if flag {
+                    debugPrint(flag)
+                } else {
+                    type = .post
+                }
                 cell.lateSelected()
             case .absent:
+                attendance["status"] = "absent"
+                if flag {
+                    debugPrint(flag)
+                } else {
+                    type = .post
+                }
                 cell.absentSelected()
             case .excused:
+                attendance["status"] = "excused"
+                if flag {
+                    debugPrint(flag)
+                } else {
+                    type = .post
+                }
                 cell.excusedSelected()
-                //display dialogue
             }
+            attendancesKey.append(attendance)
+            parameters["attendance"] = ["attendances": attendancesKey]
+            debugPrint(parameters)
+            self.createAttendance(type: type, parameters: parameters)
+            
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
         cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
