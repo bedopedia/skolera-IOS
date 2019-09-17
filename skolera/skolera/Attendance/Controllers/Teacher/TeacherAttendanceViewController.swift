@@ -67,7 +67,7 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func createAttendance(childId: Int, type: AttendanceRequestType, status: String) {
+    func createAttendance(childId: Int, type: AttendanceRequestType, status: String, comment: String = "") {
         var attendanceId: Int!
         var parameters: Parameters = [:]
         if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
@@ -78,22 +78,21 @@ class TeacherAttendanceViewController: UIViewController {
         case .post:
             var attendancesKey: [[String: Any]] = []
             var attendance: [String: Any] = [:]
-            attendance["date"] = "\(self.day)%2F\(self.month)%2F\(self.year)"
+            attendance["date"] = "\(self.day)-\(self.month)-\(self.year)" 
             attendance["student_id"] = childId
             attendance["timetable_slot_id"] = ""
-            attendance["comment"] = ""
+            attendance["comment"] = comment
             attendance["status"] = status
             attendancesKey.append(attendance)
             parameters["attendance"] = ["attendances": attendancesKey]
+            debugPrint(parameters)
             createNewAttendance(parameters)
         case .put:
             debugPrint("put")
             guard let id = attendanceId else {
                 return
             }
-//            {"attendance" : {"status" : "late", "comment" : "nil","timetable_slot_id":null}, "id" : 275479}
-//            ["attendance": ["timetable_slot_id": "", "status": "present", "comment": "nil"], "id": 275479]
-            parameters["attendance"] = ["status": status, "comment" : "nil","timetable_slot_id": "" ]
+            parameters["attendance"] = ["status": status, "comment" : comment, "timetable_slot_id": "" ]
             parameters["id"] = id
             debugPrint(parameters)
             updateAttendance(id, parameters)
@@ -105,7 +104,7 @@ class TeacherAttendanceViewController: UIViewController {
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
-                debugPrint("success")
+                self.getFullDayAttendanceStudents()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -117,9 +116,7 @@ class TeacherAttendanceViewController: UIViewController {
         updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
-                debugPrint("success")
                 self.getFullDayAttendanceStudents()
-                
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -228,60 +225,27 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         }
         cell.didSelectAttendanceState = { state in
             var status = ""
-            debugPrint("state is selected is \(state)")
-            // nw calls, should check if this student had been assigned a state, post or update
-            var parameters: Parameters = [:]
+            var comment = ""
+//            debugPrint("state is selected is \(state)")
             var type: AttendanceRequestType!
-            var attendancesKey: [[String: Any]] = []
-            var attendance: [String: Any] = [:]
-            attendance["date"] = "\(self.day)%2F\(self.month)%2F\(self.year)"
-            attendance["student_id"] = self.students[indexPath.row].childId!
-            debugPrint(self.students[indexPath.row].childId)
-            attendance["timetable_slot_id"] = ""
-            attendance["comment"] = ""
             switch state {
             case .present:
-                attendance["status"] = "present"
                 status = "present"
-                if flag {
-                    type = .put
-                } else {
-                    type = .post
-                }
-//                cell.presentSelected()
             case .late:
-                attendance["status"] = "late"
                 status = "late"
-                if flag {
-                    type = .put
-                } else {
-                    type = .post
-                }
-//                cell.lateSelected()
             case .absent:
-                attendance["status"] = "absent"
                 status = "absent"
-                if flag {
-                    type = .put
-                } else {
-                    type = .post
-                }
-//                cell.absentSelected()
             case .excused:
-                attendance["status"] = "excused"
                 status = "excused"
-                if flag {
-                    type = .put
-                } else {
-                    type = .post
-                }
-//                cell.excusedSelected()
+                let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
+                self.navigationController?.pushViewController(submitExcuse, animated: false)
             }
-            attendancesKey.append(attendance)
-            parameters["attendance"] = ["attendances": attendancesKey]
-            debugPrint(parameters)
-            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
-            
+            if flag {
+                type = .put
+            } else {
+                type = .post
+            }
+            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
         cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
