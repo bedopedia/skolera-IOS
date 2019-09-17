@@ -228,24 +228,31 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             var comment = ""
 //            debugPrint("state is selected is \(state)")
             var type: AttendanceRequestType!
-            switch state {
-            case .present:
-                status = "present"
-            case .late:
-                status = "late"
-            case .absent:
-                status = "absent"
-            case .excused:
-                status = "excused"
-                let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
-                self.navigationController?.pushViewController(submitExcuse, animated: false)
-            }
             if flag {
                 type = .put
             } else {
                 type = .post
             }
-            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
+            switch state {
+            case .present:
+                status = "present"
+                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+            case .late:
+                status = "late"
+                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+            case .absent:
+                status = "absent"
+                self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
+            case .excused:
+                status = "excused"
+                let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
+                submitExcuse.didSubmit = { comment in
+                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
+                }
+//                self.navigationController?.pushViewController(submitExcuse, animated: false)
+                self.present(submitExcuse, animated: true, completion: nil)
+                
+            }
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
         cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)

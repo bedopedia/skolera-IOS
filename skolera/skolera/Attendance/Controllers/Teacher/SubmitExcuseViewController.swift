@@ -12,13 +12,27 @@ import KMPlaceholderTextView
 class SubmitExcuseViewController: UIViewController {
 
     @IBOutlet weak var commentLabel: KMPlaceholderTextView!
+    var didSubmit: ((String) -> ())!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
+    @IBAction func close() {
+//        self.navigationController?.popViewController(animated: false)
+        self.dismiss(animated: true)
+    }
+    
+    @IBAction func submit() {
+        if !commentLabel.text.isEmpty {
+            didSubmit(commentLabel.text)
+            close()
+        } else {
+            debugPrint("empty comment")
+            //present an alert
+        }
+    }
 
     /*
     // MARK: - Navigation
