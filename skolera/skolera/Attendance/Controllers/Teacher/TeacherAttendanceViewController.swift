@@ -67,20 +67,35 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func createAttendance(childId: Int, type: AttendanceRequestType, parameters: Parameters) {
+    func createAttendance(childId: Int, type: AttendanceRequestType, status: String) {
         var attendanceId: Int!
+        var parameters: Parameters = [:]
         if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
             debugPrint(" ")
-            attendanceId = attendanceIndex
+            attendanceId = self.attedances[attendanceIndex].id!
         }
         switch (type) {
         case .post:
+            var attendancesKey: [[String: Any]] = []
+            var attendance: [String: Any] = [:]
+            attendance["date"] = "\(self.day)%2F\(self.month)%2F\(self.year)"
+            attendance["student_id"] = childId
+            attendance["timetable_slot_id"] = ""
+            attendance["comment"] = ""
+            attendance["status"] = status
+            attendancesKey.append(attendance)
+            parameters["attendance"] = ["attendances": attendancesKey]
             createNewAttendance(parameters)
         case .put:
             debugPrint("put")
             guard let id = attendanceId else {
                 return
             }
+//            {"attendance" : {"status" : "late", "comment" : "nil","timetable_slot_id":null}, "id" : 275479}
+//            ["attendance": ["timetable_slot_id": "", "status": "present", "comment": "nil"], "id": 275479]
+            parameters["attendance"] = ["status": status, "comment" : "nil","timetable_slot_id": "" ]
+            parameters["id"] = id
+            debugPrint(parameters)
             updateAttendance(id, parameters)
         }
     }
@@ -103,12 +118,13 @@ class TeacherAttendanceViewController: UIViewController {
             SVProgressHUD.dismiss()
             if isSuccess {
                 debugPrint("success")
+                self.getFullDayAttendanceStudents()
+                
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
-    
     
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
@@ -211,6 +227,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             }
         }
         cell.didSelectAttendanceState = { state in
+            var status = ""
             debugPrint("state is selected is \(state)")
             // nw calls, should check if this student had been assigned a state, post or update
             var parameters: Parameters = [:]
@@ -225,41 +242,45 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             switch state {
             case .present:
                 attendance["status"] = "present"
+                status = "present"
                 if flag {
                     type = .put
                 } else {
                     type = .post
                 }
-                cell.presentSelected()
+//                cell.presentSelected()
             case .late:
                 attendance["status"] = "late"
+                status = "late"
                 if flag {
                     type = .put
                 } else {
                     type = .post
                 }
-                cell.lateSelected()
+//                cell.lateSelected()
             case .absent:
                 attendance["status"] = "absent"
+                status = "absent"
                 if flag {
                     type = .put
                 } else {
                     type = .post
                 }
-                cell.absentSelected()
+//                cell.absentSelected()
             case .excused:
                 attendance["status"] = "excused"
+                status = "excused"
                 if flag {
                     type = .put
                 } else {
                     type = .post
                 }
-                cell.excusedSelected()
+//                cell.excusedSelected()
             }
             attendancesKey.append(attendance)
             parameters["attendance"] = ["attendances": attendancesKey]
             debugPrint(parameters)
-            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, parameters: parameters)
+            self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
             
         }
         cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
