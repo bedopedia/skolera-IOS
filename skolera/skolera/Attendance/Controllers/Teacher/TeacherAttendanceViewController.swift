@@ -55,6 +55,7 @@ class TeacherAttendanceViewController: UIViewController {
         month = Date().month
         year = Date().year
         isFullDay = true
+        leftLabel.text = "\(getTodayName().capitalizingFirstLetter()) \(Date().day)"
         
     }
     func getFullDayAttendanceStudents() {
@@ -73,6 +74,7 @@ class TeacherAttendanceViewController: UIViewController {
                 self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
                 self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
                 self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+                self.leftLabel.text = "\(getTodayName().capitalizingFirstLetter()) \(Date().day)"
                 self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -101,14 +103,13 @@ class TeacherAttendanceViewController: UIViewController {
                 for attendance in self.slotAttendances {
                     self.slotAttendanceStudents.append(attendance.student)
                 }
-                    if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
-                        self.presentSlotsViewController()
-                    } else {
-                        debugPrint("no slots available")
-                        //alert dialogue no slots available
-                    }
-                
-                    self.tableView.reloadData()
+                if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
+                    self.presentSlotsViewController()
+                } else {
+                    debugPrint("no slots available")
+                    //alert dialogue no slots available
+                }
+                self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -203,12 +204,11 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     @IBAction func fullDayAttendanceButtonAction() {
-        leftLabel.text = "Monday 23"
         getFullDayAttendanceStudents()
     }
     
     @IBAction func slotAttendanceButtonAction() {
-        self.getSlotAttendanceStudents()
+        getSlotAttendanceStudents()
     }
     
     @IBAction func assignForAllButtonAction() {
