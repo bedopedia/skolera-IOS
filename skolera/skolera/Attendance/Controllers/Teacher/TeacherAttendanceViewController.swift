@@ -34,6 +34,7 @@ class TeacherAttendanceViewController: UIViewController {
     var year = Date().year
     var isFullDay: Bool!
     var selectedSlot: TimetableSlots!
+    var selectedStudents: [AttendanceStudent]!
     enum AttendanceRequestType: String {
         case post = "post"
         case put = "put"
@@ -51,6 +52,7 @@ class TeacherAttendanceViewController: UIViewController {
         slotStudents = []
         slotAttendances = []
         slotAttendanceStudents = []
+        selectedStudents = []
         day = Date().day
         month = Date().month
         year = Date().year
@@ -72,9 +74,7 @@ class TeacherAttendanceViewController: UIViewController {
                 }
                 self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
                 self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-                self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-                self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
-                self.leftLabel.text = "\(getTodayName().capitalizingFirstLetter()) \(Date().day)"
+                self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter()) \(Date().day)"
                 self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -86,7 +86,7 @@ class TeacherAttendanceViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en")
         formatter.dateFormat = "EEEE"
-        let dayInWeek = formatter.string(from: Date()).lowercased()
+        let dayInWeek = formatter.string(from: Date())
         return dayInWeek
     }
     
@@ -103,7 +103,7 @@ class TeacherAttendanceViewController: UIViewController {
                 for attendance in self.slotAttendances {
                     self.slotAttendanceStudents.append(attendance.student)
                 }
-                if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
+                if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName().lowercased())}) {
                     self.presentSlotsViewController()
                 } else {
                     debugPrint("no slots available")
@@ -119,7 +119,7 @@ class TeacherAttendanceViewController: UIViewController {
     func presentSlotsViewController() {
         let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
         selectSlotsVc.timeTableSlots = self.timeTableSlots.filter({(timeSlot) -> Bool in
-            return timeSlot.day.elementsEqual(getTodayName())})
+            return timeSlot.day.elementsEqual(getTodayName().lowercased())})
         selectSlotsVc.didSelectSlot = { (selectedSlot) in
             self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
             self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
@@ -134,7 +134,7 @@ class TeacherAttendanceViewController: UIViewController {
         self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
     
-    func createAttendance(childId: Int, type: AttendanceRequestType, status: String, comment: String = "") {
+    func submitAttendance(childId: Int, type: AttendanceRequestType, status: String, comment: String = "") {
         var attendanceId: Int!
         var parameters: Parameters = [:]
         if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
@@ -272,29 +272,41 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var flag = false
+        let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
+        cell.resetAll()
         if isFullDay {
             flag = attendanceStudents.contains(where: { (attendanceStudent) -> Bool in
                 self.students[indexPath.row].childId == attendanceStudent.childId
             })
+            if self.selectedStudents.contains(where: { (student) -> Bool in
+                self.students[indexPath.row].childId == student.childId
+            }) {
+                cell.selectStudent()
+            } else {
+                cell.deselectStudent()
+            }
         } else {
             debugPrint(flag)
             flag = slotAttendanceStudents.contains(where: {(slotAttendanceStudent) -> Bool in
                 self.slotStudents[indexPath.row].childId == slotAttendanceStudent.childId
             })
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
-        cell.resetAll()
-        cell.studentSelectButton.layer.borderWidth = 1
-        cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+        
         cell.didSelectStudent = {
-            if self.students.indices.contains(indexPath.row) { //student is being unselected
-                cell.studentSelectButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
-                cell.resetAll()
+            if self.isFullDay {
+                if self.selectedStudents.contains(where: { (student) -> Bool in
+                    self.students[indexPath.row].childId == student.childId }) {
+                    self.selectedStudents.removeAll(where: { (student) -> Bool in
+                        student.childId == self.students[indexPath.row].childId
+                    })
+                    cell.deselectStudent()
+                } else {
+                    cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
+                    self.selectedStudents.append(self.students[indexPath.row])
+                    cell.selectStudent()
+                }
             } else {
-                cell.studentSelectButton.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-                cell.studentSelectButton.layer.borderColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-                cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
+                //same check for slots selection
             }
         }
         
@@ -309,18 +321,18 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             switch state {
             case .present:
                 status = "present"
-                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .late:
                 status = "late"
-                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .absent:
                 status = "absent"
-                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .excused:
                 status = "excused"
                 let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
                 submitExcuse.didSubmit = { comment in
-                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
+                    self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 self.present(submitExcuse, animated: true, completion: nil)

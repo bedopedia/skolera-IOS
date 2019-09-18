@@ -83,7 +83,13 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
         excusedButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
     }
     
+    
     func resetAll() {
+        
+        studentSelectButton.layer.borderWidth = 1
+        studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+        studentSelectButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
         lateButton.setImage(#imageLiteral(resourceName: "late"), for: .normal)
         lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
@@ -113,6 +119,17 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
         case .excused:
             excusedSelected()
         }
+    }
+    
+    func selectStudent() {
+        studentSelectButton.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+        studentSelectButton.layer.borderColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+    }
+    
+    func deselectStudent() {
+        studentSelectButton.layer.borderWidth = 1
+        studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+        studentSelectButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
 }
