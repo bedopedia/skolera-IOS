@@ -99,12 +99,18 @@ class TeacherAttendanceViewController: UIViewController {
                 for attendance in self.slotAttendances {
                     self.slotAttendanceStudents.append(attendance.student)
                 }
-                if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
-                    self.presentSlotsViewController()
-                } else {
-                    debugPrint("no slots available")
-                    //alert dialogue
-                }
+                self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
+                self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+                self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+                self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+                self.isFullDay = false
+                    if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
+                        self.presentSlotsViewController()
+                    } else {
+                        debugPrint("no slots available")
+                        //alert dialogue no slots available
+                    }
+                    self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -126,11 +132,6 @@ class TeacherAttendanceViewController: UIViewController {
             self.isFullDay = false
             self.tableView.reloadData()
         }
-//        selectSlotsVc.cancel = {
-////            self.getFullDayAttendanceStudents()
-////            self.isFullDay = true
-//            debugPrint("should display the same data")
-//        }
         self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
     
@@ -146,7 +147,13 @@ class TeacherAttendanceViewController: UIViewController {
             var attendance: [String: Any] = [:]
             attendance["date"] = "\(self.day)-\(self.month)-\(self.year)" 
             attendance["student_id"] = childId
-            attendance["timetable_slot_id"] = ""
+            if isFullDay {
+                attendance["timetable_slot_id"] = ""
+            } else {
+                if let slot = self.selectedSlot {
+                    attendance["timetable_slot_id"] = slot.id!
+                }
+            }
             attendance["comment"] = comment
             attendance["status"] = status
             attendancesKey.append(attendance)
@@ -170,7 +177,11 @@ class TeacherAttendanceViewController: UIViewController {
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
-                self.getFullDayAttendanceStudents()
+                if self.isFullDay {
+                    self.getFullDayAttendanceStudents()
+                } else {
+                    self.getSlotAttendanceStudents()
+                }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -273,6 +284,9 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             })
         } else {
             debugPrint(flag)
+            flag = slotAttendanceStudents.contains(where: {(slotAttendanceStudent) -> Bool in
+                self.slotStudents[indexPath.row].childId == slotAttendanceStudent.childId
+            })
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
@@ -289,6 +303,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
             }
         }
+        
         cell.didSelectAttendanceState = { state in
             var status = ""
             var type: AttendanceRequestType!
@@ -300,40 +315,25 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             switch state {
             case .present:
                 status = "present"
-                if self.isFullDay {
-                  self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
-                } else {
-                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
-                }
+                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .late:
                 status = "late"
-                if self.isFullDay {
-                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
-                } else {
-                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
-                }
+                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .absent:
                 status = "absent"
-                if self.isFullDay {
-                    self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
-                } else {
-                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
-                }
+                self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
             case .excused:
                 status = "excused"
                 let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
                 submitExcuse.didSubmit = { comment in
-                    if self.isFullDay {
-                         self.createAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
-                    } else {
-                         self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
-                    }
+                    self.createAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 self.present(submitExcuse, animated: true, completion: nil)
                 
             }
         }
+        
         if self.isFullDay == true {
             cell.studentNameLabel.text = self.students[indexPath.row].name ?? ""
             cell.studentImageView.childImageView(url: self.students[indexPath.row].avatarUrl, placeholder: "\(self.students[indexPath.row].name.prefix(2).uppercased())", textSize: 14)
@@ -347,25 +347,13 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 if let _ = cellAttendance.timetableSlotId {
                     cell.resetAll()
                 } else {
-                    switch cellAttendance.status!  {
-                    case "present":
-                        cell.presentSelected()
-                    case "late":
-                        cell.lateSelected()
-                    case "absent":
-                        cell.absentSelected()
-                    case "excused":
-                        cell.excusedSelected()
-                    default:
-                        debugPrint("default case")
-                    }
+                    cell.applyState(attendanceCase: AttendanceCases(rawValue: cellAttendance.status!) ?? .present)
                 }
             }
         } else {
-            if let cellAttendance = self.slotAttendances.first(where: { $0.student.childId == self.slotStudents[indexPath.row].childId}) {
-                if let _ = cellAttendance.timetableSlotId {
-                    cell.resetAll()
-                }
+            if let cellAttendance = self.slotAttendances.first(where: {$0.student.childId == self.slotStudents[indexPath.row].childId}) {
+                debugPrint("hello")
+                cell.applyState(attendanceCase: AttendanceCases(rawValue: cellAttendance.status!) ?? .present)
             }
         }
         return cell
@@ -374,8 +362,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 108
     }
-    
-    // implementation of protocol requirements goes here
 }
 
 

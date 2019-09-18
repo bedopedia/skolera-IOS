@@ -100,5 +100,19 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
         absentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         absentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
     }
+    
+    func applyState(attendanceCase: AttendanceCases) {
+        resetAll()
+        switch (attendanceCase) {
+        case .absent:
+            absentSelected()
+        case .present:
+            presentSelected()
+        case .late:
+            lateSelected()
+        case .excused:
+            excusedSelected()
+        }
+    }
 
 }
