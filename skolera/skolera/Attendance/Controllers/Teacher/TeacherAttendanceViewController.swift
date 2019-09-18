@@ -172,7 +172,7 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func submitBatchAttendance(status: String, timeTableSlot: TimetableSlots!) {
+    func submitBatchAttendance(status: String) {
         //create, update
         //create for batch
         var attendanceId: Int!
@@ -277,6 +277,7 @@ class TeacherAttendanceViewController: UIViewController {
         let presentImage = #imageLiteral(resourceName: "presentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
         let presentAction = UIAlertAction(title: presentString, style: .default, handler: { (_) in
             print("User click present button")
+            self.submitBatchAttendance(status: "present")
         })
         presentAction.setValue(presentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
         presentAction.setValue(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), forKey: "titleTextColor")
@@ -364,6 +365,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         }
         
         cell.didSelectAttendanceState = { state in
+            var students: [AttendanceStudent] = []
             var status = ""
             var type: AttendanceRequestType!
             if flag {
@@ -371,21 +373,26 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             } else {
                 type = .post
             }
+            if self.isFullDay {
+                students = self.students
+            } else {
+                students = self.slotStudents
+            }
             switch state {
             case .present:
                 status = "present"
-                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
             case .late:
                 status = "late"
-                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
             case .absent:
                 status = "absent"
-                self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status)
+                self.submitAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status)
             case .excused:
                 status = "excused"
                 let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
                 submitExcuse.didSubmit = { comment in
-                    self.submitAttendance(childId: self.slotStudents[indexPath.row].childId!, type: type, status: status, comment: comment)
+                    self.submitAttendance(childId: self.students[indexPath.row].childId!, type: type, status: status, comment: comment)
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 self.present(submitExcuse, animated: true, completion: nil)
