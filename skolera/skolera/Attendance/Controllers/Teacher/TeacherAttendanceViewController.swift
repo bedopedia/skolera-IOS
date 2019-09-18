@@ -45,8 +45,6 @@ class TeacherAttendanceViewController: UIViewController {
         tableView.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         students = []
-        fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-        fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         getFullDayAttendanceStudents()
         attendanceStudents = []
         timeTableSlots = []
@@ -71,6 +69,10 @@ class TeacherAttendanceViewController: UIViewController {
                 for attendance in self.attedances {
                    self.attendanceStudents.append(attendance.student)
                 }
+                self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
+                self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+                self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+                self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
                 self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -99,17 +101,13 @@ class TeacherAttendanceViewController: UIViewController {
                 for attendance in self.slotAttendances {
                     self.slotAttendanceStudents.append(attendance.student)
                 }
-                self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-                self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-                self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-                self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
-                self.isFullDay = false
                     if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
                         self.presentSlotsViewController()
                     } else {
                         debugPrint("no slots available")
                         //alert dialogue no slots available
                     }
+                
                     self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -122,13 +120,13 @@ class TeacherAttendanceViewController: UIViewController {
         selectSlotsVc.timeTableSlots = self.timeTableSlots.filter({(timeSlot) -> Bool in
             return timeSlot.day.elementsEqual(getTodayName())})
         selectSlotsVc.didSelectSlot = { (selectedSlot) in
-            self.selectedSlot = selectedSlot
-            debugPrint("Slot Index is:" , selectedSlot.slotNo!)
-            self.leftLabel.text = "Slot \(selectedSlot.slotNo!)"
             self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
             self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
             self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
             self.fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
+            self.selectedSlot = selectedSlot
+            debugPrint("Slot Index is:" , selectedSlot.slotNo!)
+            self.leftLabel.text = "Slot \(selectedSlot.slotNo!)"
             self.isFullDay = false
             self.tableView.reloadData()
         }
@@ -205,10 +203,6 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     @IBAction func fullDayAttendanceButtonAction() {
-        fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
-        fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-        slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-        slotAttendanceButton.setTitleColor(#colorLiteral(red: 0.7254901961, green: 0.7254901961, blue: 0.7254901961, alpha: 1), for: .normal)
         leftLabel.text = "Monday 23"
         getFullDayAttendanceStudents()
     }
