@@ -33,7 +33,7 @@ class TeacherAttendanceViewController: UIViewController {
     var month = Date().month
     var year = Date().year
     var isFullDay: Bool!
-    
+    var selectedSlot: TimetableSlots!
     enum AttendanceRequestType: String {
         case post = "post"
         case put = "put"
@@ -115,9 +115,10 @@ class TeacherAttendanceViewController: UIViewController {
         let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
         selectSlotsVc.timeTableSlots = self.timeTableSlots.filter({(timeSlot) -> Bool in
             return timeSlot.day.elementsEqual(getTodayName())})
-        selectSlotsVc.didSelectSlot = { (index) in
-            debugPrint("Slot Index is:",self.timeTableSlots[index].slotNo!)
-            self.leftLabel.text = "Slot \(self.timeTableSlots[index].slotNo!)"
+        selectSlotsVc.didSelectSlot = { (selectedSlot) in
+            self.selectedSlot = selectedSlot
+            debugPrint("Slot Index is:" , selectedSlot.slotNo!)
+            self.leftLabel.text = "Slot \(selectedSlot.slotNo!)"
             self.slotAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
             self.slotAttendanceBottomBar.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
             self.fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
@@ -130,7 +131,6 @@ class TeacherAttendanceViewController: UIViewController {
 ////            self.isFullDay = true
 //            debugPrint("should display the same data")
 //        }
-        
         self.navigationController?.pushViewController(selectSlotsVc, animated:true)
     }
     
@@ -138,7 +138,6 @@ class TeacherAttendanceViewController: UIViewController {
         var attendanceId: Int!
         var parameters: Parameters = [:]
         if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
-            debugPrint(" ")
             attendanceId = self.attedances[attendanceIndex].id!
         }
         switch (type) {

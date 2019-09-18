@@ -12,9 +12,10 @@ class SelectSlotsViewController: UIViewController{
 
     @IBOutlet weak var tableView: UITableView!
     
-    var didSelectSlot: ( (Int) -> () )!
+    var didSelectSlot: ( (TimetableSlots) -> () )!
 //    var cancel: (() -> ())!
     var selectedIndex: Int!
+    var selectedSlot: TimetableSlots!
     var timeTableSlots: [TimetableSlots]! {
         didSet{
             self.tableView?.reloadData()
@@ -32,7 +33,7 @@ class SelectSlotsViewController: UIViewController{
     }
     
     @IBAction func submit() {
-        didSelectSlot(selectedIndex)
+        didSelectSlot(selectedSlot)
         close()
     }
 }
@@ -64,6 +65,7 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        selectedSlot = timeTableSlots[indexPath.row]
         tableView.reloadData()
     }
 
