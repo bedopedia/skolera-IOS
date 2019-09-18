@@ -19,7 +19,14 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var excusedButton: UIButton!
     
     var didSelectStudent: ( () -> () )!
-    var didSelectAttendanceState: ( (AttendanceCases) -> () )!
+    var didSelectAttendanceState: ( (AttendanceCases, Int) -> () )!
+    
+    var student: AttendanceStudent!{
+        didSet{
+            self.studentNameLabel.text = self.student.name ?? ""
+            self.studentImageView.childImageView(url: self.student.avatarUrl, placeholder: "\(self.student.name.prefix(2).uppercased())", textSize: 14)
+        }
+    }
 
 
     override func awakeFromNib() {
@@ -39,19 +46,19 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
 
     
     @IBAction func presentButtonAction() {
-        didSelectAttendanceState(.present)
+        didSelectAttendanceState(.present, )
     }
     
     @IBAction func lateButtonAction() {
-        didSelectAttendanceState(.late)
+        didSelectAttendanceState(.late, )
     }
     
     @IBAction func absentButtonAction() {
-        didSelectAttendanceState(.absent)
+        didSelectAttendanceState(.absent, )
     }
     
     @IBAction func excusedButtonAction() {
-        didSelectAttendanceState(.excused)
+        didSelectAttendanceState(.excused, )
     }
     
     func presentSelected() {
