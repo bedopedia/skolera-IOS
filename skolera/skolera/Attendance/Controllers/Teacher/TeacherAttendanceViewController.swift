@@ -78,6 +78,14 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
+    private func getTodayName() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en")
+        formatter.dateFormat = "EEEE"
+        let dayInWeek = formatter.string(from: Date()).lowercased()
+        return dayInWeek
+    }
+    
     func getSlotAttendanceStudents() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
@@ -87,11 +95,16 @@ class TeacherAttendanceViewController: UIViewController {
                 self.slotStudents = self.slotAttendance.students
                 self.slotAttendances = self.slotAttendance?.attendances
                 self.timeTableSlots = self.slotAttendance?.timetableSlots
+                debugPrint(self.timeTableSlots)
                 for attendance in self.slotAttendances {
                     self.slotAttendanceStudents.append(attendance.student)
                 }
-                self.presentSlotsViewController()
-                
+                if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName())}) {
+                    self.presentSlotsViewController()
+                } else {
+                    debugPrint("no slots available")
+                    //alert dialogue
+                }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -100,7 +113,8 @@ class TeacherAttendanceViewController: UIViewController {
     
     func presentSlotsViewController() {
         let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
-        selectSlotsVc.timeTableSlots = self.timeTableSlots
+        selectSlotsVc.timeTableSlots = self.timeTableSlots.filter({(timeSlot) -> Bool in
+            return timeSlot.day.elementsEqual(getTodayName())})
         selectSlotsVc.didSelectSlot = { (index) in
             debugPrint("Slot Index is:",self.timeTableSlots[index].slotNo!)
             self.leftLabel.text = "Slot \(self.timeTableSlots[index].slotNo!)"
