@@ -19,6 +19,7 @@ class TeacherAttendanceViewController: UIViewController {
     @IBOutlet weak var slotAttendanceBottomBar: UIView!
     @IBOutlet weak var slotAttendanceButton: UIButton!
     @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var assignForAllButton: UIButton!
     
     var courseGroupId: Int!
     var students: [AttendanceStudent]!
@@ -171,6 +172,53 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
+    func submitBatchAttendance(status: String, timeTableSlot: TimetableSlots!) {
+        //create, update
+        //create for batch
+        var attendanceId: Int!
+        var parameters: Parameters = [:]
+        var attendancesKey: [[String: Any]] = []
+        var createNewAttendanceStudents: [AttendanceStudent] = []
+        var updateAttendanceStudents: [AttendanceStudent] = []
+        var attendances: [Attendances] = []
+        var attendanceParam: [String: Any] = [:]
+        var slotId: Int!
+//        if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == childId }) {
+//            attendanceId = self.attedances[attendanceIndex].id!
+//        }
+        if self.isFullDay {
+            attendances = self.attedances
+        } else {
+            attendances = self.slotAttendances
+            if let slot = self.selectedSlot {
+                slotId = slot.id!
+            }
+        }
+        
+        for student in selectedStudents {
+            if let attendanceIndex = self.attedances.firstIndex(where: { $0.student.childId == student.childId }) { //update case
+//                attendanceId = self.attedances[attendanceIndex].id!
+                updateAttendanceStudents.append(student)
+            } else {
+                createNewAttendanceStudents.append(student)
+            }
+        }
+        
+        for student in createNewAttendanceStudents {
+            attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
+            attendanceParam["student_id"] = student.childId!
+            attendanceParam["comment"] = ""
+            attendanceParam["status"] = status
+            attendanceParam["timetable_slot_id"] = slotId ?? ""
+            attendancesKey.append(attendanceParam)
+        }
+        
+        parameters["attendance"] = ["attendances": attendancesKey]
+        debugPrint(parameters)
+        createNewAttendance(parameters)
+        
+    }
+    
     func createNewAttendance(_ parameters: Parameters) {
         SVProgressHUD.show(withStatus: "Loading".localized)
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
@@ -308,6 +356,11 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             } else {
                 //same check for slots selection
             }
+            if self.selectedStudents.count > 0 {
+                self.assignForAllButton.titleLabel?.text = "Assign for selected"
+            } else {
+                self.assignForAllButton.titleLabel?.text = "Assign for all"
+            }
         }
         
         cell.didSelectAttendanceState = { state in
@@ -336,7 +389,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 self.present(submitExcuse, animated: true, completion: nil)
-                
             }
         }
         
