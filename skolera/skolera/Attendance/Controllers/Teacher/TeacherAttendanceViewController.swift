@@ -286,6 +286,7 @@ class TeacherAttendanceViewController: UIViewController {
         let lateImage = #imageLiteral(resourceName: "lateSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
         let lateAction = UIAlertAction(title: lateString, style: .default, handler: { (_) in
             print("User click late button")
+            self.submitBatchAttendance(status: "late")
         })
         lateAction.setValue(lateImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
         lateAction.setValue(#colorLiteral(red: 0.9843137255, green: 0.7529411765, blue: 0.1764705882, alpha: 1), forKey: "titleTextColor")
@@ -294,6 +295,7 @@ class TeacherAttendanceViewController: UIViewController {
         let absentImage = #imageLiteral(resourceName: "absentSelected").resizeImage(CGFloat(signOf: 20, magnitudeOf: 20),opaque: false)
         let absentAction = UIAlertAction(title: absentString, style: .default, handler: { (_) in
             print("User click absent button")
+            self.submitBatchAttendance(status: "absent")
         })
         absentAction.setValue(absentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
         absentAction.setValue(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), forKey: "titleTextColor")
@@ -301,6 +303,7 @@ class TeacherAttendanceViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: removeStatusString, style: .cancel, handler: { (_) in
             print("User click Dismiss button")
+            //batch delete
         }))
         
         self.present(alert, animated: true, completion: {
