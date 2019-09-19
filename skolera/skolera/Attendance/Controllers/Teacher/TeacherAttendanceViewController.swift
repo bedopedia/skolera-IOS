@@ -79,6 +79,7 @@ class TeacherAttendanceViewController: UIViewController {
             }
         }
     }
+    
     func getSlotData() {
         getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
@@ -103,7 +104,6 @@ class TeacherAttendanceViewController: UIViewController {
             for student in self.fullDayAttendanceObject.students {
                 self.currentStudents.append(student)
                 self.studentsMap[student.childId] = self.fullDayAttendanceObject.attendances.filter({ (attendance) -> Bool in
-                    debugPrint(student.childId)
                     return attendance.studentId == student.childId
                 })
                 self.highlightFullDayUi()
@@ -197,7 +197,6 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func submitBatchAttendance(status: String) {
-      
         var parameters: Parameters = [:]
         var attendancesKey: [[String: Any]] = []
         var createNewAttendanceStudents: [AttendanceStudent] = []
@@ -210,7 +209,6 @@ class TeacherAttendanceViewController: UIViewController {
                 slotId = slot.id!
             }
         }
-        
         for student in selectedStudents {
             if studentsMap[student.childId]!.count > 0  { //update case
                 updateAttendanceStudents.append(student)
@@ -218,7 +216,6 @@ class TeacherAttendanceViewController: UIViewController {
                 createNewAttendanceStudents.append(student)
             }
         }
-        
         for student in createNewAttendanceStudents {
             attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
             attendanceParam["student_id"] = student.childId!
@@ -227,11 +224,9 @@ class TeacherAttendanceViewController: UIViewController {
             attendanceParam["timetable_slot_id"] = slotId ?? ""
             attendancesKey.append(attendanceParam)
         }
-        
         parameters["attendance"] = ["attendances": attendancesKey]
         debugPrint(parameters)
         createNewAttendance(parameters)
-        
     }
     
     func createNewAttendance(_ parameters: Parameters) {
@@ -335,20 +330,25 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
-//        selection of students
-//        if self.selectedStudents.contains(where: { (student) -> Bool in
-//            self.students[indexPath.row].childId == student.childId
-//        }) {
-//            cell.selectStudent()
-//        } else {
-//            cell.deselectStudent()
-//        }
+        //ui update right label
+        if self.selectedStudents.count > 0 {
+            self.assignForAllButton.titleLabel?.text = "Assign for selected"
+        } else {
+            self.assignForAllButton.titleLabel?.text = "Assign for all"
+        }
+        
+        if self.selectedStudents.contains(where: { (student) -> Bool in
+            self.currentStudents[indexPath.row].childId == student.childId
+        }) {
+            cell.selectStudent()
+        } else {
+            cell.deselectStudent()
+        }
 
         cell.didSelectStudent = { (selectedStudent) -> () in
-    
             var isSelected = false
             isSelected = self.selectedStudents.contains(where: { (student) -> Bool in
-                student.childId == selectedStudent.id
+                student.childId! == selectedStudent.childId!
             })
             if isSelected {
                 self.selectedStudents.removeAll{ (student) -> Bool in
@@ -359,12 +359,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
                 self.selectedStudents.append(selectedStudent)
                 cell.selectStudent()
-            }
-            //ui update right label
-            if self.selectedStudents.count > 0 {
-                self.assignForAllButton.titleLabel?.text = "Assign for selected"
-            } else {
-                self.assignForAllButton.titleLabel?.text = "Assign for all"
             }
         }
         
