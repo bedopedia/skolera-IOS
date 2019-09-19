@@ -18,8 +18,8 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var absentButton: UIButton!
     @IBOutlet weak var excusedButton: UIButton!
     
-    var didSelectStudent: ( () -> () )!
-    var didSelectAttendanceState: ( (AttendanceCases, Int) -> () )!
+    var didSelectStudent: ( (AttendanceStudent) -> () )!
+    var didSelectAttendanceState: ( (AttendanceCases, AttendanceStudent) -> () )!
     
     var student: AttendanceStudent!{
         didSet{
@@ -40,25 +40,23 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     }
     
     @IBAction func studentSelectedButtonAction() {
-        didSelectStudent()
+        didSelectStudent(student)
     }
     
-
-    
     @IBAction func presentButtonAction() {
-        didSelectAttendanceState(.present, )
+        didSelectAttendanceState(.present, student)
     }
     
     @IBAction func lateButtonAction() {
-        didSelectAttendanceState(.late, )
+        didSelectAttendanceState(.late, student)
     }
     
     @IBAction func absentButtonAction() {
-        didSelectAttendanceState(.absent, )
+        didSelectAttendanceState(.absent, student)
     }
     
     @IBAction func excusedButtonAction() {
-        didSelectAttendanceState(.excused, )
+        didSelectAttendanceState(.excused, student)
     }
     
     func presentSelected() {
@@ -131,6 +129,7 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     func selectStudent() {
         studentSelectButton.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         studentSelectButton.layer.borderColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+        studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
     }
     
     func deselectStudent() {
