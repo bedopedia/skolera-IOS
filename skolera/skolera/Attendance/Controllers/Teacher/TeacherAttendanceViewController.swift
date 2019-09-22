@@ -197,7 +197,7 @@ class TeacherAttendanceViewController: UIViewController {
     func submitBatchAttendance(status: String) {
         var parameters: Parameters = [:]
         var attendancesKey: [[String: Any]] = []
-        var createNewAttendanceStudents: [AttendanceStudent] = []
+        var createNewAttendanceStudents: [Int] = []
 //        var updateAttendanceStudents: [AttendanceStudent] = []
         var attendanceParam: [String: Any] = [:]
         var slotId: Int!
@@ -210,9 +210,10 @@ class TeacherAttendanceViewController: UIViewController {
         for student in selectedStudents {
             createNewAttendanceStudents.append(student)
         }
-        for student in createNewAttendanceStudents {
+        selectedStudents = []
+        for id in createNewAttendanceStudents {
             attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
-            attendanceParam["student_id"] = student.childId!
+            attendanceParam["student_id"] = id
             attendanceParam["comment"] = ""
             attendanceParam["status"] = status
             attendanceParam["timetable_slot_id"] = slotId ?? ""
@@ -347,14 +348,14 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
         //ui update right label
-        if self.selectedStudents.count > 0 {
-            self.assignForAllButton.titleLabel?.text = "Assign for selected"
-        } else {
-            self.assignForAllButton.titleLabel?.text = "Assign for all"
-        }
+//        if self.selectedStudents.count > 0 {
+//            self.assignForAllButton.titleLabel?.text = "Assign for selected"
+//        } else {
+//            self.assignForAllButton.titleLabel?.text = "Assign for all"
+//        }
         
-        if self.selectedStudents.contains(where: { (student) -> Bool in
-            self.currentStudents[indexPath.row].childId == student.childId
+        if self.selectedStudents.contains(where: { (studentId) -> Bool in
+            self.currentStudents[indexPath.row].childId == studentId
         }) {
             cell.selectStudent()
         } else {
@@ -363,17 +364,17 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
 
         cell.didSelectStudent = { (selectedStudent) -> () in
             var isSelected = false
-            isSelected = self.selectedStudents.contains(where: { (student) -> Bool in
-                student.childId! == selectedStudent.childId!
+            isSelected = self.selectedStudents.contains(where: { (studentId) -> Bool in
+                studentId == selectedStudent.childId!
             })
             if isSelected {
-                self.selectedStudents.removeAll{ (student) -> Bool in
-                    student.childId! == selectedStudent.childId!
+                self.selectedStudents.removeAll{ (studentId) -> Bool in
+                    studentId == selectedStudent.childId!
                 }
                 cell.deselectStudent()
             } else {
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
-                self.selectedStudents.append(selectedStudent)
+                self.selectedStudents.append(selectedStudent.childId!)
                 cell.selectStudent()
             }
         }
@@ -408,7 +409,9 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         }
         
         if self.studentsMap[self.currentStudents[indexPath.row].childId!]!.count > 0 {
-            let attendance = self.studentsMap[self.currentStudents[indexPath.row].childId!]!.first
+            let attendance = self.studentsMap[self.currentStudents[indexPath.row].childId!]!.sorted { (first, second) -> Bool in
+                first.id > second.id
+            }.first
             if let _ = attendance?.timetableSlotId {    //case slots
                                                         if isFullDay {
                                                             cell.resetAll()
