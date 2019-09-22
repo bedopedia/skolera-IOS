@@ -61,7 +61,7 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     
     func presentSelected() {
         resetAll()
-        presentButton.setImage(#imageLiteral(resourceName: "presentSelected"), for: .normal)
+//        presentButton.setImage(#imageLiteral(resourceName: "presentSelected"), for: .normal)
         presentButton.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 1)
         presentButton.setTitleColor(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), for: .normal)
        
@@ -99,7 +99,7 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
         lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
         
-        presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
+//        presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
         presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
         

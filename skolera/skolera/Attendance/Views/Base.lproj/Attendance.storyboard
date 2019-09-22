@@ -694,7 +694,7 @@
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                                                    <state key="normal" title="Present" image="present">
+                                                                    <state key="normal" title="Present">
                                                                         <color key="titleColor" red="0.58431372549019611" green="0.58431372549019611" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <userDefinedRuntimeAttributes>
@@ -762,17 +762,26 @@
                                                                 <constraint firstAttribute="height" constant="24" id="lqa-OJ-9Dm"/>
                                                             </constraints>
                                                         </stackView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="present" translatesAutoresizingMaskIntoConstraints="NO" id="zU4-Kb-a94">
+                                                            <rect key="frame" x="27" y="81" width="16" height="16"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="16" id="RIB-lg-Dkv"/>
+                                                                <constraint firstAttribute="width" constant="16" id="Zb5-MX-dHZ"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="egl-rV-eW7" secondAttribute="trailing" constant="8" id="8s0-0L-XNG"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="trailing" constant="10" id="A9w-fM-wFD"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="leading" secondItem="kwJ-Ee-jtl" secondAttribute="trailing" constant="8" id="AbJ-ex-XPr"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="centerY" secondItem="wsn-JX-mTg" secondAttribute="centerY" id="AoD-Fg-aH9"/>
+                                                        <constraint firstItem="zU4-Kb-a94" firstAttribute="trailing" secondItem="0q5-D0-pDM" secondAttribute="leading" constant="20" id="EzN-CH-1go"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="leading" id="Kri-DP-hXn"/>
                                                         <constraint firstItem="wsn-JX-mTg" firstAttribute="top" secondItem="XJj-OS-GCq" secondAttribute="topMargin" constant="22" id="LaJ-9A-Z1w"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="centerY" secondItem="kwJ-Ee-jtl" secondAttribute="centerY" id="ZfI-HG-TRt"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="top" secondItem="kwJ-Ee-jtl" secondAttribute="bottom" constant="16" id="hb4-N1-nMo"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="WGY-mb-IwQ" secondAttribute="trailing" constant="8" id="qzF-ti-ZFr"/>
+                                                        <constraint firstItem="zU4-Kb-a94" firstAttribute="centerY" secondItem="0q5-D0-pDM" secondAttribute="centerY" id="tng-6h-MJl"/>
                                                         <constraint firstItem="wsn-JX-mTg" firstAttribute="leading" secondItem="XJj-OS-GCq" secondAttribute="leadingMargin" constant="8" id="xnt-YF-ESa"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
