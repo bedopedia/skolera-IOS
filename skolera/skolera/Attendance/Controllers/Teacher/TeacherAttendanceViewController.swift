@@ -101,6 +101,7 @@ class TeacherAttendanceViewController: UIViewController {
         guard slotAttendanceObject != nil else {
             return
         }
+        
         if isFullDay {
             for student in self.fullDayAttendanceObject.students {
                 self.currentStudents.append(student)
@@ -114,7 +115,6 @@ class TeacherAttendanceViewController: UIViewController {
             for student in self.slotAttendanceObject.students {
                 self.currentStudents.append(student)
                 self.studentsMap[student.childId] = self.slotAttendanceObject.attendances.filter({ (attendance) -> Bool in
-                    debugPrint(student.childId)
                     return attendance.studentId == student.childId
                 })
             }
@@ -150,14 +150,17 @@ class TeacherAttendanceViewController: UIViewController {
             selectSlotsVc.didSelectSlot = { (selectedSlot) in
                 self.highlightSlotUi()
                 self.selectedSlot = selectedSlot
-//                debugPrint("Slot Index is:" , selectedSlot.slotNo!)
                 self.leftLabel.text = "Slot \(selectedSlot.slotNo!)"
                 self.isFullDay = false
             }
             self.navigationController?.pushViewController(selectSlotsVc, animated:true)
         } else {
             debugPrint("no slots available")
-            //present dialogue no slots available
+            let alert = UIAlertController(title: "Skolera".localized, message: "No slots available".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -176,7 +179,6 @@ class TeacherAttendanceViewController: UIViewController {
         attendanceParam["status"] = status
         attendancesKey.append(attendanceParam)
         parameters["attendance"] = ["attendances": attendancesKey]
-        debugPrint(parameters)
         if !status.elementsEqual((studentsMap[student.childId]?.sorted(by: { (first, second) -> Bool in
             first.id < second.id
         }).first?.status!)!) {
@@ -355,10 +357,14 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 self.selectedStudents.removeAll{ (studentId) -> Bool in
                     studentId == selectedStudent.childId!
                 }
+                if self.selectedStudents.isEmpty {
+                    self.assignForAllButton.titleLabel?.text = "Assign for all".localized
+                }
                 cell.deselectStudent()
             } else {
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
                 self.selectedStudents.append(selectedStudent.childId!)
+                self.assignForAllButton.titleLabel?.text = "Assign for selected".localized
                 cell.selectStudent()
                 //        if self.selectedStudents.count > 0 {
                 //            self.assignForAllButton.titleLabel?.text = "Assign for selected"
@@ -408,8 +414,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                         cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
                     }
                 } else {    //case fullday
-    //                cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
-                    debugPrint("Attendance timetable slot id is nil")
                     if !isFullDay {
                         cell.resetAll()
                     } else {
