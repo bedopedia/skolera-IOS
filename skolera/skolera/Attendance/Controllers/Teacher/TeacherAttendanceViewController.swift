@@ -181,17 +181,6 @@ class TeacherAttendanceViewController: UIViewController {
         parameters["attendance"] = ["attendances": attendancesKey]
         debugPrint(parameters)
         createNewAttendance(parameters)
-        
-//        debugPrint("put")
-//        attendanceId = studentsMap[student.childId!]?.first?.id
-//        guard let id = attendanceId else {
-//            return
-//        }
-//        parameters["attendance"] = ["status": status, "comment" : comment, "timetable_slot_id": "" ]
-//        parameters["id"] = id
-//        debugPrint(parameters)
-//        updateAttendance(id, parameters)
-        
     }
     
     func submitBatchAttendance(status: String) {
@@ -225,6 +214,7 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func createNewAttendance(_ parameters: Parameters) {
+//        TO DO: must check that the latest attendance state is not the same
         SVProgressHUD.show(withStatus: "Loading".localized)
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
@@ -247,19 +237,7 @@ class TeacherAttendanceViewController: UIViewController {
             }
         }
     }
-    
-//    func updateAttendance(_ attendanceId: Int, _ parameters: Parameters) {
-//        SVProgressHUD.show(withStatus: "Loading".localized)
-//        updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
-//            SVProgressHUD.dismiss()
-//            if isSuccess {
-//                self.getFullDayData()
-//            } else {
-//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-//            }
-//        }
-//    }
-    
+
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -412,25 +390,24 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             let attendance = self.studentsMap[self.currentStudents[indexPath.row].childId!]!.sorted { (first, second) -> Bool in
                 first.id > second.id
             }.first
-            if let _ = attendance?.timetableSlotId {    //case slots
-                                                        if isFullDay {
-                                                            cell.resetAll()
-                                                        } else {
-                                                            cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
-                                                        }
-            } else {    //case fullday
-//                cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
-                debugPrint("Attendance timetable slot id is nil")
-                if !isFullDay {
-                    cell.resetAll()
-                } else {
-                    cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
+            if let _ = attendance?.timetableSlotId {
+                    if isFullDay {
+                        cell.resetAll()
+                    } else {
+                        cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
+                    }
+                } else {    //case fullday
+    //                cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
+                    debugPrint("Attendance timetable slot id is nil")
+                    if !isFullDay {
+                        cell.resetAll()
+                    } else {
+                        cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
+                    }
                 }
-            }
         } else {
             //maybe useless
             debugPrint("no attendance taken for this student")
-//            cell.resetAll()
         }
         
         cell.student = self.currentStudents[indexPath.row]
