@@ -161,46 +161,44 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func submitAttendance(student: AttendanceStudent, type: AttendanceRequestType, status: String, comment: String = "") {
-        var attendanceId: Int!
+//        var attendanceId: Int!
         var parameters: Parameters = [:]
         
-        switch (type) {
-        case .post:
-            var attendancesKey: [[String: Any]] = []
-            var attendanceParam: [String: Any] = [:]
-            attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
-            attendanceParam["student_id"] = student.childId!
-            if isFullDay {
-                attendanceParam["timetable_slot_id"] = ""
-            } else {
-                if let slot = self.selectedSlot {
-                    attendanceParam["timetable_slot_id"] = slot.id!
-                }
+        var attendancesKey: [[String: Any]] = []
+        var attendanceParam: [String: Any] = [:]
+        attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
+        attendanceParam["student_id"] = student.childId!
+        if isFullDay {
+            attendanceParam["timetable_slot_id"] = ""
+        } else {
+            if let slot = self.selectedSlot {
+                attendanceParam["timetable_slot_id"] = slot.id!
             }
-            attendanceParam["comment"] = comment
-            attendanceParam["status"] = status
-            attendancesKey.append(attendanceParam)
-            parameters["attendance"] = ["attendances": attendancesKey]
-            debugPrint(parameters)
-            createNewAttendance(parameters)
-        case .put:
-            debugPrint("put")
-            attendanceId = studentsMap[student.childId!]?.first?.id
-            guard let id = attendanceId else {
-                return
-            }
-            parameters["attendance"] = ["status": status, "comment" : comment, "timetable_slot_id": "" ]
-            parameters["id"] = id
-            debugPrint(parameters)
-            updateAttendance(id, parameters)
         }
+        attendanceParam["comment"] = comment
+        attendanceParam["status"] = status
+        attendancesKey.append(attendanceParam)
+        parameters["attendance"] = ["attendances": attendancesKey]
+        debugPrint(parameters)
+        createNewAttendance(parameters)
+        
+//        debugPrint("put")
+//        attendanceId = studentsMap[student.childId!]?.first?.id
+//        guard let id = attendanceId else {
+//            return
+//        }
+//        parameters["attendance"] = ["status": status, "comment" : comment, "timetable_slot_id": "" ]
+//        parameters["id"] = id
+//        debugPrint(parameters)
+//        updateAttendance(id, parameters)
+        
     }
     
     func submitBatchAttendance(status: String) {
         var parameters: Parameters = [:]
         var attendancesKey: [[String: Any]] = []
         var createNewAttendanceStudents: [AttendanceStudent] = []
-        var updateAttendanceStudents: [AttendanceStudent] = []
+//        var updateAttendanceStudents: [AttendanceStudent] = []
         var attendanceParam: [String: Any] = [:]
         var slotId: Int!
 
@@ -210,11 +208,7 @@ class TeacherAttendanceViewController: UIViewController {
             }
         }
         for student in selectedStudents {
-            if studentsMap[student.childId]!.count > 0  { //update case
-                updateAttendanceStudents.append(student)
-            } else {
-                createNewAttendanceStudents.append(student)
-            }
+            createNewAttendanceStudents.append(student)
         }
         for student in createNewAttendanceStudents {
             attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
@@ -241,17 +235,17 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func updateAttendance(_ attendanceId: Int, _ parameters: Parameters) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
-            if isSuccess {
-                self.getFullDayData()
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
+//    func updateAttendance(_ attendanceId: Int, _ parameters: Parameters) {
+//        SVProgressHUD.show(withStatus: "Loading".localized)
+//        updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
+//            SVProgressHUD.dismiss()
+//            if isSuccess {
+//                self.getFullDayData()
+//            } else {
+//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+//            }
+//        }
+//    }
     
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
