@@ -47,14 +47,10 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "slotCell") as! AttendanceSlotTableViewCell
         cell.slotLabel.text = "Slot \(timeTableSlots[indexPath.row].slotNo!)"
-        cell.selectionView.layer.borderWidth = 1
-        cell.selectionView.layer.cornerRadius = 12
         if selectedIndex == indexPath.row {
-            cell.selectionView.layer.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
-            cell.selectionView.layer.borderColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+            cell.selectionView.setImage(#imageLiteral(resourceName: "selectedSlot"), for: .normal)
         } else {
-            cell.selectionView.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            cell.selectionView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+            cell.selectionView.setImage(#imageLiteral(resourceName: "unselectedSlot"), for: .normal)
         }
         return cell
     }

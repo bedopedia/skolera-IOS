@@ -562,7 +562,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.5725490196078431" green="0.63529411764705879" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="49" id="ju9-t3-IhT"/>
                                         </constraints>
@@ -599,7 +599,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="LKY-nk-a8b">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="51"/>
+                                        <rect key="frame" x="0.0" y="62" width="375" height="51"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0H-NZ-WyD">
                                                 <rect key="frame" x="0.0" y="0.0" width="187" height="51"/>
@@ -647,7 +647,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NqM-na-xm7">
-                                        <rect key="frame" x="0.0" y="139" width="375" height="448"/>
+                                        <rect key="frame" x="0.0" y="121" width="375" height="466"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="teacherAttendanceCell" rowHeight="156" id="bSu-Lz-8TX" customClass="TeacherAttendanceTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -790,11 +790,11 @@
                                         </prototypes>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="60q-iC-Fj7" firstAttribute="trailing" secondItem="uoN-LV-4Iw" secondAttribute="trailing" id="55M-bH-KQ8"/>
-                                    <constraint firstItem="LKY-nk-a8b" firstAttribute="top" secondItem="60q-iC-Fj7" secondAttribute="bottom" constant="18" id="5DS-jX-Uz2"/>
-                                    <constraint firstItem="NqM-na-xm7" firstAttribute="top" secondItem="LKY-nk-a8b" secondAttribute="bottom" constant="16" id="8Dz-1k-ysB"/>
+                                    <constraint firstItem="LKY-nk-a8b" firstAttribute="top" secondItem="60q-iC-Fj7" secondAttribute="bottom" constant="8" id="5DS-jX-Uz2"/>
+                                    <constraint firstItem="NqM-na-xm7" firstAttribute="top" secondItem="LKY-nk-a8b" secondAttribute="bottom" constant="8" id="8Dz-1k-ysB"/>
                                     <constraint firstItem="lvG-zM-s1c" firstAttribute="width" secondItem="uoN-LV-4Iw" secondAttribute="width" id="9dV-mk-dne"/>
                                     <constraint firstItem="lvG-zM-s1c" firstAttribute="top" secondItem="Y1h-Lo-eDI" secondAttribute="bottom" id="CFA-01-Sv0"/>
                                     <constraint firstItem="2aN-yk-Jnh" firstAttribute="top" secondItem="Y1h-Lo-eDI" secondAttribute="bottom" id="HxW-kL-YZ4"/>
@@ -995,24 +995,24 @@
                                                     <color key="textColor" red="0.0" green="0.49411764705882355" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-K1-hOH">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCj-Ca-OR1">
                                                     <rect key="frame" x="309" y="10" width="24" height="24"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="cRR-qD-fXg"/>
-                                                        <constraint firstAttribute="height" constant="24" id="s1c-8S-7OS"/>
+                                                        <constraint firstAttribute="height" constant="24" id="4bV-IT-Mxc"/>
+                                                        <constraint firstAttribute="width" constant="24" id="crg-CG-acK"/>
                                                     </constraints>
-                                                </view>
+                                                    <state key="normal" image="unselectedSlot"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="pXa-K1-hOH" secondAttribute="trailing" constant="26" id="Zl4-75-kJv"/>
+                                                <constraint firstAttribute="trailing" secondItem="MCj-Ca-OR1" secondAttribute="trailing" constant="26" id="H7d-cZ-f7l"/>
                                                 <constraint firstItem="Vgz-O7-Bc4" firstAttribute="centerX" secondItem="4fl-W7-m9o" secondAttribute="centerX" id="bic-24-eS2"/>
-                                                <constraint firstItem="pXa-K1-hOH" firstAttribute="centerY" secondItem="4fl-W7-m9o" secondAttribute="centerY" id="cAc-hG-MfS"/>
+                                                <constraint firstItem="MCj-Ca-OR1" firstAttribute="centerY" secondItem="Vgz-O7-Bc4" secondAttribute="centerY" id="hZ6-6H-k7v"/>
                                                 <constraint firstItem="Vgz-O7-Bc4" firstAttribute="centerY" secondItem="4fl-W7-m9o" secondAttribute="centerY" id="jG4-Lr-xeU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="selectionView" destination="pXa-K1-hOH" id="HKY-cI-qS4"/>
+                                            <outlet property="selectionView" destination="MCj-Ca-OR1" id="rT0-kf-dPI"/>
                                             <outlet property="slotLabel" destination="Vgz-O7-Bc4" id="qq9-3a-asy"/>
                                         </connections>
                                     </tableViewCell>
@@ -1070,7 +1070,8 @@
         <image name="excuseReason" width="80" height="80"/>
         <image name="excused" width="16" height="16"/>
         <image name="late" width="16" height="16"/>
-        <image name="mydaysIco" width="24" height="24"/>
+        <image name="mydaysIco" width="18" height="18"/>
         <image name="present" width="16" height="16"/>
+        <image name="unselectedSlot" width="24" height="24"/>
     </resources>
 </document>

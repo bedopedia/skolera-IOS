@@ -43,7 +43,7 @@ class TeacherAttendanceViewController: UIViewController {
         case post = "post"
         case put = "put"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -184,7 +184,6 @@ class TeacherAttendanceViewController: UIViewController {
         } else {
             debugPrint("same attendance state")
         }
-        
     }
     
     func submitBatchAttendance(status: String) {
@@ -339,13 +338,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teacherAttendanceCell") as! TeacherAttendanceTableViewCell
         cell.resetAll()
-        //ui update right label
-//        if self.selectedStudents.count > 0 {
-//            self.assignForAllButton.titleLabel?.text = "Assign for selected"
-//        } else {
-//            self.assignForAllButton.titleLabel?.text = "Assign for all"
-//        }
-        
         if self.selectedStudents.contains(where: { (studentId) -> Bool in
             self.currentStudents[indexPath.row].childId == studentId
         }) {
@@ -368,6 +360,11 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
                 self.selectedStudents.append(selectedStudent.childId!)
                 cell.selectStudent()
+                //        if self.selectedStudents.count > 0 {
+                //            self.assignForAllButton.titleLabel?.text = "Assign for selected"
+                //        } else {
+                //            self.assignForAllButton.titleLabel?.text = "Assign for all"
+                //        }
             }
         }
         

@@ -10,7 +10,7 @@ import UIKit
 
 class AttendanceSlotTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var selectionView: UIView!
+    @IBOutlet weak var selectionView: UIButton!
     @IBOutlet weak var slotLabel: UILabel!
     
     override func awakeFromNib() {
