@@ -94,6 +94,7 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func setUpData() {
+        currentStudents = []
         guard fullDayAttendanceObject != nil else {
             return
         }
@@ -163,7 +164,6 @@ class TeacherAttendanceViewController: UIViewController {
     func submitAttendance(student: AttendanceStudent, type: AttendanceRequestType, status: String, comment: String = "") {
 //        var attendanceId: Int!
         var parameters: Parameters = [:]
-        
         var attendancesKey: [[String: Any]] = []
         var attendanceParam: [String: Any] = [:]
         attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
@@ -180,7 +180,14 @@ class TeacherAttendanceViewController: UIViewController {
         attendancesKey.append(attendanceParam)
         parameters["attendance"] = ["attendances": attendancesKey]
         debugPrint(parameters)
-        createNewAttendance(parameters)
+        if !status.elementsEqual((studentsMap[student.childId]?.sorted(by: { (first, second) -> Bool in
+            first.id < second.id
+        }).first?.status!)!) {
+            createNewAttendance(parameters)
+        } else {
+            debugPrint("same attendance state")
+        }
+        
     }
     
     func submitBatchAttendance(status: String) {
@@ -209,7 +216,6 @@ class TeacherAttendanceViewController: UIViewController {
             attendancesKey.append(attendanceParam)
         }
         parameters["attendance"] = ["attendances": attendancesKey]
-        debugPrint(parameters)
         createNewAttendance(parameters)
     }
     
@@ -226,7 +232,16 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
-    func deleteAttendances(_ parameters: Parameters) {
+    func deleteAttendances() {
+        var parameters: Parameters = [:]
+        var deletedAttendances: [Int] = []
+        for attendances in studentsMap.values {
+            for attendance in attendances {
+                deletedAttendances.append(attendance.id!)
+            }
+        }
+        selectedStudents = []
+        parameters["ids"] = deletedAttendances
         SVProgressHUD.show(withStatus: "Loading".localized)
         deleteAttendancesApi(parameters: parameters) {  (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
@@ -302,7 +317,7 @@ class TeacherAttendanceViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: removeStatusString, style: .default, handler: { (_) in
             print("User click delete for all")
-            //batch delete
+            self.deleteAttendances()
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in

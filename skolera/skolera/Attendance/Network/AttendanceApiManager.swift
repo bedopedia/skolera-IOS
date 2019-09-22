@@ -41,7 +41,6 @@ func createFullDayAttendanceApi(parameters: Parameters, completion: @escaping ((
     let url = CREATE_ATTENDANCE()
     debugPrint(parameters)
     Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-        debugPrint(response)
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
@@ -55,13 +54,19 @@ func deleteAttendancesApi(parameters: Parameters, completion: @escaping ((Bool, 
     let headers : HTTPHeaders? = getHeaders()
     let url = DELETE_ATTENDANCE()
     debugPrint(parameters)
-    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON{ response in
         debugPrint(response)
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
-            completion(false, response.response?.statusCode ?? 0, nil, error)
+            if let array = response.result.value as? [[String : Any]] {
+                completion(false, response.response?.statusCode ?? 0, nil, error)
+            } else {
+                // Handle error: your json response is not a [[String : Any]] as you were expecting
+                completion(true, response.response?.statusCode ?? 0, nil, error)
+            }
+//            completion(false, response.response?.statusCode ?? 0, nil, error)
         }
     }
 }
