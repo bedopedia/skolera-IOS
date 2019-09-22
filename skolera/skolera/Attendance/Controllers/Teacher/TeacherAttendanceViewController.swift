@@ -162,15 +162,12 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func submitAttendance(student: AttendanceStudent, type: AttendanceRequestType, status: String, comment: String = "") {
-//        var attendanceId: Int!
         var parameters: Parameters = [:]
         var attendancesKey: [[String: Any]] = []
         var attendanceParam: [String: Any] = [:]
         attendanceParam["date"] = "\(self.day)-\(self.month)-\(self.year)"
         attendanceParam["student_id"] = student.childId!
-        if isFullDay {
-            attendanceParam["timetable_slot_id"] = ""
-        } else {
+        if !isFullDay {
             if let slot = self.selectedSlot {
                 attendanceParam["timetable_slot_id"] = slot.id!
             }
@@ -194,7 +191,6 @@ class TeacherAttendanceViewController: UIViewController {
         var parameters: Parameters = [:]
         var attendancesKey: [[String: Any]] = []
         var createNewAttendanceStudents: [Int] = []
-//        var updateAttendanceStudents: [AttendanceStudent] = []
         var attendanceParam: [String: Any] = [:]
         var slotId: Int!
 
@@ -212,7 +208,10 @@ class TeacherAttendanceViewController: UIViewController {
             attendanceParam["student_id"] = id
             attendanceParam["comment"] = ""
             attendanceParam["status"] = status
-            attendanceParam["timetable_slot_id"] = slotId ?? ""
+            if !isFullDay {
+               attendanceParam["timetable_slot_id"] = slotId!
+            }
+            
             attendancesKey.append(attendanceParam)
         }
         parameters["attendance"] = ["attendances": attendancesKey]
@@ -420,9 +419,6 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                         cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
                     }
                 }
-        } else {
-            //maybe useless
-            debugPrint("no attendance taken for this student")
         }
         
         cell.student = self.currentStudents[indexPath.row]
