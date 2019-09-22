@@ -203,3 +203,7 @@ func UPDATE_ATTENDANCE(attendanceId: Int) -> String {
     return "\(BASE_URL!)/api/attendances/\(attendanceId)"
 }
 
+func DELETE_ATTENDANCE() -> String {
+    return "\(BASE_URL!)/api/attendances/batch_destroy"
+}
+

@@ -31,7 +31,7 @@ class TeacherAttendanceViewController: UIViewController {
     var year = Date().year
     var isFullDay: Bool!
     var selectedSlot: TimetableSlots!
-    var selectedStudents: [AttendanceStudent]!
+    var selectedStudents: [Int]!
     
     var slotAttendanceObject: FullDayAttendances!
     var fullDayAttendanceObject: FullDayAttendances!
@@ -235,6 +235,18 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
     
+    func deleteAttendances(_ parameters: Parameters) {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        deleteAttendancesApi(parameters: parameters) {  (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                self.getFullDayData()   //retrieves all the values again
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
 //    func updateAttendance(_ attendanceId: Int, _ parameters: Parameters) {
 //        SVProgressHUD.show(withStatus: "Loading".localized)
 //        updateAttendanceApi(attendanceId: attendanceId, parameters: parameters) { (isSuccess, statusCode, value, error) in
@@ -264,6 +276,11 @@ class TeacherAttendanceViewController: UIViewController {
     
     @IBAction func assignForAllButtonAction() {
         
+        if selectedStudents.isEmpty {
+            selectedStudents = [Int](studentsMap.keys)
+        } else {
+            debugPrint(studentsMap.keys.count, "selected")
+        }
         let title = "Assign action for all students"
         let presentString = "Present"
         let lateString = "Late"
@@ -304,7 +321,12 @@ class TeacherAttendanceViewController: UIViewController {
         absentAction.setValue(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), forKey: "titleTextColor")
         alert.addAction(absentAction)
         
-        alert.addAction(UIAlertAction(title: removeStatusString, style: .cancel, handler: { (_) in
+        alert.addAction(UIAlertAction(title: removeStatusString, style: .default, handler: { (_) in
+            print("User click delete for all")
+            //batch delete
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
             print("User click Dismiss button")
             //batch delete
         }))
