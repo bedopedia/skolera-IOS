@@ -970,7 +970,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I75-dw-DF7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I75-dw-DF7">
                                 <rect key="frame" x="16" y="44" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="DY9-VZ-H91"/>
@@ -1054,7 +1054,7 @@
                             <constraint firstItem="nU1-KG-eFM" firstAttribute="top" secondItem="ZJN-Xg-QP2" secondAttribute="bottom" constant="24" id="F1v-EJ-oZ2"/>
                             <constraint firstItem="ZJN-Xg-QP2" firstAttribute="top" secondItem="I75-dw-DF7" secondAttribute="bottom" constant="42" id="HBn-eW-ccY"/>
                             <constraint firstItem="vRk-zB-hjQ" firstAttribute="top" secondItem="nU1-KG-eFM" secondAttribute="bottom" id="LZV-iV-mvb"/>
-                            <constraint firstItem="I75-dw-DF7" firstAttribute="leading" secondItem="nf1-bT-6bx" secondAttribute="leading" constant="16" id="R4P-Ya-CkM"/>
+                            <constraint firstItem="I75-dw-DF7" firstAttribute="leading" secondItem="nf1-bT-6bx" secondAttribute="leading" constant="16" id="Pvu-7T-fGi"/>
                             <constraint firstItem="nU1-KG-eFM" firstAttribute="leading" secondItem="nf1-bT-6bx" secondAttribute="leading" constant="8" id="YLK-Ia-ruP"/>
                             <constraint firstItem="nf1-bT-6bx" firstAttribute="bottom" secondItem="vRk-zB-hjQ" secondAttribute="bottom" constant="16" id="aa2-9p-7xc"/>
                             <constraint firstItem="vRk-zB-hjQ" firstAttribute="leading" secondItem="nU1-KG-eFM" secondAttribute="leading" id="uns-xq-J11"/>

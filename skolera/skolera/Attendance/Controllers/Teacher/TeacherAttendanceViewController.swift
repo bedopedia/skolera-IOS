@@ -58,7 +58,7 @@ class TeacherAttendanceViewController: UIViewController {
         month = Date().month
         year = Date().year
         isFullDay = true
-        leftLabel.text = "\(getTodayName().capitalizingFirstLetter()) \(Date().day)"
+        leftLabel.text = "\(getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
         studentsMap = [:]
         getFullDayData()
     }
@@ -109,7 +109,7 @@ class TeacherAttendanceViewController: UIViewController {
                     return attendance.studentId == student.childId
                 })
                 self.highlightFullDayUi()
-                self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter()) \(Date().day)"
+                self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
             }
         } else {
             for student in self.slotAttendanceObject.students {
@@ -150,7 +150,7 @@ class TeacherAttendanceViewController: UIViewController {
             selectSlotsVc.didSelectSlot = { (selectedSlot) in
                 self.highlightSlotUi()
                 self.selectedSlot = selectedSlot
-                self.leftLabel.text = "Slot \(selectedSlot.slotNo!)"
+                self.leftLabel.text = "\("Slot".localized) \(selectedSlot.slotNo!)"
                 self.isFullDay = false
             }
             self.navigationController?.pushViewController(selectSlotsVc, animated:true)

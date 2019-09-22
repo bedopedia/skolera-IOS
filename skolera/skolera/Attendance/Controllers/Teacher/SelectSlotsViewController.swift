@@ -46,7 +46,7 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "slotCell") as! AttendanceSlotTableViewCell
-        cell.slotLabel.text = "Slot \(timeTableSlots[indexPath.row].slotNo!)"
+        cell.slotLabel.text = "\("Slot".localized) \(timeTableSlots[indexPath.row].slotNo!)"
         if selectedIndex == indexPath.row {
             cell.selectionView.setImage(#imageLiteral(resourceName: "selectedSlot"), for: .normal)
         } else {
