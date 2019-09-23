@@ -191,12 +191,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                         self.headerView.isHidden = true
                     }
                 }
-                
                 if let contactTeacher = child as? ContactTeacherNVC {
                     contactTeacher.child = self.child
                 }
             }
-            
         }
         
         if !moreView.isHidden {

@@ -298,6 +298,7 @@
 		8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119C21E74D8600106EF2 /* Announcement.swift */; };
 		8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */; };
 		8AF6664723390ADE009C4EF2 /* TeacherCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF6664623390ADE009C4EF2 /* TeacherCoursesViewController.swift */; };
+		8AF66649233923C5009C4EF2 /* AnnouncementMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF66648233923C5009C4EF2 /* AnnouncementMainViewController.swift */; };
 		8AF8F73722E9EA0800544744 /* QuizzesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73622E9EA0800544744 /* QuizzesResponse.swift */; };
 		8AF8F73922E9EA6A00544744 /* FullQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73822E9EA6A00544744 /* FullQuiz.swift */; };
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
@@ -614,6 +615,7 @@
 		8AF5119C21E74D8600106EF2 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		8AF5119E21E74DF900106EF2 /* AnnouncementReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementReceiver.swift; sourceTree = "<group>"; };
 		8AF6664623390ADE009C4EF2 /* TeacherCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCoursesViewController.swift; sourceTree = "<group>"; };
+		8AF66648233923C5009C4EF2 /* AnnouncementMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementMainViewController.swift; sourceTree = "<group>"; };
 		8AF8F73622E9EA0800544744 /* QuizzesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesResponse.swift; sourceTree = "<group>"; };
 		8AF8F73822E9EA6A00544744 /* FullQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQuiz.swift; sourceTree = "<group>"; };
 		8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStudentSubmission.swift; sourceTree = "<group>"; };
@@ -1509,6 +1511,7 @@
 				8A7C4A352327DAAC00984A53 /* Nav Controllers */,
 				8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */,
 				8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */,
+				8AF66648233923C5009C4EF2 /* AnnouncementMainViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1970,6 +1973,7 @@
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,
 				8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */,
 				8A5F42EA20B1CB1800FF93D1 /* Threads.swift in Sources */,
+				8AF66649233923C5009C4EF2 /* AnnouncementMainViewController.swift in Sources */,
 				54640B0A20559A9800A13CCB /* AttendanceViewController.swift in Sources */,
 				8A5F42EC20B1CB3300FF93D1 /* Participant.swift in Sources */,
 				8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */,
