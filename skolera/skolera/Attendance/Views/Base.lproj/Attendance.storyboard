@@ -711,7 +711,7 @@
                                                                     <color key="backgroundColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                                                                    <state key="normal" title="Late" image="late">
+                                                                    <state key="normal" title="Late">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <userDefinedRuntimeAttributes>
@@ -764,10 +764,9 @@
                                                         </stackView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="present" translatesAutoresizingMaskIntoConstraints="NO" id="zU4-Kb-a94">
                                                             <rect key="frame" x="27" y="81" width="16" height="16"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="16" id="RIB-lg-Dkv"/>
-                                                                <constraint firstAttribute="width" constant="16" id="Zb5-MX-dHZ"/>
-                                                            </constraints>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="late" translatesAutoresizingMaskIntoConstraints="NO" id="hzy-SV-sa1">
+                                                            <rect key="frame" x="111.5" y="81" width="16" height="16"/>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
@@ -777,8 +776,9 @@
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="centerY" secondItem="wsn-JX-mTg" secondAttribute="centerY" id="AoD-Fg-aH9"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="leading" id="Kri-DP-hXn"/>
                                                         <constraint firstItem="wsn-JX-mTg" firstAttribute="top" secondItem="XJj-OS-GCq" secondAttribute="topMargin" constant="22" id="LaJ-9A-Z1w"/>
+                                                        <constraint firstItem="hzy-SV-sa1" firstAttribute="trailing" secondItem="fBI-IT-Mvp" secondAttribute="leading" constant="20" id="VBi-0j-7s3"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="centerY" secondItem="kwJ-Ee-jtl" secondAttribute="centerY" id="ZfI-HG-TRt"/>
-                                                        <constraint firstItem="0q5-D0-pDM" firstAttribute="leading" secondItem="zU4-Kb-a94" secondAttribute="trailing" constant="-20" id="dRP-QB-Fit"/>
+                                                        <constraint firstItem="hzy-SV-sa1" firstAttribute="centerY" secondItem="fBI-IT-Mvp" secondAttribute="centerY" id="daW-mm-z71"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="top" secondItem="kwJ-Ee-jtl" secondAttribute="bottom" constant="16" id="hb4-N1-nMo"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="WGY-mb-IwQ" secondAttribute="trailing" constant="8" id="qzF-ti-ZFr"/>
                                                         <constraint firstItem="zU4-Kb-a94" firstAttribute="centerY" secondItem="0q5-D0-pDM" secondAttribute="centerY" id="tng-6h-MJl"/>
