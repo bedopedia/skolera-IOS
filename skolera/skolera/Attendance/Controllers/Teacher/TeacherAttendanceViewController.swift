@@ -179,12 +179,14 @@ class TeacherAttendanceViewController: UIViewController {
         attendanceParam["status"] = status
         attendancesKey.append(attendanceParam)
         parameters["attendance"] = ["attendances": attendancesKey]
-        if !status.elementsEqual((studentsMap[student.childId]?.sorted(by: { (first, second) -> Bool in
-            first.id < second.id
-        }).first?.status!)!) {
-            createNewAttendance(parameters)
+        if let attendance = studentsMap[student.childId!]?.first {
+            if let statusString = attendance.status, statusString.elementsEqual(status) {
+                debugPrint("same attendance state")
+            } else {
+                createNewAttendance(parameters)
+            }
         } else {
-            debugPrint("same attendance state")
+            createNewAttendance(parameters)
         }
     }
     
