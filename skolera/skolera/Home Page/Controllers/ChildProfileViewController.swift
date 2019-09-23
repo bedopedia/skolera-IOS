@@ -133,14 +133,8 @@ class ChildProfileViewController: UIViewController {
             
         }
     }
+
     
-    
-    
-    //MARK: - Actions
-    
-    /// show notification screen modally
-    ///
-    /// - Parameter sender: notification button
     @IBAction func showNotifications(_ sender: UIBarButtonItem) {
         let notificationsTVC = NotificationsTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
         let nvc = UINavigationController(rootViewController: notificationsTVC)

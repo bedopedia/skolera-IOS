@@ -18,10 +18,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var threadsTableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
+    @IBOutlet weak var leftHeaderButton: UIButton!
     
     var threads: [Threads] = []
     var child: Child!
     var actor: Actor!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +40,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             newThreadButton.tintColor = UIColor.clear
             newThreadButton.isEnabled = false
         }
-        
+ 
+        if getUserType().elementsEqual("teacher") {
+            leftHeaderButton.isHidden = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,6 +53,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             parentVC.headerView.isHidden = false
         }
         getThreads()
+        
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -97,6 +103,63 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
         }
+    }
+    
+    @IBAction func logout() {
+        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
+            if Language.language == .arabic {
+                self.showChangeLanguageConfirmation(language: .english)
+            } else{
+                self.showChangeLanguageConfirmation(language: .arabic)
+            }
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
+            if(SVProgressHUD.isVisible())
+            {
+                SVProgressHUD.dismiss()
+            }
+            self.sendFCM(token: "")
+            let keychain = KeychainSwift()
+            keychain.clear()
+            let nvc = UINavigationController()
+            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+            nvc.pushViewController(schoolCodeVC, animated: true)
+            self.present(nvc, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler:{ (UIAlertAction)in
+        }))
+        
+        self.present(alert, animated: true, completion: {
+        })
+    }
+    
+    func sendFCM(token: String) {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        let parameters: Parameters = ["user": ["mobile_device_token": token]]
+        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                debugPrint("UPDATED_FCM_SUCCESSFULLY")
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func showChangeLanguageConfirmation(language: Language){
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
+            Language.language = language
+            exit(0);
+        }))
+        alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
+            // do nothing
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -266,27 +329,13 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func createNewThread(){
-        debugPrint(childViewControllers)
-//        if let childNvc = childViewControllers[0] as? ContactTeacherNVC {
-//            let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-//            newMessageVC.child = self.child
-//            childNvc.pushViewController(newMessageVC, animated: true)
-//        }
+
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
         newMessageVC.child = self.child
         self.navigationController?.pushViewController(newMessageVC, animated: true)
+
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }
 

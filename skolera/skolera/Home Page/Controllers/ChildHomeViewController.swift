@@ -129,7 +129,12 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                 newMessageVC.child = self.child
                 contactTeacherNvc.pushViewController(newMessageVC, animated: true)
             }
+            
+//            if let contactTeacher = child as? ContactTeacherViewController {
+//                contactTeacher.child = self.child
+//            }
         }
+        
         
     }
     
@@ -185,6 +190,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                         self.headerHeightConstraint.constant = 0
                         self.headerView.isHidden = true
                     }
+                }
+                
+                if let contactTeacher = child as? ContactTeacherNVC {
+                    contactTeacher.child = self.child
                 }
             }
             

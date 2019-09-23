@@ -10,12 +10,22 @@ import UIKit
 
 class ContactTeacherNVC: UINavigationController {
 
+    var child: Child! {
+        didSet {
+            for child in childViewControllers {
+                if let contactTeacher = child as? ContactTeacherViewController {
+                    contactTeacher.child = self.child
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.isHidden = true
 //        debugPrint("contact teacher nvc")
 //        self.interactivePopGestureRecognizer?.isEnabled = true
 //        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
