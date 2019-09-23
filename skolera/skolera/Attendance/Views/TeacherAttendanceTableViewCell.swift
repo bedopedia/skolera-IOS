@@ -17,6 +17,8 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var lateButton: UIButton!
     @IBOutlet weak var absentButton: UIButton!
     @IBOutlet weak var excusedButton: UIButton!
+    @IBOutlet weak var presentImageView: UIImageView!
+    @IBOutlet weak var lateImageView: UIImageView!
     
     var didSelectStudent: ( (AttendanceStudent) -> () )!
     var didSelectAttendanceState: ( (AttendanceCases, AttendanceStudent) -> () )!
@@ -62,6 +64,7 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     func presentSelected() {
         resetAll()
 //        presentButton.setImage(#imageLiteral(resourceName: "presentSelected"), for: .normal)
+        presentImageView.image = #imageLiteral(resourceName: "presentSelected")
         presentButton.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 1)
         presentButton.setTitleColor(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), for: .normal)
        
@@ -70,6 +73,7 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     func lateSelected() {
         resetAll()
 //        lateButton.setImage(#imageLiteral(resourceName: "lateSelected"), for: .normal)
+        lateImageView.image = #imageLiteral(resourceName: "lateSelected")
         lateButton.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9098039216, blue: 0.737254902, alpha: 1)
         lateButton.setTitleColor(#colorLiteral(red: 0.9843137255, green: 0.7529411765, blue: 0.1764705882, alpha: 1), for: .normal)
     }
@@ -95,11 +99,12 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
 //        studentSelectButton.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
 //        studentSelectButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
-//        lateButton.setImage(#imageLiteral(resourceName: "late"), for: .normal)
         lateButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         lateButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
+        lateImageView.image = #imageLiteral(resourceName: "late")
         
 //        presentButton.setImage(#imageLiteral(resourceName: "present"), for: .normal)
+        presentImageView.image = #imageLiteral(resourceName: "present")
         presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
         

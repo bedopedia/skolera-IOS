@@ -778,6 +778,7 @@
                                                         <constraint firstItem="wsn-JX-mTg" firstAttribute="top" secondItem="XJj-OS-GCq" secondAttribute="topMargin" constant="22" id="LaJ-9A-Z1w"/>
                                                         <constraint firstItem="hzy-SV-sa1" firstAttribute="trailing" secondItem="fBI-IT-Mvp" secondAttribute="leading" constant="20" id="VBi-0j-7s3"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="centerY" secondItem="kwJ-Ee-jtl" secondAttribute="centerY" id="ZfI-HG-TRt"/>
+                                                        <constraint firstItem="zU4-Kb-a94" firstAttribute="trailing" secondItem="0q5-D0-pDM" secondAttribute="leading" constant="20" id="aGP-hd-5Y1"/>
                                                         <constraint firstItem="hzy-SV-sa1" firstAttribute="centerY" secondItem="fBI-IT-Mvp" secondAttribute="centerY" id="daW-mm-z71"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="top" secondItem="kwJ-Ee-jtl" secondAttribute="bottom" constant="16" id="hb4-N1-nMo"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="WGY-mb-IwQ" secondAttribute="trailing" constant="8" id="qzF-ti-ZFr"/>
@@ -790,7 +791,9 @@
                                                     <outlet property="absentButton" destination="5PM-3p-tVd" id="YB0-r5-qJp"/>
                                                     <outlet property="excusedButton" destination="nYP-Gs-52r" id="Mub-kf-Ih6"/>
                                                     <outlet property="lateButton" destination="fBI-IT-Mvp" id="fea-T6-mFZ"/>
+                                                    <outlet property="lateImageView" destination="hzy-SV-sa1" id="9T3-gM-MuB"/>
                                                     <outlet property="presentButton" destination="0q5-D0-pDM" id="SPM-qg-meB"/>
+                                                    <outlet property="presentImageView" destination="zU4-Kb-a94" id="FYK-Rz-Y0D"/>
                                                     <outlet property="studentImageView" destination="kwJ-Ee-jtl" id="h8f-5N-qlM"/>
                                                     <outlet property="studentNameLabel" destination="egl-rV-eW7" id="Lm0-Wq-FFT"/>
                                                     <outlet property="studentSelectButton" destination="wsn-JX-mTg" id="RUA-sQ-W02"/>
