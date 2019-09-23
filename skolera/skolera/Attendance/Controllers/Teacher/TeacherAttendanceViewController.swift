@@ -292,12 +292,12 @@ class TeacherAttendanceViewController: UIViewController {
         } else {
             debugPrint(studentsMap.keys.count, "selected")
         }
-        let title = "Assign action for all students"
-        let presentString = "Present"
-        let lateString = "Late"
-        let absentString = "Absent"
-        let removeStatusString = "Remove all status"
-        let alert = UIAlertController(title: "", message: "Assign action for all students", preferredStyle: .actionSheet)
+        let title = "Assign action for all students".localized
+        let presentString = "Present".localized
+        let lateString = "Late".localized
+        let absentString = "Absent".localized
+        let removeStatusString = "Remove all status".localized
+        let alert = UIAlertController(title: "", message: "Assign action for all students".localized, preferredStyle: .actionSheet)
         let font = UIFont.systemFont(ofSize: 18)
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .font: font,
@@ -337,7 +337,7 @@ class TeacherAttendanceViewController: UIViewController {
             self.deleteAttendances()
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: { (_) in
             print("User click Dismiss button")
             //batch delete
         }))
