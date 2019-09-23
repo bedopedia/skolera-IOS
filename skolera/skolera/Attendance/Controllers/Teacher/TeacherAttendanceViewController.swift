@@ -237,11 +237,26 @@ class TeacherAttendanceViewController: UIViewController {
     func deleteAttendances() {
         var parameters: Parameters = [:]
         var deletedAttendances: [Int] = []
-        for attendances in studentsMap.values {
-            for attendance in attendances {
-                deletedAttendances.append(attendance.id!)
+        if selectedStudents.isEmpty {
+            for attendances in studentsMap.values {
+                for attendance in attendances {
+                    deletedAttendances.append(attendance.id!)
+                }
+            }
+        } else {
+            //delete attendance for selected students only
+            var students = studentsMap.filter { (childId, attendances) -> Bool in
+                self.selectedStudents.contains(childId)
+            }
+            for student in students {
+                if let attendanceVal = student.value.first {
+                    deletedAttendances.append(attendanceVal.id!)
+                } else  {
+                    debugPrint("no attendance for this student")
+                }
             }
         }
+        
         selectedStudents = []
         parameters["ids"] = deletedAttendances
         SVProgressHUD.show(withStatus: "Loading".localized)
