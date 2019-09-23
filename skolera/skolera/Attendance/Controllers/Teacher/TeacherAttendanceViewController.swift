@@ -31,7 +31,17 @@ class TeacherAttendanceViewController: UIViewController {
     var year = Date().year
     var isFullDay: Bool!
     var selectedSlot: TimetableSlots!
-    var selectedStudents: [Int]!
+    var selectedStudents: [Int] = [] {
+        didSet{
+            if assignForAllButton != nil {
+                if self.selectedStudents.isEmpty {
+                    self.assignForAllButton.setTitle("Assign for all".localized, for: .normal)
+                } else {
+                    self.assignForAllButton.setTitle("Assign for selected".localized, for: .normal)
+                }
+            }
+        }
+    }
     
     var slotAttendanceObject: FullDayAttendances!
     var fullDayAttendanceObject: FullDayAttendances!
@@ -374,20 +384,11 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 self.selectedStudents.removeAll{ (studentId) -> Bool in
                     studentId == selectedStudent.childId!
                 }
-                if self.selectedStudents.isEmpty {
-                    self.assignForAllButton.titleLabel?.text = "Assign for all".localized
-                }
                 cell.deselectStudent()
             } else {
                 cell.studentSelectButton.setImage(#imageLiteral(resourceName: "attendanceCheck"), for: .normal)
                 self.selectedStudents.append(selectedStudent.childId!)
-                self.assignForAllButton.titleLabel?.text = "Assign for selected".localized
                 cell.selectStudent()
-                //        if self.selectedStudents.count > 0 {
-                //            self.assignForAllButton.titleLabel?.text = "Assign for selected"
-                //        } else {
-                //            self.assignForAllButton.titleLabel?.text = "Assign for all"
-                //        }
             }
         }
         
