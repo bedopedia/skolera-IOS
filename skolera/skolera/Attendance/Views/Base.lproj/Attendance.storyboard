@@ -728,7 +728,7 @@
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                                                    <state key="normal" title="Absent" image="absent">
+                                                                    <state key="normal" title="Absent">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <userDefinedRuntimeAttributes>
@@ -745,7 +745,7 @@
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                                                    <state key="normal" title="Excused" image="excused">
+                                                                    <state key="normal" title="Excused">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <userDefinedRuntimeAttributes>
@@ -768,15 +768,25 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="late" translatesAutoresizingMaskIntoConstraints="NO" id="hzy-SV-sa1">
                                                             <rect key="frame" x="111.5" y="81" width="16" height="16"/>
                                                         </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="late" translatesAutoresizingMaskIntoConstraints="NO" id="zf1-m7-KJj">
+                                                            <rect key="frame" x="195.5" y="81" width="16" height="16"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="excused" translatesAutoresizingMaskIntoConstraints="NO" id="rHK-4j-96D">
+                                                            <rect key="frame" x="280" y="81" width="16" height="16"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="egl-rV-eW7" secondAttribute="trailing" constant="8" id="8s0-0L-XNG"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="trailing" constant="10" id="A9w-fM-wFD"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="leading" secondItem="kwJ-Ee-jtl" secondAttribute="trailing" constant="8" id="AbJ-ex-XPr"/>
                                                         <constraint firstItem="kwJ-Ee-jtl" firstAttribute="centerY" secondItem="wsn-JX-mTg" secondAttribute="centerY" id="AoD-Fg-aH9"/>
+                                                        <constraint firstItem="rHK-4j-96D" firstAttribute="trailing" secondItem="nYP-Gs-52r" secondAttribute="leading" constant="20" id="FUZ-84-xAs"/>
+                                                        <constraint firstItem="zf1-m7-KJj" firstAttribute="centerY" secondItem="5PM-3p-tVd" secondAttribute="centerY" id="Hwc-Tt-yNC"/>
                                                         <constraint firstItem="WGY-mb-IwQ" firstAttribute="leading" secondItem="wsn-JX-mTg" secondAttribute="leading" id="Kri-DP-hXn"/>
                                                         <constraint firstItem="wsn-JX-mTg" firstAttribute="top" secondItem="XJj-OS-GCq" secondAttribute="topMargin" constant="22" id="LaJ-9A-Z1w"/>
+                                                        <constraint firstItem="rHK-4j-96D" firstAttribute="centerY" secondItem="nYP-Gs-52r" secondAttribute="centerY" id="PNi-dg-AFT"/>
                                                         <constraint firstItem="hzy-SV-sa1" firstAttribute="trailing" secondItem="fBI-IT-Mvp" secondAttribute="leading" constant="20" id="VBi-0j-7s3"/>
+                                                        <constraint firstItem="zf1-m7-KJj" firstAttribute="trailing" secondItem="5PM-3p-tVd" secondAttribute="leading" constant="20" id="XlT-0Y-eTV"/>
                                                         <constraint firstItem="egl-rV-eW7" firstAttribute="centerY" secondItem="kwJ-Ee-jtl" secondAttribute="centerY" id="ZfI-HG-TRt"/>
                                                         <constraint firstItem="zU4-Kb-a94" firstAttribute="trailing" secondItem="0q5-D0-pDM" secondAttribute="leading" constant="20" id="aGP-hd-5Y1"/>
                                                         <constraint firstItem="hzy-SV-sa1" firstAttribute="centerY" secondItem="fBI-IT-Mvp" secondAttribute="centerY" id="daW-mm-z71"/>
@@ -789,7 +799,9 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
                                                     <outlet property="absentButton" destination="5PM-3p-tVd" id="YB0-r5-qJp"/>
+                                                    <outlet property="absentImageView" destination="zf1-m7-KJj" id="qFl-Ny-m8M"/>
                                                     <outlet property="excusedButton" destination="nYP-Gs-52r" id="Mub-kf-Ih6"/>
+                                                    <outlet property="excusedImageView" destination="rHK-4j-96D" id="k2W-a6-duD"/>
                                                     <outlet property="lateButton" destination="fBI-IT-Mvp" id="fea-T6-mFZ"/>
                                                     <outlet property="lateImageView" destination="hzy-SV-sa1" id="9T3-gM-MuB"/>
                                                     <outlet property="presentButton" destination="0q5-D0-pDM" id="SPM-qg-meB"/>
@@ -1076,7 +1088,6 @@
     </scenes>
     <resources>
         <image name="Advisement" width="512" height="512"/>
-        <image name="absent" width="16" height="16"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="close" width="24" height="24"/>
         <image name="excuseReason" width="80" height="80"/>

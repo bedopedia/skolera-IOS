@@ -19,6 +19,8 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var excusedButton: UIButton!
     @IBOutlet weak var presentImageView: UIImageView!
     @IBOutlet weak var lateImageView: UIImageView!
+    @IBOutlet weak var absentImageView: UIImageView!
+    @IBOutlet weak var excusedImageView: UIImageView!
     
     var didSelectStudent: ( (AttendanceStudent) -> () )!
     var didSelectAttendanceState: ( (AttendanceCases, AttendanceStudent) -> () )!
@@ -80,14 +82,16 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
     
     func absentSelected() {
         resetAll()
-        absentButton.setImage(#imageLiteral(resourceName: "absentSelected"), for: .normal)
+//        absentButton.setImage(#imageLiteral(resourceName: "absentSelected"), for: .normal)
+        absentImageView.image = #imageLiteral(resourceName: "absentSelected")
         absentButton.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 1)
         absentButton.setTitleColor(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), for: .normal)
     }
     
     func excusedSelected() {
         resetAll()
-        excusedButton.setImage(#imageLiteral(resourceName: "excusedSelected"), for: .normal)
+//        excusedButton.setImage(#imageLiteral(resourceName: "excusedSelected"), for: .normal)
+        excusedImageView.image = #imageLiteral(resourceName: "excusedSelected")
         excusedButton.backgroundColor = #colorLiteral(red: 0.7333333333, green: 0.8705882353, blue: 0.9803921569, alpha: 1)
         excusedButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
     }
@@ -108,11 +112,11 @@ class TeacherAttendanceTableViewCell: UITableViewCell {
         presentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         presentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
         
-        excusedButton.setImage(#imageLiteral(resourceName: "excused"), for: .normal)
+        excusedImageView.image = #imageLiteral(resourceName: "excused")
         excusedButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         excusedButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
         
-        absentButton.setImage(#imageLiteral(resourceName: "absent"), for: .normal)
+        absentImageView.image = #imageLiteral(resourceName: "absent")
         absentButton.backgroundColor = #colorLiteral(red: 0.8901960784, green: 0.8901960784, blue: 0.8901960784, alpha: 1)
         absentButton.setTitleColor(#colorLiteral(red: 0.5843137255, green: 0.5843137255, blue: 0.5843137255, alpha: 1), for: .normal)
     }
