@@ -19,6 +19,7 @@ class ChatViewController: BaseChatViewController {
     
     var chatName: String = "Chat"
     var thread: Threads!
+    var canSendMessage: Bool = true
     var newThread:Bool = false
     var courseId: Int = -1
     var teacherId: Int = -1
@@ -68,13 +69,17 @@ class ChatViewController: BaseChatViewController {
    
     var chatInputPresenter: BasicChatInputBarPresenter!
     override func createChatInputView() -> UIView {
-        let chatInputView = ChatInputBar.loadNib()
-        var appearance = ChatInputBarAppearance()
-        appearance.sendButtonAppearance.title = "Send".localized
-        appearance.textInputAppearance.placeholderText = "Type a message".localized
-        self.chatInputPresenter = BasicChatInputBarPresenter(chatInputBar: chatInputView, chatInputItems: self.createChatInputItems(), chatInputBarAppearance: appearance)
-        chatInputView.maxCharactersCount = 1000
-        return chatInputView
+        if canSendMessage {
+            let chatInputView = ChatInputBar.loadNib()
+            var appearance = ChatInputBarAppearance()
+            appearance.sendButtonAppearance.title = "Send".localized
+            appearance.textInputAppearance.placeholderText = "Type a message".localized
+            self.chatInputPresenter = BasicChatInputBarPresenter(chatInputBar: chatInputView, chatInputItems: self.createChatInputItems(), chatInputBarAppearance: appearance)
+            chatInputView.maxCharactersCount = 1000
+            return chatInputView
+        } else {
+            return UIView.init(frame: .init(x: 0, y: 0, width: 0, height: 0))
+        }
     }
     
     override func createPresenterBuilders() -> [ChatItemType: [ChatItemPresenterBuilderProtocol]] {

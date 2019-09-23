@@ -125,9 +125,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             if self.threads[indexPath.row].messages.count == 0 {
                 cell.threadLatestMessage.text = ""
             } else {
-                cell.threadLatestMessage.text = "\(self.threads[indexPath.row].messages.first!.user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                if let user = self.threads[indexPath.row].messages.first!.user {
+                    cell.threadLatestMessage.text = "\(user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                } else {
+                    cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                }
             }
-            
         }
         
         cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first ?? Character(" "))\((fullNameArr?.last ?? " ").first ?? Character(" "))", textSize: 20)
@@ -186,18 +189,18 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
                 let date = dateFormatter.date(from: item.createdAt)!
                 if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
-                    if "\(item.user.id!)".elementsEqual(userId()){
-                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
+                    if "\(item.user?.id ?? -1)".elementsEqual(userId()){
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
                         let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
                         messages.append(textModel)
                     } else {
-                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
+                        let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
                         let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
                         
                         messages.append(textModel)
                     }
                 } else {
-                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user.id!)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user.id!)".elementsEqual(userId()), date: date, status: .success)
+                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user?.id ?? -1)".elementsEqual(userId()), date: date, status: .success)
                     let size = CGSize(width: 2000.0, height: 1000.0)
                     if item.ext == nil {
                         let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
@@ -249,7 +252,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
             var fullNameArr = fullName?.components(separatedBy: " ")
             chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
-            
+            chatVC.canSendMessage = !self.threads[indexPath.row].participants.isEmpty 
             chatVC.thread = self.threads[indexPath.row]
             
             DispatchQueue.main.async {
