@@ -689,11 +689,11 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WGY-mb-IwQ">
                                                             <rect key="frame" x="23" y="77" width="329" height="24"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0q5-D0-pDM">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0q5-D0-pDM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="76.5" height="24"/>
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                    <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="8" maxY="0.0"/>
                                                                     <state key="normal" title="Present">
                                                                         <color key="titleColor" red="0.58431372549019611" green="0.58431372549019611" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -706,11 +706,11 @@
                                                                         <action selector="presentButtonAction" destination="bSu-Lz-8TX" eventType="touchUpInside" id="73c-SC-4hM"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBI-IT-Mvp">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBI-IT-Mvp">
                                                                     <rect key="frame" x="84.5" y="0.0" width="76" height="24"/>
                                                                     <color key="backgroundColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                                                    <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
                                                                     <state key="normal" title="Late">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -723,11 +723,12 @@
                                                                         <action selector="lateButtonAction" destination="bSu-Lz-8TX" eventType="touchUpInside" id="jb7-F6-1kY"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5PM-3p-tVd">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5PM-3p-tVd">
                                                                     <rect key="frame" x="168.5" y="0.0" width="76.5" height="24"/>
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                    <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="12" maxY="0.0"/>
+                                                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     <state key="normal" title="Absent">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -740,11 +741,12 @@
                                                                         <action selector="absentButtonAction" destination="bSu-Lz-8TX" eventType="touchUpInside" id="H6f-ZY-uoc"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYP-Gs-52r">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYP-Gs-52r">
                                                                     <rect key="frame" x="253" y="0.0" width="76" height="24"/>
                                                                     <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                                    <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
+                                                                    <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     <state key="normal" title="Excused">
                                                                         <color key="titleColor" red="0.58431372550000005" green="0.58431372550000005" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
@@ -854,6 +856,7 @@
                     <connections>
                         <outlet property="assignForAllButton" destination="eDh-A6-sdp" id="iEN-Dk-9U7"/>
                         <outlet property="backButton" destination="dQc-Fz-L43" id="bd2-R9-NbE"/>
+                        <outlet property="calendarImageView" destination="IIl-SZ-NhK" id="1vf-rU-rGI"/>
                         <outlet property="fullDayAttendanceBottomBorder" destination="2aN-yk-Jnh" id="Gz3-9C-wKo"/>
                         <outlet property="fullDayAttendanceButton" destination="Yc5-E9-JhH" id="3dU-I7-q6n"/>
                         <outlet property="leftLabel" destination="kx8-C0-zgw" id="6P2-Yv-8Zc"/>
@@ -889,8 +892,8 @@
                                         <color key="textColor" red="0.6470588235294118" green="0.67843137254901964" blue="0.70588235294117641" alpha="0.38" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ow6-XE-3E5" customClass="KMPlaceholderTextView" customModule="KMPlaceholderTextView">
-                                        <rect key="frame" x="24" y="127" width="291" height="118"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ow6-XE-3E5" customClass="KMPlaceholderTextView" customModule="KMPlaceholderTextView">
+                                        <rect key="frame" x="24" y="126.5" width="295" height="109.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -927,11 +930,16 @@
                                     <constraint firstAttribute="bottom" secondItem="0vN-2x-Mun" secondAttribute="bottom" constant="16" id="UpN-aS-Lg5"/>
                                     <constraint firstItem="LNo-oP-jYE" firstAttribute="centerX" secondItem="DZL-sh-6By" secondAttribute="centerX" id="VW6-yG-znU"/>
                                     <constraint firstItem="ow6-XE-3E5" firstAttribute="top" secondItem="LNo-oP-jYE" secondAttribute="bottom" constant="12" id="cAS-PR-mLd"/>
-                                    <constraint firstItem="0vN-2x-Mun" firstAttribute="top" secondItem="ow6-XE-3E5" secondAttribute="bottom" id="dI4-w5-Ysi"/>
+                                    <constraint firstItem="0vN-2x-Mun" firstAttribute="top" secondItem="ow6-XE-3E5" secondAttribute="bottom" constant="16" id="dI4-w5-Ysi"/>
                                     <constraint firstItem="RGo-46-6lC" firstAttribute="top" secondItem="DZL-sh-6By" secondAttribute="top" constant="72" id="gf5-xb-JoN"/>
                                     <constraint firstAttribute="height" constant="316" id="kNt-1v-WGQ"/>
                                     <constraint firstAttribute="trailing" secondItem="ow6-XE-3E5" secondAttribute="trailing" constant="24" id="rf1-BR-qBJ"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="excuseReason" translatesAutoresizingMaskIntoConstraints="NO" id="Aje-mw-oz3">
                                 <rect key="frame" x="147.5" y="130.5" width="80" height="80"/>

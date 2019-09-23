@@ -16,6 +16,9 @@ class SubmitExcuseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        commentLabel.layer.borderWidth = 1
+        commentLabel.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
+        commentLabel.layer.cornerRadius = 6
 
     }
     

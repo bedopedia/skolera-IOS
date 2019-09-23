@@ -20,6 +20,7 @@ class TeacherAttendanceViewController: UIViewController {
     @IBOutlet weak var slotAttendanceButton: UIButton!
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var assignForAllButton: UIButton!
+    @IBOutlet weak var calendarImageView: UIImageView!
     
     var courseGroupId: Int!
 
@@ -120,6 +121,7 @@ class TeacherAttendanceViewController: UIViewController {
                 })
                 self.highlightFullDayUi()
                 self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
+                self.calendarImageView.isHidden = false
             }
         } else {
             for student in self.slotAttendanceObject.students {
@@ -161,6 +163,7 @@ class TeacherAttendanceViewController: UIViewController {
                 self.highlightSlotUi()
                 self.selectedSlot = selectedSlot
                 self.leftLabel.text = "\("Slot".localized) \(selectedSlot.slotNo!)"
+                self.calendarImageView.isHidden = true
                 self.isFullDay = false
             }
             self.navigationController?.pushViewController(selectSlotsVc, animated:true)
