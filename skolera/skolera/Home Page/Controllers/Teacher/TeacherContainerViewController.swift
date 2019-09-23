@@ -52,7 +52,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     
     override func viewDidAppear(_ animated: Bool) {
         for child in childViewControllers {
-            if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesTableViewController {
+            if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesViewController {
                 coursesViewController.actor = self.actor
             } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
                 actorViewController.actor = self.actor
