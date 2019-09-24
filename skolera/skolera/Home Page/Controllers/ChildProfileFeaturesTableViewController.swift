@@ -33,7 +33,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     var child : Child!{
         didSet{
             if child != nil{
-                getGrades()
+//                getGrades()
                 getBehaviorNotesCount()
                 getTimeTable()
                 getWeeklyReport()
@@ -87,8 +87,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         switch cell?.reuseIdentifier{
         case "mainAttendanceCell":
             showAttendance()
-        case "mainGradesCell":
-            showCoursesGrades()
+//        case "mainGradesCell":
+//            showCoursesGrades()
         case "mainTimetableCell":
             showTimetable()
         case "mainBehaviorNotesCell":
