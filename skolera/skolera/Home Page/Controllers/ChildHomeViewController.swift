@@ -94,7 +94,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    private func openSettings() {
+    func openSettings() {
         let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
             if Language.language == .arabic {

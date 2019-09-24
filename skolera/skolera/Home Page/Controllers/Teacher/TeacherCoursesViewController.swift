@@ -81,6 +81,13 @@ class TeacherCoursesViewController: UIViewController {
         }
         
     }
+    
+    @IBAction func logout() {
+        let parentController = parent?.parent
+        if let mainViewController = parentController as? TeacherContainerViewController {
+            mainViewController.logout()
+        }
+    }
 
 
 }

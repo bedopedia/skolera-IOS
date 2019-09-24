@@ -1048,6 +1048,7 @@
                                         <state key="normal" image="settings"/>
                                         <connections>
                                             <action selector="logout" destination="Z4O-kc-n7U" eventType="touchUpInside" id="UPK-9I-I3H"/>
+                                            <action selector="logout" destination="nuY-Lb-wXn" eventType="touchUpInside" id="acx-L0-hgt"/>
                                             <action selector="rightAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="Ta7-fi-5AB"/>
                                         </connections>
                                     </button>
@@ -1589,14 +1590,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="605"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Child Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBa-Ip-S6Q">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teacher Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBa-Ip-S6Q">
                                 <rect key="frame" x="8" y="239" width="398" height="21"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI  Text" pointSize="18"/>
                                 <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Child grade" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI0-Rp-iyM">
-                                <rect key="frame" x="169" y="265" width="76.333333333333314" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teacher" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI0-Rp-iyM">
+                                <rect key="frame" x="180.33333333333334" y="265" width="53.333333333333343" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
                                 <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1888,7 +1889,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wnh-lg-oOH">
-                                                    <rect key="frame" x="95" y="29.333333333333329" width="92.666666666666686" height="21"/>
+                                                    <rect key="frame" x="95" y="29.333333333333329" width="102.33333333333331" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1917,7 +1918,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quizzes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DH-tx-7wj">
-                                                    <rect key="frame" x="95" y="29.333333333333329" width="63.666666666666657" height="21"/>
+                                                    <rect key="frame" x="95" y="29.333333333333329" width="70.666666666666686" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1946,7 +1947,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Phm-Ov-DO6">
-                                                    <rect key="frame" x="95" y="29.333333333333329" width="104" height="21"/>
+                                                    <rect key="frame" x="95" y="29.333333333333329" width="115" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1981,7 +1982,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkm-x0-08B">
-                                                    <rect key="frame" x="95" y="29.333333333333329" width="45.666666666666657" height="21"/>
+                                                    <rect key="frame" x="95" y="29.333333333333329" width="49.333333333333343" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2093,6 +2094,6 @@
         <image name="weeklyPlanner" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="92u-D6-jgG"/>
+        <segue reference="17l-HS-qQX"/>
     </inferredMetricsTieBreakers>
 </document>
