@@ -154,8 +154,8 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
         self.headerView.isHidden = false
         for child in childViewControllers {
-            if let notificationsTableViewController = child as? NotificationsTableViewController {
-                notificationsTableViewController.setNotificationsSeen()
+            if let notificationsViewController = child as? NotificationsViewController {
+                notificationsViewController.setNotificationsSeen()
             }
         }
         notificationsDotView.isHidden = true

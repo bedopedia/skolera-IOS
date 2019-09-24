@@ -23,13 +23,20 @@ class NotificationsViewController: UIViewController {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.dataSource = self
+        tableView.delegate = self
         getNotifcations()
 
         // Do any additional setup after loading the view.
     }
     
     @IBAction func logout () {
-        
+        if let mainViewController = parent as? TeacherContainerViewController {
+            mainViewController.logout()
+        }
+        if let mainViewController = parent as? ChildHomeViewController {
+            mainViewController.openSettings()
+        }
     }
     
     func setNotificationsSeen(){

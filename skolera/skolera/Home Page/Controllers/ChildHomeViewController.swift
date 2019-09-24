@@ -267,8 +267,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         unSelectAllTabs()
         notificationView.isHidden = false
         for child in childViewControllers {
-            if let notificationsTableViewController = child as? NotificationsTableViewController {
-                notificationsTableViewController.setNotificationsSeen()
+            if let notificationsViewController = child as? NotificationsViewController {
+                notificationsViewController.setNotificationsSeen()
             }
         }
         notiificationsDotView.isHidden = true

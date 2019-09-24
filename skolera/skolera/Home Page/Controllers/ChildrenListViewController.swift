@@ -149,8 +149,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
         if(SVProgressHUD.isVisible()){
             SVProgressHUD.dismiss()
         }
-        let notificationsTVC = NotificationsTableViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        let nvc = UINavigationController(rootViewController: notificationsTVC)
+        let notificationsVC = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        let nvc = UINavigationController(rootViewController: notificationsVC)
         self.present(nvc, animated: true, completion: nil)
     }
     
