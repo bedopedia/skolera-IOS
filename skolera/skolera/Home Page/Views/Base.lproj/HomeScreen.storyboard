@@ -541,7 +541,7 @@
                 <viewControllerPlaceholder storyboardName="Announcements" referencedIdentifier="AnnouncementsTableViewNVC" id="pF6-QC-P7s" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nAc-SV-Qar" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="799" y="-1683"/>
+            <point key="canvasLocation" x="-893" y="-585"/>
         </scene>
         <!--ContactTeacherNVC-->
         <scene sceneID="bY3-ML-kgg">
@@ -549,7 +549,7 @@
                 <viewControllerPlaceholder storyboardName="Threads" referencedIdentifier="ContactTeacherNVC" id="BIW-W7-utO" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kL6-2I-oSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="793" y="-1600"/>
+            <point key="canvasLocation" x="-1195" y="-508"/>
         </scene>
         <!--Notifications Table View Controller-->
         <scene sceneID="1Q7-ua-sCA">
@@ -660,7 +660,7 @@
             <objects>
                 <viewController id="edB-J8-WxP" customClass="NotificationsViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pUr-t5-n2x">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="605"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNd-gL-rje">
@@ -724,7 +724,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2CQ-vh-Woh">
-                                <rect key="frame" x="0.0" y="60" width="414" height="676"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="545"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="notificationCell" rowHeight="100" id="os1-IS-XoS" customClass="NotificationTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -809,7 +809,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tK-Xk-f4t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-17.39130434782609" y="178.53260869565219"/>
+            <point key="canvasLocation" x="-17" y="210"/>
         </scene>
         <!--Child Profile Features Table View Controller-->
         <scene sceneID="Dup-d9-phz">
@@ -1636,13 +1636,13 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzq-qo-Azt">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="ikF-tN-SxR" kind="embed" id="KMy-XN-qtd"/>
+                                    <segue destination="ikF-tN-SxR" kind="embed" id="SKv-1j-422"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVG-Xx-yiT">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="LVB-oI-Wr9" kind="embed" id="92u-D6-jgG"/>
+                                    <segue destination="edB-J8-WxP" kind="embed" id="w5P-6d-p8W"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfC-gx-BS0">
@@ -1655,19 +1655,19 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5MI-QO-yGn">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="GRi-4O-qKc" kind="embed" id="s5A-Au-Div"/>
+                                    <segue destination="BIW-W7-utO" kind="embed" id="5O0-tl-mFf"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LeN-B0-heJ">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="pQa-vU-io2" kind="embed" id="dGm-eD-Gpo"/>
+                                    <segue destination="pF6-QC-P7s" kind="embed" id="GfK-1g-BTM"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJa-ki-8D5">
                                 <rect key="frame" x="0.0" y="80" width="414" height="605"/>
                                 <connections>
-                                    <segue destination="Bk9-iX-KFO" kind="embed" id="kJV-qH-b1c"/>
+                                    <segue destination="Bk9-iX-KFO" kind="embed" id="zgC-AP-IE4"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -2250,6 +2250,7 @@
         <image name="weeklyPlanner" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="17l-HS-qQX"/>
+        <segue reference="5O0-tl-mFf"/>
+        <segue reference="GfK-1g-BTM"/>
     </inferredMetricsTieBreakers>
 </document>
