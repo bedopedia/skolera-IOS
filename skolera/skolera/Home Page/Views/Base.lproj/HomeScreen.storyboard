@@ -307,10 +307,10 @@
                             <constraint firstItem="dBV-5M-8Rr" firstAttribute="top" secondItem="DO9-pp-kuK" secondAttribute="bottom" constant="5" id="SWc-a9-wcc"/>
                             <constraint firstItem="Iqv-JB-ekG" firstAttribute="leading" secondItem="jOw-Gy-H72" secondAttribute="leading" id="XXX-jd-6pk"/>
                             <constraint firstItem="jOw-Gy-H72" firstAttribute="bottom" secondItem="Iqv-JB-ekG" secondAttribute="bottom" id="ZjU-4J-zz6"/>
-                            <constraint firstItem="tqj-68-hho" firstAttribute="top" secondItem="hPy-QY-3cO" secondAttribute="bottom" constant="24" id="bbK-wf-o0a"/>
                             <constraint firstItem="tqj-68-hho" firstAttribute="centerX" secondItem="jOw-Gy-H72" secondAttribute="centerX" id="eJz-KO-c8a"/>
                             <constraint firstItem="hPy-QY-3cO" firstAttribute="leading" secondItem="jOw-Gy-H72" secondAttribute="leading" id="eOC-tf-YbV"/>
                             <constraint firstItem="jOw-Gy-H72" firstAttribute="trailing" secondItem="DO9-pp-kuK" secondAttribute="trailing" constant="8" id="ev7-ai-p07"/>
+                            <constraint firstItem="DO9-pp-kuK" firstAttribute="top" secondItem="hPy-QY-3cO" secondAttribute="bottom" constant="143" id="gPj-jc-mLL"/>
                             <constraint firstItem="tqj-68-hho" firstAttribute="height" secondItem="dFx-AX-hwH" secondAttribute="height" multiplier="0.1" constant="22.399999999999991" id="gVZ-fD-h3K"/>
                             <constraint firstItem="DO9-pp-kuK" firstAttribute="top" secondItem="tqj-68-hho" secondAttribute="bottom" constant="30" id="hck-e5-9Eb"/>
                             <constraint firstItem="dBV-5M-8Rr" firstAttribute="centerX" secondItem="dFx-AX-hwH" secondAttribute="centerX" id="qKy-SE-hWY"/>
@@ -328,6 +328,7 @@
                         <outlet property="childGradeLabel" destination="dBV-5M-8Rr" id="zC7-qg-q7y"/>
                         <outlet property="childImageOuterView" destination="tqj-68-hho" id="cYd-12-pPn"/>
                         <outlet property="childNameLabel" destination="DO9-pp-kuK" id="edn-qD-RuP"/>
+                        <outlet property="heightConstraint" destination="gPj-jc-mLL" id="tJm-4B-WAn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sLx-iR-K6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>

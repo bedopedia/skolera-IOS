@@ -33,7 +33,7 @@ class ChildProfileViewController: UIViewController {
     var quizzesText : String!
     var eventsText : String!
     
-    let maxHeight: CGFloat = 138
+    let maxHeight: CGFloat = 143
     let minHeight: CGFloat = 12
     
     //MARK: - Life Cycle
@@ -131,14 +131,14 @@ class ChildProfileViewController: UIViewController {
         featureTVC.scrollHandler = { y in
             debugPrint(y)
             ///////////////////
-//            let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
-//            if newHeaderViewHeight > self.maxHeight {
-//                self.heightConstraint.constant = self.maxHeight
-//            } else if newHeaderViewHeight < self.minHeight{
-//                self.heightConstraint.constant = self.minHeight
-//            } else {
-//                self.heightConstraint.constant = newHeaderViewHeight
-//            }
+            let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
+            if newHeaderViewHeight > self.maxHeight {
+                self.heightConstraint.constant = self.maxHeight
+            } else if newHeaderViewHeight < self.minHeight{
+                self.heightConstraint.constant = self.minHeight
+            } else {
+                self.heightConstraint.constant = newHeaderViewHeight
+            }
             ////////////////////
             
         }
