@@ -25,6 +25,7 @@ class ChildProfileViewController: UIViewController {
     @IBOutlet weak var eventsLabel: UILabel!
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Variables
     var child: Child!
@@ -41,15 +42,11 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         if isParent() {
-            let backItem = UIBarButtonItem()
-            navigationItem.backBarButtonItem = backItem
+//            let backItem = UIBarButtonItem()
+//            navigationItem.backBarButtonItem = backItem
         } else {
-            let settingsItem = UIBarButtonItem.init(image: #imageLiteral(resourceName: "settings"), landscapeImagePhone: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(logout))
-            settingsItem.tintColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
-            navigationItem.leftBarButtonItem = settingsItem
+            backButton.isHidden = true
             setLocalization()
             InstanceID.instanceID().instanceID { (result, error) in
                 if let error = error {
@@ -66,8 +63,8 @@ class ChildProfileViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
-            parentVC.headerHeightConstraint.constant = 0
-            parentVC.headerView.isHidden = true
+//            parentVC.headerHeightConstraint.constant = 0
+//            parentVC.headerView.isHidden = true
         }
         
     }
@@ -75,10 +72,23 @@ class ChildProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
-            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-            parentVC.headerView.isHidden = false
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
         }
         //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
+    }
+    
+    @IBAction func settingsButton() {
+        
+        let parentController = parent?.parent
+        if let mainViewController = parentController as? ChildHomeViewController {
+            mainViewController.openSettings()
+        }
+    }
+    
+    @IBAction func backAction() {
+        self.parent?.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
     }
 
     //MARK: - methods
@@ -121,14 +131,14 @@ class ChildProfileViewController: UIViewController {
         featureTVC.scrollHandler = { y in
             debugPrint(y)
             ///////////////////
-            let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
-            if newHeaderViewHeight > self.maxHeight {
-                self.heightConstraint.constant = self.maxHeight
-            } else if newHeaderViewHeight < self.minHeight{
-                self.heightConstraint.constant = self.minHeight
-            } else {
-                self.heightConstraint.constant = newHeaderViewHeight
-            }
+//            let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
+//            if newHeaderViewHeight > self.maxHeight {
+//                self.heightConstraint.constant = self.maxHeight
+//            } else if newHeaderViewHeight < self.minHeight{
+//                self.heightConstraint.constant = self.minHeight
+//            } else {
+//                self.heightConstraint.constant = newHeaderViewHeight
+//            }
             ////////////////////
             
         }
@@ -170,37 +180,7 @@ class ChildProfileViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func logout(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-            if Language.language == .arabic {
-                self.showChangeLanguageConfirmation(language: .english)
-            } else{
-                self.showChangeLanguageConfirmation(language: .arabic)
-            }
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible())
-            {
-                SVProgressHUD.dismiss()
-            }
-            self.sendFCM(token: "")
-            let keychain = KeychainSwift()
-            keychain.clear()
-            let nvc = UINavigationController()
-            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-            nvc.pushViewController(schoolCodeVC, animated: true)
-            self.present(nvc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler:{ (UIAlertAction)in
-        }))
-        
-        self.present(alert, animated: true, completion: {
-        })
-    }
+
     
     func sendFCM(token: String) {
         SVProgressHUD.show(withStatus: "Loading".localized)

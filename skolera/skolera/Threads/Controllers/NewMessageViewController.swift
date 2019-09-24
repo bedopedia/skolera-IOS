@@ -39,8 +39,8 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let parentVc = parent?.parent as? ChildHomeViewController {
-            parentVc.headerHeightConstraint.constant = 0
-            parentVc.headerView.isHidden = true
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
         }
 //        self.navigationController?.isNavigationBarHidden = true
     }
@@ -48,8 +48,8 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
-            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-            parentVC.headerView.isHidden = false
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
         }
     }
 

@@ -49,8 +49,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let parentVC = parent?.parent as? ChildHomeViewController {
-            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-            parentVC.headerView.isHidden = false
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
         }
         getThreads()
         
@@ -60,8 +60,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidDisappear(animated)
         SVProgressHUD.dismiss()
         if let parentVc = parent?.parent as? ChildHomeViewController {
-            parentVc.headerHeightConstraint.constant = 0
-            parentVc.headerView.isHidden = true
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
         }
     }
 

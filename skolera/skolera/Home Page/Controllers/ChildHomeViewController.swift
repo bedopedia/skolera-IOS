@@ -32,8 +32,6 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var notiificationsDotView: UIView!
     
     //MARK: - Variables
@@ -64,7 +62,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             fourthLabel.text = "Announcments".localized
             
         }
-        headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//        headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -174,21 +172,21 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             if isParent() {
                 if let nvc = child as? AnnouncementsTableViewNVC {
                     if nvc.viewControllers.count == 1 {
-                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                        self.headerView.isHidden = false
+//                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                        self.headerView.isHidden = false
                     } else {
-                        self.headerHeightConstraint.constant = 0
-                        self.headerView.isHidden = true
+//                        self.headerHeightConstraint.constant = 0
+//                        self.headerView.isHidden = true
                     }
                 }
             } else {
                 if let nvc = child as? ChildProfileFeaturesNVC {
                     if nvc.viewControllers.count == 1 {
-                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                        self.headerView.isHidden = false
+//                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                        self.headerView.isHidden = false
                     } else {
-                        self.headerHeightConstraint.constant = 0
-                        self.headerView.isHidden = true
+//                        self.headerHeightConstraint.constant = 0
+//                        self.headerView.isHidden = true
                     }
                 }
                 if let contactTeacher = child as? ContactTeacherNVC {
@@ -228,11 +226,11 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         for child in childViewControllers {
             if let nvc = child as? ContactTeacherNVC {
                 if nvc.viewControllers.count == 1 {
-                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                    self.headerView.isHidden = false
+//                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                    self.headerView.isHidden = false
                 } else {
-                    self.headerHeightConstraint.constant = 0
-                    self.headerView.isHidden = true
+//                    self.headerHeightConstraint.constant = 0
+//                    self.headerView.isHidden = true
                 }
             }
         }
@@ -262,13 +260,13 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     @IBAction func selectThirdTab(){
-        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-        self.headerView.isHidden = false
+//        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//        self.headerView.isHidden = false
         unSelectAllTabs()
         notificationView.isHidden = false
         for child in childViewControllers {
-            if let notificationsViewController = child as? NotificationsViewController {
-                notificationsViewController.setNotificationsSeen()
+            if let notificationsTableViewController = child as? NotificationsTableViewController {
+                notificationsTableViewController.setNotificationsSeen()
             }
         }
         notiificationsDotView.isHidden = true
@@ -288,21 +286,21 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             if !isParent() {
                 if let nvc = child as? AnnouncementsTableViewNVC {
                     if nvc.viewControllers.count == 1 {
-                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                        self.headerView.isHidden = false
+//                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                        self.headerView.isHidden = false
                     } else {
-                        self.headerHeightConstraint.constant = 0
-                        self.headerView.isHidden = true
-                    }
+//                        self.headerHeightConstraint.constant = 0
+//                        self.headerView.isHidden = true
+//                    }
                 }
             } else {
                 if let nvc = child as? ChildProfileFeaturesNVC {
                     if nvc.viewControllers.count == 1 {
-                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                        self.headerView.isHidden = false
+//                        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                        self.headerView.isHidden = false
                     } else {
-                        self.headerHeightConstraint.constant = 0
-                        self.headerView.isHidden = true
+//                        self.headerHeightConstraint.constant = 0
+//                        self.headerView.isHidden = true
                     }
                 }
             }
@@ -339,6 +337,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
     }
+}
     
     
     
@@ -370,3 +369,5 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
 }
+
+
