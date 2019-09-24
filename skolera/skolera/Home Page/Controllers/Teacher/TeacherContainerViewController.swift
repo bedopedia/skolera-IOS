@@ -28,8 +28,6 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var menuLabel: UILabel!
     @IBOutlet weak var menuContainer: UIView!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var notificationsDotView: UIView!
     
     
@@ -86,11 +84,11 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         for child in childViewControllers {
             if let nvc = child as? TeacherCoursesTableViewNVC {
                 if nvc.viewControllers.count == 1 {
-                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                    self.headerView.isHidden = false
+//                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                    self.headerView.isHidden = false
                 } else {
-                    self.headerHeightConstraint.constant = 0
-                    self.headerView.isHidden = true
+//                    self.headerHeightConstraint.constant = 0
+//                    self.headerView.isHidden = true
                 }
             }
         }
@@ -111,11 +109,11 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         for child in childViewControllers {
             if let nvc = child as? AnnouncementsTableViewNVC {
                 if nvc.viewControllers.count == 1 {
-                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                    self.headerView.isHidden = false
+//                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                    self.headerView.isHidden = false
                 } else {
-                    self.headerHeightConstraint.constant = 0
-                    self.headerView.isHidden = true
+//                    self.headerHeightConstraint.constant = 0
+//                    self.headerView.isHidden = true
                 }
             }
         }
@@ -136,11 +134,11 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         for child in childViewControllers {
             if let nvc = child as? ContactTeacherNVC {
                 if nvc.viewControllers.count == 1 {
-                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                    self.headerView.isHidden = false
+//                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                    self.headerView.isHidden = false
                 } else {
-                    self.headerHeightConstraint.constant = 0
-                    self.headerView.isHidden = true
+//                    self.headerHeightConstraint.constant = 0
+//                    self.headerView.isHidden = true
                 }
             }
         }
@@ -151,8 +149,8 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectNotification() {
-        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-        self.headerView.isHidden = false
+//        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//        self.headerView.isHidden = false
         for child in childViewControllers {
             if let notificationsViewController = child as? NotificationsViewController {
                 notificationsViewController.setNotificationsSeen()
@@ -169,11 +167,11 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         for child in childViewControllers {
             if let nvc = child as? ActorNvc {
                 if nvc.viewControllers.count == 1 {
-                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-                    self.headerView.isHidden = false
+//                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//                    self.headerView.isHidden = false
                 } else {
-                    self.headerHeightConstraint.constant = 0
-                    self.headerView.isHidden = true
+//                    self.headerHeightConstraint.constant = 0
+//                    self.headerView.isHidden = true
                 }
             }
         }

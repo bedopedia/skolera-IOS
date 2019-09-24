@@ -1080,7 +1080,7 @@
             <objects>
                 <viewController id="nuY-Lb-wXn" customClass="TeacherCoursesViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JuA-Ra-kfL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="605"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="665"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4Q-V5-LYd">
@@ -1143,7 +1143,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QTF-sk-osE">
-                                <rect key="frame" x="0.0" y="80" width="414" height="525"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TeacherCourseTableViewCell" rowHeight="80" id="own-QH-NFB" customClass="TeacherCourseTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -1490,51 +1490,14 @@
                                     <constraint firstItem="tOo-pI-u1K" firstAttribute="leading" secondItem="vge-He-o08" secondAttribute="leading" id="yca-p8-G7q"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EnJ-Pa-Oz1">
-                                <rect key="frame" x="0.0" y="20" width="414" height="60"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="rXv-zT-8Tf">
-                                        <rect key="frame" x="141.66666666666666" y="18" width="130.99999999999997" height="24"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thk-5A-dj7">
-                                        <rect key="frame" x="366" y="15" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="a6V-9D-EcT"/>
-                                            <constraint firstAttribute="height" constant="30" id="mDC-vx-ntT"/>
-                                        </constraints>
-                                        <state key="normal" image="settings"/>
-                                        <connections>
-                                            <action selector="logout" destination="2iN-9U-0Z0" eventType="touchUpInside" id="yR8-hr-lZF"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyu-pu-LzB">
-                                        <rect key="frame" x="0.0" y="59" width="414" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="yei-dg-Dig"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="lyu-pu-LzB" firstAttribute="leading" secondItem="EnJ-Pa-Oz1" secondAttribute="leading" id="G1O-ya-XdA"/>
-                                    <constraint firstAttribute="height" constant="60" id="MW4-5Z-Xki"/>
-                                    <constraint firstItem="thk-5A-dj7" firstAttribute="centerY" secondItem="EnJ-Pa-Oz1" secondAttribute="centerY" id="NFb-04-o8G"/>
-                                    <constraint firstItem="rXv-zT-8Tf" firstAttribute="centerX" secondItem="EnJ-Pa-Oz1" secondAttribute="centerX" id="Rx8-9F-pA9"/>
-                                    <constraint firstAttribute="trailing" secondItem="lyu-pu-LzB" secondAttribute="trailing" id="Wgc-aV-tyq"/>
-                                    <constraint firstAttribute="trailing" secondItem="thk-5A-dj7" secondAttribute="trailing" constant="18" id="bxc-Mx-vBZ"/>
-                                    <constraint firstItem="rXv-zT-8Tf" firstAttribute="centerY" secondItem="EnJ-Pa-Oz1" secondAttribute="centerY" id="zT7-yc-3SL"/>
-                                    <constraint firstAttribute="bottom" secondItem="lyu-pu-LzB" secondAttribute="bottom" id="zwq-dU-p2X"/>
-                                </constraints>
-                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzq-qo-Azt">
-                                <rect key="frame" x="0.0" y="80" width="414" height="605"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="665"/>
                                 <connections>
                                     <segue destination="ikF-tN-SxR" kind="embed" id="SKv-1j-422"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVG-Xx-yiT">
-                                <rect key="frame" x="0.0" y="80" width="414" height="605"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="665"/>
                                 <connections>
                                     <segue destination="edB-J8-WxP" kind="embed" id="w5P-6d-p8W"/>
                                 </connections>
@@ -1547,19 +1510,19 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5MI-QO-yGn">
-                                <rect key="frame" x="0.0" y="80" width="414" height="605"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="665"/>
                                 <connections>
                                     <segue destination="BIW-W7-utO" kind="embed" id="5O0-tl-mFf"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LeN-B0-heJ">
-                                <rect key="frame" x="0.0" y="80" width="414" height="605"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="665"/>
                                 <connections>
                                     <segue destination="pF6-QC-P7s" kind="embed" id="GfK-1g-BTM"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJa-ki-8D5">
-                                <rect key="frame" x="0.0" y="80" width="414" height="605"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="665"/>
                                 <connections>
                                     <segue destination="Bk9-iX-KFO" kind="embed" id="zgC-AP-IE4"/>
                                 </connections>
@@ -1570,16 +1533,15 @@
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="trailing" secondItem="gVG-Xx-yiT" secondAttribute="trailing" id="1VM-mg-JQp"/>
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="trailing" secondItem="eJa-ki-8D5" secondAttribute="trailing" id="2X9-Il-qh9"/>
                             <constraint firstAttribute="trailing" secondItem="yfC-gx-BS0" secondAttribute="trailing" id="4C1-Yd-blX"/>
-                            <constraint firstItem="xzq-qo-Azt" firstAttribute="top" secondItem="EnJ-Pa-Oz1" secondAttribute="bottom" id="7el-hW-uGm"/>
+                            <constraint firstItem="5MI-QO-yGn" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="5O6-PO-Tjh"/>
                             <constraint firstAttribute="trailing" secondItem="vge-He-o08" secondAttribute="trailing" id="8IS-Gg-bgT"/>
-                            <constraint firstItem="eJa-ki-8D5" firstAttribute="top" secondItem="EnJ-Pa-Oz1" secondAttribute="bottom" id="A5b-L2-leH"/>
-                            <constraint firstItem="EnJ-Pa-Oz1" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="CGa-Gi-ntz"/>
                             <constraint firstItem="eJa-ki-8D5" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="CXm-wa-4tT"/>
+                            <constraint firstItem="LeN-B0-heJ" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="F2H-F5-5Cp"/>
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="trailing" secondItem="xzq-qo-Azt" secondAttribute="trailing" id="KDI-Q2-chS"/>
                             <constraint firstItem="vge-He-o08" firstAttribute="top" secondItem="gVG-Xx-yiT" secondAttribute="bottom" constant="1" id="KQ7-no-lZn"/>
-                            <constraint firstAttribute="trailing" secondItem="EnJ-Pa-Oz1" secondAttribute="trailing" id="Q62-B8-cgh"/>
+                            <constraint firstItem="xzq-qo-Azt" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="L2S-5H-ftg"/>
+                            <constraint firstItem="gVG-Xx-yiT" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="MRo-2o-F6Z"/>
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="trailing" secondItem="LeN-B0-heJ" secondAttribute="trailing" id="QZk-5e-cEC"/>
-                            <constraint firstItem="LeN-B0-heJ" firstAttribute="top" secondItem="EnJ-Pa-Oz1" secondAttribute="bottom" id="Qt9-RX-WcE"/>
                             <constraint firstItem="vge-He-o08" firstAttribute="top" secondItem="yfC-gx-BS0" secondAttribute="bottom" id="RO8-TP-ETN"/>
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="trailing" secondItem="5MI-QO-yGn" secondAttribute="trailing" id="Tzw-eI-U7I"/>
                             <constraint firstItem="gVG-Xx-yiT" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="U67-uX-oio"/>
@@ -1587,12 +1549,10 @@
                             <constraint firstItem="yfC-gx-BS0" firstAttribute="top" secondItem="eJa-ki-8D5" secondAttribute="bottom" id="X00-m8-dic"/>
                             <constraint firstItem="SrG-dj-Ytw" firstAttribute="bottom" secondItem="vge-He-o08" secondAttribute="bottom" id="aMC-Wr-pOD"/>
                             <constraint firstItem="LeN-B0-heJ" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="csV-i3-skX"/>
-                            <constraint firstItem="EnJ-Pa-Oz1" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="fuf-6C-o2Q"/>
                             <constraint firstItem="vge-He-o08" firstAttribute="top" secondItem="xzq-qo-Azt" secondAttribute="bottom" constant="1" id="g9p-Kn-35f"/>
                             <constraint firstItem="yfC-gx-BS0" firstAttribute="leading" secondItem="rUn-uE-FCT" secondAttribute="leading" id="hsm-Sq-gI6"/>
                             <constraint firstItem="yfC-gx-BS0" firstAttribute="top" secondItem="LeN-B0-heJ" secondAttribute="bottom" id="lRK-WU-qsu"/>
-                            <constraint firstItem="gVG-Xx-yiT" firstAttribute="top" secondItem="EnJ-Pa-Oz1" secondAttribute="bottom" id="oNr-nm-Cc1"/>
-                            <constraint firstItem="5MI-QO-yGn" firstAttribute="top" secondItem="EnJ-Pa-Oz1" secondAttribute="bottom" id="s48-3p-bnb"/>
+                            <constraint firstItem="eJa-ki-8D5" firstAttribute="top" secondItem="SrG-dj-Ytw" secondAttribute="top" id="qzk-Ak-UHv"/>
                             <constraint firstItem="xzq-qo-Azt" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="ufe-7l-ckd"/>
                             <constraint firstItem="yfC-gx-BS0" firstAttribute="top" secondItem="5MI-QO-yGn" secondAttribute="bottom" id="wNY-6n-AfC"/>
                             <constraint firstItem="5MI-QO-yGn" firstAttribute="leading" secondItem="SrG-dj-Ytw" secondAttribute="leading" id="zM4-if-FzA"/>
@@ -1606,8 +1566,6 @@
                         <outlet property="coursesButton" destination="MpJ-Gv-cY3" id="Ccb-Rc-wCQ"/>
                         <outlet property="coursesContainer" destination="eJa-ki-8D5" id="PMY-ci-4sr"/>
                         <outlet property="coursesLabel" destination="sRK-Rf-3o1" id="for-cZ-Ulw"/>
-                        <outlet property="headerHeightConstraint" destination="MW4-5Z-Xki" id="EDJ-M6-Ub8"/>
-                        <outlet property="headerView" destination="EnJ-Pa-Oz1" id="oH8-8d-EI0"/>
                         <outlet property="menuButton" destination="2OE-g1-Hws" id="P3u-y8-iZi"/>
                         <outlet property="menuContainer" destination="xzq-qo-Azt" id="cVK-1l-gl3"/>
                         <outlet property="menuLabel" destination="7gb-Ac-KvO" id="i2Y-55-9nP"/>
@@ -1629,30 +1587,30 @@
             <objects>
                 <viewController storyboardIdentifier="ActorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Z4O-kc-n7U" customClass="ActorViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bfv-Mz-7JB">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="605"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="665"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teacher Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBa-Ip-S6Q">
-                                <rect key="frame" x="8" y="239" width="398" height="21"/>
+                                <rect key="frame" x="8" y="245" width="398" height="21"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI  Text" pointSize="18"/>
                                 <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teacher" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI0-Rp-iyM">
-                                <rect key="frame" x="180.33333333333334" y="265" width="53.333333333333343" height="17"/>
+                                <rect key="frame" x="180.33333333333334" y="271" width="53.333333333333343" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
                                 <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVK-DI-3e7">
-                                <rect key="frame" x="165.66666666666666" y="126" width="82.666666666666657" height="83"/>
+                                <rect key="frame" x="162.66666666666666" y="126" width="88.666666666666657" height="89"/>
                                 <color key="backgroundColor" white="0.88785807289999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uVK-DI-3e7" secondAttribute="height" multiplier="1:1" id="wVd-QK-jX1"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAZ-3y-wtx">
-                                <rect key="frame" x="0.0" y="302" width="414" height="303"/>
+                                <rect key="frame" x="0.0" y="308" width="414" height="357"/>
                                 <connections>
                                     <segue destination="ojf-0u-s35" kind="embed" id="DP8-zK-sAH"/>
                                 </connections>
@@ -1758,7 +1716,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ActorFeaturesTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ojf-0u-s35" customClass="ActorFeaturesTableViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zCS-0I-bye">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="303"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="357"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
@@ -2127,8 +2085,8 @@
         <image name="weeklyPlanner" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YSP-NV-DlE"/>
-        <segue reference="yTp-dm-llu"/>
-        <segue reference="E7U-la-Ad1"/>
+        <segue reference="w5P-6d-p8W"/>
+        <segue reference="5O0-tl-mFf"/>
+        <segue reference="GfK-1g-BTM"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -302,8 +302,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                     }
                 }
             }
-            
         }
+            
         if moreView.isHidden == false {
             if isParent() {
                 for child in childViewControllers {
