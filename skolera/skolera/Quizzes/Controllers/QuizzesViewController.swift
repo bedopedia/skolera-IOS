@@ -19,6 +19,9 @@ class QuizzesViewController: UIViewController {
     var filteredQuizzes: [FullQuiz] = []
     var isTeacher: Bool = false
     var courseGroupId = 0
+    var pageId = 1
+    var selectedSegment = 0
+    var meta: Meta!
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -26,10 +29,10 @@ class QuizzesViewController: UIViewController {
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        // Do any additional setup after loading the view.
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,8 +43,6 @@ class QuizzesViewController: UIViewController {
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
             }
         }
-        
-        
         if isParent() {
             statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
         } else {
@@ -50,14 +51,12 @@ class QuizzesViewController: UIViewController {
             } else {
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
-            
         }
         if isTeacher {
             getTeacherQuizzes()
         } else {
-            getQuizzes()
+            getQuizzes(pageId: pageId)
         }
-        
     }
     
     @IBAction func back() {
@@ -67,8 +66,10 @@ class QuizzesViewController: UIViewController {
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
+            selectedSegment = 0
             setOpenedQuizzes()
         case 1:
+            selectedSegment = 1
             setClosedQuizzes()
         default:
             setOpenedQuizzes()
@@ -100,15 +101,20 @@ class QuizzesViewController: UIViewController {
         }
     }
     
-    func getQuizzes(){
+    func getQuizzes(pageId: Int) {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getQuizzesForChildApi(childId: child.id, courseId: courseId) { (isSuccess, statusCode, value, error) in
+        getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
-                    self.quizzes = quizResponse.quizzes
-                    self.setOpenedQuizzes()
+                    if pageId == 1 {
+                        self.quizzes = quizResponse.quizzes
+                        self.meta = quizResponse.meta
+                        self.setOpenedQuizzes()
+                    } else {
+                        self.quizzes.append(contentsOf: quizResponse.quizzes)
+                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -119,6 +125,7 @@ class QuizzesViewController: UIViewController {
 }
 
 extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredQuizzes.count
     }
@@ -128,6 +135,20 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
 //        cell.assignment = filteredAssignments[indexPath.row]
+//        debugPrint("Index path: ",indexPath.row)
+        if indexPath.row >= filteredQuizzes.count - 2 {
+//            debugPrint("Index path: ",indexPath.row)
+            if meta.totalPages > pageId {
+                pageId += 1
+                getQuizzes(pageId: pageId)
+                if selectedSegment == 0 {
+                    setOpenedQuizzes()
+                }
+                if selectedSegment == 1 {
+                    setClosedQuizzes()
+                }
+            }
+        }
         return cell
     }
     
