@@ -302,6 +302,7 @@
 		8AF8F73722E9EA0800544744 /* QuizzesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73622E9EA0800544744 /* QuizzesResponse.swift */; };
 		8AF8F73922E9EA6A00544744 /* FullQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73822E9EA6A00544744 /* FullQuiz.swift */; };
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
+		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -619,6 +620,7 @@
 		8AF8F73622E9EA0800544744 /* QuizzesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesResponse.swift; sourceTree = "<group>"; };
 		8AF8F73822E9EA6A00544744 /* FullQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullQuiz.swift; sourceTree = "<group>"; };
 		8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStudentSubmission.swift; sourceTree = "<group>"; };
+		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -821,6 +823,7 @@
 				5402CA0C2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift */,
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
+				8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1924,6 +1927,7 @@
 				8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */,
 				8A94E45D22DF836200A01B0C /* PostOwner.swift in Sources */,
 				8A97DFAA22FAE87700B646CA /* AnnouncementsApiManager.swift in Sources */,
+				8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */,
 				8A6D361720B5983500DD0445 /* BaseMessageHandler.swift in Sources */,
 				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
 				54230E06205DA17C00EA7E62 /* String+CapitalizeFirstLetter.swift in Sources */,
