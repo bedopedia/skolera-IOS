@@ -28,9 +28,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var secondLabel: UILabel!
     @IBOutlet weak var thirdLabel: UILabel!
     @IBOutlet weak var fourthLabel: UILabel!
-    
-    @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var leftButton: UIButton!
+   
     
     @IBOutlet weak var notiificationsDotView: UIView!
     
@@ -44,10 +42,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         if !isParent() {
-            leftButton.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
-            rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
+//            leftButton.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
+//            rightButton.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
         }
-        leftButton.setImage(leftButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+//        leftButton.setImage(leftButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if isParent() {
             selectFourthTab()
             firstLabel.text = "Announcments".localized
@@ -138,9 +136,9 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func unSelectAllTabs(){
         if isParent() {
-            rightButton.isHidden = true
+//            rightButton.isHidden = true
         } else {
-            leftButton.isHidden = true
+//            leftButton.isHidden = true
         }
         moreView.isHidden = true
         notificationView.isHidden = true
@@ -243,9 +241,9 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         unSelectAllTabs()
         if isParent() {
-            rightButton.isHidden = false
+//            rightButton.isHidden = false
         } else {
-            leftButton.isHidden = false
+//            leftButton.isHidden = false
         }
         threadsView.isHidden = false
         if isParent() {
