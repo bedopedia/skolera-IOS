@@ -41,11 +41,8 @@ class ChildProfileViewController: UIViewController {
     /// sets basic screen details, sends current child to embedded ChildProfileFeaturesTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if isParent() {
-//            let backItem = UIBarButtonItem()
-//            navigationItem.backBarButtonItem = backItem
-        } else {
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if !isParent() {
             backButton.isHidden = true
             setLocalization()
             InstanceID.instanceID().instanceID { (result, error) in
@@ -57,7 +54,6 @@ class ChildProfileViewController: UIViewController {
                 }
             }
         }
-//        addChildImage()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
