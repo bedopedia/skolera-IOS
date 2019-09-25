@@ -94,31 +94,26 @@ class QuizStatusViewController: UIViewController {
             quizDateLabel.isHidden = true
             quizClockImage.isHidden = true
         }
-        
         if quiz.state.elementsEqual("running") {
-            
             quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
             quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
             quizClockImage.image = #imageLiteral(resourceName: "greenHour")
          
-            
             if let subId = quiz.studentSubmissions.id {
                 solveQuizButton.isHidden = true
-                studentFinishedQuizView.isHidden = false
+//                studentFinishedQuizView.isHidden = false
             } else {
                 studentFinishedQuizView.isHidden = true
-                //solve now ui
-                solveQuizButton.isHidden = true
+                
+                solveQuizButton.isHidden = false
                 if !getUserType().elementsEqual("student") {
                     notStartedQuizView.isHidden = false
                 } else {
                     notStartedQuizView.isHidden = true
                 }
             }
-            
-        }
-          
-        else {
+        } else {
+            solveQuizButton.isHidden = true
             quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
             quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
             quizClockImage.image = #imageLiteral(resourceName: "1")
@@ -127,12 +122,28 @@ class QuizStatusViewController: UIViewController {
             
             studentFinishedQuizView.isHidden = false
             solveQuizButton.isHidden = true
+            if let subId = quiz.studentSubmissions.id {
+                gradeView.isHidden = false
+            } else {
+                gradeView.isHidden = true
+                if !getUserType().elementsEqual("student") {
+                    notStartedQuizView.isHidden = false
+                }
+            }
+            if getUserType().elementsEqual("parent") {
+                //constraints = 0, isHidden = true
+                answersHeightConstraint.constant = 0
+                questionsHeightConstraint.constant = 0
+                detailsHeightConstraint.constant = 0
+                detailsView.isHidden = true
+            }
             if quiz.studentSubmissions != nil {
                 quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
                 quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
                 quizDateLabel.text = "Solved".localized
                 quizClockImage.image = nil
-                gradeView.isHidden = false
+//                gradeView.isHidden = false
+                
                 if let grade = quiz.studentSubmissions.score{
                     quizGradeLabel.text = "\(grade)"
                     if let note = quiz.studentSubmissions.feedback{
@@ -147,9 +158,7 @@ class QuizStatusViewController: UIViewController {
             } else {
                 gradeView.isHidden = true
             }
-            
         }
-
     }
     
     @IBAction func back() {
