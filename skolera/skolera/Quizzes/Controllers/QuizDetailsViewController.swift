@@ -16,8 +16,40 @@ class QuizDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    @IBAction func backAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 
 }
+
+extension QuizDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        debugPrint("table view height:", self.tableView.estimatedRowHeight)
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell") as! QuizDetailsTableViewCell
+//        cell.behaviorNote = currentDataSource[indexPath.row]
+//        if indexPath.row == currentDataSource.count - 1{
+//            if meta.currentPage != meta.totalPages{
+//                getBehaviorNotes(page: (meta.currentPage)! + 1)
+//            }
+//        }
+        return cell
+    }
+   
+    
+    
+    
+    
+}
+
+
 

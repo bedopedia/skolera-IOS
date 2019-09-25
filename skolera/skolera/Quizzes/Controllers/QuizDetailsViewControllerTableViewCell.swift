@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuizDetailsViewControllerCellTableViewCell: UITableViewCell {
+class QuizDetailsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
