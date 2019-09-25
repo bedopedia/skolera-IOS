@@ -21,12 +21,20 @@ class QuizStatusViewController: UIViewController {
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var courseNameLabel: UILabel!
+    
     @IBOutlet weak var notStartedQuizView: UIView!
-    @IBOutlet weak var finishedQuizView: UIView!
+    
     @IBOutlet weak var studentFinishedQuizView: UIView!
+    @IBOutlet weak var gradeView: UIView!
     @IBOutlet weak var quizGradeLabel: UILabel!
     @IBOutlet weak var quizTotalGradeLabel: UILabel!
     @IBOutlet weak var quizNoteLabel: UILabel!
+    
+    @IBOutlet weak var solveQuizButton: UIButton!
+    
+    @IBOutlet weak var detailsImage: UIImageView!
+    @IBOutlet weak var questionsImage: UIImageView!
+    @IBOutlet weak var answersImage: UIImageView!
     
     var quiz: FullQuiz!
     var child : Child!
@@ -35,6 +43,9 @@ class QuizStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        detailsImage.image = #imageLiteral(resourceName: "chevronRight").flipIfNeeded()
+        questionsImage.image = #imageLiteral(resourceName: "chevronRight").flipIfNeeded()
+        answersImage.image = #imageLiteral(resourceName: "chevronRight").flipIfNeeded()
         titleLabel.text = courseName
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
@@ -63,37 +74,60 @@ class QuizStatusViewController: UIViewController {
             quizDateView.isHidden = false
             quizDateLabel.isHidden = false
             quizClockImage.isHidden = false
+            
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+            
             let quizDate = dateFormatter.date(from: quizStringDate)
             let newDateFormat = DateFormatter()
             newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
             quizDateLabel.text = newDateFormat.string(from: quizDate!)
-            if quiz.state.elementsEqual("running") {
-                quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                quizClockImage.image = #imageLiteral(resourceName: "greenHour")
-                notStartedQuizView.isHidden = false
-                finishedQuizView.isHidden = true
+            
+        } else {
+            quizDateView.isHidden = true
+            quizDateLabel.isHidden = true
+            quizClockImage.isHidden = true
+        }
+        
+        if quiz.state.elementsEqual("running") {
+            
+            quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
+            quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
+            quizClockImage.image = #imageLiteral(resourceName: "greenHour")
+         
+            
+            if let subId = quiz.studentSubmissions.id {
+                solveQuizButton.isHidden = true
+                studentFinishedQuizView.isHidden = false
+            } else {
                 studentFinishedQuizView.isHidden = true
-                
+                //solve now ui
+                solveQuizButton.isHidden = true
+                if !getUserType().elementsEqual("student") {
+                    notStartedQuizView.isHidden = false
+                } else {
+                    notStartedQuizView.isHidden = true
+                }
             }
-//            else if getUserType().elementsEqual("student") {
-//                debugPrint("open quiz details for student")
-//                notStartedQuizView.isHidden = true
-//                finishedQuizView.isHidden = true
-//                studentFinishedQuizView.isHidden = false
-//                
-//            }
-            else {
+            
+        }
+          
+        else {
+            quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+            quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+            quizClockImage.image = #imageLiteral(resourceName: "1")
+            notStartedQuizView.isHidden = true
+            quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
+            
+            studentFinishedQuizView.isHidden = false
+            solveQuizButton.isHidden = true
+            if quiz.studentSubmissions != nil {
                 quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
                 quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                quizClockImage.image = #imageLiteral(resourceName: "1")
-                notStartedQuizView.isHidden = true
-                finishedQuizView.isHidden = false
-                studentFinishedQuizView.isHidden = true
-                quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
+                quizDateLabel.text = "Solved".localized
+                quizClockImage.image = nil
+                gradeView.isHidden = false
                 if let grade = quiz.studentSubmissions.score{
                     quizGradeLabel.text = "\(grade)"
                     if let note = quiz.studentSubmissions.feedback{
@@ -103,18 +137,14 @@ class QuizStatusViewController: UIViewController {
                     }
                 } else {
                     quizGradeLabel.text = "--"
-                    quizNoteLabel.text = "No Submission".localized
+                    quizNoteLabel.text = "Not graded yet".localized
                 }
-               
-                
+            } else {
+                gradeView.isHidden = true
             }
-        } else {
-            quizDateView.isHidden = true
-            quizDateLabel.isHidden = true
-            quizClockImage.isHidden = true
+            
         }
 
-        
     }
     
     @IBAction func back() {
