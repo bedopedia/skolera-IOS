@@ -36,6 +36,11 @@ class QuizStatusViewController: UIViewController {
     @IBOutlet weak var questionsImage: UIImageView!
     @IBOutlet weak var answersImage: UIImageView!
     
+    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var detailsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var questionsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var answersHeightConstraint: NSLayoutConstraint!
+    
     var quiz: FullQuiz!
     var child : Child!
     var courseName: String = ""
