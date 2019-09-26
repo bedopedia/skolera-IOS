@@ -182,6 +182,7 @@
 		8A3923E5233CBD150001963A /* DetailedQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3923E4233CBD150001963A /* DetailedQuiz.swift */; };
 		8A3923E7233CC7520001963A /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3923E6233CC7520001963A /* Questions.swift */; };
 		8A3923E9233CC7710001963A /* Answers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3923E8233CC7710001963A /* Answers.swift */; };
+		8A3923EB233CF4FB0001963A /* SolveQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3923EA233CF4FB0001963A /* SolveQuizViewController.swift */; };
 		8A3A217520D9121900539E1C /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217420D9121900539E1C /* Assignment.swift */; };
 		8A3A217720D913F500539E1C /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217620D913F500539E1C /* Quiz.swift */; };
 		8A3A217920D9186B00539E1C /* GradeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A217820D9186B00539E1C /* GradeItem.swift */; };
@@ -499,6 +500,7 @@
 		8A3923E4233CBD150001963A /* DetailedQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedQuiz.swift; sourceTree = "<group>"; };
 		8A3923E6233CC7520001963A /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 		8A3923E8233CC7710001963A /* Answers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answers.swift; sourceTree = "<group>"; };
+		8A3923EA233CF4FB0001963A /* SolveQuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolveQuizViewController.swift; sourceTree = "<group>"; };
 		8A3A217420D9121900539E1C /* Assignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		8A3A217620D913F500539E1C /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 		8A3A217820D9186B00539E1C /* GradeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeItem.swift; sourceTree = "<group>"; };
@@ -1203,6 +1205,7 @@
 				8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */,
 				8A32B7FB2312DF6C00317A79 /* QuizDetailsViewController.swift */,
 				8A32B7FD2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift */,
+				8A3923EA233CF4FB0001963A /* SolveQuizViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1982,6 +1985,7 @@
 				54847C63205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift in Sources */,
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
 				8ADABB7A230AEAF7001509EF /* Event.swift in Sources */,
+				8A3923EB233CF4FB0001963A /* SolveQuizViewController.swift in Sources */,
 				8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */,
 				8A7C4A3A2327DCC900984A53 /* ContactTeacherNVC.swift in Sources */,
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,

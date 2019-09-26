@@ -164,6 +164,7 @@ class QuizStatusViewController: UIViewController {
         }
     }
     
+    
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -174,5 +175,10 @@ class QuizStatusViewController: UIViewController {
         self.navigationController?.pushViewController(quizDetailsVC, animated: true)
     }
     
+    @IBAction func solveQuizButtonAction() {
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+//        quizDetailsVC.quizId = quiz.id
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    }
 
 }
