@@ -208,3 +208,8 @@ func DELETE_ATTENDANCE() -> String {
     return "\(BASE_URL!)/api/attendances/batch_destroy"
 }
 
+func GET_QUIZ(quizId: Int) -> String {
+    return "\(BASE_URL!)/api/quizzes/\(quizId)"
+}
+
+

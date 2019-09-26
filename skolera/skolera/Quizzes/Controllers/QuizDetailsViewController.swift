@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SVProgressHUD
+import Alamofire
 
 class QuizDetailsViewController: UIViewController {
 
@@ -14,42 +16,63 @@ class QuizDetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var quizId: Int!
+    var detailedQuiz: DetailedQuiz! {
+        didSet {
+            titleLabel.text = self.detailedQuiz.name ?? ""
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        getQuizDetails()
     }
     
     @IBAction func backAction() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
+    func getQuizDetails() {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        getQuizApi(quizId: quizId) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.detailedQuiz = DetailedQuiz(result)
+                    self.tableView.reloadData()
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }    
 }
 
 extension QuizDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        debugPrint("table view height:", self.tableView.estimatedRowHeight)
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell") as! QuizDetailsTableViewCell
-//        cell.behaviorNote = currentDataSource[indexPath.row]
-//        if indexPath.row == currentDataSource.count - 1{
-//            if meta.currentPage != meta.totalPages{
-//                getBehaviorNotes(page: (meta.currentPage)! + 1)
-//            }
-//        }
+        if detailedQuiz != nil {
+            cell.detailedQuiz = self.detailedQuiz
+        }
         return cell
     }
+    
+    
+}
    
     
     
     
     
-}
+
 
 
 

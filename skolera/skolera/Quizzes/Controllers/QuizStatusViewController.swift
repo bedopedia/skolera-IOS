@@ -169,12 +169,8 @@ class QuizStatusViewController: UIViewController {
     }
     
     @IBAction func openQuizDetails() {
-        debugPrint("open quiz details")
-        
         let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-//        quizVC.child = self.child
-//        quizVC.courseName = courseName
-//        quizVC.quiz = filteredQuizzes[indexPath.row]
+        quizDetailsVC.quizId = quiz.id
         self.navigationController?.pushViewController(quizDetailsVC, animated: true)
     }
     

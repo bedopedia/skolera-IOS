@@ -437,9 +437,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quizzes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmg-YX-CeH">
-                                        <rect key="frame" x="57" y="15.5" width="300" height="29"/>
+                                        <rect key="frame" x="67" y="15.5" width="280" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="R9c-Fz-1J7"/>
+                                            <constraint firstAttribute="width" constant="280" id="R9c-Fz-1J7"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -712,9 +712,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quizzes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WvB-8U-4Y9">
-                                        <rect key="frame" x="57" y="15.5" width="300" height="29"/>
+                                        <rect key="frame" x="67" y="15.5" width="280" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="jbK-ew-haG"/>
+                                            <constraint firstAttribute="width" constant="280" id="jbK-ew-haG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1217,9 +1217,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ej6-by-Ucp">
-                                        <rect key="frame" x="57" y="15.5" width="300" height="29"/>
+                                        <rect key="frame" x="67" y="15.5" width="280" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="cfM-xJ-ETC"/>
+                                            <constraint firstAttribute="width" constant="280" id="cfM-xJ-ETC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1447,6 +1447,20 @@
                                                 <constraint firstItem="WkA-za-jMR" firstAttribute="trailing" secondItem="fzk-q2-Xki" secondAttribute="trailing" id="ykf-Pw-Ko0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bloomsLabel" destination="Nxj-MB-3Q8" id="85D-PE-Svk"/>
+                                            <outlet property="courseGroupsLabel" destination="Zqy-UR-rh8" id="KUk-sB-KQG"/>
+                                            <outlet property="durationLabel" destination="WkA-za-jMR" id="ztp-8m-nDT"/>
+                                            <outlet property="endDateLabel" destination="fzk-q2-Xki" id="uJj-l8-vtT"/>
+                                            <outlet property="lessonLabel" destination="892-LZ-LAs" id="zG2-VR-In6"/>
+                                            <outlet property="objectivesLabel" destination="WoQ-qs-0jj" id="r4v-x8-VIm"/>
+                                            <outlet property="quizDescriptionLabel" destination="UDm-ec-RUc" id="cN5-Zp-CQD"/>
+                                            <outlet property="quizNameLabel" destination="pmD-XL-kI0" id="mem-7q-0Tk"/>
+                                            <outlet property="startDateLabel" destination="LQp-nk-kX6" id="1hx-ng-7ly"/>
+                                            <outlet property="subtopicLabel" destination="Sgt-Y0-bFr" id="y42-6W-xd3"/>
+                                            <outlet property="topicLabel" destination="3qh-Vl-CnD" id="8BO-fZ-KBS"/>
+                                            <outlet property="totalScoreLabel" destination="w7h-xx-xJq" id="KVd-g6-HJq"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

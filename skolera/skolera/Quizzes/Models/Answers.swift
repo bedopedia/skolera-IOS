@@ -1,9 +1,31 @@
 //
-//  Answers.swift
-//  skolera
+//  AnswersAttributes.swift
 //
-//  Created by Rana Hossam on 9/26/19.
-//  Copyright © 2019 Skolera. All rights reserved.
+//  Generated using https://jsonmaster.github.io
+//  Created on September 26, 2019
 //
-
 import Foundation
+
+class Answers {
+    
+    let id: Int?
+    let body: String?
+    let isCorrect: Bool?
+    let createdAt: String?
+    let updatedAt: String?
+    let questionId: Int?
+    let match: String?
+    let deletedAt: Any?
+    
+    init(_ dict: [String: Any]) {
+        id = dict["id"] as? Int
+        body = dict["body"] as? String
+        isCorrect = dict["is_correct"] as? Bool
+        createdAt = dict["created_at"] as? String
+        updatedAt = dict["updated_at"] as? String
+        questionId = dict["question_id"] as? Int
+        match = dict["match"] as? String
+        deletedAt = dict["deleted_at"] as? Any
+    }
+    
+}
