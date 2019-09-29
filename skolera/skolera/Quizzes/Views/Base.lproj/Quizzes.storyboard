@@ -1689,6 +1689,9 @@
                                                 <constraint firstItem="Pa6-8V-ric" firstAttribute="leading" secondItem="w69-lU-n6Q" secondAttribute="trailing" constant="24" id="x0g-UW-L5H"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="answerTextLabel" destination="Pa6-8V-ric" id="S9x-hB-hJ1"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

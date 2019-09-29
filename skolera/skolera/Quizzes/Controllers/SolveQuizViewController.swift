@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class SolveQuizViewController: UIViewController {
+    
+    
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
@@ -23,13 +26,21 @@ class SolveQuizViewController: UIViewController {
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
+    var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if #available(iOS 11.0, *) {
+            tableView.dropDelegate = self
+            tableView.dragDelegate = self
+            tableView.dragInteractionEnabled = true
+        } else {
+            // Fallback on earlier versions
+        }
         tableView.delegate = self
         tableView.dataSource = self
-        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,23 +77,10 @@ class SolveQuizViewController: UIViewController {
     @objc func updateTimer() {
             if duration < 1 {
             timer.invalidate()
-            debugPrint("time is over")
         } else {
             duration -= 1
         }
     }
-//    func getPlist(withName name: String) -> [String]?
-//    {
-//        if  let path = Bundle.main.path(forResource: name, ofType: "plist"),
-//            let xml = FileManager.default.contents(atPath: path)
-//        {
-//            return (try? PropertyListSerialization.propertyList(from: xml, options: .mutableContainersAndLeaves, format: nil)) as? [String]
-//        }
-//
-//        return nil
-//    }
-    
-
     
     func timeString(time: TimeInterval) -> String {
         let hours = Int(time) / 3600
@@ -90,12 +88,65 @@ class SolveQuizViewController: UIViewController {
         let seconds = Int(time) % 60
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
+
 }
 
-extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource {
+extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    @available(iOS 11.0, *)
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .move)
+    }
+    
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        debugPrint("drop")
+        let destinationIndexPath: IndexPath
+
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            let section = tableView.numberOfSections - 1
+            let row = tableView.numberOfRows(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+//        answers.swapAt(indexPath.row, destinationIndexPath.row)
+//        self.tableView.reloadData()
+        coordinator.session.loadObjects(ofClass: NSString.self) { items in
+//
+            guard let name = (items as? [String])?.first else { return }
+            guard let oldIndex = self.answers.index(of: name) else { return }
+            let newIndex = destinationIndexPath.row
+            self.answers.swapAt(oldIndex, newIndex-2)
+            self.tableView.reloadData()
+//            var indexPaths = [IndexPath]()
+//            for (index, string) in strings.enumerated() {
+//                let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+////                self.answers.insert(string, at: indexPath.row)
+//                indexPaths.append(indexPath)
+//            }
+//            tableView.insertRows(at: indexPaths, with: .automatic)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        debugPrint("drag")
+        let string = answers[indexPath.row-2]
+        guard let data = string.data(using: .utf8) else { return [] }
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
+        return [UIDragItem(itemProvider: itemProvider)]
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return answers.count + 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,9 +160,15 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource {
                 
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
+                cell.answerTextLabel.text = answers[indexPath.row-2]
                 return cell
             }
         }
     }
+    
+//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+    
     
 }

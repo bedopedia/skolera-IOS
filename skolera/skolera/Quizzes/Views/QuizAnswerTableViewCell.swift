@@ -11,6 +11,7 @@ import UIKit
 
 class QuizAnswerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var answerTextLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

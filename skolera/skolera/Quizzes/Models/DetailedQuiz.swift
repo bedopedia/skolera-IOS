@@ -28,7 +28,7 @@ class DetailedQuiz {
     let gradingPeriodLock: Bool!
     let gradingPeriod: Any!
     let questions: [Questions]!
-    let objectives: [Any]!
+    let objectives: [Objectives]!
     let groupingStudents: [Any]!
 //    let courseGroupsQuiz: [CourseGroupsQuiz]?
     
@@ -83,7 +83,11 @@ class DetailedQuiz {
         } else {
             questions = nil
         }
-        objectives = dict["objectives"] as? [Any]
+        if let objectivesDictArray = dict["objectives"] as? [[String: Any]] {
+            objectives = objectivesDictArray.map { Objectives($0) }
+        } else {
+            objectives = nil
+        }
         groupingStudents = dict["grouping_students"] as? [Any]
         
     }
@@ -204,6 +208,18 @@ class Chapter {
         updatedAt = dict["updated_at"] as? String
         lock = dict["lock"] as? Bool
         deletedAt = dict["deleted_at"] as? Any
+    }
+    
+}
+
+class Objectives {
+    
+    let id: Int?
+    let name: String?
+    
+    init(_ dict: [String: Any]) {
+        id = dict["id"] as? Int
+        name = dict["name"] as? String
     }
     
 }

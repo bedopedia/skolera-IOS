@@ -39,6 +39,7 @@ class QuizDetailsTableViewCell: UITableViewCell {
             lessonLabel.text = self.detailedQuiz.lesson?.name ?? ""
             bloomsLabel.text = self.detailedQuiz.blooms.joined(separator: ", ")
             courseGroupsLabel.text = getCourseGroupsString()
+            objectivesLabel.text = getObjectivesString()
     
         }
     }
@@ -46,8 +47,18 @@ class QuizDetailsTableViewCell: UITableViewCell {
     //could be a generic funciton to handle the objectives param
     func getCourseGroupsString() -> String {
         if let courseGroups = self.detailedQuiz.courseGroups {
-            var string: [String] = courseGroups.map { (course) -> String in
+            let string: [String] = courseGroups.map { (course) -> String in
                 return course.name ?? ""
+            }
+            return string.joined(separator: ", ")
+        }
+        return ""
+    }
+    
+    func getObjectivesString() -> String {
+        if let objectives = self.detailedQuiz.objectives {
+            let string: [String] = objectives.map { (objective) -> String in
+                return objective.name ?? ""
             }
             return string.joined(separator: ", ")
         }
