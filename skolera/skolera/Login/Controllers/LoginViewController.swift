@@ -178,7 +178,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                     } else {
                         SVProgressHUD.dismiss()
+                        ///////
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        if !parent.data.userType.elementsEqual("teacher") {
+                            childProfileVC.otherUser = true
+                        }
                         childProfileVC.actor = parent.data
                         let nvc = UINavigationController(rootViewController: childProfileVC)
                         nvc.isNavigationBarHidden = true
