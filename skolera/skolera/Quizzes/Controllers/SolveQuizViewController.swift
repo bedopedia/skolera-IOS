@@ -92,6 +92,7 @@ class SolveQuizViewController: UIViewController {
 }
 
 extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
+    
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)
@@ -104,6 +105,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if destinationIndexPath!.row < 2 {
+            return UITableViewDropProposal(operation: .forbidden, intent: .insertAtDestinationIndexPath)
+        }
         return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
@@ -118,31 +122,29 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             let row = tableView.numberOfRows(inSection: section)
             destinationIndexPath = IndexPath(row: row, section: section)
         }
-//        answers.swapAt(indexPath.row, destinationIndexPath.row)
-//        self.tableView.reloadData()
+//        drop destination is below the questions and the answer cell.
+        guard destinationIndexPath.row > 1 else {
+            return
+        }
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
-//
             guard let name = (items as? [String])?.first else { return }
             guard let oldIndex = self.answers.index(of: name) else { return }
             let newIndex = destinationIndexPath.row
             self.answers.swapAt(oldIndex, newIndex-2)
             self.tableView.reloadData()
-//            var indexPaths = [IndexPath]()
-//            for (index, string) in strings.enumerated() {
-//                let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
-////                self.answers.insert(string, at: indexPath.row)
-//                indexPaths.append(indexPath)
-//            }
-//            tableView.insertRows(at: indexPaths, with: .automatic)
         }
     }
     
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        debugPrint("drag")
-        let string = answers[indexPath.row-2]
-        guard let data = string.data(using: .utf8) else { return [] }
-        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
-        return [UIDragItem(itemProvider: itemProvider)]
+        //should be disabled for questions and the answer cell
+        if indexPath.row < 2 {
+            return []
+        } else {
+            let string = answers[indexPath.row-2]
+            guard let data = string.data(using: .utf8) else { return [] }
+            let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
+            return [UIDragItem(itemProvider: itemProvider)]
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -167,6 +169,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     }
     
 //    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        if indexPath.row < 2 {
+//            return false
+//        }
 //        return true
 //    }
     
