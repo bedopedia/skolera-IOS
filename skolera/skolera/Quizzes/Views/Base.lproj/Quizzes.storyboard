@@ -1533,7 +1533,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e9-un-rm9">
-                                        <rect key="frame" x="162" y="66" width="90.5" height="24"/>
+                                        <rect key="frame" x="162" y="66" width="90.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                         <color key="textColor" red="0.99215686274509807" green="0.50980392156862742" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1548,6 +1548,7 @@
                                     <constraint firstAttribute="trailing" secondItem="HGR-WK-nRV" secondAttribute="trailing" id="fkp-of-tol"/>
                                     <constraint firstItem="MdC-i4-rX9" firstAttribute="centerX" secondItem="nns-Yd-GSo" secondAttribute="centerX" id="gtC-hI-7pF"/>
                                     <constraint firstAttribute="bottom" secondItem="HGR-WK-nRV" secondAttribute="bottom" id="hPL-0c-NzT"/>
+                                    <constraint firstItem="HGR-WK-nRV" firstAttribute="top" secondItem="4e9-un-rm9" secondAttribute="bottom" constant="12" id="hbn-rt-6sM"/>
                                     <constraint firstItem="HGR-WK-nRV" firstAttribute="leading" secondItem="nns-Yd-GSo" secondAttribute="leading" id="mfJ-Lt-L1n"/>
                                     <constraint firstItem="xBZ-22-xVP" firstAttribute="centerY" secondItem="nns-Yd-GSo" secondAttribute="centerY" constant="-20" id="p4D-4e-DbM"/>
                                     <constraint firstItem="4e9-un-rm9" firstAttribute="top" secondItem="MdC-i4-rX9" secondAttribute="bottom" constant="24" id="qXB-3L-Wgw"/>
@@ -1783,36 +1784,15 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizSubmissionCheck" translatesAutoresizingMaskIntoConstraints="NO" id="kgr-NI-ikP">
                                 <rect key="frame" x="132" y="253" width="150" height="150"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rn-uM-yvW">
-                                <rect key="frame" x="0.0" y="44" width="414" height="284"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="close" destination="H2q-pS-Gyd" eventType="touchUpInside" id="z5X-0f-xlx"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDR-9d-xOU">
-                                <rect key="frame" x="0.0" y="578" width="414" height="284"/>
-                                <connections>
-                                    <action selector="close" destination="H2q-pS-Gyd" eventType="touchUpInside" id="aF2-vh-6O9"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="5rn-uM-yvW" secondAttribute="trailing" id="3Fn-no-Xwa"/>
                             <constraint firstItem="5sx-QL-Cb4" firstAttribute="centerX" secondItem="LQe-nM-AiQ" secondAttribute="centerX" id="9s3-67-3Px"/>
                             <constraint firstItem="5sx-QL-Cb4" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" constant="16" id="Ci4-6B-h5I"/>
                             <constraint firstItem="kgr-NI-ikP" firstAttribute="centerX" secondItem="LQe-nM-AiQ" secondAttribute="centerX" id="Idy-6d-PYS"/>
                             <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="5sx-QL-Cb4" secondAttribute="trailing" constant="16" id="LfZ-L5-wOf"/>
                             <constraint firstItem="kgr-NI-ikP" firstAttribute="top" secondItem="5sx-QL-Cb4" secondAttribute="top" constant="-75" id="Ppw-bS-jjy"/>
-                            <constraint firstItem="wDR-9d-xOU" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" id="dxd-sB-32m"/>
-                            <constraint firstItem="5rn-uM-yvW" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" id="g6H-n5-NeN"/>
-                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="wDR-9d-xOU" secondAttribute="trailing" id="kt6-8m-FJ8"/>
-                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="bottom" secondItem="wDR-9d-xOU" secondAttribute="bottom" id="l0s-1i-rkm"/>
                             <constraint firstItem="5sx-QL-Cb4" firstAttribute="centerY" secondItem="LQe-nM-AiQ" secondAttribute="centerY" id="sqz-CJ-yGg"/>
-                            <constraint firstItem="5sx-QL-Cb4" firstAttribute="top" secondItem="5rn-uM-yvW" secondAttribute="bottom" id="tAC-Ui-wt8"/>
-                            <constraint firstItem="wDR-9d-xOU" firstAttribute="top" secondItem="5sx-QL-Cb4" secondAttribute="bottom" id="uK1-hG-c8V"/>
-                            <constraint firstItem="5rn-uM-yvW" firstAttribute="top" secondItem="LQe-nM-AiQ" secondAttribute="top" id="vba-I2-Rs5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LQe-nM-AiQ"/>
                     </view>

@@ -16,12 +16,8 @@ class QuizSubmissionViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    @IBAction func close() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func showQuizGrade() {
-        close()
+        self.dismiss(animated: true, completion: nil)
         openQuizStatus()
         
     }
