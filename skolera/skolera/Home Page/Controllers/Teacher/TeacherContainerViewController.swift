@@ -32,12 +32,12 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     
     
     var actor: Actor!
+    var otherUser: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        selectMenu()
         
 //        for child in childViewControllers {
 //            if let actorViewController = child as? ActorViewController {
@@ -46,6 +46,15 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
 //                coursesViewController.actor = self.actor
 //            }
 //        }
+        if otherUser {
+            menuButton.isHidden = true
+            coursesButton.isHidden = true
+            menuLabel.isHidden = true
+            coursesLabel.isHidden = true
+            selectAnnouncements()
+        } else {
+            selectMenu()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -109,6 +109,9 @@ class SplashScreenViewController: UIViewController {
                     } else {
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         childProfileVC.actor = parent.data
+                        if !parent.data.userType.elementsEqual("teacher") {
+                            childProfileVC.otherUser = true
+                        }
                         let nvc = UINavigationController(rootViewController: childProfileVC)
                         nvc.isNavigationBarHidden = true
                         self.present(nvc, animated: true, completion: nil)
