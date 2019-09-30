@@ -70,8 +70,14 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func getPosts(page: Int = 1){
+        var id: Int
+        if isTeacher {
+            id = courseGroup.id
+        } else {
+            id = courseId
+        }
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getPostsForCourseApi(page: page,courseId: courseGroup.id) { (isSuccess, statusCode, value, error) in
+        getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
             SVProgressHUD.dismiss()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
