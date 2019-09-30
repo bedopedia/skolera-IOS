@@ -177,7 +177,6 @@ class QuizStatusViewController: UIViewController {
     
     @IBAction func solveQuizButtonAction() {
         let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-//        quizDetailsVC.quizId = quiz.id
         self.navigationController?.pushViewController(solveQuizVC, animated: true)
     }
 

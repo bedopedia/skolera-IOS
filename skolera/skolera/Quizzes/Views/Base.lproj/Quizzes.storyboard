@@ -1719,6 +1719,108 @@
             </objects>
             <point key="canvasLocation" x="2266.666666666667" y="849.77678571428567"/>
         </scene>
+        <!--Quiz Submission View Controller-->
+        <scene sceneID="Joq-c8-1C0">
+            <objects>
+                <viewController storyboardIdentifier="QuizSubmissionViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="H2q-pS-Gyd" customClass="QuizSubmissionViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="h7z-Yk-y1Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sx-QL-Cb4">
+                                <rect key="frame" x="16" y="328" width="382" height="250"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz has been submitted successfuly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLv-Dl-Lg9">
+                                        <rect key="frame" x="52.5" y="104" width="277.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will be able to see your grade in grades section" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sq-uK-aOO">
+                                        <rect key="frame" x="45.5" y="131.5" width="291" height="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.64705882349999999" green="0.67843137249999996" blue="0.70588235290000001" alpha="0.38" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hld-VP-mej">
+                                        <rect key="frame" x="107" y="186" width="168" height="48"/>
+                                        <color key="backgroundColor" red="0.99215686274509807" green="0.50980392156862742" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="Qzg-cH-v3J"/>
+                                            <constraint firstAttribute="width" constant="168" id="aLn-xR-nwK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <state key="normal" title="Go to home">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="DqH-OP-REz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="6Sq-uK-aOO" firstAttribute="centerX" secondItem="5sx-QL-Cb4" secondAttribute="centerX" id="6iS-Za-glK"/>
+                                    <constraint firstItem="6Sq-uK-aOO" firstAttribute="top" secondItem="cLv-Dl-Lg9" secondAttribute="bottom" constant="8" id="AwO-Uv-sHc"/>
+                                    <constraint firstAttribute="height" constant="250" id="YKX-FN-SjY"/>
+                                    <constraint firstAttribute="bottom" secondItem="Hld-VP-mej" secondAttribute="bottom" constant="16" id="gRX-4E-HV1"/>
+                                    <constraint firstItem="cLv-Dl-Lg9" firstAttribute="top" secondItem="5sx-QL-Cb4" secondAttribute="top" constant="104" id="jmF-YQ-xQB"/>
+                                    <constraint firstItem="Hld-VP-mej" firstAttribute="centerX" secondItem="5sx-QL-Cb4" secondAttribute="centerX" id="nZu-xL-Ifa"/>
+                                    <constraint firstItem="cLv-Dl-Lg9" firstAttribute="centerX" secondItem="5sx-QL-Cb4" secondAttribute="centerX" id="ny9-Gz-R7S"/>
+                                    <constraint firstItem="Hld-VP-mej" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Sq-uK-aOO" secondAttribute="bottom" constant="24" id="sSg-4m-7ds"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizSubmissionCheck" translatesAutoresizingMaskIntoConstraints="NO" id="kgr-NI-ikP">
+                                <rect key="frame" x="132" y="253" width="150" height="150"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rn-uM-yvW">
+                                <rect key="frame" x="0.0" y="44" width="414" height="284"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="close" destination="H2q-pS-Gyd" eventType="touchUpInside" id="z5X-0f-xlx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDR-9d-xOU">
+                                <rect key="frame" x="0.0" y="578" width="414" height="284"/>
+                                <connections>
+                                    <action selector="close" destination="H2q-pS-Gyd" eventType="touchUpInside" id="aF2-vh-6O9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="5rn-uM-yvW" secondAttribute="trailing" id="3Fn-no-Xwa"/>
+                            <constraint firstItem="5sx-QL-Cb4" firstAttribute="centerX" secondItem="LQe-nM-AiQ" secondAttribute="centerX" id="9s3-67-3Px"/>
+                            <constraint firstItem="5sx-QL-Cb4" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" constant="16" id="Ci4-6B-h5I"/>
+                            <constraint firstItem="kgr-NI-ikP" firstAttribute="centerX" secondItem="LQe-nM-AiQ" secondAttribute="centerX" id="Idy-6d-PYS"/>
+                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="5sx-QL-Cb4" secondAttribute="trailing" constant="16" id="LfZ-L5-wOf"/>
+                            <constraint firstItem="kgr-NI-ikP" firstAttribute="top" secondItem="5sx-QL-Cb4" secondAttribute="top" constant="-75" id="Ppw-bS-jjy"/>
+                            <constraint firstItem="wDR-9d-xOU" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" id="dxd-sB-32m"/>
+                            <constraint firstItem="5rn-uM-yvW" firstAttribute="leading" secondItem="LQe-nM-AiQ" secondAttribute="leading" id="g6H-n5-NeN"/>
+                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="trailing" secondItem="wDR-9d-xOU" secondAttribute="trailing" id="kt6-8m-FJ8"/>
+                            <constraint firstItem="LQe-nM-AiQ" firstAttribute="bottom" secondItem="wDR-9d-xOU" secondAttribute="bottom" id="l0s-1i-rkm"/>
+                            <constraint firstItem="5sx-QL-Cb4" firstAttribute="centerY" secondItem="LQe-nM-AiQ" secondAttribute="centerY" id="sqz-CJ-yGg"/>
+                            <constraint firstItem="5sx-QL-Cb4" firstAttribute="top" secondItem="5rn-uM-yvW" secondAttribute="bottom" id="tAC-Ui-wt8"/>
+                            <constraint firstItem="wDR-9d-xOU" firstAttribute="top" secondItem="5sx-QL-Cb4" secondAttribute="bottom" id="uK1-hG-c8V"/>
+                            <constraint firstItem="5rn-uM-yvW" firstAttribute="top" secondItem="LQe-nM-AiQ" secondAttribute="top" id="vba-I2-Rs5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LQe-nM-AiQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mfz-Mj-miu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3096" y="850"/>
+        </scene>
     </scenes>
     <resources>
         <image name="assignmentsIco" width="38" height="32"/>
@@ -1727,6 +1829,7 @@
         <image name="downloadAssignmentIcon" width="24" height="24"/>
         <image name="group3" width="170" height="170"/>
         <image name="quizReorder" width="22" height="18"/>
+        <image name="quizSubmissionCheck" width="150" height="150"/>
         <image name="yellowHour" width="16" height="16"/>
     </resources>
 </document>

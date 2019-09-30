@@ -260,6 +260,7 @@
 		8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */; };
 		8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */; };
 		8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */; };
+		8A9181532341F84500E8F6AF /* QuizSubmissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9181522341F84500E8F6AF /* QuizSubmissionViewController.swift */; };
 		8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */; };
 		8A93357122E0930E007B287D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A93357022E0930E007B287D /* PostTableViewCell.swift */; };
 		8A93357522E0B1B9007B287D /* UploadedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A93357422E0B1B9007B287D /* UploadedFile.swift */; };
@@ -581,6 +582,7 @@
 		8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorPresenter.swift; sourceTree = "<group>"; };
+		8A9181522341F84500E8F6AF /* QuizSubmissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmissionViewController.swift; sourceTree = "<group>"; };
 		8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+convertHTML.swift"; sourceTree = "<group>"; };
 		8A93357022E0930E007B287D /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		8A93357422E0B1B9007B287D /* UploadedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadedFile.swift; sourceTree = "<group>"; };
@@ -1212,6 +1214,7 @@
 				8A32B7FB2312DF6C00317A79 /* QuizDetailsViewController.swift */,
 				8A32B7FD2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift */,
 				8A3923EA233CF4FB0001963A /* SolveQuizViewController.swift */,
+				8A9181522341F84500E8F6AF /* QuizSubmissionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2042,6 +2045,7 @@
 				8A5F42DA20B1805900FF93D1 /* CourseGradingPeriods.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
 				8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */,
+				8A9181532341F84500E8F6AF /* QuizSubmissionViewController.swift in Sources */,
 				544216E7204C604000BEB167 /* GradesListViewController.swift in Sources */,
 				8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */,
 				8A93357922E0BC58007B287D /* PostResourcesViewController.swift in Sources */,

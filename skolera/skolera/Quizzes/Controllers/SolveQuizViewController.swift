@@ -11,14 +11,12 @@ import MobileCoreServices
 
 class SolveQuizViewController: UIViewController {
     
-    
-
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     
-    var duration = 30 { //duration in seconds
+    var duration = 10 {
         didSet{
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
@@ -27,7 +25,6 @@ class SolveQuizViewController: UIViewController {
     var isTimerRunning = false
     var savedDuration = 0
     var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,9 +74,18 @@ class SolveQuizViewController: UIViewController {
     @objc func updateTimer() {
             if duration < 1 {
             timer.invalidate()
+            navigateToQuizStatus()
         } else {
             duration -= 1
         }
+    }
+    
+    func navigateToQuizStatus() {
+        let submitQuiz = QuizSubmissionViewController.instantiate(fromAppStoryboard: .Quizzes)
+        submitQuiz.openQuizStatus = {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        self.navigationController?.navigationController?.present(submitQuiz, animated: true, completion: nil)
     }
     
     func timeString(time: TimeInterval) -> String {
@@ -112,9 +118,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        debugPrint("drop")
+        
         let destinationIndexPath: IndexPath
-
         if let indexPath = coordinator.destinationIndexPath {
             destinationIndexPath = indexPath
         } else {
