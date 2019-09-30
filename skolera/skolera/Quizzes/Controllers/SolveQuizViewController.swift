@@ -105,7 +105,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        if destinationIndexPath!.row < 2 {
+        if let destIndex = destinationIndexPath, destIndex.row < 2 {
             return UITableViewDropProposal(operation: .forbidden, intent: .insertAtDestinationIndexPath)
         }
         return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
