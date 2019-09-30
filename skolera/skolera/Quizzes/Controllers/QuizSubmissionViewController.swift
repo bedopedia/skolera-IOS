@@ -19,7 +19,6 @@ class QuizSubmissionViewController: UIViewController {
     @IBAction func showQuizGrade() {
         self.dismiss(animated: true, completion: nil)
         openQuizStatus()
-        
     }
 
 }

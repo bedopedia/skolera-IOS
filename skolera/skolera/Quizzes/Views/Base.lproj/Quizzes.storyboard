@@ -970,11 +970,6 @@
                             <constraint firstItem="C9a-6n-Kc2" firstAttribute="leading" secondItem="WJl-Io-dfB" secondAttribute="leading" id="vFg-BX-M8H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WJl-Io-dfB"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="jmp-X6-jI0"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="answersHeightConstraint" destination="6Wb-jv-Iue" id="QDl-gH-NZ2"/>
@@ -1731,8 +1726,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sx-QL-Cb4">
                                 <rect key="frame" x="16" y="328" width="382" height="250"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz has been submitted successfuly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLv-Dl-Lg9">
-                                        <rect key="frame" x="52.5" y="104" width="277.5" height="19.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz has been successfully submitted " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLv-Dl-Lg9">
+                                        <rect key="frame" x="48.5" y="104" width="285.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1744,11 +1739,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hld-VP-mej">
-                                        <rect key="frame" x="107" y="186" width="168" height="48"/>
+                                        <rect key="frame" x="100" y="186" width="182" height="48"/>
                                         <color key="backgroundColor" red="0.99215686274509807" green="0.50980392156862742" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="Qzg-cH-v3J"/>
-                                            <constraint firstAttribute="width" constant="168" id="aLn-xR-nwK"/>
+                                            <constraint firstAttribute="width" constant="182" id="aLn-xR-nwK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <state key="normal" title="Go to home">
