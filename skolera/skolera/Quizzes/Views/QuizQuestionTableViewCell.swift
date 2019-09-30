@@ -9,7 +9,10 @@
 import UIKit
 
 class QuizQuestionTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var questionNumberLabel: UILabel!
+    @IBOutlet weak var questionBodyLabel: UILabel!
+    @IBOutlet weak var questionImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

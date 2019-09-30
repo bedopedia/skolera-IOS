@@ -11,7 +11,12 @@ import UIKit
 
 class QuizAnswerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var matchLeftView: UIView!
+    @IBOutlet weak var matchLabel: UILabel!
     @IBOutlet weak var answerTextLabel: UILabel!
+    @IBOutlet weak var answerLeftImageView: UIImageView!
+    @IBOutlet weak var answerRightImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

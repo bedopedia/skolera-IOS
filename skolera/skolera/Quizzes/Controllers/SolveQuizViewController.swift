@@ -15,8 +15,11 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var outOfLabel: UILabel!
+    @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
-    var duration = 10 {
+    var duration = 60 {
         didSet{
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
@@ -33,9 +36,7 @@ class SolveQuizViewController: UIViewController {
             tableView.dropDelegate = self
             tableView.dragDelegate = self
             tableView.dragInteractionEnabled = true
-        } else {
-            // Fallback on earlier versions
-        }
+        } 
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -53,7 +54,7 @@ class SolveQuizViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
             if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
                 self.duration -= ( Date().second - Int(timerDuration)! )
-                debugPrint("in the background for:", Date().second - Int(timerDuration)!)
+                debugPrint("was in the background for:", Date().second - Int(timerDuration)!)
             }
         }
     }
@@ -74,13 +75,13 @@ class SolveQuizViewController: UIViewController {
     @objc func updateTimer() {
             if duration < 1 {
             timer.invalidate()
-            navigateToQuizStatus()
+            navigateToHome()
         } else {
             duration -= 1
         }
     }
     
-    func navigateToQuizStatus() {
+    func navigateToHome() {
         let submitQuiz = QuizSubmissionViewController.instantiate(fromAppStoryboard: .Quizzes)
         submitQuiz.openQuizStatus = {
             self.navigationController?.popToRootViewController(animated: true)
@@ -93,6 +94,14 @@ class SolveQuizViewController: UIViewController {
         let minutes = Int(time) / 60 % 60
         let seconds = Int(time) % 60
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
+    
+    @IBAction func nextButtonAction() {
+        //should submit if this is the last question
+    }
+    
+    @IBAction func previousButtonAction() {
+        
     }
 
 }

@@ -1550,7 +1550,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="p4O-FW-jGH">
-                                <rect key="frame" x="0.0" y="139" width="414" height="723"/>
+                                <rect key="frame" x="0.0" y="139" width="414" height="599.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="questionCell" rowHeight="107" id="9h3-3m-RCJ" customClass="QuizQuestionTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -1604,6 +1604,11 @@
                                                 <constraint firstItem="c2y-rD-QaB" firstAttribute="leading" secondItem="rrr-5y-QWe" secondAttribute="leading" constant="8" id="quk-Em-OFT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="questionBodyLabel" destination="Fwq-47-r6Y" id="6dI-XM-dF4"/>
+                                            <outlet property="questionImageView" destination="ZxL-Qs-qSj" id="fy4-Sa-CKC"/>
+                                            <outlet property="questionNumberLabel" destination="c2y-rD-QaB" id="6mp-7c-u19"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="answerLabelCell" rowHeight="25" id="KK5-af-1hg" customClass="QuizAnswerLabelTableViewCell" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="135" width="414" height="25"/>
@@ -1658,8 +1663,8 @@
                                                         <constraint firstAttribute="height" constant="48" id="u7Q-o6-Yhf"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="answer cell" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-8V-ric">
-                                                    <rect key="frame" x="104" y="31.5" width="83.5" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="answer body" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-8V-ric">
+                                                    <rect key="frame" x="104" y="31.5" width="95" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.090196078430000007" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1686,27 +1691,88 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="answerLeftImageView" destination="w69-lU-n6Q" id="20F-V2-h84"/>
+                                            <outlet property="answerRightImageView" destination="McX-g8-bK9" id="fzC-BB-DbP"/>
                                             <outlet property="answerTextLabel" destination="Pa6-8V-ric" id="S9x-hB-hJ1"/>
+                                            <outlet property="matchLabel" destination="hYP-W8-WU9" id="Bl8-Jf-ERG"/>
+                                            <outlet property="matchLeftView" destination="MEe-Yx-6cM" id="Fpw-UB-neS"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txj-pH-OFt">
+                                <rect key="frame" x="234" y="794" width="168" height="48"/>
+                                <color key="backgroundColor" red="0.99215686270000003" green="0.50980392159999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="168" id="X1B-CM-HNx"/>
+                                    <constraint firstAttribute="height" constant="48" id="jft-W1-UWO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="2Qg-aO-VSK"/>
+                                    <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="5KP-yE-HBI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Out of 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qA7-aB-yoZ">
+                                <rect key="frame" x="167" y="762.5" width="80.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQI-eJ-vqk">
+                                <rect key="frame" x="54" y="794" width="168" height="48"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="168" id="IwD-Pc-2r4"/>
+                                    <constraint firstAttribute="height" constant="48" id="ptw-pg-qSD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="Previous">
+                                    <color key="titleColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="previousButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="AMC-D4-HBo"/>
+                                    <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="NJQ-87-zko"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Txj-pH-OFt" firstAttribute="top" secondItem="qA7-aB-yoZ" secondAttribute="bottom" constant="12" id="4Ng-Wx-dEE"/>
+                            <constraint firstItem="Txj-pH-OFt" firstAttribute="leading" secondItem="fQI-eJ-vqk" secondAttribute="trailing" constant="12" id="Aqz-WF-xIf"/>
                             <constraint firstItem="p4O-FW-jGH" firstAttribute="leading" secondItem="iuY-Rj-hIq" secondAttribute="leading" id="OJ6-Zy-Lxl"/>
+                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="Txj-pH-OFt" secondAttribute="trailing" constant="12" id="UcA-w4-xEc"/>
                             <constraint firstItem="nns-Yd-GSo" firstAttribute="top" secondItem="iuY-Rj-hIq" secondAttribute="top" id="UsH-z2-9WR"/>
                             <constraint firstItem="p4O-FW-jGH" firstAttribute="top" secondItem="nns-Yd-GSo" secondAttribute="bottom" id="Wad-DL-Ckb"/>
-                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="bottom" secondItem="p4O-FW-jGH" secondAttribute="bottom" id="ble-yX-rhJ"/>
+                            <constraint firstItem="qA7-aB-yoZ" firstAttribute="top" secondItem="p4O-FW-jGH" secondAttribute="bottom" constant="24" id="XPH-Sw-NQg"/>
+                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="bottom" secondItem="Txj-pH-OFt" secondAttribute="bottom" constant="20" id="bpV-Yn-T68"/>
                             <constraint firstItem="nns-Yd-GSo" firstAttribute="leading" secondItem="eRT-8f-DQe" secondAttribute="leading" id="pGr-hl-rkB"/>
                             <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="p4O-FW-jGH" secondAttribute="trailing" id="r7s-kG-YCk"/>
                             <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="nns-Yd-GSo" secondAttribute="trailing" id="uFH-wI-5P2"/>
+                            <constraint firstItem="qA7-aB-yoZ" firstAttribute="centerX" secondItem="eRT-8f-DQe" secondAttribute="centerX" id="wq9-Sa-fC1"/>
+                            <constraint firstItem="fQI-eJ-vqk" firstAttribute="centerY" secondItem="Txj-pH-OFt" secondAttribute="centerY" id="wuc-hk-QSN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iuY-Rj-hIq"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="xBZ-22-xVP" id="xxN-FL-2FG"/>
                         <outlet property="headerTitle" destination="MdC-i4-rX9" id="DkA-ed-VrJ"/>
+                        <outlet property="nextButton" destination="Txj-pH-OFt" id="dJ2-qU-Qii"/>
+                        <outlet property="outOfLabel" destination="qA7-aB-yoZ" id="vjB-cq-urH"/>
+                        <outlet property="previousButton" destination="fQI-eJ-vqk" id="8n8-6M-5jf"/>
                         <outlet property="tableView" destination="p4O-FW-jGH" id="ooT-Rx-2sS"/>
                         <outlet property="timerLabel" destination="4e9-un-rm9" id="FBZ-42-8oC"/>
                     </connections>
