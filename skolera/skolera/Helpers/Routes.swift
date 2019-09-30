@@ -212,4 +212,9 @@ func GET_QUIZ(quizId: Int) -> String {
     return "\(BASE_URL!)/api/quizzes/\(quizId)"
 }
 
+func CREATE_SUBMISSION() -> String {
+    return "\(BASE_URL!)/api/active_quizzes/create_submission"
+}
+
+
 

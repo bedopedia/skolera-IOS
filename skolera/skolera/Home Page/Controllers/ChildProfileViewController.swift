@@ -125,8 +125,6 @@ class ChildProfileViewController: UIViewController {
         let featureTVC = childViewControllers[0] as! ChildProfileFeaturesTableViewController
         featureTVC.child = child
         featureTVC.scrollHandler = { y in
-            debugPrint(y)
-            ///////////////////
             let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
             if newHeaderViewHeight > self.maxHeight {
                 self.heightConstraint.constant = self.maxHeight
@@ -135,8 +133,6 @@ class ChildProfileViewController: UIViewController {
             } else {
                 self.heightConstraint.constant = newHeaderViewHeight
             }
-            ////////////////////
-            
         }
     }
 

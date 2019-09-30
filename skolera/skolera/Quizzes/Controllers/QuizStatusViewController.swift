@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SVProgressHUD
 
 class QuizStatusViewController: UIViewController {
    
@@ -44,6 +46,7 @@ class QuizStatusViewController: UIViewController {
     var quiz: FullQuiz!
     var child : Child!
     var courseName: String = ""
+    var courseGroupId: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,7 +169,7 @@ class QuizStatusViewController: UIViewController {
     
     
     @IBAction func back() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func openQuizDetails() {
@@ -176,8 +179,21 @@ class QuizStatusViewController: UIViewController {
     }
     
     @IBAction func solveQuizButtonAction() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+        createSubmission()
+    }
+    
+    func createSubmission() {
+        SVProgressHUD.show(withStatus: "Loading".localized)
+        let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]
+        createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
+            if isSuccess {
+                let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+                self.navigationController?.pushViewController(solveQuizVC, animated: true)
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
     }
 
 }

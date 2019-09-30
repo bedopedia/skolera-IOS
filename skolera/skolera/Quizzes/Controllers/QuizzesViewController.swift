@@ -162,6 +162,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
             quizVC.child = self.child
             quizVC.courseName = courseName
             quizVC.quiz = filteredQuizzes[indexPath.row]
+            quizVC.courseGroupId = self.courseId
             self.navigationController?.pushViewController(quizVC, animated: true)
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
