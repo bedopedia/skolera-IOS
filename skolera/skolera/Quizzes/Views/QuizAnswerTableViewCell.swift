@@ -19,7 +19,11 @@ class QuizAnswerTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        matchLeftView.layer.borderWidth = 1
+        matchLeftView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
+        matchLeftView.layer.cornerRadius = 6
+//        matchLeftView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
