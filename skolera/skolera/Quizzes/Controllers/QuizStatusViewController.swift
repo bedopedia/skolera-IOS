@@ -179,7 +179,9 @@ class QuizStatusViewController: UIViewController {
     }
     
     @IBAction func solveQuizButtonAction() {
-        createSubmission()
+//        createSubmission()
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
     }
     
     func createSubmission() {
