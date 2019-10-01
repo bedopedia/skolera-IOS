@@ -18,6 +18,7 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var outOfLabel: UILabel!
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var outOfLabelHeight: NSLayoutConstraint!
     
     var duration = 60 {
         didSet{
@@ -30,6 +31,8 @@ class SolveQuizViewController: UIViewController {
     var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
     
     var detailedQuiz: DetailedQuiz!
+    var currentQuestion = 0
+    var questions: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +45,23 @@ class SolveQuizViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         detailedQuiz = DetailedQuiz.init(dummyResponse())
+        setUpQuestions()
+        NSLayoutConstraint.deactivate([outOfLabelHeight])
+        previousButtonAction()
         
+    }
+    
+    func setUpQuestions() {
+        questions = []
+        let question = detailedQuiz.questions[currentQuestion]
+        questions.append(question)
+        //      TO:DO  check is th question type is match and append the match model
+        questions.append("Answers")
+        question.answersAttributes?.forEach{ (answer) in
+            questions.append(answer)
+        }
+        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -358,15 +377,60 @@ class SolveQuizViewController: UIViewController {
     
     @IBAction func nextButtonAction() {
         //should submit if this is the last question
+        if currentQuestion < detailedQuiz.questions.count - 1 {
+            currentQuestion += 1
+            setUpQuestions()
+        } 
+        if currentQuestion == detailedQuiz.questions.count - 1 {
+            nextButton.setTitle("Submit", for: .normal)
+        }
     }
     
     @IBAction func previousButtonAction() {
-        
+        if currentQuestion == 0 {
+            outOfLabel.isHidden = true
+            if let _ = outOfLabelHeight {
+                NSLayoutConstraint.activate([outOfLabelHeight])
+            }
+            previousButton.setTitle("1 Out of \(detailedQuiz.questions.count)", for: .normal)
+        } else {
+            outOfLabel.isHidden = false
+            NSLayoutConstraint.deactivate([outOfLabelHeight])
+        }
+        self.view.layoutIfNeeded()
     }
 
 }
 
 extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return answers.count + 2
+        return questions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if questions[indexPath.row] is Questions {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
+            cell.question = questions[indexPath.row] as? Questions
+            if let question = questions.first as? Questions {
+                cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
+            }
+            return cell
+        } else {
+            if questions[indexPath.row] is String {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "answerLabelCell") as! QuizAnswerLabelTableViewCell
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
+                cell.answer = questions[indexPath.row] as? Answers
+                if let question = questions.first as? Questions {
+                    cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
+                }
+                return cell
+            }
+        }
+    }
     
     @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
@@ -396,7 +460,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             let row = tableView.numberOfRows(inSection: section)
             destinationIndexPath = IndexPath(row: row, section: section)
         }
-//        drop destination is below the questions and the answer cell.
+        //        drop destination is below the questions and the answer cell.
         guard destinationIndexPath.row > 1 else {
             return
         }
@@ -418,27 +482,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             guard let data = string.data(using: .utf8) else { return [] }
             let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
             return [UIDragItem(itemProvider: itemProvider)]
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return answers.count + 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
-            return cell
-        } else {
-            if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "answerLabelCell") as! QuizAnswerLabelTableViewCell
-                return cell
-                
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
-                cell.answerTextLabel.text = answers[indexPath.row-2]
-                return cell
-            }
         }
     }
     

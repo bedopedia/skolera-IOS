@@ -153,6 +153,7 @@
 		8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */; };
 		8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */; };
 		8A06B6DD22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06B6DC22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift */; };
+		8A0F606823437D2500B75929 /* QuestionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0F606723437D2500B75929 /* QuestionTypes.swift */; };
 		8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */; };
 		8A119507231BFF3200691398 /* TeacherAttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */; };
 		8A119509231C2C1200691398 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119508231C2C1200691398 /* AttendanceCases.swift */; };
@@ -464,6 +465,7 @@
 		8A06B6D822F98D3700F5F85C /* PostsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsApiManager.swift; sourceTree = "<group>"; };
 		8A06B6DA22F9998900F5F85C /* AssignmentGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentGradesViewController.swift; sourceTree = "<group>"; };
 		8A06B6DC22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentSubmissionTableViewCell.swift; sourceTree = "<group>"; };
+		8A0F606723437D2500B75929 /* QuestionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypes.swift; sourceTree = "<group>"; };
 		8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceViewController.swift; sourceTree = "<group>"; };
 		8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceTableViewCell.swift; sourceTree = "<group>"; };
 		8A119508231C2C1200691398 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
@@ -1102,6 +1104,7 @@
 				547DD3E4208D0C2A008EED15 /* Time.swift */,
 				8AA44CD621904975007DB9C5 /* Localizable.swift */,
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
+				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1925,6 +1928,7 @@
 				547605AA202091E100369BE0 /* TodayWorkloadStatus.swift in Sources */,
 				8A255BEA22E5F777007A0766 /* QuizCourseTableViewCell.swift in Sources */,
 				8AF4A5CC20D910BD003A1D31 /* Student.swift in Sources */,
+				8A0F606823437D2500B75929 /* QuestionTypes.swift in Sources */,
 				54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */,
 				8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */,
 				8A8079CB2340C38400C4DC16 /* QuizAnswerLabelTableViewCell.swift in Sources */,
