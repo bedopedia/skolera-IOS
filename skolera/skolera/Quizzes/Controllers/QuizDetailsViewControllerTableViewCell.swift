@@ -40,7 +40,6 @@ class QuizDetailsTableViewCell: UITableViewCell {
             bloomsLabel.text = self.detailedQuiz.blooms.joined(separator: ", ")
             courseGroupsLabel.text = getCourseGroupsString()
             objectivesLabel.text = getObjectivesString()
-    
         }
     }
     
