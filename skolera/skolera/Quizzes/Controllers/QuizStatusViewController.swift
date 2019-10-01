@@ -48,6 +48,7 @@ class QuizStatusViewController: UIViewController {
     var courseName: String = ""
     var courseGroupId: Int!
     var detailedQuiz: DetailedQuiz!
+    var solvingQuiz = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,24 +66,30 @@ class QuizStatusViewController: UIViewController {
         setUpGradeUi()
         if quiz.state.elementsEqual("running") {
             setUpRunningQuizUi()
-            
         } else {
             setUpFinishedQuizUi()
         }
+//        getQuizDetails()
     }
     
     @IBAction func back() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if solvingQuiz {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func openQuizDetails() {
         let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
         quizDetailsVC.quizId = quiz.id
+//        quizDetailsVC.detailedQuiz = self.detailedQuiz
         self.navigationController?.pushViewController(quizDetailsVC, animated: true)
     }
     
     @IBAction func solveQuizButtonAction() {
 //        createSubmission()
+        solvingQuiz = true  //should be removed, already in createSubmission
         let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
         self.navigationController?.pushViewController(solveQuizVC, animated: true)
     }
@@ -94,6 +101,7 @@ class QuizStatusViewController: UIViewController {
             SVProgressHUD.dismiss()
             if isSuccess {
                 let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+                self.solvingQuiz = true
                 self.navigationController?.pushViewController(solveQuizVC, animated: true)
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -101,22 +109,21 @@ class QuizStatusViewController: UIViewController {
         }
     }
     
-    func getQuizDetails() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        getQuizApi(quizId: quiz.id!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    self.detailedQuiz = DetailedQuiz(result)
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
+//    func getQuizDetails() {
+//        SVProgressHUD.show(withStatus: "Loading".localized)
+//        getQuizApi(quizId: quiz.id!) { (isSuccess, statusCode, value, error) in
+//            SVProgressHUD.dismiss()
+//            if isSuccess {
+//                if let result = value as? [String : AnyObject] {
+//                    self.detailedQuiz = DetailedQuiz(result)
+//                }
+//            } else {
+//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+//            }
+//        }
+//    }
     
     func setUpDatesUi() {
-        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
