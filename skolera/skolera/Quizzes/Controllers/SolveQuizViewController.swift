@@ -39,18 +39,12 @@ class SolveQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if #available(iOS 11.0, *) {
-            tableView.dropDelegate = self
-            tableView.dragDelegate = self
-            tableView.dragInteractionEnabled = true
-        } 
         tableView.delegate = self
         tableView.dataSource = self
         detailedQuiz = DetailedQuiz.init(dummyResponse())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,8 +65,22 @@ class SolveQuizViewController: UIViewController {
         }
     }
     
- 
- 
+    func dragAction(flag: Bool) {
+        if flag {
+            if #available(iOS 11.0, *) {
+                tableView.dropDelegate = self
+                tableView.dragDelegate = self
+                tableView.dragInteractionEnabled = true
+            }
+        } else {
+            if #available(iOS 11.0, *) {
+                tableView.dropDelegate = nil
+                tableView.dragDelegate = nil
+                tableView.dragInteractionEnabled = false
+            }
+        }
+    }
+    
     
     @IBAction func backAction() {
         self.navigationController?.popToRootViewController(animated: true)
@@ -148,6 +156,11 @@ class SolveQuizViewController: UIViewController {
     func setUpQuestions() {
         questions = []
         let question = detailedQuiz.questions[currentQuestion]
+        if question.type!.elementsEqual("Reorder") {
+            dragAction(flag: true)
+        } else {
+            dragAction(flag: false)
+        }
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
         questions.append("Answers")
@@ -503,7 +516,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         }
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
             guard let answerBody = (items as? [String])?.first else { return }
-            debugPrint("body", answerBody)
             for (index, anyAnswer) in self.questions.enumerated() {
                 if let answer = anyAnswer as? Answers {
                     if answer.body!.elementsEqual(answerBody) {

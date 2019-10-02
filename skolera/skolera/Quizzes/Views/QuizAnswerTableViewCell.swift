@@ -23,6 +23,7 @@ class QuizAnswerTableViewCell: UITableViewCell {
         
         didSet {
             self.hideMatchView()
+            self.cellView.backgroundColor = .white
             switch self.questionType! {
             case QuestionTypes.match:
                 self.showMatchView()
