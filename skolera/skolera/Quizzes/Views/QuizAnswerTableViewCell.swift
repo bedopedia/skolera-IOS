@@ -12,7 +12,7 @@ import UIKit
 class QuizAnswerTableViewCell: UITableViewCell {
 
     @IBOutlet weak var matchLeftView: UIView!
-    @IBOutlet weak var matchLabel: UILabel!
+    @IBOutlet weak var matchTextField: UITextField!
     @IBOutlet weak var answerTextLabel: UILabel!
     @IBOutlet weak var answerLeftImageView: UIImageView!
     @IBOutlet weak var answerRightImageView: UIImageView!
@@ -71,13 +71,13 @@ class QuizAnswerTableViewCell: UITableViewCell {
     }
     func hideMatchView() {
         matchLeftView.isHidden = true
-        matchLabel.isHidden = true
+        matchTextField.isHidden = true
     }
     func showMatchView() {
         cellView.backgroundColor = .clear
         self.answerLeftImageView.image = nil
         matchLeftView.isHidden = false
-        matchLabel.isHidden = false
+        matchTextField.isHidden = false
     }
     override func awakeFromNib() {
         super.awakeFromNib()

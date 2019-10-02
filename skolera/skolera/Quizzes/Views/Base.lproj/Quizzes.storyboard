@@ -1648,19 +1648,19 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEe-Yx-6cM">
                                                             <rect key="frame" x="12" y="11" width="48" height="48"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYP-W8-WU9">
-                                                                    <rect key="frame" x="20" y="14" width="8" height="20"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                                                    <color key="textColor" red="0.0" green="0.090196078430000007" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i61-wK-Mcf">
+                                                                    <rect key="frame" x="20" y="15.5" width="8" height="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                </textField>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstItem="hYP-W8-WU9" firstAttribute="centerY" secondItem="MEe-Yx-6cM" secondAttribute="centerY" id="4AL-2w-4bQ"/>
+                                                                <constraint firstItem="i61-wK-Mcf" firstAttribute="centerX" secondItem="MEe-Yx-6cM" secondAttribute="centerX" id="7WS-jd-Wwu"/>
                                                                 <constraint firstAttribute="height" constant="48" id="8tg-AH-k8k"/>
                                                                 <constraint firstAttribute="width" constant="48" id="DWS-cI-lSV"/>
-                                                                <constraint firstItem="hYP-W8-WU9" firstAttribute="centerX" secondItem="MEe-Yx-6cM" secondAttribute="centerX" id="orh-pQ-BmB"/>
+                                                                <constraint firstItem="i61-wK-Mcf" firstAttribute="centerY" secondItem="MEe-Yx-6cM" secondAttribute="centerY" id="zah-J3-ZEE"/>
                                                             </constraints>
                                                         </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizReorder" translatesAutoresizingMaskIntoConstraints="NO" id="w69-lU-n6Q">
@@ -1712,8 +1712,8 @@
                                             <outlet property="answerRightImageView" destination="McX-g8-bK9" id="fzC-BB-DbP"/>
                                             <outlet property="answerTextLabel" destination="Pa6-8V-ric" id="S9x-hB-hJ1"/>
                                             <outlet property="cellView" destination="ZaR-OI-Xgf" id="7A3-Fq-dga"/>
-                                            <outlet property="matchLabel" destination="hYP-W8-WU9" id="Bl8-Jf-ERG"/>
                                             <outlet property="matchLeftView" destination="MEe-Yx-6cM" id="Fpw-UB-neS"/>
+                                            <outlet property="matchTextField" destination="i61-wK-Mcf" id="krD-9U-7mm"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
