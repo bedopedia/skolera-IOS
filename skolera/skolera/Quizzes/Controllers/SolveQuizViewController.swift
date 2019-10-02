@@ -51,19 +51,6 @@ class SolveQuizViewController: UIViewController {
         
     }
     
-    func setUpQuestions() {
-        questions = []
-        let question = detailedQuiz.questions[currentQuestion]
-        questions.append(question)
-        //      TO:DO  check is th question type is match and append the match model
-        questions.append("Answers")
-        question.answersAttributes?.forEach{ (answer) in
-            questions.append(answer)
-        }
-        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
-        tableView.reloadData()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !isTimerRunning {
@@ -82,265 +69,11 @@ class SolveQuizViewController: UIViewController {
         }
     }
     
-    func dummyResponse() -> [String: Any] {
-        return [
-            "id": 94,
-            "name": "uuu",
-            "start_date": "2019-07-11T00:00:00.000Z",
-            "end_date": "2019-07-18T00:00:00.000Z",
-            "description": "",
-            "course_groups": [
-            [
-            "name": "18A",
-            "id": 516,
-            "students": 20
-            ],
-            [
-            "name": "18B",
-            "id": 532,
-            "students": 18
-            ]
-            ],
-            "category": "",
-            "lesson": [
-                "id": 247,
-                "name": "General",
-                "unit_id": 247,
-                "description": "",
-                "date": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "deleted_at": ""
-            ],
-            "unit": [
-                "id": 247,
-                "name": "General",
-                "chapter_id": 247,
-                "description": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "deleted_at": ""
-            ],
-            "chapter": [
-                "id": 247,
-                "name": "General",
-                "course_id": 247,
-                "description": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "lock": true,
-                "deleted_at": ""
-            ],
-            "duration": 5,
-            "is_questions_randomized": false,
-            "num_of_questions_per_page": 5,
-            "state": "running",
-            "total_score": 26.0,
-            "lesson_id": 247,
-            "student_solved": true,
-            "blooms": [],
-            "grading_period_lock": false,
-            "grading_period": "",
-            "questions": [
-            [
-            "id": 231,
-            "body": "<p>m,mjkj</p>",
-            "difficulty": "Easy",
-            "score": 5.0,
-            "answers_attributes": [
-            [
-            "id": 579,
-            "body": "234",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 231,
-            "match": "234",
-            "deleted_at": ""
-            ],
-            [
-            "id": 578,
-            "body": "123",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 231,
-            "match": "123",
-            "deleted_at": ""
-            ]
-            ],
-            "correction_style": "",
-            "type": "Match",
-            "bloom": [],
-            "files": "",
-            "uploaded_file": "",
-            "correct_answers_count": 0
-            ],
-            [
-            "id": 232,
-            "body": "<p>hguyu</p>",
-            "difficulty": "Easy",
-            "score": 5.0,
-            "answers_attributes": [
-            [
-            "id": 581,
-            "body": "98766",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 232,
-            "match": "",
-            "deleted_at": ""
-            ],
-            [
-            "id": 580,
-            "body": "12345",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 232,
-            "match": "",
-            "deleted_at": ""
-            ],
-            [
-            "id": 582,
-            "body": "5565",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 232,
-            "match": "",
-            "deleted_at": ""
-            ]
-            ],
-            "correction_style": "",
-            "type": "MultipleSelect",
-            "bloom": [],
-            "files": "",
-            "uploaded_file": "",
-            "correct_answers_count": 1
-            ],
-            [
-            "id": 233,
-            "body": "<p>choose</p>",
-            "difficulty": "Easy",
-            "score": 6.0,
-            "answers_attributes": [
-            [
-            "id": 584,
-            "body": "jk",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 233,
-            "match": "",
-            "deleted_at": ""
-            ],
-            [
-            "id": 583,
-            "body": "jhk",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 233,
-            "match": "",
-            "deleted_at": ""
-            ]
-            ],
-            "correction_style": "",
-            "type": "MultipleChoice",
-            "bloom": [],
-            "files": "",
-            "uploaded_file": "",
-            "correct_answers_count": 1
-            ],
-            [
-            "id": 234,
-            "body": "<p>jhkh</p>",
-            "difficulty": "Easy",
-            "score": 5.0,
-            "answers_attributes": [
-            [
-            "id": 587,
-            "body": "7777",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 234,
-            "match": "2",
-            "deleted_at": ""
-            ],
-            [
-            "id": 585,
-            "body": "5555",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 234,
-            "match": "0",
-            "deleted_at": ""
-            ],
-            [
-            "id": 586,
-            "body": "6666",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 234,
-            "match": "1",
-            "deleted_at": ""
-            ]
-            ],
-            "correction_style": "",
-            "type": "Reorder",
-            "bloom": [],
-            "files": "",
-            "uploaded_file": "",
-            "correct_answers_count": 0
-            ],
-            [
-            "id": 235,
-            "body": "<p>khkhk</p>",
-            "difficulty": "Easy",
-            "score": 5.0,
-            "answers_attributes": [
-            [
-            "id": 588,
-            "body": "",
-            "created_at": "2019-05-15T11:10:35.000Z",
-            "updated_at": "2019-05-15T11:10:35.000Z",
-            "question_id": 235,
-            "match": "",
-            "deleted_at": ""
-            ]
-            ],
-            "correction_style": "",
-            "type": "TrueOrFalse",
-            "bloom": [],
-            "files": "",
-            "uploaded_file": "",
-            "correct_answers_count": 1
-            ]
-            ],
-            "objectives": [],
-            "grouping_students": [],
-            "course_groups_quiz": [
-            [
-            "course_group_id": 516,
-            "quiz_id": 94,
-            "deleted_at": "",
-            "hide_grade": false,
-            "id": 158,
-            "select_all": true
-            ],
-            [
-            "course_group_id": 532,
-            "quiz_id": 94,
-            "deleted_at": "",
-            "hide_grade": false,
-            "id": 159,
-            "select_all": true
-            ]
-            ]
-        ]
-    }
+ 
  
     
     @IBAction func backAction() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1,
@@ -395,9 +128,282 @@ class SolveQuizViewController: UIViewController {
             previousButton.setTitle("1 Out of \(detailedQuiz.questions.count)", for: .normal)
         } else {
             outOfLabel.isHidden = false
-            NSLayoutConstraint.deactivate([outOfLabelHeight])
+            previousButton.setTitle("Previous", for: .normal)
+            if let _ = outOfLabelHeight {
+                NSLayoutConstraint.deactivate([outOfLabelHeight])
+            }
         }
         self.view.layoutIfNeeded()
+    }
+    
+    func setUpQuestions() {
+        questions = []
+        let question = detailedQuiz.questions[currentQuestion]
+        questions.append(question)
+        //      TO:DO  check is th question type is match and append the match model
+        questions.append("Answers")
+        question.answersAttributes?.forEach{ (answer) in
+            questions.append(answer)
+        }
+        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+        previousButtonAction()
+        tableView.reloadData()
+    }
+    
+    func dummyResponse() -> [String: Any] {
+        return [
+            "id": 94,
+            "name": "uuu",
+            "start_date": "2019-07-11T00:00:00.000Z",
+            "end_date": "2019-07-18T00:00:00.000Z",
+            "description": "",
+            "course_groups": [
+                [
+                    "name": "18A",
+                    "id": 516,
+                    "students": 20
+                ],
+                [
+                    "name": "18B",
+                    "id": 532,
+                    "students": 18
+                ]
+            ],
+            "category": "",
+            "lesson": [
+                "id": 247,
+                "name": "General",
+                "unit_id": 247,
+                "description": "",
+                "date": "",
+                "order": 0,
+                "created_at": "2018-09-01T18:03:56.000Z",
+                "updated_at": "2018-09-01T18:03:56.000Z",
+                "deleted_at": ""
+            ],
+            "unit": [
+                "id": 247,
+                "name": "General",
+                "chapter_id": 247,
+                "description": "",
+                "order": 0,
+                "created_at": "2018-09-01T18:03:56.000Z",
+                "updated_at": "2018-09-01T18:03:56.000Z",
+                "deleted_at": ""
+            ],
+            "chapter": [
+                "id": 247,
+                "name": "General",
+                "course_id": 247,
+                "description": "",
+                "order": 0,
+                "created_at": "2018-09-01T18:03:56.000Z",
+                "updated_at": "2018-09-01T18:03:56.000Z",
+                "lock": true,
+                "deleted_at": ""
+            ],
+            "duration": 5,
+            "is_questions_randomized": false,
+            "num_of_questions_per_page": 5,
+            "state": "running",
+            "total_score": 26.0,
+            "lesson_id": 247,
+            "student_solved": true,
+            "blooms": [],
+            "grading_period_lock": false,
+            "grading_period": "",
+            "questions": [
+                [
+                    "id": 231,
+                    "body": "<p>m,mjkj</p>",
+                    "difficulty": "Easy",
+                    "score": 5.0,
+                    "answers_attributes": [
+                        [
+                            "id": 579,
+                            "body": "234",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 231,
+                            "match": "234",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 578,
+                            "body": "123",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 231,
+                            "match": "123",
+                            "deleted_at": ""
+                        ]
+                    ],
+                    "correction_style": "",
+                    "type": "Match",
+                    "bloom": [],
+                    "files": "",
+                    "uploaded_file": "",
+                    "correct_answers_count": 0
+                ],
+                [
+                    "id": 232,
+                    "body": "<p>hguyu</p>",
+                    "difficulty": "Easy",
+                    "score": 5.0,
+                    "answers_attributes": [
+                        [
+                            "id": 581,
+                            "body": "98766",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 232,
+                            "match": "",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 580,
+                            "body": "12345",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 232,
+                            "match": "",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 582,
+                            "body": "5565",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 232,
+                            "match": "",
+                            "deleted_at": ""
+                        ]
+                    ],
+                    "correction_style": "",
+                    "type": "MultipleSelect",
+                    "bloom": [],
+                    "files": "",
+                    "uploaded_file": "",
+                    "correct_answers_count": 1
+                ],
+                [
+                    "id": 233,
+                    "body": "<p>choose</p>",
+                    "difficulty": "Easy",
+                    "score": 6.0,
+                    "answers_attributes": [
+                        [
+                            "id": 584,
+                            "body": "jk",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 233,
+                            "match": "",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 583,
+                            "body": "jhk",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 233,
+                            "match": "",
+                            "deleted_at": ""
+                        ]
+                    ],
+                    "correction_style": "",
+                    "type": "MultipleChoice",
+                    "bloom": [],
+                    "files": "",
+                    "uploaded_file": "",
+                    "correct_answers_count": 1
+                ],
+                [
+                    "id": 234,
+                    "body": "<p>jhkh</p>",
+                    "difficulty": "Easy",
+                    "score": 5.0,
+                    "answers_attributes": [
+                        [
+                            "id": 587,
+                            "body": "7777",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 234,
+                            "match": "2",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 585,
+                            "body": "5555",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 234,
+                            "match": "0",
+                            "deleted_at": ""
+                        ],
+                        [
+                            "id": 586,
+                            "body": "6666",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 234,
+                            "match": "1",
+                            "deleted_at": ""
+                        ]
+                    ],
+                    "correction_style": "",
+                    "type": "Reorder",
+                    "bloom": [],
+                    "files": "",
+                    "uploaded_file": "",
+                    "correct_answers_count": 0
+                ],
+                [
+                    "id": 235,
+                    "body": "<p>khkhk</p>",
+                    "difficulty": "Easy",
+                    "score": 5.0,
+                    "answers_attributes": [
+                        [
+                            "id": 588,
+                            "body": "answer",
+                            "created_at": "2019-05-15T11:10:35.000Z",
+                            "updated_at": "2019-05-15T11:10:35.000Z",
+                            "question_id": 235,
+                            "match": "",
+                            "deleted_at": ""
+                        ]
+                    ],
+                    "correction_style": "",
+                    "type": "TrueOrFalse",
+                    "bloom": [],
+                    "files": "",
+                    "uploaded_file": "",
+                    "correct_answers_count": 1
+                ]
+            ],
+            "objectives": [],
+            "grouping_students": [],
+            "course_groups_quiz": [
+                [
+                    "course_group_id": 516,
+                    "quiz_id": 94,
+                    "deleted_at": "",
+                    "hide_grade": false,
+                    "id": 158,
+                    "select_all": true
+                ],
+                [
+                    "course_group_id": 532,
+                    "quiz_id": 94,
+                    "deleted_at": "",
+                    "hide_grade": false,
+                    "id": 159,
+                    "select_all": true
+                ]
+            ]
+        ]
     }
 
 }
@@ -405,7 +411,6 @@ class SolveQuizViewController: UIViewController {
 extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return answers.count + 2
         return questions.count
     }
     
