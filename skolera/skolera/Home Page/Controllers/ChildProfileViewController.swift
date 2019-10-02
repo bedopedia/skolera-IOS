@@ -51,6 +51,7 @@ class ChildProfileViewController: UIViewController {
                 } else if let result = result {
                     print("Remote instance ID token: \(result.token)")
                     self.sendFCM(token: result.token)
+                    debugPrint(result.token)
                 }
             }
         }

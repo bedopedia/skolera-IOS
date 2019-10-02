@@ -28,11 +28,13 @@ class SolveQuizViewController: UIViewController {
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
-    var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
+//    var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
     
     var detailedQuiz: DetailedQuiz!
     var currentQuestion = 0
     var questions: [Any] = []
+    var selectedIndex: Int!
+    var answeredQuestions: [String: [String: Any]]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +89,7 @@ class SolveQuizViewController: UIViewController {
     @objc func updateTimer() {
             if duration < 1 {
             timer.invalidate()
-            navigateToHome()
+//            navigateToHome()
         } else {
             duration -= 1
         }
@@ -125,7 +127,6 @@ class SolveQuizViewController: UIViewController {
             nextButton.setTitle("Next", for: .normal)
         }
         self.view.layoutIfNeeded()
-        
     }
     
     @IBAction func previousButtonAction() {
@@ -154,8 +155,18 @@ class SolveQuizViewController: UIViewController {
             questions.append(answer)
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
-//        previousButtonAction()
+        setTableViewMultipleSelection(question: question)
         tableView.reloadData()
+    }
+    
+    func setTableViewMultipleSelection(question: Questions) {
+        if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
+            if questionType == QuestionTypes.multipleSelect {
+                self.tableView.allowsMultipleSelection = true
+            } else {
+                self.tableView.allowsMultipleSelection = false
+            }
+        }
     }
     
     func dummyResponse() -> [String: Any] {
@@ -440,9 +451,21 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
+                if selectedIndex == indexPath.row {
+                    cell.setSelectedImage()
+                } else {
+//                    cell.selectionView.setImage(#imageLiteral(resourceName: "unselectedSlot"), for: .normal)
+                }
                 return cell
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+        tableView.reloadData()
+        //append in the selected answers, reload the table view
+        
     }
     
     @available(iOS 11.0, *)
@@ -466,6 +489,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         
         let destinationIndexPath: IndexPath
+        var oldIndex: Int!
         if let indexPath = coordinator.destinationIndexPath {
             destinationIndexPath = indexPath
         } else {
@@ -478,10 +502,20 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             return
         }
         coordinator.session.loadObjects(ofClass: NSString.self) { items in
-            guard let name = (items as? [String])?.first else { return }
-            guard let oldIndex = self.answers.index(of: name) else { return }
+            guard let answerBody = (items as? [String])?.first else { return }
+            debugPrint("body", answerBody)
+            for (index, anyAnswer) in self.questions.enumerated() {
+                if let answer = anyAnswer as? Answers {
+                    if answer.body!.elementsEqual(answerBody) {
+                        oldIndex = index
+                    }
+                }
+            }
+            if oldIndex == nil {
+                return
+            }
             let newIndex = destinationIndexPath.row
-            self.answers.swapAt(oldIndex, newIndex-2)
+            self.questions.swapAt(oldIndex, newIndex)
             self.tableView.reloadData()
         }
     }
@@ -491,7 +525,11 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         if indexPath.row < 2 {
             return []
         } else {
-            let string = answers[indexPath.row-2]
+            // 2 for the uppermost 2 cells
+            var string = ""
+            if let answer = questions[indexPath.row] as? Answers {
+                string = answer.body!
+            }
             guard let data = string.data(using: .utf8) else { return [] }
             let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
             return [UIDragItem(itemProvider: itemProvider)]
@@ -504,6 +542,5 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
 //        }
 //        return true
 //    }
-    
     
 }

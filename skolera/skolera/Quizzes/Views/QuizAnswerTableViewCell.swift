@@ -18,26 +18,22 @@ class QuizAnswerTableViewCell: UITableViewCell {
     @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
+//    var setSelected: (()->())!
     var questionType: QuestionTypes! {
         
         didSet {
             self.hideMatchView()
             switch self.questionType! {
             case QuestionTypes.match:
-                debugPrint("match")
                 self.showMatchView()
             case QuestionTypes.multipleChoice:
-                debugPrint("multipleChoice")
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
             case QuestionTypes.multipleSelect:
-                debugPrint("multipleSelect")
                 //set asset
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
             case QuestionTypes.reorder:
-                debugPrint("reorder")
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
             case QuestionTypes.trueOrFalse:
-                debugPrint("trueOrFalse")
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
             }
         }
@@ -47,7 +43,14 @@ class QuizAnswerTableViewCell: UITableViewCell {
             answerTextLabel.text = self.answer.body
         }
     }
-    
+    func setSelectedImage() {
+        if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
+            answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+        }
+    }
+    func resetLeftImage() {
+        answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+    }
     func hideMatchView() {
         matchLeftView.isHidden = true
         matchLabel.isHidden = true
@@ -69,7 +72,6 @@ class QuizAnswerTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 
