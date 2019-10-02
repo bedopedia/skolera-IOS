@@ -18,7 +18,7 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var outOfLabel: UILabel!
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var outOfLabelHeight: NSLayoutConstraint!
+    @IBOutlet var outOfLabelHeight: NSLayoutConstraint!
     
     var duration = 60 {
         didSet{
@@ -109,29 +109,37 @@ class SolveQuizViewController: UIViewController {
     }
     
     @IBAction func nextButtonAction() {
-        //should submit if this is the last question
         if currentQuestion < detailedQuiz.questions.count - 1 {
             currentQuestion += 1
             setUpQuestions()
-        } 
+        }
+        if let _ = outOfLabelHeight {
+            NSLayoutConstraint.deactivate([outOfLabelHeight])
+        }
+        outOfLabel.isHidden = false
+        previousButton.setTitle("Previous", for: .normal)
+        
         if currentQuestion == detailedQuiz.questions.count - 1 {
             nextButton.setTitle("Submit", for: .normal)
+        } else {
+            nextButton.setTitle("Next", for: .normal)
         }
+        self.view.layoutIfNeeded()
+        
     }
     
     @IBAction func previousButtonAction() {
+        if currentQuestion > 0 {
+            currentQuestion -= 1
+            setUpQuestions()
+        }
         if currentQuestion == 0 {
             outOfLabel.isHidden = true
-            if let _ = outOfLabelHeight {
-                NSLayoutConstraint.activate([outOfLabelHeight])
-            }
+            NSLayoutConstraint.activate([outOfLabelHeight])
             previousButton.setTitle("1 Out of \(detailedQuiz.questions.count)", for: .normal)
-        } else {
-            outOfLabel.isHidden = false
-            previousButton.setTitle("Previous", for: .normal)
-            if let _ = outOfLabelHeight {
-                NSLayoutConstraint.deactivate([outOfLabelHeight])
-            }
+        }
+        if currentQuestion < detailedQuiz.questions.count - 1 {
+            nextButton.setTitle("Next", for: .normal)
         }
         self.view.layoutIfNeeded()
     }
@@ -146,7 +154,7 @@ class SolveQuizViewController: UIViewController {
             questions.append(answer)
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
-        previousButtonAction()
+//        previousButtonAction()
         tableView.reloadData()
     }
     
