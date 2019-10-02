@@ -503,6 +503,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             debugPrint("trueOrFalse")
         case .match:
             debugPrint("match")
+//            self.tableView.resignFirstResponder()
         }
         answeredQuestions[detailedQuiz.questions[ currentQuestion] ] =  [0,0]
         

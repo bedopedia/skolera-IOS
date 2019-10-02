@@ -9,7 +9,7 @@
 
 import UIKit
 
-class QuizAnswerTableViewCell: UITableViewCell {
+class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var matchLeftView: UIView!
     @IBOutlet weak var matchTextField: UITextField!
@@ -55,7 +55,17 @@ class QuizAnswerTableViewCell: UITableViewCell {
             if questionType != QuestionTypes.trueOrFalse {
                 answerTextLabel.text = self.answer.body
             }
+            matchTextField.delegate = self
+            matchTextField.font = UIFont.init(name: matchTextField.font!.fontName, size: 20)
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 2
+        let currentString: NSString = matchTextField.text as! NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
     }
     
    
