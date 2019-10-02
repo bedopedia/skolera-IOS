@@ -19,6 +19,17 @@ class QuizAnswerTableViewCell: UITableViewCell {
     @IBOutlet weak var cellView: UIView!
     
 //    var setSelected: (()->())!
+    var trueOrFalseFlag: Bool! {
+        didSet {
+            if self.trueOrFalseFlag != nil {
+                if trueOrFalseFlag {
+                    answerTextLabel.text = "true"
+                } else {
+                    answerTextLabel.text = "false"
+                }
+            }
+        }
+    }
     var questionType: QuestionTypes! {
         
         didSet {
@@ -41,9 +52,15 @@ class QuizAnswerTableViewCell: UITableViewCell {
     }
     var answer: Answers! {
         didSet {
-            answerTextLabel.text = self.answer.body
+            if questionType != QuestionTypes.trueOrFalse {
+                answerTextLabel.text = self.answer.body
+            }
         }
     }
+    
+   
+    
+    
     func setSelectedImage() {
         if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
             answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")

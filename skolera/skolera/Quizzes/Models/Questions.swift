@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class Questions {
+class Questions: Hashable {
     
     let id: Int?
     let body: String?
@@ -37,6 +37,16 @@ class Questions {
         files = dict["files"] as? Any
         uploadedFile = dict["uploaded_file"] as? Any
         correctAnswersCount = dict["correct_answers_count"] as? Int
+    }
+    
+    static func == (lhs: Questions, rhs: Questions) -> Bool {
+        if lhs.id == rhs.id {
+            return true
+        }
+        return false
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
 }

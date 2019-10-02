@@ -28,19 +28,20 @@ class SolveQuizViewController: UIViewController {
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
-//    var answers = ["ans 1", "ans 2", "ans 3" ,"ans 4"]
-    
     var detailedQuiz: DetailedQuiz!
     var currentQuestion = 0
     var questions: [Any] = []
     var selectedIndex: Int!
-    var answeredQuestions: [String: [String: Any]]!
+    var answeredQuestions: [Questions: [Any]]!
+    var questionType: QuestionTypes!
+    var trueOrFalseFlag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        answeredQuestions = [:]
         detailedQuiz = DetailedQuiz.init(dummyResponse())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -81,10 +82,10 @@ class SolveQuizViewController: UIViewController {
         }
     }
     
-    
     @IBAction func backAction() {
         self.navigationController?.popToRootViewController(animated: true)
     }
+    
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1,
                                      target: self,
@@ -94,6 +95,7 @@ class SolveQuizViewController: UIViewController {
         RunLoop.current.add(timer, forMode: .commonModes)
         timer.tolerance = 0.1
     }
+    
     @objc func updateTimer() {
             if duration < 1 {
             timer.invalidate()
@@ -156,7 +158,8 @@ class SolveQuizViewController: UIViewController {
     func setUpQuestions() {
         questions = []
         let question = detailedQuiz.questions[currentQuestion]
-        if question.type!.elementsEqual("Reorder") {
+        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
+        if questionType == QuestionTypes.reorder {
             dragAction(flag: true)
         } else {
             dragAction(flag: false)
@@ -164,8 +167,14 @@ class SolveQuizViewController: UIViewController {
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
         questions.append("Answers")
-        question.answersAttributes?.forEach{ (answer) in
-            questions.append(answer)
+        if questionType == QuestionTypes.trueOrFalse {
+            var answer = question.answersAttributes?.first
+            questions.append(question.answersAttributes?.first)
+            questions.append(question.answersAttributes?.first)
+        } else {
+            question.answersAttributes?.forEach{ (answer) in
+                questions.append(answer)
+            }
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
@@ -399,7 +408,7 @@ class SolveQuizViewController: UIViewController {
                     "answers_attributes": [
                         [
                             "id": 588,
-                            "body": "answer",
+                            "body": "",
                             "created_at": "2019-05-15T11:10:35.000Z",
                             "updated_at": "2019-05-15T11:10:35.000Z",
                             "question_id": 235,
@@ -460,15 +469,20 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
-                cell.answer = questions[indexPath.row] as? Answers
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
+                }
+                cell.answer = questions[indexPath.row] as? Answers
+                if questionType == QuestionTypes.trueOrFalse {
+                    cell.trueOrFalseFlag = !self.trueOrFalseFlag
+                    trueOrFalseFlag = !trueOrFalseFlag
                 }
                 if selectedIndex == indexPath.row {
                     cell.setSelectedImage()
                 } else {
 //                    cell.selectionView.setImage(#imageLiteral(resourceName: "unselectedSlot"), for: .normal)
                 }
+                
                 return cell
             }
         }
@@ -476,6 +490,22 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        //should save the answer for this question
+        var answers: [Any] = []
+        switch questionType! {
+        case .reorder:
+            debugPrint("reorder")
+        case .multipleChoice:
+            debugPrint("multipleChoice")
+        case .multipleSelect:
+            debugPrint("multipleSelect")
+        case .trueOrFalse:
+            debugPrint("trueOrFalse")
+        case .match:
+            debugPrint("match")
+        }
+        answeredQuestions[detailedQuiz.questions[ currentQuestion] ] =  [0,0]
+        
         tableView.reloadData()
         //append in the selected answers, reload the table view
         
