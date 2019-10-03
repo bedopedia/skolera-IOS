@@ -35,7 +35,6 @@ class SolveQuizViewController: UIViewController {
     var selectedIndex: Int!
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
-    var trueOrFalseFlag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,9 +168,36 @@ class SolveQuizViewController: UIViewController {
         //      TO:DO  check is th question type is match and append the match model
         questions.append("Answers")
         if questionType == QuestionTypes.trueOrFalse {
-            var answer = question.answersAttributes?.first
-            questions.append(question.answersAttributes?.first)
-            questions.append(question.answersAttributes?.first)
+            var correctanswer = Answers.init(["id": question.answersAttributes!.first?.id,
+                                       "body": "true",
+                                       "created_at": question.answersAttributes?.first?.createdAt,
+                                      "updated_at": question.answersAttributes?.first?.updatedAt,
+                                      "question_id": question.answersAttributes?.first?.questionId,
+                                      "match": question.answersAttributes?.first?.match,
+                                      "deleted_at": question.answersAttributes?.first?.deletedAt,
+                                      "is_correct": question.answersAttributes?.first?.isCorrect
+                                      ])
+            
+            questions.append(correctanswer)
+            var falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id,
+                                              "body": "false",
+                                              "created_at": question.answersAttributes?.first?.createdAt,
+                                              "updated_at": question.answersAttributes?.first?.updatedAt,
+                                              "question_id": question.answersAttributes?.first?.questionId,
+                                              "match": question.answersAttributes?.first?.match,
+                                              "deleted_at": question.answersAttributes?.first?.deletedAt,
+                                              "is_correct": question.answersAttributes?.first?.isCorrect
+                ])
+            
+            questions.append(falseAnswer)
+            
+//            if let question = questions[2] as? Answers {
+//                question.body = "true"
+//            }
+//            if let question = questions[3] as? Answers {
+//                question.body = "false"
+//            }
+            //mutate the questions body
         } else {
             question.answersAttributes?.forEach{ (answer) in
                 questions.append(answer)
@@ -474,10 +500,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
                 cell.answer = questions[indexPath.row] as? Answers
-                if questionType == QuestionTypes.trueOrFalse {
-                    cell.trueOrFalseFlag = !self.trueOrFalseFlag
-                    trueOrFalseFlag = !trueOrFalseFlag
-                }
                 if selectedIndex == indexPath.row {
 //                    cell.setSelectedImage()
                     //check the answers map

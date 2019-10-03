@@ -18,18 +18,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
-//    var setSelected: (()->())!
-    var trueOrFalseFlag: Bool! {
-        didSet {
-            if self.trueOrFalseFlag != nil {
-                if trueOrFalseFlag {
-                    answerTextLabel.text = "true"
-                } else {
-                    answerTextLabel.text = "false"
-                }
-            }
-        }
-    }
     var questionType: QuestionTypes! {
         
         didSet {
@@ -43,7 +31,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             case QuestionTypes.multipleSelect:
                 //set asset
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-                debugPrint("")
             case QuestionTypes.reorder:
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
             case QuestionTypes.trueOrFalse:
@@ -53,9 +40,9 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     var answer: Answers! {
         didSet {
-            if questionType != QuestionTypes.trueOrFalse {
+//            if questionType != QuestionTypes.trueOrFalse {
                 answerTextLabel.text = self.answer.body
-            }
+//            }
             matchTextField.delegate = self
             matchTextField.font = UIFont.init(name: matchTextField.font!.fontName, size: 20)
         }
