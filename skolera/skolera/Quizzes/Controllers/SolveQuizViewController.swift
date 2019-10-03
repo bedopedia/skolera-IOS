@@ -479,23 +479,23 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     trueOrFalseFlag = !trueOrFalseFlag
                 }
                 if selectedIndex == indexPath.row {
-                    cell.setSelectedImage()
+//                    cell.setSelectedImage()
                     //check the answers map
                 }
                 //multiple select check
-                if questionType == QuestionTypes.multipleSelect {
+//                if questionType == QuestionTypes.multipleSelect {
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
-                        if let answers = answeredQuestions[detailedQuiz.questions[ currentQuestion]] {
+                        if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
-                                    if modelledAnswer.id == selectedAnswer.id {
+                                    if modelledAnswer.id == selectedAnswer.id {         //true or false not handled
                                         cell.setSelectedImage()
                                     }
                                 }
                             }
                         }
                     }
-                }
+//                }
                 return cell
             }
         }
@@ -515,17 +515,20 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             debugPrint("trueOrFalse")
         case .match:
             debugPrint("match")
-//            self.tableView.resignFirstResponder()
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.resignFirstResponder()
         }
         //multi select logic
-        if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+        if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
             //check that the current selection doesn't exist in the answers array
             var flag: Bool = true
+            var answerToBeRemovedIndex: Int!
             if let selectedAnswer = questions[indexPath.row] as? Answers {
-                for answer in previousAnswers {
+                for (index, answer) in previousAnswers.enumerated() {
                     if flag == true {
                         if let validAnswer = answer as? Answers {
                             if validAnswer.id == selectedAnswer.id {
+                                answerToBeRemovedIndex = index
                                 flag = false
                                 break
                             }
@@ -534,7 +537,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 }
                 if flag {
                     previousAnswers.append(selectedAnswer)
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = previousAnswers
+                    answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+                } else {
+                    //remove the selected answer from the array and reload the table
+                    if answerToBeRemovedIndex != nil {
+                        previousAnswers.remove(at: answerToBeRemovedIndex)
+                        answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+                        tableView.reloadData()
+                    }
                 }
             }
         } else {
