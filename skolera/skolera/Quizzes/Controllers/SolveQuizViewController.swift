@@ -168,7 +168,7 @@ class SolveQuizViewController: UIViewController {
         //      TO:DO  check is th question type is match and append the match model
         questions.append("Answers")
         if questionType == QuestionTypes.trueOrFalse {
-            var correctanswer = Answers.init(["id": question.answersAttributes!.first?.id,
+            var correctanswer = Answers.init(["id": question.answersAttributes!.first?.id ,
                                        "body": "true",
                                        "created_at": question.answersAttributes?.first?.createdAt,
                                       "updated_at": question.answersAttributes?.first?.updatedAt,
@@ -190,14 +190,6 @@ class SolveQuizViewController: UIViewController {
                 ])
             
             questions.append(falseAnswer)
-            
-//            if let question = questions[2] as? Answers {
-//                question.body = "true"
-//            }
-//            if let question = questions[3] as? Answers {
-//                question.body = "false"
-//            }
-            //mutate the questions body
         } else {
             question.answersAttributes?.forEach{ (answer) in
                 questions.append(answer)
@@ -500,24 +492,25 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
                 cell.answer = questions[indexPath.row] as? Answers
-                if selectedIndex == indexPath.row {
-//                    cell.setSelectedImage()
-                    //check the answers map
-                }
-                //multiple select check
-//                if questionType == QuestionTypes.multipleSelect {
+                switch questionType! {
+                case .match:
+                    cell.matchTextField.becomeFirstResponder()
+                    
+//                case .reorder:
+                    
+                default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
-                                    if modelledAnswer.id == selectedAnswer.id {         //true or false not handled
+                                    if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
                                         cell.setSelectedImage()
                                     }
                                 }
                             }
                         }
                     }
-//                }
+                }
                 return cell
             }
         }
@@ -537,8 +530,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             debugPrint("trueOrFalse")
         case .match:
             debugPrint("match")
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.resignFirstResponder()
+            let cell = tableView.cellForRow(at: indexPath) as? QuizAnswerTableViewCell
+            cell?.matchTextField.becomeFirstResponder()
         }
         //multi select logic
         if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
