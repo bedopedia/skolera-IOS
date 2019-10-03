@@ -491,13 +491,11 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
-                cell.answer = questions[indexPath.row] as? Answers
+                
                 switch questionType! {
-                case .match:
-                    cell.matchTextField.becomeFirstResponder()
-                    
-//                case .reorder:
-                    
+//                case .match:
+                case .reorder:
+                   answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
@@ -511,6 +509,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         }
                     }
                 }
+                cell.answer = questions[indexPath.row] as? Answers
                 return cell
             }
         }
@@ -519,58 +518,52 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
         //should save the answer for this question
-        switch questionType! {
-        case .reorder:
-            debugPrint("reorder")
-        case .multipleChoice:
-            debugPrint("multipleChoice")
-        case .multipleSelect:
-            debugPrint("multipleSelect")
-        case .trueOrFalse:
-            debugPrint("trueOrFalse")
-        case .match:
-            debugPrint("match")
-            let cell = tableView.cellForRow(at: indexPath) as? QuizAnswerTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as? QuizAnswerTableViewCell
+        if let type = questionType, type == QuestionTypes.match {
             cell?.matchTextField.becomeFirstResponder()
+            return
+        } else {
+            cell?.matchTextField.resignFirstResponder()
         }
-        //multi select logic
-        if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
-            //check that the current selection doesn't exist in the answers array
-            var flag: Bool = true
-            var answerToBeRemovedIndex: Int!
-            if let selectedAnswer = questions[indexPath.row] as? Answers {
-                for (index, answer) in previousAnswers.enumerated() {
-                    if flag == true {
-                        if let validAnswer = answer as? Answers {
-                            if validAnswer.id == selectedAnswer.id {
-                                answerToBeRemovedIndex = index
-                                flag = false
-                                break
+        switch questionType! {
+        case .multipleChoice, .multipleSelect, .trueOrFalse:
+            if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
+                //check that the current selection doesn't exist in the answers array
+                var flag: Bool = true
+                var answerToBeRemovedIndex: Int!
+                if let selectedAnswer = questions[indexPath.row] as? Answers {
+                    for (index, answer) in previousAnswers.enumerated() {
+                        if flag == true {
+                            if let validAnswer = answer as? Answers {
+                                if validAnswer.id == selectedAnswer.id {
+                                    answerToBeRemovedIndex = index
+                                    flag = false
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                if flag {
-                    previousAnswers.append(selectedAnswer)
-                    answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
-                } else {
-                    //remove the selected answer from the array and reload the table
-                    if answerToBeRemovedIndex != nil {
-                        previousAnswers.remove(at: answerToBeRemovedIndex)
+                    if flag {
+                        previousAnswers.append(selectedAnswer)
                         answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
-                        tableView.reloadData()
+                    } else {
+                        //remove the selected answer from the array and reload the table
+                        if answerToBeRemovedIndex != nil {
+                            previousAnswers.remove(at: answerToBeRemovedIndex)
+                            answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+                            tableView.reloadData()
+                        }
                     }
                 }
+            } else {
+                if let validAnswer = questions[indexPath.row] as? Answers {
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [validAnswer]
+                }
             }
-        } else {
-            if let validAnswer = questions[indexPath.row] as? Answers {
-                answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [validAnswer]
-            }
+            tableView.reloadData()
+        default:
+            return
         }
-        
-        tableView.reloadData()
-        //append in the selected answers, reload the table view
-        
     }
     
     @available(iOS 11.0, *)
@@ -620,6 +613,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             }
             let newIndex = destinationIndexPath.row
             self.questions.swapAt(oldIndex, newIndex)
+            self.answeredQuestions?[self.detailedQuiz.questions[self.currentQuestion]] = self.questions
             self.tableView.reloadData()
         }
     }
