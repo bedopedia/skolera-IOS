@@ -43,6 +43,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             case QuestionTypes.multipleSelect:
                 //set asset
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+                debugPrint("")
             case QuestionTypes.reorder:
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
             case QuestionTypes.trueOrFalse:
@@ -60,6 +61,28 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    func setSelectedImage() {
+        if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
+            answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+        }
+    }
+    
+    func resetLeftImage() {
+        answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+    }
+    
+    func hideMatchView() {
+        matchLeftView.isHidden = true
+        matchTextField.isHidden = true
+    }
+    
+    func showMatchView() {
+        cellView.backgroundColor = .clear
+        self.answerLeftImageView.image = nil
+        matchLeftView.isHidden = false
+        matchTextField.isHidden = false
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 2
         let currentString: NSString = matchTextField.text as! NSString
@@ -68,27 +91,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         return newString.length <= maxLength
     }
     
-   
-    
-    
-    func setSelectedImage() {
-        if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
-            answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
-        }
-    }
-    func resetLeftImage() {
-        answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-    }
-    func hideMatchView() {
-        matchLeftView.isHidden = true
-        matchTextField.isHidden = true
-    }
-    func showMatchView() {
-        cellView.backgroundColor = .clear
-        self.answerLeftImageView.image = nil
-        matchLeftView.isHidden = false
-        matchTextField.isHidden = false
-    }
     override func awakeFromNib() {
         super.awakeFromNib()
         

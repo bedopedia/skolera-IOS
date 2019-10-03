@@ -25,6 +25,7 @@ class SolveQuizViewController: UIViewController {
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
     }
+    
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
@@ -479,10 +480,22 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 }
                 if selectedIndex == indexPath.row {
                     cell.setSelectedImage()
-                } else {
-//                    cell.selectionView.setImage(#imageLiteral(resourceName: "unselectedSlot"), for: .normal)
+                    //check the answers map
                 }
-                
+                //multiple select check
+                if questionType == QuestionTypes.multipleSelect {
+                    if let selectedAnswer = questions[indexPath.row] as? Answers {
+                        if let answers = answeredQuestions[detailedQuiz.questions[ currentQuestion]] {
+                            for answer in answers {
+                                if let modelledAnswer = answer as? Answers {
+                                    if modelledAnswer.id == selectedAnswer.id {
+                                        cell.setSelectedImage()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 return cell
             }
         }
@@ -491,7 +504,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
         //should save the answer for this question
-        var answers: [Any] = []
         switch questionType! {
         case .reorder:
             debugPrint("reorder")
@@ -505,7 +517,31 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             debugPrint("match")
 //            self.tableView.resignFirstResponder()
         }
-        answeredQuestions[detailedQuiz.questions[ currentQuestion] ] =  [0,0]
+        //multi select logic
+        if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+            //check that the current selection doesn't exist in the answers array
+            var flag: Bool = true
+            if let selectedAnswer = questions[indexPath.row] as? Answers {
+                for answer in previousAnswers {
+                    if flag == true {
+                        if let validAnswer = answer as? Answers {
+                            if validAnswer.id == selectedAnswer.id {
+                                flag = false
+                                break
+                            }
+                        }
+                    }
+                }
+                if flag {
+                    previousAnswers.append(selectedAnswer)
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = previousAnswers
+                }
+            }
+        } else {
+            if let validAnswer = questions[indexPath.row] as? Answers {
+                answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [validAnswer]
+            }
+        }
         
         tableView.reloadData()
         //append in the selected answers, reload the table view
