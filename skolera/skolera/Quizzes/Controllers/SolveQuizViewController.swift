@@ -20,21 +20,20 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet var outOfLabelHeight: NSLayoutConstraint!
     
-    var duration = 60 {
-        didSet{
-            timerLabel.text = timeString(time: TimeInterval(duration))
-        }
-    }
-    
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
     var detailedQuiz: DetailedQuiz!
     var currentQuestion = 0
     var questions: [Any] = []
-    var selectedIndex: Int!
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
+    var newOrder: [Answers] = []
+    var duration = 60 {
+        didSet{
+            timerLabel.text = timeString(time: TimeInterval(duration))
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +159,12 @@ class SolveQuizViewController: UIViewController {
         let question = detailedQuiz.questions[currentQuestion]
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
+            if newOrder.isEmpty {
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
+            } else {
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = newOrder
+            }
+            //questions array should have the state saved
             dragAction(flag: true)
         } else {
             dragAction(flag: false)
@@ -167,8 +172,9 @@ class SolveQuizViewController: UIViewController {
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
         questions.append("Answers")
+        
         if questionType == QuestionTypes.trueOrFalse {
-            var correctanswer = Answers.init(["id": question.answersAttributes!.first?.id ,
+            let correctanswer = Answers.init(["id": question.answersAttributes!.first?.id as Any ,
                                        "body": "true",
                                        "created_at": question.answersAttributes?.first?.createdAt,
                                       "updated_at": question.answersAttributes?.first?.updatedAt,
@@ -177,9 +183,8 @@ class SolveQuizViewController: UIViewController {
                                       "deleted_at": question.answersAttributes?.first?.deletedAt,
                                       "is_correct": question.answersAttributes?.first?.isCorrect
                                       ])
-            
             questions.append(correctanswer)
-            var falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id,
+            let falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id as Any,
                                               "body": "false",
                                               "created_at": question.answersAttributes?.first?.createdAt,
                                               "updated_at": question.answersAttributes?.first?.updatedAt,
@@ -188,7 +193,6 @@ class SolveQuizViewController: UIViewController {
                                               "deleted_at": question.answersAttributes?.first?.deletedAt,
                                               "is_correct": question.answersAttributes?.first?.isCorrect
                 ])
-            
             questions.append(falseAnswer)
         } else {
             question.answersAttributes?.forEach{ (answer) in
@@ -197,6 +201,7 @@ class SolveQuizViewController: UIViewController {
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
+        
         tableView.reloadData()
     }
     
@@ -478,8 +483,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         if questions[indexPath.row] is Questions {
             let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
             cell.question = questions[indexPath.row] as? Questions
-            if let question = questions.first as? Questions {
-                cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
+            if let _ = questions.first as? Questions {
+                cell.questionType = questionType
             }
             return cell
         } else {
@@ -491,11 +496,15 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
-                
                 switch questionType! {
 //                case .match:
                 case .reorder:
-                   answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
+//                   answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
+                   if let answersArray = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+                    let answerIndex = (indexPath.row - 2 ) // 0 -> question, 1 -> static answer label
+                    cell.answer = answersArray[answerIndex] as? Answers
+                   }
+                    
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
@@ -508,16 +517,15 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                             }
                         }
                     }
+                    cell.answer = questions[indexPath.row] as? Answers
                 }
-                cell.answer = questions[indexPath.row] as? Answers
+                
                 return cell
             }
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        //should save the answer for this question
         let cell = tableView.cellForRow(at: indexPath) as? QuizAnswerTableViewCell
         if let type = questionType, type == QuestionTypes.match {
             cell?.matchTextField.becomeFirstResponder()
@@ -525,6 +533,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         } else {
             cell?.matchTextField.resignFirstResponder()
         }
+        //should save the answer for this question
         switch questionType! {
         case .multipleChoice, .multipleSelect, .trueOrFalse:
             if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
@@ -614,6 +623,13 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             let newIndex = destinationIndexPath.row
             self.questions.swapAt(oldIndex, newIndex)
             self.answeredQuestions?[self.detailedQuiz.questions[self.currentQuestion]] = self.questions
+            self.newOrder = []
+            for answer in self.questions {
+                if let validAnswer = answer as? Answers {
+                    self.newOrder.append(validAnswer)
+                }
+            }
+            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = self.newOrder
             self.tableView.reloadData()
         }
     }
