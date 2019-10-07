@@ -35,16 +35,21 @@ class SolveQuizViewController: UIViewController {
         }
     }
     
+    var questionsOnlyFlag: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.dropDelegate = self
+        tableView.dragDelegate = self
         answeredQuestions = [:]
         detailedQuiz = DetailedQuiz.init(dummyResponse())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,22 +66,6 @@ class SolveQuizViewController: UIViewController {
             if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
                 self.duration -= ( Date().second - Int(timerDuration)! )
                 debugPrint("was in the background for:", Date().second - Int(timerDuration)!)
-            }
-        }
-    }
-    
-    func dragAction(flag: Bool) {
-        if flag {
-            if #available(iOS 11.0, *) {
-                tableView.dropDelegate = self
-                tableView.dragDelegate = self
-                tableView.dragInteractionEnabled = true
-            }
-        } else {
-            if #available(iOS 11.0, *) {
-                tableView.dropDelegate = nil
-                tableView.dragDelegate = nil
-                tableView.dragInteractionEnabled = false
             }
         }
     }
@@ -165,12 +154,15 @@ class SolveQuizViewController: UIViewController {
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = newOrder
             }
             //questions array should have the state saved
-            dragAction(flag: true)
+            tableView.dragInteractionEnabled = true
         } else {
-            dragAction(flag: false)
+            tableView.dragInteractionEnabled = false
         }
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
+        
+        
+        
         questions.append("Answers")
         
         if questionType == QuestionTypes.trueOrFalse {
@@ -575,17 +567,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)
     }
     
-    @available(iOS 11.0, *)
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .move)
     }
     
-    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         if let destIndex = destinationIndexPath, destIndex.row < 2 {
             return UITableViewDropProposal(operation: .forbidden, intent: .insertAtDestinationIndexPath)
