@@ -19,6 +19,9 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet var outOfLabelHeight: NSLayoutConstraint!
+    @IBOutlet var timerLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var backButtonAllignment: NSLayoutConstraint!
     
     var timer = Timer()
     var isTimerRunning = false
@@ -52,6 +55,9 @@ class SolveQuizViewController: UIViewController {
         if isQuestionsOnly {
             timerLabel.isHidden = true
             tableView.allowsSelection = false
+            NSLayoutConstraint.deactivate([timerLabelTopConstraint])
+            backButtonAllignment.constant = 0
+            headerHeightConstraint.constant = 60
         }
         
     }
@@ -75,7 +81,11 @@ class SolveQuizViewController: UIViewController {
     }
     
     @IBAction func backAction() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if isQuestionsOnly {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     func runTimer() {
@@ -116,6 +126,9 @@ class SolveQuizViewController: UIViewController {
         if currentQuestion < detailedQuiz.questions.count - 1 {
             currentQuestion += 1
             setUpQuestions()
+        } else {
+//            TODO: call the submit grade api, call back action
+            debugPrint("submit grade")
         }
         if let _ = outOfLabelHeight {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -124,7 +137,15 @@ class SolveQuizViewController: UIViewController {
         previousButton.setTitle("Previous", for: .normal)
         
         if currentQuestion == detailedQuiz.questions.count - 1 {
-            nextButton.setTitle("Submit", for: .normal)
+            if isQuestionsOnly {
+                NSLayoutConstraint.activate([outOfLabelHeight])
+                outOfLabel.isHidden = true
+                nextButton.backgroundColor = .clear
+                nextButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+                nextButton.setTitle("\(currentQuestion + 1) out of \(detailedQuiz.questions.count)", for: .normal)
+            } else {
+                nextButton.setTitle("Submit", for: .normal)
+            }
         } else {
             nextButton.setTitle("Next", for: .normal)
         }
@@ -132,6 +153,14 @@ class SolveQuizViewController: UIViewController {
     }
     
     @IBAction func previousButtonAction() {
+        
+        if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly {
+            NSLayoutConstraint.deactivate([outOfLabelHeight])
+            outOfLabel.isHidden = false
+            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+            nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
+            nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        }
         if currentQuestion > 0 {
             currentQuestion -= 1
             setUpQuestions()
@@ -194,7 +223,6 @@ class SolveQuizViewController: UIViewController {
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
-        
         tableView.reloadData()
     }
     

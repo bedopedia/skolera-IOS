@@ -1787,6 +1787,8 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="xBZ-22-xVP" id="xxN-FL-2FG"/>
+                        <outlet property="backButtonAllignment" destination="p4D-4e-DbM" id="Fdt-Sc-50E"/>
+                        <outlet property="headerHeightConstraint" destination="KOf-EO-1Jd" id="tjk-Bs-FbQ"/>
                         <outlet property="headerTitle" destination="MdC-i4-rX9" id="DkA-ed-VrJ"/>
                         <outlet property="nextButton" destination="Txj-pH-OFt" id="dJ2-qU-Qii"/>
                         <outlet property="outOfLabel" destination="qA7-aB-yoZ" id="vjB-cq-urH"/>
@@ -1794,6 +1796,7 @@
                         <outlet property="previousButton" destination="fQI-eJ-vqk" id="8n8-6M-5jf"/>
                         <outlet property="tableView" destination="p4O-FW-jGH" id="ooT-Rx-2sS"/>
                         <outlet property="timerLabel" destination="4e9-un-rm9" id="FBZ-42-8oC"/>
+                        <outlet property="timerLabelTopConstraint" destination="qXB-3L-Wgw" id="B94-Vb-KGU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lrv-yB-6gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
