@@ -29,7 +29,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     //MARK: - Variables
     var child : Child!
-    var grade: CourseGrade!
+    var grade: PostCourse!
     var courseGradingPeriods: [CourseGradingPeriods] = []
     var coursePeriods: [CourseGradingPeriods] = []
     var courseSubPeriods: [CourseGradingPeriods] = []
@@ -102,7 +102,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId, grade.courseGroup.id)
+        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.popActivity()
             switch response.result{
@@ -137,7 +137,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId, grade.courseGroup.id)
+        let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId!, grade.id!)
         debugPrint(url)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.popActivity()

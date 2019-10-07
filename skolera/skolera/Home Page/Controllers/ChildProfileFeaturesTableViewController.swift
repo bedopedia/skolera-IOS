@@ -24,7 +24,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
-    var grades = [CourseGrade]()
+    var grades = [PostCourse]()
     var timeslots = [TimeSlot]()
     var weeklyPlans: [WeeklyPlan] = []
     var today: Date!
@@ -33,7 +33,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     var child : Child!{
         didSet{
             if child != nil{
-//                getGrades()
+                getGrades()
                 getBehaviorNotesCount()
                 getTimeTable()
                 getWeeklyReport()
@@ -87,8 +87,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
         switch cell?.reuseIdentifier{
         case "mainAttendanceCell":
             showAttendance()
-//        case "mainGradesCell":
-//            showCoursesGrades()
+        case "mainGradesCell":
+            showCoursesGrades()
         case "mainTimetableCell":
             showTimetable()
         case "mainBehaviorNotesCell":
@@ -152,30 +152,28 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     /// service call to get total courses grades, average grade is set on completion
     private func getGrades() {
         SVProgressHUD.show(withStatus: "Loading".localized)
-        getGradesAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
+            SVProgressHUD.dismiss()
             if isSuccess {
-                if let res = value as? [String : AnyObject] {
-                    let result = res["courses_grades"] as! [[String: AnyObject]]
-                    for grade in result {
-                        let gradeItem = CourseGrade.init(fromDictionary: grade)
-                        let gradeingPeriods = grade["grading_periods_grades"] as! [[String: AnyObject]]
-                        var hideGrade: Bool = false
-                        for item in  gradeingPeriods{
-                            if let publish = item["publish"] as? Bool, publish {
-                                hideGrade = false
-                            } else {
-                                hideGrade = true
-                                break
-                            }
-                        }
-                        gradeItem.hideGrade = hideGrade
-                        self.grades.append(gradeItem)
-                    }
-                    self.getCourseGroups()
+                if let result = value as? [[String : AnyObject]] {
+                    self.grades = result.map({ PostCourse($0) })
+                    self.tableView.reloadData()
                 }
             } else {
-                SVProgressHUD.dismiss()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func getPostsCoursesApi(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+        let headers : HTTPHeaders? = getHeaders()
+        let url = String(format: GET_POSTS_COURSES(), childId)
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+            switch response.result{
+            case .success(_):
+                completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+            case .failure(let error):
+                completion(false, response.response?.statusCode ?? 0, nil, error)
             }
         }
     }
@@ -190,9 +188,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
                         let temp = CourseGroup.init(fromDictionary: courseGroup)
                         courseGroups[temp.courseId] = temp
                     }
-                    for grade in self.grades{
-                        grade.courseGroup = courseGroups[grade.courseId]
-                    }
+//                    for grade in self.grades{
+//                        grade.courseGroup = courseGroups[grade.courseId]
+//                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
