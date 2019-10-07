@@ -93,7 +93,11 @@ class QuizStatusViewController: UIViewController {
         let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
         self.navigationController?.pushViewController(solveQuizVC, animated: true)
     }
-    
+    @IBAction func openQuizQuestions() {
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        solveQuizVC.isQuestionsOnly = true
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    }
     func createSubmission() {
         SVProgressHUD.show(withStatus: "Loading".localized)
         let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]

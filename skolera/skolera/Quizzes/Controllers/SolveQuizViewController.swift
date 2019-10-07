@@ -35,7 +35,7 @@ class SolveQuizViewController: UIViewController {
         }
     }
     
-    var questionsOnlyFlag: Bool!
+    var isQuestionsOnly = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +49,10 @@ class SolveQuizViewController: UIViewController {
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
+        if isQuestionsOnly {
+            timerLabel.isHidden = true
+            tableView.allowsSelection = false
+        }
         
     }
     
@@ -152,7 +156,9 @@ class SolveQuizViewController: UIViewController {
                 newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
             }
             //questions array should have the state saved
-            tableView.dragInteractionEnabled = true
+            if !isQuestionsOnly {
+                tableView.dragInteractionEnabled = true
+            }
         } else {
             tableView.dragInteractionEnabled = false
         }
@@ -195,7 +201,9 @@ class SolveQuizViewController: UIViewController {
     func setTableViewMultipleSelection(question: Questions) {
         if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
             if questionType == QuestionTypes.multipleSelect {
-                self.tableView.allowsMultipleSelection = true
+                if !isQuestionsOnly {
+                    self.tableView.allowsMultipleSelection = true
+                }
             } else {
                 self.tableView.allowsMultipleSelection = false
             }

@@ -815,7 +815,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H03-bF-dQt">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
                                                         <connections>
-                                                            <action selector="openQuizDetails" destination="H4o-AW-EDL" eventType="touchUpInside" id="n67-gt-baw"/>
+                                                            <action selector="openQuizQuestions" destination="H4o-AW-EDL" eventType="touchUpInside" id="ST5-x2-sQM"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -847,9 +847,6 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51K-Hb-ZrS">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
-                                                        <connections>
-                                                            <action selector="openQuizDetails" destination="H4o-AW-EDL" eventType="touchUpInside" id="vRf-C6-Oew"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
