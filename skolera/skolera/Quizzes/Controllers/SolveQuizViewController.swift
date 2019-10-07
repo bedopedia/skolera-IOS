@@ -149,9 +149,7 @@ class SolveQuizViewController: UIViewController {
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
             if newOrder.isEmpty {
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
-            } else {
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = newOrder
+                newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
             }
             //questions array should have the state saved
             tableView.dragInteractionEnabled = true
@@ -160,9 +158,6 @@ class SolveQuizViewController: UIViewController {
         }
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
-        
-        
-        
         questions.append("Answers")
         
         if questionType == QuestionTypes.trueOrFalse {
@@ -491,11 +486,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 switch questionType! {
 //                case .match:
                 case .reorder:
-//                   answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
-                   if let answersArray = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                    let answerIndex = (indexPath.row - 2 ) // 0 -> question, 1 -> static answer label
-                    cell.answer = answersArray[answerIndex] as? Answers
-                   }
+                    if !newOrder.isEmpty {
+                        cell.answer = newOrder[indexPath.row - 2]
+                    }
                     
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
@@ -610,15 +603,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 return
             }
             let newIndex = destinationIndexPath.row
-            self.questions.swapAt(oldIndex, newIndex)
-            self.answeredQuestions?[self.detailedQuiz.questions[self.currentQuestion]] = self.questions
-            self.newOrder = []
-            for answer in self.questions {
-                if let validAnswer = answer as? Answers {
-                    self.newOrder.append(validAnswer)
-                }
-            }
-            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = self.newOrder
+            self.newOrder.swapAt(oldIndex - 2, newIndex - 2)
             self.tableView.reloadData()
         }
     }
