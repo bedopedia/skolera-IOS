@@ -147,6 +147,15 @@ class SolveQuizViewController: UIViewController {
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
+    func stringValue(booleanValue: Bool) -> String {
+        switch booleanValue {
+        case true:
+            return "true"
+        case false:
+            return "false"
+        }
+    }
+    
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
             currentQuestion += 1
@@ -302,8 +311,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
-                                    if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
-                                        cell.setSelectedImage()
+                                    if isAnswers && questionType! == .trueOrFalse {
+                                        if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
+                                            cell.setSelectedImage()
+                                        }
+                                    } else {
+                                        if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
+                                            cell.setSelectedImage()
+                                        }
                                     }
                                 }
                             }
