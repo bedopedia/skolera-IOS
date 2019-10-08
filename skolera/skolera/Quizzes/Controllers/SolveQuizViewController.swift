@@ -300,6 +300,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
+                if isAnswers {
+                    cell.isAnswers = true
+                }
                 switch questionType! {
 //                case .match:
                 case .reorder:
@@ -325,6 +328,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         }
                     }
                     cell.answer = questions[indexPath.row] as? Answers
+                }
+                if isAnswers || isQuestionsOnly {
+                    cell.matchTextField.isUserInteractionEnabled = false
                 }
                 return cell
             }

@@ -18,8 +18,8 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
+    var isAnswers = false
     var questionType: QuestionTypes! {
-        
         didSet {
             self.hideMatchView()
             self.cellView.backgroundColor = .white
@@ -45,8 +45,13 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
 //            }
             matchTextField.delegate = self
             matchTextField.font = UIFont.init(name: matchTextField.font!.fontName, size: 20)
+            if isAnswers {
+                matchTextField.text = self.answer.match ?? ""
+            }
         }
     }
+    
+    
     
     func setSelectedImage() {
         if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
