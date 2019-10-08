@@ -103,10 +103,10 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!)
+//        let url =  String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!, child.actableId!)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             SVProgressHUD.popActivity()
             switch response.result{
-                
             case .success(_):
                 if let result = response.result.value as? [String : AnyObject]
                 {
