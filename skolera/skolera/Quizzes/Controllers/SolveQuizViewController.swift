@@ -44,14 +44,33 @@ class SolveQuizViewController: UIViewController {
     func showAnswers() {
         if let answers = detailedQuiz.questions[currentQuestion].answersAttributes {
             switch questionType! {
-            case .multipleChoice, .multipleSelect, .trueOrFalse:
+            case .multipleChoice, .multipleSelect:
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
                     guard let correct = answer.isCorrect else {
                         return false
                     }
                     return correct == true
                 })
-                
+            case .trueOrFalse:
+                let correctanswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any ,
+                                                  "body": "true",
+                                                  "created_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
+                                                  "updated_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
+                                                  "question_id": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
+                                                  "match": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.match,
+                                                  "deleted_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
+                                                  "is_correct": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                    ])
+                let falseAnswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any,
+                                                "body": "false",
+                                                "created_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
+                                                "updated_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
+                                                "question_id": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
+                                                "match": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.match,
+                                                "deleted_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
+                                                "is_correct": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                    ])
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
             default:
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
                     guard let firstMatch = Int(firstAnswer.match ?? ""), let secondMatch = Int(secondAnswer.match ?? "") else {
