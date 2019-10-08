@@ -84,9 +84,7 @@ class SolveQuizViewController: UIViewController {
             backButtonAllignment.constant = 0
             headerHeightConstraint.constant = 60
         }
-        if isAnswers {
-            showAnswers()
-        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -250,6 +248,9 @@ class SolveQuizViewController: UIViewController {
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
+        if isAnswers {
+            showAnswers()
+        }
         tableView.reloadData()
     }
     
