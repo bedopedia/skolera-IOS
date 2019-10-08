@@ -32,13 +32,38 @@ class SolveQuizViewController: UIViewController {
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
     var newOrder: [Answers] = []
+    var isQuestionsOnly = false
+    var isAnswers = false
     var duration = 60 {
         didSet{
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
     }
     
-    var isQuestionsOnly = false
+    // Add answers in the answered questions dictionary
+    func showAnswers() {
+        if let answers = detailedQuiz.questions[currentQuestion].answersAttributes {
+            switch questionType! {
+            case .multipleChoice, .multipleSelect, .trueOrFalse:
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
+                    guard let correct = answer.isCorrect else {
+                        return false
+                    }
+                    return correct == true
+                })
+                
+            default:
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
+                    guard let firstMatch = Int(firstAnswer.match ?? ""), let secondMatch = Int(secondAnswer.match ?? "") else {
+                        return false
+                    }
+                    return firstMatch < secondMatch
+                })
+                newOrder = answeredQuestions[detailedQuiz.questions[currentQuestion]] as! [Answers]
+            }
+        }
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,14 +77,16 @@ class SolveQuizViewController: UIViewController {
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
-        if isQuestionsOnly {
+        if isQuestionsOnly || isAnswers {
             timerLabel.isHidden = true
             tableView.allowsSelection = false
             NSLayoutConstraint.deactivate([timerLabelTopConstraint])
             backButtonAllignment.constant = 0
             headerHeightConstraint.constant = 60
         }
-        
+        if isAnswers {
+            showAnswers()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,20 +95,20 @@ class SolveQuizViewController: UIViewController {
             runTimer()
         }
         NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
-            debugPrint("back ground mode")
+            debugPrint("Background mode")
             UserDefaults.standard.set(Date().second, forKey: "timerDuration")
         }
         
         NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
             if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
                 self.duration -= ( Date().second - Int(timerDuration)! )
-                debugPrint("was in the background for:", Date().second - Int(timerDuration)!)
+                debugPrint("Background time is:", Date().second - Int(timerDuration)!)
             }
         }
     }
     
     @IBAction func backAction() {
-        if isQuestionsOnly {
+        if isQuestionsOnly || isAnswers {
             self.navigationController?.popViewController(animated: true)
         } else {
             self.navigationController?.popToRootViewController(animated: true)
@@ -137,7 +164,7 @@ class SolveQuizViewController: UIViewController {
         previousButton.setTitle("Previous", for: .normal)
         
         if currentQuestion == detailedQuiz.questions.count - 1 {
-            if isQuestionsOnly {
+            if isQuestionsOnly || isAnswers {
                 NSLayoutConstraint.activate([outOfLabelHeight])
                 outOfLabel.isHidden = true
                 nextButton.backgroundColor = .clear
@@ -154,7 +181,7 @@ class SolveQuizViewController: UIViewController {
     
     @IBAction func previousButtonAction() {
         
-        if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly {
+        if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly || isAnswers {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
             outOfLabel.isHidden = false
             outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
@@ -185,7 +212,7 @@ class SolveQuizViewController: UIViewController {
                 newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
             }
             //questions array should have the state saved
-            if !isQuestionsOnly {
+            if !isQuestionsOnly && !isAnswers {
                 tableView.dragInteractionEnabled = true
             }
         } else {
@@ -229,7 +256,7 @@ class SolveQuizViewController: UIViewController {
     func setTableViewMultipleSelection(question: Questions) {
         if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
             if questionType == QuestionTypes.multipleSelect {
-                if !isQuestionsOnly {
+                if !isQuestionsOnly && !isAnswers {
                     self.tableView.allowsMultipleSelection = true
                 }
             } else {
@@ -269,7 +296,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
                     }
-                    
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
@@ -284,7 +310,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                     cell.answer = questions[indexPath.row] as? Answers
                 }
-                
                 return cell
             }
         }
