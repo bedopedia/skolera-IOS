@@ -44,14 +44,12 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
                 answerTextLabel.text = self.answer.body
 //            }
             matchTextField.delegate = self
-            matchTextField.font = UIFont.init(name: matchTextField.font!.fontName, size: 20)
+            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
             if isAnswers {
                 matchTextField.text = self.answer.match ?? ""
             }
         }
     }
-    
-    
     
     func setSelectedImage() {
         if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
