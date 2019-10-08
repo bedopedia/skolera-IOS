@@ -40,9 +40,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     var answer: Answers! {
         didSet {
-//            if questionType != QuestionTypes.trueOrFalse {
-                answerTextLabel.text = self.answer.body
-//            }
+            answerTextLabel.text = self.answer.body
             matchTextField.delegate = self
             matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
             if isAnswers {

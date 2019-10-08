@@ -16,23 +16,11 @@ class QuizQuestionTableViewCell: UITableViewCell {
     @IBOutlet weak var questtionNumberLabelWidth: NSLayoutConstraint!
     
     var questionType: QuestionTypes! {
-        
         didSet {
-            self.questionNumberLabel.isHidden = true
-//            NSLayoutConstraint.activate([questtionNumberLabelWidth])
-            switch self.questionType! {
-            case QuestionTypes.match:
-                debugPrint("match")
+                if self.questionType! == QuestionTypes.match {
                 self.questionNumberLabel.isHidden = false
-//                NSLayoutConstraint.deactivate([questtionNumberLabelWidth])
-            case QuestionTypes.multipleChoice:
-                debugPrint("multipleChoice")
-            case QuestionTypes.multipleSelect:
-                debugPrint("multipleSelect")
-            case QuestionTypes.reorder:
-                debugPrint("reorder")
-            case QuestionTypes.trueOrFalse:
-                debugPrint("reorder")
+            } else {
+                self.questionNumberLabel.isHidden = true
             }
         }
     }
@@ -49,7 +37,6 @@ class QuizQuestionTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 
