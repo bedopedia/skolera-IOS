@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SVProgressHUD
 import Alamofire
-class BehaviorNotesViewController: UIViewController{
+import NVActivityIndicatorView
+class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable{
     //TODO:- Fix Cell Height
     //MARK: - Variables
     var child : Child!
@@ -110,10 +110,10 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func getBehaviorNotes(page: Int = 1){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents", "page": page, "per_page" : 20]
         getBehaviorNotesAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
