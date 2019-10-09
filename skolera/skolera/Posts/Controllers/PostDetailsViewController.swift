@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -49,10 +49,10 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     @IBAction func send(){
         if let text = replyTextField.text, !text.isEmpty {
-            SVProgressHUD.show(withStatus: "Loading".localized)
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             let parameters : Parameters = ["comment": ["content": text, "owner_id": userId(), "post_id": self.post.id!]]
             addPostReplyApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 if isSuccess {
                     if let result = value as? [String: AnyObject] {
                         let comment: PostComment = PostComment(result)

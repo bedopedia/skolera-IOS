@@ -8,9 +8,9 @@
 
 import UIKit
 import Alamofire
-import SVProgressHUD
+import NVActivityIndicatorView
 
-class QuizStatusViewController: UIViewController {
+class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -105,10 +105,10 @@ class QuizStatusViewController: UIViewController {
     }
     
     func createSubmission() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]
         createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
                 self.solvingQuiz = true

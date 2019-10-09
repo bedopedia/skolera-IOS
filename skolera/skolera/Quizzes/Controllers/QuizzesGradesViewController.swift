@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class QuizzesGradesViewController: UIViewController {
+class QuizzesGradesViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -36,9 +36,9 @@ class QuizzesGradesViewController: UIViewController {
     }
     
     private func getSubmissions() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizSubmissionsApi(courseGroupId: courseGroupId, quizId: quiz.id) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
                     
@@ -52,7 +52,7 @@ class QuizzesGradesViewController: UIViewController {
     }
     
     private func submitGrade(submission: AssignmentStudentSubmission, grade: String, feedback: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["score": grade,
                                       "student_id": submission.studentId ?? 0,
                                       "quiz_id": quiz.id!,
@@ -63,13 +63,13 @@ class QuizzesGradesViewController: UIViewController {
         submitQuizGradeApi(courseId: courseId, courseGroupId: courseGroupId, quizId: quiz.id, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if feedback.isEmpty {
-                    SVProgressHUD.dismiss()
+                    self.stopAnimating()
                     self.getSubmissions()
                 } else {
                     self.submitFeedback(submissionId: self.quiz.id!, studentId: submission.studentId, feedback: feedback)
                 }
             } else {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
@@ -85,7 +85,7 @@ class QuizzesGradesViewController: UIViewController {
             "to_type": "Student"
             ]]
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 self.getSubmissions()
             } else {

@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 import Chatto
 import ChattoAdditions
 
-class ChatViewController: BaseChatViewController {
+class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     
     var messageSender: DemoChatMessageSender!
     let messagesSelector = BaseMessagesSelector()
@@ -158,12 +158,12 @@ class ChatViewController: BaseChatViewController {
     
     func setThreadSeen(){
         if !newThread {
-            SVProgressHUD.show(withStatus: "Loading".localized)
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             let parameters : Parameters? = ["thread_ids": [self.thread.id]]
             let headers : HTTPHeaders? = getHeaders()
             let url = String(format: SET_THREAD_IS_SEEN())
             Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 switch response.result{
                     
                 case .success(_):
@@ -190,7 +190,7 @@ class ChatViewController: BaseChatViewController {
     
     func send(message: String)
     {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let headers : HTTPHeaders? = getHeaders()
         if newThread {
             let parameters : Parameters = [
@@ -209,7 +209,7 @@ class ChatViewController: BaseChatViewController {
             
             let url = String(format: GET_THREADS())
             Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 switch response.result{
                     
                 case .success(_):
@@ -248,7 +248,7 @@ class ChatViewController: BaseChatViewController {
             ]
             let url = String(format: SEND_MESSAGE(),thread.id)
             Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 switch response.result{
                     
                 case .success(_):
@@ -320,7 +320,7 @@ class ChatViewController: BaseChatViewController {
     }
     
     private func uploadImage(imageData: Data, imageName: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         if !newThread {
             let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
             Alamofire.upload(
@@ -331,7 +331,7 @@ class ChatViewController: BaseChatViewController {
             },
                 to: url, method: .post, headers: getHeaders(),
                 encodingCompletion: { encodingResult in
-                    SVProgressHUD.dismiss()
+                    self.stopAnimating()
                     switch encodingResult {
                     case .success(let upload, _, _):
                         upload.responseJSON { response in

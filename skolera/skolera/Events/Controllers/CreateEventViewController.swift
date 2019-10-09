@@ -8,9 +8,9 @@
 
 import UIKit
 import Alamofire
-import SVProgressHUD
+import NVActivityIndicatorView
 
-class CreateEventViewController: UIViewController {
+class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var whenDateTextField: UITextField!
@@ -135,9 +135,9 @@ class CreateEventViewController: UIViewController {
             eventsParameters["cancel"] = false
             eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId!]]
             let parameters = [ "event": eventsParameters ]
-            SVProgressHUD.show(withStatus: "Loading".localized)
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             createEventsAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 if isSuccess {
                     self.navigationController?.popViewController(animated: true)
                 } else {
