@@ -11,7 +11,7 @@ import SVProgressHUD
 import Alamofire
 import KeychainSwift
 import Firebase
-
+import NVActivityIndicatorView
 class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var moreView: UIView!    //home

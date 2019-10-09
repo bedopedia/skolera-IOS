@@ -113,3 +113,15 @@ func image( _ image:UIImage, withSize newSize:CGSize) -> UIImage {
     UIGraphicsEndImageContext()
     return newImage!.withRenderingMode(.automatic)
 }
+
+func getMainColor() -> UIColor {
+    if getUserType().elementsEqual("student") {
+        return #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
+    } else {
+        if getUserType().elementsEqual("parent") {
+            return #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+        } else {
+            return #colorLiteral(red: 0.02352941176, green: 0.768627451, blue: 0.8, alpha: 1)
+        }
+    }
+}
