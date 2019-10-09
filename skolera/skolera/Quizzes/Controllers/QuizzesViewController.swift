@@ -158,11 +158,12 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isTeacher {
-            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
-            quizVC.child = self.child
-            quizVC.courseName = courseName
-            quizVC.quiz = filteredQuizzes[indexPath.row]
-            self.navigationController?.pushViewController(quizVC, animated: true)
+//            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
+//            quizVC.child = self.child
+//            quizVC.courseName = courseName
+//            quizVC.quiz = filteredQuizzes[indexPath.row]
+//            self.navigationController?.pushViewController(quizVC, animated: true)
+            debugPrint("show quiz details")
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName
