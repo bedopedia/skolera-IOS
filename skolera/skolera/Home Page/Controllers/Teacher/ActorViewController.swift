@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import KeychainSwift
 
-class ActorViewController: UIViewController {
+class ActorViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet weak var childImageOuterView: UIView!
     @IBOutlet weak var childNameLabel: UILabel!

@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class NotificationsViewController: UIViewController {
+class NotificationsViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -40,9 +40,9 @@ class NotificationsViewController: UIViewController {
     }
     
     func setNotificationsSeen(){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             debugPrint("Notification is Seen")
         }
     }
@@ -51,9 +51,9 @@ class NotificationsViewController: UIViewController {
     ///
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)

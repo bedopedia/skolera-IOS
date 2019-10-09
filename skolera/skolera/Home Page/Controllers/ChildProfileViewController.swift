@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 import KeychainSwift
 import Firebase
 
-class ChildProfileViewController: UIViewController {
+class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable {
 
     //MARK: - Outlets
     
@@ -176,10 +176,10 @@ class ChildProfileViewController: UIViewController {
 
     
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -190,7 +190,7 @@ class ChildProfileViewController: UIViewController {
     
     //service call to change localization
     func setLocalization() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
@@ -201,7 +201,7 @@ class ChildProfileViewController: UIViewController {
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             switch response.result{
             case .success(_):
                 //do nothing

@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
-class NotificationsTableViewController: UITableViewController {
+class NotificationsTableViewController: UITableViewController, NVActivityIndicatorViewable {
     // MARK: - variables
     
     /// data source for tableview
@@ -30,9 +30,9 @@ class NotificationsTableViewController: UITableViewController {
 
     
     func setNotificationsSeen(){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             debugPrint("Notification is Seen")
         }
     }
@@ -41,9 +41,9 @@ class NotificationsTableViewController: UITableViewController {
     ///
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
@@ -92,9 +92,9 @@ class NotificationsTableViewController: UITableViewController {
     ///
     /// - Parameter sender: close button
     @IBAction func close(_ sender: UIBarButtonItem) {
-        if(SVProgressHUD.isVisible())
+        if(self.isAnimating)
         {
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
         }
         dismiss(animated: true, completion: nil)
     }

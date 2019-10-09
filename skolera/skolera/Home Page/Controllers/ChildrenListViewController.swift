@@ -8,14 +8,14 @@
 
 import UIKit
 import KeychainSwift
-import SVProgressHUD
 import Alamofire
 import Kingfisher
 import Firebase
+import NVActivityIndicatorView
 
 
 
-class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate {
+class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
@@ -63,10 +63,10 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     
     /// sevice call to set firebase token
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -79,9 +79,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
         self.refreshControl.endRefreshing()
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
@@ -126,8 +126,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible()) {
-                SVProgressHUD.dismiss()
+            if(self.isAnimating) {
+                self.stopAnimating()
             }
             self.sendFCM(token: "")
             let keychain = KeychainSwift()
@@ -146,8 +146,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     ///
     /// - Parameter sender: notification button
     @IBAction func showNotifications() {
-        if(SVProgressHUD.isVisible()){
-            SVProgressHUD.dismiss()
+        if(self.isAnimating){
+            self.stopAnimating()
         }
         let notificationsVC = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         let nvc = UINavigationController(rootViewController: notificationsVC)

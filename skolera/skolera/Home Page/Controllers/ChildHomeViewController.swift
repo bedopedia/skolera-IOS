@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import SVProgressHUD
 import Alamofire
 import KeychainSwift
 import Firebase
 import NVActivityIndicatorView
-class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
+class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     
     @IBOutlet weak var moreView: UIView!    //home
     @IBOutlet weak var notificationView: UIView!
@@ -102,8 +101,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible()) {
-                SVProgressHUD.dismiss()
+            if(self.isAnimating) {
+                self.stopAnimating()
             }
             self.sendFCM(token: "")
             let keychain = KeychainSwift()
@@ -340,10 +339,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
