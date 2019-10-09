@@ -115,7 +115,7 @@ func image( _ image:UIImage, withSize newSize:CGSize) -> UIImage {
 }
 
 func getMainColor() -> UIColor {
-    if getUserType().elementsEqual("student") {
+     if getUserType().elementsEqual("student") {
         return #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
     } else {
         if getUserType().elementsEqual("parent") {
