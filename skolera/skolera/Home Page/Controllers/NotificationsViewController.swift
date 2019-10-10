@@ -13,8 +13,12 @@ import Alamofire
 class NotificationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var backButton: UIButton!
+    
+    var fromChildrenList = false
     
     var notifications = [Notification]()
+    
     
     /// carries data for notifications pagination
     var meta: Meta?
@@ -25,9 +29,16 @@ class NotificationsViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         tableView.delegate = self
+        if !fromChildrenList {
+           backButton.isHidden = true
+        } else {
+            backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        }
         getNotifcations()
-
         // Do any additional setup after loading the view.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+       super.viewDidAppear(animated)
     }
     
     @IBAction func logout () {
@@ -65,6 +76,10 @@ class NotificationsViewController: UIViewController {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
+    }
+    
+    @IBAction func backButtonAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 
 

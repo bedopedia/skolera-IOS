@@ -150,8 +150,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
             SVProgressHUD.dismiss()
         }
         let notificationsVC = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        let nvc = UINavigationController(rootViewController: notificationsVC)
-        self.present(nvc, animated: true, completion: nil)
+        notificationsVC.fromChildrenList = true
+        self.navigationController?.pushViewController(notificationsVC, animated: true)
     }
     
     /// refreshes table if user dragged table down for refresh
