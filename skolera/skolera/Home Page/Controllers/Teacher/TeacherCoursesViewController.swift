@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 
-
-class TeacherCoursesViewController: UIViewController {
+class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet weak var tableView: UITableView!
     var courses: [TeacherCourse] = []
@@ -56,9 +55,9 @@ class TeacherCoursesViewController: UIViewController {
     }
     
     func getCourses() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getCoursesForTeacherAPI(teacherActableId: actor.actableId) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     let teacherCourses: [TeacherCourse] = result.map({ TeacherCourse($0) })

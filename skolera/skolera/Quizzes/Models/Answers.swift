@@ -9,7 +9,7 @@ import Foundation
 class Answers {
     
     let id: Int?
-    let body: String?
+    var body: String?
     let isCorrect: Bool?
     let createdAt: String?
     let updatedAt: String?

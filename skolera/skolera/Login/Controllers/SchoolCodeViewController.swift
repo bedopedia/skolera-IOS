@@ -8,9 +8,9 @@
 
 import UIKit
 import Alamofire
-import SVProgressHUD
+import NVActivityIndicatorView
 import KeychainSwift
-class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
+class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     //MARK: - Outlets
     @IBOutlet weak var schoolCodeTextField: UITextField!
     
@@ -23,7 +23,6 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
-        SVProgressHUD.setDefaultMaskType(.clear)
         schoolCodeTextField.underlined()
     }
     
@@ -78,10 +77,10 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
     ///
     /// - Parameter code: schoolCode
     private func getSchoolBy(code: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["code" : code]
         getSchoolurlAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
@@ -102,10 +101,10 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate {
     ///
     /// - Parameter schoolInfo: school Information come from heruko
     func moveToLoginVC(schoolInfo : HerukoSchoolInfo) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["code" : schoolInfo.code]
         getSchoolInfoAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: Any] {
                     self.schoolCodeTextField.text = ""

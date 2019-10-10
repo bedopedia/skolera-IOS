@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 import YLProgressBar
 
-class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     //MARK: - Outlets
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
@@ -134,13 +134,13 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
 //    }
     
     private func getStudentGradeBook(){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId!, grade.id!)
         debugPrint(url)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.popActivity()
+            self.stopAnimating()
             switch response.result{
                 
             case .success(_):
@@ -226,12 +226,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     private func getCourseGradingPeriods(){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = ["course_id" : grade.courseId]
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_COURSE_GRADING_PERIODS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.popActivity()
+            self.stopAnimating()
             switch response.result{
                 
             case .success(_):

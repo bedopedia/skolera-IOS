@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import NVActivityIndicatorView
 
-class QuizStatusViewController: UIViewController {
+class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -44,6 +46,9 @@ class QuizStatusViewController: UIViewController {
     var quiz: FullQuiz!
     var child : Child!
     var courseName: String = ""
+    var courseGroupId: Int!
+    var detailedQuiz: DetailedQuiz!
+    var solvingQuiz = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +60,80 @@ class QuizStatusViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        
         nameLabel.text = quiz.name
         courseNameLabel.text = courseName
+        setUpDatesUi()
+        setUpGradeUi()
+        if quiz.state.elementsEqual("running") {
+            setUpRunningQuizUi()
+        } else {
+            setUpFinishedQuizUi()
+        }
+//        getQuizDetails()
+    }
+    
+    @IBAction func back() {
+        if solvingQuiz {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @IBAction func openQuizDetails() {
+        let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+        quizDetailsVC.quizId = quiz.id
+//        quizDetailsVC.detailedQuiz = self.detailedQuiz
+        self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+    }
+    
+    @IBAction func solveQuizButtonAction() {
+//        createSubmission()
+        solvingQuiz = true  //should be removed, already in createSubmission
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    }
+    @IBAction func openQuizQuestions() {
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        solveQuizVC.isQuestionsOnly = true
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    }
+    @IBAction func openQuizAnswers() {
+        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        solveQuizVC.isAnswers = true
+        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    }
+    
+    func createSubmission() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]
+        createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+                self.solvingQuiz = true
+                self.navigationController?.pushViewController(solveQuizVC, animated: true)
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+//    func getQuizDetails() {
+//        SVProgressHUD.show(withStatus: "Loading".localized)
+//        getQuizApi(quizId: quiz.id!) { (isSuccess, statusCode, value, error) in
+//            SVProgressHUD.dismiss()
+//            if isSuccess {
+//                if let result = value as? [String : AnyObject] {
+//                    self.detailedQuiz = DetailedQuiz(result)
+//                }
+//            } else {
+//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+//            }
+//        }
+//    }
+    
+    func setUpDatesUi() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
@@ -94,7 +170,9 @@ class QuizStatusViewController: UIViewController {
             quizDateLabel.isHidden = true
             quizClockImage.isHidden = true
         }
-        
+    }
+    
+    func setUpGradeUi() {
         if let grade = quiz.studentSubmissions.score {
             quizGradeLabel.text = "\(grade)"
             if let note = quiz.studentSubmissions.feedback{
@@ -106,79 +184,61 @@ class QuizStatusViewController: UIViewController {
             quizGradeLabel.text = "--"
             quizNoteLabel.text = "Not graded yet".localized
         }
+    }
+    
+    func setUpRunningQuizUi() {
+        quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
+        quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
+        quizClockImage.image = #imageLiteral(resourceName: "greenHour")
         
-        if quiz.state.elementsEqual("running") {
-            quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-            quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-            quizClockImage.image = #imageLiteral(resourceName: "greenHour")
-         
-            if let subId = quiz.studentSubmissions.id {
-                solveQuizButton.isHidden = true
-                quizDateLabel.text = "Solved".localized
-                quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
-//                studentFinishedQuizView.isHidden = false
-            } else {
-                studentFinishedQuizView.isHidden = true
-                solveQuizButton.isHidden = false
-                if !getUserType().elementsEqual("student") {
-                    notStartedQuizView.isHidden = false
-                } else {
-                    notStartedQuizView.isHidden = true
-                }
-            }
+        if let _ = quiz.studentSubmissions.id {
+            solveQuizButton.isHidden = true
+            quizDateLabel.text = "Solved".localized
+            quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
+            //                studentFinishedQuizView.isHidden = false
         } else {
-            solveQuizButton.isHidden = true
-            quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-            quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-            quizClockImage.image = #imageLiteral(resourceName: "1")
-            notStartedQuizView.isHidden = true
-            studentFinishedQuizView.isHidden = false
-            solveQuizButton.isHidden = true
-            if let subId = quiz.studentSubmissions.id {
-                quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
-                gradeView.isHidden = false
-                quizDateLabel.text = "Solved".localized
+            studentFinishedQuizView.isHidden = true
+            solveQuizButton.isHidden = false
+            if !getUserType().elementsEqual("student") {
+                notStartedQuizView.isHidden = false
             } else {
-                gradeView.isHidden = true
-                if !getUserType().elementsEqual("student") {
-                    notStartedQuizView.isHidden = false
-                }
-            }
-            if getUserType().elementsEqual("parent") {
-                //constraints = 0, isHidden = true
-                answersHeightConstraint.constant = 0
-                questionsHeightConstraint.constant = 0
-                detailsHeightConstraint.constant = 0
-                detailsView.isHidden = true
-            }
-            if quiz.studentSubmissions != nil {
-                quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                
-                quizClockImage.image = nil
-//                gradeView.isHidden = false
-                
-            } else {
-                gradeView.isHidden = true
+                notStartedQuizView.isHidden = true
             }
         }
     }
     
-    
-    @IBAction func back() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func openQuizDetails() {
-        let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-        quizDetailsVC.quizId = quiz.id
-        self.navigationController?.pushViewController(quizDetailsVC, animated: true)
-    }
-    
-    @IBAction func solveQuizButtonAction() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-//        quizDetailsVC.quizId = quiz.id
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+    func setUpFinishedQuizUi() {
+        solveQuizButton.isHidden = true
+        quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+        quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+        quizClockImage.image = #imageLiteral(resourceName: "1")
+        notStartedQuizView.isHidden = true
+        studentFinishedQuizView.isHidden = false
+        solveQuizButton.isHidden = true
+        if let _ = quiz.studentSubmissions.id {
+            quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
+            gradeView.isHidden = false
+            quizDateLabel.text = "Solved".localized
+        } else {
+            gradeView.isHidden = true
+            if !getUserType().elementsEqual("student") {
+                notStartedQuizView.isHidden = false
+            }
+        }
+        if getUserType().elementsEqual("parent") {
+            //constraints = 0, isHidden = true
+            answersHeightConstraint.constant = 0
+            questionsHeightConstraint.constant = 0
+            detailsHeightConstraint.constant = 0
+            detailsView.isHidden = true
+        }
+        if quiz.studentSubmissions != nil {
+//            quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+//            quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+            quizClockImage.image = nil
+        } else {
+            gradeView.isHidden = true
+        }
     }
 
 }

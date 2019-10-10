@@ -9,10 +9,10 @@
 import UIKit
 import Kingfisher
 import Alamofire
-import SVProgressHUD
+import NVActivityIndicatorView
 import KeychainSwift
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     
     //MARKL - Variables
@@ -101,7 +101,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     ///   - email: entered user email
     ///   - password: entered user password
     func authenticate( email: String, password: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
         loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
             if isSuccess {
@@ -123,7 +123,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.updateLocale(parent: parent)
                 }
             } else {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
             }
         }
@@ -131,7 +131,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func getChildren(parentId: Int, childId: Int) {
         getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     for childJson in result {
@@ -168,7 +168,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setLocaleAPI(locale) { (isSuccess, statusCode, error) in
             if isSuccess {
                 if isParent() {
-                    SVProgressHUD.dismiss()
+                    self.stopAnimating()
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
@@ -177,7 +177,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     if parent.data.userType.elementsEqual("student") {
                         self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                     } else {
-                        SVProgressHUD.dismiss()
+                        self.stopAnimating()
                         ///////
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         if !parent.data.userType.elementsEqual("teacher") {
@@ -190,7 +190,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             } else {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)

@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import SVProgressHUD
 import Alamofire
 import YLProgressBar
 import DateToolsSwift
-class ChildProfileFeaturesTableViewController: UITableViewController {
+import NVActivityIndicatorView
+class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
 
     //MARK: - Outlets
     @IBOutlet weak var presentDaysLabel: UILabel!
@@ -72,14 +72,10 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SVProgressHUD.setDefaultMaskType(.clear)
         setProgressBarProperties()
-        
-        
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -151,9 +147,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     /// service call to get total courses grades, average grade is set on completion
     private func getGrades() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.grades = result.map({ PostCourse($0) })
@@ -180,7 +176,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     
     private func getCourseGroups() {
         getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     var courseGroups = [Int: CourseGroup]()
@@ -199,10 +195,10 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     }
     
     private func getBehaviorNotesCount() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
         getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
@@ -217,12 +213,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     }
     
     private func getWeeklyReport() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let formatter: DateFormatter = DateFormatter()
         formatter.dateFormat = "d/M/y"
         formatter.locale = Locale(identifier: "en")
         getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
@@ -237,9 +233,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController {
     }
     
     private func getTimeTable() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getTimeTableAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+           self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
                     for timeslotDictionary in result {
