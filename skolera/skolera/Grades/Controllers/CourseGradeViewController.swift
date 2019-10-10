@@ -22,14 +22,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     var students: [Student] = []
-    var assignAvg: [String: Double] = [:]
-    var quizAvg: [String: Double] = [:]
-    var gradeItemAvg: [String: Double] = [:]
+//    var assignAvg: [String: Double] = [:]
+//    var quizAvg: [String: Double] = [:]
+//    var gradeItemAvg: [String: Double] = [:]
     
     
     //MARK: - Variables
     var child : Child!
-    var grade: CourseGrade!
+    var grade: PostCourse!
     var courseGradingPeriods: [CourseGradingPeriods] = []
     var coursePeriods: [CourseGradingPeriods] = []
     var courseSubPeriods: [CourseGradingPeriods] = []
@@ -51,7 +51,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             navbarTitleLabel.text = grade.name
         }
         
-        getAvgStudentGrades()
+//        getAvgStudentGrades()
         getCourseGradingPeriods()
 //        getStudentGradeBook()
         tableView.delegate = self
@@ -92,52 +92,52 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     @objc private func refreshData(_ sender: Any) {
         // Fetch Weather Data
         refreshControl.beginRefreshing()
-        getAvgStudentGrades()
+//        getAvgStudentGrades()
         getCourseGradingPeriods()
 //        getStudentGradeBook()
         refreshControl.endRefreshing()
     }
     
-    private func getAvgStudentGrades(){
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters? = ["student_id" : child.actableId]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId, grade.courseGroup.id)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            self.stopAnimating()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
-                {
-                    self.assignAvg = (result["assignments_averages"] as! [String: Double])
-                    self.quizAvg = (result["quizzes_averages"] as! [String: Double])
-                    self.gradeItemAvg = (result["grades_averages"] as! [String: Double])
-                    
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
-            }
-        }
-    }
+//    private func getAvgStudentGrades(){
+//        SVProgressHUD.show(withStatus: "Loading".localized)
+//        let parameters : Parameters? = ["student_id" : child.actableId]
+//        let headers : HTTPHeaders? = getHeaders()
+//        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!)
+////        let url =  String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!, child.actableId!)
+//        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+//            SVProgressHUD.popActivity()
+//            switch response.result{
+//            case .success(_):
+//                if let result = response.result.value as? [String : AnyObject]
+//                {
+//                    self.assignAvg = (result["assignments_averages"] as! [String: Double])
+//                    self.quizAvg = (result["quizzes_averages"] as! [String: Double])
+//                    self.gradeItemAvg = (result["grades_averages"] as! [String: Double])
+//
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+//                {
+//                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+//                }
+//                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
+//                {
+//                    showReauthenticateAlert(viewController: self)
+//                }
+//                else
+//                {
+//                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
+//                }
+//            }
+//        }
+//    }
     
     private func getStudentGradeBook(){
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId, grade.courseGroup.id)
+        let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId!, grade.id!)
         debugPrint(url)
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             self.stopAnimating()
@@ -156,7 +156,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         assignments.append(Assignment(id: assignDic["id"] as! Int,
                                                       name: assignDic["name"] as! String,
                                                       total: assignDic["total"] as! Double,
-                                                      grade: assignDic["grade"] as! Double,
+                                                      grade: assignDic["grade"] as? Double ?? 0,
                                                       gradeView: assignDic["grade_view"] as? String ?? "\(assignDic["grade_view"] as? Double ?? 0)",
                                                       feedback: assignDic["feedback"] as? String ?? "",
                                                       createdAt: assignDic["end_date"] as! String,
@@ -172,7 +172,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                             name: quizDic["name"] as! String,
                                             totalScore: quizDic["total_score"] as! Double,
                                             total: quizDic["total"] as! Double,
-                                            grade: quizDic["grade"] as! Double,
+                                            grade: quizDic["grade"] as? Double ?? 0,
                                             gradeView: quizDic["grade_view"] as? String ?? "\(quizDic["grade_view"] as? Double ?? 0)",
                                             feedback: quizDic["feedback"] as? String ?? "",
                                             createdAt: quizDic["end_date"] as! String,
@@ -188,7 +188,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                     name: gradeItemDic["name"] as! String,
                                                     maxGrade: gradeItemDic["max_grade"] as! Int,
                                                     total: gradeItemDic["total"] as! Double,
-                                                    grade: gradeItemDic["grade"] as! Double,
+                                                    grade: gradeItemDic["grade"] as? Double ?? 0,
                                                     gradeView: gradeItemDic["grade_view"] as? String ?? "\(gradeItemDic["grade_view"] as? Double ?? 0)",
                                                     feedback: gradeItemDic["feedback"] as? String ?? "",
                                                     createdAt: gradeItemDic["end_date"] as! String,
@@ -531,8 +531,6 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             publish = self.coursePeriods[indexPath.section].publish
         }
         
-        
-        
         if item is String {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeHeaderTableViewCell", for: indexPath as IndexPath) as! GradeHeaderTableViewCell
             cell.selectionStyle = .none
@@ -586,7 +584,6 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     cell.totalGradeLabel.text = ""
                 }
             }
-            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeDetailTableViewCell", for: indexPath as IndexPath) as! GradeDetailTableViewCell
@@ -601,12 +598,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 
                 cell.gradeWorldLabel.text = (item as! Assignment).feedback
-                if Language.language == .arabic {
-                    cell.avgGradeLabel.text = "الدرجه المتوسطه \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
-                } else {
-                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
-                }
-                
+//                if Language.language == .arabic {
+//                    cell.avgGradeLabel.text = "الدرجه المتوسطه \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
+//                } else {
+//                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
+//                }
             } else if item is Quiz {
                 cell.TitleLabel.text = (item as! Quiz).name
                 cell.avgGradeLabel.text = ""
@@ -617,12 +613,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 
                 cell.gradeWorldLabel.text = (item as! Quiz).feedback
-                if Language.language == .arabic {
-                    cell.avgGradeLabel.text = "الدرجه المتوسطه\(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
-                } else {
-                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
-                }
-                
+//                if Language.language == .arabic {
+//                    cell.avgGradeLabel.text = "الدرجه المتوسطه\(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
+//                } else {
+//                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
+//                }
             } else if item is GradeItem {
                 cell.TitleLabel.text = (item as! GradeItem).name
                 cell.avgGradeLabel.text = ""
@@ -633,15 +628,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 cell.gradeWorldLabel.text = (item as! GradeItem).feedback
                 
-                if Language.language == .arabic {
-                    cell.avgGradeLabel.text = "الدرجة المتوسطه \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
-                } else {
-                    cell.avgGradeLabel.text = "Avg. grade is \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
-                }
+//                if Language.language == .arabic {
+//                    cell.avgGradeLabel.text = "الدرجة المتوسطه \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
+//                } else {
+//                    cell.avgGradeLabel.text = "Avg. grade is \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
+//                }
             }
             return cell
         }
-        
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

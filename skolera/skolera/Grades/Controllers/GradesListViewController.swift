@@ -14,7 +14,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     var child : Child!
     
     /// date source for tableView
-    var grades = [CourseGrade]()
+    var grades = [PostCourse]()
     //MARK: - Outlets
     
     @IBOutlet weak var backButton: UIButton!

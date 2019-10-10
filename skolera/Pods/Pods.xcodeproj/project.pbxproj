@@ -844,8 +844,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
-			remoteInfo = GoogleUtilities;
+			remoteGlobalIDString = 9513DC9A6C5DA07EDB2094920BC9EE79;
+			remoteInfo = Cache;
 		};
 		6DBEA262AA4AA14D21E4B6F0083BDFAD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -991,8 +991,8 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4402AFF83DBDC4DD07E198685FDC2DF2;
-			remoteInfo = FirebaseCore;
+			remoteGlobalIDString = 1C8D67D8B72D6BA42CCEDB648537A340;
+			remoteInfo = SVProgressHUD;
 		};
 		BD7D26641D81CD8A30B1ABF4A78265FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1029,6 +1029,20 @@
 			remoteGlobalIDString = 630BAC1AB01015E1392FF8FFB70CDDD3;
 			remoteInfo = Neon;
 		};
+		CDE883ACB9CC76D9B5D060B1FE8B6B58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4402AFF83DBDC4DD07E198685FDC2DF2;
+			remoteInfo = FirebaseCore;
+		};
+		CFEF06E58BD4521EC8F23D42447BC315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E25537BF40D1A3B30CF43FD3E6ACD94;
+			remoteInfo = FirebaseInstanceID;
+		};
 		D46A744E56C38F5DFF6A516604BA7BFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1050,6 +1064,13 @@
 			remoteGlobalIDString = AF8A82876C43F4DFD625D1823E680EAC;
 			remoteInfo = NVActivityIndicatorView;
 		};
+		E42E72B7977F3A18D6A11430CAF0201C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2508BC3B908322C9E85E61AE743C9842;
+			remoteInfo = Chatto;
+		};
 		E46272D86C13C72502335117F369FBB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1064,12 +1085,12 @@
 			remoteGlobalIDString = 630BAC1AB01015E1392FF8FFB70CDDD3;
 			remoteInfo = Neon;
 		};
-		EB0414F78F270B8A7BDBA879786C2665 /* PBXContainerItemProxy */ = {
+		E7B8D3D44C3A9C3CA6F64B0E6BBCCE37 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
-			remoteInfo = GoogleUtilities;
+			remoteGlobalIDString = 421B6ABF460857FE6CA2905EFB5A4F74;
+			remoteInfo = JTAppleCalendar;
 		};
 		ECA032AB26E28700AEB2F57C15C72179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1917,6 +1938,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				000B8AC517E16D4E535586FC6B499B3C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09B0F5505FB775D3FE4162EA3D8FA578 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8F13ABAEACC22E9ACE1A654F1E5DE4D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2776,8 +2805,7 @@
 				206ECAC7EA921AAA70542ABD79682B94 /* TegKeychainConstants.swift */,
 				C67A8F853B838B6942338CFEF34EEC64 /* Support Files */,
 			);
-			name = KeychainSwift;
-			path = KeychainSwift;
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 		682054912843BB718CB57C4E5F8627E9 /* KMPlaceholderTextView */ = {
@@ -3215,7 +3243,8 @@
 				C7946D63DFF1A4441FAC42D7BC0BD263 /* FirebaseAnalytics.framework */,
 				27CA75DC00B50B4354DFE70F01F4DE13 /* FirebaseCoreDiagnostics.framework */,
 			);
-			name = Frameworks;
+			name = "Support Files";
+			path = "../Target Support Files/FirebaseMessaging";
 			sourceTree = "<group>";
 		};
 		A9ACE03C11985A9AC92538B48C46EBD0 /* GoogleAppMeasurement */ = {
@@ -3966,6 +3995,14 @@
 			files = (
 				6F308EE7877A24F8910A8B69544F75E6 /* Chatto-umbrella.h in Headers */,
 				1ED1AC38BA653DDD2FDF10FFAE79370C /* Chatto.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE9EE0F9A160DDF8E8EDA359F946F7F3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				078F9D60E205F6F1056CA03A1B2602EE /* Pods-skolera-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4758,6 +4795,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB2280EADB1BD03CFBE670E285F72DF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB4A0989D2C24C1D1939EB5003FDEEFE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4847,6 +4891,14 @@
 			files = (
 				C2AB1AED7CDD3DA67BC597BA636A0A53 /* YLProgressBar-dummy.m in Sources */,
 				30F8F12922B6C5841332936202625ED7 /* YLProgressBar.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A97B761D8BD84876587913F21C1D5A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CA78A0FFBB30E41DFE89007FE1D7869 /* Pods-skolera-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5488,7 +5540,7 @@
 			isa = PBXTargetDependency;
 			name = Neon;
 			target = 630BAC1AB01015E1392FF8FFB70CDDD3 /* Neon */;
-			targetProxy = E7AAF3DADB657BDB26372D3F014E6150 /* PBXContainerItemProxy */;
+			targetProxy = 0C9782B27477044613C5F85156B192AF /* PBXContainerItemProxy */;
 		};
 		1A4593533AEDB3B02B0753C75076E380 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5519,6 +5571,12 @@
 			name = DateToolsSwift;
 			target = CCB5EA80CC733D89D54DAEB30E93351D /* DateToolsSwift */;
 			targetProxy = 7C2457DC149B0BD81A60FA5096E30398 /* PBXContainerItemProxy */;
+		};
+		2C4D7810A01FEFF7A5526B7EC983A52E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FirebaseAnalytics;
+			target = C49E7A4D59E5C8BE8DE9FB1EFB150185 /* FirebaseAnalytics */;
+			targetProxy = 58E6B908AAB33C4C14D50A1E6883E7D6 /* PBXContainerItemProxy */;
 		};
 		2E16B0C9F82E251D41C0CABA3281ED0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5627,6 +5685,12 @@
 			name = Protobuf;
 			target = 470FE31978DC918618A329D8B55C85FF /* Protobuf */;
 			targetProxy = 8AE514545EE221B7F90CBA965EB2F243 /* PBXContainerItemProxy */;
+		};
+		9BF2705B96541765000179019B067571 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ChattoAdditions;
+			target = 9A88D54DB316ADF1E80363324718D63E /* ChattoAdditions */;
+			targetProxy = D94CF0D44070598F5B72E733C696DAA6 /* PBXContainerItemProxy */;
 		};
 		9CE9590B07A15049DFC81A1C4F346139 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6573,6 +6637,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		5C4E8EE1F6E7B5FF106A44F579C0F0E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5CE8A4ED9990A0DE19EB2C2A14A5492 /* Pods-skolera.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-skolera/Pods-skolera-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-skolera/Pods-skolera.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		5E6F4F4D722BBD3C6A97100DBCCE4969 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -7832,6 +7931,15 @@
 			buildConfigurations = (
 				196DFA3E4A09A28224918543529A1885 /* Debug */,
 				B01D14FDC83DCF9D4BE53066BEA96D05 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		72520C906B105DCF1A902BF6048C5041 /* Build configuration list for PBXNativeTarget "Pods-skolera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BAA14A02D5AC2A9683F477B405B2B28 /* Debug */,
+				5C4E8EE1F6E7B5FF106A44F579C0F0E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
