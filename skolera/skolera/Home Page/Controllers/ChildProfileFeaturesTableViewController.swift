@@ -148,14 +148,14 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     /// service call to get total courses grades, average grade is set on completion
     private func getGrades() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getGradesAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.grades = result.map({ PostCourse($0) })
                     self.tableView.reloadData()
                 }
             } else {
-                self.stopAnimating()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
