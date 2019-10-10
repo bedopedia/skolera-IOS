@@ -31,9 +31,10 @@ class NotificationsViewController: UIViewController {
         tableView.delegate = self
         if !fromChildrenList {
            backButton.isHidden = true
+        } else {
+            backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         getNotifcations()
-
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
