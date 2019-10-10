@@ -136,16 +136,17 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.quiz = self.filteredQuizzes[indexPath.row]
 //        cell.assignment = filteredAssignments[indexPath.row]
 //        debugPrint("Index path: ",indexPath.row)
-        if indexPath.row >= filteredQuizzes.count - 2 {
-//            debugPrint("Index path: ",indexPath.row)
-            if meta.totalPages > pageId {
-                pageId += 1
-                getQuizzes(pageId: pageId)
-                if selectedSegment == 0 {
-                    setOpenedQuizzes()
-                }
-                if selectedSegment == 1 {
-                    setClosedQuizzes()
+        if !getUserType().elementsEqual("teacher") {
+            if indexPath.row >= filteredQuizzes.count - 2 {
+                if meta.totalPages > pageId {
+                    pageId += 1
+                    getQuizzes(pageId: pageId)
+                    if selectedSegment == 0 {
+                        setOpenedQuizzes()
+                    }
+                    if selectedSegment == 1 {
+                        setClosedQuizzes()
+                    }
                 }
             }
         }
