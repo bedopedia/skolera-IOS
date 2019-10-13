@@ -173,7 +173,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
-            alert.modalPresentationStyle = .fullScreen
+            alert.modalPresentationStyle = .overCurrentContext
             self.present(alert, animated: true, completion: nil)
         }
     }
