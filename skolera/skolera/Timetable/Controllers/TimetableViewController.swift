@@ -60,11 +60,20 @@ class TimetableViewController: UIViewController, EventDataSource{
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
             }
         } else {
-            if #available(iOS 13.0, *) {
-                statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            if getUserType().elementsEqual("student") {
+                if #available(iOS 13.0, *) {
+                    statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+                } else {
+                    statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+                }
             } else {
-                statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+                if #available(iOS 13.0, *) {
+                    statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+                } else {
+                    statusSegmentControl.tintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+                }
             }
+            
         }
 
     }
