@@ -156,6 +156,7 @@ class SolveQuizViewController: UIViewController {
         submitQuiz.openQuizStatus = {
             self.navigationController?.popToRootViewController(animated: true)
         }
+        submitQuiz.modalPresentationStyle = .fullScreen
         self.navigationController?.navigationController?.present(submitQuiz, animated: true, completion: nil)
     }
     

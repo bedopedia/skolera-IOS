@@ -144,6 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                             childProfileVC.eventsText = ""
                             let nvc = UINavigationController(rootViewController: childProfileVC)
                             nvc.isNavigationBarHidden = true
+                            nvc.modalPresentationStyle = .fullScreen
                             self.present(nvc, animated: true, completion: nil)
                             break
                         }
@@ -172,6 +173,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
+                    nvc.modalPresentationStyle = .fullScreen
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
@@ -186,6 +188,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         childProfileVC.actor = parent.data
                         let nvc = UINavigationController(rootViewController: childProfileVC)
                         nvc.isNavigationBarHidden = true
+                        nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)
                     }
                 }

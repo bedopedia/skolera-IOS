@@ -16,6 +16,7 @@ func showAlert(viewController: UIViewController, title: String, message: String,
     
     let okAction = UIAlertAction(title: "OK", style: .default, handler: completion)
     alertController.addAction(okAction)
+    alertController.modalPresentationStyle = .fullScreen
     viewController.present(alertController, animated: true, completion: nil)
 }
 
@@ -27,9 +28,11 @@ func showReauthenticateAlert(viewController: UIViewController) {
         let nvc = UINavigationController()
         let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
         nvc.pushViewController(schoolCodeVC, animated: true)
+        nvc.modalPresentationStyle = .fullScreen
         viewController.present(nvc, animated: true, completion: nil)
     })
     alertController.addAction(okAction)
+    alertController.modalPresentationStyle = .fullScreen
     viewController.present(alertController, animated: true, completion: {() -> Void in
     })
 }

@@ -307,6 +307,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -335,6 +336,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
                 }))
+                alert.modalPresentationStyle = .fullScreen
                 self.present(alert, animated: true, completion: nil)
             }
         
@@ -342,6 +344,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             let alert = UIAlertController(title: "Skolera", message: "No timetable available".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }

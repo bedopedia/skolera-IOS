@@ -113,6 +113,7 @@ extension QuizzesGradesViewController: UITableViewDataSource, UITableViewDelegat
         feedbackDialog.didSubmitGrade = { (grade, feedback) in
             self.submitGrade(submission: self.submissions[indexPath.row], grade: grade, feedback: feedback)
         }
+        feedbackDialog.modalPresentationStyle = .overCurrentContext
         self.present(feedbackDialog, animated: true, completion: nil)
     }
 

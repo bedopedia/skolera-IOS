@@ -65,6 +65,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -74,6 +75,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
         let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypePDF), String(kUTTypePresentation), String(kUTTypeMP3), String(kUTTypeImage), String(kUTTypeVideo), String(kUTTypeData), String(kUTTypeArchive)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
+        importMenu.modalPresentationStyle = .fullScreen
         self.present(importMenu, animated: true, completion: nil)
     }
     
@@ -108,6 +110,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
                 }))
+                alert.modalPresentationStyle = .fullScreen
                 self.present(alert, animated: true, completion: nil)
             }
             
@@ -172,6 +175,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                                 alert.addAction(UIAlertAction(title: "CANCEL".localized, style: .cancel, handler: { _ in
                                     NSLog("The \"Cancel\" alert occured.")
                                 }))
+                                alert.modalPresentationStyle = .fullScreen
                                 self.present(alert, animated: true, completion: nil)
                             }
         cell.chosenFile = attachments[indexPath.row]
