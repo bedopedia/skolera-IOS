@@ -75,7 +75,6 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
         let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypePDF), String(kUTTypePresentation), String(kUTTypeMP3), String(kUTTypeImage), String(kUTTypeVideo), String(kUTTypeData), String(kUTTypeArchive)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
-        importMenu.modalPresentationStyle = .fullScreen
         self.present(importMenu, animated: true, completion: nil)
     }
     
