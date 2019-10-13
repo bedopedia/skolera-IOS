@@ -220,11 +220,12 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
+            nvc.modalPresentationStyle = .fullScreen
             self.present(nvc, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler:{ (UIAlertAction)in
         }))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: {
         })
     }
@@ -238,6 +239,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
             // do nothing
         }))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     

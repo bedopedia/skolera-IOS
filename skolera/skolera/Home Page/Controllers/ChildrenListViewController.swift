@@ -105,6 +105,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
             exit(0);
         }))
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: nil))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -135,10 +136,11 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
+            nvc.modalPresentationStyle = .fullScreen
             self.present(nvc, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     

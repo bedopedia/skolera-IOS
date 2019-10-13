@@ -135,6 +135,7 @@ class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicat
                     alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                         NSLog("The \"OK\" alert occured.")
                     }))
+                    alert.modalPresentationStyle = .fullScreen
                     self.present(alert, animated: true, completion: nil)
                 }
             }
