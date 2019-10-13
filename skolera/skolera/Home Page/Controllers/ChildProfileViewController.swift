@@ -141,6 +141,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable 
     @IBAction func showNotifications(_ sender: UIBarButtonItem) {
         let notificationsVC = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         let nvc = UINavigationController(rootViewController: notificationsVC)
+        nvc.modalPresentationStyle = .fullScreen
         self.present(nvc, animated: true, completion: nil)
     }
     
@@ -170,6 +171,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable 
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
             // do nothing
         }))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     

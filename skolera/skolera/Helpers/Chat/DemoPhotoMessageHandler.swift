@@ -47,6 +47,7 @@ class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
             ]
             let controller = LightboxController(images: images)
             controller.dynamicBackground = true
+            controller.modalPresentationStyle = .fullScreen
             viewController.present(controller, animated: true, completion: nil)
         }
         self.baseHandler.userDidTapOnBubble(viewModel: viewModel)

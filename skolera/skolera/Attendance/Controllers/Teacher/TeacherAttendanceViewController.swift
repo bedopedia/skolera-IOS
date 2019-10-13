@@ -173,6 +173,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -354,7 +355,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             print("User click Dismiss button")
             //batch delete
         }))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: {
             print("completion block")
         })
@@ -420,6 +421,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                     self.submitAttendance(student: selectedStudent, type: type, status: status, comment: comment)
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
+                submitExcuse.modalPresentationStyle = .fullScreen
                 self.present(submitExcuse, animated: true, completion: nil)
             }
         }

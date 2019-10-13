@@ -115,6 +115,7 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
             feedbackDialog.didSubmitGrade = { grade, feedback in
                 self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
             }
+            feedbackDialog.modalPresentationStyle = .overCurrentContext
             self.present(feedbackDialog, animated: true, completion: nil)
         }
         
