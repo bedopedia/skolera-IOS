@@ -136,6 +136,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                             let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
                             assignmentDetailsVC.child = self.child
                             assignmentDetailsVC.assignment = assignment
+                            debugPrint(self.parent, self.parent?.parent)
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                         }
                     } else {
