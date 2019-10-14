@@ -22,6 +22,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var pageId = 1
     var selectedSegment = 0
     var meta: Meta!
+    private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -72,8 +73,20 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             getQuizzes(pageId: pageId)
         }
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        if isTeacher {
+            getTeacherQuizzes()
+        } else {
+            getQuizzes(pageId: pageId)
+        }
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
