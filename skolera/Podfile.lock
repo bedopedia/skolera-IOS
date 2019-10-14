@@ -9,8 +9,13 @@ PODS:
   - Chatto (3.3.1)
   - ChattoAdditions (3.3.1):
     - Chatto
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - DateToolsSwift (4.0.0)
   - Device.swift (1.1.2)
+  - Fabric (1.10.2)
+  - Firebase/Analytics (5.10.0):
+    - Firebase/Core
   - Firebase/Core (5.10.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.2.0)
@@ -94,7 +99,10 @@ DEPENDENCIES:
   - CalendarKit (= 0.3.1)
   - Chatto (= 3.3.1)
   - ChattoAdditions (= 3.3.1)
+  - Crashlytics (~> 3.14.0)
   - Device.swift
+  - Fabric (~> 1.10.2)
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
   - IQKeyboardManager
@@ -141,6 +149,8 @@ SPEC REPOS:
     - TPKeyboardAvoiding
     - YLProgressBar
   trunk:
+    - Crashlytics
+    - Fabric
     - NVActivityIndicatorView
 
 SPEC CHECKSUMS:
@@ -150,8 +160,10 @@ SPEC CHECKSUMS:
   CalendarKit: d188d78a424c1559a6a5b1ee18c37180fde1498f
   Chatto: 24a6c9b0c91b08130466888b8b61563b90191c6f
   ChattoAdditions: cc74cd3dd371aa3f70e5ab8568a4f383f0c0eb8c
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Device.swift: f5ff884087c13999505b3a6b2ff1104fb6923f93
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 6691d47562a780c26281ce8464518faafc90c610
   FirebaseAnalytics: 831f1f127f4a75698e9875a87bf7e2668730d953
   FirebaseCore: c6079de64c1a87000e52e9b408dddcadc901177f
@@ -175,6 +187,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
   YLProgressBar: 365b6c5e934be18b661f79413db33c993c8e8251
 
-PODFILE CHECKSUM: 1cd1421216f37f5390701114f8b1076ae620a391
+PODFILE CHECKSUM: 29896f7a432d5f10e5cc1e640c92fd81146c9be6
 
-COCOAPODS: 1.8.0.beta.2
+COCOAPODS: 1.8.3
