@@ -82,6 +82,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         if isTeacher {
             getTeacherQuizzes()
         } else {
+            pageId = 1
             getQuizzes(pageId: pageId)
         }
         refreshControl.endRefreshing()
@@ -121,7 +122,11 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.quizzes = result.map({ FullQuiz($0) })
-                    self.setOpenedQuizzes()
+                    if self.selectedSegment == 1 {
+                        self.setClosedQuizzes()
+                    } else {
+                        self.setOpenedQuizzes()
+                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -139,9 +144,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
                     if pageId == 1 {
                         self.quizzes = quizResponse.quizzes
                         self.meta = quizResponse.meta
-                        self.setOpenedQuizzes()
                     } else {
                         self.quizzes.append(contentsOf: quizResponse.quizzes)
+                    }
+                    if self.selectedSegment == 1 {
+                        self.setClosedQuizzes()
+                    } else {
+                        self.setOpenedQuizzes()
                     }
                 }
             } else {
