@@ -17,8 +17,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var backButton: UIButton!
     
     var child : Child!
-
     var courses: [PostCourse] = []
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
@@ -28,13 +29,26 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.rowHeight = UITableViewAutomaticDimension
+        if #available(iOS 10.0, *) {
+             tableView.refreshControl = refreshControl
+         } else {
+             tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
+        
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getCourses()
+        refreshControl.endRefreshing()
+    }
+
 
     func getCourses(){
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
