@@ -73,11 +73,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         createEventButton.layer.borderWidth = 1
         tableView.delegate = self
         tableView.dataSource = self
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
-        }
+        tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
