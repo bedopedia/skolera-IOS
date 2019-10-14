@@ -23,6 +23,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     var threads: [Threads] = []
     var child: Child!
     var actor: Actor!
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         if getUserType().elementsEqual("teacher") {
             leftHeaderButton.isHidden = true
         }
+        threadsTableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +66,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 //            parentVc.headerHeightConstraint.constant = 0
 //            parentVc.headerView.isHidden = true
         }
+    }
+
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getThreads()
+        refreshControl.endRefreshing()
     }
 
     func getThreads()
@@ -282,11 +291,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func createNewThread(){
-
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        newMessageVC.child = self.child
+        debugPrint(parent)
+        if let nvc = parent as? ContactTeacherNVC {
+            newMessageVC.child = nvc.child
+        }
         self.navigationController?.pushViewController(newMessageVC, animated: true)
-
     }
 
     

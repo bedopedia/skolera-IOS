@@ -71,6 +71,12 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
             childVc.addChildImage()
             childVc.addChildData()
         }
+        
+        for child in childViewControllers {
+            if let childNvc = child as? ContactTeacherNVC {
+                childNvc.child = self.child
+            }
+        }
     }
     
     @IBAction func leftAction() {
@@ -125,13 +131,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
                 newMessageVC.child = self.child
                 contactTeacherNvc.pushViewController(newMessageVC, animated: true)
             }
-            
-//            if let contactTeacher = child as? ContactTeacherViewController {
-//                contactTeacher.child = self.child
-//            }
+            if let contactTeacher = child as? ContactTeacherViewController {
+                contactTeacher.child = self.child
+            }
         }
-        
-        
     }
     
     private func unSelectAllTabs(){
