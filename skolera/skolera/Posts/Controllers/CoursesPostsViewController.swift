@@ -25,9 +25,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var courseGroup: CourseGroup!
     var posts: [Post] = []
     var meta: Meta!
-
     var isTeacher: Bool = false
     
+//    MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,7 +93,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    
+//    MARK: -Table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
