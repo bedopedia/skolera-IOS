@@ -1636,6 +1636,7 @@
 				54EB92F82015ED1D001DD93F /* Resources */,
 				C1F7E074340271C3ABF2205C /* [CP] Embed Pods Frameworks */,
 				54F46E83203DBC7E003F21BB /* Increment Build */,
+				DC995506235471E500124F72 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1894,6 +1895,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DC995506235471E500124F72 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2287,7 +2305,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
