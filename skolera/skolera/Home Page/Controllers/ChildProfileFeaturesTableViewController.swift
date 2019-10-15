@@ -11,6 +11,7 @@ import Alamofire
 import YLProgressBar
 import DateToolsSwift
 import NVActivityIndicatorView
+
 class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
 
     //MARK: - Outlets
