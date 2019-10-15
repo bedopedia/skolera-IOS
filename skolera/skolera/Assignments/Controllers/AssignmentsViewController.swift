@@ -26,8 +26,10 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     var courseGroupId: Int = 0
     var assignments: [FullAssignment] = []
     var filteredAssignments: [FullAssignment] = []
-    
     var meta: Meta!
+    var selectedSegment = 0
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
@@ -67,6 +69,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getAssignments()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     @IBAction func back() {
@@ -76,14 +80,21 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
+            selectedSegment = 0
             setOpenedAssignments()
         case 1:
+            selectedSegment = 1
             setClosedAssignments()
         default:
             setOpenedAssignments()
         }
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getAssignments()
+        refreshControl.endRefreshing()
+    }
+
     private func setOpenedAssignments() {
         filteredAssignments = assignments.filter({ $0.state.elementsEqual("running") })
         self.tableView.reloadData()
@@ -101,7 +112,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
-                    self.setOpenedAssignments()
+                    if self.selectedSegment == 0 {
+                        self.setOpenedAssignments()
+                    } else {
+                        self.setClosedAssignments()
+                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -121,6 +136,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                             let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
                             assignmentDetailsVC.child = self.child
                             assignmentDetailsVC.assignment = assignment
+                            debugPrint(self.parent, self.parent?.parent)
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                         }
                     } else {

@@ -20,6 +20,8 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
         }
     }
     var meta: BehaviorNotesResponseMeta!
+    private let refreshControl = UIRefreshControl()
+
     //MARK: - Outlets
     
     @IBOutlet weak var backButton: UIButton!
@@ -52,9 +54,17 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
-        
         getBehaviorNotes()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
     }
+    @objc private func refreshData(_ sender: Any) {
+            // Fetch Weather Data
+            refreshControl.beginRefreshing()
+            getBehaviorNotes()
+            refreshControl.endRefreshing()
+        }
 
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {

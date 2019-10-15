@@ -21,6 +21,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     var courses = [QuizCourse]()
     
     var meta: Meta!
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +34,15 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getCourses()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getCourses()
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
