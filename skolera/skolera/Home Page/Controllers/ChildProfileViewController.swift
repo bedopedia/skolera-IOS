@@ -12,7 +12,7 @@ import Alamofire
 import KeychainSwift
 import Firebase
 
-class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable {
+class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
     //MARK: - Outlets
     
@@ -32,7 +32,6 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable 
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
-    
     let maxHeight: CGFloat = 143
     let minHeight: CGFloat = 12
     
@@ -55,7 +54,19 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable 
                 }
             }
         }
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
