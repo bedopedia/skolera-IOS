@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Alamofire
 
-class NotificationsViewController: UIViewController, NVActivityIndicatorViewable {
+class NotificationsViewController: UIViewController, NVActivityIndicatorViewable,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
@@ -35,12 +35,22 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         getNotifcations()
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewDidAppear(_ animated: Bool) {
        super.viewDidAppear(animated)
     }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1 && fromChildrenList
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     
     @IBAction func logout () {
         if let mainViewController = parent as? TeacherContainerViewController {
