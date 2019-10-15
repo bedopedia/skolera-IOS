@@ -71,47 +71,28 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         getThreads()
         refreshControl.endRefreshing()
     }
-
-    func getThreads()
-    {
+    
+    func getThreads() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters? = nil
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_THREADS())
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        getThreadsApi { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            switch response.result{
-            case .success(_):
+            if isSuccess {
                 self.threads = []
-                if let result = response.result.value as? [String: AnyObject]
-                {
+                if let result = response as? [String: AnyObject] {
                     debugPrint(result)
                     if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
-                        for thread in threadsJson
-                        {
+                        for thread in threadsJson {
                             self.threads.append(Threads.init(fromDictionary: thread))
                         }
                         self.threadsTableView.reloadData()
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
-    
+
     @IBAction func logout() {
         let parentController = parent?.parent
         if let mainViewController = parentController as? TeacherContainerViewController {
