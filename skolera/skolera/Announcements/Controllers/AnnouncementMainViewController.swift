@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 
 
-class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable {
+class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
     var announcements = [Announcement]()
     var meta: Meta?
@@ -27,6 +27,17 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         navigationItem.backBarButtonItem = backItem
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+//    MARK: - Swipe
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 
     

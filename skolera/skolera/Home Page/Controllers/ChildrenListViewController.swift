@@ -56,6 +56,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
+    
+   
+
     // MARK: - Table view settings
     
     /// sevice call to set firebase token
