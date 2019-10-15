@@ -27,8 +27,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
 //        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self

@@ -30,9 +30,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
 //        signOutButton.image = signOutButton.image?.flipIfNeeded()
 //        navigationController?.isNavigationBarHidden = false
         self.tableView.delegate = self
@@ -59,6 +56,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
+    
+   
+
     // MARK: - Table view settings
     
     /// sevice call to set firebase token

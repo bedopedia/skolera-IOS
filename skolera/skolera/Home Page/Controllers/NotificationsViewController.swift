@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Alamofire
 
-class NotificationsViewController: UIViewController, NVActivityIndicatorViewable {
+class NotificationsViewController: UIViewController, NVActivityIndicatorViewable,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
@@ -33,12 +33,25 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         getNotifcations()
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     override func viewDidAppear(_ animated: Bool) {
        super.viewDidAppear(animated)
     }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1 && fromChildrenList
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         getNotifcations()
