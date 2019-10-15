@@ -15,6 +15,8 @@ class AttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+    
     
     //MARK: - Variables
     var borderColor: UIColor!{
@@ -55,7 +57,8 @@ class AttendanceTableViewCell: UITableViewCell {
                 formatter.locale = Locale(identifier: "en")
                 formatter.dateFormat = "MMM"
                 monthLabel.text = formatter.string(from: date!)
-                messageLabel.text = event.title
+                messageLabel.text = event.description ?? ""
+                titleLabel.text = self.event.title
             }
         }
     }
