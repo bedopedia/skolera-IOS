@@ -17,10 +17,10 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     @IBOutlet weak var tableView: UITableView!
     
     private var submissions: [AssignmentStudentSubmission] = []
-    
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignment: FullAssignment!
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +29,19 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         tableView.delegate = self
         tableView.dataSource = self
         getSubmissions()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getSubmissions()
+        refreshControl.endRefreshing()
+    }
+
     private func getSubmissions() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id) { (isSuccess, statusCode, value, error) in

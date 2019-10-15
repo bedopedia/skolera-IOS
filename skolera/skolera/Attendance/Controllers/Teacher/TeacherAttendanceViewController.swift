@@ -284,6 +284,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         }
     }
 
+//    MARK: - IBActions
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -361,7 +362,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         })
     }
 }
-
+//MARK: Table View Extension
 extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

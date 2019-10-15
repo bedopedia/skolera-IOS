@@ -49,6 +49,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     var eventsCount = 0
     var vacationsCount = 0
     var personalCount = 0
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         createEventButton.layer.borderWidth = 1
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +95,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         self.navigationController?.pushViewController(createEventVC, animated: true)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getEvents()
+        refreshControl.endRefreshing()
+        }
+
     func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo) {
         let date = visibleDates.monthDates.first?.date
         let formatter = DateFormatter()

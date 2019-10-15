@@ -21,7 +21,8 @@ class QuizzesGradesViewController: UIViewController, NVActivityIndicatorViewable
     var courseId: Int = 0
     var quiz: FullQuiz!
     var quizName: String = ""
-    
+    private let refreshControl = UIRefreshControl()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
@@ -29,8 +30,16 @@ class QuizzesGradesViewController: UIViewController, NVActivityIndicatorViewable
         tableView.dataSource = self
         titleLabel.text = quizName
         getSubmissions()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getSubmissions()
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }

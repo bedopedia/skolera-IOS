@@ -16,12 +16,10 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     @IBOutlet var backButton: UIButton!
     
     var fromChildrenList = false
-    
     var notifications = [Notification]()
-    
-    
     /// carries data for notifications pagination
     var meta: Meta?
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +35,8 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     override func viewDidAppear(_ animated: Bool) {
        super.viewDidAppear(animated)
@@ -52,6 +52,12 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     }
 
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getNotifcations()
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func logout () {
         if let mainViewController = parent as? TeacherContainerViewController {
             mainViewController.logout()

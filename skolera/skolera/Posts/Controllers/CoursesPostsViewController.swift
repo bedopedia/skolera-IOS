@@ -25,12 +25,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var courseGroup: CourseGroup!
     var posts: [Post] = []
     var meta: Meta!
-
     var isTeacher: Bool = false
+    private let refreshControl = UIRefreshControl()
+
     
+//    MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
@@ -48,6 +49,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
     }
     
@@ -68,7 +71,12 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
 //        self.present(createPost, animated: true, completion: nil)
         self.navigationController?.pushViewController(createPost, animated: true)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getPosts()
+        refreshControl.endRefreshing()
+    }
+
     func getPosts(page: Int = 1){
         var id: Int
         if isTeacher {
@@ -93,7 +101,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    
+//    MARK: -Table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
