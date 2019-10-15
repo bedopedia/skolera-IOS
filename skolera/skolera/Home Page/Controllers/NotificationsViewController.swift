@@ -35,7 +35,8 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         getNotifcations()
-        // Do any additional setup after loading the view.
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     override func viewDidAppear(_ animated: Bool) {
        super.viewDidAppear(animated)
