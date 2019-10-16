@@ -8,13 +8,13 @@
 
 import UIKit
 import KeychainSwift
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 import Chatto
 import ChattoAdditions
 import AlamofireImage
 
-class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NVActivityIndicatorViewable {
     @IBOutlet weak var threadsTableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
@@ -23,11 +23,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     var threads: [Threads] = []
     var child: Child!
     var actor: Actor!
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
 //        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
@@ -44,6 +43,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         if getUserType().elementsEqual("teacher") {
             leftHeaderButton.isHidden = true
         }
+        threadsTableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,21 +59,27 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        SVProgressHUD.dismiss()
+        self.stopAnimating()
         if let parentVc = parent?.parent as? ChildHomeViewController {
 //            parentVc.headerHeightConstraint.constant = 0
 //            parentVc.headerView.isHidden = true
         }
     }
 
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getThreads()
+        refreshControl.endRefreshing()
+    }
+
     func getThreads()
     {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_THREADS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             switch response.result{
             case .success(_):
                 self.threads = []
@@ -187,7 +194,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         DispatchQueue.global(qos: .userInitiated).async {
             // Bounce back to the main thread to update the UI
             guard self.threads.count > 0 else {
@@ -272,7 +279,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             chatVC.thread = self.threads[indexPath.row]
             
             DispatchQueue.main.async {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
 //                self.navigationController?.isNavigationBarHidden = false
 //                self.navigationController?.pushViewController(chatVC, animated: true)
                 self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
@@ -282,11 +289,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func createNewThread(){
-
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        newMessageVC.child = self.child
+        debugPrint(parent)
+        if let nvc = parent as? ContactTeacherNVC {
+            newMessageVC.child = nvc.child
+        }
         self.navigationController?.pushViewController(newMessageVC, animated: true)
-
     }
 
     

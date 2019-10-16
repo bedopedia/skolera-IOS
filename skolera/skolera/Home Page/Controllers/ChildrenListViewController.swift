@@ -8,14 +8,14 @@
 
 import UIKit
 import KeychainSwift
-import SVProgressHUD
 import Alamofire
 import Kingfisher
 import Firebase
+import NVActivityIndicatorView
 
 
 
-class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate {
+class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
@@ -30,9 +30,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
 //        signOutButton.image = signOutButton.image?.flipIfNeeded()
 //        navigationController?.isNavigationBarHidden = false
         self.tableView.delegate = self
@@ -59,14 +56,17 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
+    
+   
+
     // MARK: - Table view settings
     
     /// sevice call to set firebase token
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -79,9 +79,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
         self.refreshControl.endRefreshing()
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
@@ -105,6 +105,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
             exit(0);
         }))
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: nil))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -126,8 +127,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible()) {
-                SVProgressHUD.dismiss()
+            if(self.isAnimating) {
+                self.stopAnimating()
             }
             self.sendFCM(token: "")
             let keychain = KeychainSwift()
@@ -135,10 +136,11 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
+            nvc.modalPresentationStyle = .fullScreen
             self.present(nvc, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -146,12 +148,12 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate 
     ///
     /// - Parameter sender: notification button
     @IBAction func showNotifications() {
-        if(SVProgressHUD.isVisible()){
-            SVProgressHUD.dismiss()
+        if(self.isAnimating){
+            self.stopAnimating()
         }
         let notificationsVC = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        let nvc = UINavigationController(rootViewController: notificationsVC)
-        self.present(nvc, animated: true, completion: nil)
+        notificationsVC.fromChildrenList = true
+        self.navigationController?.pushViewController(notificationsVC, animated: true)
     }
     
     /// refreshes table if user dragged table down for refresh

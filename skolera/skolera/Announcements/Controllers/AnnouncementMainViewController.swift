@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 
 
-class AnnouncementMainViewController: UIViewController {
+class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
     var announcements = [Announcement]()
     var meta: Meta?
@@ -27,13 +27,24 @@ class AnnouncementMainViewController: UIViewController {
         navigationItem.backBarButtonItem = backItem
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+//    MARK: - Swipe
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 
     
     func getAnnouncements(page: Int = 1) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {

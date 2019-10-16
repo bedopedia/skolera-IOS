@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import SVProgressHUD
 import Alamofire
 import KeychainSwift
 import Firebase
-
-class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
+import NVActivityIndicatorView
+class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     
     @IBOutlet weak var moreView: UIView!    //home
     @IBOutlet weak var notificationView: UIView!
@@ -72,6 +71,12 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             childVc.addChildImage()
             childVc.addChildData()
         }
+        
+        for child in childViewControllers {
+            if let childNvc = child as? ContactTeacherNVC {
+                childNvc.child = self.child
+            }
+        }
     }
     
     @IBAction func leftAction() {
@@ -102,8 +107,8 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible()) {
-                SVProgressHUD.dismiss()
+            if(self.isAnimating) {
+                self.stopAnimating()
             }
             self.sendFCM(token: "")
             let keychain = KeychainSwift()
@@ -111,10 +116,11 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
+            nvc.modalPresentationStyle = .fullScreen
             self.present(nvc, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -125,13 +131,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
                 newMessageVC.child = self.child
                 contactTeacherNvc.pushViewController(newMessageVC, animated: true)
             }
-            
-//            if let contactTeacher = child as? ContactTeacherViewController {
-//                contactTeacher.child = self.child
-//            }
+            if let contactTeacher = child as? ContactTeacherViewController {
+                contactTeacher.child = self.child
+            }
         }
-        
-        
     }
     
     private func unSelectAllTabs(){
@@ -340,10 +343,10 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -363,6 +366,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate {
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
             // do nothing
         }))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     

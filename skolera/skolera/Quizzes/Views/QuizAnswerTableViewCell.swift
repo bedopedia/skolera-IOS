@@ -18,8 +18,8 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
+    var isAnswers = false
     var questionType: QuestionTypes! {
-        
         didSet {
             self.hideMatchView()
             self.cellView.backgroundColor = .white
@@ -40,11 +40,12 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     var answer: Answers! {
         didSet {
-//            if questionType != QuestionTypes.trueOrFalse {
-                answerTextLabel.text = self.answer.body
-//            }
+            answerTextLabel.text = self.answer.body
             matchTextField.delegate = self
-            matchTextField.font = UIFont.init(name: matchTextField.font!.fontName, size: 20)
+            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
+            if isAnswers {
+                matchTextField.text = self.answer.match ?? ""
+            }
         }
     }
     

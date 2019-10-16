@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class TeacherAttendanceViewController: UIViewController {
+class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -80,7 +80,7 @@ class TeacherAttendanceViewController: UIViewController {
     }
     
     func getFullDayData() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 self.fullDayAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
@@ -93,7 +93,7 @@ class TeacherAttendanceViewController: UIViewController {
     
     func getSlotData() {
         getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 self.slotAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
                 self.timeTableSlots = self.slotAttendanceObject.timetableSlots
@@ -173,6 +173,7 @@ class TeacherAttendanceViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -236,9 +237,9 @@ class TeacherAttendanceViewController: UIViewController {
     
     func createNewAttendance(_ parameters: Parameters) {
 //        TO DO: must check that the latest attendance state is not the same
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 self.getFullDayData()   //retrieves all the values again
             } else {
@@ -272,9 +273,9 @@ class TeacherAttendanceViewController: UIViewController {
         
         selectedStudents = []
         parameters["ids"] = deletedAttendances
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         deleteAttendancesApi(parameters: parameters) {  (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 self.getFullDayData()   //retrieves all the values again
             } else {
@@ -283,6 +284,7 @@ class TeacherAttendanceViewController: UIViewController {
         }
     }
 
+//    MARK: - IBActions
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -354,13 +356,13 @@ class TeacherAttendanceViewController: UIViewController {
             print("User click Dismiss button")
             //batch delete
         }))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: {
             print("completion block")
         })
     }
 }
-
+//MARK: Table View Extension
 extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -420,6 +422,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                     self.submitAttendance(student: selectedStudent, type: type, status: status, comment: comment)
                 }
 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
+                submitExcuse.modalPresentationStyle = .fullScreen
                 self.present(submitExcuse, animated: true, completion: nil)
             }
         }

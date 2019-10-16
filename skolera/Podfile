@@ -22,6 +22,10 @@ target 'skolera' do
   #Firebase
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
+ # Pods for PodTest
+  pod 'Fabric', '~> 1.10.2'
+  pod 'Crashlytics', '~> 3.14.0'
   #Chat
   pod 'Chatto', '= 3.3.1'
   pod 'ChattoAdditions', '= 3.3.1'
@@ -36,4 +40,6 @@ target 'skolera' do
   pod 'IQKeyboardManager'
   #textView with placeholder
   pod 'KMPlaceholderTextView', '~> 1.4.0'
+  #NVActivity loader
+  pod 'NVActivityIndicatorView'
 end

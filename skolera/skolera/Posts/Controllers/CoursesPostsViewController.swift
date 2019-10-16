@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -25,12 +25,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var courseGroup: CourseGroup!
     var posts: [Post] = []
     var meta: Meta!
-
     var isTeacher: Bool = false
+    private let refreshControl = UIRefreshControl()
+
     
+//    MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
@@ -48,6 +49,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
     }
     
@@ -68,11 +71,22 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
 //        self.present(createPost, animated: true, completion: nil)
         self.navigationController?.pushViewController(createPost, animated: true)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getPosts()
+        refreshControl.endRefreshing()
+    }
+
     func getPosts(page: Int = 1){
-        SVProgressHUD.show(withStatus: "Loading".localized)
-        getPostsForCourseApi(page: page,courseId: courseGroup.id) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+        var id: Int
+        if isTeacher {
+            id = courseGroup.id
+        } else {
+            id = courseId
+        }
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
@@ -87,7 +101,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    
+//    MARK: -Table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }

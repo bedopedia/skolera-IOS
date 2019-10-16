@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SVProgressHUD
 import Alamofire
-class BehaviorNotesViewController: UIViewController{
+import NVActivityIndicatorView
+class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable{
     //TODO:- Fix Cell Height
     //MARK: - Variables
     var child : Child!
@@ -20,6 +20,8 @@ class BehaviorNotesViewController: UIViewController{
         }
     }
     var meta: BehaviorNotesResponseMeta!
+    private let refreshControl = UIRefreshControl()
+
     //MARK: - Outlets
     
     @IBOutlet weak var backButton: UIButton!
@@ -37,15 +39,32 @@ class BehaviorNotesViewController: UIViewController{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.rowHeight = UITableViewAutomaticDimension
-        
+        statusSegmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
+        statusSegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .selected)
         if isParent() {
-            statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            if #available(iOS 13.0, *) {
+                statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            } else {
+                statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            }
         } else {
-            statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            if #available(iOS 13.0, *) {
+                statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            } else {
+                statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+            }
         }
-        
         getBehaviorNotes()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+
     }
+    @objc private func refreshData(_ sender: Any) {
+            // Fetch Weather Data
+            refreshControl.beginRefreshing()
+            getBehaviorNotes()
+            refreshControl.endRefreshing()
+        }
 
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -110,10 +129,10 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func getBehaviorNotes(page: Int = 1){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents", "page": page, "per_page" : 20]
         getBehaviorNotesAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)

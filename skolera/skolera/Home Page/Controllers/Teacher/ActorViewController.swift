@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import KeychainSwift
 
-class ActorViewController: UIViewController {
+class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var childImageOuterView: UIView!
     @IBOutlet weak var childNameLabel: UILabel!
@@ -39,9 +39,8 @@ class ActorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // Do any additional setup after loading the view.
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +58,17 @@ class ActorViewController: UIViewController {
 //            parentVc.headerView.isHidden = true
         }
     }
+    
+//    MARK: - Swipe
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     
     public func setActorData(actor: Actor) {
         self.actor = actor

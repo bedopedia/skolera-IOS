@@ -9,9 +9,9 @@
 import UIKit
 import JTAppleCalendar
 import Alamofire
-import SVProgressHUD
+import NVActivityIndicatorView
 
-class EventsViewController: UIViewController {
+class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet weak var weekDaysStackView: UIStackView!
     @IBOutlet weak var currentMonthLabel: UILabel!
@@ -49,6 +49,7 @@ class EventsViewController: UIViewController {
     var eventsCount = 0
     var vacationsCount = 0
     var personalCount = 0
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,8 @@ class EventsViewController: UIViewController {
         createEventButton.layer.borderWidth = 1
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +95,12 @@ class EventsViewController: UIViewController {
         self.navigationController?.pushViewController(createEventVC, animated: true)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getEvents()
+        refreshControl.endRefreshing()
+        }
+
     func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo) {
         let date = visibleDates.monthDates.first?.date
         let formatter = DateFormatter()
@@ -111,9 +120,9 @@ class EventsViewController: UIViewController {
     }
     
     func getEvents() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.events = result.map{ StudentEvent($0) }
@@ -221,19 +230,15 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
         let days = events.filter { (event) -> Bool in
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en")
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.string(from: )
-            
-            let start: Date = Date(timeIntervalSince1970: TimeInterval(event.startDate!))
-            let end: Date = Date(timeIntervalSince1970: TimeInterval(event.endDate!))
-            
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+//            formatter.string(from: )
+            let start: Date = formatter.date(from: event.startDate!)!
+            let end: Date = formatter.date(from: event.endDate!)!
             guard start < end else {
                 return false
             }
             let dateInterval: DateInterval = DateInterval(start: start, end: end)
-            
 //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
-            
             return dateInterval.contains(date)
         }
         return days.first

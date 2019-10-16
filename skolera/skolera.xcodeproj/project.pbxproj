@@ -240,6 +240,7 @@
 		8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */; };
 		8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */; };
 		8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A78A0182201F16B006A3E2D /* Assets.xcassets */; };
+		8A793BBF234B74C0009D45B2 /* DummyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A793BBE234B74C0009D45B2 /* DummyResponse.swift */; };
 		8A7C4A372327DADA00984A53 /* AnnouncementsTableViewNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7C4A362327DADA00984A53 /* AnnouncementsTableViewNVC.swift */; };
 		8A7C4A3A2327DCC900984A53 /* ContactTeacherNVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7C4A392327DCC900984A53 /* ContactTeacherNVC.swift */; };
 		8A7E305520BABD7900BF2985 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E305420BABD7900BF2985 /* Subject.swift */; };
@@ -563,6 +564,7 @@
 		8A6D362A20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoPhotoMessageHandler.swift; sourceTree = "<group>"; };
 		8A6D363020B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A78A0182201F16B006A3E2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A793BBE234B74C0009D45B2 /* DummyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyResponse.swift; sourceTree = "<group>"; };
 		8A7C4A362327DADA00984A53 /* AnnouncementsTableViewNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewNVC.swift; sourceTree = "<group>"; };
 		8A7C4A392327DCC900984A53 /* ContactTeacherNVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTeacherNVC.swift; sourceTree = "<group>"; };
 		8A7E305420BABD7900BF2985 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
@@ -1105,6 +1107,7 @@
 				8AA44CD621904975007DB9C5 /* Localizable.swift */,
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
+				8A793BBE234B74C0009D45B2 /* DummyResponse.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1633,6 +1636,7 @@
 				54EB92F82015ED1D001DD93F /* Resources */,
 				C1F7E074340271C3ABF2205C /* [CP] Embed Pods Frameworks */,
 				54F46E83203DBC7E003F21BB /* Increment Build */,
+				DC995506235471E500124F72 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1852,11 +1856,11 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NRAppUpdate/NRAppUpdate.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/YLProgressBar/YLProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1879,11 +1883,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NRAppUpdate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1891,6 +1895,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DC995506235471E500124F72 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2108,6 +2129,7 @@
 				54EB92FE2015ED1D001DD93F /* AppDelegate.swift in Sources */,
 				54970688208CEE270070CE46 /* TimetableViewController.swift in Sources */,
 				54CCF3FE206BEBA600824A3D /* BehaviorNotesReceiver.swift in Sources */,
+				8A793BBF234B74C0009D45B2 /* DummyResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2283,7 +2305,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

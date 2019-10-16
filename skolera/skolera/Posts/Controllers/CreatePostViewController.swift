@@ -9,10 +9,10 @@
 import UIKit
 import KMPlaceholderTextView
 import MobileCoreServices
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
+class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocumentPickerDelegate,UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, NVActivityIndicatorViewable {
     
     @IBOutlet weak var postContentTextView: KMPlaceholderTextView!
     @IBOutlet weak var addAttachmentsView: UIView!
@@ -40,11 +40,11 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
     @IBAction func post() {
         debugPrint("create post")
         if !postContentTextView.text.isEmpty {
-            SVProgressHUD.show(withStatus: "Loading".localized)
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.id, "postable_type": "CourseGroup","video_preview": "",
                                                     "videoURL": ""]]
             createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 if isSuccess {
                     debugPrint("createPostApi success")
                     if let result = value as? [String : AnyObject] {
@@ -65,6 +65,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
+            alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -108,6 +109,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
                 }))
+                alert.modalPresentationStyle = .fullScreen
                 self.present(alert, animated: true, completion: nil)
             }
             
@@ -172,6 +174,7 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                                 alert.addAction(UIAlertAction(title: "CANCEL".localized, style: .cancel, handler: { _ in
                                     NSLog("The \"Cancel\" alert occured.")
                                 }))
+                                alert.modalPresentationStyle = .fullScreen
                                 self.present(alert, animated: true, completion: nil)
                             }
         cell.chosenFile = attachments[indexPath.row]

@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import KeychainSwift
 import Alamofire
 
-class TeacherContainerViewController: UIViewController, UIGestureRecognizerDelegate {
+class TeacherContainerViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
 
     @IBOutlet weak var coursesButton: UIButton!
     @IBOutlet weak var coursesLabel: UILabel!
@@ -210,9 +210,9 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         }))
         
         alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(SVProgressHUD.isVisible())
+            if(self.isAnimating)
             {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
             }
             self.sendFCM(token: "")
             let keychain = KeychainSwift()
@@ -220,11 +220,12 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
+            nvc.modalPresentationStyle = .fullScreen
             self.present(nvc, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler:{ (UIAlertAction)in
         }))
-        
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: {
         })
     }
@@ -238,14 +239,15 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
         alert.addAction(UIAlertAction(title: "NO".localized, style: .default, handler: { action in
             // do nothing
         }))
+        alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
     
     func sendFCM(token: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {

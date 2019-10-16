@@ -15,6 +15,8 @@ class AttendanceTableViewCell: UITableViewCell {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+    
     
     //MARK: - Variables
     var borderColor: UIColor!{
@@ -44,14 +46,19 @@ class AttendanceTableViewCell: UITableViewCell {
         didSet{
             if event != nil{
                 let calendar = Calendar.current
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                dateFormatter.locale = Locale(identifier: "en")
+                let date = dateFormatter.date(from:self.event.startDate)
+                let components = calendar.dateComponents([.year, .month, .day, .hour], from: date!)
+                let day = components.day!
+                dayLabel.text = "\(day)"
                 let formatter = DateFormatter()
                 formatter.locale = Locale(identifier: "en")
                 formatter.dateFormat = "MMM"
-                let day = calendar.component(.day, from: Date(timeIntervalSince1970: TimeInterval(event.startDate!)))
-                let month = formatter.string(from: Date(timeIntervalSince1970: TimeInterval(event.startDate!)))
-                dayLabel.text = "\(day)"
-                monthLabel.text = month
-                messageLabel.text = event.title
+                monthLabel.text = formatter.string(from: date!)
+                messageLabel.text = event.description ?? ""
+                titleLabel.text = self.event.title
             }
         }
     }

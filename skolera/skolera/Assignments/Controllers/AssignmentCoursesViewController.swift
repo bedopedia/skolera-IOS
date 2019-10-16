@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -18,8 +18,8 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     
     var child : Child!
     var courses = [AssignmentCourse]()
-    
     var meta: Meta!
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,16 +32,23 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         getCourses()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getCourses()
+        refreshControl.endRefreshing()
+    }
+
     func getCourses() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)

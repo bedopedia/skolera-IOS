@@ -7,20 +7,20 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class AssignmentGradesViewController: UIViewController {
+class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     private var submissions: [AssignmentStudentSubmission] = []
-    
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignment: FullAssignment!
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +29,23 @@ class AssignmentGradesViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         getSubmissions()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getSubmissions()
+        refreshControl.endRefreshing()
+    }
+
     private func getSubmissions() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
                     self.submissions = result.map { AssignmentStudentSubmission($0) }
@@ -51,7 +58,7 @@ class AssignmentGradesViewController: UIViewController {
     }
     
     private func submitGrade(submission: AssignmentStudentSubmission, grade: String, feedback: String) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["grade": grade,
                                       "student_id": submission.studentId ?? 0,
                                       "assignment_id": assignment.id!,
@@ -62,13 +69,13 @@ class AssignmentGradesViewController: UIViewController {
         submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if feedback.isEmpty {
-                    SVProgressHUD.dismiss()
+                    self.stopAnimating()
                     self.getSubmissions()
                 } else {
                     self.submitFeedback(submissionId: self.assignment.id!, studentId: submission.studentId, feedback: feedback)
                 }
             } else {
-                SVProgressHUD.dismiss()
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
@@ -84,7 +91,7 @@ class AssignmentGradesViewController: UIViewController {
             "to_type": "Student"
         ]]
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 self.getSubmissions()
             } else {
@@ -115,6 +122,7 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
             feedbackDialog.didSubmitGrade = { grade, feedback in
                 self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
             }
+            feedbackDialog.modalPresentationStyle = .overCurrentContext
             self.present(feedbackDialog, animated: true, completion: nil)
         }
         

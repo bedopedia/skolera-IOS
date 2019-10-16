@@ -815,7 +815,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H03-bF-dQt">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
                                                         <connections>
-                                                            <action selector="openQuizDetails" destination="H4o-AW-EDL" eventType="touchUpInside" id="n67-gt-baw"/>
+                                                            <action selector="openQuizQuestions" destination="H4o-AW-EDL" eventType="touchUpInside" id="ST5-x2-sQM"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -848,7 +848,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51K-Hb-ZrS">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
                                                         <connections>
-                                                            <action selector="openQuizDetails" destination="H4o-AW-EDL" eventType="touchUpInside" id="vRf-C6-Oew"/>
+                                                            <action selector="openQuizAnswers" destination="H4o-AW-EDL" eventType="touchUpInside" id="46q-Th-Blf"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1549,7 +1549,7 @@
                                     <constraint firstItem="4e9-un-rm9" firstAttribute="top" secondItem="MdC-i4-rX9" secondAttribute="bottom" constant="16" id="qXB-3L-Wgw"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="p4O-FW-jGH">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="p4O-FW-jGH">
                                 <rect key="frame" x="0.0" y="130" width="414" height="632"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -1648,10 +1648,10 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEe-Yx-6cM">
                                                             <rect key="frame" x="12" y="11" width="48" height="48"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i61-wK-Mcf">
-                                                                    <rect key="frame" x="19.5" y="12" width="9" height="24"/>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i61-wK-Mcf">
+                                                                    <rect key="frame" x="20" y="14" width="8" height="20"/>
                                                                     <color key="textColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                                 </textField>
                                                             </subviews>
@@ -1790,6 +1790,8 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="xBZ-22-xVP" id="xxN-FL-2FG"/>
+                        <outlet property="backButtonAllignment" destination="p4D-4e-DbM" id="Fdt-Sc-50E"/>
+                        <outlet property="headerHeightConstraint" destination="KOf-EO-1Jd" id="tjk-Bs-FbQ"/>
                         <outlet property="headerTitle" destination="MdC-i4-rX9" id="DkA-ed-VrJ"/>
                         <outlet property="nextButton" destination="Txj-pH-OFt" id="dJ2-qU-Qii"/>
                         <outlet property="outOfLabel" destination="qA7-aB-yoZ" id="vjB-cq-urH"/>
@@ -1797,6 +1799,7 @@
                         <outlet property="previousButton" destination="fQI-eJ-vqk" id="8n8-6M-5jf"/>
                         <outlet property="tableView" destination="p4O-FW-jGH" id="ooT-Rx-2sS"/>
                         <outlet property="timerLabel" destination="4e9-un-rm9" id="FBZ-42-8oC"/>
+                        <outlet property="timerLabelTopConstraint" destination="qXB-3L-Wgw" id="B94-Vb-KGU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lrv-yB-6gv" userLabel="First Responder" sceneMemberID="firstResponder"/>

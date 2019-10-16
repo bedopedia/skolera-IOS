@@ -7,17 +7,19 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class NotificationsViewController: UIViewController {
+class NotificationsViewController: UIViewController, NVActivityIndicatorViewable,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var backButton: UIButton!
     
+    var fromChildrenList = false
     var notifications = [Notification]()
-    
     /// carries data for notifications pagination
     var meta: Meta?
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +27,37 @@ class NotificationsViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         tableView.delegate = self
+        if !fromChildrenList {
+           backButton.isHidden = true
+        } else {
+            backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        }
         getNotifcations()
-
-        // Do any additional setup after loading the view.
+        self.navigationController?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+       super.viewDidAppear(animated)
     }
     
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        let enable = self.navigationController?.viewControllers.count ?? 0 > 1 && fromChildrenList
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getNotifcations()
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func logout () {
         if let mainViewController = parent as? TeacherContainerViewController {
             mainViewController.logout()
@@ -40,9 +68,9 @@ class NotificationsViewController: UIViewController {
     }
     
     func setNotificationsSeen(){
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             debugPrint("Notification is Seen")
         }
     }
@@ -51,9 +79,9 @@ class NotificationsViewController: UIViewController {
     ///
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
@@ -65,6 +93,10 @@ class NotificationsViewController: UIViewController {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
+    }
+    
+    @IBAction func backButtonAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 
 

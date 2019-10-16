@@ -19,6 +19,9 @@ class SolveQuizViewController: UIViewController {
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet var outOfLabelHeight: NSLayoutConstraint!
+    @IBOutlet var timerLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var backButtonAllignment: NSLayoutConstraint!
     
     var timer = Timer()
     var isTimerRunning = false
@@ -29,10 +32,56 @@ class SolveQuizViewController: UIViewController {
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
     var newOrder: [Answers] = []
+    var isQuestionsOnly = false
+    var isAnswers = false
     var duration = 60 {
         didSet{
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
+    }
+    
+    // Add answers in the answered questions dictionary
+    func showAnswers() {
+        if let answers = detailedQuiz.questions[currentQuestion].answersAttributes {
+            switch questionType! {
+            case .multipleChoice, .multipleSelect:
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
+                    guard let correct = answer.isCorrect else {
+                        return false
+                    }
+                    return correct == true
+                })
+            case .trueOrFalse:
+                let correctanswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any ,
+                                                  "body": "true",
+                                                  "created_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
+                                                  "updated_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
+                                                  "question_id": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
+                                                  "match": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.match,
+                                                  "deleted_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
+                                                  "is_correct": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                    ])
+                let falseAnswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any,
+                                                "body": "false",
+                                                "created_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
+                                                "updated_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
+                                                "question_id": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
+                                                "match": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.match,
+                                                "deleted_at": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
+                                                "is_correct": detailedQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                    ])
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
+            default:
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
+                    guard let firstMatch = Int(firstAnswer.match ?? ""), let secondMatch = Int(secondAnswer.match ?? "") else {
+                        return false
+                    }
+                    return firstMatch < secondMatch
+                })
+                newOrder = answeredQuestions[detailedQuiz.questions[currentQuestion]] as! [Answers]
+            }
+        }
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -40,11 +89,21 @@ class SolveQuizViewController: UIViewController {
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.dropDelegate = self
+        tableView.dragDelegate = self
         answeredQuestions = [:]
-        detailedQuiz = DetailedQuiz.init(dummyResponse())
+        detailedQuiz = DetailedQuiz.init(dummyResponse2())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
+        if isQuestionsOnly || isAnswers {
+            timerLabel.isHidden = true
+            tableView.allowsSelection = false
+            NSLayoutConstraint.deactivate([timerLabelTopConstraint])
+            backButtonAllignment.constant = 0
+            headerHeightConstraint.constant = 60
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,36 +112,24 @@ class SolveQuizViewController: UIViewController {
             runTimer()
         }
         NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
-            debugPrint("back ground mode")
+            debugPrint("Background mode")
             UserDefaults.standard.set(Date().second, forKey: "timerDuration")
         }
         
         NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
             if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
                 self.duration -= ( Date().second - Int(timerDuration)! )
-                debugPrint("was in the background for:", Date().second - Int(timerDuration)!)
-            }
-        }
-    }
-    
-    func dragAction(flag: Bool) {
-        if flag {
-            if #available(iOS 11.0, *) {
-                tableView.dropDelegate = self
-                tableView.dragDelegate = self
-                tableView.dragInteractionEnabled = true
-            }
-        } else {
-            if #available(iOS 11.0, *) {
-                tableView.dropDelegate = nil
-                tableView.dragDelegate = nil
-                tableView.dragInteractionEnabled = false
+                debugPrint("Background time is:", Date().second - Int(timerDuration)!)
             }
         }
     }
     
     @IBAction func backAction() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if isQuestionsOnly || isAnswers {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     func runTimer() {
@@ -109,6 +156,7 @@ class SolveQuizViewController: UIViewController {
         submitQuiz.openQuizStatus = {
             self.navigationController?.popToRootViewController(animated: true)
         }
+        submitQuiz.modalPresentationStyle = .fullScreen
         self.navigationController?.navigationController?.present(submitQuiz, animated: true, completion: nil)
     }
     
@@ -119,10 +167,22 @@ class SolveQuizViewController: UIViewController {
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
+    func stringValue(booleanValue: Bool) -> String {
+        switch booleanValue {
+        case true:
+            return "true"
+        case false:
+            return "false"
+        }
+    }
+    
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
             currentQuestion += 1
             setUpQuestions()
+        } else {
+//            TODO: call the submit grade api, call back action
+            debugPrint("submit grade")
         }
         if let _ = outOfLabelHeight {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -131,7 +191,15 @@ class SolveQuizViewController: UIViewController {
         previousButton.setTitle("Previous", for: .normal)
         
         if currentQuestion == detailedQuiz.questions.count - 1 {
-            nextButton.setTitle("Submit", for: .normal)
+            if isQuestionsOnly || isAnswers {
+                NSLayoutConstraint.activate([outOfLabelHeight])
+                outOfLabel.isHidden = true
+                nextButton.backgroundColor = .clear
+                nextButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+                nextButton.setTitle("\(currentQuestion + 1) out of \(detailedQuiz.questions.count)", for: .normal)
+            } else {
+                nextButton.setTitle("Submit", for: .normal)
+            }
         } else {
             nextButton.setTitle("Next", for: .normal)
         }
@@ -139,6 +207,14 @@ class SolveQuizViewController: UIViewController {
     }
     
     @IBAction func previousButtonAction() {
+        
+        if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly || isAnswers {
+            NSLayoutConstraint.deactivate([outOfLabelHeight])
+            outOfLabel.isHidden = false
+            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+            nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
+            nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        }
         if currentQuestion > 0 {
             currentQuestion -= 1
             setUpQuestions()
@@ -160,14 +236,14 @@ class SolveQuizViewController: UIViewController {
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
             if newOrder.isEmpty {
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
-            } else {
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = newOrder
+                newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
             }
             //questions array should have the state saved
-            dragAction(flag: true)
+            if !isQuestionsOnly && !isAnswers {
+                tableView.dragInteractionEnabled = true
+            }
         } else {
-            dragAction(flag: false)
+            tableView.dragInteractionEnabled = false
         }
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
@@ -201,274 +277,22 @@ class SolveQuizViewController: UIViewController {
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
-        
+        if isAnswers {
+            showAnswers()
+        }
         tableView.reloadData()
     }
     
     func setTableViewMultipleSelection(question: Questions) {
         if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
             if questionType == QuestionTypes.multipleSelect {
-                self.tableView.allowsMultipleSelection = true
+                if !isQuestionsOnly && !isAnswers {
+                    self.tableView.allowsMultipleSelection = true
+                }
             } else {
                 self.tableView.allowsMultipleSelection = false
             }
         }
-    }
-    
-    func dummyResponse() -> [String: Any] {
-        return [
-            "id": 94,
-            "name": "uuu",
-            "start_date": "2019-07-11T00:00:00.000Z",
-            "end_date": "2019-07-18T00:00:00.000Z",
-            "description": "",
-            "course_groups": [
-                [
-                    "name": "18A",
-                    "id": 516,
-                    "students": 20
-                ],
-                [
-                    "name": "18B",
-                    "id": 532,
-                    "students": 18
-                ]
-            ],
-            "category": "",
-            "lesson": [
-                "id": 247,
-                "name": "General",
-                "unit_id": 247,
-                "description": "",
-                "date": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "deleted_at": ""
-            ],
-            "unit": [
-                "id": 247,
-                "name": "General",
-                "chapter_id": 247,
-                "description": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "deleted_at": ""
-            ],
-            "chapter": [
-                "id": 247,
-                "name": "General",
-                "course_id": 247,
-                "description": "",
-                "order": 0,
-                "created_at": "2018-09-01T18:03:56.000Z",
-                "updated_at": "2018-09-01T18:03:56.000Z",
-                "lock": true,
-                "deleted_at": ""
-            ],
-            "duration": 5,
-            "is_questions_randomized": false,
-            "num_of_questions_per_page": 5,
-            "state": "running",
-            "total_score": 26.0,
-            "lesson_id": 247,
-            "student_solved": true,
-            "blooms": [],
-            "grading_period_lock": false,
-            "grading_period": "",
-            "questions": [
-                [
-                    "id": 231,
-                    "body": "<p>m,mjkj</p>",
-                    "difficulty": "Easy",
-                    "score": 5.0,
-                    "answers_attributes": [
-                        [
-                            "id": 579,
-                            "body": "234",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 231,
-                            "match": "234",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 578,
-                            "body": "123",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 231,
-                            "match": "123",
-                            "deleted_at": ""
-                        ]
-                    ],
-                    "correction_style": "",
-                    "type": "Match",
-                    "bloom": [],
-                    "files": "",
-                    "uploaded_file": "",
-                    "correct_answers_count": 0
-                ],
-                [
-                    "id": 232,
-                    "body": "<p>hguyu</p>",
-                    "difficulty": "Easy",
-                    "score": 5.0,
-                    "answers_attributes": [
-                        [
-                            "id": 581,
-                            "body": "98766",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 232,
-                            "match": "",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 580,
-                            "body": "12345",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 232,
-                            "match": "",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 582,
-                            "body": "5565",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 232,
-                            "match": "",
-                            "deleted_at": ""
-                        ]
-                    ],
-                    "correction_style": "",
-                    "type": "MultipleSelect",
-                    "bloom": [],
-                    "files": "",
-                    "uploaded_file": "",
-                    "correct_answers_count": 1
-                ],
-                [
-                    "id": 233,
-                    "body": "<p>choose</p>",
-                    "difficulty": "Easy",
-                    "score": 6.0,
-                    "answers_attributes": [
-                        [
-                            "id": 584,
-                            "body": "jk",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 233,
-                            "match": "",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 583,
-                            "body": "jhk",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 233,
-                            "match": "",
-                            "deleted_at": ""
-                        ]
-                    ],
-                    "correction_style": "",
-                    "type": "MultipleChoice",
-                    "bloom": [],
-                    "files": "",
-                    "uploaded_file": "",
-                    "correct_answers_count": 1
-                ],
-                [
-                    "id": 234,
-                    "body": "<p>jhkh</p>",
-                    "difficulty": "Easy",
-                    "score": 5.0,
-                    "answers_attributes": [
-                        [
-                            "id": 587,
-                            "body": "7777",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 234,
-                            "match": "2",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 585,
-                            "body": "5555",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 234,
-                            "match": "0",
-                            "deleted_at": ""
-                        ],
-                        [
-                            "id": 586,
-                            "body": "6666",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 234,
-                            "match": "1",
-                            "deleted_at": ""
-                        ]
-                    ],
-                    "correction_style": "",
-                    "type": "Reorder",
-                    "bloom": [],
-                    "files": "",
-                    "uploaded_file": "",
-                    "correct_answers_count": 0
-                ],
-                [
-                    "id": 235,
-                    "body": "<p>khkhk</p>",
-                    "difficulty": "Easy",
-                    "score": 5.0,
-                    "answers_attributes": [
-                        [
-                            "id": 588,
-                            "body": "",
-                            "created_at": "2019-05-15T11:10:35.000Z",
-                            "updated_at": "2019-05-15T11:10:35.000Z",
-                            "question_id": 235,
-                            "match": "",
-                            "deleted_at": ""
-                        ]
-                    ],
-                    "correction_style": "",
-                    "type": "TrueOrFalse",
-                    "bloom": [],
-                    "files": "",
-                    "uploaded_file": "",
-                    "correct_answers_count": 1
-                ]
-            ],
-            "objectives": [],
-            "grouping_students": [],
-            "course_groups_quiz": [
-                [
-                    "course_group_id": 516,
-                    "quiz_id": 94,
-                    "deleted_at": "",
-                    "hide_grade": false,
-                    "id": 158,
-                    "select_all": true
-                ],
-                [
-                    "course_group_id": 532,
-                    "quiz_id": 94,
-                    "deleted_at": "",
-                    "hide_grade": false,
-                    "id": 159,
-                    "select_all": true
-                ]
-            ]
-        ]
     }
 
 }
@@ -496,22 +320,28 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
                 }
+                if isAnswers {
+                    cell.isAnswers = true
+                }
                 switch questionType! {
 //                case .match:
                 case .reorder:
-//                   answeredQuestions[detailedQuiz.questions[currentQuestion]] = detailedQuiz.questions[currentQuestion].answersAttributes
-                   if let answersArray = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                    let answerIndex = (indexPath.row - 2 ) // 0 -> question, 1 -> static answer label
-                    cell.answer = answersArray[answerIndex] as? Answers
-                   }
-                    
+                    if !newOrder.isEmpty {
+                        cell.answer = newOrder[indexPath.row - 2]
+                    }
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
-                                    if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
-                                        cell.setSelectedImage()
+                                    if isAnswers && questionType! == .trueOrFalse {
+                                        if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
+                                            cell.setSelectedImage()
+                                        }
+                                    } else {
+                                        if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
+                                            cell.setSelectedImage()
+                                        }
                                     }
                                 }
                             }
@@ -519,7 +349,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                     cell.answer = questions[indexPath.row] as? Answers
                 }
-                
+                if isAnswers || isQuestionsOnly {
+                    cell.matchTextField.isUserInteractionEnabled = false
+                }
                 return cell
             }
         }
@@ -575,17 +407,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)
     }
     
-    @available(iOS 11.0, *)
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .move)
     }
     
-    @available(iOS 11.0, *)
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         if let destIndex = destinationIndexPath, destIndex.row < 2 {
             return UITableViewDropProposal(operation: .forbidden, intent: .insertAtDestinationIndexPath)
@@ -621,15 +450,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 return
             }
             let newIndex = destinationIndexPath.row
-            self.questions.swapAt(oldIndex, newIndex)
-            self.answeredQuestions?[self.detailedQuiz.questions[self.currentQuestion]] = self.questions
-            self.newOrder = []
-            for answer in self.questions {
-                if let validAnswer = answer as? Answers {
-                    self.newOrder.append(validAnswer)
-                }
-            }
-            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = self.newOrder
+            self.newOrder.swapAt(oldIndex - 2, newIndex - 2)
             self.tableView.reloadData()
         }
     }

@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import SVProgressHUD
+import NVActivityIndicatorView
 import Alamofire
 
-class QuizzesViewController: UIViewController {
+class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     var child : Child!
     var courseName: String = ""
@@ -22,6 +22,7 @@ class QuizzesViewController: UIViewController {
     var pageId = 1
     var selectedSegment = 0
     var meta: Meta!
+    private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -43,13 +44,28 @@ class QuizzesViewController: UIViewController {
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
             }
         }
+        statusSegmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
+        statusSegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .selected)
         if isParent() {
-            statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            if #available(iOS 13.0, *) {
+                statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            } else {
+                statusSegmentControl.tintColor = #colorLiteral(red: 0.01857026853, green: 0.7537801862, blue: 0.7850604653, alpha: 1)
+            }
         } else {
             if isTeacher {
-                statusSegmentControl.tintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
-            } else {
-                statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+               if #available(iOS 13.0, *) {
+                    statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
+                } else {
+                    statusSegmentControl.tintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
+                }
+            }
+            else {
+                if #available(iOS 13.0, *) {
+                    statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+                } else {
+                    statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
+                }
             }
         }
         if isTeacher {
@@ -57,8 +73,21 @@ class QuizzesViewController: UIViewController {
         } else {
             getQuizzes(pageId: pageId)
         }
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        if isTeacher {
+            getTeacherQuizzes()
+        } else {
+            pageId = 1
+            getQuizzes(pageId: pageId)
+        }
+        refreshControl.endRefreshing()
+    }
+
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -87,13 +116,17 @@ class QuizzesViewController: UIViewController {
     }
     
     func getTeacherQuizzes() {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesForTeacherApi(courseGroupId: courseGroupId) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.quizzes = result.map({ FullQuiz($0) })
-                    self.setOpenedQuizzes()
+                    if self.selectedSegment == 1 {
+                        self.setClosedQuizzes()
+                    } else {
+                        self.setOpenedQuizzes()
+                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -102,18 +135,22 @@ class QuizzesViewController: UIViewController {
     }
     
     func getQuizzes(pageId: Int) {
-        SVProgressHUD.show(withStatus: "Loading".localized)
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
-            SVProgressHUD.dismiss()
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
                     if pageId == 1 {
                         self.quizzes = quizResponse.quizzes
                         self.meta = quizResponse.meta
-                        self.setOpenedQuizzes()
                     } else {
                         self.quizzes.append(contentsOf: quizResponse.quizzes)
+                    }
+                    if self.selectedSegment == 1 {
+                        self.setClosedQuizzes()
+                    } else {
+                        self.setOpenedQuizzes()
                     }
                 }
             } else {
@@ -136,19 +173,21 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.quiz = self.filteredQuizzes[indexPath.row]
 //        cell.assignment = filteredAssignments[indexPath.row]
 //        debugPrint("Index path: ",indexPath.row)
-        if indexPath.row >= filteredQuizzes.count - 2 {
-//            debugPrint("Index path: ",indexPath.row)
-            if meta.totalPages > pageId {
-                pageId += 1
-                getQuizzes(pageId: pageId)
-                if selectedSegment == 0 {
-                    setOpenedQuizzes()
-                }
-                if selectedSegment == 1 {
-                    setClosedQuizzes()
+        if !getUserType().elementsEqual("teacher") {
+            if indexPath.row >= filteredQuizzes.count - 2 {
+                if meta.totalPages > pageId {
+                    pageId += 1
+                    getQuizzes(pageId: pageId)
+                    if selectedSegment == 0 {
+                        setOpenedQuizzes()
+                    }
+                    if selectedSegment == 1 {
+                        setClosedQuizzes()
+                    }
                 }
             }
         }
+        
         return cell
     }
     
@@ -158,12 +197,12 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isTeacher {
-            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
-            quizVC.child = self.child
-            quizVC.courseName = courseName
-            quizVC.quiz = filteredQuizzes[indexPath.row]
-            quizVC.courseGroupId = self.courseId
-            self.navigationController?.pushViewController(quizVC, animated: true)
+//            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
+//            quizVC.child = self.child
+//            quizVC.courseName = courseName
+//            quizVC.quiz = filteredQuizzes[indexPath.row]
+//            self.navigationController?.pushViewController(quizVC, animated: true)
+            debugPrint("show quiz details")
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName
