@@ -19,6 +19,7 @@ class Questions: Hashable {
     let files: Any?
     let uploadedFile: Any?
     let correctAnswersCount: Int?
+    let numberOfCorrectAnswers: Int?
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -37,6 +38,7 @@ class Questions: Hashable {
         files = dict["files"] as? Any
         uploadedFile = dict["uploaded_file"] as? Any
         correctAnswersCount = dict["correct_answers_count"] as? Int
+        numberOfCorrectAnswers = dict["number_of_correct_answers"] as? Int
     }
     
     static func == (lhs: Questions, rhs: Questions) -> Bool {
