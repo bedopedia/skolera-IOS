@@ -217,5 +217,19 @@ func CREATE_SUBMISSION() -> String {
     return "\(BASE_URL!)/api/active_quizzes/create_submission"
 }
 
+func QUIZ_SOLVE_DETAILS(quizId: Int) -> String {
+    return "\(BASE_URL!)/api/quizzes/\(quizId)/quiz_solve_details"
+}
 
 
+func GET_ANSWER_SUBMISSIONS(submissionId: Int) -> String {
+    return "\(BASE_URL!)/api/answer_submissions?by_quiz_sumbission=\(submissionId)"
+}
+
+func POST_ANSWER_SUBMISSIONS() -> String {
+    return "\(BASE_URL!)/api/answer_submissions"
+}
+
+func DELETE_ANSWER_SUBMISSIONS() -> String {
+    return "\(BASE_URL!)/api/answer_submissions/remove_answer_submission"
+}

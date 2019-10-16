@@ -91,6 +91,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
 //        createSubmission()
         solvingQuiz = true  //should be removed, already in createSubmission
         let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+        solveQuizVC.courseGroupId = courseGroupId
         self.navigationController?.pushViewController(solveQuizVC, animated: true)
     }
     @IBAction func openQuizQuestions() {
@@ -106,7 +107,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     
     func createSubmission() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]
+        let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0, "is_submitted": false]]
         createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {

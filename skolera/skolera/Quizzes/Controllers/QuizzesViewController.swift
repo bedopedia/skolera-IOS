@@ -200,6 +200,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
             let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.child = self.child
             quizVC.courseName = courseName
+            quizVC.courseGroupId = courseGroupId
             quizVC.quiz = filteredQuizzes[indexPath.row]
             self.navigationController?.pushViewController(quizVC, animated: true)
             debugPrint("show quiz details")

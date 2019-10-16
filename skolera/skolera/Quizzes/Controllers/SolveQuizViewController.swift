@@ -28,16 +28,136 @@ class SolveQuizViewController: UIViewController {
     var savedDuration = 0
     var detailedQuiz: DetailedQuiz!
     var currentQuestion = 0
-    var questions: [Any] = []   //Populates the Table view
+//    Populates the Table view
+    var questions: [Any] = []
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
     var newOrder: [Answers] = []
     var isQuestionsOnly = false
     var isAnswers = false
+    var courseGroupId: Int!
     var duration = 60 {
         didSet{
             timerLabel.text = timeString(time: TimeInterval(duration))
         }
+    }
+//    MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.dropDelegate = self
+        tableView.dragDelegate = self
+        answeredQuestions = [:]
+        detailedQuiz = DetailedQuiz.init(dummyResponse2())
+        setUpQuestions()
+        NSLayoutConstraint.deactivate([outOfLabelHeight])
+        previousButtonAction()
+        if isQuestionsOnly || isAnswers {
+            timerLabel.isHidden = true
+            tableView.allowsSelection = false
+            NSLayoutConstraint.deactivate([timerLabelTopConstraint])
+            backButtonAllignment.constant = 0
+            headerHeightConstraint.constant = 60
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isTimerRunning {
+            runTimer()
+        }
+        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
+            debugPrint("Background mode")
+            UserDefaults.standard.set(Date().second, forKey: "timerDuration")
+        }
+        
+        NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
+            if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
+                self.duration -= ( Date().second - Int(timerDuration)! )
+                debugPrint("Background time is:", Date().second - Int(timerDuration)!)
+            }
+        }
+    }
+    //    MARK: - Timer methods
+        func runTimer() {
+            timer = Timer.scheduledTimer(timeInterval: 1,
+                                         target: self,
+                                         selector: (#selector(self.updateTimer)),
+                                         userInfo: nil,
+                                         repeats: true)
+            RunLoop.current.add(timer, forMode: .commonModes)
+            timer.tolerance = 0.1
+        }
+        
+        @objc func updateTimer() {
+                if duration < 1 {
+                timer.invalidate()
+    //            navigateToHome()
+            } else {
+                duration -= 1
+            }
+        }
+        func timeString(time: TimeInterval) -> String {
+            let hours = Int(time) / 3600
+            let minutes = Int(time) / 60 % 60
+            let seconds = Int(time) % 60
+            return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+        }
+    
+//    MARK: - Data setup
+    func setUpQuestions() {
+        questions = []
+        let question = detailedQuiz.questions[currentQuestion]
+        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
+        if questionType == QuestionTypes.reorder {
+            if newOrder.isEmpty {
+                newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
+            }
+            //questions array should have the state saved
+            if !isQuestionsOnly && !isAnswers {
+                tableView.dragInteractionEnabled = true
+            }
+        } else {
+            tableView.dragInteractionEnabled = false
+        }
+        questions.append(question)
+        //      TO:DO  check is th question type is match and append the match model
+        questions.append("Answers")
+        
+        if questionType == QuestionTypes.trueOrFalse {
+            let correctanswer = Answers.init(["id": question.answersAttributes!.first?.id as Any ,
+                                       "body": "true",
+                                       "created_at": question.answersAttributes?.first?.createdAt,
+                                      "updated_at": question.answersAttributes?.first?.updatedAt,
+                                      "question_id": question.answersAttributes?.first?.questionId,
+                                      "match": question.answersAttributes?.first?.match,
+                                      "deleted_at": question.answersAttributes?.first?.deletedAt,
+                                      "is_correct": question.answersAttributes?.first?.isCorrect
+                                      ])
+            questions.append(correctanswer)
+            let falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id as Any,
+                                              "body": "false",
+                                              "created_at": question.answersAttributes?.first?.createdAt,
+                                              "updated_at": question.answersAttributes?.first?.updatedAt,
+                                              "question_id": question.answersAttributes?.first?.questionId,
+                                              "match": question.answersAttributes?.first?.match,
+                                              "deleted_at": question.answersAttributes?.first?.deletedAt,
+                                              "is_correct": question.answersAttributes?.first?.isCorrect
+                ])
+            questions.append(falseAnswer)
+        } else {
+            question.answersAttributes?.forEach{ (answer) in
+                questions.append(answer)
+            }
+        }
+        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+        setTableViewMultipleSelection(question: question)
+        if isAnswers {
+            showAnswers()
+        }
+        tableView.reloadData()
     }
     
     // Add answers in the answered questions dictionary
@@ -83,71 +203,25 @@ class SolveQuizViewController: UIViewController {
         }
         tableView.reloadData()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.dropDelegate = self
-        tableView.dragDelegate = self
-        answeredQuestions = [:]
-        detailedQuiz = DetailedQuiz.init(dummyResponse2())
-        setUpQuestions()
-        NSLayoutConstraint.deactivate([outOfLabelHeight])
-        previousButtonAction()
-        if isQuestionsOnly || isAnswers {
-            timerLabel.isHidden = true
-            tableView.allowsSelection = false
-            NSLayoutConstraint.deactivate([timerLabelTopConstraint])
-            backButtonAllignment.constant = 0
-            headerHeightConstraint.constant = 60
-        }
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if !isTimerRunning {
-            runTimer()
-        }
-        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
-            debugPrint("Background mode")
-            UserDefaults.standard.set(Date().second, forKey: "timerDuration")
-        }
-        
-        NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
-            if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
-                self.duration -= ( Date().second - Int(timerDuration)! )
-                debugPrint("Background time is:", Date().second - Int(timerDuration)!)
+    func setTableViewMultipleSelection(question: Questions) {
+        if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
+            if questionType == QuestionTypes.multipleSelect {
+                if !isQuestionsOnly && !isAnswers {
+                    self.tableView.allowsMultipleSelection = true
+                }
+            } else {
+                self.tableView.allowsMultipleSelection = false
             }
         }
     }
     
-    @IBAction func backAction() {
-        if isQuestionsOnly || isAnswers {
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-    }
-    
-    func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                                     target: self,
-                                     selector: (#selector(self.updateTimer)),
-                                     userInfo: nil,
-                                     repeats: true)
-        RunLoop.current.add(timer, forMode: .commonModes)
-        timer.tolerance = 0.1
-    }
-    
-    @objc func updateTimer() {
-            if duration < 1 {
-            timer.invalidate()
-//            navigateToHome()
-        } else {
-            duration -= 1
+    func stringValue(booleanValue: Bool) -> String {
+        switch booleanValue {
+        case true:
+            return "true"
+        case false:
+            return "false"
         }
     }
     
@@ -160,19 +234,13 @@ class SolveQuizViewController: UIViewController {
         self.navigationController?.navigationController?.present(submitQuiz, animated: true, completion: nil)
     }
     
-    func timeString(time: TimeInterval) -> String {
-        let hours = Int(time) / 3600
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
-    }
+//    MARK: - IBActions
     
-    func stringValue(booleanValue: Bool) -> String {
-        switch booleanValue {
-        case true:
-            return "true"
-        case false:
-            return "false"
+    @IBAction func backAction() {
+        if isQuestionsOnly || isAnswers {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
@@ -229,80 +297,15 @@ class SolveQuizViewController: UIViewController {
         }
         self.view.layoutIfNeeded()
     }
-    
-    func setUpQuestions() {
-        questions = []
-        let question = detailedQuiz.questions[currentQuestion]
-        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
-        if questionType == QuestionTypes.reorder {
-            if newOrder.isEmpty {
-                newOrder = detailedQuiz.questions[currentQuestion].answersAttributes ?? []
-            }
-            //questions array should have the state saved
-            if !isQuestionsOnly && !isAnswers {
-                tableView.dragInteractionEnabled = true
-            }
-        } else {
-            tableView.dragInteractionEnabled = false
-        }
-        questions.append(question)
-        //      TO:DO  check is th question type is match and append the match model
-        questions.append("Answers")
-        
-        if questionType == QuestionTypes.trueOrFalse {
-            let correctanswer = Answers.init(["id": question.answersAttributes!.first?.id as Any ,
-                                       "body": "true",
-                                       "created_at": question.answersAttributes?.first?.createdAt,
-                                      "updated_at": question.answersAttributes?.first?.updatedAt,
-                                      "question_id": question.answersAttributes?.first?.questionId,
-                                      "match": question.answersAttributes?.first?.match,
-                                      "deleted_at": question.answersAttributes?.first?.deletedAt,
-                                      "is_correct": question.answersAttributes?.first?.isCorrect
-                                      ])
-            questions.append(correctanswer)
-            let falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id as Any,
-                                              "body": "false",
-                                              "created_at": question.answersAttributes?.first?.createdAt,
-                                              "updated_at": question.answersAttributes?.first?.updatedAt,
-                                              "question_id": question.answersAttributes?.first?.questionId,
-                                              "match": question.answersAttributes?.first?.match,
-                                              "deleted_at": question.answersAttributes?.first?.deletedAt,
-                                              "is_correct": question.answersAttributes?.first?.isCorrect
-                ])
-            questions.append(falseAnswer)
-        } else {
-            question.answersAttributes?.forEach{ (answer) in
-                questions.append(answer)
-            }
-        }
-        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
-        setTableViewMultipleSelection(question: question)
-        if isAnswers {
-            showAnswers()
-        }
-        tableView.reloadData()
-    }
-    
-    func setTableViewMultipleSelection(question: Questions) {
-        if let questionType = question.type.map({ QuestionTypes(rawValue: $0) }) {
-            if questionType == QuestionTypes.multipleSelect {
-                if !isQuestionsOnly && !isAnswers {
-                    self.tableView.allowsMultipleSelection = true
-                }
-            } else {
-                self.tableView.allowsMultipleSelection = false
-            }
-        }
-    }
-
 }
+//MARK: - Table view Extension
 
 extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questions.count
     }
-    
+//    MARK: - cellForRow
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if questions[indexPath.row] is Questions {
             let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
@@ -357,6 +360,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
+//    MARK: - didSelectRow
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? QuizAnswerTableViewCell
         if let type = questionType, type == QuestionTypes.match {
@@ -406,6 +411,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             return
         }
     }
+//    MARK: - Drag and Drop methods
     
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)

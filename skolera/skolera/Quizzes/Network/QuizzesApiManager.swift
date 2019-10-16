@@ -96,7 +96,7 @@ func submitQuizFeedbackApi(parameters: Parameters, completion: @escaping ((Bool,
         }
     }
 }
-
+// using show quiz
 func getQuizApi(quizId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = GET_QUIZ(quizId: quizId)
@@ -127,4 +127,6 @@ func createSubmissionApi(parameters: Parameters, completion: @escaping ((Bool, I
         }
     }
 }
+
+
 
