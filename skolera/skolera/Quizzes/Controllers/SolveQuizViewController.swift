@@ -28,7 +28,7 @@ class SolveQuizViewController: UIViewController {
     var savedDuration = 0
     var detailedQuiz: DetailedQuiz!
     var currentQuestion = 0
-    var questions: [Any] = []
+    var questions: [Any] = []   //Populates the Table view
     var answeredQuestions: [Questions: [Any]]!
     var questionType: QuestionTypes!
     var newOrder: [Answers] = []
