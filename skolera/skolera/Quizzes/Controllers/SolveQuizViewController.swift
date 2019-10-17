@@ -143,8 +143,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                         ])
             questions.append(falseAnswer)
         } else {
-            question.answers?.forEach{ (answer) in
-                questions.append(answer)
+            if questionType == QuestionTypes.match {
+                questions.append(contentsOf: question.answers)
+            } else {
+                question.answers?.forEach{ (answer) in
+                    questions.append(answer)
+                }
             }
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"

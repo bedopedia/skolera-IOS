@@ -8,19 +8,19 @@ import Foundation
 
 class Questions: Hashable {
     
-    let id: Int?
-    let body: String?
-    let difficulty: String?
-    let score: Int?
-    let answersAttributes: [Answers]?
-    let correctionStyle: Any?
-    let type: String?
-    let bloom: [String]?
-    let files: Any?
-    let uploadedFile: Any?
-    let correctAnswersCount: Int?
-    let numberOfCorrectAnswers: Int?
-    let answers: [Answers]!
+    let id: Int!
+    let body: String!
+    let difficulty: String!
+    let score: Int!
+    let answersAttributes: [Answers]!
+    let correctionStyle: Any!
+    let type: String!
+    let bloom: [String]!
+    let files: Any!
+    let uploadedFile: Any!
+    let correctAnswersCount: Int!
+    let numberOfCorrectAnswers: Int!
+    var answers: [Answers]!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -33,13 +33,19 @@ class Questions: Hashable {
         } else {
             answersAttributes = nil
         }
+        type = dict["type"] as? String
         if let answersDictArray = dict["answers"] as? [[String: Any]] {
             answers = answersDictArray.map { Answers($0) }
         } else {
-            answers = nil
+            if let matchAnswer = dict["answers"] as? [String: Any] {
+                answers = []
+                answers.append(Answers.init(["options" : matchAnswer["options"],
+                                             "matches": matchAnswer["matches"]]))
+            } else {
+                answers = nil
+            }
         }
         correctionStyle = dict["correction_style"] as? Any
-        type = dict["type"] as? String
         bloom = dict["bloom"] as? [String]
         files = dict["files"] as? Any
         uploadedFile = dict["uploaded_file"] as? Any
