@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 extension String {
     var htmlToAttributedString: NSAttributedString? {
         guard let data = data(using: .utf8) else { return NSAttributedString() }

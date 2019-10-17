@@ -27,7 +27,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var timer = Timer()
     var isTimerRunning = false
     var savedDuration = 0
-    var detailedDummyQuiz: DetailedQuiz!
+//    var detailedDummyQuiz: DetailedQuiz!
     var detailedQuiz: DetailedQuiz!
     var submissionId: Int!
     var currentQuestion = 0
@@ -53,7 +53,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dropDelegate = self
         tableView.dragDelegate = self
         answeredQuestions = [:]
-        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
+//        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
@@ -113,11 +113,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
 //    MARK: - Data setup
     func setUpQuestions() {
         questions = []
-        let question = detailedDummyQuiz.questions[currentQuestion]
+//        let question = detailedDummyQuiz.questions[currentQuestion]
+        let question = detailedQuiz.questions[currentQuestion]
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
             if newOrder.isEmpty {
-                newOrder = detailedDummyQuiz.questions[currentQuestion].answersAttributes ?? []
+                newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
             }
             //questions array should have the state saved
             if !isQuestionsOnly && !isAnswers {
@@ -131,32 +132,22 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         questions.append("Answers")
         
         if questionType == QuestionTypes.trueOrFalse {
-            let correctanswer = Answers.init(["id": question.answersAttributes!.first?.id as Any ,
+            let correctanswer = Answers.init(["id": question.answers.first?.id as Any ,
                                        "body": "true",
-                                       "created_at": question.answersAttributes?.first?.createdAt,
-                                      "updated_at": question.answersAttributes?.first?.updatedAt,
-                                      "question_id": question.answersAttributes?.first?.questionId,
-                                      "match": question.answersAttributes?.first?.match,
-                                      "deleted_at": question.answersAttributes?.first?.deletedAt,
-                                      "is_correct": question.answersAttributes?.first?.isCorrect
+                                       "question_id": question.answers.first?.questionId
                                       ])
             questions.append(correctanswer)
-            let falseAnswer = Answers.init(["id": question.answersAttributes!.first?.id as Any,
-                                              "body": "false",
-                                              "created_at": question.answersAttributes?.first?.createdAt,
-                                              "updated_at": question.answersAttributes?.first?.updatedAt,
-                                              "question_id": question.answersAttributes?.first?.questionId,
-                                              "match": question.answersAttributes?.first?.match,
-                                              "deleted_at": question.answersAttributes?.first?.deletedAt,
-                                              "is_correct": question.answersAttributes?.first?.isCorrect
-                ])
+            let falseAnswer = Answers.init(["id": question.answers.first?.id as Any ,
+                                         "body": "false",
+                                         "question_id": question.answers.first?.questionId
+                                        ])
             questions.append(falseAnswer)
         } else {
-            question.answersAttributes?.forEach{ (answer) in
+            question.answers?.forEach{ (answer) in
                 questions.append(answer)
             }
         }
-        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedDummyQuiz.questions.count)"
+        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
         if isAnswers {
             showAnswers()
@@ -166,43 +157,43 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     // Add answers in the answered questions dictionary
     func showAnswers() {
-        if let answers = detailedDummyQuiz.questions[currentQuestion].answersAttributes {
+        if let answers = detailedQuiz.questions[currentQuestion].answers {
             switch questionType! {
             case .multipleChoice, .multipleSelect:
-                answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
                     guard let correct = answer.isCorrect else {
                         return false
                     }
                     return correct == true
                 })
             case .trueOrFalse:
-                let correctanswer = Answers.init(["id": detailedDummyQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any ,
+                let correctanswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any ,
                                                   "body": "true",
-                                                  "created_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
-                                                  "updated_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
-                                                  "question_id": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
-                                                  "match": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.match,
-                                                  "deleted_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
-                                                  "is_correct": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                                                  "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt,
+                                                  "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt,
+                                                  "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId,
+                                                  "match": detailedQuiz.questions[currentQuestion].answers?.first?.match,
+                                                  "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt,
+                                                  "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect
                     ])
-                let falseAnswer = Answers.init(["id": detailedDummyQuiz.questions[currentQuestion].answersAttributes!.first?.id as Any,
+                let falseAnswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any,
                                                 "body": "false",
-                                                "created_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.createdAt,
-                                                "updated_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.updatedAt,
-                                                "question_id": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.questionId,
-                                                "match": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.match,
-                                                "deleted_at": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.deletedAt,
-                                                "is_correct": detailedDummyQuiz.questions[currentQuestion].answersAttributes?.first?.isCorrect
+                                                "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt,
+                                                "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt,
+                                                "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId,
+                                                "match": detailedQuiz.questions[currentQuestion].answers?.first?.match,
+                                                "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt,
+                                                "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect
                     ])
-                answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
             default:
-                answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
                     guard let firstMatch = Int(firstAnswer.match ?? ""), let secondMatch = Int(secondAnswer.match ?? "") else {
                         return false
                     }
                     return firstMatch < secondMatch
                 })
-                newOrder = answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] as! [Answers]
+                newOrder = answeredQuestions[detailedQuiz.questions[currentQuestion]] as! [Answers]
             }
         }
         tableView.reloadData()
@@ -249,7 +240,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func nextButtonAction() {
-        if currentQuestion < detailedDummyQuiz.questions.count - 1 {
+        if currentQuestion < detailedQuiz.questions.count - 1 {
             currentQuestion += 1
             setUpQuestions()
         } else {
@@ -262,13 +253,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         outOfLabel.isHidden = false
         previousButton.setTitle("Previous", for: .normal)
         
-        if currentQuestion == detailedDummyQuiz.questions.count - 1 {
+        if currentQuestion == detailedQuiz.questions.count - 1 {
             if isQuestionsOnly || isAnswers {
                 NSLayoutConstraint.activate([outOfLabelHeight])
                 outOfLabel.isHidden = true
                 nextButton.backgroundColor = .clear
                 nextButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-                nextButton.setTitle("\(currentQuestion + 1) out of \(detailedDummyQuiz.questions.count)", for: .normal)
+                nextButton.setTitle("\(currentQuestion + 1) out of \(detailedQuiz.questions.count)", for: .normal)
             } else {
                 nextButton.setTitle("Submit", for: .normal)
             }
@@ -280,10 +271,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBAction func previousButtonAction() {
         
-        if currentQuestion == detailedDummyQuiz.questions.count - 1, isQuestionsOnly || isAnswers {
+        if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly || isAnswers {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
             outOfLabel.isHidden = false
-            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedDummyQuiz.questions.count)"
+            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
             nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
             nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
         }
@@ -294,9 +285,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if currentQuestion == 0 {
             outOfLabel.isHidden = true
             NSLayoutConstraint.activate([outOfLabelHeight])
-            previousButton.setTitle("1 Out of \(detailedDummyQuiz.questions.count)", for: .normal)
+            previousButton.setTitle("1 Out of \(detailedQuiz.questions.count)", for: .normal)
         }
-        if currentQuestion < detailedDummyQuiz.questions.count - 1 {
+        if currentQuestion < detailedQuiz.questions.count - 1 {
             nextButton.setTitle("Next", for: .normal)
         }
         self.view.layoutIfNeeded()
@@ -354,7 +345,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
-                        if let answers = answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] {
+                        if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
                                     if isAnswers && questionType! == .trueOrFalse {
@@ -372,6 +363,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                     cell.answer = questions[indexPath.row] as? Answers
                 }
+                
                 if isAnswers || isQuestionsOnly {
                     cell.matchTextField.isUserInteractionEnabled = false
                 }
@@ -393,7 +385,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         //should save the answer for this question
         switch questionType! {
         case .multipleChoice, .multipleSelect, .trueOrFalse:
-            if var previousAnswers = answeredQuestions[detailedDummyQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
+            if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
                 //check that the current selection doesn't exist in the answers array
                 var flag: Bool = true
                 var answerToBeRemovedIndex: Int!
@@ -411,19 +403,19 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                     if flag {
                         previousAnswers.append(selectedAnswer)
-                        answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] = previousAnswers
+                        answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
                     } else {
                         //remove the selected answer from the array and reload the table
                         if answerToBeRemovedIndex != nil {
                             previousAnswers.remove(at: answerToBeRemovedIndex)
-                            answeredQuestions[detailedDummyQuiz.questions[currentQuestion]] = previousAnswers
+                            answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
                             tableView.reloadData()
                         }
                     }
                 }
             } else {
                 if let validAnswer = questions[indexPath.row] as? Answers {
-                    answeredQuestions[detailedDummyQuiz.questions[ currentQuestion] ] = [validAnswer]
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [validAnswer]
                 }
             }
             tableView.reloadData()

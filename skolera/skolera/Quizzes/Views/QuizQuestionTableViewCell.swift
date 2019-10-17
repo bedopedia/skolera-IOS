@@ -27,7 +27,7 @@ class QuizQuestionTableViewCell: UITableViewCell {
     
     var question: Questions! {
         didSet {
-            questionBodyLabel.text = self.question.body
+            questionBodyLabel.attributedText = self.question.body?.htmlToAttributedString
         }
     }
     

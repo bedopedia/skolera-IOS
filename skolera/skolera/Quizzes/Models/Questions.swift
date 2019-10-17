@@ -20,6 +20,7 @@ class Questions: Hashable {
     let uploadedFile: Any?
     let correctAnswersCount: Int?
     let numberOfCorrectAnswers: Int?
+    let answers: [Answers]!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -31,6 +32,11 @@ class Questions: Hashable {
             answersAttributes = answersAttributesDictArray.map { Answers($0) }
         } else {
             answersAttributes = nil
+        }
+        if let answersDictArray = dict["answers"] as? [[String: Any]] {
+            answers = answersDictArray.map { Answers($0) }
+        } else {
+            answers = nil
         }
         correctionStyle = dict["correction_style"] as? Any
         type = dict["type"] as? String
