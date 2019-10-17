@@ -96,7 +96,7 @@ func submitQuizFeedbackApi(parameters: Parameters, completion: @escaping ((Bool,
         }
     }
 }
-// using show quiz
+// using show quiz For the details page
 func getQuizApi(quizId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = GET_QUIZ(quizId: quizId)
@@ -113,12 +113,29 @@ func getQuizApi(quizId: Int, completion: @escaping ((Bool, Int, Any?, Error?) ->
 func createSubmissionApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = CREATE_SUBMISSION()
-    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).responseJSON { response in
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
-            if let array = response.result.value as? [[String : Any]] {
+            if let _ = response.result.value as? [String : Any] {
+                completion(false, response.response?.statusCode ?? 0, nil, error)
+            } else {
+                completion(true, response.response?.statusCode ?? 0, nil, error)
+            }
+        }
+    }
+}
+
+func getQuizSolveDetailsApi(quizId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = QUIZ_SOLVE_DETAILS(quizId: quizId)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            if let _ = response.result.value as? [[String : Any]] {
                 completion(false, response.response?.statusCode ?? 0, nil, error)
             } else {
                 // Handle error: no json response
@@ -127,6 +144,26 @@ func createSubmissionApi(parameters: Parameters, completion: @escaping ((Bool, I
         }
     }
 }
+
+func getQuizAnswersSubmissionsApi(submissionId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = GET_ANSWER_SUBMISSIONS(submissionId: submissionId)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            if let _ = response.result.value as? [[String : Any]] {
+                completion(false, response.response?.statusCode ?? 0, nil, error)
+            } else {
+                // Handle error: no json response
+                completion(true, response.response?.statusCode ?? 0, nil, error)
+            }
+        }
+    }
+}
+
+
 
 
 

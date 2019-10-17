@@ -8,14 +8,14 @@ import Foundation
 
 class Answers {
     
-    let id: Int?
-    var body: String?
-    let isCorrect: Bool?
-    let createdAt: String?
-    let updatedAt: String?
-    let questionId: Int?
-    let match: String?
-    let deletedAt: Any?
+    let id: Int!
+    var body: String!
+    let isCorrect: Bool!
+    let createdAt: String!
+    let updatedAt: String!
+    let questionId: Int!
+    let match: String!
+    let deletedAt: Any!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int

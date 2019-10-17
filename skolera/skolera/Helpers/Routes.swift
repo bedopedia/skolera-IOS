@@ -233,3 +233,7 @@ func POST_ANSWER_SUBMISSIONS() -> String {
 func DELETE_ANSWER_SUBMISSIONS() -> String {
     return "\(BASE_URL!)/api/answer_submissions/remove_answer_submission"
 }
+
+func SUBMIT_QUIZ() -> String {
+    return "\(BASE_URL!)/api/active_quizzes/submit_quiz"
+}

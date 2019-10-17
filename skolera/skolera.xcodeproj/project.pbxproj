@@ -314,6 +314,7 @@
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
+		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -643,6 +644,7 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1248,6 +1250,7 @@
 				8A3923E4233CBD150001963A /* DetailedQuiz.swift */,
 				8A3923E6233CC7520001963A /* Questions.swift */,
 				8A3923E8233CC7710001963A /* Answers.swift */,
+				DCC0DDDD23587AA30061660B /* Submission.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2055,6 +2058,7 @@
 				8A94E45922DF826300A01B0C /* PostCourse.swift in Sources */,
 				545BBFFF2018CEC600A1F858 /* SchoolInfo.swift in Sources */,
 				545977DB202676B900263794 /* Label+KingfisherPlaceholder.swift in Sources */,
+				DCC0DDDE23587AA30061660B /* Submission.swift in Sources */,
 				8A6D362520B59A4200DD0445 /* DemoTextMessageHandler.swift in Sources */,
 				5402CA0D2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift in Sources */,
 				8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */,
