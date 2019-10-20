@@ -130,6 +130,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
         if questionType == QuestionTypes.trueOrFalse {
+            questions.append("headerCell")
             let correctanswer = Answers.init(["id": question.answers.first?.id as Any ,
                                        "body": "true",
                                        "question_id": question.answers.first?.questionId
@@ -138,7 +139,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             let falseAnswer = Answers.init(["id": question.answers.first?.id as Any ,
                                          "body": "false",
                                          "question_id": question.answers.first?.questionId
-                                        ])
+                                       ])
             questions.append(falseAnswer)
         } else {
             if questionType == QuestionTypes.match {

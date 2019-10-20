@@ -12,7 +12,6 @@ class QuizQuestionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var questionBodyLabel: UILabel!
-    @IBOutlet weak var questionImageView: UIImageView!
     @IBOutlet weak var questtionNumberLabelWidth: NSLayoutConstraint!
     
     var question: Questions! {

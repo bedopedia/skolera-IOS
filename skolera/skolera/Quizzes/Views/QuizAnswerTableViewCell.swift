@@ -15,7 +15,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var matchTextField: UITextField!
     @IBOutlet weak var answerTextLabel: UILabel!
     @IBOutlet weak var answerLeftImageView: UIImageView!
-    @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
     var isAnswers = false
