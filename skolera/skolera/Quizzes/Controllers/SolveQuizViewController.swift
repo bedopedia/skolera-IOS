@@ -129,8 +129,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
-        questions.append("Answers")
-        
         if questionType == QuestionTypes.trueOrFalse {
             let correctanswer = Answers.init(["id": question.answers.first?.id as Any ,
                                        "body": "true",
@@ -144,8 +142,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             questions.append(falseAnswer)
         } else {
             if questionType == QuestionTypes.match {
-                questions.append(contentsOf: question.answers)
+//                should divide the answers and append them all here
+                question.answers.first?.options.forEach({ (option) in
+                    questions.append(option)
+                })
+                questions.append("headerCell")
+                question.answers.first?.matches.forEach({ (match) in
+                    questions.append(match)
+                })
+                
             } else {
+                questions.append("headerCell")
                 question.answers?.forEach{ (answer) in
                     questions.append(answer)
                 }
@@ -322,18 +329,22 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     }
 //    MARK: - cellForRow
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if questions[indexPath.row] is Questions {
+        if questions[indexPath.row] is Questions || questions[indexPath.row] is Options {
             let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
-            cell.question = questions[indexPath.row] as? Questions
-            if let _ = questions.first as? Questions {
-                cell.questionType = questionType
+            cell.questionType = questionType
+            if let _ = questions[indexPath.row] as? Questions{
+                cell.question = questions[indexPath.row] as? Questions
+            } else {
+                cell.option = questions[indexPath.row] as? Options
+                cell.matchIndex = indexPath.row
             }
             return cell
         } else {
-            if questions[indexPath.row] is String {
+            if let title = questions[indexPath.row] as? String, title.elementsEqual("headerCell") {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "answerLabelCell") as! QuizAnswerLabelTableViewCell
                 return cell
-            } else {
+            }
+            else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
                 if let question = questions.first as? Questions {
                     cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
@@ -342,7 +353,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.isAnswers = true
                 }
                 switch questionType! {
-//                case .match:
+                case .match:
+                    cell.matchString = questions[indexPath.row] as? String
                 case .reorder:
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
@@ -364,10 +376,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                 }
                             }
                         }
+                        cell.answer = questions[indexPath.row] as? Answers
                     }
-                    cell.answer = questions[indexPath.row] as? Answers
                 }
-                
                 if isAnswers || isQuestionsOnly {
                     cell.matchTextField.isUserInteractionEnabled = false
                 }

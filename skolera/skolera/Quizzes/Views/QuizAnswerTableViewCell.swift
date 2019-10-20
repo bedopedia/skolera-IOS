@@ -19,6 +19,11 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var cellView: UIView!
     
     var isAnswers = false
+    var matchString: String! {
+        didSet {
+            answerTextLabel.attributedText = self.matchString.htmlToAttributedString
+        }
+    }
     var questionType: QuestionTypes! {
         didSet {
             self.hideMatchView()
@@ -29,7 +34,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             case QuestionTypes.multipleChoice:
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
             case QuestionTypes.multipleSelect:
-                //set asset
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
             case QuestionTypes.reorder:
                 self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
@@ -41,7 +45,8 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     var answer: Answers! {
         didSet {
             if questionType == QuestionTypes.match {
-                answer.ma
+                debugPrint("match cell")
+//                answerTextLabel.attributedText
             } else {
                 answerTextLabel.attributedText = self.answer.body.htmlToAttributedString
             }
