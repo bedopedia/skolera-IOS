@@ -16,8 +16,6 @@ class SplashScreenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let keyChain = KeychainSwift.init()
-        keyChain.clear()
         navigationController?.isNavigationBarHidden = true
         getMainScreen()
     }
