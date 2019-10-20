@@ -177,7 +177,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
-                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                        if let _ = parent.data.parentId {
+                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                        } else {
+                            showNetworkFailureError(viewController: self, statusCode: 500, error: NSError())
+                        }
                     } else {
                         self.stopAnimating()
                         ///////
