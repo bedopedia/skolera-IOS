@@ -7,23 +7,29 @@
 //
 
 import UIKit
+import RichTextView
 
 class QuizQuestionTableViewCell: UITableViewCell {
     
+    
+
     @IBOutlet weak var questionNumberLabel: UILabel!
-    @IBOutlet weak var questionBodyLabel: UILabel!
+    @IBOutlet weak var questionBodyLabel: RichTextView!
     @IBOutlet weak var questtionNumberLabelWidth: NSLayoutConstraint!
     
     var question: Questions! {
         didSet{
             self.questionNumberLabel.isHidden = true
-            questionBodyLabel.attributedText = self.question.body?.htmlToAttributedString
+//            questionBodyLabel.update(input: self.question.body)
+//            questionBodyLabel.attributedText = self.question.body?.htmlToAttributedString
         }
     }
     var option: Options! {
         didSet{
             self.questionNumberLabel.isHidden = false
-            questionBodyLabel.attributedText = self.option.body?.htmlToAttributedString
+//            questionBodyLabel.update(input: self.option.body)
+//            questionBodyLabel.attributedText = self.option.body?.htmlToAttributedString
+            
         }
     }
     var questionType: QuestionTypes!
@@ -40,5 +46,6 @@ class QuizQuestionTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
+    
     
 }

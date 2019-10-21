@@ -9,8 +9,9 @@
 import UIKit
 import MobileCoreServices
 import NVActivityIndicatorView
+import RichTextView
 
-class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
+class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, RichTextViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
@@ -320,6 +321,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
+    
+    func didTapCustomLink(withID linkID: String) {
+        debugPrint("link tapped")
+    }
 }
 //MARK: - Table view Extension
 
@@ -333,8 +338,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         if questions[indexPath.row] is Questions || questions[indexPath.row] is Options {
             let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
             cell.questionType = questionType
-            if let _ = questions[indexPath.row] as? Questions{
-                cell.question = questions[indexPath.row] as? Questions
+            if let question = questions[indexPath.row] as? Questions{
+                cell.question = question
+                cell.questionBodyLabel.update(input: question.body)
             } else {
                 cell.option = questions[indexPath.row] as? Options
                 cell.matchIndex = indexPath.row
