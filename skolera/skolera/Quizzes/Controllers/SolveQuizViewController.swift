@@ -11,7 +11,7 @@ import MobileCoreServices
 import NVActivityIndicatorView
 import RichTextView
 
-class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, RichTextViewDelegate {
+class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
@@ -29,7 +29,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, Ri
     var isTimerRunning = false
     var savedDuration = 0
 //    var detailedDummyQuiz: DetailedQuiz!
-    var detailedQuiz: DetailedQuiz!
+    var detailedQuiz: DetailedQuiz! {
+        didSet {
+            self.duration = self.detailedQuiz.duration * 60
+        }
+    }
     var submissionId: Int!
     var currentQuestion = 0
 //    Populates the Table view
@@ -40,11 +44,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, Ri
     var isQuestionsOnly = false
     var isAnswers = false
     var courseGroupId: Int!
-    var duration = 60 {
-        didSet{
-            timerLabel.text = timeString(time: TimeInterval(duration))
-        }
-    }
+    var duration: Int!
 //    MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +65,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, Ri
             backButtonAllignment.constant = 0
             headerHeightConstraint.constant = 60
         }
+        timerLabel.text = timeString(time: TimeInterval(duration))
         getAnswers()
     }
     
@@ -97,6 +98,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, Ri
         }
         
         @objc func updateTimer() {
+            timerLabel.text = timeString(time: TimeInterval(duration))
                 if duration < 1 {
                 timer.invalidate()
     //            navigateToHome()
@@ -320,10 +322,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable, Ri
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
-    }
-    
-    func didTapCustomLink(withID linkID: String) {
-        debugPrint("link tapped")
     }
 }
 //MARK: - Table view Extension
