@@ -390,10 +390,56 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 switch questionType! {
                 case .match:
                     cell.matchString = questions[indexPath.row] as? String
-                case .reorder:
-                    if !newOrder.isEmpty {
-                        cell.answer = newOrder[indexPath.row - 2]
+//                    update the matchTextField with the corresponding answer from the array
+                    if let currentAnswer = questions[indexPath.row] as? String {
+                        if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+                            for answer in answers { //should not be for all answers, should only be for my specific answer
+//                                map of option: matches wa3rd el rakam
+                                if let answerDict = answer as? [String: Any] {
+                                    if let matchAnswer = answerDict["match"] as? String {
+                                        debugPrint("matchAnswer", matchAnswer, "currentAnswer", currentAnswer )
+                                    }
+                                }
+                            }
+    //                        if i get the answer i need to update the textViews with the corressponding match number
+                        }
+                    } else {
+//
                     }
+                case .reorder:
+                    if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+//                        order would be determined by the int value of the body attribute -1
+//                        should populate the new order array with the correct order
+                        if let currentAnswer = questions[indexPath.row] as? Answers {
+                            for answer in answers {
+                                if let answerDict = answer as? [String: Any] {
+                                    if let answerId = answerDict["answer_id"] as? Int, answerId == currentAnswer.id! {
+                                        if let orderString = answerDict["match"] as? String {
+                                            if var order = Int(orderString) {
+                                                debugPrint(order)
+                                                order -= 1
+                                                if let modelledAnswer = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
+                                                    if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id! {
+                                                        return true
+                                                    }
+                                                    return false
+                                                }) {
+                                                    newOrder[order] = modelledAnswer
+                                                    cell.answer = modelledAnswer
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    } else {
+                        if !newOrder.isEmpty {
+                            cell.answer = newOrder[indexPath.row - 2]
+                        }
+                    }
+                    
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
