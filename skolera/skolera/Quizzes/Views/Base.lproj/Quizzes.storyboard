@@ -1665,22 +1665,21 @@
                                                                 <constraint firstAttribute="height" constant="36" id="u7Q-o6-Yhf"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="answer body" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-8V-ric">
-                                                            <rect key="frame" x="72" y="12" width="95" height="42"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                                            <color key="textColor" red="0.0" green="0.090196078430000007" blue="0.1647058824" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXY-fE-ZvL" customClass="RichTextView" customModule="RichTextView">
+                                                            <rect key="frame" x="72" y="8" width="306" height="50"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="w69-lU-n6Q" firstAttribute="leading" secondItem="ZaR-OI-Xgf" secondAttribute="leading" constant="12" id="33q-Ye-Z8g"/>
-                                                        <constraint firstItem="Pa6-8V-ric" firstAttribute="top" secondItem="ZaR-OI-Xgf" secondAttribute="top" constant="12" id="38s-6F-3z4"/>
                                                         <constraint firstItem="MEe-Yx-6cM" firstAttribute="leading" secondItem="ZaR-OI-Xgf" secondAttribute="leading" constant="12" id="8hK-kF-zhM"/>
-                                                        <constraint firstItem="w69-lU-n6Q" firstAttribute="centerY" secondItem="Pa6-8V-ric" secondAttribute="centerY" id="Be4-3B-0eg"/>
-                                                        <constraint firstItem="MEe-Yx-6cM" firstAttribute="centerY" secondItem="Pa6-8V-ric" secondAttribute="centerY" id="TDB-Pl-xcK"/>
-                                                        <constraint firstItem="Pa6-8V-ric" firstAttribute="leading" secondItem="w69-lU-n6Q" secondAttribute="trailing" constant="24" id="fQB-GS-6fk"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Pa6-8V-ric" secondAttribute="bottom" constant="12" id="qw8-c9-Cfw"/>
+                                                        <constraint firstItem="MEe-Yx-6cM" firstAttribute="centerY" secondItem="xXY-fE-ZvL" secondAttribute="centerY" id="8q2-Dt-Li8"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xXY-fE-ZvL" secondAttribute="trailing" constant="12" id="8t3-RF-7JV"/>
+                                                        <constraint firstItem="xXY-fE-ZvL" firstAttribute="top" secondItem="ZaR-OI-Xgf" secondAttribute="top" constant="8" id="Btp-Js-LvP"/>
+                                                        <constraint firstItem="xXY-fE-ZvL" firstAttribute="leading" secondItem="MEe-Yx-6cM" secondAttribute="trailing" constant="24" id="JCf-mk-bSV"/>
+                                                        <constraint firstItem="w69-lU-n6Q" firstAttribute="centerY" secondItem="xXY-fE-ZvL" secondAttribute="centerY" id="ROx-iq-FKH"/>
+                                                        <constraint firstAttribute="bottom" secondItem="xXY-fE-ZvL" secondAttribute="bottom" constant="8" id="h6L-EZ-ZPr"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -1694,7 +1693,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="answerLeftImageView" destination="w69-lU-n6Q" id="20F-V2-h84"/>
-                                            <outlet property="answerTextLabel" destination="Pa6-8V-ric" id="S9x-hB-hJ1"/>
+                                            <outlet property="answerTextView" destination="xXY-fE-ZvL" id="oK7-zd-OkP"/>
                                             <outlet property="cellView" destination="ZaR-OI-Xgf" id="7A3-Fq-dga"/>
                                             <outlet property="matchLeftView" destination="MEe-Yx-6cM" id="Fpw-UB-neS"/>
                                             <outlet property="matchTextField" destination="i61-wK-Mcf" id="krD-9U-7mm"/>

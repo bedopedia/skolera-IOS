@@ -8,19 +8,22 @@
 //
 
 import UIKit
+import RichTextView
 
 class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var matchLeftView: UIView!
     @IBOutlet weak var matchTextField: UITextField!
-    @IBOutlet weak var answerTextLabel: UILabel!
+    @IBOutlet weak var answerTextView: RichTextView!
     @IBOutlet weak var answerLeftImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
     var isAnswers = false
     var matchString: String! {
         didSet {
-            answerTextLabel.attributedText = self.matchString.htmlToAttributedString
+//            answerTextLabel.attributedText = self.matchString.htmlToAttributedString
+            answerTextView.update(input: self.matchString)
+            answerTextView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         }
     }
     var questionType: QuestionTypes! {
@@ -45,9 +48,11 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         didSet {
             if questionType == QuestionTypes.match {
                 debugPrint("match cell")
-//                answerTextLabel.attributedText
+//                answerTextView.update(input: self.answer.body)
+//                answerTextView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
             } else {
-                answerTextLabel.attributedText = self.answer.body.htmlToAttributedString
+                answerTextView.backgroundColor = .white
+                answerTextView.update(input: self.answer.body)
             }
             matchTextField.delegate = self
             matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
