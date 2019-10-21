@@ -340,10 +340,13 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             cell.questionType = questionType
             if let question = questions[indexPath.row] as? Questions{
                 cell.question = question
-                cell.questionBodyLabel.update(input: question.body)
+                cell.questionBodyView.update(input: question.body)
             } else {
-                cell.option = questions[indexPath.row] as? Options
-                cell.matchIndex = indexPath.row
+                if let option = questions[indexPath.row] as? Options {
+                    cell.option = option
+                    cell.questionBodyView.update(input: option.body)
+                    cell.matchIndex = indexPath.row
+                }
             }
             return cell
         } else {
