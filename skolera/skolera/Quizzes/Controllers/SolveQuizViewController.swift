@@ -410,19 +410,23 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                         }
                                     }
                                 } else {
-//                                    answers from get submissions
-                                    if questionType == QuestionTypes.trueOrFalse {
-                                        if let answerDict = answer as? [String: Any] {
+//                                    answers from get submissions api
+                                    if let answerDict = answer as? [String: Any] {
+                                        if questionType == QuestionTypes.trueOrFalse {
                                             if let trueOrFalse = answerDict["is_correct"] as? Bool{
                                                 if trueOrFalse == selectedAnswer.isCorrect! {
                                                     cell.setSelectedImage()
                                                 }
                                             }
+                                        } else {
+//                                            handle multiselect, multiple choices
+                                            if let trueOrFalse = answerDict["is_correct"] as? Bool, trueOrFalse == true {
+                                                if let answerId = answerDict["answer_id"] as? Int, answerId == selectedAnswer.id! {
+                                                    cell.setSelectedImage()
+                                                }
+                                            }
                                         }
-                                    } else {
-//                                        handle the rest of the questions types
                                     }
-
                                 }
                             }
                         }
