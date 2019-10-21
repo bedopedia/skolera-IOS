@@ -21,7 +21,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     var isAnswers = false
     var matchString: String! {
         didSet {
-//            answerTextLabel.attributedText = self.matchString.htmlToAttributedString
             answerTextView.update(input: self.matchString)
             answerTextView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
         }
@@ -50,9 +49,9 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             if questionType != QuestionTypes.match {
                 answerTextView.backgroundColor = .white
                 answerTextView.update(input: self.answer.body)
-            } 
+            }
             matchTextField.delegate = self
-            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
+            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 14)
             if isAnswers {
                 matchTextField.attributedText = self.answer.match.htmlToAttributedString ?? "".htmlToAttributedString
             }
@@ -91,11 +90,9 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         matchLeftView.layer.borderWidth = 1
         matchLeftView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
         matchLeftView.layer.cornerRadius = 6
-//        matchLeftView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

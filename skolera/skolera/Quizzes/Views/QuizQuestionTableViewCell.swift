@@ -11,8 +11,6 @@ import RichTextView
 
 class QuizQuestionTableViewCell: UITableViewCell {
     
-    
-
     @IBOutlet weak var questionNumberLabel: UILabel!
     @IBOutlet weak var questionBodyView: RichTextView!
     
@@ -20,14 +18,13 @@ class QuizQuestionTableViewCell: UITableViewCell {
         didSet{
             self.questionNumberLabel.isHidden = true
 //            questionBodyView.update(input: self.question.body)
-//            questionBodyView.attributedText = self.question.body?.htmlToAttributedString
         }
     }
     var option: Options! {
         didSet{
             self.questionNumberLabel.isHidden = false
+            self.questionBodyView.layer.cornerRadius = 6
 //            questionBodyView.update(input: self.option.body)
-//            questionBodyView.attributedText = self.option.body?.htmlToAttributedString
             
         }
     }
@@ -45,6 +42,5 @@ class QuizQuestionTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
     
 }
