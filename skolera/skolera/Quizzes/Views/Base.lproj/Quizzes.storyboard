@@ -1570,11 +1570,22 @@
                                                             <color key="textColor" red="0.6470588235294118" green="0.67843137254901964" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lf-06-CXY" customClass="RichTextView" customModule="RichTextView">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lf-06-CXY">
                                                             <rect key="frame" x="38" y="0.0" width="352" height="99"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLT-UC-Fup" customClass="RichTextView" customModule="RichTextView">
+                                                                    <rect key="frame" x="0.0" y="8" width="352" height="83"/>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </view>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="tintColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
+                                                                <constraint firstItem="XLT-UC-Fup" firstAttribute="centerY" secondItem="2lf-06-CXY" secondAttribute="centerY" id="8a7-Lt-bOx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="XLT-UC-Fup" secondAttribute="trailing" id="I1D-Kp-OoD"/>
+                                                                <constraint firstAttribute="bottom" secondItem="XLT-UC-Fup" secondAttribute="bottom" constant="8" id="Rj1-FE-pp6"/>
+                                                                <constraint firstItem="XLT-UC-Fup" firstAttribute="leading" secondItem="2lf-06-CXY" secondAttribute="leading" id="bG4-nc-lQf"/>
+                                                                <constraint firstItem="XLT-UC-Fup" firstAttribute="top" secondItem="2lf-06-CXY" secondAttribute="top" constant="8" id="obC-Er-bTE"/>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="pFb-ae-DN1"/>
                                                             </constraints>
                                                         </view>
@@ -1594,7 +1605,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="questionBodyView" destination="2lf-06-CXY" id="fft-PO-n9z"/>
+                                            <outlet property="questionBodyView" destination="XLT-UC-Fup" id="JxP-5a-7v8"/>
                                             <outlet property="questionNumberLabel" destination="c2y-rD-QaB" id="6mp-7c-u19"/>
                                         </connections>
                                     </tableViewCell>

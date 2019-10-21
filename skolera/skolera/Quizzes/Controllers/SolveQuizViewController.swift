@@ -341,6 +341,8 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             if let question = questions[indexPath.row] as? Questions{
                 cell.question = question
                 cell.questionBodyView.update(input: question.body)
+//                cell.questionBodyView.update(input: "<img width = 50, height = 50, src=\"https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg\"> <p>This is normal text - <b>and this is bold text</b>.</p> <img src = \"http://via.placeholder.com/70\">")
+                
             } else {
                 if let option = questions[indexPath.row] as? Options {
                     cell.option = option
