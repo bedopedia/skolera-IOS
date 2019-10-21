@@ -46,14 +46,11 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     var answer: Answers! {
         didSet {
-            if questionType == QuestionTypes.match {
-                debugPrint("match cell")
-//                answerTextView.update(input: self.answer.body)
-//                answerTextView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
-            } else {
+//            Might be a redundant check
+            if questionType != QuestionTypes.match {
                 answerTextView.backgroundColor = .white
                 answerTextView.update(input: self.answer.body)
-            }
+            } 
             matchTextField.delegate = self
             matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
             if isAnswers {

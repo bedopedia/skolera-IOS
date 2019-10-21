@@ -1574,7 +1574,7 @@
                                                             <rect key="frame" x="38" y="0.0" width="352" height="99"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLT-UC-Fup" customClass="RichTextView" customModule="RichTextView">
-                                                                    <rect key="frame" x="0.0" y="8" width="352" height="83"/>
+                                                                    <rect key="frame" x="0.0" y="14" width="352" height="71"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                             </subviews>
@@ -1583,10 +1583,10 @@
                                                             <constraints>
                                                                 <constraint firstItem="XLT-UC-Fup" firstAttribute="centerY" secondItem="2lf-06-CXY" secondAttribute="centerY" id="8a7-Lt-bOx"/>
                                                                 <constraint firstAttribute="trailing" secondItem="XLT-UC-Fup" secondAttribute="trailing" id="I1D-Kp-OoD"/>
-                                                                <constraint firstAttribute="bottom" secondItem="XLT-UC-Fup" secondAttribute="bottom" constant="8" id="Rj1-FE-pp6"/>
+                                                                <constraint firstAttribute="bottom" secondItem="XLT-UC-Fup" secondAttribute="bottom" constant="14" id="Rj1-FE-pp6"/>
                                                                 <constraint firstItem="XLT-UC-Fup" firstAttribute="leading" secondItem="2lf-06-CXY" secondAttribute="leading" id="bG4-nc-lQf"/>
-                                                                <constraint firstItem="XLT-UC-Fup" firstAttribute="top" secondItem="2lf-06-CXY" secondAttribute="top" constant="8" id="obC-Er-bTE"/>
-                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="pFb-ae-DN1"/>
+                                                                <constraint firstItem="XLT-UC-Fup" firstAttribute="top" secondItem="2lf-06-CXY" secondAttribute="top" constant="14" id="obC-Er-bTE"/>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="pFb-ae-DN1"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -1638,13 +1638,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZaR-OI-Xgf">
-                                                    <rect key="frame" x="12" y="8" width="390" height="66"/>
+                                                    <rect key="frame" x="12" y="12" width="390" height="58"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MEe-Yx-6cM">
-                                                            <rect key="frame" x="12" y="15" width="36" height="36"/>
+                                                            <rect key="frame" x="12" y="8" width="42" height="42"/>
                                                             <subviews>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i61-wK-Mcf">
-                                                                    <rect key="frame" x="16" y="8" width="4" height="20"/>
+                                                                    <rect key="frame" x="19" y="8" width="4" height="20"/>
                                                                     <color key="textColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
@@ -1654,19 +1654,19 @@
                                                             <constraints>
                                                                 <constraint firstItem="i61-wK-Mcf" firstAttribute="centerX" secondItem="MEe-Yx-6cM" secondAttribute="centerX" id="7WS-jd-Wwu"/>
                                                                 <constraint firstItem="i61-wK-Mcf" firstAttribute="top" secondItem="MEe-Yx-6cM" secondAttribute="topMargin" id="8r4-3i-KYg"/>
-                                                                <constraint firstAttribute="height" constant="36" id="8tg-AH-k8k"/>
-                                                                <constraint firstAttribute="width" constant="36" id="DWS-cI-lSV"/>
+                                                                <constraint firstAttribute="height" constant="42" id="8tg-AH-k8k"/>
+                                                                <constraint firstAttribute="width" constant="42" id="DWS-cI-lSV"/>
                                                             </constraints>
                                                         </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizReorder" translatesAutoresizingMaskIntoConstraints="NO" id="w69-lU-n6Q">
-                                                            <rect key="frame" x="12" y="15" width="36" height="36"/>
+                                                            <rect key="frame" x="12" y="8" width="42" height="42"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="36" id="cgn-51-wos"/>
-                                                                <constraint firstAttribute="height" constant="36" id="u7Q-o6-Yhf"/>
+                                                                <constraint firstAttribute="width" constant="42" id="cgn-51-wos"/>
+                                                                <constraint firstAttribute="height" constant="42" id="u7Q-o6-Yhf"/>
                                                             </constraints>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXY-fE-ZvL" customClass="RichTextView" customModule="RichTextView">
-                                                            <rect key="frame" x="72" y="8" width="306" height="50"/>
+                                                            <rect key="frame" x="78" y="8" width="300" height="42"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
@@ -1686,9 +1686,9 @@
                                             <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="ZaR-OI-Xgf" firstAttribute="leading" secondItem="SPE-2t-yY1" secondAttribute="leading" constant="12" id="EVE-8s-CHa"/>
-                                                <constraint firstItem="ZaR-OI-Xgf" firstAttribute="top" secondItem="SPE-2t-yY1" secondAttribute="top" constant="8" id="Gvt-i0-HUy"/>
+                                                <constraint firstItem="ZaR-OI-Xgf" firstAttribute="top" secondItem="SPE-2t-yY1" secondAttribute="top" constant="12" id="Gvt-i0-HUy"/>
                                                 <constraint firstAttribute="trailing" secondItem="ZaR-OI-Xgf" secondAttribute="trailing" constant="12" id="bMa-uj-Al4"/>
-                                                <constraint firstAttribute="bottom" secondItem="ZaR-OI-Xgf" secondAttribute="bottom" constant="8" id="lh5-pS-VTY"/>
+                                                <constraint firstAttribute="bottom" secondItem="ZaR-OI-Xgf" secondAttribute="bottom" constant="12" id="lh5-pS-VTY"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
