@@ -27,7 +27,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     var timer = Timer()
     var isTimerRunning = false
-    var savedDuration = 0
+//    var savedDuration = 0
 //    var detailedDummyQuiz: DetailedQuiz!
     var detailedQuiz: DetailedQuiz! {
         didSet {
@@ -45,6 +45,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var isAnswers = false
     var courseGroupId: Int!
     var duration: Int!
+    var previousAnswers: [String : [Any]]!
 //    MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dropDelegate = self
         tableView.dragDelegate = self
         answeredQuestions = [:]
+        previousAnswers = [:]
 //        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -116,6 +118,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
 //    MARK: - Data setup
     func setUpQuestions() {
         questions = []
+        showAnswers()
 //        let question = detailedDummyQuiz.questions[currentQuestion]
         let question = detailedQuiz.questions[currentQuestion]
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
@@ -136,12 +139,14 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             questions.append("headerCell")
             let correctanswer = Answers.init(["id": question.answers.first?.id as Any ,
                                        "body": "true",
-                                       "question_id": question.answers.first?.questionId
+                                       "question_id": question.answers.first?.questionId,
+                                       "is_correct": true
                                       ])
             questions.append(correctanswer)
             let falseAnswer = Answers.init(["id": question.answers.first?.id as Any ,
                                          "body": "false",
-                                         "question_id": question.answers.first?.questionId
+                                         "question_id": question.answers.first?.questionId,
+                                         "is_correct": false
                                        ])
             questions.append(falseAnswer)
         } else {
@@ -165,13 +170,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
         if isAnswers {
-            showAnswers()
+//            showAnswers()
         }
         tableView.reloadData()
     }
     
     // Add answers in the answered questions dictionary
-    func showAnswers() {
+    func showDummyAnswers() {
         if let answers = detailedQuiz.questions[currentQuestion].answers {
             switch questionType! {
             case .multipleChoice, .multipleSelect:
@@ -210,6 +215,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 })
                 newOrder = answeredQuestions[detailedQuiz.questions[currentQuestion]] as! [Answers]
             }
+        }
+        tableView.reloadData()
+    }
+    
+    func showAnswers() {
+        debugPrint("show answers")
+        let questionId  = detailedQuiz.questions[currentQuestion].id!
+//        previous answers is an array of objects, search if it contains this question id
+        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
+            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
+                return true
+            }
+            return false
+        }
+        debugPrint(previousAnswers)
+        if let answersArray = previousAnswer["\(questionId)"] {
+            debugPrint(answersArray.count)
+            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
         }
         tableView.reloadData()
     }
@@ -316,7 +339,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 if let result = value as? [String : [Any]] {
 //                    array of available answers for the questions
-                   debugPrint(result)
+//                    string question id, array of corresponding answers
+                    self.previousAnswers = result
+                    self.showAnswers()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -374,6 +399,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answers {
+//                                    in case of using the answers api
                                     if isAnswers && questionType! == .trueOrFalse {
                                         if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
                                             cell.setSelectedImage()
@@ -383,6 +409,20 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                             cell.setSelectedImage()
                                         }
                                     }
+                                } else {
+//                                    answers from get submissions
+                                    if questionType == QuestionTypes.trueOrFalse {
+                                        if let answerDict = answer as? [String: Any] {
+                                            if let trueOrFalse = answerDict["is_correct"] as? Bool{
+                                                if trueOrFalse == selectedAnswer.isCorrect! {
+                                                    cell.setSelectedImage()
+                                                }
+                                            }
+                                        }
+                                    } else {
+//                                        handle the rest of the questions types
+                                    }
+
                                 }
                             }
                         }
