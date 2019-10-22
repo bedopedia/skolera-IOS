@@ -395,6 +395,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
+//    MARK: - Match Answers
     func matchAnswers(matchIndex: String!, matchString: String) {
         guard let arrayIndex = Int(matchIndex ?? "") else {
             return
@@ -402,26 +403,23 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard var answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
             return
         }
-    //                        then check if the answers attributes keys have the same match remove it
+        guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
+            return
+        }
+//      check if the answers attributes keys have the same match remove it
         for answer in answers {
             if var answerDict = answer as? [Option: String] {
-                if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
-                    for (index, option) in options.enumerated() {
-                        if answerDict[option] == matchString {
-                            answerDict[option] = ""
-                            answers[index] = answerDict
-                            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
-                            
-                        }
+                for (index, option) in options.enumerated() {
+                    if answerDict[option] == matchString {
+                        answerDict[option] = ""
+                        answers[index] = answerDict
+                        self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
                     }
-                } else {
-    //                                        no options available
                 }
             } else {
-    //                                        no dict available
+    //          no dict available
             }
         }
-        
         if answers.indices.contains(arrayIndex - 1) {
             if var matchDict = answers[arrayIndex - 1] as? [Option: String] {
                 if let matchTupleKey = matchDict.first?.key {
@@ -431,11 +429,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
             else {
-    //                                          no dict available
+    //      no dict available
             }
         } else {
             return
         }
+        self.tableView.reloadData()
     }
 }
 //MARK: - Table view Extension
@@ -476,43 +475,62 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 }
                 switch questionType! {
                 case .match:
-                    cell.matchString = questions[indexPath.row] as? String
+                    guard let matchString = questions[indexPath.row] as? String else {
+                        break
+                    }
+                    cell.matchString = matchString
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
+                    
+                    if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
+                        for (index, answer) in answers.enumerated() {
+                            for option in options {
+                                if let matchAnswer = answer as? [Option: String], let value = matchAnswer[option] {
+                                    if value.elementsEqual(matchString) {
+                                        cell.matchTextField.text = "\(index + 1)"
+                                        break
+                                    }
+//                                    else {
+//                                        cell.matchTextField.text = ""
+//                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                    
                 case .reorder:
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
                     }
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                        if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                            for answer in answers {
-                                if let modelledAnswer = answer as? Answer {
-                                    //                                    in case of using the answers api
-                                    if isAnswers && questionType! == .trueOrFalse {
-                                        if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
-                                            cell.setSelectedImage()
-                                        }
-                                    } else {
-                                        if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
-                                            cell.setSelectedImage()
-                                        }
+                        for answer in answers {
+                            if let modelledAnswer = answer as? Answer {
+//                                in case of using the answers api
+                                if isAnswers && questionType! == .trueOrFalse {
+                                    if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
+                                        cell.setSelectedImage()
                                     }
                                 } else {
+                                    if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
+                                        cell.setSelectedImage()
+                                    }
+                                }
+                            } else {
 //                                  answers from get submissions api
-                                    if let answerDict = answer as? [String: Any] {
-                                        if questionType == QuestionTypes.trueOrFalse {
-                                            if let trueOrFalse = answerDict["is_correct"] as? Bool{
-                                                if trueOrFalse == selectedAnswer.isCorrect! {
-                                                    cell.setSelectedImage()
-                                                }
+                                if let answerDict = answer as? [String: Any] {
+                                    if questionType == QuestionTypes.trueOrFalse {
+                                        if let trueOrFalse = answerDict["is_correct"] as? Bool{
+                                            if trueOrFalse == selectedAnswer.isCorrect! {
+                                                cell.setSelectedImage()
                                             }
-                                        } else {
-                                            if let trueOrFalse = answerDict["is_correct"] as? Bool, trueOrFalse == true {
-                                                if let answerId = answerDict["answer_id"] as? Int, answerId == selectedAnswer.id! {
-                                                    cell.setSelectedImage()
-                                                }
+                                        }
+                                    } else {
+                                        if let trueOrFalse = answerDict["is_correct"] as? Bool, trueOrFalse == true {
+                                            if let answerId = answerDict["answer_id"] as? Int, answerId == selectedAnswer.id! {
+                                                cell.setSelectedImage()
                                             }
                                         }
                                     }
