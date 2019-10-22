@@ -118,40 +118,33 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     func sortReorderQuestion() {
-        if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-            let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
-                if let answer1Dict = answer1 as? [String: Any] {
-                    if let answer2Dict = answer2 as? [String: Any] {
-                        if let first = answer1Dict["match"] as? String {
-                            if let second = answer2Dict["match"] as? String, first < second {
-                                return true
-                            } else {
-                                return false
-                            }
-                        } else {
-                            return false
-                        }
-                    }
-                }
+        guard let answers = detailedQuiz.questions[currentQuestion].answers else {
+            return
+        }
+        guard let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
+            if newOrder.isEmpty {
+                newOrder = answers
+            }
+            return
+        }
+        let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
+            guard let answer1Dict = answer1 as? [String: Any],
+                                                            let answer2Dict = answer2 as? [String: Any],
+                                                            let first = answer1Dict["match"] as? String,
+                                                            let second = answer2Dict["match"] as? String  else {
                 return false
             }
-            for answer in orderedAnswers {
-                if let answerDict = answer as? [String: Any] {
-                    let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
-                        if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
-                            return true
-                        } else {
-                            return false
-                        }
-                    })
-                    if let modelledAnswer = matchedModel {
-                        newOrder.append(modelledAnswer)
-                    }
+            return first < second
+        }
+        for answer in orderedAnswers {
+            if let answerDict = answer as? [String: Any], let answerId = answerDict["answer_id"] as? Int {
+                let matchedModel = answers.first(where: { (answer) -> Bool in
+                    answerId == answer.id
+                })
+                guard let modelledAnswer = matchedModel else {
+                    return
                 }
-            }
-        } else {
-            if newOrder.isEmpty {
-                newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
+                newOrder.append(modelledAnswer)
             }
         }
     }
@@ -264,19 +257,26 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.reloadData()
     }
     
+//    func showAnswers() {
+//        debugPrint("show answers")
+//        let questionId  = detailedQuiz.questions[currentQuestion].id!
+//        //        previous answers is an array of objects, search if it contains this question id
+//        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
+//            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
+//                return true
+//            }
+//            return false
+//        }
+//        debugPrint(previousAnswers)
+//        if let answersArray = previousAnswer["\(questionId)"] {
+//            debugPrint(answersArray.count)
+//            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+//        }
+//        tableView.reloadData()
+//    }
     func showAnswers() {
-        debugPrint("show answers")
         let questionId  = detailedQuiz.questions[currentQuestion].id!
-        //        previous answers is an array of objects, search if it contains this question id
-        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
-            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
-                return true
-            }
-            return false
-        }
-        debugPrint(previousAnswers)
-        if let answersArray = previousAnswer["\(questionId)"] {
-            debugPrint(answersArray.count)
+        if let answersArray = previousAnswers["\(questionId)"] {
             answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
         }
         tableView.reloadData()
@@ -301,6 +301,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         case false:
             return "false"
         }
+//        bool ? "True" : "False"
+        
     }
     
     func navigateToHome() {
@@ -483,7 +485,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         cell.answer = newOrder[indexPath.row - 2]
                     }
                 default:
-                    if let selectedAnswer = questions[indexPath.row] as? Answer {
+                    if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                             for answer in answers {
                                 if let modelledAnswer = answer as? Answer {
@@ -597,7 +599,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        
         let destinationIndexPath: IndexPath
         var oldIndex: Int!
         if let indexPath = coordinator.destinationIndexPath {
