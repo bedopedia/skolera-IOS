@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class Answers {
+class Answer {
     
     let id: Int!
     let questionId: Int!
@@ -16,7 +16,7 @@ class Answers {
     let updatedAt: String!
     let match: String!
     let deletedAt: Any!
-    let options: [Options]!
+    let options: [Option]!
     let matches: [String]!
     
     init(_ dict: [String: Any]) {
@@ -29,7 +29,7 @@ class Answers {
         match = dict["match"] as? String
         deletedAt = dict["deleted_at"] as? Any
         if let optionsDictArray = dict["options"] as? [[String: Any]] {
-            options = optionsDictArray.map { Options($0) }
+            options = optionsDictArray.map { Option($0) }
         } else {
             options = nil
         }
@@ -38,8 +38,8 @@ class Answers {
     
 }
 
-class Options: Hashable {
-    static func == (lhs: Options, rhs: Options) -> Bool {
+class Option: Hashable {
+    static func == (lhs: Option, rhs: Option) -> Bool {
         lhs.id == rhs.id
     }
     let id: Int!

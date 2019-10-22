@@ -20,7 +20,7 @@ class QuizQuestionTableViewCell: UITableViewCell {
 //            questionBodyView.update(input: self.question.body)
         }
     }
-    var option: Options! {
+    var option: Option! {
         didSet{
             self.questionNumberLabel.isHidden = false
             self.questionBodyView.layer.cornerRadius = 6

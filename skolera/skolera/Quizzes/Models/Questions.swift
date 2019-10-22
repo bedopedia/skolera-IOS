@@ -12,7 +12,7 @@ class Questions: Hashable {
     let body: String!
     let difficulty: String!
     let score: Int!
-    let answersAttributes: [Answers]!
+    let answersAttributes: [Answer]!
     let correctionStyle: Any!
     let type: String!
     let bloom: [String]!
@@ -20,7 +20,7 @@ class Questions: Hashable {
     let uploadedFile: Any!
     let correctAnswersCount: Int!
     let numberOfCorrectAnswers: Int!
-    var answers: [Answers]!
+    var answers: [Answer]!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -29,17 +29,17 @@ class Questions: Hashable {
         score = dict["score"] as? Int
         
         if let answersAttributesDictArray = dict["answers_attributes"] as? [[String: Any]] {
-            answersAttributes = answersAttributesDictArray.map { Answers($0) }
+            answersAttributes = answersAttributesDictArray.map { Answer($0) }
         } else {
             answersAttributes = nil
         }
         type = dict["type"] as? String
         if let answersDictArray = dict["answers"] as? [[String: Any]] {
-            answers = answersDictArray.map { Answers($0) }
+            answers = answersDictArray.map { Answer($0) }
         } else {
             if let matchAnswer = dict["answers"] as? [String: Any] {
                 answers = []
-                answers.append(Answers.init(["options" : matchAnswer["options"],
+                answers.append(Answer.init(["options" : matchAnswer["options"],
                                              "matches": matchAnswer["matches"]]))
             } else {
                 answers = nil

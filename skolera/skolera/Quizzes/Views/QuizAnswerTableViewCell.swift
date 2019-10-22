@@ -19,6 +19,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var cellView: UIView!
     
     var isAnswers = false
+    var updateMatchAnswer: ((String!, String) -> ())!
     var matchString: String! {
         didSet {
             answerTextView.update(input: self.matchString)
@@ -43,7 +44,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
     }
-    var answer: Answers! {
+    var answer: Answer! {
         didSet {
 //            Might be a redundant check
             if questionType != QuestionTypes.match {
@@ -88,16 +89,30 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         return newString.length <= maxLength
     }
     
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        // User finished typing (hit return): hide the keyboard.
+//        debugPrint(matchTextField.text)
+//        return true
+//    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         matchLeftView.layer.borderWidth = 1
         matchLeftView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
         matchLeftView.layer.cornerRadius = 6
+        matchTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+//        debugPrint(matchTextField.text)
+//        call a closure to update the matches map, match string is available from which i can get the array index
+        updateMatchAnswer(textField.text, matchString)
     }
 
 }
