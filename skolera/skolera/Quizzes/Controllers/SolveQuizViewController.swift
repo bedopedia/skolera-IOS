@@ -393,6 +393,48 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
+    func matchAnswers(matchIndex: String!, matchString: String) {
+        guard let arrayIndex = Int(matchIndex ?? "") else {
+            return
+        }
+        guard var answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
+            return
+        }
+    //                        then check if the answers attributes keys have the same match remove it
+        for answer in answers {
+            if var answerDict = answer as? [Option: String] {
+                if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
+                    for (index, option) in options.enumerated() {
+                        if answerDict[option] == matchString {
+                            answerDict[option] = ""
+                            answers[index] = answerDict
+                            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
+                            
+                        }
+                    }
+                } else {
+    //                                        no options available
+                }
+            } else {
+    //                                        no dict available
+            }
+        }
+        
+        if answers.indices.contains(arrayIndex - 1) {
+            if var matchDict = answers[arrayIndex - 1] as? [Option: String] {
+                if let matchTupleKey = matchDict.first?.key {
+                    matchDict[matchTupleKey] = matchString
+                    answers[arrayIndex - 1] = matchDict
+                    self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
+                }
+            }
+            else {
+    //                                          no dict available
+            }
+        } else {
+            return
+        }
+    }
 }
 //MARK: - Table view Extension
 
@@ -434,46 +476,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 case .match:
                     cell.matchString = questions[indexPath.row] as? String
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
-                        guard let arrayIndex = Int(matchIndex ?? "") else {
-                            return
-                        }
-                        guard var answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
-                            return
-                        }
-//                        then check if the answers attributes keys have the same match remove it
-                        for answer in answers {
-                            if var answerDict = answer as? [Option: String] {
-                                if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
-                                    for (index, option) in options.enumerated() {
-                                        if answerDict[option] == matchString {
-                                            answerDict[option] = ""
-                                            answers[index] = answerDict
-                                            self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
-                                            
-                                        }
-                                    }
-                                } else {
-    //                                        no options available
-                                }
-                            } else {
-                                //                                        no dict available
-                            }
-                        }
-                        
-                        if answers.indices.contains(arrayIndex - 1) {
-                            if var matchDict = answers[arrayIndex - 1] as? [Option: String] {
-                                if let matchTupleKey = matchDict.first?.key {
-                                    matchDict[matchTupleKey] = matchString
-                                    answers[arrayIndex - 1] = matchDict
-                                    self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
-                                }
-                            }
-                            else {
-                                //                                        no dict available
-                            }
-                        } else {
-                            return
-                        }
+                        self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
                 case .reorder:
                     if !newOrder.isEmpty {
@@ -495,7 +498,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                         }
                                     }
                                 } else {
-                                    //                                    answers from get submissions api
+//                                  answers from get submissions api
                                     if let answerDict = answer as? [String: Any] {
                                         if questionType == QuestionTypes.trueOrFalse {
                                             if let trueOrFalse = answerDict["is_correct"] as? Bool{
@@ -504,7 +507,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                                 }
                                             }
                                         } else {
-                                            //                                            handle multiselect, multiple choices
                                             if let trueOrFalse = answerDict["is_correct"] as? Bool, trueOrFalse == true {
                                                 if let answerId = answerDict["answer_id"] as? Int, answerId == selectedAnswer.id! {
                                                     cell.setSelectedImage()
