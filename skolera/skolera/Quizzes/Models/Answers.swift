@@ -38,8 +38,10 @@ class Answers {
     
 }
 
-class Options {
-
+class Options: Hashable {
+    static func == (lhs: Options, rhs: Options) -> Bool {
+        lhs.id == rhs.id
+    }
     let id: Int!
     let questionId: Int!
     let body: String!
@@ -48,6 +50,10 @@ class Options {
         id = dict["id"] as? Int
         questionId = dict["question_id"] as? Int
         body = dict["body"] as? String
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 
 }

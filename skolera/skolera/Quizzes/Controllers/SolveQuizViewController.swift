@@ -46,6 +46,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var courseGroupId: Int!
     var duration: Int!
     var previousAnswers: [String : [Any]]!
+    var matchesMap: [Options: String]!
     
 //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -57,6 +58,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dragDelegate = self
         answeredQuestions = [:]
         previousAnswers = [:]
+        matchesMap = [:]
 //        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
         setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -115,7 +117,44 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             let seconds = Int(time) % 60
             return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
         }
-    
+    func sortReorderQuestion() {
+        if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+            let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
+                if let answer1Dict = answer1 as? [String: Any] {
+                    if let answer2Dict = answer2 as? [String: Any] {
+                        if let first = answer1Dict["match"] as? String {
+                            if let second = answer2Dict["match"] as? String, first < second {
+                                return true
+                            } else {
+                                return false
+                            }
+                        } else {
+                            return false
+                        }
+                    }
+                }
+                return false
+            }
+            for answer in orderedAnswers {
+                if let answerDict = answer as? [String: Any] {
+                    let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
+                        if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
+                    if let modelledAnswer = matchedModel {
+                        newOrder.append(modelledAnswer)
+                    }
+                }
+            }
+        } else {
+            if newOrder.isEmpty {
+                newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
+            }
+        }
+    }
 //    MARK: - Data setup
     func setUpQuestions() {
         questions = []
@@ -123,50 +162,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
 //        let question = detailedDummyQuiz.questions[currentQuestion]
         let question = detailedQuiz.questions[currentQuestion]
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
-        if questionType == QuestionTypes.reorder {
-            if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
-                    if let answer1Dict = answer1 as? [String: Any] {
-                        if let answer2Dict = answer2 as? [String: Any] {
-                            if let first = answer1Dict["match"] as? String {
-                                if let second = answer2Dict["match"] as? String, first < second {
-                                    return true
-                                } else {
-                                    return false
-                                }
-                            } else {
-                                return false
-                            }
-                        }
-                    }
-                    return false
-                }
-                for answer in orderedAnswers {
-                    if let answerDict = answer as? [String: Any] {
-                        let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
-                            if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
-                                return true
-                            } else {
-                                return false
-                            }
-                        })
-                        if let modelledAnswer = matchedModel {
-                            newOrder.append(modelledAnswer)
-                        }
-                    }
-                }
-            } else {
-                if newOrder.isEmpty {
-                    newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
-                }
-            }
-        }
-        //questions array should have the state saved
         if !isQuestionsOnly && !isAnswers {
             tableView.dragInteractionEnabled = true
         } else {
             tableView.dragInteractionEnabled = false
         }
+        
         questions.append(question)
         //      TO:DO  check is th question type is match and append the match model
         if questionType == QuestionTypes.trueOrFalse {
@@ -184,8 +185,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                        ])
             questions.append(falseAnswer)
         } else {
+            if questionType == QuestionTypes.reorder {
+                sortReorderQuestion()
+            }
             if questionType == QuestionTypes.match {
-//                should divide the answers and append them all here
+    //                should divide the answers and append them all here
                 question.answers.first?.options.forEach({ (option) in
                     questions.append(option)
                 })
@@ -193,12 +197,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 question.answers.first?.matches.forEach({ (match) in
                     questions.append(match)
                 })
+//                TO:DO matches map
+                
             } else {
                 questions.append("headerCell")
                 question.answers?.forEach{ (answer) in
                     questions.append(answer)
                 }
             }
+            
         }
         outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
         setTableViewMultipleSelection(question: question)
