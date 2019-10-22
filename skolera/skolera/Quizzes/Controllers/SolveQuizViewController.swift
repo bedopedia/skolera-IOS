@@ -123,13 +123,49 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         let question = detailedQuiz.questions[currentQuestion]
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
-            if newOrder.isEmpty {
-                newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
+            if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+//                answers sorting
+                let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
+                    if let answer1Dict = answer1 as? [String: Any] {
+                        if let answer2Dict = answer2 as? [String: Any] {
+                            if let first = answer1Dict["match"] as? String {
+                                if let second = answer1Dict["match"] as? String, first > second {
+                                    return true
+                                } else {
+                                    return false
+                                }
+                            } else {
+                                return false
+                            }
+                        }
+                    }
+                    return false
+                }
+//                new order population
+//                matching every answer with corresponding 1 that has the same answer id
+                
+                for answer in orderedAnswers {
+                    if let answerDict = answer as? [String: Any] {
+                        if let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
+                            if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
+                                return true
+                            } else {
+                                return false
+                            }
+                        }) {
+                            newOrder.append(matchedModel)
+                        }
+                    }
+                }
+            } else {
+                if newOrder.isEmpty {
+                    newOrder = detailedQuiz.questions[currentQuestion].answers ?? []
+                }
             }
-            //questions array should have the state saved
-            if !isQuestionsOnly && !isAnswers {
-                tableView.dragInteractionEnabled = true
-            }
+        }
+        //questions array should have the state saved
+        if !isQuestionsOnly && !isAnswers {
+            tableView.dragInteractionEnabled = true
         } else {
             tableView.dragInteractionEnabled = false
         }
@@ -407,38 +443,38 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
 //
                     }
                 case .reorder:
-                    if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-//                        order would be determined by the int value of the body attribute -1
-//                        should populate the new order array with the correct order
-                        if let currentAnswer = questions[indexPath.row] as? Answers {
-                            for answer in answers {
-                                if let answerDict = answer as? [String: Any] {
-                                    if let answerId = answerDict["answer_id"] as? Int, answerId == currentAnswer.id! {
-                                        if let orderString = answerDict["match"] as? String {
-                                            if var order = Int(orderString) {
-                                                debugPrint(order)
-                                                order -= 1
-                                                if let modelledAnswer = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
-                                                    if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id! {
-                                                        return true
-                                                    }
-                                                    return false
-                                                }) {
-                                                    newOrder[order] = modelledAnswer
-                                                    cell.answer = modelledAnswer
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    } else {
+//                    if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+////                        order would be determined by the int value of the body attribute -1
+////                        should populate the new order array with the correct order
+//                        if let currentAnswer = questions[indexPath.row] as? Answers {
+//                            for answer in answers {
+//                                if let answerDict = answer as? [String: Any] {
+//                                    if let answerId = answerDict["answer_id"] as? Int, answerId == currentAnswer.id! {
+//                                        if let orderString = answerDict["match"] as? String {
+//                                            if var order = Int(orderString) {
+//                                                debugPrint(order)
+//                                                order -= 1
+//                                                if let modelledAnswer = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
+//                                                    if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id! {
+//                                                        return true
+//                                                    }
+//                                                    return false
+//                                                }) {
+//                                                    newOrder[order] = modelledAnswer
+//                                                    cell.answer = modelledAnswer
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//                    } else {
                         if !newOrder.isEmpty {
                             cell.answer = newOrder[indexPath.row - 2]
                         }
-                    }
+//                    }
                     
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
