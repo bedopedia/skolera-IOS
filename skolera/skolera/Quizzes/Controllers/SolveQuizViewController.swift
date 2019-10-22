@@ -484,19 +484,24 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     }
                     
                     if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
+//                        var foundFlag = false
                         for (index, answer) in answers.enumerated() {
                             for option in options {
                                 if let matchAnswer = answer as? [Option: String], let value = matchAnswer[option] {
+                                    debugPrint("option body", option.body, "answer", answer)
                                     if value.elementsEqual(matchString) {
                                         cell.matchTextField.text = "\(index + 1)"
+//                                        foundFlag = true
                                         break
                                     }
 //                                    else {
 //                                        cell.matchTextField.text = ""
 //                                    }
-                                    
                                 }
                             }
+                        }
+                        if foundFlag {
+                            cell.matchTextField.text = ""
                         }
                     }
                     
