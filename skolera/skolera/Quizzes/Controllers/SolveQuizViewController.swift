@@ -46,6 +46,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var courseGroupId: Int!
     var duration: Int!
     var previousAnswers: [String : [Any]]!
+    
 //    MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,12 +125,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if questionType == QuestionTypes.reorder {
             if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-//                answers sorting
                 let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
                     if let answer1Dict = answer1 as? [String: Any] {
                         if let answer2Dict = answer2 as? [String: Any] {
                             if let first = answer1Dict["match"] as? String {
-                                if let second = answer1Dict["match"] as? String, first > second {
+                                if let second = answer2Dict["match"] as? String, first < second {
                                     return true
                                 } else {
                                     return false
@@ -141,19 +141,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     }
                     return false
                 }
-//                new order population
-//                matching every answer with corresponding 1 that has the same answer id
-                
                 for answer in orderedAnswers {
                     if let answerDict = answer as? [String: Any] {
-                        if let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
+                        let matchedModel = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
                             if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
                                 return true
                             } else {
                                 return false
                             }
-                        }) {
-                            newOrder.append(matchedModel)
+                        })
+                        if let modelledAnswer = matchedModel {
+                            newOrder.append(modelledAnswer)
                         }
                     }
                 }
@@ -175,13 +173,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             questions.append("headerCell")
             let correctanswer = Answers.init(["id": question.answers.first?.id as Any ,
                                        "body": "true",
-                                       "question_id": question.answers.first?.questionId,
+                                       "question_id": question.answers.first?.questionId as Any,
                                        "is_correct": true
                                       ])
             questions.append(correctanswer)
             let falseAnswer = Answers.init(["id": question.answers.first?.id as Any ,
                                          "body": "false",
-                                         "question_id": question.answers.first?.questionId,
+                                         "question_id": question.answers.first?.questionId as Any,
                                          "is_correct": false
                                        ])
             questions.append(falseAnswer)
@@ -195,7 +193,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 question.answers.first?.matches.forEach({ (match) in
                     questions.append(match)
                 })
-                
             } else {
                 questions.append("headerCell")
                 question.answers?.forEach{ (answer) in
@@ -225,21 +222,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             case .trueOrFalse:
                 let correctanswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any ,
                                                   "body": "true",
-                                                  "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt,
-                                                  "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt,
-                                                  "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId,
-                                                  "match": detailedQuiz.questions[currentQuestion].answers?.first?.match,
-                                                  "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt,
-                                                  "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect
+                                                  "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt as Any,
+                                                  "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt as Any,
+                                                  "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId as Any,
+                                                  "match": detailedQuiz.questions[currentQuestion].answers?.first?.match as Any,
+                                                  "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt as Any,
+                                                  "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect! as Any
                     ])
                 let falseAnswer = Answers.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any,
                                                 "body": "false",
-                                                "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt,
-                                                "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt,
-                                                "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId,
-                                                "match": detailedQuiz.questions[currentQuestion].answers?.first?.match,
-                                                "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt,
-                                                "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect
+                                                "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt as Any,
+                                                "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt as Any,
+                                                "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId as Any,
+                                                "match": detailedQuiz.questions[currentQuestion].answers?.first?.match as Any,
+                                                "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt as Any,
+                                                "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect as Any
                     ])
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
             default:
@@ -443,39 +440,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
 //
                     }
                 case .reorder:
-//                    if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-////                        order would be determined by the int value of the body attribute -1
-////                        should populate the new order array with the correct order
-//                        if let currentAnswer = questions[indexPath.row] as? Answers {
-//                            for answer in answers {
-//                                if let answerDict = answer as? [String: Any] {
-//                                    if let answerId = answerDict["answer_id"] as? Int, answerId == currentAnswer.id! {
-//                                        if let orderString = answerDict["match"] as? String {
-//                                            if var order = Int(orderString) {
-//                                                debugPrint(order)
-//                                                order -= 1
-//                                                if let modelledAnswer = detailedQuiz.questions[currentQuestion].answers.first(where: { (answer) -> Bool in
-//                                                    if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id! {
-//                                                        return true
-//                                                    }
-//                                                    return false
-//                                                }) {
-//                                                    newOrder[order] = modelledAnswer
-//                                                    cell.answer = modelledAnswer
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                    } else {
-                        if !newOrder.isEmpty {
-                            cell.answer = newOrder[indexPath.row - 2]
-                        }
-//                    }
-                    
+                    if !newOrder.isEmpty {
+                        cell.answer = newOrder[indexPath.row - 2]
+                    }
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answers {
                         if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
