@@ -278,8 +278,22 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
 //    }
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
+        guard let answers = detailedQuiz.questions[currentQuestion].answers else {
+            return
+        }
         if let answersArray = previousAnswers["\(questionId)"] {
-            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+            answeredQuestions[detailedQuiz.questions[currentQuestion]] = []
+//            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+            answersArray.forEach { (answer) in
+                if let answerDict = answer as? [String: Any] {
+                    for answer in answers {
+                        if let modelledAnswer = answer as? Answer, let answerId = answerDict["answer_id"] as? Int, answerId == modelledAnswer.id {
+                            answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(answerDict)
+                        }
+                    }
+                }
+            }
+            
         }
         tableView.reloadData()
     }
@@ -354,9 +368,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
-//            submitAnswer()
-            self.currentQuestion += 1
-            self.setUpQuestions()
+            submitAnswer()
+//            self.currentQuestion += 1
+//            self.setUpQuestions()
         } else {
             //            TODO: call the submit grade api, call back action
             debugPrint("submit grade")
@@ -417,7 +431,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     //                    array of available answers for the questions
                     //                    string question id, array of corresponding answers
                     self.previousAnswers = result
-                    self.showAnswers()
+                    self.setUpQuestions()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -562,8 +576,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                 }
                             }
                         }
-                        cell.answer = questions[indexPath.row] as? Answer
+//                       cell.answer = questions[indexPath.row] as? Answer
                     }
+                    cell.answer = questions[indexPath.row] as? Answer
                 }
                 if isAnswers || isQuestionsOnly {
                     cell.matchTextField.isUserInteractionEnabled = false
