@@ -60,7 +60,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         previousAnswers = [:]
         matchesMap = [:]
         //        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
-        setUpQuestions()
+//        setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
         if isQuestionsOnly || isAnswers {
@@ -284,16 +284,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if let answersArray = previousAnswers["\(questionId)"] {
             answeredQuestions[detailedQuiz.questions[currentQuestion]] = []
 //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
-            answersArray.forEach { (answer) in
-                if let answerDict = answer as? [String: Any] {
+            answersArray.forEach { (prevAnswer) in
+                if let answerDict = prevAnswer as? [String: Any] {
                     for answer in answers {
-                        if let modelledAnswer = answer as? Answer, let answerId = answerDict["answer_id"] as? Int, answerId == modelledAnswer.id {
-                            answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(answerDict)
+                        if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
+                            answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(prevAnswer)
                         }
                     }
                 }
             }
-            
         }
         tableView.reloadData()
     }
@@ -358,6 +357,14 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         postQuizAnswersSubmissionsApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
+                let questionId = self.detailedQuiz.questions[self.currentQuestion].id!
+                if let result = value as? [[String: Any]] {
+//                    replace every new value in the array with the old value in previousAnswers
+//                    if let _ = self.previousAnswers["\(questionId)"] {
+//                        self.previousAnswers["\(questionId)"] = result
+//                    }
+                    self.previousAnswers["\(questionId)"] = result
+                }
                 self.currentQuestion += 1
                 self.setUpQuestions()
             } else {
