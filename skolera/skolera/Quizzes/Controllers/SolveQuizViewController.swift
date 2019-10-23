@@ -324,10 +324,35 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    func submitAnswer() {
+        var parameters: [String: Any] = [:]
+//        should take the answer from the answers attributes, according to the question type
+//        case true or false
+        guard let answer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? Answer else {
+            return
+        }
+        let answerSubmission = [["answer_id": answer.id!,
+                                  "match": "",
+                                  "is_correct":answer.isCorrect!,
+                                  "question_id":detailedQuiz.questions[currentQuestion].id!,
+            "quiz_submission_id": submissionId]]
+        parameters["answer_submission"] = answerSubmission
+        parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        postQuizAnswersSubmissionsApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                self.currentQuestion += 1
+                self.setUpQuestions()
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
-            currentQuestion += 1
-            setUpQuestions()
+            submitAnswer()
         } else {
             //            TODO: call the submit grade api, call back action
             debugPrint("submit grade")
@@ -486,7 +511,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
                         for (index, answer) in answers.enumerated() {
                             if let matchAnswer = answer as? [Option: String], let value = matchAnswer[options[index]] {
-                                debugPrint("option body", options[index].body, "answer", matchAnswer)
                                 if value.elementsEqual(matchString) {
                                     cell.matchTextField.text = "\(index + 1)"
                                     break
