@@ -294,7 +294,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
         }
-        tableView.reloadData()
     }
     
     func setTableViewMultipleSelection(question: Questions) {
@@ -360,22 +359,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         return flag
     }
-    //    MARK: - Submit Answer
-    func submitAnswer() {
-        if checksTheAnswer() == true {
-//            skip this question
-             self.currentQuestion += 1
-             self.setUpQuestions()
-             return
+    func createAnswersDictionary() -> [String: Any] {
+//                should check the question type, in case of true or false
+        guard let answer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? Answer else {
+            return [:]
         }
         var parameters: [String: Any] = [:]
-        //        should take the answer from the answers attributes, according to the question type
-        //        case true or false
-        
-        
-        guard let answer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? Answer else {
-            return
-        }
         let answerSubmission = [["answer_id": answer.id!,
                                  "match": "",
                                  "is_correct":answer.isCorrect!,
@@ -383,8 +372,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                  "quiz_submission_id": submissionId]]
         parameters["answer_submission"] = answerSubmission
         parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
+        return parameters
+    }
+    //    MARK: - Submit Answer
+    func submitAnswer() {
+        if checksTheAnswer() {
+//            skip this question
+             self.currentQuestion += 1
+             self.setUpQuestions()
+             return
+        }
+        
+        //        should take the answer from the answers attributes, according to the question type
+        //        case true or false
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        postQuizAnswersSubmissionsApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+        postQuizAnswersSubmissionsApi(parameters: createAnswersDictionary()) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 let questionId = self.detailedQuiz.questions[self.currentQuestion].id!
@@ -467,6 +469,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if let result = value as? [String : [Any]] {
                     //                    array of available answers for the questions
                     //                    string question id, array of corresponding answers
+                    debugPrint(result)
                     self.previousAnswers = result
                     self.setUpQuestions()
                 }
