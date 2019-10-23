@@ -141,10 +141,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 let matchedModel = answers.first(where: { (answer) -> Bool in
                     answerId == answer.id
                 })
-                guard let modelledAnswer = matchedModel else {
-                    return
+                if let modelledAnswer = matchedModel {
+                    newOrder.append(modelledAnswer)
+                } else {
+                    continue
                 }
-                newOrder.append(modelledAnswer)
+                
             }
         }
     }
@@ -352,7 +354,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
-            submitAnswer()
+//            submitAnswer()
+            self.currentQuestion += 1
+            self.setUpQuestions()
         } else {
             //            TODO: call the submit grade api, call back action
             debugPrint("submit grade")
