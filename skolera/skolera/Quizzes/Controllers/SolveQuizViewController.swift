@@ -478,33 +478,25 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     guard let matchString = questions[indexPath.row] as? String else {
                         break
                     }
+                    
                     cell.matchString = matchString
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
-                    
                     if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
-//                        var foundFlag = false
                         for (index, answer) in answers.enumerated() {
-                            for option in options {
-                                if let matchAnswer = answer as? [Option: String], let value = matchAnswer[option] {
-                                    debugPrint("option body", option.body, "answer", answer)
-                                    if value.elementsEqual(matchString) {
-                                        cell.matchTextField.text = "\(index + 1)"
-//                                        foundFlag = true
-                                        break
-                                    }
-//                                    else {
-//                                        cell.matchTextField.text = ""
-//                                    }
+                            if let matchAnswer = answer as? [Option: String], let value = matchAnswer[options[index]] {
+                                debugPrint("option body", options[index].body, "answer", matchAnswer)
+                                if value.elementsEqual(matchString) {
+                                    cell.matchTextField.text = "\(index + 1)"
+                                    break
+                                }
+                                else {
+                                    cell.matchTextField.text = ""
                                 }
                             }
                         }
-                        if foundFlag {
-                            cell.matchTextField.text = ""
-                        }
                     }
-                    
                 case .reorder:
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
