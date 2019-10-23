@@ -60,7 +60,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         previousAnswers = [:]
         matchesMap = [:]
         //        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
-//        setUpQuestions()
+        //        setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
         previousButtonAction()
         if isQuestionsOnly || isAnswers {
@@ -129,10 +129,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
             guard let answer1Dict = answer1 as? [String: Any],
-                                                            let answer2Dict = answer2 as? [String: Any],
-                                                            let first = answer1Dict["match"] as? String,
-                                                            let second = answer2Dict["match"] as? String  else {
-                return false
+                let answer2Dict = answer2 as? [String: Any],
+                let first = answer1Dict["match"] as? String,
+                let second = answer2Dict["match"] as? String  else {
+                    return false
             }
             return first < second
         }
@@ -259,23 +259,23 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.reloadData()
     }
     
-//    func showAnswers() {
-//        debugPrint("show answers")
-//        let questionId  = detailedQuiz.questions[currentQuestion].id!
-//        //        previous answers is an array of objects, search if it contains this question id
-//        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
-//            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
-//                return true
-//            }
-//            return false
-//        }
-//        debugPrint(previousAnswers)
-//        if let answersArray = previousAnswer["\(questionId)"] {
-//            debugPrint(answersArray.count)
-//            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
-//        }
-//        tableView.reloadData()
-//    }
+    //    func showAnswers() {
+    //        debugPrint("show answers")
+    //        let questionId  = detailedQuiz.questions[currentQuestion].id!
+    //        //        previous answers is an array of objects, search if it contains this question id
+    //        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
+    //            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
+    //                return true
+    //            }
+    //            return false
+    //        }
+    //        debugPrint(previousAnswers)
+    //        if let answersArray = previousAnswer["\(questionId)"] {
+    //            debugPrint(answersArray.count)
+    //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+    //        }
+    //        tableView.reloadData()
+    //    }
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
         guard let answers = detailedQuiz.questions[currentQuestion].answers else {
@@ -283,7 +283,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         if let answersArray = previousAnswers["\(questionId)"] {
             answeredQuestions[detailedQuiz.questions[currentQuestion]] = []
-//            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+            //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
             answersArray.forEach { (prevAnswer) in
                 if let answerDict = prevAnswer as? [String: Any] {
                     for answer in answers {
@@ -316,7 +316,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         case false:
             return "false"
         }
-//        bool ? "True" : "False"
+        //        bool ? "True" : "False"
         
     }
     
@@ -338,19 +338,49 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
-    
+    func checksTheAnswer() -> Bool {
+        var flag = false
+    //        should check that this answer is not the same as the one in the answer attributes
+        if let previousAnswersArray = previousAnswers?["\(detailedQuiz.questions[currentQuestion].id!)"] as? [[String: Any]] {
+            if let selectedAnswer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
+                flag =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
+                    if let prevAnswerId = prevAnswer["answer_id"] as? Int {
+                        if prevAnswerId == selectedAnswerId {
+    //                            should be a switch case according to the question type
+                            if self.questionType == QuestionTypes.trueOrFalse, let prev = prevAnswer["is_correct"] as? Bool, let selected = selectedAnswer["is_correct"] as? Bool, prev == selected {
+                               return true
+                            } else {
+                                return false
+                            }
+                        }
+                    }
+                    return false
+                })
+            }
+        }
+        return flag
+    }
+    //    MARK: - Submit Answer
     func submitAnswer() {
+        if checksTheAnswer() == true {
+//            skip this question
+             self.currentQuestion += 1
+             self.setUpQuestions()
+             return
+        }
         var parameters: [String: Any] = [:]
-//        should take the answer from the answers attributes, according to the question type
-//        case true or false
+        //        should take the answer from the answers attributes, according to the question type
+        //        case true or false
+        
+        
         guard let answer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? Answer else {
             return
         }
         let answerSubmission = [["answer_id": answer.id!,
-                                  "match": "",
-                                  "is_correct":answer.isCorrect!,
-                                  "question_id":detailedQuiz.questions[currentQuestion].id!,
-            "quiz_submission_id": submissionId]]
+                                 "match": "",
+                                 "is_correct":answer.isCorrect!,
+                                 "question_id":detailedQuiz.questions[currentQuestion].id!,
+                                 "quiz_submission_id": submissionId]]
         parameters["answer_submission"] = answerSubmission
         parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -359,10 +389,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 let questionId = self.detailedQuiz.questions[self.currentQuestion].id!
                 if let result = value as? [[String: Any]] {
-//                    replace every new value in the array with the old value in previousAnswers
-//                    if let _ = self.previousAnswers["\(questionId)"] {
-//                        self.previousAnswers["\(questionId)"] = result
-//                    }
+                    //                    replace every new value in the array with the old value in previousAnswers
+                    //                    if let _ = self.previousAnswers["\(questionId)"] {
+                    //                        self.previousAnswers["\(questionId)"] = result
+                    //                    }
                     self.previousAnswers["\(questionId)"] = result
                 }
                 self.currentQuestion += 1
@@ -376,8 +406,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count - 1 {
             submitAnswer()
-//            self.currentQuestion += 1
-//            self.setUpQuestions()
+            //            self.currentQuestion += 1
+            //            self.setUpQuestions()
         } else {
             //            TODO: call the submit grade api, call back action
             debugPrint("submit grade")
@@ -445,7 +475,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
-//    MARK: - Match Answers
+    //    MARK: - Match Answers
     func matchAnswers(matchIndex: String!, matchString: String) {
         guard let arrayIndex = Int(matchIndex ?? "") else {
             return
@@ -456,7 +486,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
             return
         }
-//      check if the answers attributes keys have the same match remove it
+        //      check if the answers attributes keys have the same match remove it
         for answer in answers {
             if var answerDict = answer as? [Option: String] {
                 for (index, option) in options.enumerated() {
@@ -467,7 +497,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     }
                 }
             } else {
-    //          no dict available
+                //          no dict available
             }
         }
         if answers.indices.contains(arrayIndex - 1) {
@@ -479,7 +509,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
             else {
-    //      no dict available
+                //      no dict available
             }
         } else {
             return
@@ -554,7 +584,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         for answer in answers {
                             if let modelledAnswer = answer as? Answer {
-//                                in case of using the answers api
+                                //                                in case of using the answers api
                                 if isAnswers && questionType! == .trueOrFalse {
                                     if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
                                         cell.setSelectedImage()
@@ -565,7 +595,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                     }
                                 }
                             } else {
-//                                  answers from get submissions api
+                                //                                  answers from get submissions api
                                 if let answerDict = answer as? [String: Any] {
                                     if questionType == QuestionTypes.trueOrFalse {
                                         if let trueOrFalse = answerDict["is_correct"] as? Bool{
@@ -583,7 +613,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                 }
                             }
                         }
-//                       cell.answer = questions[indexPath.row] as? Answer
+                        //                       cell.answer = questions[indexPath.row] as? Answer
                     }
                     cell.answer = questions[indexPath.row] as? Answer
                 }
