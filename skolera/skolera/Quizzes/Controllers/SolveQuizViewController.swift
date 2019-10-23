@@ -152,11 +152,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     //    MARK: - Data setup
     func setUpQuestions() {
+        let question = detailedQuiz.questions[currentQuestion]
+        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         questions = []
         showAnswers()
         //        let question = detailedDummyQuiz.questions[currentQuestion]
-        let question = detailedQuiz.questions[currentQuestion]
-        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
         if !isQuestionsOnly && !isAnswers {
             tableView.dragInteractionEnabled = true
         } else {
@@ -167,15 +167,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         //      TO:DO  check is th question type is match and append the match model
         if questionType == QuestionTypes.trueOrFalse {
             questions.append("headerCell")
-            let correctanswer = Answer.init(["id": question.answers.first?.id as Any ,
+            let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
                                              "body": "true",
-                                             "question_id": question.answers.first?.questionId as Any,
+                                             "question_id": question.answers.first?.questionId ?? 0,
                                              "is_correct": true
             ])
             questions.append(correctanswer)
-            let falseAnswer = Answer.init(["id": question.answers.first?.id as Any ,
+            let falseAnswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
                                            "body": "false",
-                                           "question_id": question.answers.first?.questionId as Any,
+                                           "question_id": question.answers.first?.questionId ?? 0,
                                            "is_correct": false
             ])
             questions.append(falseAnswer)
@@ -227,23 +227,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     return correct == true
                 })
             case .trueOrFalse:
-                let correctanswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any ,
+                let correctanswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id ?? 0 ,
                                                  "body": "true",
-                                                 "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt as Any,
-                                                 "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt as Any,
-                                                 "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId as Any,
-                                                 "match": detailedQuiz.questions[currentQuestion].answers?.first?.match as Any,
-                                                 "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt as Any,
-                                                 "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect! as Any
+                                                 "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId ?? 0,
+                                                 "match": detailedQuiz.questions[currentQuestion].answers?.first?.match ?? "",
+                                                 "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect ?? ""
                 ])
-                let falseAnswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id as Any,
+                let falseAnswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id ?? 0,
                                                "body": "false",
-                                               "created_at": detailedQuiz.questions[currentQuestion].answers?.first?.createdAt as Any,
-                                               "updated_at": detailedQuiz.questions[currentQuestion].answers?.first?.updatedAt as Any,
-                                               "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId as Any,
-                                               "match": detailedQuiz.questions[currentQuestion].answers?.first?.match as Any,
-                                               "deleted_at": detailedQuiz.questions[currentQuestion].answers?.first?.deletedAt as Any,
-                                               "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect as Any
+                                               "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId ?? 0,
+                                               "match": detailedQuiz.questions[currentQuestion].answers?.first?.match ?? "",
+                                               "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect ?? ""
                 ])
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
             default:
@@ -278,17 +272,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     //    }
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
-        guard let answers = detailedQuiz.questions[currentQuestion].answers else {
-            return
-        }
-        if let answersArray = previousAnswers["\(questionId)"] {
-            answeredQuestions[detailedQuiz.questions[currentQuestion]] = []
-            //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
-            answersArray.forEach { (prevAnswer) in
-                if let answerDict = prevAnswer as? [String: Any] {
-                    for answer in answers {
-                        if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
-                            answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(prevAnswer)
+        if questionType == QuestionTypes.match {
+//            populate the answers attributes
+        } else {
+            guard let answers = detailedQuiz.questions[currentQuestion].answers else {
+                return
+            }
+            if let answersArray = previousAnswers["\(questionId)"] {
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = []
+                //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
+                answersArray.forEach { (prevAnswer) in
+                    if let answerDict = prevAnswer as? [String: Any] {
+                        for answer in answers {
+                            if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
+                                answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(prevAnswer)
+                            }
                         }
                     }
                 }
