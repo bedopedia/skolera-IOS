@@ -180,7 +180,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         if let _ = parent.data.parentId {
                             self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                         } else {
-                            showNetworkFailureError(viewController: self, statusCode: 500, error: NSError())
+                            self.stopAnimating()
+                            showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
                         }
                     } else {
                         self.stopAnimating()
