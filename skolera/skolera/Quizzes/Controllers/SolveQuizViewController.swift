@@ -46,7 +46,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var courseGroupId: Int!
     var duration: Int!
     var previousAnswers: [String : [Any]]!
-    var matchesMap: [Option: String]!
+    var matchesMap: [String: Option]!
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -274,26 +274,30 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
         
         if questionType == QuestionTypes.match {
-            guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options, let previousArray = previousAnswers["\(questionId)"], let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
+            guard let _ = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options, let previousArray = previousAnswers["\(questionId)"], let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
                 return
             }
             var replacement: [[Option: String]] = []
+            matchesMap = [:]
 //            populate the answers attributes with the correct answers from the call if available
             for previousAnswer in previousArray {
                 if let previousDict = previousAnswer as? [String: Any], let prevId = previousDict["answer_id"] as? Int {
-                    for (index, answer) in answers.enumerated() {
+                    for answer in answers {
                         if let answerDict = answer as? [Option: String] {
                             let keys = answerDict.keys
                             if let answerId = keys.first?.id, answerId == prevId {
                                 if let option = keys.first, let matchString = previousDict["match"] as? String {
                                     replacement.append([option: matchString ])
+                                    matchesMap[matchString] = option
                                 }
                             }
                         }
                     }
                 }
             }
+            
             self.answeredQuestions[detailedQuiz.questions[currentQuestion]] = replacement
+            
         } else {
             guard let answers = detailedQuiz.questions[currentQuestion].answers else {
                 return
@@ -506,6 +510,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
             return
         }
+//        remove this option from the matches map and then add it to this specific matchString
+        if answers.indices.contains(arrayIndex - 1) {
+            let optionIndex = arrayIndex - 1
+            let option = options[optionIndex]
+            for match in matchesMap {
+                if match.value == option {
+                    matchesMap.removeValue(forKey: match.key)
+                }
+            }
+            matchesMap[matchString] = option
+        }
         //      check if the answers attributes keys have the same match remove it
         for answer in answers {
             if var answerDict = answer as? [Option: String] {
@@ -520,6 +535,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 //          no dict available
             }
         }
+        
         if answers.indices.contains(arrayIndex - 1) {
             if var matchDict = answers[arrayIndex - 1] as? [Option: String] {
                 if let matchTupleKey = matchDict.first?.key {
@@ -531,7 +547,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             else {
                 //      no dict available
             }
+//            updating the matchesMap
+
         } else {
+//            invalid matchIndex
             return
         }
         self.tableView.reloadData()
@@ -584,36 +603,34 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
                     
-//                    in case of solving the question
-                    if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
-                        for (index, answer) in answers.enumerated() {
-                            if let matchAnswer = answer as? [Option: String], let value = matchAnswer[options[index]] {
-                                if value.elementsEqual(matchString) {
+////                    in case of solving the question
+//                    if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
+//                        for (index, answer) in answers.enumerated() {
+//                            if let matchAnswer = answer as? [Option: String], let value = matchAnswer[options[index]] {
+//                                if value.elementsEqual(matchString) {
+//                                    cell.matchTextField.text = "\(index + 1)"
+//                                    break
+//                                }
+//                                else {
+//                                    cell.matchTextField.text = ""
+//                                }
+//                            }
+//                        }
+//                    }
+//
+                    if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
+                        for (index, option) in options.enumerated() {
+                            if let matchOption = matchesMap[matchString] {
+                                if matchOption == option {
                                     cell.matchTextField.text = "\(index + 1)"
-                                    break
-                                }
-                                else {
-                                    cell.matchTextField.text = ""
-                                }
-                            }
-                        }
-                    }
-//                    in case of retrieving the answers
-                    
-                    if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
-                        for answer in answers {
-                            if let matchAnswer = answer as? [Option: String] {
-                                for (index, option) in options.enumerated() {
-                                    if let value = matchAnswer[option] {
-                                       if value.elementsEqual(matchString) {
-                                            cell.matchTextField.text = "\(index + 1)"
-                                            break
-                                        }
-                                    }
                                 }
                                 
+                            } else {
+                                cell.matchTextField.text = ""
                             }
                         }
+                    } else {
+                        cell.matchTextField.text = ""
                     }
                     
                 case .reorder:
