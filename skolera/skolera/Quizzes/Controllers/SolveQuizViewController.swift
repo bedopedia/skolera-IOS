@@ -253,23 +253,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.reloadData()
     }
     
-    //    func showAnswers() {
-    //        debugPrint("show answers")
-    //        let questionId  = detailedQuiz.questions[currentQuestion].id!
-    //        //        previous answers is an array of objects, search if it contains this question id
-    //        let previousAnswer = previousAnswers.filter { (questionId, answers) -> Bool in
-    //            if questionId.elementsEqual("\(self.detailedQuiz.questions[currentQuestion].id!)") {
-    //                return true
-    //            }
-    //            return false
-    //        }
-    //        debugPrint(previousAnswers)
-    //        if let answersArray = previousAnswer["\(questionId)"] {
-    //            debugPrint(answersArray.count)
-    //            answeredQuestions[detailedQuiz.questions[currentQuestion]] = answersArray
-    //        }
-    //        tableView.reloadData()
-    //    }
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
         
@@ -331,12 +314,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func stringValue(booleanValue: Bool) -> String {
-//        switch booleanValue {
-//        case true:
-//            return "true"
-//        case false:
-//            return "false"
-//        }
         booleanValue ? "True" : "False"
     }
     
@@ -381,18 +358,44 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         return flag
     }
     func createAnswersDictionary() -> [String: Any] {
-//                should check the question type, in case of true or false
-        guard let answer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? Answer else {
-            return [:]
+        
+        guard let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
+                   return [:]
         }
+        let answersAttributes = detailedQuiz.questions[currentQuestion].answers   //to fing each answers id
         var parameters: [String: Any] = [:]
-        let answerSubmission = [["answer_id": answer.id!,
-                                 "match": "",
-                                 "is_correct":answer.isCorrect!,
-                                 "question_id":detailedQuiz.questions[currentQuestion].id!,
-                                 "quiz_submission_id": submissionId]]
-        parameters["answer_submission"] = answerSubmission
-        parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
+        switch questionType {
+        case .trueOrFalse:
+            guard let answer = answers.first as? Answer else {
+                return [:]
+            }
+            let answerSubmission = [["answer_id": answer.id!,
+                                     "match": "",
+                                     "is_correct":answer.isCorrect!,
+                                     "question_id":detailedQuiz.questions[currentQuestion].id!,
+                                     "quiz_submission_id": submissionId]]
+            parameters["answer_submission"] = answerSubmission
+            parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
+        case .multipleSelect:
+            debugPrint("")
+            var answerSubmission: [[String: Any]] = [[:]]
+            for answer in answers {
+                
+            }
+            
+        case .multipleChoice:
+            debugPrint("")
+        case .reorder:
+            debugPrint("")
+        case .match:
+            debugPrint("")
+        case .none:
+            debugPrint("")
+        }
+//                should check the question type, in case of true or false
+       
+        
+        
         return parameters
     }
     //    MARK: - Submit Answer
@@ -504,7 +507,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let arrayIndex = Int(matchIndex ?? "") else {
             return
         }
-        guard var answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
+        guard let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
             return
         }
         guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
@@ -520,38 +523,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
             matchesMap[matchString] = option
-        }
-        //      check if the answers attributes keys have the same match remove it
-        for answer in answers {
-            if var answerDict = answer as? [Option: String] {
-                for (index, option) in options.enumerated() {
-                    if answerDict[option] == matchString {
-                        answerDict[option] = ""
-                        answers[index] = answerDict
-                        self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
-                    }
-                }
-            } else {
-                //          no dict available
-            }
-        }
-        
-        if answers.indices.contains(arrayIndex - 1) {
-            if var matchDict = answers[arrayIndex - 1] as? [Option: String] {
-                if let matchTupleKey = matchDict.first?.key {
-                    matchDict[matchTupleKey] = matchString
-                    answers[arrayIndex - 1] = matchDict
-                    self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] = answers
-                }
-            }
-            else {
-                //      no dict available
-            }
-//            updating the matchesMap
-
-        } else {
-//            invalid matchIndex
-            return
         }
         self.tableView.reloadData()
     }
@@ -602,22 +573,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
-                    
-////                    in case of solving the question
-//                    if let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]], let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options{
-//                        for (index, answer) in answers.enumerated() {
-//                            if let matchAnswer = answer as? [Option: String], let value = matchAnswer[options[index]] {
-//                                if value.elementsEqual(matchString) {
-//                                    cell.matchTextField.text = "\(index + 1)"
-//                                    break
-//                                }
-//                                else {
-//                                    cell.matchTextField.text = ""
-//                                }
-//                            }
-//                        }
-//                    }
-//
+
                     if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
                         for (index, option) in options.enumerated() {
                             if let matchOption = matchesMap[matchString] {
@@ -652,7 +608,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                     }
                                 }
                             } else {
-                                //                                  answers from get submissions api
+//                              answers from get submissions api
                                 if let answerDict = answer as? [String: Any] {
                                     if questionType == QuestionTypes.trueOrFalse {
                                         if let trueOrFalse = answerDict["is_correct"] as? Bool{
