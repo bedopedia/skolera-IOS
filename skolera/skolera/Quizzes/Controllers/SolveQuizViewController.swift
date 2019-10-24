@@ -362,7 +362,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
                    return [:]
         }
-        let answersAttributes = detailedQuiz.questions[currentQuestion].answers   //to fing each answers id
+        let answersAttributes = detailedQuiz.questions[currentQuestion].answers   //to find each answers id
         var parameters: [String: Any] = [:]
         switch questionType {
         case .trueOrFalse:
@@ -380,9 +380,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             debugPrint("")
             var answerSubmission: [[String: Any]] = [[:]]
             for answer in answers {
-                
+//                the array is of type Answer
+                if let modelledAnswer = answer as? [String: Any] {
+                    answerSubmission.append(["answer_id": modelledAnswer["answer_id"]!,
+                    "match": "",
+                    "is_correct":modelledAnswer["is_correct"]!,
+                    "question_id":detailedQuiz.questions[currentQuestion].id!,
+                    "quiz_submission_id": submissionId])
+                }
             }
-            
+            parameters["answer_submission"] = answerSubmission
+            parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .multipleChoice:
             debugPrint("")
         case .reorder:
@@ -393,9 +401,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             debugPrint("")
         }
 //                should check the question type, in case of true or false
-       
-        
-        
         return parameters
     }
     //    MARK: - Submit Answer
@@ -593,6 +598,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
                     }
+                    
                 default:
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         for answer in answers {
@@ -626,7 +632,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                 }
                             }
                         }
-                        //                       cell.answer = questions[indexPath.row] as? Answer
                     }
                     cell.answer = questions[indexPath.row] as? Answer
                 }
@@ -681,7 +686,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 }
             } else {
                 if let validAnswer = questions[indexPath.row] as? Answer {
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [validAnswer]
+//                    should make isCorrect true
+                   let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [["id": validAnswer.id! ?? 0 ,
+                                                    
+                                                     "question_id": questionId! ?? 0,
+                                                     "match": "",
+                                                     "is_correct": true
+                    ]]
                 }
             }
             tableView.reloadData()
