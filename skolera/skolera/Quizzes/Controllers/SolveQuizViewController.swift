@@ -850,6 +850,13 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                             answerToBeRemovedIndex = index
                             flag = false
                             break
+                        } else if let validAnswer = answer as? Answer {
+                            if validAnswer.id! == selectedAnswer.id {
+                                answerToBeRemovedIndex = index
+                                //                                debugPrint(selectedAnswer.id, validAnswerId, index)
+                                flag = false
+                                break
+                            }
                         }
                     }
                 }
