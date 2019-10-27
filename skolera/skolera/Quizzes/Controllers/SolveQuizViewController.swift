@@ -395,8 +395,23 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     
                 case .match:
                     debugPrint("Check is due")
+                    
                 case .reorder:
-                    debugPrint("Check is due")
+                    for (index, orderAnswer) in newOrder.enumerated() {
+                        let prevAnswer = previousAnswersArray.first(where: { (prevDict) -> Bool in
+                            if let prevId = prevDict["answer_id"] as? Int, prevId == orderAnswer.id! {
+                               return true
+                            } else {
+                                return false
+                            }
+                        })
+                        if let prevBody = prevAnswer?["match"] as? String, prevBody.elementsEqual("\(index + 1)") {
+                            isContained = true
+                        } else {
+                            isContained = false
+                            break
+                        }
+                    }
                 case .none:
                     debugPrint("Check is due")
                 }
@@ -521,7 +536,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-                    self.submitQuiz()
+//                    self.submitQuiz()
                 }
                 
             } else {
