@@ -394,7 +394,20 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     }
                     
                 case .match:
-                    debugPrint("Check is due")
+                    isContained = true
+                    for match in matchesMap {
+                        if isContained {
+                            isContained = previousAnswersArray.contains { (prevDict) -> Bool in
+                                if let prevId = prevDict["answer_id"] as? Int, prevId == match.value.id!, let prevMatch = prevDict["match"] as? String, prevMatch.elementsEqual(match.key) {
+                                    return true
+                                } else {
+                                    return false
+                                }
+                            }
+                        } else {
+                            break
+                        }
+                    }
                     
                 case .reorder:
                     for (index, orderAnswer) in newOrder.enumerated() {
