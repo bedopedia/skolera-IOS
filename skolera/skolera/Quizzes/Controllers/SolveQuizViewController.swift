@@ -47,6 +47,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var duration: Int!
     var previousAnswers: [String : [Any]]!
     var matchesMap: [String: Option]!
+    var trueOrFlaseAnswers: [Answer]!    //from the previousAnswers array
+    var multipleChoicesAnswers: [Answer]!
+    var multiSelectAnswers: [Answer]!
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -59,6 +62,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         answeredQuestions = [:]
         previousAnswers = [:]
         matchesMap = [:]
+        trueOrFlaseAnswers = []
+        multipleChoicesAnswers = []
+        multiSelectAnswers = []
         //        detailedDummyQuiz = DetailedQuiz.init(dummyResponse2())
         //        setUpQuestions()
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -293,10 +299,16 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         for answer in answers {
                             if let answerId = answerDict["answer_id"] as? Int, answerId == answer.id {
                                 answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(prevAnswer)
+                                trueOrFlaseAnswers.append(Answer.init(answerDict))
                             }
                         }
                     }
                 }
+//                trueOrFlaseAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.map({
+//                    Answer($0)
+//                })
+//                multiSelectAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
+//                multipleChoicesAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
             }
         }
     }
@@ -339,16 +351,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         var flag = false
     //        should check that this answer is not the same as the one in the answer attributes
         if let previousAnswersArray = previousAnswers?["\(detailedQuiz.questions[currentQuestion].id!)"] as? [[String: Any]] {
-            if let selectedAnswer = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
+            if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]], let selectedAnswer = answers.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
                 flag =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
                     if let prevAnswerId = prevAnswer["answer_id"] as? Int {
                         if prevAnswerId == selectedAnswerId {
-    //                            should be a switch case according to the question type
-                            if self.questionType == QuestionTypes.trueOrFalse, let prev = prevAnswer["is_correct"] as? Bool, let selected = selectedAnswer["is_correct"] as? Bool, prev == selected {
-                               return true
-                            } else {
-                                return false
+                            switch questionType {
+                            case .trueOrFalse, .multipleChoice:
+                                if let prev = prevAnswer["is_correct"] as? Bool, let selected = selectedAnswer["is_correct"] as? Bool, prev == selected {
+                                    return true
+                                } else {
+                                    return false
+                                }
+                            case .multipleSelect:
+                                debugPrint("Check in due")
+//                                should check that all the previous answers are contained in the answered Questions
+                            default:
+                                debugPrint("Check in due")
                             }
+                            
                         }
                     }
                     return false
@@ -377,7 +397,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .multipleSelect:
-            debugPrint("")
             var answerSubmission: [[String: Any]] = [[:]]
             for answer in answers {
 //                the array is of type Answer
@@ -609,8 +628,15 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                         cell.setSelectedImage()
                                     }
                                 } else {
-                                    if modelledAnswer.id == selectedAnswer.id, modelledAnswer.body == selectedAnswer.body {
-                                        cell.setSelectedImage()
+                                    if modelledAnswer.id == selectedAnswer.id {
+                                        if questionType == QuestionTypes.trueOrFalse,  modelledAnswer.body == selectedAnswer.body {
+                                            cell.setSelectedImage()
+                                        } else {
+                                            if modelledAnswer.isCorrect {
+                                                cell.setSelectedImage()
+                                            }
+                                        }
+                                        
                                     }
                                 }
                             } else {
@@ -686,14 +712,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                 }
             } else {
                 if let validAnswer = questions[indexPath.row] as? Answer {
-//                    should make isCorrect true
+//                    should make isCorrect true, should append the value from answers model
                    let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion] ] = [["id": validAnswer.id! ?? 0 ,
-                                                    
-                                                     "question_id": questionId! ?? 0,
-                                                     "match": "",
-                                                     "is_correct": true
-                    ]]
+                
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id! ?? 0 ,
+                                                                         "question_id": questionId,
+                                                                         "match": "",
+                                                                         "is_correct": true
+                                        ])]
                 }
             }
             tableView.reloadData()
