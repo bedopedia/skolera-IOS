@@ -127,32 +127,36 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let answers = detailedQuiz.questions[currentQuestion].answers else {
             return
         }
-        guard let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
+        let questionId = detailedQuiz.questions[currentQuestion].id
+        if let prevAnswers = previousAnswers["\(questionId!)"] {
+            answeredQuestions[detailedQuiz.questions[currentQuestion]] = prevAnswers
+            if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+                let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
+                    guard let answer1Dict = answer1 as? [String: Any],
+                        let answer2Dict = answer2 as? [String: Any],
+                        let first = answer1Dict["match"] as? String,
+                        let second = answer2Dict["match"] as? String  else {
+                            return false
+                    }
+                    return first < second
+                }
+                for answer in orderedAnswers {
+                    if let answerDict = answer as? [String: Any], let answerId = answerDict["answer_id"] as? Int {
+                        let matchedModel = answers.first(where: { (answer) -> Bool in
+                            answerId == answer.id
+                        })
+                        if let modelledAnswer = matchedModel {
+                            newOrder.append(modelledAnswer)
+                        } else {
+                            continue
+                        }
+                        
+                    }
+                }
+            }
+        } else {
             if newOrder.isEmpty {
                 newOrder = answers
-            }
-            return
-        }
-        let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
-            guard let answer1Dict = answer1 as? [String: Any],
-                let answer2Dict = answer2 as? [String: Any],
-                let first = answer1Dict["match"] as? String,
-                let second = answer2Dict["match"] as? String  else {
-                    return false
-            }
-            return first < second
-        }
-        for answer in orderedAnswers {
-            if let answerDict = answer as? [String: Any], let answerId = answerDict["answer_id"] as? Int {
-                let matchedModel = answers.first(where: { (answer) -> Bool in
-                    answerId == answer.id
-                })
-                if let modelledAnswer = matchedModel {
-                    newOrder.append(modelledAnswer)
-                } else {
-                    continue
-                }
-                
             }
         }
     }
@@ -382,7 +386,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
                    return [:]
         }
-        let answersAttributes = detailedQuiz.questions[currentQuestion].answers   //to find each answers id
+        guard  let answersAttributes = detailedQuiz.questions[currentQuestion].answers else {
+            return [:]
+        }
         var parameters: [String: Any] = [:]
         switch questionType {
         case .trueOrFalse:
@@ -400,13 +406,45 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             var answerSubmission: [[String: Any]] = [[:]]
             for answer in answers {
 //                the array is of type Answer
-                if let modelledAnswer = answer as? [String: Any] {
+                if let modelledAnswer = answer as? [String: Any] {  // from the answers api
                     answerSubmission.append(["answer_id": modelledAnswer["answer_id"]!,
                     "match": "",
                     "is_correct":modelledAnswer["is_correct"]!,
                     "question_id":detailedQuiz.questions[currentQuestion].id!,
                     "quiz_submission_id": submissionId])
+                } else {    //from the student solution
+                    if let modelledAnswer = answer as? Answer {
+                        answerSubmission.append(["answer_id": modelledAnswer.id!,
+                        "match": "",
+                        "is_correct":modelledAnswer.isCorrect,
+                        "question_id":modelledAnswer.questionId!,
+                        "quiz_submission_id": submissionId])
+                    }
                 }
+            }
+            
+            
+            for answer in answersAttributes {
+                var isContained = answers.contains(where: { (solved) -> Bool in
+                    if let solved = answer as? [String: Any], let solvedId = solved["answer_id"] as? Int, solvedId == answer.id! {
+                        return true
+                    } else {
+                        if let solved = answer as? Answer, solved.id == answer.id {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                })
+                
+                if !isContained {
+                    answerSubmission.append(["answer_id": answer.id!,
+                    "match": "",
+                    "is_correct":answer.isCorrect,
+                    "question_id":answer.questionId!,
+                    "quiz_submission_id": submissionId])
+                }
+                 
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
@@ -592,7 +630,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     guard let matchString = questions[indexPath.row] as? String else {
                         break
                     }
-                    
                     cell.matchString = matchString
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
@@ -699,17 +736,14 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         }
                     }
                     if flag {
-//                        previousAnswers.append(selectedAnswer)
-                        answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id! ?? 0 ,
+                        answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id!,
                                                                                                         "question_id": selectedAnswer.questionId,
-                                                         "match": "",
-                                                         "is_correct": true
+                                                                                             "match": "",
+                                                                                             "is_correct": true
                         ]))
                     } else {
-                        //remove the selected answer from the array and reload the table
                         if answerToBeRemovedIndex != nil {
                             previousAnswers.remove(at: answerToBeRemovedIndex)
-//                            i should remove directly from the answeredQuestions
                             answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
                             tableView.reloadData()
                         }
