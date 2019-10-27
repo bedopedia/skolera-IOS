@@ -390,20 +390,20 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             return [:]
         }
         var parameters: [String: Any] = [:]
+        var answerSubmission: [[String: Any]] = [[:]]
         switch questionType {
         case .trueOrFalse:
             guard let answer = answers.first as? Answer else {
                 return [:]
             }
-            let answerSubmission = [["answer_id": answer.id!,
-                                     "match": "",
-                                     "is_correct":answer.isCorrect!,
-                                     "question_id":detailedQuiz.questions[currentQuestion].id!,
-                                     "quiz_submission_id": submissionId]]
+            answerSubmission.append(["answer_id": answer.id!,
+            "match": "",
+            "is_correct":answer.isCorrect!,
+            "question_id":detailedQuiz.questions[currentQuestion].id!,
+            "quiz_submission_id": submissionId])
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .multipleSelect, .multipleChoice:
-            var answerSubmission: [[String: Any]] = [[:]]
             for answer in answers {
 //                the array is of type Answer
                 if let modelledAnswer = answer as? [String: Any] {  // from the answers api
@@ -435,7 +435,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         }
                     }
                 })
-                
                 if !isContained {
                     answerSubmission.append(["answer_id": answer.id!,
                     "match": "",
@@ -443,14 +442,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     "question_id":answer.questionId!,
                     "quiz_submission_id": submissionId])
                 }
-                 
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .reorder:
             debugPrint("")
         case .match:
-            debugPrint("")
+            for match in matchesMap {
+                let option = match.value
+                answerSubmission.append(["answer_id": option.id!,
+                                         "match": match.key,
+                                         "question_id":option.questionId!,
+                                         "quiz_submission_id": submissionId])
+            }
+            parameters["answer_submission"] = answerSubmission
+            parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .none:
             debugPrint("")
         }
