@@ -699,12 +699,17 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                         }
                     }
                     if flag {
-                        previousAnswers.append(selectedAnswer)
-                        answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+//                        previousAnswers.append(selectedAnswer)
+                        answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id! ?? 0 ,
+                                                                                                        "question_id": selectedAnswer.questionId,
+                                                         "match": "",
+                                                         "is_correct": true
+                        ]))
                     } else {
                         //remove the selected answer from the array and reload the table
                         if answerToBeRemovedIndex != nil {
                             previousAnswers.remove(at: answerToBeRemovedIndex)
+//                            i should remove directly from the answeredQuestions
                             answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
                             tableView.reloadData()
                         }
