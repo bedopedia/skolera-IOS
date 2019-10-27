@@ -367,10 +367,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                     return false
                                 }
                             case .multipleSelect:
-                                debugPrint("Check in due")
+                                debugPrint("Check is due")
 //                                should check that all the previous answers are contained in the answered Questions
                             default:
-                                debugPrint("Check in due")
+                                debugPrint("Check is due")
                             }
                             
                         }
@@ -402,7 +402,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                      "quiz_submission_id": submissionId]]
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
-        case .multipleSelect:
+        case .multipleSelect, .multipleChoice:
             var answerSubmission: [[String: Any]] = [[:]]
             for answer in answers {
 //                the array is of type Answer
@@ -422,7 +422,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     }
                 }
             }
-            
             
             for answer in answersAttributes {
                 var isContained = answers.contains(where: { (solved) -> Bool in
@@ -448,8 +447,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
-        case .multipleChoice:
-            debugPrint("")
         case .reorder:
             debugPrint("")
         case .match:
