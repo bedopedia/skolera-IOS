@@ -78,6 +78,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
         getAnswers()
+        headerTitle.text = detailedQuiz.name ?? ""
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -476,7 +477,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if checksTheAnswer() {
             //            skip this question
             self.currentQuestion += 1
-            self.setUpQuestions()
+            if self.currentQuestion < self.detailedQuiz.questions.count {
+                self.setUpQuestions()
+            } else {
+//                self.submitQuiz()
+            }
             return
         }
         
@@ -494,7 +499,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-                    //                    self.submitQuiz()
+                    self.submitQuiz()
                 }
                 
             } else {
@@ -505,9 +510,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     func submitQuiz() {
         var parameters: [String: Any] = [:]
-        parameters["submission"] = ["id": submissionId]
+        parameters["submission"] = ["id": submissionId!]
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        postQuizAnswersSubmissionsApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+        submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 debugPrint("Quiz is submitted successfully")
