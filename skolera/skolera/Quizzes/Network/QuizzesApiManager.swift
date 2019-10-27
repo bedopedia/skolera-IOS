@@ -181,6 +181,23 @@ func postQuizAnswersSubmissionsApi(parameters: Parameters, completion: @escaping
     }
 }
 
+func submitQuizApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = SUBMIT_QUIZ()
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            if let _ = response.result.value as? [[String : Any]] {
+                completion(false, response.response?.statusCode ?? 0, nil, error)
+            } else {
+                // Handle error: no json response
+                completion(true, response.response?.statusCode ?? 0, nil, error)
+            }
+        }
+    }
+}
 
 
 

@@ -494,9 +494,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-//                    call the submit quiz api
+//                    self.submitQuiz()
                 }
                 
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func submitQuiz() {
+        var parameters: [String: Any] = [:]
+        parameters["submission"] = ["id": submissionId]
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        postQuizAnswersSubmissionsApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                debugPrint("Quiz is submitted successfully")
+                self.backAction()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -671,15 +686,18 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         for answer in answers {
                             if let modelledAnswer = answer as? Answer {
-                                //                                in case of using the answers api
+//                          in case of using the answers api
+                           
                                 if isAnswers && questionType! == .trueOrFalse {
                                     if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
                                         cell.setSelectedImage()
                                     }
                                 } else {
                                     if modelledAnswer.id == selectedAnswer.id {
-                                        if questionType == QuestionTypes.trueOrFalse,  modelledAnswer.body == selectedAnswer.body {
-                                            cell.setSelectedImage()
+                                        if questionType == QuestionTypes.trueOrFalse {
+                                            if modelledAnswer.body == selectedAnswer.body {
+                                                cell.setSelectedImage()
+                                            }
                                         } else {
                                             if modelledAnswer.isCorrect {
                                                 cell.setSelectedImage()
@@ -764,13 +782,25 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             } else {
                 if let validAnswer = questions[indexPath.row] as? Answer {
 //                    should make isCorrect true, should append the value from answers model
-                   let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
-                
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id! ?? 0 ,
-                                                                         "question_id": questionId,
-                                                                         "match": "",
-                                                                         "is_correct": true
-                                        ])]
+                    var boolValue = false
+                    if validAnswer.body.elementsEqual("true") {
+                        boolValue = true
+                    }
+                    let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
+                    if questionType == QuestionTypes.trueOrFalse {
+                        answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
+                                     "question_id": questionId!,
+                                     "match": "",
+                                     "is_correct": boolValue,
+                                     "body": "\(boolValue)"
+                        ])]
+                    } else {
+                        answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
+                                     "question_id": questionId!,
+                                     "match": "",
+                                     "is_correct": true
+                        ])]
+                    }
                 }
             }
             tableView.reloadData()
