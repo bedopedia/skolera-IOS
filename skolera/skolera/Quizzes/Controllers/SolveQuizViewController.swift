@@ -272,7 +272,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
             var replacement: [[Option: String]] = []
             matchesMap = [:]
-//            populate the answers attributes with the correct answers from the call if available
+            //            populate the answers attributes with the correct answers from the call if available
             for previousAnswer in previousArray {
                 if let previousDict = previousAnswer as? [String: Any], let prevId = previousDict["answer_id"] as? Int {
                     for answer in answers {
@@ -308,11 +308,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         }
                     }
                 }
-//                trueOrFlaseAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.map({
-//                    Answer($0)
-//                })
-//                multiSelectAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
-//                multipleChoicesAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
+                //                trueOrFlaseAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]?.map({
+                //                    Answer($0)
+                //                })
+                //                multiSelectAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
+                //                multipleChoicesAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]]
             }
         }
     }
@@ -353,7 +353,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     func checksTheAnswer() -> Bool {
         var flag = false
-    //        should check that this answer is not the same as the one in the answer attributes
+        //        should check that this answer is not the same as the one in the answer attributes
         if let previousAnswersArray = previousAnswers?["\(detailedQuiz.questions[currentQuestion].id!)"] as? [[String: Any]] {
             if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]], let selectedAnswer = answers.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
                 flag =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
@@ -368,7 +368,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                 }
                             case .multipleSelect:
                                 debugPrint("Check is due")
-//                                should check that all the previous answers are contained in the answered Questions
+                            //                                should check that all the previous answers are contained in the answered Questions
                             default:
                                 debugPrint("Check is due")
                             }
@@ -384,7 +384,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     func createAnswersDictionary() -> [String: Any] {
         
         guard let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] else {
-                   return [:]
+            return [:]
         }
         guard  let answersAttributes = detailedQuiz.questions[currentQuestion].answers else {
             return [:]
@@ -397,28 +397,28 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 return [:]
             }
             answerSubmission.append(["answer_id": answer.id!,
-            "match": "",
-            "is_correct":answer.isCorrect!,
-            "question_id":detailedQuiz.questions[currentQuestion].id!,
-            "quiz_submission_id": submissionId])
+                                     "match": "",
+                                     "is_correct":answer.isCorrect!,
+                                     "question_id":detailedQuiz.questions[currentQuestion].id!,
+                                     "quiz_submission_id": submissionId])
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .multipleSelect, .multipleChoice:
             for answer in answers {
-//                the array is of type Answer
+                //                the array is of type Answer
                 if let modelledAnswer = answer as? [String: Any] {  // from the answers api
                     answerSubmission.append(["answer_id": modelledAnswer["answer_id"]!,
-                    "match": "",
-                    "is_correct":modelledAnswer["is_correct"]!,
-                    "question_id":detailedQuiz.questions[currentQuestion].id!,
-                    "quiz_submission_id": submissionId])
+                                             "match": "",
+                                             "is_correct":modelledAnswer["is_correct"]!,
+                                             "question_id":detailedQuiz.questions[currentQuestion].id!,
+                                             "quiz_submission_id": submissionId])
                 } else {    //from the student solution
                     if let modelledAnswer = answer as? Answer {
                         answerSubmission.append(["answer_id": modelledAnswer.id!,
-                        "match": "",
-                        "is_correct":modelledAnswer.isCorrect,
-                        "question_id":modelledAnswer.questionId!,
-                        "quiz_submission_id": submissionId])
+                                                 "match": "",
+                                                 "is_correct":modelledAnswer.isCorrect,
+                                                 "question_id":modelledAnswer.questionId!,
+                                                 "quiz_submission_id": submissionId])
                     }
                 }
             }
@@ -437,10 +437,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 })
                 if !isContained {
                     answerSubmission.append(["answer_id": answer.id!,
-                    "match": "",
-                    "is_correct":answer.isCorrect,
-                    "question_id":answer.questionId!,
-                    "quiz_submission_id": submissionId])
+                                             "match": "",
+                                             "is_correct":answer.isCorrect,
+                                             "question_id":answer.questionId!,
+                                             "quiz_submission_id": submissionId])
                 }
             }
             parameters["answer_submission"] = answerSubmission
@@ -449,9 +449,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             debugPrint("")
             for (index, answer) in newOrder.enumerated() {
                 answerSubmission.append(["answer_id": answer.id!,
-                "match": "\(index + 1)",
-                "question_id":answer.questionId!,
-                "quiz_submission_id": submissionId])
+                                         "match": "\(index + 1)",
+                    "question_id":answer.questionId!,
+                    "quiz_submission_id": submissionId])
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
@@ -468,16 +468,16 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         case .none:
             debugPrint("")
         }
-//                should check the question type, in case of true or false
+        //                should check the question type, in case of true or false
         return parameters
     }
     //    MARK: - Submit Answer
     func submitAnswer() {
         if checksTheAnswer() {
-//            skip this question
-             self.currentQuestion += 1
-             self.setUpQuestions()
-             return
+            //            skip this question
+            self.currentQuestion += 1
+            self.setUpQuestions()
+            return
         }
         
         //        should take the answer from the answers attributes, according to the question type
@@ -494,7 +494,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-//                    self.submitQuiz()
+                    //                    self.submitQuiz()
                 }
                 
             } else {
@@ -602,7 +602,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
             return
         }
-//        remove this option from the matches map and then add it to this specific matchString
+        //        remove this option from the matches map and then add it to this specific matchString
         if answers.indices.contains(arrayIndex - 1) {
             let optionIndex = arrayIndex - 1
             let option = options[optionIndex]
@@ -661,7 +661,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
-
+                    
                     if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
                         for (index, option) in options.enumerated() {
                             if let matchOption = matchesMap[matchString] {
@@ -686,8 +686,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         for answer in answers {
                             if let modelledAnswer = answer as? Answer {
-//                          in case of using the answers api
-                           
+                                //                          in case of using the answers api
                                 if isAnswers && questionType! == .trueOrFalse {
                                     if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
                                         cell.setSelectedImage()
@@ -707,7 +706,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                     }
                                 }
                             } else {
-//                              answers from get submissions api
+                                //                              answers from get submissions api
                                 if let answerDict = answer as? [String: Any] {
                                     if questionType == QuestionTypes.trueOrFalse {
                                         if let trueOrFalse = answerDict["is_correct"] as? Bool{
@@ -747,66 +746,62 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             cell?.matchTextField.resignFirstResponder()
         }
         //should save the answer for this question
-        switch questionType! {
-        case .multipleChoice, .multipleSelect, .trueOrFalse:
-            if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
-                //check that the current selection doesn't exist in the answers array
-                var flag: Bool = true
-                var answerToBeRemovedIndex: Int!
-                if let selectedAnswer = questions[indexPath.row] as? Answer {
-                    for (index, answer) in previousAnswers.enumerated() {
-                        if flag == true {
-                            if let validAnswer = answer as? Answer {
-                                if validAnswer.id == selectedAnswer.id {
-                                    answerToBeRemovedIndex = index
-                                    flag = false
-                                    break
-                                }
+        if var previousAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]], questionType == QuestionTypes.multipleSelect {
+            //check that the current selection doesn't exist in the answers array
+            var flag: Bool = true
+            var answerToBeRemovedIndex: Int!
+            if let selectedAnswer = questions[indexPath.row] as? Answer {
+                for (index, answer) in previousAnswers.enumerated() {
+                    if flag == true {
+                        if let validAnswer = answer as? [String: Any], let validAnswerId = validAnswer["answer_id"] as? Int {
+                            if validAnswerId == selectedAnswer.id {
+                                answerToBeRemovedIndex = index
+                                flag = false
+                                break
                             }
                         }
                     }
-                    if flag {
-                        answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id!,
-                                                                                                        "question_id": selectedAnswer.questionId,
-                                                                                             "match": "",
-                                                                                             "is_correct": true
-                        ]))
-                    } else {
-                        if answerToBeRemovedIndex != nil {
-                            previousAnswers.remove(at: answerToBeRemovedIndex)
-                            answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
-                            tableView.reloadData()
-                        }
-                    }
                 }
+            if flag {
+                answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id!,
+                                                                                                "question_id": selectedAnswer.questionId,
+                                                                                                "match": "",
+                                                                                                "is_correct": true
+                ]))
             } else {
-                if let validAnswer = questions[indexPath.row] as? Answer {
-//                    should make isCorrect true, should append the value from answers model
-                    var boolValue = false
-                    if validAnswer.body.elementsEqual("true") {
-                        boolValue = true
-                    }
-                    let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
-                    if questionType == QuestionTypes.trueOrFalse {
-                        answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
-                                     "question_id": questionId!,
-                                     "match": "",
-                                     "is_correct": boolValue,
-                                     "body": "\(boolValue)"
-                        ])]
-                    } else {
-                        answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
-                                     "question_id": questionId!,
-                                     "match": "",
-                                     "is_correct": true
-                        ])]
-                    }
+                if answerToBeRemovedIndex != nil {
+                    previousAnswers.remove(at: answerToBeRemovedIndex)
+                    answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+                    tableView.reloadData()
                 }
             }
-            tableView.reloadData()
-        default:
-            return
+            }
+        } else {
+            if let validAnswer = questions[indexPath.row] as? Answer {
+                //                    should make isCorrect true, should append the value from answers model
+                var boolValue = false
+                if validAnswer.body.elementsEqual("true") {
+                    boolValue = true
+                }
+                let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
+                if questionType == QuestionTypes.trueOrFalse {
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
+                                                                                                "question_id": questionId!,
+                                                                                                "match": "",
+                                                                                                "is_correct": boolValue,
+                                                                                                "body": "\(boolValue)"
+                    ])]
+                } else {
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
+                                                                                                "question_id": questionId!,
+                                                                                                "match": "",
+                                                                                                "is_correct": true
+                    ])]
+                }
+            }
         }
+        tableView.reloadData()
+        
     }
     //    MARK: - Drag and Drop methods
     
