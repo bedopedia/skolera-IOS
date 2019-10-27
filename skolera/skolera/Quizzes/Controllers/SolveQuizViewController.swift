@@ -50,6 +50,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var trueOrFlaseAnswers: [Answer]!    //from the previousAnswers array
     var multipleChoicesAnswers: [Answer]!
     var multiSelectAnswers: [Answer]!
+    var deletionFlag = false
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -163,67 +164,72 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     //    MARK: - Data setup
     func setUpQuestions() {
-        let question = detailedQuiz.questions[currentQuestion]
-        questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
-        questions = []
-        //        let question = detailedDummyQuiz.questions[currentQuestion]
-        if !isQuestionsOnly && !isAnswers {
-            tableView.dragInteractionEnabled = true
+        if self.deletionFlag {
+            self.deletionFlag = false
+            getAnswers()
         } else {
-            tableView.dragInteractionEnabled = false
-        }
-        
-        questions.append(question)
-        //      TO:DO  check is th question type is match and append the match model
-        if questionType == QuestionTypes.trueOrFalse {
-            questions.append("headerCell")
-            let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
-                                             "body": "true",
-                                             "question_id": question.answers.first?.questionId ?? 0,
-                                             "is_correct": true
-            ])
-            questions.append(correctanswer)
-            let falseAnswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
-                                           "body": "false",
-                                           "question_id": question.answers.first?.questionId ?? 0,
-                                           "is_correct": false
-            ])
-            questions.append(falseAnswer)
-        } else {
-            if questionType == QuestionTypes.reorder {
-                sortReorderQuestion()
-            }
-            if questionType == QuestionTypes.match {
-                answeredQuestions[question] = []
-                //                should divide the answers and append them all here
-                question.answers.first?.options.forEach({ (option) in
-                    var matchTuple:[Option: String] = [:]
-                    matchTuple[option] = ""
-                    questions.append(option)
-                    //                    build the matches map
-                    answeredQuestions[question]?.append(matchTuple)
-                })
-                questions.append("headerCell")
-                question.answers.first?.matches.forEach({ (match) in
-                    questions.append(match)
-                })
-                //                debugPrint(answeredQuestions[question]?.count)
-                
+            let question = detailedQuiz.questions[currentQuestion]
+            questionType = question.type.map({ QuestionTypes(rawValue: $0)! })
+            questions = []
+            //        let question = detailedDummyQuiz.questions[currentQuestion]
+            if !isQuestionsOnly && !isAnswers {
+                tableView.dragInteractionEnabled = true
             } else {
-                questions.append("headerCell")
-                question.answers?.forEach{ (answer) in
-                    questions.append(answer)
-                }
+                tableView.dragInteractionEnabled = false
             }
             
+            questions.append(question)
+            //      TO:DO  check is th question type is match and append the match model
+            if questionType == QuestionTypes.trueOrFalse {
+                questions.append("headerCell")
+                let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
+                                                 "body": "true",
+                                                 "question_id": question.answers.first?.questionId ?? 0,
+                                                 "is_correct": true
+                ])
+                questions.append(correctanswer)
+                let falseAnswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
+                                               "body": "false",
+                                               "question_id": question.answers.first?.questionId ?? 0,
+                                               "is_correct": false
+                ])
+                questions.append(falseAnswer)
+            } else {
+                if questionType == QuestionTypes.reorder {
+                    sortReorderQuestion()
+                }
+                if questionType == QuestionTypes.match {
+                    answeredQuestions[question] = []
+                    //                should divide the answers and append them all here
+                    question.answers.first?.options.forEach({ (option) in
+                        var matchTuple:[Option: String] = [:]
+                        matchTuple[option] = ""
+                        questions.append(option)
+                        //                    build the matches map
+                        answeredQuestions[question]?.append(matchTuple)
+                    })
+                    questions.append("headerCell")
+                    question.answers.first?.matches.forEach({ (match) in
+                        questions.append(match)
+                    })
+                    //                debugPrint(answeredQuestions[question]?.count)
+                    
+                } else {
+                    questions.append("headerCell")
+                    question.answers?.forEach{ (answer) in
+                        questions.append(answer)
+                    }
+                }
+                
+            }
+            showAnswers()
+            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+            setTableViewMultipleSelection(question: question)
+            if isAnswers {
+                //            showAnswers()
+            }
+            tableView.reloadData()
         }
-        showAnswers()
-        outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
-        setTableViewMultipleSelection(question: question)
-        if isAnswers {
-            //            showAnswers()
-        }
-        tableView.reloadData()
     }
     
     // Add answers in the answered questions dictionary
@@ -413,7 +419,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     for (index, orderAnswer) in newOrder.enumerated() {
                         let prevAnswer = previousAnswersArray.first(where: { (prevDict) -> Bool in
                             if let prevId = prevDict["answer_id"] as? Int, prevId == orderAnswer.id! {
-                               return true
+                                return true
                             } else {
                                 return false
                             }
@@ -530,13 +536,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if self.currentQuestion < self.detailedQuiz.questions.count {
                 self.setUpQuestions()
             } else {
-//                self.submitQuiz()
+                //                self.submitQuiz()
             }
             return
         }
         
-        //        should take the answer from the answers attributes, according to the question type
-        //        case true or false
+        if questionType == QuestionTypes.multipleSelect {
+            if let previousAnswersArray = previousAnswers["\(detailedQuiz.questions[currentQuestion].id!)"], !previousAnswersArray.isEmpty {
+                if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
+                    deleteSubmission()
+                }
+            }
+            
+        }
+        
+        
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         postQuizAnswersSubmissionsApi(parameters: createAnswersDictionary()) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
@@ -549,7 +563,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-//                    self.submitQuiz()
+                    //                    self.submitQuiz()
                 }
                 
             } else {
@@ -573,9 +587,35 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    func deleteSubmission() {
+        let questionId = detailedQuiz.questions[currentQuestion].id
+        var parameters: [String: Any] = [:]
+        parameters["quiz_submission_id"] = submissionId!
+        parameters["question_id"] = questionId ?? 0
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        deleteSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                debugPrint("question submission deleted")
+                self.deletionFlag = true
+                self.currentQuestion += 1
+                if self.currentQuestion < self.detailedQuiz.questions.count {
+                    self.setUpQuestions()
+                }
+                
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count {
-            submitAnswer()
+            if let previousAnswersArray = previousAnswers["\(detailedQuiz.questions[currentQuestion].id!)"], !previousAnswersArray.isEmpty, questionType == QuestionTypes.multipleSelect, answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
+                deleteSubmission()
+            } else {
+                submitAnswer()
+            }
             //            self.currentQuestion += 1
             //            self.setUpQuestions()
         } else {
@@ -635,8 +675,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : [Any]] {
-                    //                    array of available answers for the questions
-                    //                    string question id, array of corresponding answers
                     debugPrint(result)
                     self.previousAnswers = result
                     self.setUpQuestions()
@@ -808,28 +846,26 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             if let selectedAnswer = questions[indexPath.row] as? Answer {
                 for (index, answer) in previousAnswers.enumerated() {
                     if flag == true {
-                        if let validAnswer = answer as? [String: Any], let validAnswerId = validAnswer["answer_id"] as? Int {
-                            if validAnswerId == selectedAnswer.id {
-                                answerToBeRemovedIndex = index
-                                flag = false
-                                break
-                            }
+                        if let validAnswer = answer as? [String: Any], let validAnswerId = validAnswer["answer_id"] as? Int, validAnswerId == selectedAnswer.id {
+                            answerToBeRemovedIndex = index
+                            flag = false
+                            break
                         }
                     }
                 }
-            if flag {
-                answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id!,
-                                                                                                "question_id": selectedAnswer.questionId,
-                                                                                                "match": "",
-                                                                                                "is_correct": true
-                ]))
-            } else {
-                if answerToBeRemovedIndex != nil {
-                    previousAnswers.remove(at: answerToBeRemovedIndex)
-                    answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
-                    tableView.reloadData()
+                if flag {
+                    answeredQuestions[detailedQuiz.questions[currentQuestion]]?.append(Answer.init(["id": selectedAnswer.id!,
+                                                                                                    "question_id": selectedAnswer.questionId,
+                                                                                                    "match": "",
+                                                                                                    "is_correct": true
+                    ]))
+                } else {
+                    if answerToBeRemovedIndex != nil {
+                        previousAnswers.remove(at: answerToBeRemovedIndex)
+                        answeredQuestions[detailedQuiz.questions[currentQuestion]] = previousAnswers
+                        tableView.reloadData()
+                    }
                 }
-            }
             }
         } else {
             if let validAnswer = questions[indexPath.row] as? Answer {
