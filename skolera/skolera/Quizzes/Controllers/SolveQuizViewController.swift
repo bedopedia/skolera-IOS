@@ -447,6 +447,14 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .reorder:
             debugPrint("")
+            for (index, answer) in newOrder.enumerated() {
+                answerSubmission.append(["answer_id": answer.id!,
+                "match": "\(index + 1)",
+                "question_id":answer.questionId!,
+                "quiz_submission_id": submissionId])
+            }
+            parameters["answer_submission"] = answerSubmission
+            parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .match:
             for match in matchesMap {
                 let option = match.value
@@ -480,14 +488,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 let questionId = self.detailedQuiz.questions[self.currentQuestion].id!
                 if let result = value as? [[String: Any]] {
-                    //                    replace every new value in the array with the old value in previousAnswers
-                    //                    if let _ = self.previousAnswers["\(questionId)"] {
-                    //                        self.previousAnswers["\(questionId)"] = result
-                    //                    }
                     self.previousAnswers["\(questionId)"] = result
                 }
                 self.currentQuestion += 1
-                self.setUpQuestions()
+                if self.currentQuestion < self.detailedQuiz.questions.count {
+                    self.setUpQuestions()
+                } else {
+//                    call the submit quiz api
+                }
+                
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -495,7 +504,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func nextButtonAction() {
-        if currentQuestion < detailedQuiz.questions.count - 1 {
+        if currentQuestion < detailedQuiz.questions.count {
             submitAnswer()
             //            self.currentQuestion += 1
             //            self.setUpQuestions()
@@ -509,7 +518,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         outOfLabel.isHidden = false
         previousButton.setTitle("Previous", for: .normal)
         
-        if currentQuestion == detailedQuiz.questions.count - 1 {
+        if currentQuestion + 1 >= detailedQuiz.questions.count - 1 {
             if isQuestionsOnly || isAnswers {
                 NSLayoutConstraint.activate([outOfLabelHeight])
                 outOfLabel.isHidden = true
