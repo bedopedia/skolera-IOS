@@ -353,34 +353,56 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     func checksTheAnswer() -> Bool {
-        var flag = false
-        //        should check that this answer is not the same as the one in the answer attributes
+        var isContained = false
         if let previousAnswersArray = previousAnswers?["\(detailedQuiz.questions[currentQuestion].id!)"] as? [[String: Any]] {
-            if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]], let selectedAnswer = answers.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
-                flag =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
-                    if let prevAnswerId = prevAnswer["answer_id"] as? Int {
-                        if prevAnswerId == selectedAnswerId {
-                            switch questionType {
-                            case .trueOrFalse, .multipleChoice:
+            if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+                switch questionType {
+                case .multipleChoice, .trueOrFalse:
+                    isContained =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
+                        if let prevAnswerId = prevAnswer["answer_id"] as? Int, let selectedAnswer = answers.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
+                            if prevAnswerId == selectedAnswerId {
                                 if let prev = prevAnswer["is_correct"] as? Bool, let selected = selectedAnswer["is_correct"] as? Bool, prev == selected {
                                     return true
                                 } else {
                                     return false
                                 }
-                            case .multipleSelect:
-                                debugPrint("Check is due")
-                            //                                should check that all the previous answers are contained in the answered Questions
-                            default:
-                                debugPrint("Check is due")
                             }
-                            
+                        }
+                        return false
+                    })
+                case .multipleSelect:
+                    for multiSelect in answers {
+                        if let modelledAnswer = multiSelect as? Answer {
+                            isContained = previousAnswersArray.contains { (prevDict) -> Bool in
+                                if let prevAnswerId = prevDict["answer_id"] as? Int, prevAnswerId == modelledAnswer.id!, let prevAnswerIsCorrect = prevDict["is_correct"] as? Bool, prevAnswerIsCorrect == modelledAnswer.isCorrect! {
+                                    return true
+                                    
+                                }
+                                return false
+                            }
+                        } else {
+                            if let answerDict = multiSelect as? [String: Any] {
+                                isContained = previousAnswersArray.contains { (prevDict) -> Bool in
+                                    if let prevAnswerId = prevDict["answer_id"] as? Int, let answerId = answerDict["answer_id"] as? Int, prevAnswerId == answerId, let prevAnswerIsCorrect = prevDict["is_correct"] as? Bool, let isCorrect = answerDict["is_correct"] as? Bool, prevAnswerIsCorrect == isCorrect {
+                                        return true
+                                    } else {
+                                        return false
+                                    }
+                                }
+                            }
                         }
                     }
-                    return false
-                })
+                    
+                case .match:
+                    debugPrint("Check is due")
+                case .reorder:
+                    debugPrint("Check is due")
+                case .none:
+                    debugPrint("Check is due")
+                }
             }
         }
-        return flag
+        return isContained
     }
     func createAnswersDictionary() -> [String: Any] {
         
