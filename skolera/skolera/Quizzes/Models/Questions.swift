@@ -12,7 +12,7 @@ class Questions: Hashable {
     let body: String!
     let difficulty: String!
     let score: Int!
-    let answersAttributes: [Answer]!
+//    let answersAttributes: [Answer]!
     let correctionStyle: Any!
     let type: String!
     let bloom: [String]!
@@ -29,14 +29,10 @@ class Questions: Hashable {
         score = dict["score"] as? Int
         
         if let answersAttributesDictArray = dict["answers_attributes"] as? [[String: Any]] {
-            answersAttributes = answersAttributesDictArray.map { Answer($0) }
-        } else {
-            answersAttributes = nil
-        }
-        type = dict["type"] as? String
-        if let answersDictArray = dict["answers"] as? [[String: Any]] {
+            answers = answersAttributesDictArray.map { Answer($0) }
+        } else if let answersDictArray = dict["answers"] as? [[String: Any]] {
             answers = answersDictArray.map { Answer($0) }
-        } else {
+        }  else {
             if let matchAnswer = dict["answers"] as? [String: Any] {
                 answers = []
                 answers.append(Answer.init(["options" : matchAnswer["options"],
@@ -45,10 +41,22 @@ class Questions: Hashable {
                 answers = nil
             }
         }
-        correctionStyle = dict["correction_style"] as? Any
+        type = dict["type"] as? String
+//        if let answersDictArray = dict["answers"] as? [[String: Any]] {
+//            answers = answersDictArray.map { Answer($0) }
+//        } else {
+//            if let matchAnswer = dict["answers"] as? [String: Any] {
+//                answers = []
+//                answers.append(Answer.init(["options" : matchAnswer["options"],
+//                                             "matches": matchAnswer["matches"]]))
+//            } else {
+//                answers = nil
+//            }
+//        }
+        correctionStyle = dict["correction_style"]
         bloom = dict["bloom"] as? [String]
-        files = dict["files"] as? Any
-        uploadedFile = dict["uploaded_file"] as? Any
+        files = dict["files"] 
+        uploadedFile = dict["uploaded_file"]
         correctAnswersCount = dict["correct_answers_count"] as? Int
         numberOfCorrectAnswers = dict["number_of_correct_answers"] as? Int
     }

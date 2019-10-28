@@ -76,9 +76,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             NSLayoutConstraint.deactivate([timerLabelTopConstraint])
             backButtonAllignment.constant = 0
             headerHeightConstraint.constant = 60
+            setUpQuestions()
+        } else {
+            getAnswers()
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
-        getAnswers()
         headerTitle.text = detailedQuiz.name ?? ""
     }
     
@@ -177,8 +179,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             } else {
                 tableView.dragInteractionEnabled = false
             }
-            
             questions.append(question)
+            
             //      TO:DO  check is th question type is match and append the match model
             if questionType == QuestionTypes.trueOrFalse {
                 questions.append("headerCell")
@@ -199,20 +201,37 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     sortReorderQuestion()
                 }
                 if questionType == QuestionTypes.match {
-                    answeredQuestions[question] = []
-                    //                should divide the answers and append them all here
-                    question.answers.first?.options.forEach({ (option) in
-                        var matchTuple:[Option: String] = [:]
-                        matchTuple[option] = ""
-                        questions.append(option)
-                        //                    build the matches map
-                        answeredQuestions[question]?.append(matchTuple)
-                    })
-                    questions.append("headerCell")
-                    question.answers.first?.matches.forEach({ (match) in
-                        questions.append(match)
-                    })
-                    //                debugPrint(answeredQuestions[question]?.count)
+                    if isQuestionsOnly || isAnswers {
+//                        construct options
+                        answeredQuestions[question] = []
+                        question.answers.forEach({ (matchAnswer) in
+                            //                    build the matches map
+                            questions.append(Option.init(["id":matchAnswer.id!,
+                                                                             "question_id":question.id!,
+                                                                             "body": matchAnswer.body! ]))
+                        })
+                        questions.append("headerCell")
+                        question.answers.forEach({ (matchAnswer) in
+                            //                    build the matches map
+                            questions.append(matchAnswer.match)
+                        })
+                        
+                    } else {
+                        answeredQuestions[question] = []
+                        //                should divide the answers and append them all here
+                        question.answers.first?.options.forEach({ (option) in
+                            var matchTuple:[Option: String] = [:]
+                            matchTuple[option] = ""
+                            questions.append(option)
+                            //                    build the matches map
+                            answeredQuestions[question]?.append(matchTuple)
+                        })
+                        questions.append("headerCell")
+                        question.answers.first?.matches.forEach({ (match) in
+                            questions.append(match)
+                        })
+                    }
+                    
                     
                 } else {
                     questions.append("headerCell")
@@ -612,38 +631,48 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func nextButtonAction() {
-        if currentQuestion < detailedQuiz.questions.count {
-            let questionId = detailedQuiz.questions[currentQuestion].id
-            if let previousAnswersArray = previousAnswers["\(questionId!)"] {
-                if !previousAnswersArray.isEmpty {
-                    if  questionType == QuestionTypes.multipleSelect {
-                        if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
-                            deleteSubmission()
-                        } else {
-                            submitAnswer()
-                        }
-                    }
-                    else {
-                        if questionType == QuestionTypes.match {
-                            if matchesMap.isEmpty {
+        if !isAnswers && !isQuestionsOnly {
+            if currentQuestion < detailedQuiz.questions.count {
+                let questionId = detailedQuiz.questions[currentQuestion].id
+                if let previousAnswersArray = previousAnswers["\(questionId!)"] {
+                    if !previousAnswersArray.isEmpty {
+                        if  questionType == QuestionTypes.multipleSelect {
+                            if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
                                 deleteSubmission()
                             } else {
                                 submitAnswer()
                             }
-                        } else {
-                            submitAnswer()
                         }
+                        else {
+                            if questionType == QuestionTypes.match {
+                                if matchesMap.isEmpty {
+                                    deleteSubmission()
+                                } else {
+                                    submitAnswer()
+                                }
+                            } else {
+                                submitAnswer()
+                            }
+                        }
+                    } else {
+                        submitAnswer()
                     }
                 } else {
                     submitAnswer()
                 }
             } else {
-                submitAnswer()
+                //            TODO: call the submit grade api, call back action
+                debugPrint("submit grade")
             }
         } else {
-            //            TODO: call the submit grade api, call back action
-            debugPrint("submit grade")
+            self.currentQuestion += 1
+            if self.currentQuestion < self.detailedQuiz.questions.count {
+                self.setUpQuestions()
+            } else {
+                //                self.submitQuiz()
+            }
         }
+        
         if let _ = outOfLabelHeight {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
         }

@@ -135,9 +135,25 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func openQuizQuestions() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        solveQuizVC.isQuestionsOnly = true
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+        getQuizDetails()
+    }
+    
+    func getQuizDetails() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getQuizApi(quizId: self.quiz.id!) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.detailedQuiz = DetailedQuiz(result)
+                    let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+                    solveQuizVC.isQuestionsOnly = true
+                    solveQuizVC.detailedQuiz = self.detailedQuiz
+                    self.navigationController?.pushViewController(solveQuizVC, animated: true)
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
     }
     
     @IBAction func openQuizAnswers() {
