@@ -51,6 +51,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var multipleChoicesAnswers: [Answer]!
     var multiSelectAnswers: [Answer]!
     var deletionFlag = false
+    var options: [Option] = []
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -204,18 +205,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     if isQuestionsOnly || isAnswers {
 //                        construct options
                         answeredQuestions[question] = []
+                        
                         question.answers.forEach({ (matchAnswer) in
                             //                    build the matches map
-                            questions.append(Option.init(["id":matchAnswer.id!,
-                                                                             "question_id":question.id!,
-                                                                             "body": matchAnswer.body! ]))
+                            let option = Option.init(["id":matchAnswer.id!,
+                            "question_id":question.id!,
+                            "body": matchAnswer.body!])
+                            questions.append(option)
+                            options.append(option)
+                            matchesMap[matchAnswer.match!] = option
                         })
                         questions.append("headerCell")
                         question.answers.forEach({ (matchAnswer) in
                             //                    build the matches map
                             questions.append(matchAnswer.match)
                         })
-                        
                     } else {
                         answeredQuestions[question] = []
                         //                should divide the answers and append them all here
@@ -231,15 +235,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             questions.append(match)
                         })
                     }
-                    
-                    
                 } else {
                     questions.append("headerCell")
                     question.answers?.forEach{ (answer) in
                         questions.append(answer)
                     }
                 }
-                
             }
             showAnswers()
             outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
@@ -665,11 +666,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 debugPrint("submit grade")
             }
         } else {
-            self.currentQuestion += 1
-            if self.currentQuestion < self.detailedQuiz.questions.count {
+            if self.currentQuestion < self.detailedQuiz.questions.count - 1 {
+                self.currentQuestion += 1
                 self.setUpQuestions()
             } else {
-                //                self.submitQuiz()
+                //               go to home
             }
         }
         
@@ -813,8 +814,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     cell.updateMatchAnswer = { (matchIndex, matchString) in
                         self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
                     }
-                    
-                    if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
+                    if isAnswers || isQuestionsOnly {
                         for (index, option) in options.enumerated() {
                             if let matchOption = matchesMap[matchString] {
                                 if matchOption == option {
@@ -826,9 +826,21 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                             }
                         }
                     } else {
-                        cell.matchTextField.text = ""
+                        if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
+                            for (index, option) in options.enumerated() {
+                                if let matchOption = matchesMap[matchString] {
+                                    if matchOption == option {
+                                        cell.matchTextField.text = "\(index + 1)"
+                                    }
+                                    
+                                } else {
+                                    cell.matchTextField.text = ""
+                                }
+                            }
+                        } else {
+                            cell.matchTextField.text = ""
+                        }
                     }
-                    
                 case .reorder:
                     if !newOrder.isEmpty {
                         cell.answer = newOrder[indexPath.row - 2]
