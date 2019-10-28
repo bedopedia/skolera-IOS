@@ -55,7 +55,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var multiSelectAnswers: [Answer]!
     var deletionFlag = false
     var options: [Option] = []
-    var correctAnswer = true
+    var showCorrectAnswer = true
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -83,7 +83,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             headerHeightConstraint.constant = 60
             setUpQuestions()
         }
-        if !correctAnswer {
+        if !showCorrectAnswer {
             getAnswers()
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
@@ -139,7 +139,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         let questionId = detailedQuiz.questions[currentQuestion].id
         if isAnswers {
-            if correctAnswer {
+            if showCorrectAnswer {
                 newOrder = answers.sorted(by: { (answer1, answer2) -> Bool in
                     answer1.match < answer2.match
                 })
@@ -199,13 +199,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             questions.append(question)
             
             //      TO:DO  check is th question type is match and append the match model
-            if questionType == QuestionTypes.trueOrFalse {
-                if isAnswers && correctAnswer {
-                    let isCorrect = question.answers.first?.isCorrect
+            if questionType == .trueOrFalse {
+                if isAnswers && showCorrectAnswer {
+                    let isCorrect = question.answers.first?.isCorrect ?? false
                     answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": question.answers.first?.id ?? 0,
                                                                                                 "question_id": question.answers.first?.questionId ?? 0,
-                                                                                                "is_correct": isCorrect ?? false,
-                                                                                                "body": "\(isCorrect!)"
+                                                                                                "is_correct": isCorrect,
+                                                                                                "body": "\(isCorrect)"
                     ])]
                 }
                 questions.append("headerCell")
@@ -238,7 +238,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             "body": matchAnswer.body!])
                             questions.append(option)
                             options.append(option)
-                            if correctAnswer {
+                            if showCorrectAnswer {
                                 matchesMap[matchAnswer.match!] = option
                             }
                         })
@@ -267,7 +267,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     question.answers?.forEach{ (answer) in
                         questions.append(answer)
                     }
-                    if isAnswers && correctAnswer {
+                    if isAnswers && showCorrectAnswer {
                         var answers: [Answer] = []
                         question.answers?.forEach{ (answer) in
                             if let isCorrect = answer.isCorrect, isCorrect {
@@ -355,10 +355,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-    func stringValue(booleanValue: Bool) -> String {
-        booleanValue ? "True" : "False"
-    }
-    
+
     func navigateToHome() {
         let submitQuiz = QuizSubmissionViewController.instantiate(fromAppStoryboard: .Quizzes)
         submitQuiz.openQuizStatus = {
@@ -778,124 +775,126 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questions.count
     }
-    //    MARK: - cellForRow
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if questions[indexPath.row] is Questions || questions[indexPath.row] is Option {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
-            cell.questionType = questionType
-            if let question = questions[indexPath.row] as? Questions{
-                cell.question = question
-                cell.questionBodyView.update(input: question.body)
-            } else {
-                if let option = questions[indexPath.row] as? Option {
-                    cell.option = option
-                    cell.questionBodyView.update(input: option.body)
-                    cell.matchIndex = indexPath.row
-                }
-            }
-            return cell
+    //    MARK: - Handle cells
+    fileprivate func handleQuestionCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "questionCell") as! QuizQuestionTableViewCell
+        cell.questionType = questionType
+        if let question = questions[indexPath.row] as? Questions{
+            cell.question = question
+            cell.questionBodyView.update(input: question.body)
         } else {
-            if let title = questions[indexPath.row] as? String, title.elementsEqual("headerCell") {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "answerLabelCell") as! QuizAnswerLabelTableViewCell
-                return cell
+            if let option = questions[indexPath.row] as? Option {
+                cell.option = option
+                cell.questionBodyView.update(input: option.body)
+                cell.matchIndex = indexPath.row
             }
-            else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
-                if let question = questions.first as? Questions {
-                    cell.questionType = question.type.map { QuestionTypes(rawValue: $0) }!
-                }
-                if isAnswers {
-                    cell.isAnswers = true
-                }
-                switch questionType! {
-                case .match:
-                    guard let matchString = questions[indexPath.row] as? String else {
-                        break
-                    }
-                    cell.matchString = matchString
-                    cell.updateMatchAnswer = { (matchIndex, matchString) in
-                        self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
-                    }
-                    if isAnswers || isQuestionsOnly {
-                        for (index, option) in options.enumerated() {
-                            if let matchOption = matchesMap[matchString] {
-                                if matchOption == option {
-                                    cell.matchTextField.text = "\(index + 1)"
-                                }
-                                
-                            } else {
-                                cell.matchTextField.text = ""
-                            }
-                        }
-                    } else {
-                        if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
-                            for (index, option) in options.enumerated() {
-                                if let matchOption = matchesMap[matchString] {
-                                    if matchOption == option {
-                                        cell.matchTextField.text = "\(index + 1)"
-                                    }
-                                    
-                                } else {
-                                    cell.matchTextField.text = ""
-                                }
-                            }
-                        } else {
-                            cell.matchTextField.text = ""
-                        }
-                    }
-                case .reorder:
-                    if !newOrder.isEmpty {
-                        cell.answer = newOrder[indexPath.row - 2]
+        }
+        return cell
+    }
+    
+    fileprivate func handleTitleCell(_ tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "answerLabelCell") as! QuizAnswerLabelTableViewCell
+        return cell
+    }
+    
+    fileprivate func handleReorderCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
+        cell.questionType = .reorder
+        cell.isAnswers = isAnswers
+        if !newOrder.isEmpty {
+            cell.answer = newOrder[indexPath.row - 2]
+        }
+        return cell
+    }
+    
+    fileprivate func handleMatchCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
+        let matchString = questions[indexPath.row] as? String ?? ""
+        cell.questionType = .match
+        cell.isAnswers = isAnswers
+        cell.matchString = matchString
+        cell.updateMatchAnswer = { (matchIndex, matchString) in
+            self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
+        }
+        if isAnswers || isQuestionsOnly {
+            for (index, option) in options.enumerated() {
+                if let matchOption = matchesMap[matchString] {
+                    if matchOption == option {
+                        cell.matchTextField.text = "\(index + 1)"
                     }
                     
-                default:
-                    if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                        for answer in answers {
-                            if let modelledAnswer = answer as? Answer {
-//                                 in case of using the answers api
-                                if isAnswers && questionType! == .trueOrFalse {
-                                    if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
-                                        cell.setSelectedImage()
-                                    }
-                                } else {
-                                    if modelledAnswer.id == selectedAnswer.id {
-                                        if questionType == QuestionTypes.trueOrFalse {
-                                            if modelledAnswer.body == selectedAnswer.body {
-                                                cell.setSelectedImage()
-                                            }
-                                        } else {
-                                            if modelledAnswer.isCorrect {
-                                                cell.setSelectedImage()
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                //                              answers from get submissions api
-                                if let answerDict = answer as? [String: Any] {
-                                    if questionType == QuestionTypes.trueOrFalse {
-                                        if let trueOrFalse = answerDict["is_correct"] as? Bool{
-                                            if trueOrFalse == selectedAnswer.isCorrect! {
-                                                cell.setSelectedImage()
-                                            }
-                                        }
-                                    } else {
-                                        if let trueOrFalse = answerDict["is_correct"] as? Bool, trueOrFalse == true {
-                                            if let answerId = answerDict["answer_id"] as? Int, answerId == selectedAnswer.id! {
-                                                cell.setSelectedImage()
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                } else {
+                    cell.matchTextField.text = ""
+                }
+            }
+        } else {
+            if let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options {
+                for (index, option) in options.enumerated() {
+                    if let matchOption = matchesMap[matchString] {
+                        if matchOption == option {
+                            cell.matchTextField.text = "\(index + 1)"
+                        }
+                        
+                    } else {
+                        cell.matchTextField.text = ""
+                    }
+                }
+            } else {
+                cell.matchTextField.text = ""
+            }
+        }
+        if isAnswers || isQuestionsOnly {
+            cell.matchTextField.isUserInteractionEnabled = false
+        }
+        return cell
+    }
+    
+    fileprivate func handleDefaultCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "answerCell") as! QuizAnswerTableViewCell
+        cell.questionType = questionType
+        if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+            for answer in answers {
+                if let modelledAnswer = answer as? Answer {
+                    if isAnswers && questionType! == .trueOrFalse {
+                        if let answerBody = selectedAnswer.body, let isAnswerCorrect = selectedAnswer.isCorrect {
+                            cell.isAnswerSelected = answerBody.elementsEqual("\(isAnswerCorrect)")
+                        }
+                    } else if modelledAnswer.id == selectedAnswer.id {
+                        if questionType == QuestionTypes.trueOrFalse {
+                            cell.isAnswerSelected = modelledAnswer.body.elementsEqual(selectedAnswer.body)
+                        } else {
+                            cell.isAnswerSelected = modelledAnswer.isCorrect
                         }
                     }
-                    cell.answer = questions[indexPath.row] as? Answer
+                } else if let answerDict = answer as? [String: Any] {
+//                  answers from get submissions api
+                    if questionType == QuestionTypes.trueOrFalse {
+                        if let trueOrFalse = answerDict["is_correct"] as? Bool{
+                            cell.isAnswerSelected = trueOrFalse == selectedAnswer.isCorrect!
+                        }
+                    } else if let isCorrect = answerDict["is_correct"] as? Bool, isCorrect, let answerId = answerDict["answer_id"] as? Int {
+                        cell.isAnswerSelected = answerId == selectedAnswer.id!
+                    }
                 }
-                if isAnswers || isQuestionsOnly {
-                    cell.matchTextField.isUserInteractionEnabled = false
-                }
-                return cell
+            }
+        }
+        cell.answer = questions[indexPath.row] as? Answer
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if questions[indexPath.row] is Questions || questions[indexPath.row] is Option {
+            return handleQuestionCell(tableView, indexPath)
+        } else if let title = questions[indexPath.row] as? String, title.elementsEqual("headerCell") {
+            return handleTitleCell(tableView)
+        } else {
+            switch questionType {
+            case .reorder:
+                return handleReorderCell(tableView, indexPath)
+            case .match:
+                return handleMatchCell(tableView, indexPath)
+            default:
+                return handleDefaultCell(tableView, indexPath)
             }
         }
     }

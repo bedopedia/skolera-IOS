@@ -9,6 +9,41 @@
 import Foundation
 
 class FullAssignment {
+    internal init(id: Int?, name: String?, description: String?, state: String?, endAt: String?, startAt: String?, assignmentType: String?, blooms: [String]?, points: Int?, lateSubmissionsDate: String?, lateSubmissionPoints: Any?, content: String?, category: Any?, lessonName: String?, chapterName: String?, fileName: Any?, teacherId: Int?, onlineText: Bool?, fileUpload: Bool?, hardCopy: Bool?, unitName: String?, lateSubmission: Bool?, submissionsStudentIds: [Any]?, adminId: Any?, fileUrl: Any?, contentType: Any?, assignmentsCourseGroups: [Any]?, assignmentsObjectives: [Any]?, gradingPeriodLock: Bool?, courseGroups: [Any]?, objectives: [Any]?, uploadedFiles: [UploadedFile]?) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.state = state
+        self.endAt = endAt
+        self.startAt = startAt
+        self.assignmentType = assignmentType
+        self.blooms = blooms
+        self.points = points
+        self.lateSubmissionsDate = lateSubmissionsDate
+        self.lateSubmissionPoints = lateSubmissionPoints
+        self.content = content
+        self.category = category
+        self.lessonName = lessonName
+        self.chapterName = chapterName
+        self.fileName = fileName
+        self.teacherId = teacherId
+        self.onlineText = onlineText
+        self.fileUpload = fileUpload
+        self.hardCopy = hardCopy
+        self.unitName = unitName
+        self.lateSubmission = lateSubmission
+        self.submissionsStudentIds = submissionsStudentIds
+        self.adminId = adminId
+        self.fileUrl = fileUrl
+        self.contentType = contentType
+        self.assignmentsCourseGroups = assignmentsCourseGroups
+        self.assignmentsObjectives = assignmentsObjectives
+        self.gradingPeriodLock = gradingPeriodLock
+        self.courseGroups = courseGroups
+        self.objectives = objectives
+        self.uploadedFiles = uploadedFiles
+    }
+    
     
     let id: Int!
     let name: String?

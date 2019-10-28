@@ -107,7 +107,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                 solveQuizVC.isSolvable = self.isSolvable
                 solveQuizVC.detailedQuiz = self.detailedQuiz
                 solveQuizVC.submissionId = self.submissionId
-                solveQuizVC.correctAnswer = self.correctAnswer
+                solveQuizVC.showCorrectAnswer = self.correctAnswer
                 self.navigationController?.pushViewController(solveQuizVC, animated: true)
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -169,7 +169,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                     solveQuizVC.isQuestionsOnly = true
                     solveQuizVC.detailedQuiz = self.detailedQuiz
                     solveQuizVC.isSolvable = self.isSolvable
-                    solveQuizVC.correctAnswer = self.correctAnswer
+                    solveQuizVC.showCorrectAnswer = self.correctAnswer
                     solveQuizVC.submissionId = self.quiz.studentSubmissions.id
                     solveQuizVC.isAnswers = self.isAnswers
                     solveQuizVC.isQuestionsOnly = !self.isAnswers

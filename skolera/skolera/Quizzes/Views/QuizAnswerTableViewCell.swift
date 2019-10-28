@@ -18,6 +18,16 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var answerLeftImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
+    var isAnswerSelected = false {
+        didSet {
+            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse) && self.isAnswerSelected {
+                answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+            } else {
+                self.setUnselectedImage()
+            }
+        }
+    }
+    
     var isAnswers = false
     var updateMatchAnswer: ((String?, String) -> ())!
     var matchString: String! {
@@ -30,18 +40,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         didSet {
             self.hideMatchView()
             self.cellView.backgroundColor = .white
-            switch self.questionType! {
-            case QuestionTypes.match:
-                self.showMatchView()
-            case QuestionTypes.multipleChoice:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            case QuestionTypes.multipleSelect:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            case QuestionTypes.reorder:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
-            case QuestionTypes.trueOrFalse:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            }
+            self.setUnselectedImage()
         }
     }
     var answer: Answer! {
@@ -59,11 +58,21 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    func setSelectedImage() {
-        if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
-            answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+    private func setUnselectedImage() {
+        switch self.questionType! {
+        case QuestionTypes.match:
+            self.showMatchView()
+        case QuestionTypes.multipleChoice:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+        case QuestionTypes.multipleSelect:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+        case QuestionTypes.reorder:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
+        case QuestionTypes.trueOrFalse:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
         }
     }
+ 
     
     func resetLeftImage() {
         answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
