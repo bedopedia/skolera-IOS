@@ -382,7 +382,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             isContained = previousAnswersArray.contains { (prevDict) -> Bool in
                                 if let prevAnswerId = prevDict["answer_id"] as? Int, prevAnswerId == modelledAnswer.id!, let prevAnswerIsCorrect = prevDict["is_correct"] as? Bool, prevAnswerIsCorrect == modelledAnswer.isCorrect! {
                                     return true
-                                    
                                 }
                                 return false
                             }
@@ -398,7 +397,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             }
                         }
                     }
-                    
                 case .match:
                     isContained = true
                     for match in matchesMap {
@@ -434,6 +432,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 case .none:
                     debugPrint("Check is due")
                 }
+            }
+        } else {
+//            check to handle deletion, no answer so the question should be skipped
+            if let _ = answeredQuestions[detailedQuiz.questions[currentQuestion]]{
+                debugPrint("")
+            } else {
+                isContained = true
             }
         }
         return isContained
@@ -530,6 +535,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     //    MARK: - Submit Answer
     func submitAnswer() {
+        
+        
+      
         if checksTheAnswer() {
             //            skip this question
             self.currentQuestion += 1
@@ -540,16 +548,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
             return
         }
-        
-        if questionType == QuestionTypes.multipleSelect {
-            if let previousAnswersArray = previousAnswers["\(detailedQuiz.questions[currentQuestion].id!)"], !previousAnswersArray.isEmpty {
-                if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
-                    deleteSubmission()
-                }
-            }
-            
-        }
-        
         
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         postQuizAnswersSubmissionsApi(parameters: createAnswersDictionary()) { (isSuccess, statusCode, value, error) in
@@ -565,7 +563,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 } else {
                     //                    self.submitQuiz()
                 }
-                
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
@@ -611,13 +608,20 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBAction func nextButtonAction() {
         if currentQuestion < detailedQuiz.questions.count {
-            if let previousAnswersArray = previousAnswers["\(detailedQuiz.questions[currentQuestion].id!)"], !previousAnswersArray.isEmpty, questionType == QuestionTypes.multipleSelect, answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
-                deleteSubmission()
+            let questionId = detailedQuiz.questions[currentQuestion].id
+            if let previousAnswersArray = previousAnswers["\(questionId!)"] {
+                if !previousAnswersArray.isEmpty, questionType == QuestionTypes.multipleSelect {
+                    if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
+                        deleteSubmission()
+                    } else {
+                        submitAnswer()
+                    }
+                } else {
+                    submitAnswer()
+                }
             } else {
                 submitAnswer()
             }
-            //            self.currentQuestion += 1
-            //            self.setUpQuestions()
         } else {
             //            TODO: call the submit grade api, call back action
             debugPrint("submit grade")
