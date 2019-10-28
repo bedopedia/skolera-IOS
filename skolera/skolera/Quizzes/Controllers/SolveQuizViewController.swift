@@ -31,7 +31,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     //    var detailedDummyQuiz: DetailedQuiz!
     var detailedQuiz: DetailedQuiz! {
         didSet {
-            self.duration = self.detailedQuiz.duration * 60
+            if isSolvable {
+                self.duration = self.detailedQuiz.duration * 60
+            }
         }
     }
     var submissionId: Int!
@@ -43,6 +45,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var newOrder: [Answer] = []
     var isQuestionsOnly = false
     var isAnswers = false
+    var isSolvable = true
     var courseGroupId: Int!
     var duration: Int!
     var previousAnswers: [String : [Any]]!
@@ -52,6 +55,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var multiSelectAnswers: [Answer]!
     var deletionFlag = false
     var options: [Option] = []
+    var correctAnswer = true
     
     //    MARK: - Life Cycle
     override func viewDidLoad() {
@@ -78,7 +82,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             backButtonAllignment.constant = 0
             headerHeightConstraint.constant = 60
             setUpQuestions()
-        } else {
+        }
+        if !correctAnswer {
             getAnswers()
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
@@ -133,10 +138,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             return
         }
         let questionId = detailedQuiz.questions[currentQuestion].id
-        if isAnswers || isQuestionsOnly {
-            newOrder = answers.sorted(by: { (answer1, answer2) -> Bool in
-                answer1.match < answer2.match
-            })
+        if isAnswers {
+            if correctAnswer {
+                newOrder = answers.sorted(by: { (answer1, answer2) -> Bool in
+                    answer1.match < answer2.match
+                })
+            } else {
+                newOrder = answers
+            }
+            
         } else {
             if let prevAnswers = previousAnswers["\(questionId!)"] {
                 answeredQuestions[detailedQuiz.questions[currentQuestion]] = prevAnswers
@@ -190,7 +200,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             
             //      TO:DO  check is th question type is match and append the match model
             if questionType == QuestionTypes.trueOrFalse {
-                if isAnswers || isQuestionsOnly {
+                if isAnswers && correctAnswer {
                     let isCorrect = question.answers.first?.isCorrect
                     answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": question.answers.first?.id ?? 0,
                                                                                                 "question_id": question.answers.first?.questionId ?? 0,
@@ -217,10 +227,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     sortReorderQuestion()
                 }
                 if questionType == QuestionTypes.match {
-                    if isQuestionsOnly || isAnswers {
+                    if isAnswers || isQuestionsOnly {
 //                        construct options
+                        options = []
                         answeredQuestions[question] = []
-                        
                         question.answers.forEach({ (matchAnswer) in
                             //                    build the matches map
                             let option = Option.init(["id":matchAnswer.id!,
@@ -228,7 +238,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             "body": matchAnswer.body!])
                             questions.append(option)
                             options.append(option)
-                            matchesMap[matchAnswer.match!] = option
+                            if correctAnswer {
+                                matchesMap[matchAnswer.match!] = option
+                            }
                         })
                         questions.append("headerCell")
                         question.answers.forEach({ (matchAnswer) in
@@ -255,7 +267,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     question.answers?.forEach{ (answer) in
                         questions.append(answer)
                     }
-                    if isAnswers || isQuestionsOnly {
+                    if isAnswers && correctAnswer {
                         var answers: [Answer] = []
                         question.answers?.forEach{ (answer) in
                             if let isCorrect = answer.isCorrect, isCorrect {
@@ -273,9 +285,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             showAnswers()
             outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
             setTableViewMultipleSelection(question: question)
-            if isAnswers {
-                //            showAnswers()
-            }
             tableView.reloadData()
         }
     }
@@ -622,7 +631,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func nextButtonAction() {
-        if !isAnswers && !isQuestionsOnly {
+        if isSolvable {
             if currentQuestion < detailedQuiz.questions.count {
                 let questionId = detailedQuiz.questions[currentQuestion].id
                 if let previousAnswersArray = previousAnswers["\(questionId!)"] {
@@ -712,8 +721,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     //    MARK: - Get Answers
     func getAnswers() {
+        guard let subId = submissionId else {
+            return
+        }
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getQuizAnswersSubmissionsApi(submissionId: submissionId) { (isSuccess, statusCode, value, error) in
+        getQuizAnswersSubmissionsApi(submissionId: subId) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : [Any]] {
@@ -840,7 +852,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                         for answer in answers {
                             if let modelledAnswer = answer as? Answer {
-                                //                          in case of using the answers api
+//                                 in case of using the answers api
                                 if isAnswers && questionType! == .trueOrFalse {
                                     if (selectedAnswer.body?.elementsEqual(stringValue(booleanValue: selectedAnswer.isCorrect!)))! {
                                         cell.setSelectedImage()

@@ -46,6 +46,10 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     var solvingQuiz = false
     var submission: Submission!
     var submissionId: Int!
+    var isSolvable = true
+    var correctAnswer = true
+    var isAnswers = false
+
     
 //    MARK: -Life Cycle
     override func viewDidLoad() {
@@ -100,8 +104,10 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                 self.solvingQuiz = true  //should be removed, already in createSubmission
                 let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
                 solveQuizVC.courseGroupId = self.courseGroupId
+                solveQuizVC.isSolvable = self.isSolvable
                 solveQuizVC.detailedQuiz = self.detailedQuiz
                 solveQuizVC.submissionId = self.submissionId
+                solveQuizVC.correctAnswer = self.correctAnswer
                 self.navigationController?.pushViewController(solveQuizVC, animated: true)
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -125,6 +131,8 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func solveQuizButtonAction() {
+        self.isSolvable = true
+        self.correctAnswer = false
         if let _ = quiz.studentSubmissions {
             self.startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             self.submissionId = quiz.studentSubmissions.id
@@ -135,7 +143,19 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func openQuizQuestions() {
-        getQuizDetails()
+        self.correctAnswer = false
+        if quiz.state.elementsEqual("finished") {
+            self.isSolvable = false
+            getQuizDetails()
+        } else {
+            self.isSolvable = false
+            if quiz.studentSubmissions.isSubmitted {
+                getQuizDetails()
+            } else {
+                getSolveQuizDetails()
+            }
+        }
+        
     }
     
     func getQuizDetails() {
@@ -148,6 +168,11 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                     let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
                     solveQuizVC.isQuestionsOnly = true
                     solveQuizVC.detailedQuiz = self.detailedQuiz
+                    solveQuizVC.isSolvable = self.isSolvable
+                    solveQuizVC.correctAnswer = self.correctAnswer
+                    solveQuizVC.submissionId = self.quiz.studentSubmissions.id
+                    solveQuizVC.isAnswers = self.isAnswers
+                    solveQuizVC.isQuestionsOnly = !self.isAnswers
                     self.navigationController?.pushViewController(solveQuizVC, animated: true)
                 }
             } else {
@@ -157,9 +182,20 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @IBAction func openQuizAnswers() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        solveQuizVC.isAnswers = true
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
+        self.isAnswers = true
+        self.correctAnswer = false
+        if quiz.state.elementsEqual("finished") {
+            self.isSolvable = false
+            self.correctAnswer = true
+            getQuizDetails()
+        } else {
+            self.isSolvable = false
+            if quiz.studentSubmissions.isSubmitted {
+                getQuizDetails()
+            } else {
+                getSolveQuizDetails()
+            }
+        }
     }
 //    MARK: - UI Setup
     func setUpDatesUi() {

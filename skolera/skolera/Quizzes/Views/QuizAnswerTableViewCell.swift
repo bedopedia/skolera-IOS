@@ -54,7 +54,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             matchTextField.delegate = self
             matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 14)
             if isAnswers {
-                matchTextField.attributedText = self.answer.match.htmlToAttributedString ?? "".htmlToAttributedString
+//                matchTextField.attributedText = self.answer.match.htmlToAttributedString ?? "".htmlToAttributedString
             }
         }
     }
