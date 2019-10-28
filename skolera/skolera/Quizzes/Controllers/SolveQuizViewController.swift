@@ -184,6 +184,14 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             
             //      TO:DO  check is th question type is match and append the match model
             if questionType == QuestionTypes.trueOrFalse {
+                if isAnswers || isQuestionsOnly {
+                    let isCorrect = question.answers.first?.isCorrect
+                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": question.answers.first?.id ?? 0,
+                                                                                                "question_id": question.answers.first?.questionId ?? 0,
+                                                                                                "is_correct": isCorrect ?? false,
+                                                                                                "body": "\(isCorrect!)"
+                    ])]
+                }
                 questions.append("headerCell")
                 let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
                                                  "body": "true",
@@ -197,6 +205,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                                "is_correct": false
                 ])
                 questions.append(falseAnswer)
+                
             } else {
                 if questionType == QuestionTypes.reorder {
                     sortReorderQuestion()
@@ -235,10 +244,23 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             questions.append(match)
                         })
                     }
-                } else {
+                } else {    //mc ans ms
                     questions.append("headerCell")
                     question.answers?.forEach{ (answer) in
                         questions.append(answer)
+                    }
+                    if isAnswers || isQuestionsOnly {
+                        var answers: [Answer] = []
+                        question.answers?.forEach{ (answer) in
+                            if let isCorrect = answer.isCorrect, isCorrect {
+                                answers.append(Answer.init(["id": answer.id ?? 0,
+                                                            "question_id": question.answers.first?.questionId ?? 0,
+                                                            "is_correct": isCorrect,
+                                                            "body": answer.body!
+                                ]))
+                            }
+                            answeredQuestions[detailedQuiz.questions[ currentQuestion]] = answers
+                        }
                     }
                 }
             }
@@ -251,45 +273,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             tableView.reloadData()
         }
     }
-    
-    // Add answers in the answered questions dictionary
-    func showDummyAnswers() {
-        if let answers = detailedQuiz.questions[currentQuestion].answers {
-            switch questionType! {
-            case .multipleChoice, .multipleSelect:
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.filter({ (answer) -> Bool in
-                    guard let correct = answer.isCorrect else {
-                        return false
-                    }
-                    return correct == true
-                })
-            case .trueOrFalse:
-                let correctanswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id ?? 0 ,
-                                                 "body": "true",
-                                                 "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId ?? 0,
-                                                 "match": detailedQuiz.questions[currentQuestion].answers?.first?.match ?? "",
-                                                 "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect ?? ""
-                ])
-                let falseAnswer = Answer.init(["id": detailedQuiz.questions[currentQuestion].answers!.first?.id ?? 0,
-                                               "body": "false",
-                                               "question_id": detailedQuiz.questions[currentQuestion].answers?.first?.questionId ?? 0,
-                                               "match": detailedQuiz.questions[currentQuestion].answers?.first?.match ?? "",
-                                               "is_correct": detailedQuiz.questions[currentQuestion].answers?.first?.isCorrect ?? ""
-                ])
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = [correctanswer, falseAnswer]
-            default:
-                answeredQuestions[detailedQuiz.questions[currentQuestion]] = answers.sorted(by: { (firstAnswer, secondAnswer) -> Bool in
-                    guard let firstMatch = Int(firstAnswer.match ?? ""), let secondMatch = Int(secondAnswer.match ?? "") else {
-                        return false
-                    }
-                    return firstMatch < secondMatch
-                })
-                newOrder = answeredQuestions[detailedQuiz.questions[currentQuestion]] as! [Answer]
-            }
-        }
-        tableView.reloadData()
-    }
-    
+   
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
         
@@ -866,7 +850,6 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                                                 cell.setSelectedImage()
                                             }
                                         }
-                                        
                                     }
                                 }
                             } else {
