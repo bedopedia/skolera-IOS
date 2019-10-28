@@ -19,7 +19,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var cellView: UIView!
     
     var isAnswers = false
-    var updateMatchAnswer: ((String!, String) -> ())!
+    var updateMatchAnswer: ((String?, String) -> ())!
     var matchString: String! {
         didSet {
             answerTextView.update(input: self.matchString)
@@ -112,6 +112,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc func textFieldDidChange(_ textField: UITextField) {
 //        debugPrint(matchTextField.text)
 //        call a closure to update the matches map, match string is available from which i can get the array index
+        debugPrint(textField.text)
         updateMatchAnswer(textField.text, matchString)
     }
 

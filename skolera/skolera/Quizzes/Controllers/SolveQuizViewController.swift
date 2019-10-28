@@ -397,6 +397,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             }
                         }
                     }
+                    
+                    
                 case .match:
                     isContained = true
                     for match in matchesMap {
@@ -434,10 +436,16 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
         } else {
-//            check to handle deletion, no answer so the question should be skipped
-            if let _ = answeredQuestions[detailedQuiz.questions[currentQuestion]]{
+            //            check to handle deletion, no answer so the question should be skipped
+            if let _ = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                 debugPrint("")
             } else {
+                if questionType == QuestionTypes.multipleSelect {
+                    isContained = true
+                }
+            }
+            
+            if matchesMap.isEmpty, questionType == QuestionTypes.match {
                 isContained = true
             }
         }
@@ -535,9 +543,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     //    MARK: - Submit Answer
     func submitAnswer() {
-        
-        
-      
         if checksTheAnswer() {
             //            skip this question
             self.currentQuestion += 1
@@ -610,11 +615,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if currentQuestion < detailedQuiz.questions.count {
             let questionId = detailedQuiz.questions[currentQuestion].id
             if let previousAnswersArray = previousAnswers["\(questionId!)"] {
-                if !previousAnswersArray.isEmpty, questionType == QuestionTypes.multipleSelect {
-                    if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
-                        deleteSubmission()
-                    } else {
-                        submitAnswer()
+                if !previousAnswersArray.isEmpty {
+                    if  questionType == QuestionTypes.multipleSelect {
+                        if answeredQuestions[detailedQuiz.questions[currentQuestion]]!.isEmpty {
+                            deleteSubmission()
+                        } else {
+                            submitAnswer()
+                        }
+                    }
+                    else {
+                        if questionType == QuestionTypes.match {
+                            if matchesMap.isEmpty {
+                                deleteSubmission()
+                            } else {
+                                submitAnswer()
+                            }
+                        } else {
+                            submitAnswer()
+                        }
                     }
                 } else {
                     submitAnswer()
@@ -690,26 +708,34 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     //    MARK: - Match Answers
     func matchAnswers(matchIndex: String!, matchString: String) {
-        guard let arrayIndex = Int(matchIndex ?? "") else {
-            return
-        }
-        guard let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
-            return
-        }
-        guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
-            return
-        }
-        //        remove this option from the matches map and then add it to this specific matchString
-        if answers.indices.contains(arrayIndex - 1) {
-            let optionIndex = arrayIndex - 1
-            let option = options[optionIndex]
-            for match in matchesMap {
-                if match.value == option {
-                    matchesMap.removeValue(forKey: match.key)
-                }
+        if matchIndex.isEmpty {
+            debugPrint("empty")
+            if let match = matchesMap[matchString] {
+                matchesMap.removeValue(forKey: matchString)
             }
-            matchesMap[matchString] = option
+        } else {
+            guard let arrayIndex = Int(matchIndex ?? "") else {
+                return
+            }
+            guard let answers = self.answeredQuestions[self.detailedQuiz.questions[self.currentQuestion]] else {
+                return
+            }
+            guard let options = self.detailedQuiz.questions[self.currentQuestion].answers.first?.options else {
+                return
+            }
+            //        remove this option from the matches map and then add it to this specific matchString
+            if answers.indices.contains(arrayIndex - 1) {
+                let optionIndex = arrayIndex - 1
+                let option = options[optionIndex]
+                for match in matchesMap {
+                    if match.value == option {
+                        matchesMap.removeValue(forKey: match.key)
+                    }
+                }
+                matchesMap[matchString] = option
+            }
         }
+        
         self.tableView.reloadData()
     }
 }
