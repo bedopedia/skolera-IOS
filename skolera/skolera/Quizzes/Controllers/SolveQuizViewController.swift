@@ -133,35 +133,41 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             return
         }
         let questionId = detailedQuiz.questions[currentQuestion].id
-        if let prevAnswers = previousAnswers["\(questionId!)"] {
-            answeredQuestions[detailedQuiz.questions[currentQuestion]] = prevAnswers
-            if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
-                let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
-                    guard let answer1Dict = answer1 as? [String: Any],
-                        let answer2Dict = answer2 as? [String: Any],
-                        let first = answer1Dict["match"] as? String,
-                        let second = answer2Dict["match"] as? String  else {
-                            return false
-                    }
-                    return first < second
-                }
-                for answer in orderedAnswers {
-                    if let answerDict = answer as? [String: Any], let answerId = answerDict["answer_id"] as? Int {
-                        let matchedModel = answers.first(where: { (answer) -> Bool in
-                            answerId == answer.id
-                        })
-                        if let modelledAnswer = matchedModel {
-                            newOrder.append(modelledAnswer)
-                        } else {
-                            continue
-                        }
-                        
-                    }
-                }
-            }
+        if isAnswers || isQuestionsOnly {
+            newOrder = answers.sorted(by: { (answer1, answer2) -> Bool in
+                answer1.match < answer2.match
+            })
         } else {
-            if newOrder.isEmpty {
-                newOrder = answers
+            if let prevAnswers = previousAnswers["\(questionId!)"] {
+                answeredQuestions[detailedQuiz.questions[currentQuestion]] = prevAnswers
+                if let submittedAnswers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
+                    let orderedAnswers = submittedAnswers.sorted { (answer1, answer2) -> Bool in
+                        guard let answer1Dict = answer1 as? [String: Any],
+                            let answer2Dict = answer2 as? [String: Any],
+                            let first = answer1Dict["match"] as? String,
+                            let second = answer2Dict["match"] as? String  else {
+                                return false
+                        }
+                        return first < second
+                    }
+                    for answer in orderedAnswers {
+                        if let answerDict = answer as? [String: Any], let answerId = answerDict["answer_id"] as? Int {
+                            let matchedModel = answers.first(where: { (answer) -> Bool in
+                                answerId == answer.id
+                            })
+                            if let modelledAnswer = matchedModel {
+                                newOrder.append(modelledAnswer)
+                            } else {
+                                continue
+                            }
+                            
+                        }
+                    }
+                }
+            } else {
+                if newOrder.isEmpty {
+                    newOrder = answers
+                }
             }
         }
     }
