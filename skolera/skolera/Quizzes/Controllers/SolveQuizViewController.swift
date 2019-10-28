@@ -200,25 +200,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             
             //      TO:DO  check is th question type is match and append the match model
             if questionType == .trueOrFalse {
-                if isAnswers && showCorrectAnswer {
-                    let isCorrect = question.answers.first?.isCorrect ?? false
+                let isCorrect = question.answers.first?.isCorrect
+                if isAnswers && showCorrectAnswer && isCorrect != nil {
                     answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": question.answers.first?.id ?? 0,
                                                                                                 "question_id": question.answers.first?.questionId ?? 0,
-                                                                                                "is_correct": isCorrect,
-                                                                                                "body": "\(isCorrect)"
-                    ])]
+                                                                                                "is_correct": isCorrect!
+                                                                                                ])]
                 }
                 questions.append("headerCell")
                 let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
                                                  "body": "true",
                                                  "question_id": question.answers.first?.questionId ?? 0,
-                                                 "is_correct": true
+                                                 "is_correct": (isCorrect ?? false) ? true : false
                 ])
                 questions.append(correctanswer)
                 let falseAnswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
                                                "body": "false",
                                                "question_id": question.answers.first?.questionId ?? 0,
-                                               "is_correct": false
+                                               "is_correct": (isCorrect ?? false) ? false : true
                 ])
                 questions.append(falseAnswer)
                 
@@ -856,21 +855,17 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             for answer in answers {
                 if let modelledAnswer = answer as? Answer {
                     if isAnswers && questionType! == .trueOrFalse {
-                        if let answerBody = selectedAnswer.body, let isAnswerCorrect = selectedAnswer.isCorrect {
-                            cell.isAnswerSelected = answerBody.elementsEqual("\(isAnswerCorrect)")
+                        if let isAnswerCorrect = selectedAnswer.isCorrect {
+                            cell.isAnswerSelected = isAnswerCorrect
                         }
                     } else if modelledAnswer.id == selectedAnswer.id {
-                        if questionType == QuestionTypes.trueOrFalse {
-                            cell.isAnswerSelected = modelledAnswer.body.elementsEqual(selectedAnswer.body)
-                        } else {
-                            cell.isAnswerSelected = modelledAnswer.isCorrect
-                        }
+                         cell.isAnswerSelected = modelledAnswer.isCorrect
                     }
                 } else if let answerDict = answer as? [String: Any] {
 //                  answers from get submissions api
                     if questionType == QuestionTypes.trueOrFalse {
                         if let trueOrFalse = answerDict["is_correct"] as? Bool{
-                            cell.isAnswerSelected = trueOrFalse == selectedAnswer.isCorrect!
+                            cell.isAnswerSelected = selectedAnswer.body.lowercased().elementsEqual("\(trueOrFalse)")
                         }
                     } else if let isCorrect = answerDict["is_correct"] as? Bool, isCorrect, let answerId = answerDict["answer_id"] as? Int {
                         cell.isAnswerSelected = answerId == selectedAnswer.id!
@@ -947,6 +942,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             }
         } else {
             if let validAnswer = questions[indexPath.row] as? Answer {
+                
                 //                    should make isCorrect true, should append the value from answers model
                 var boolValue = false
                 if validAnswer.body.elementsEqual("true") {
