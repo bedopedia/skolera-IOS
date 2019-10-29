@@ -20,7 +20,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var isAnswerSelected = false {
         didSet {
-            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse) && self.isAnswerSelected {
+            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect) && self.isAnswerSelected {
                 answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
             } else {
                 self.setUnselectedImage()
@@ -68,8 +68,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
         case QuestionTypes.reorder:
             self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
-        case QuestionTypes.trueOrFalse:
-            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
         }
     }
  

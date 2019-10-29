@@ -13,6 +13,4 @@ enum QuestionTypes: String {
     case multipleSelect = "MultipleSelect"
     case multipleChoice = "MultipleChoice"
     case reorder = "Reorder"
-    case trueOrFalse = "TrueOrFalse"
-
 }

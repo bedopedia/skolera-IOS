@@ -199,85 +199,61 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             questions.append(question)
             
             //      TO:DO  check is th question type is match and append the match model
-            if questionType == .trueOrFalse {
-                let isCorrect = question.answers.first?.isCorrect
-                if isAnswers && showCorrectAnswer && isCorrect != nil {
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": question.answers.first?.id ?? 0,
-                                                                                                "question_id": question.answers.first?.questionId ?? 0,
-                                                                                                "is_correct": isCorrect!
-                                                                                                ])]
-                }
-                questions.append("headerCell")
-                let correctanswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
-                                                 "body": "true",
-                                                 "question_id": question.answers.first?.questionId ?? 0,
-                                                 "is_correct": (isCorrect ?? false) ? true : false
-                ])
-                questions.append(correctanswer)
-                let falseAnswer = Answer.init(["id": question.answers.first?.id ?? 0 ,
-                                               "body": "false",
-                                               "question_id": question.answers.first?.questionId ?? 0,
-                                               "is_correct": (isCorrect ?? false) ? false : true
-                ])
-                questions.append(falseAnswer)
-                
-            } else {
-                if questionType == QuestionTypes.reorder {
-                    sortReorderQuestion()
-                }
-                if questionType == QuestionTypes.match {
-                    if isAnswers || isQuestionsOnly {
-//                        construct options
-                        options = []
-                        answeredQuestions[question] = []
-                        question.answers.forEach({ (matchAnswer) in
-                            //                    build the matches map
-                            let option = Option.init(["id":matchAnswer.id!,
-                            "question_id":question.id!,
-                            "body": matchAnswer.body!])
-                            questions.append(option)
-                            options.append(option)
-                            if showCorrectAnswer {
-                                matchesMap[matchAnswer.match!] = option
-                            }
-                        })
-                        questions.append("headerCell")
-                        question.answers.forEach({ (matchAnswer) in
-                            //                    build the matches map
-                            questions.append(matchAnswer.match)
-                        })
-                    } else {
-                        answeredQuestions[question] = []
-                        //                should divide the answers and append them all here
-                        question.answers.first?.options.forEach({ (option) in
-                            var matchTuple:[Option: String] = [:]
-                            matchTuple[option] = ""
-                            questions.append(option)
-                            //                    build the matches map
-                            answeredQuestions[question]?.append(matchTuple)
-                        })
-                        questions.append("headerCell")
-                        question.answers.first?.matches.forEach({ (match) in
-                            questions.append(match)
-                        })
-                    }
-                } else {    //mc ans ms
-                    questions.append("headerCell")
-                    question.answers?.forEach{ (answer) in
-                        questions.append(answer)
-                    }
-                    if isAnswers && showCorrectAnswer {
-                        var answers: [Answer] = []
-                        question.answers?.forEach{ (answer) in
-                            if let isCorrect = answer.isCorrect, isCorrect {
-                                answers.append(Answer.init(["id": answer.id ?? 0,
-                                                            "question_id": question.answers.first?.questionId ?? 0,
-                                                            "is_correct": isCorrect,
-                                                            "body": answer.body!
-                                ]))
-                            }
-                            answeredQuestions[detailedQuiz.questions[ currentQuestion]] = answers
+            if questionType == QuestionTypes.reorder {
+                sortReorderQuestion()
+            }
+            if questionType == QuestionTypes.match {
+                if isAnswers || isQuestionsOnly {
+                    //                        construct options
+                    options = []
+                    answeredQuestions[question] = []
+                    question.answers.forEach({ (matchAnswer) in
+                        //                    build the matches map
+                        let option = Option.init(["id":matchAnswer.id!,
+                                                  "question_id":question.id!,
+                                                  "body": matchAnswer.body!])
+                        questions.append(option)
+                        options.append(option)
+                        if showCorrectAnswer {
+                            matchesMap[matchAnswer.match!] = option
                         }
+                    })
+                    questions.append("headerCell")
+                    question.answers.forEach({ (matchAnswer) in
+                        //                    build the matches map
+                        questions.append(matchAnswer.match)
+                    })
+                } else {
+                    answeredQuestions[question] = []
+                    //                should divide the answers and append them all here
+                    question.answers.first?.options.forEach({ (option) in
+                        var matchTuple:[Option: String] = [:]
+                        matchTuple[option] = ""
+                        questions.append(option)
+                        //                    build the matches map
+                        answeredQuestions[question]?.append(matchTuple)
+                    })
+                    questions.append("headerCell")
+                    question.answers.first?.matches.forEach({ (match) in
+                        questions.append(match)
+                    })
+                }
+            } else {    //mc ans ms
+                questions.append("headerCell")
+                question.answers?.forEach{ (answer) in
+                    questions.append(answer)
+                }
+                if isAnswers && showCorrectAnswer {
+                    var answers: [Answer] = []
+                    question.answers?.forEach{ (answer) in
+                        if let isCorrect = answer.isCorrect, isCorrect {
+                            answers.append(Answer.init(["id": answer.id ?? 0,
+                                                        "question_id": question.answers.first?.questionId ?? 0,
+                                                        "is_correct": isCorrect,
+                                                        "body": answer.body!
+                            ]))
+                        }
+                        answeredQuestions[detailedQuiz.questions[ currentQuestion]] = answers
                     }
                 }
             }
@@ -287,7 +263,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             tableView.reloadData()
         }
     }
-   
+    
     func showAnswers() {
         let questionId  = detailedQuiz.questions[currentQuestion].id!
         
@@ -354,7 +330,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-
+    
     func navigateToHome() {
         let submitQuiz = QuizSubmissionViewController.instantiate(fromAppStoryboard: .Quizzes)
         submitQuiz.openQuizStatus = {
@@ -378,7 +354,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if let previousAnswersArray = previousAnswers?["\(detailedQuiz.questions[currentQuestion].id!)"] as? [[String: Any]] {
             if let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
                 switch questionType {
-                case .multipleChoice, .trueOrFalse:
+                case .multipleChoice:
                     isContained =  previousAnswersArray.contains(where: { (prevAnswer) -> Bool in
                         if let prevAnswerId = prevAnswer["answer_id"] as? Int, let selectedAnswer = answers.first as? [String: Any], let selectedAnswerId = selectedAnswer["answer_id"] as? Int {
                             if prevAnswerId == selectedAnswerId {
@@ -477,17 +453,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         var parameters: [String: Any] = [:]
         var answerSubmission: [[String: Any]] = [[:]]
         switch questionType {
-        case .trueOrFalse:
-            guard let answer = answers.first as? Answer else {
-                return [:]
-            }
-            answerSubmission.append(["answer_id": answer.id!,
-                                     "match": "",
-                                     "is_correct":answer.isCorrect!,
-                                     "question_id":detailedQuiz.questions[currentQuestion].id!,
-                                     "quiz_submission_id": submissionId])
-            parameters["answer_submission"] = answerSubmission
-            parameters["question_id"] = detailedQuiz.questions[currentQuestion].id!
         case .multipleSelect, .multipleChoice:
             for answer in answers {
                 //                the array is of type Answer
@@ -854,20 +819,12 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
         if let selectedAnswer = questions[indexPath.row] as? Answer, let answers = answeredQuestions[detailedQuiz.questions[currentQuestion]] {
             for answer in answers {
                 if let modelledAnswer = answer as? Answer {
-                    if isAnswers && questionType! == .trueOrFalse {
-                        if let isAnswerCorrect = selectedAnswer.isCorrect {
-                            cell.isAnswerSelected = isAnswerCorrect
-                        }
-                    } else if modelledAnswer.id == selectedAnswer.id {
-                         cell.isAnswerSelected = modelledAnswer.isCorrect
+                    if modelledAnswer.id == selectedAnswer.id {
+                        cell.isAnswerSelected = modelledAnswer.isCorrect
                     }
                 } else if let answerDict = answer as? [String: Any] {
-//                  answers from get submissions api
-                    if questionType == QuestionTypes.trueOrFalse {
-                        if let trueOrFalse = answerDict["is_correct"] as? Bool{
-                            cell.isAnswerSelected = selectedAnswer.body.lowercased().elementsEqual("\(trueOrFalse)")
-                        }
-                    } else if let isCorrect = answerDict["is_correct"] as? Bool, isCorrect, let answerId = answerDict["answer_id"] as? Int {
+                    //                  answers from get submissions api
+                    if let isCorrect = answerDict["is_correct"] as? Bool, isCorrect, let answerId = answerDict["answer_id"] as? Int {
                         cell.isAnswerSelected = answerId == selectedAnswer.id!
                     }
                 }
@@ -949,20 +906,11 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     boolValue = true
                 }
                 let questionId = detailedQuiz.questions[currentQuestion].answers?.first?.questionId
-                if questionType == QuestionTypes.trueOrFalse {
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
-                                                                                                "question_id": questionId!,
-                                                                                                "match": "",
-                                                                                                "is_correct": boolValue,
-                                                                                                "body": "\(boolValue)"
-                    ])]
-                } else {
-                    answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
-                                                                                                "question_id": questionId!,
-                                                                                                "match": "",
-                                                                                                "is_correct": true
-                    ])]
-                }
+                answeredQuestions[detailedQuiz.questions[ currentQuestion]] = [Answer.init(["id": validAnswer.id!,
+                                                                                            "question_id": questionId!,
+                                                                                            "match": "",
+                                                                                            "is_correct": true
+                ])]
             }
         }
         tableView.reloadData()
