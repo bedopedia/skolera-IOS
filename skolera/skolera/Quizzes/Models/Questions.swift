@@ -35,7 +35,7 @@ class Questions: Hashable {
         correctAnswersCount = dict["correct_answers_count"] as? Int
         numberOfCorrectAnswers = dict["number_of_correct_answers"] as? Int
         if let answersAttributesDictArray = dict["answers_attributes"] as? [[String: Any]] {
-            answers = answersAttributesDictArray.map { Answer($0) }
+            handleAnswerAttributesArray(answerAttributesArray: answersAttributesDictArray)
         } else if let answersDictArray = dict["answers"] as? [[String: Any]] {
             self.handleAnswersArray(answersArray: answersDictArray)
         }  else {
@@ -59,7 +59,7 @@ class Questions: Hashable {
         hasher.combine(id)
     }
     
-    func handleAnswersArray(answersArray: [[String: Any]]){
+    func handleAnswersArray(answersArray: [[String: Any]]) {
         if let body = answersArray.first?["body"] as? String, !body.isEmpty {
             answers = answersArray.map { Answer($0) }
         } else {
@@ -74,6 +74,29 @@ class Questions: Hashable {
                               "question_id": firstAnswer.questionId ?? -1
                             ]
             customizedAnswersArray.append(Answer(secondItem))
+            answers = customizedAnswersArray
+        }
+    }
+    
+    func handleAnswerAttributesArray(answerAttributesArray: [[String: Any]]) {
+        if let body = answerAttributesArray.first?["body"] as? String, !body.isEmpty {
+            answers = answerAttributesArray.map { Answer($0) }
+        } else {
+            type = "MultipleChoice"
+            var customizedAnswersArray: [Answer] = []
+            var firstItem = answerAttributesArray.first
+            if let isCorrect = firstItem?["is_correct"] as? Bool {
+                firstItem?["body"] = "\(isCorrect)"
+            }
+            let firstAnswer = Answer(firstItem ?? [:])
+            customizedAnswersArray.append(firstAnswer)
+            let secondItem: [String: Any] = ["body": "\(!firstAnswer.isCorrect)",
+              "id": -firstAnswer.id,
+              "question_id": firstAnswer.questionId ?? -1,
+              "is_correct": !firstAnswer.isCorrect
+            ]
+            let secondAnswer = Answer(secondItem)
+            customizedAnswersArray.append(secondAnswer)
             answers = customizedAnswersArray
         }
     }
