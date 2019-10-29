@@ -6,12 +6,20 @@
 //
 import Foundation
 
-class Answer {
+class Answer: Hashable {
+    
+    static func == (lhs: Answer, rhs: Answer) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     
     let id: Int!
     let questionId: Int!
     var body: String!
-    let isCorrect: Bool!
+    var isCorrect: Bool!
     let createdAt: String!
     let updatedAt: String!
     let match: String!

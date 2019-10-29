@@ -14,7 +14,7 @@ class Questions: Hashable {
     let score: Int!
 //    let answersAttributes: [Answer]!
     let correctionStyle: Any!
-    var type: String!
+    var type: QuestionTypes!
     let bloom: [String]!
     let files: Any!
     let uploadedFile: Any!
@@ -27,7 +27,7 @@ class Questions: Hashable {
         body = dict["body"] as? String
         difficulty = dict["difficulty"] as? String
         score = dict["score"] as? Int
-        type = dict["type"] as? String
+        type = QuestionTypes(rawValue: dict["type"] as? String ?? "")
         correctionStyle = dict["correction_style"]
         bloom = dict["bloom"] as? [String]
         files = dict["files"] 
@@ -63,7 +63,7 @@ class Questions: Hashable {
         if let body = answersArray.first?["body"] as? String, !body.isEmpty {
             answers = answersArray.map { Answer($0) }
         } else {
-            type = "MultipleChoice"
+            type = .multipleChoice
             var firstItem = answersArray.first
             firstItem?["body"] = "true"
             let firstAnswer = Answer(firstItem ?? [:])
@@ -82,7 +82,7 @@ class Questions: Hashable {
         if let body = answerAttributesArray.first?["body"] as? String, !body.isEmpty {
             answers = answerAttributesArray.map { Answer($0) }
         } else {
-            type = "MultipleChoice"
+            type = .multipleChoice
             var customizedAnswersArray: [Answer] = []
             var firstItem = answerAttributesArray.first
             if let isCorrect = firstItem?["is_correct"] as? Bool {
