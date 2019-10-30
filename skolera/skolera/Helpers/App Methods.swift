@@ -77,16 +77,12 @@ func userId() -> String
 }
 
 //check if the imageurl is from local server or on amazon aws
-func getChildImageURL(urlString imageURL:String) -> URL!
-{
+func getChildImageURL(urlString imageURL:String) -> URL! {
     if imageURL.contains("amazon"){
         return URL(string: imageURL)
-    }
-    else
-    {
+    } else {
         return URL(string: "\(BASE_URL)/uploads/\(imageURL)")
     }
-    
 }
 
 func isParent() -> Bool {
