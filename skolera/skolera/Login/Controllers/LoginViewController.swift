@@ -166,7 +166,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, error) in
+        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
             if isSuccess {
                 if isParent() {
                     self.stopAnimating()
@@ -177,7 +177,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
-                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                        if let _ = parent.data.parentId {
+                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                        } else {
+                            self.stopAnimating()
+                            showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
+                        }
                     } else {
                         self.stopAnimating()
                         ///////

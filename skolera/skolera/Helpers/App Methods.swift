@@ -59,11 +59,10 @@ func getHeaders() -> [String : String]
 {
     let keychain = KeychainSwift()
     var headers = [String : String]()
-    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN)!
-    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE)!
-    headers[UID] = keychain.get(UID)!
-    headers[CLIENT] = keychain.get(CLIENT)!
-    
+    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN) ?? ""
+    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE) ?? ""
+    headers[UID] = keychain.get(UID) ?? ""
+    headers[CLIENT] = keychain.get(CLIENT) ?? ""
     return headers
 }
 func parentId() -> String
@@ -78,16 +77,12 @@ func userId() -> String
 }
 
 //check if the imageurl is from local server or on amazon aws
-func getChildImageURL(urlString imageURL:String) -> URL!
-{
+func getChildImageURL(urlString imageURL:String) -> URL! {
     if imageURL.contains("amazon"){
         return URL(string: imageURL)
-    }
-    else
-    {
+    } else {
         return URL(string: "\(BASE_URL)/uploads/\(imageURL)")
     }
-    
 }
 
 func isParent() -> Bool {
