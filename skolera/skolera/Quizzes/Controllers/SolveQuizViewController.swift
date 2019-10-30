@@ -79,6 +79,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
         headerTitle.text = detailedQuiz.name ?? ""
+        setUpQuestions()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -288,8 +289,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 for matchTuple in matchesMap {
                     studentMatchAnswers[matchTuple.key] = matchTuple.value.id!
                 }
-                for previousAnswer in questions[currentQuestion].answers {
-                    previousMatchAnswers[previousAnswer.match!] = previousAnswer.id!
+            
+//                for previousAnswer in questions[currentQuestion].answers {
+//                    previousMatchAnswers[previousAnswer.match!] = previousAnswer.id!
+//                }
+                for previousAnswer in matchesMap.enumerated() {
+                    previousMatchAnswers[previousAnswer.element.key] = previousAnswer.element.value.id!
                 }
                 shouldSkipSubmission = NSDictionary(dictionary: studentMatchAnswers).isEqual(to: NSDictionary(dictionary: previousMatchAnswers) as! [AnyHashable : Any])
                 return shouldSkipSubmission
@@ -549,7 +554,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if let result = value as? [String : [[String: Any]]] {
                     for answerDict in result {
                          let tempQuestion = self.questions.first { (question) -> Bool in
-                            debugPrint(question.id!, Int(answerDict.key))
+//                            debugPrint(question.id!, Int(answerDict.key))
                             return question.id! == Int(answerDict.key) ?? 0
                         }
                         if let question = tempQuestion {
@@ -568,6 +573,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                 for answerDictItem in answerDict.value {
                                     var tempAnswerDict = answerDictItem
                                     tempAnswerDict["id"] = tempAnswerDict["answer_id"]
+                                    if question.type == .reorder {
+//                                    should add body to the answers dictionary array
+                                        tempAnswerDict["body"] = question.answers.first(where: { (answer) -> Bool in
+                                            answer.id == tempAnswerDict["id"] as? Int
+                                            })?.body
+                                    }
                                     answersDictArray.append(tempAnswerDict)
                                     if question.type == .match {
                                         let matchString = tempAnswerDict["match"] as! String
@@ -588,6 +599,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             }
                         }
                     }
+                    
                     self.tableView.reloadData()
                 }
             } else {
