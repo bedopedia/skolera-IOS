@@ -128,7 +128,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
-//    MARK: - Setup Reorder question
+    //    MARK: - Setup Reorder question
     func sortReorderQuestion() {
         guard let answers = questions[currentQuestion].answers else {
             return
@@ -146,7 +146,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if let orderAnswers = prevAnswers[questionId ?? 0] {
                 let orderedAnswers = orderAnswers.sorted { (answer1, answer2) -> Bool in
                     guard let first = answer1.match, let second = answer2.match  else {
-                            return false
+                        return false
                     }
                     return first < second
                 }
@@ -219,7 +219,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-//    MARK: - Set Multi-selection
+    //    MARK: - Set Multi-selection
     func setTableViewMultipleSelection(question: Questions) {
         if question.type == .multipleSelect {
             if !isQuestionsOnly && !isAnswers {
@@ -249,7 +249,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
-//    MARK: - Handle match answers
+    //    MARK: - Handle match answers
     
     func matchAnswers(matchIndex: String!, matchString: String) {
         if matchIndex.isEmpty {
@@ -257,8 +257,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 matchesMap.removeValue(forKey: matchString)
             }
         } else {
-            if let arrayIndex = Int(matchIndex ?? ""), arrayIndex < options.count {
-                let option = options[arrayIndex - 1]
+            let matchOptions = questions[currentQuestion].answers.first?.options ?? []
+            if let arrayIndex = Int(matchIndex ?? ""), arrayIndex < matchOptions.count {
+                let option = matchOptions[arrayIndex - 1]
                 for match in matchesMap {
                     if match.value == option {
                         matchesMap.removeValue(forKey: match.key)
@@ -272,7 +273,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         self.tableView.reloadData()
     }
     
-//    MARK: - Should Skip Submission
+    //    MARK: - Should Skip Submission
     func shouldSkipSubmission() -> Bool {
         if let questionType = questions[currentQuestion].type {
             switch questionType {
@@ -286,17 +287,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 var shouldSkipSubmission = true
                 var studentMatchAnswers: [String: Int] = [:]
                 var previousMatchAnswers: [String: Int] = [:]
+                let questionId = questions[currentQuestion].id ?? 0
                 for matchTuple in matchesMap {
                     studentMatchAnswers[matchTuple.key] = matchTuple.value.id!
                 }
-            
-//                for previousAnswer in questions[currentQuestion].answers {
-//                    previousMatchAnswers[previousAnswer.match!] = previousAnswer.id!
-//                }
-                for previousAnswer in matchesMap.enumerated() {
-                    previousMatchAnswers[previousAnswer.element.key] = previousAnswer.element.value.id!
+                if let previousAnswers = prevAnswers[questionId] {
+                    for answer in previousAnswers {
+                        previousMatchAnswers[answer.match!] = answer.id!
+                    }
                 }
-                shouldSkipSubmission = NSDictionary(dictionary: studentMatchAnswers).isEqual(to: NSDictionary(dictionary: previousMatchAnswers) as! [AnyHashable : Any])
+                
+                shouldSkipSubmission = NSDictionary(dictionary: studentMatchAnswers).isEqual(to: NSDictionary(dictionary: previousMatchAnswers) as! [AnyHashable : Any]) && (studentMatchAnswers.count == previousMatchAnswers.count)
                 return shouldSkipSubmission
             case .reorder:
                 var shouldSkipSubmission = true
@@ -319,7 +320,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         return true
     }
     
-//    MARK: - Create answers dictionary
+    func boolValue(_ stringValue: String) -> Bool {
+        if stringValue.elementsEqual("true") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //    MARK: - Create answers dictionary
     func createAnswersDictionary() -> [String: Any] {
         let question = questions[currentQuestion]
         guard let questionType = question.type else {
@@ -331,28 +340,47 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         case .multipleChoice, .multipleSelect:
             let solutions = studentAnswers[question.id!] ?? []
             let answers = question.answers ?? []
-            for answer in answers {
-                var isCorrect = false
-                for solution in solutions {
-                    isCorrect = answer.id == solution.id
-                    if isCorrect {
-                        break
-                    }
+            if questions[currentQuestion].answers.count == 2 && questions[currentQuestion].answers[0].id == -(questions[currentQuestion].answers[1].id) {
+                let answerId = abs(questions[currentQuestion].answers[0].id)
+                if questions[currentQuestion].answers[0].isCorrect {
+                    let body = questions[currentQuestion].answers[0].body
+                    answerSubmission.append(["answer_id": answerId,
+                    "match": "",
+                    "is_correct": boolValue(body ?? ""),
+                    "question_id": question.id!,
+                    "quiz_submission_id": submissionId!])
+                } else if questions[currentQuestion].answers[1].isCorrect {
+                    let body = questions[currentQuestion].answers[1].body
+                    answerSubmission.append(["answer_id": answerId,
+                    "match": "",
+                    "is_correct": boolValue(body ?? ""),
+                    "question_id": question.id!,
+                    "quiz_submission_id": submissionId!])
                 }
-                answerSubmission.append(["answer_id": answer.id!,
-                "match": "",
-                "is_correct": isCorrect,
-                "question_id": question.id!,
-                "quiz_submission_id": submissionId])
+            } else {
+                for answer in answers {
+                    var isCorrect = false
+                    for solution in solutions {
+                        if answer.id == solution.id {
+                            isCorrect = solution.isCorrect
+                            break
+                        }
+                    }
+                    answerSubmission.append(["answer_id": answer.id!,
+                                             "match": "",
+                                             "is_correct": isCorrect,
+                                             "question_id": question.id!,
+                                             "quiz_submission_id": submissionId!])
+                }
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = question.id!
         case .reorder:
             for (index, solution) in newOrder.enumerated() {
                 answerSubmission.append(["answer_id": solution.id!,
-                "match": "\(index + 1)",
-                "question_id":question.id!,
-                "quiz_submission_id": submissionId])
+                                         "match": "\(index + 1)",
+                    "question_id":question.id!,
+                    "quiz_submission_id": submissionId!])
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = question.id!
@@ -361,7 +389,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 answerSubmission.append(["answer_id": matchTuple.value.id!,
                                          "match": matchTuple.key,
                                          "question_id":question.id!,
-                                         "quiz_submission_id": submissionId])
+                                         "quiz_submission_id": submissionId!])
             }
             parameters["answer_submission"] = answerSubmission
             parameters["question_id"] = question.id!
@@ -384,7 +412,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             var firstAnswerDict = result[0]
                             firstAnswerDict["id"] = firstAnswerDict["answer_id"]
                             let firstAnswerId = firstAnswerDict["answer_id"] as! Int
-                            let firstAnswerIsCorrect = firstAnswerDict["answer_id"] as! Bool
+                            let firstAnswerIsCorrect = firstAnswerDict["is_correct"] as! Bool
                             var secondAnswerDict = result[0]
                             secondAnswerDict["id"] = -firstAnswerId
                             secondAnswerDict["is_correct"] = !firstAnswerIsCorrect
@@ -396,6 +424,11 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                 var tempAnswerDict = answerDictItem
                                 tempAnswerDict["id"] = tempAnswerDict["answer_id"]
                                 answersDictArray.append(tempAnswerDict)
+                                if question.type == .reorder {
+                                    tempAnswerDict["body"] = question.answers.first(where: { (answer) -> Bool in
+                                        answer.id == tempAnswerDict["id"] as? Int
+                                    })?.body
+                                }
                                 if question.type == .match {
                                     let matchString = tempAnswerDict["match"] as! String
                                     let answerId = tempAnswerDict["answer_id"] as! Int
@@ -427,7 +460,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-//    MARK: - Submit quiz
+    //    MARK: - Submit quiz
     func submitQuiz() {
         var parameters: [String: Any] = [:]
         parameters["submission"] = ["id": submissionId!]
@@ -443,7 +476,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-//    MARK: - Delete submission
+    //    MARK: - Delete submission
     func deleteSubmission() {
         let questionId = questions[currentQuestion].id ?? 0
         var parameters: [String: Any] = [:]
@@ -459,7 +492,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-//                    self.submitQuiz()
+                    //                    self.submitQuiz()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -553,8 +586,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 if let result = value as? [String : [[String: Any]]] {
                     for answerDict in result {
-                         let tempQuestion = self.questions.first { (question) -> Bool in
-//                            debugPrint(question.id!, Int(answerDict.key))
+                        let tempQuestion = self.questions.first { (question) -> Bool in
+                            //                            debugPrint(question.id!, Int(answerDict.key))
                             return question.id! == Int(answerDict.key) ?? 0
                         }
                         if let question = tempQuestion {
@@ -574,16 +607,16 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                     var tempAnswerDict = answerDictItem
                                     tempAnswerDict["id"] = tempAnswerDict["answer_id"]
                                     if question.type == .reorder {
-//                                    should add body to the answers dictionary array
+                                        //                                    should add body to the answers dictionary array
                                         tempAnswerDict["body"] = question.answers.first(where: { (answer) -> Bool in
                                             answer.id == tempAnswerDict["id"] as? Int
-                                            })?.body
+                                        })?.body
                                     }
                                     answersDictArray.append(tempAnswerDict)
                                     if question.type == .match {
                                         let matchString = tempAnswerDict["match"] as! String
                                         let answerId = tempAnswerDict["answer_id"] as! Int
-                                        question.answers.forEach({ (matchAnswer) in
+                                        question.answers[0].options.forEach({ (matchAnswer) in
                                             if matchAnswer.id == answerId {
                                                 let option = Option.init(["id":matchAnswer.id!,
                                                                           "question_id":question.id!,
