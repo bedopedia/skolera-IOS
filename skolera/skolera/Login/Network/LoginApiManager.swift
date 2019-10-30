@@ -31,11 +31,10 @@ func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int,
     }
 }
 
-func setLocaleAPI(_ locale: String, userId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func setLocaleAPI(_ locale: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let parameters: Parameters = ["user": ["language": locale]]
     let headers : HTTPHeaders? = getHeaders()
-    debugPrint(userId())
-    let url = String(format: EDIT_USER(), )
+    let url = String(format: EDIT_USER(), userId())
     Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

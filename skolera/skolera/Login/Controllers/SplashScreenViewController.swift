@@ -58,7 +58,7 @@ class SplashScreenViewController: UIViewController {
     private func getMainScreen() {
         let keychain = KeychainSwift()
         if keychain.get(ACCESS_TOKEN) != nil {
-//            login(keychain)
+            BASE_URL = keychain.get("BASE_URL")
             self.updateLocale()
         } else {
             let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
@@ -98,17 +98,15 @@ class SplashScreenViewController: UIViewController {
     
     private func updateLocale() {
         var locale = ""
-        var parent: ParentResponse!
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
         } else {
             locale = "en"
         }
-        debugPrint(userId())
         setLocaleAPI(locale) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if let result = value as? [String: Any] {
-                    parent = ParentResponse.init(fromDictionary: result)
+                    let parent = ParentResponse(fromDictionary: result)
                     if isParent() {
                         let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         let nvc = UINavigationController(rootViewController: childrenTVC)

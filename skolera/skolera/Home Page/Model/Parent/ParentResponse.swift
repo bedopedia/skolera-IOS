@@ -9,35 +9,23 @@ import Foundation
 
 
 class ParentResponse : NSObject, NSCoding{
-
 	var data : Actor!
-
-
-	/**
-	 * Instantiate the instance using the passed dictionary values to set the properties values
-	 */
-	init(fromDictionary dictionary: [String:Any]){
+	init(fromDictionary dictionary: [String:Any]) {
 		if let dataData = dictionary["data"] as? [String:Any]{
 			data = Actor(fromDictionary: dataData)
-		}
+        } else if !dictionary.isEmpty {
+            data = Actor(fromDictionary: dictionary)
+        }
 	}
 
-	/**
-	 * Returns all the available property values in the form of [String:Any] object where the key is the approperiate json key and the value is the value of the corresponding property
-	 */
-	func toDictionary() -> [String:Any]
-	{
+	func toDictionary() -> [String:Any] {
 		var dictionary = [String:Any]()
-		if data != nil{
+		if data != nil {
 			dictionary["data"] = data.toDictionary()
 		}
 		return dictionary
 	}
 
-    /**
-    * NSCoding required initializer.
-    * Fills the data from the passed decoder
-    */
     @objc required init(coder aDecoder: NSCoder)
 	{
          data = aDecoder.decodeObject(forKey: "data") as? Actor
