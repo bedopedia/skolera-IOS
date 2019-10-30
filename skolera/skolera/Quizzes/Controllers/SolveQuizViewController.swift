@@ -39,7 +39,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     }
     var submissionId: Int!
     var currentQuestion = 0
-    //    Populates the Table view
     var tableViewDataSourceArray: [Any] = []
     var questions: [Questions] = []
     var prevAnswers: [Int : Set<Answer>] = [:]
@@ -50,7 +49,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var isSolvable = true
     var courseGroupId: Int!
     var duration: Int!
-    
     var matchesMap: [String: Option]!
     var deletionFlag = false
     var options: [Option] = []
@@ -64,7 +62,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dataSource = self
         tableView.dropDelegate = self
         tableView.dragDelegate = self
-        questions = []
         prevAnswers = [:]
         matchesMap = [:]
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -552,19 +549,20 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if let result = value as? [String : [[String: Any]]] {
                     for answerDict in result {
                          let tempQuestion = self.questions.first { (question) -> Bool in
-                            question.id! == Int(answerDict.key) ?? 0
+                            debugPrint(question.id!, Int(answerDict.key))
+                            return question.id! == Int(answerDict.key) ?? 0
                         }
                         if let question = tempQuestion {
                             if question.answers.count == 2 && question.answers[0].id == -(question.answers[1].id) {
                                 var firstAnswerDict = answerDict.value[0]
                                 firstAnswerDict["id"] = firstAnswerDict["answer_id"]
                                 let firstAnswerId = firstAnswerDict["answer_id"] as! Int
-                                let firstAnswerIsCorrect = firstAnswerDict["answer_id"] as! Bool
+                                let firstAnswerIsCorrect = firstAnswerDict["is_correct"] as! Bool
                                 var secondAnswerDict = answerDict.value[0]
                                 secondAnswerDict["id"] = -firstAnswerId
                                 secondAnswerDict["is_correct"] = !firstAnswerIsCorrect
                                 self.prevAnswers[question.id!] = [Answer(firstAnswerDict), Answer(secondAnswerDict)]
-                                self.studentAnswers[question.id!] = [Answer(firstAnswerDict), Answer(secondAnswerDict)]
+                                self.studentAnswers[question.id!] = [ Answer(firstAnswerDict), Answer(secondAnswerDict)]
                             } else {
                                 var answersDictArray: [[String: Any]] = []
                                 for answerDictItem in answerDict.value {
@@ -590,7 +588,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             }
                         }
                     }
-                    
+                    self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
