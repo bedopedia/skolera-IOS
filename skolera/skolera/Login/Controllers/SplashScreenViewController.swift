@@ -10,16 +10,17 @@ import UIKit
 import KeychainSwift
 import Alamofire
 import Firebase
-import NRAppUpdate
+//import NRAppUpdate
 
 class SplashScreenViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
-        getMainScreen()
+        checkUpdate(for: "1346646110")
+        //        navigationController?.isNavigationBarHidden = true
+        //        getMainScreen()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -65,7 +66,6 @@ class SplashScreenViewController: UIViewController {
             self.navigationController?.pushViewController(schoolCodevc, animated: false)
         }
     }
-    
     
     func getChildren(parentId: Int, childId: Int) {
         getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
@@ -142,4 +142,80 @@ class SplashScreenViewController: UIViewController {
             }
         }
     }
+    
+     func checkUpdate(for appId: String) {
+        let itunesUrlString =  "https://itunes.apple.com/jp/lookup/?id=\(appId)"
+        let itunesUrl = URL(string: itunesUrlString)
+        var request = URLRequest(url: itunesUrl!)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                if let parseJSON = json {
+                    
+                    if let resultArray = parseJSON["results"] as? NSArray {
+                        if resultArray.count > 0 {
+                            if let result = resultArray.firstObject as? NSDictionary {
+                                let version = result["version"] as! String
+                                if let bundleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                                    if version != bundleVersion {
+                                        DispatchQueue.main.async {
+                                            self.showUpdateAlert(version: version, appID: appId)
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                        
+                    }
+                    
+                }
+                
+            } catch {
+                print(error)
+                
+            }
+        }
+        
+        task.resume()
+    }
+    
+     func showUpdateAlert(version: String, appID: String) {
+        
+        let itunesUrlString =  "https://itunes.apple.com/app/id\(appID)"
+        let itunesUrl = URL(string: itunesUrlString)
+        let alert = UIAlertController(title: "Update Available", message: "A new version of app is available. Please update to version now. \(version)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Update now", style: .default) { action in
+            if UIApplication.shared.canOpenURL(itunesUrl!) {
+                if #available(iOS 10.0, *) {
+                    self.navigationController?.isNavigationBarHidden = true
+                    self.getMainScreen()
+                    UIApplication.shared.open(itunesUrl!, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                }
+            }
+            
+        })
+        alert.addAction(UIAlertAction(title: "Not now", style: .default) { action in
+            self.navigationController?.isNavigationBarHidden = true
+            self.getMainScreen()
+            
+        })
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    
 }
+
