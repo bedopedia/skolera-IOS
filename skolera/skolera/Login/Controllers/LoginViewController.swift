@@ -166,7 +166,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, error) in
+        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
             if isSuccess {
                 if isParent() {
                     self.stopAnimating()
