@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import DateToolsSwift
 
 class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -143,16 +144,53 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
                     let quizResponse = QuizzesResponse(result)
                     if pageId == 1 {
                         self.quizzes = quizResponse.quizzes
+                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
                         self.meta = quizResponse.meta
                     } else {
                         self.quizzes.append(contentsOf: quizResponse.quizzes)
-                    }
-                    if self.selectedSegment == 1 {
-                        self.setClosedQuizzes()
-                    } else {
-                        self.setOpenedQuizzes()
+                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
                     }
                 }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    func checkQuizSubmission(quizzes: [FullQuiz]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        for quiz in quizzes {
+            let now = Date()
+            if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
+                let startDate = dateFormatter.date(from: startDate)
+                let duration = startDate?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
+                if now < duration ?? now {
+                    if !submission.isSubmitted {
+                        var parameters: [String: Any] = [:]
+                        parameters["submission"] = ["id": submission.id ?? 0]
+                        submitQuiz(parameters: parameters)
+                    }
+                }
+            } else {
+                continue
+            }
+        }
+//        if count = 0
+        if self.selectedSegment == 1 {
+            self.setClosedQuizzes()
+        } else {
+            self.setOpenedQuizzes()
+        }
+    }
+    
+    func submitQuiz(parameters: Parameters) {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                debugPrint("Quiz is submitted successfully")
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
