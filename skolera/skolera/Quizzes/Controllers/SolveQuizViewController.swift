@@ -76,6 +76,19 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         if !showCorrectAnswer {
             getAnswers()
+        } else {
+//            populate the students answers array
+            for question in questions {
+                if question.type == .multipleChoice || question.type == .multipleSelect {
+                    var answersArray: [Answer] = []
+                    for answer in question.answers {
+                        if answer.isCorrect {
+                            answersArray.append(answer)
+                        }
+                    }
+                    studentAnswers[question.id!] = Set(answersArray)
+                }
+            }
         }
         timerLabel.text = timeString(time: TimeInterval(duration))
         headerTitle.text = detailedQuiz.name ?? ""
