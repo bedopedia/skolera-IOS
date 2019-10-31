@@ -140,7 +140,13 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     answer1.match < answer2.match
                 })
             } else {
-                newOrder = answers
+                if let prev = prevAnswers[questionId!] {
+                    newOrder = Array(prev).sorted(by: { (answer1, answer2) -> Bool in
+                        answer1.match < answer2.match
+                    })
+                } else {
+                   newOrder = answers
+                }
             }
         } else {
             if let orderAnswers = prevAnswers[questionId ?? 0] {
@@ -627,7 +633,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                             }
                         }
                     }
-                    
                     self.tableView.reloadData()
                 }
             } else {

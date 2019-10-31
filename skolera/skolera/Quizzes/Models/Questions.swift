@@ -99,18 +99,28 @@ class Questions: Hashable {
                 firstItem?["body"] = "\(isCorrect)"
             }
             let firstAnswer = Answer(firstItem ?? [:])
-            let isCorrect = firstAnswer.isCorrect ?? false
-            firstAnswer.body = "\(isCorrect)"
-            customizedAnswersArray.append(firstAnswer)
-            let secondItem: [String: Any] = ["body": "\(!isCorrect)" ,
-              "id": -firstAnswer.id,
-              "question_id": firstAnswer.questionId ?? -1,
-              "is_correct": !isCorrect
-            ]
-            let secondAnswer = Answer(secondItem)
-            customizedAnswersArray.append(secondAnswer)
-            answers = customizedAnswersArray
+            if let firstAnswerIsCorrect = firstAnswer.isCorrect {
+                customizedAnswersArray.append(firstAnswer)
+                let secondItem: [String: Any] = ["body": "\(!firstAnswerIsCorrect)" ,
+                  "id": -firstAnswer.id,
+                  "question_id": firstAnswer.questionId ?? -1,
+                  "is_correct": !firstAnswerIsCorrect
+                ]
+                let secondAnswer = Answer(secondItem)
+                customizedAnswersArray.append(secondAnswer)
+                answers = customizedAnswersArray
+            } else {
+                firstAnswer.body = "true"
+                customizedAnswersArray.append(firstAnswer)
+                let secondItem: [String: Any] = ["body": "false" ,
+                  "id": -firstAnswer.id,
+                  "question_id": firstAnswer.questionId ?? -1
+                ]
+                let secondAnswer = Answer(secondItem)
+                customizedAnswersArray.append(secondAnswer)
+                answers = customizedAnswersArray
+            }
+            
         }
     }
-    
 }
