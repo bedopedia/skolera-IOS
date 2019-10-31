@@ -180,15 +180,15 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             let question = questions[currentQuestion]
             tableViewDataSourceArray = []
-            if !isQuestionsOnly && !isAnswers {
-                tableView.dragInteractionEnabled = true
-            } else {
-                tableView.dragInteractionEnabled = false
-            }
+            tableView.dragInteractionEnabled = false
+            
             tableViewDataSourceArray.append(question)
             
             if question.type == .reorder {
                 sortReorderQuestion()
+                if isSolvable {
+                    tableView.dragInteractionEnabled = true
+                }
             }
             if question.type == .match {
                 if isAnswers || isQuestionsOnly {
@@ -217,6 +217,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
             tableView.reloadData()
         }
+        
     }
     
     //    MARK: - Set Multi-selection
@@ -300,18 +301,18 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 shouldSkipSubmission = NSDictionary(dictionary: studentMatchAnswers).isEqual(to: NSDictionary(dictionary: previousMatchAnswers) as! [AnyHashable : Any]) && (studentMatchAnswers.count == previousMatchAnswers.count)
                 return shouldSkipSubmission
             case .reorder:
-                var shouldSkipSubmission = true
-                if let previousAnswers = questions[currentQuestion].answers {
-                    for studentAnswer in studentAnswers[questions[currentQuestion].id!]! {
-                        let tempPreviousAnswer = previousAnswers.first { (answer) -> Bool in
-                            answer.id == studentAnswer.id
-                        }
-                        if let prevAnswer = tempPreviousAnswer, !prevAnswer.match.elementsEqual(studentAnswer.match!) {
-                            shouldSkipSubmission = false
-                            break
+                let selectedQuestion = questions[currentQuestion]
+                var newOrderMap: [Int: String] = [:]
+                var prevOrderMap: [Int: String] = [:]
+                if let previousAnswers = prevAnswers[selectedQuestion.id] {
+                    for answer in previousAnswers {
+                        prevOrderMap[answer.id!] = answer.match!
+                    }
+                    for (index, newAnswer) in newOrder.enumerated() {
+                        if !(prevOrderMap[newAnswer.id!] ?? "").elementsEqual("\(index + 1)") {
+                            return false
                         }
                     }
-                    return shouldSkipSubmission
                 } else {
                     return false
                 }
@@ -442,8 +443,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         }
                     }
                 }
-                self.currentQuestion += 1
-                if self.currentQuestion < self.detailedQuiz.questions.count {
+                if self.currentQuestion < self.questions.count - 1 {
+                    self.currentQuestion += 1
                     self.setUpQuestions()
                 } else {
                     //                    self.submitQuiz()
@@ -501,9 +502,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if (studentAnswers[questionId]?.isEmpty ?? true) && !(prevAnswers[questionId]?.isEmpty ?? true ) {
                     deleteSubmission()
                 } else if shouldSkipSubmission() {
-                    self.currentQuestion += 1
-                    if self.currentQuestion < self.detailedQuiz.questions.count {
-                        self.setUpQuestions()
+                    if currentQuestion < questions.count - 1 {
+                        currentQuestion += 1
+                        setUpQuestions()
                     } else {
                         //                self.submitQuiz()
                     }
@@ -780,6 +781,7 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     let answers = self.questions[currentQuestion].answers ?? []
                     studentAnswers[questionId] = handleMultiSelectAnswers(indexPath, Set(answers))
                 }
+                tableView.reloadData()
             case .multipleChoice:
                 cell.matchTextField.resignFirstResponder()
                 if let answers = studentAnswers[questionId], !answers.isEmpty {
@@ -788,14 +790,15 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
                     let answers = self.questions[currentQuestion].answers ?? []
                     studentAnswers[questionId] = handleMultipleChoiceAnswers(indexPath, Set(answers))
                 }
-                
+                tableView.reloadData()
             case .match:
                 cell.matchTextField.becomeFirstResponder()
             case .reorder:
                 cell.matchTextField.resignFirstResponder()
+                tableView.reloadData()
             }
         }
-        tableView.reloadData()
+        
         
     }
     //    MARK: - Drag and Drop methods

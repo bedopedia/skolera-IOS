@@ -191,7 +191,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             self.isSolvable = false
             if quiz.studentSubmissions.isSubmitted {
-                getQuizDetails()
+                getQuizDetails()   // show quiz
             } else {
                 getSolveQuizDetails()
             }

@@ -24,7 +24,7 @@ class Questions: Hashable {
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
-        body = dict["body"] as? String
+        body =  dict["body"] as? String
         difficulty = dict["difficulty"] as? String
         score = dict["score"] as? Int
         type = QuestionTypes(rawValue: dict["type"] as? String ?? "")
@@ -89,11 +89,12 @@ class Questions: Hashable {
                 firstItem?["body"] = "\(isCorrect)"
             }
             let firstAnswer = Answer(firstItem ?? [:])
+            let isCorrect = firstAnswer.isCorrect ?? false
             customizedAnswersArray.append(firstAnswer)
-            let secondItem: [String: Any] = ["body": "\(!firstAnswer.isCorrect)",
+            let secondItem: [String: Any] = ["body": "\(!isCorrect)" ,
               "id": -firstAnswer.id,
               "question_id": firstAnswer.questionId ?? -1,
-              "is_correct": !firstAnswer.isCorrect
+              "is_correct": !isCorrect
             ]
             let secondAnswer = Answer(secondItem)
             customizedAnswersArray.append(secondAnswer)
