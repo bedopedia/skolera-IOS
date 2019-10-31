@@ -24,7 +24,7 @@ class Answer: Hashable {
     let updatedAt: String!
     let match: String!
     let deletedAt: Any!
-    let options: [Option]!
+    var options: [Option]!
     let matches: [String]!
     
     init(_ dict: [String: Any]) {

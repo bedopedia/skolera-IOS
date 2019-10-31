@@ -81,6 +81,16 @@ class Questions: Hashable {
     func handleAnswerAttributesArray(answerAttributesArray: [[String: Any]]) {
         if let body = answerAttributesArray.first?["body"] as? String, !body.isEmpty {
             answers = answerAttributesArray.map { Answer($0) }
+            if type == .match {
+//                construct the options
+                var optionsArray: [Option] = []
+                for answer in answers {
+                    let option = Option(["id": answer.id!,
+                                        "body": answer.body!])
+                    optionsArray.append(option)
+                }
+                answers.first?.options = optionsArray
+            }
         } else {
             type = .multipleChoice
             var customizedAnswersArray: [Answer] = []
@@ -90,6 +100,7 @@ class Questions: Hashable {
             }
             let firstAnswer = Answer(firstItem ?? [:])
             let isCorrect = firstAnswer.isCorrect ?? false
+            firstAnswer.body = "\(isCorrect)"
             customizedAnswersArray.append(firstAnswer)
             let secondItem: [String: Any] = ["body": "\(!isCorrect)" ,
               "id": -firstAnswer.id,

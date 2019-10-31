@@ -686,7 +686,9 @@ extension SolveQuizViewController: UITableViewDelegate, UITableViewDataSource, U
             self.matchAnswers(matchIndex: matchIndex, matchString: matchString)
         }
         if isAnswers || isQuestionsOnly {
-            for (index, option) in options.enumerated() {
+            let matchOptions = questions[currentQuestion].answers.first?.options ?? []
+            for (index, option) in  matchOptions.enumerated() {
+                debugPrint(option.id, matchesMap[matchString]?.id)
                 if let matchOption = matchesMap[matchString], matchOption == option {
                     cell.matchTextField.text = "\(index + 1)"
                 }
