@@ -77,7 +77,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if !showCorrectAnswer {
             getAnswers()
         } else {
-//            populate the students answers array
+            //            populate the students answers array
             for question in questions {
                 if question.type == .multipleChoice || question.type == .multipleSelect {
                     var answersArray: [Answer] = []
@@ -158,7 +158,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         answer1.match < answer2.match
                     })
                 } else {
-                   newOrder = answers
+                    newOrder = answers
                 }
             }
         } else {
@@ -278,7 +278,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             }
         } else {
             let matchOptions = questions[currentQuestion].answers.first?.options ?? []
-            if let arrayIndex = Int(matchIndex ?? ""), arrayIndex < matchOptions.count {
+            if let arrayIndex = Int(matchIndex ?? ""), arrayIndex - 1 < matchOptions.count {
                 let option = matchOptions[arrayIndex - 1]
                 for match in matchesMap {
                     if match.value == option {
@@ -359,17 +359,17 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if solution?.isCorrect ?? false {
                     let body = selectedQuestion.answers.first{ $0.id! == solution?.id! }?.body ?? "false"
                     answerSubmission.append(["answer_id": answerId,
-                    "match": "",
-                    "is_correct": body.elementsEqual("true"),
-                    "question_id": question.id!,
-                    "quiz_submission_id": submissionId!])
+                                             "match": "",
+                                             "is_correct": body.elementsEqual("true"),
+                                             "question_id": question.id!,
+                                             "quiz_submission_id": submissionId!])
                 } else {
                     let body = selectedQuestion.answers.first{ $0.id! == solution?.id! }?.body ?? "false"
                     answerSubmission.append(["answer_id": answerId,
-                    "match": "",
-                    "is_correct": body.elementsEqual("false"),
-                    "question_id": question.id!,
-                    "quiz_submission_id": submissionId!])
+                                             "match": "",
+                                             "is_correct": body.elementsEqual("false"),
+                                             "question_id": question.id!,
+                                             "quiz_submission_id": submissionId!])
                 }
             } else {
                 for answer in answers {
@@ -466,14 +466,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                     self.currentQuestion += 1
                     self.setUpQuestions()
                 } else {
-                    //                    self.submitQuiz()
+                    self.shouldSubmitQuiz()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
-    
+    func showConfirmationDialogue(completion: @escaping ((Bool) -> ())) {
+        let alert = UIAlertController(title: "Skolera".localized, message: "Please complete your answers".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Solve now".localized, style: .default, handler: { _ in
+            completion(false)
+        }))
+        alert.addAction(UIAlertAction(title: "Submit quiz".localized, style: .default, handler: { _ in
+            completion(true)
+        }))
+        alert.modalPresentationStyle = .overCurrentContext
+        present(alert, animated: true, completion: nil)
+    }
     //    MARK: - Submit quiz
     func submitQuiz() {
         var parameters: [String: Any] = [:]
@@ -487,6 +497,30 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+        }
+    }
+    
+    func shouldSubmitQuiz() {
+        var missingAnswersIndex: Int!
+        for (index, question) in questions.enumerated() {
+            if let solvedAnswers = studentAnswers[question.id], !solvedAnswers.isEmpty {
+                continue
+            } else {
+                missingAnswersIndex = index
+                break
+            }
+        }
+        if missingAnswersIndex != nil {
+            showConfirmationDialogue { (submit) in
+                if submit {
+                    self.submitQuiz()
+                } else {
+                    self.currentQuestion = missingAnswersIndex
+                    self.setUpQuestions()
+                }
+            }
+        } else {
+            self.submitQuiz()
         }
     }
     
@@ -506,7 +540,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 if self.currentQuestion < self.detailedQuiz.questions.count {
                     self.setUpQuestions()
                 } else {
-                    //                    self.submitQuiz()
+                    self.shouldSubmitQuiz()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -525,7 +559,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                         currentQuestion += 1
                         setUpQuestions()
                     } else {
-                        //                self.submitQuiz()
+                        self.shouldSubmitQuiz()
                     }
                 } else {
                     submitAnswer()
@@ -638,7 +672,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                                 self.matchesMap[matchString] = option
                                             }
                                         })
-                                        
                                     }
                                 }
                                 self.prevAnswers[question.id!] = Set(answersDictArray.map{ Answer($0) })
