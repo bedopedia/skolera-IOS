@@ -320,14 +320,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         return true
     }
     
-    func boolValue(_ stringValue: String) -> Bool {
-        if stringValue.elementsEqual("true") {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     //    MARK: - Create answers dictionary
     func createAnswersDictionary() -> [String: Any] {
         let question = questions[currentQuestion]
@@ -336,24 +328,26 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
         var parameters: [String: Any] = [:]
         var answerSubmission: [[String: Any]] = []
+        let selectedQuestion = questions[currentQuestion]
         switch questionType {
         case .multipleChoice, .multipleSelect:
             let solutions = studentAnswers[question.id!] ?? []
             let answers = question.answers ?? []
-            if questions[currentQuestion].answers.count == 2 && questions[currentQuestion].answers[0].id == -(questions[currentQuestion].answers[1].id) {
-                let answerId = abs(questions[currentQuestion].answers[0].id)
-                if questions[currentQuestion].answers[0].isCorrect {
-                    let body = questions[currentQuestion].answers[0].body
+            if selectedQuestion.answers.count == 2 && selectedQuestion.answers[0].id == -(selectedQuestion.answers[1].id) {
+                let solution = solutions.first
+                let answerId = abs(solution?.id ?? 0)
+                if solution?.isCorrect ?? false {
+                    let body = selectedQuestion.answers.first{ $0.id! == solution?.id! }?.body ?? "false"
                     answerSubmission.append(["answer_id": answerId,
                     "match": "",
-                    "is_correct": boolValue(body ?? ""),
+                    "is_correct": body.elementsEqual("true"),
                     "question_id": question.id!,
                     "quiz_submission_id": submissionId!])
-                } else if questions[currentQuestion].answers[1].isCorrect {
-                    let body = questions[currentQuestion].answers[1].body
+                } else {
+                    let body = selectedQuestion.answers.first{ $0.id! == solution?.id! }?.body ?? "false"
                     answerSubmission.append(["answer_id": answerId,
                     "match": "",
-                    "is_correct": boolValue(body ?? ""),
+                    "is_correct": body.elementsEqual("false"),
                     "question_id": question.id!,
                     "quiz_submission_id": submissionId!])
                 }
