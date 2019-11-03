@@ -233,7 +233,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
                 setTableViewMultipleSelection(question: question)
             }
-            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+            outOfLabel.text = "\(currentQuestion + 1) \("out of".localized) \(detailedQuiz.questions.count)"
             tableView.reloadData()
         }
         
@@ -587,7 +587,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
         }
         outOfLabel.isHidden = false
-        previousButton.setTitle("Previous", for: .normal)
+        previousButton.setTitle("Previous".localized, for: .normal)
         
         if currentQuestion + 1 >= detailedQuiz.questions.count - 1 {
             if isQuestionsOnly || isAnswers {
@@ -595,12 +595,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 outOfLabel.isHidden = true
                 nextButton.backgroundColor = .clear
                 nextButton.setTitleColor(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-                nextButton.setTitle("\(currentQuestion + 1) out of \(detailedQuiz.questions.count)", for: .normal)
+                nextButton.setTitle("\(currentQuestion + 1) \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
             } else {
-                nextButton.setTitle("Submit", for: .normal)
+                nextButton.setTitle("Submit".localized, for: .normal)
             }
         } else {
-            nextButton.setTitle("Next", for: .normal)
+            nextButton.setTitle("Next".localized, for: .normal)
         }
         self.view.layoutIfNeeded()
     }
@@ -610,7 +610,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if currentQuestion == detailedQuiz.questions.count - 1, isQuestionsOnly || isAnswers {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
             outOfLabel.isHidden = false
-            outOfLabel.text = "\(currentQuestion + 1) Out of \(detailedQuiz.questions.count)"
+            outOfLabel.text = "\(currentQuestion + 1) \("out of".localized) \(detailedQuiz.questions.count)"
             nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
             nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
         }
@@ -621,10 +621,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         if currentQuestion == 0 {
             outOfLabel.isHidden = true
             NSLayoutConstraint.activate([outOfLabelHeight])
-            previousButton.setTitle("1 Out of \(detailedQuiz.questions.count)", for: .normal)
+            previousButton.setTitle("1 \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
         }
         if currentQuestion < detailedQuiz.questions.count - 1 {
-            nextButton.setTitle("Next", for: .normal)
+            nextButton.setTitle("Next".localized, for: .normal)
         }
         self.view.layoutIfNeeded()
     }
