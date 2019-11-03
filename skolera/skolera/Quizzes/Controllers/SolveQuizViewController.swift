@@ -99,7 +99,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !isTimerRunning {
+        if !isTimerRunning && isSolvable {
             runTimer()
         }
         NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
@@ -583,17 +583,32 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 self.currentQuestion += 1
                 self.setUpQuestions()
             } else {
-                backAction()
+//                do nothing
+//                backAction()
             }
+        }
+        
+        if questions.count > 1 {
+            nextButton.setTitle("Next".localized, for: .normal)
+        } else {
+            if isQuestionsOnly || isAnswers {
+                nextButton.backgroundColor = .clear
+                nextButton.setTitle("1 \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
+                nextButton.isHidden = true
+            } else {
+                nextButton.setTitle("Submit".localized, for: .normal)
+            }
+            
         }
         
         if let _ = outOfLabelHeight {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
         }
         outOfLabel.isHidden = false
-        previousButton.setTitle("Previous".localized, for: .normal)
-        
-        if currentQuestion + 1 >= detailedQuiz.questions.count - 1 {
+        if currentQuestion > 0 {
+            previousButton.setTitle("Previous".localized, for: .normal)
+        }
+        if currentQuestion + 1  >= detailedQuiz.questions.count {
             if isQuestionsOnly || isAnswers {
                 NSLayoutConstraint.activate([outOfLabelHeight])
                 outOfLabel.isHidden = true
@@ -604,22 +619,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 nextButton.setTitle("Submit".localized, for: .normal)
             }
         } else {
-//            if questions.count > 1 {
-//                nextButton.setTitle("Next".localized, for: .normal)
-//            } else {
-//                nextButton.setTitle("Submit".localized, for: .normal)
-//            }
             nextButton.setTitle("Next".localized, for: .normal)
-        }
-        if questions.count > 1 {
-            nextButton.setTitle("Next".localized, for: .normal)
-        } else {
-            if isQuestionsOnly || isAnswers {
-                nextButton.setTitle("Back".localized, for: .normal)
-            } else {
-                nextButton.setTitle("Submit".localized, for: .normal)
-            }
-            
         }
         self.view.layoutIfNeeded()
     }
@@ -630,8 +630,16 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             NSLayoutConstraint.deactivate([outOfLabelHeight])
             outOfLabel.isHidden = false
             outOfLabel.text = "\(currentQuestion + 1) \("out of".localized) \(detailedQuiz.questions.count)"
-            nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
-            nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+            if questions.count > 1 {
+                nextButton.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
+                nextButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+            } else {
+                nextButton.backgroundColor = .clear
+                nextButton.setTitleColor(#colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0), for: .normal)
+                nextButton.isHidden = true
+            }
+            
+            
         }
         if currentQuestion > 0 {
             currentQuestion -= 1
@@ -642,7 +650,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             NSLayoutConstraint.activate([outOfLabelHeight])
             previousButton.setTitle("1 \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
         }
-        if currentQuestion < detailedQuiz.questions.count - 1 {
+        if currentQuestion + 1 < detailedQuiz.questions.count - 1 {
 //            if questions.count > 1 {
 //                nextButton.setTitle("Next".localized, for: .normal)
 //            } else {
@@ -654,7 +662,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             nextButton.setTitle("Next".localized, for: .normal)
         } else {
             if isQuestionsOnly || isAnswers {
-                nextButton.setTitle("Back".localized, for: .normal)
+                nextButton.setTitle("1 \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
             } else {
                 nextButton.setTitle("Submit".localized, for: .normal)
             }
