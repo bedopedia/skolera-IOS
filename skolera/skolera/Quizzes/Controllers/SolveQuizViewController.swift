@@ -130,7 +130,8 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         timerLabel.text = timeString(time: TimeInterval(duration))
         if duration < 1 {
             timer.invalidate()
-            //            navigateToHome()
+            self.submitQuiz()
+            navigateToHome()
         } else {
             duration -= 1
         }
@@ -489,7 +490,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         alert.addAction(UIAlertAction(title: "Submit quiz".localized, style: .default, handler: { _ in
             completion(true)
         }))
-        alert.modalPresentationStyle = .overCurrentContext
+        alert.modalPresentationStyle = .fullScreen
         present(alert, animated: true, completion: nil)
     }
     //    MARK: - Submit quiz
@@ -602,7 +603,22 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 nextButton.setTitle("Submit".localized, for: .normal)
             }
         } else {
+//            if questions.count > 1 {
+//                nextButton.setTitle("Next".localized, for: .normal)
+//            } else {
+//                nextButton.setTitle("Submit".localized, for: .normal)
+//            }
             nextButton.setTitle("Next".localized, for: .normal)
+        }
+        if questions.count > 1 {
+            nextButton.setTitle("Next".localized, for: .normal)
+        } else {
+            if isQuestionsOnly || isAnswers {
+                nextButton.setTitle("Back".localized, for: .normal)
+            } else {
+                nextButton.setTitle("Submit".localized, for: .normal)
+            }
+            
         }
         self.view.layoutIfNeeded()
     }
@@ -626,7 +642,21 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             previousButton.setTitle("1 \("out of".localized) \(detailedQuiz.questions.count)", for: .normal)
         }
         if currentQuestion < detailedQuiz.questions.count - 1 {
+//            if questions.count > 1 {
+//                nextButton.setTitle("Next".localized, for: .normal)
+//            } else {
+//                nextButton.setTitle("Submit".localized, for: .normal)
+//            }
             nextButton.setTitle("Next".localized, for: .normal)
+        }
+        if questions.count > 1 {
+            nextButton.setTitle("Next".localized, for: .normal)
+        } else {
+            if isQuestionsOnly || isAnswers {
+                nextButton.setTitle("Back".localized, for: .normal)
+            } else {
+                nextButton.setTitle("Submit".localized, for: .normal)
+            }
         }
         self.view.layoutIfNeeded()
     }
