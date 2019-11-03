@@ -75,7 +75,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             setUpQuestions()
         }
         if !showCorrectAnswer {
-            getAnswers()
+            if !isQuestionsOnly {
+                getAnswers()
+            }
         } else {
             //            populate the students answers array
             for question in questions {
