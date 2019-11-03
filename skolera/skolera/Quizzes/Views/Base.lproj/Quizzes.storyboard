@@ -883,7 +883,7 @@
                                         <rect key="frame" x="75" y="222" width="264" height="156"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade is" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-BT-Z7g">
-                                                <rect key="frame" x="101.5" y="24" width="61" height="14.5"/>
+                                                <rect key="frame" x="101.5" y="35" width="61" height="14.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="rtt-Y6-Sti"/>
                                                 </constraints>
@@ -892,12 +892,12 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uoQ-hI-jvR">
-                                                <rect key="frame" x="107.5" y="46.5" width="49" height="30"/>
+                                                <rect key="frame" x="107.5" y="57.5" width="49" height="41"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="40"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Out of 30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPu-sQ-fhy">
-                                                <rect key="frame" x="97" y="84.5" width="70" height="14.5"/>
+                                                <rect key="frame" x="97" y="106.5" width="70" height="14.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="LC5-5E-zmM"/>
                                                 </constraints>
@@ -906,7 +906,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep up the good work" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOP-i2-Ef1">
-                                                <rect key="frame" x="12" y="115" width="240" height="17"/>
+                                                <rect key="frame" x="12" y="127" width="240" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="fWa-Se-gN2"/>
                                                 </constraints>
@@ -917,13 +917,13 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="HOP-i2-Ef1" firstAttribute="leading" secondItem="GTw-pq-uQc" secondAttribute="leading" constant="12" id="0HM-hQ-Nj1"/>
-                                            <constraint firstItem="HOP-i2-Ef1" firstAttribute="top" secondItem="cPu-sQ-fhy" secondAttribute="bottom" constant="16" id="3UG-qJ-2xs"/>
                                             <constraint firstItem="mYc-BT-Z7g" firstAttribute="centerX" secondItem="GTw-pq-uQc" secondAttribute="centerX" id="9u1-p0-4ok"/>
-                                            <constraint firstItem="mYc-BT-Z7g" firstAttribute="top" secondItem="GTw-pq-uQc" secondAttribute="top" constant="24" id="Hcu-wJ-agg"/>
                                             <constraint firstItem="uoQ-hI-jvR" firstAttribute="top" secondItem="mYc-BT-Z7g" secondAttribute="bottom" constant="8" id="LKa-FK-vht"/>
+                                            <constraint firstItem="HOP-i2-Ef1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="cPu-sQ-fhy" secondAttribute="bottom" constant="6" id="Nq3-fc-Lgb"/>
                                             <constraint firstItem="uoQ-hI-jvR" firstAttribute="centerX" secondItem="GTw-pq-uQc" secondAttribute="centerX" id="P3C-SK-giq"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="HOP-i2-Ef1" secondAttribute="bottom" constant="24" id="VyU-Ih-gBY"/>
+                                            <constraint firstItem="uoQ-hI-jvR" firstAttribute="centerY" secondItem="GTw-pq-uQc" secondAttribute="centerY" id="Sms-aW-Cd5"/>
                                             <constraint firstItem="cPu-sQ-fhy" firstAttribute="top" secondItem="uoQ-hI-jvR" secondAttribute="bottom" constant="8" id="bGr-to-m9j"/>
+                                            <constraint firstAttribute="bottom" secondItem="HOP-i2-Ef1" secondAttribute="bottom" constant="12" id="bdp-tN-zE7"/>
                                             <constraint firstItem="cPu-sQ-fhy" firstAttribute="centerX" secondItem="GTw-pq-uQc" secondAttribute="centerX" id="ceE-ki-Udc"/>
                                             <constraint firstAttribute="trailing" secondItem="HOP-i2-Ef1" secondAttribute="trailing" constant="12" id="dq9-pI-zAq"/>
                                             <constraint firstAttribute="height" constant="156" id="j9e-qz-g8P"/>
