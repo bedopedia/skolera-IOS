@@ -257,6 +257,9 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         //check the availability of a submission
         if let submission = quiz.studentSubmissions, submission.isSubmitted == true {
             solveQuizButton.isHidden = true
+            quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+            quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+            quizClockImage.image = nil
             quizDateLabel.text = "Solved".localized
             quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
         } else {
@@ -274,7 +277,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         solveQuizButton.isHidden = true
         quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
         quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-        quizClockImage.image = #imageLiteral(resourceName: "1")
+        quizClockImage.image = nil
         notStartedQuizView.isHidden = true
         studentFinishedQuizView.isHidden = false
         solveQuizButton.isHidden = true
