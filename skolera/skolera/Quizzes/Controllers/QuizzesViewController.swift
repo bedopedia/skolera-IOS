@@ -170,26 +170,27 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss.000'Z'"
-//        for quiz in quizzes {
-//            if quiz.state.elementsEqual("running") {
-//                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
-//                    let now = Date()
-//                    let date = dateFormatter.date(from: startDate)
-//                    let duration = date?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
-//                    if let calculatedTime = duration {
-//                        if now < calculatedTime {
-//                            if !submission.isSubmitted {
-//                                var parameters: [String: Any] = [:]
-//                                parameters["submission"] = ["id": submission.id ?? 0]
-//                                submitQuiz(parameters: parameters)
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    continue
-//                }
-//            }
-//        }
+        for quiz in quizzes {
+            if quiz.state.elementsEqual("running") {
+                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
+                    let now = Date()
+                    let date = dateFormatter.date(from: startDate)
+                    let duration = date?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
+                    if let calculatedTime = duration {
+                        if now < calculatedTime {
+                            if !submission.isSubmitted {
+                                count += 1
+                                var parameters: [String: Any] = [:]
+                                parameters["submission"] = ["id": submission.id ?? 0]
+                                submitQuiz(parameters: parameters)
+                            }
+                        }
+                    }
+                } else {
+                    continue
+                }
+            }
+        }
         if count == 0 {
             presentQuizzes()
         }
