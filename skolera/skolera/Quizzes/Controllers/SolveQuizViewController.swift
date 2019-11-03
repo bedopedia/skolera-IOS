@@ -318,7 +318,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
                 
                 shouldSkipSubmission = NSDictionary(dictionary: studentMatchAnswers).isEqual(to: NSDictionary(dictionary: previousMatchAnswers) as! [AnyHashable : Any]) && (studentMatchAnswers.count == previousMatchAnswers.count)
-                return shouldSkipSubmission
+                return shouldSkipSubmission && (studentMatchAnswers.count == questions[currentQuestion].answers.first?.options.count)
             case .reorder:
                 let selectedQuestion = questions[currentQuestion]
                 var newOrderMap: [Int: String] = [:]

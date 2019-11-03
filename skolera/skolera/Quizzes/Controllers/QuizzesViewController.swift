@@ -23,6 +23,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var pageId = 1
     var selectedSegment = 0
     var meta: Meta!
+    var count = 0
     private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
@@ -157,27 +158,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-    func checkQuizSubmission(quizzes: [FullQuiz]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-        for quiz in quizzes {
-            let now = Date()
-            if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
-                let startDate = dateFormatter.date(from: startDate)
-                let duration = startDate?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
-                if now < duration ?? now {
-                    if !submission.isSubmitted {
-                        var parameters: [String: Any] = [:]
-                        parameters["submission"] = ["id": submission.id ?? 0]
-                        submitQuiz(parameters: parameters)
-                    }
-                }
-            } else {
-                continue
-            }
-        }
-//        if count = 0
+    fileprivate func presentQuizzes() {
         if self.selectedSegment == 1 {
             self.setClosedQuizzes()
         } else {
@@ -185,12 +166,44 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    func checkQuizSubmission(quizzes: [FullQuiz]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss.000'Z'"
+        for quiz in quizzes {
+            if quiz.state.elementsEqual("running") {
+                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
+                    let now = Date()
+                    let date = dateFormatter.date(from: startDate)
+                    let duration = date?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
+                    if let calculatedTime = duration {
+                        if now < calculatedTime {
+                            if !submission.isSubmitted {
+                                var parameters: [String: Any] = [:]
+                                parameters["submission"] = ["id": submission.id ?? 0]
+                                submitQuiz(parameters: parameters)
+                            }
+                        }
+                    }
+                } else {
+                    continue
+                }
+            }
+        }
+        if count == 0 {
+            presentQuizzes()
+        }
+    }
+    
     func submitQuiz(parameters: Parameters) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.count -= 1
             self.stopAnimating()
             if isSuccess {
-                debugPrint("Quiz is submitted successfully")
+                if self.count == 0 {
+                    self.presentQuizzes()
+                }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
