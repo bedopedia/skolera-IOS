@@ -167,23 +167,27 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func checkQuizSubmission(quizzes: [FullQuiz]) {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss.000'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        var str = "2019-10-31T13:17:19.000Z"
+        debugPrint(dateFormatter.date(from: str))
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en")
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         for quiz in quizzes {
             if quiz.state.elementsEqual("running") {
-                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt {
+                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
                     let now = Date()
                     let date = dateFormatter.date(from: startDate)
                     let duration = date?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
                     if let calculatedTime = duration {
                         if now < calculatedTime {
-                            if !submission.isSubmitted {
-                                count += 1
-                                var parameters: [String: Any] = [:]
-                                parameters["submission"] = ["id": submission.id ?? 0]
-                                submitQuiz(parameters: parameters)
-                            }
+                            count += 1
+                            var parameters: [String: Any] = [:]
+                            parameters["submission"] = ["id": submission.id ?? 0]
+                            submitQuiz(parameters: parameters)
                         }
                     }
                 } else {
