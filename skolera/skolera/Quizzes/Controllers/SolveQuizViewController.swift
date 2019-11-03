@@ -253,13 +253,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-    
     func navigateToHome() {
         let submitQuiz = QuizSubmissionViewController.instantiate(fromAppStoryboard: .Quizzes)
         submitQuiz.openQuizStatus = {
             self.navigationController?.popToRootViewController(animated: true)
         }
-        submitQuiz.modalPresentationStyle = .fullScreen
+        submitQuiz.modalPresentationStyle = .overFullScreen
         self.navigationController?.navigationController?.present(submitQuiz, animated: true, completion: nil)
     }
     
@@ -502,7 +501,9 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             self.stopAnimating()
             if isSuccess {
                 debugPrint("Quiz is submitted successfully")
-                self.backAction()
+                if self.timer.isValid {
+                   self.backAction()
+                }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
