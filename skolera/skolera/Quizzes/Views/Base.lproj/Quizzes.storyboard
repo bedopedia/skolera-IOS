@@ -1548,7 +1548,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="p4O-FW-jGH">
-                                <rect key="frame" x="0.0" y="130" width="414" height="632"/>
+                                <rect key="frame" x="0.0" y="130" width="414" height="636"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="questionCell" rowHeight="107" id="9h3-3m-RCJ" customClass="QuizQuestionTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -1703,29 +1703,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txj-pH-OFt">
-                                <rect key="frame" x="234" y="798" width="168" height="44"/>
-                                <color key="backgroundColor" red="0.99215686270000003" green="0.50980392159999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="168" id="X1B-CM-HNx"/>
-                                    <constraint firstAttribute="height" constant="44" id="jft-W1-UWO"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="nextButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="2Qg-aO-VSK"/>
-                                    <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="5KP-yE-HBI"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Out of 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qA7-aB-yoZ">
-                                <rect key="frame" x="167" y="786" width="80.5" height="0.0"/>
+                                <rect key="frame" x="167" y="790" width="80.5" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="SHn-lh-O1n"/>
                                 </constraints>
@@ -1733,43 +1712,69 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQI-eJ-vqk">
-                                <rect key="frame" x="54" y="798" width="168" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Lyw-Xk-quh">
+                                <rect key="frame" x="12" y="806" width="390" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQI-eJ-vqk">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="ptw-pg-qSD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <state key="normal" title="Previous">
+                                            <color key="titleColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="previousButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="AMC-D4-HBo"/>
+                                            <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="NJQ-87-zko"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txj-pH-OFt">
+                                        <rect key="frame" x="203" y="0.0" width="187" height="44"/>
+                                        <color key="backgroundColor" red="0.99215686270000003" green="0.50980392159999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="jft-W1-UWO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <state key="normal" title="Next">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="nextButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="2Qg-aO-VSK"/>
+                                            <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="5KP-yE-HBI"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="168" id="IwD-Pc-2r4"/>
-                                    <constraint firstAttribute="height" constant="44" id="ptw-pg-qSD"/>
+                                    <constraint firstAttribute="height" constant="44" id="bwb-0I-gg1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Previous">
-                                    <color key="titleColor" red="0.0" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="previousButtonAction" destination="Bua-Ap-6DK" eventType="touchUpInside" id="AMC-D4-HBo"/>
-                                    <action selector="showQuizGrade" destination="H2q-pS-Gyd" eventType="touchUpInside" id="NJQ-87-zko"/>
-                                </connections>
-                            </button>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Txj-pH-OFt" firstAttribute="top" secondItem="qA7-aB-yoZ" secondAttribute="bottom" constant="12" id="4Ng-Wx-dEE"/>
-                            <constraint firstItem="Txj-pH-OFt" firstAttribute="leading" secondItem="fQI-eJ-vqk" secondAttribute="trailing" constant="12" id="Aqz-WF-xIf"/>
+                            <constraint firstItem="Lyw-Xk-quh" firstAttribute="leading" secondItem="iuY-Rj-hIq" secondAttribute="leading" constant="12" id="2J3-eE-Ua3"/>
                             <constraint firstItem="p4O-FW-jGH" firstAttribute="leading" secondItem="iuY-Rj-hIq" secondAttribute="leading" id="OJ6-Zy-Lxl"/>
-                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="Txj-pH-OFt" secondAttribute="trailing" constant="12" id="UcA-w4-xEc"/>
+                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="Lyw-Xk-quh" secondAttribute="trailing" constant="12" id="Qqh-el-IDf"/>
+                            <constraint firstItem="Lyw-Xk-quh" firstAttribute="top" secondItem="qA7-aB-yoZ" secondAttribute="bottom" constant="16" id="SSB-J6-QPC"/>
                             <constraint firstItem="nns-Yd-GSo" firstAttribute="top" secondItem="iuY-Rj-hIq" secondAttribute="top" id="UsH-z2-9WR"/>
                             <constraint firstItem="p4O-FW-jGH" firstAttribute="top" secondItem="nns-Yd-GSo" secondAttribute="bottom" id="Wad-DL-Ckb"/>
                             <constraint firstItem="qA7-aB-yoZ" firstAttribute="top" secondItem="p4O-FW-jGH" secondAttribute="bottom" constant="24" id="XPH-Sw-NQg"/>
-                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="bottom" secondItem="Txj-pH-OFt" secondAttribute="bottom" constant="20" id="bpV-Yn-T68"/>
+                            <constraint firstItem="iuY-Rj-hIq" firstAttribute="bottom" secondItem="Lyw-Xk-quh" secondAttribute="bottom" constant="12" id="dv0-v5-gCg"/>
                             <constraint firstItem="nns-Yd-GSo" firstAttribute="leading" secondItem="eRT-8f-DQe" secondAttribute="leading" id="pGr-hl-rkB"/>
                             <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="p4O-FW-jGH" secondAttribute="trailing" id="r7s-kG-YCk"/>
                             <constraint firstItem="iuY-Rj-hIq" firstAttribute="trailing" secondItem="nns-Yd-GSo" secondAttribute="trailing" id="uFH-wI-5P2"/>
                             <constraint firstItem="qA7-aB-yoZ" firstAttribute="centerX" secondItem="eRT-8f-DQe" secondAttribute="centerX" id="wq9-Sa-fC1"/>
-                            <constraint firstItem="fQI-eJ-vqk" firstAttribute="centerY" secondItem="Txj-pH-OFt" secondAttribute="centerY" id="wuc-hk-QSN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iuY-Rj-hIq"/>
                     </view>
