@@ -118,6 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
                     keychain.set(String(parent.data.id), forKey: ID)
                     keychain.set(parent.data.userType, forKey: USER_TYPE)
+                    debugPrint(keychain.get(USER_TYPE))
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     self.updateLocale(parent: parent)

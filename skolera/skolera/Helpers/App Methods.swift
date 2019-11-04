@@ -90,9 +90,9 @@ func isParent() -> Bool {
     return keychain.get(USER_TYPE)!.elementsEqual("parent")
 }
 
-func getUserType() -> String {
+func getUserType() -> UserType {
     let keychain = KeychainSwift()
-    return keychain.get(USER_TYPE)!
+    return UserType(rawValue: keychain.get(USER_TYPE)!) ?? UserType.student
 }
 
 func isValidEmail(testStr:String) -> Bool {
