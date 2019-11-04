@@ -199,7 +199,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             studentFinishedQuizView.isHidden = true
             solveQuizButton.isHidden = false
-            if !getUserType().elementsEqual("student") {
+            if getUserType() != UserType.student {
                 notStartedQuizView.isHidden = false
             } else {
                 notStartedQuizView.isHidden = true
@@ -221,11 +221,11 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
             quizDateLabel.text = "Solved".localized
         } else {
             gradeView.isHidden = true
-            if !getUserType().elementsEqual("student") {
+            if getUserType() != UserType.student {
                 notStartedQuizView.isHidden = false
             }
         }
-        if getUserType().elementsEqual("parent") {
+        if getUserType() == UserType.parent {
             //constraints = 0, isHidden = true
             answersHeightConstraint.constant = 0
             questionsHeightConstraint.constant = 0
