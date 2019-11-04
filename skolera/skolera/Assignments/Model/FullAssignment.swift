@@ -9,7 +9,6 @@
 import Foundation
 
 class FullAssignment {
-    
     let id: Int!
     let name: String?
     let description: String!

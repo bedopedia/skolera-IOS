@@ -137,6 +137,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     private func openQuizzes(){
         let quizVC = QuizzesCoursesViewController.instantiate(fromAppStoryboard: .Quizzes)
         quizVC.child = self.child
+        
         self.navigationController?.pushViewController(quizVC, animated: true)
     }
     

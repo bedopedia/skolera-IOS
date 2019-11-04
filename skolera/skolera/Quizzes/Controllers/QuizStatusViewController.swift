@@ -23,21 +23,16 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var courseNameLabel: UILabel!
-    
     @IBOutlet weak var notStartedQuizView: UIView!
-    
     @IBOutlet weak var studentFinishedQuizView: UIView!
     @IBOutlet weak var gradeView: UIView!
     @IBOutlet weak var quizGradeLabel: UILabel!
     @IBOutlet weak var quizTotalGradeLabel: UILabel!
     @IBOutlet weak var quizNoteLabel: UILabel!
-    
     @IBOutlet weak var solveQuizButton: UIButton!
-    
     @IBOutlet weak var detailsImage: UIImageView!
     @IBOutlet weak var questionsImage: UIImageView!
     @IBOutlet weak var answersImage: UIImageView!
-    
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var questionsHeightConstraint: NSLayoutConstraint!
@@ -49,7 +44,15 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     var courseGroupId: Int!
     var detailedQuiz: DetailedQuiz!
     var solvingQuiz = false
+    var submission: Submission!
+    var submissionId: Int!
+    var isSolvable = true
+    var correctAnswer = true
+    var isAnswers = false
+    var submissionDate: String!
+
     
+//    MARK: -Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
@@ -69,49 +72,45 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             setUpFinishedQuizUi()
         }
-//        getQuizDetails()
     }
-    
-    @IBAction func back() {
-        if solvingQuiz {
-            self.navigationController?.popToRootViewController(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @IBAction func openQuizDetails() {
-        let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-        quizDetailsVC.quizId = quiz.id
-//        quizDetailsVC.detailedQuiz = self.detailedQuiz
-        self.navigationController?.pushViewController(quizDetailsVC, animated: true)
-    }
-    
-    @IBAction func solveQuizButtonAction() {
-//        createSubmission()
-        solvingQuiz = true  //should be removed, already in createSubmission
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
-    }
-    @IBAction func openQuizQuestions() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        solveQuizVC.isQuestionsOnly = true
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
-    }
-    @IBAction func openQuizAnswers() {
-        let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-        solveQuizVC.isAnswers = true
-        self.navigationController?.pushViewController(solveQuizVC, animated: true)
-    }
+//    MARK: - Create Submission
     
     func createSubmission() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0 ]]
-        createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+            let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0, "is_submitted": false]]
+            createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
+                if isSuccess {
+                    if let result = response as? [String : AnyObject] {
+                        self.submission = Submission(result)
+                        self.submissionId = self.submission.id
+                        self.submissionDate = self.submission.createdAt
+                    }
+                    if statusCode == 422 {
+                        debugPrint(self.quiz.studentSubmissions)
+                    }
+                    self.getSolveQuizDetails()
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                }
+            }
+        }
+    //    MARK: - Get solve quiz details
+        
+    func getSolveQuizDetails() {
+        getQuizSolveDetailsApi(quizId: self.quiz.id!) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.detailedQuiz = DetailedQuiz(result)
+                }
+                self.solvingQuiz = true  //should be removed, already in createSubmission
                 let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
-                self.solvingQuiz = true
+                solveQuizVC.courseGroupId = self.courseGroupId
+                solveQuizVC.isSolvable = self.isSolvable
+                solveQuizVC.detailedQuiz = self.detailedQuiz
+                solveQuizVC.submissionId = self.submissionId
+                solveQuizVC.submissionDate = self.submissionDate
+                solveQuizVC.showCorrectAnswer = self.correctAnswer
                 self.navigationController?.pushViewController(solveQuizVC, animated: true)
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -119,20 +118,90 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-//    func getQuizDetails() {
-//        SVProgressHUD.show(withStatus: "Loading".localized)
-//        getQuizApi(quizId: quiz.id!) { (isSuccess, statusCode, value, error) in
-//            SVProgressHUD.dismiss()
-//            if isSuccess {
-//                if let result = value as? [String : AnyObject] {
-//                    self.detailedQuiz = DetailedQuiz(result)
-//                }
-//            } else {
-//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-//            }
-//        }
-//    }
+//    MARK: - IBActions
+    @IBAction func back() {
+            if solvingQuiz {
+                self.navigationController?.popToRootViewController(animated: true)
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+    @IBAction func openQuizDetails() {
+        let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+        quizDetailsVC.quizId = quiz.id
+        self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+    }
     
+    @IBAction func solveQuizButtonAction() {
+        self.isSolvable = true
+        self.correctAnswer = false
+        if let submissionId = quiz.studentSubmissions.id {
+            self.startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+            self.submissionId = submissionId
+            self.submissionDate = quiz.studentSubmissions.createdAt
+            getSolveQuizDetails()
+        } else {
+            createSubmission()
+        }
+    }
+    
+    @IBAction func openQuizQuestions() {
+        self.correctAnswer = false
+        if quiz.state.elementsEqual("finished") {
+            self.isSolvable = false
+            getQuizDetails()
+        } else {
+            self.isSolvable = false
+            if quiz.studentSubmissions.isSubmitted {
+                getQuizDetails()
+            } else {
+                getSolveQuizDetails()
+            }
+        }
+        
+    }
+    
+    func getQuizDetails() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getQuizApi(quizId: self.quiz.id!) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.detailedQuiz = DetailedQuiz(result)
+                    let solveQuizVC = SolveQuizViewController.instantiate(fromAppStoryboard: .Quizzes)
+                    solveQuizVC.isQuestionsOnly = true
+                    solveQuizVC.detailedQuiz = self.detailedQuiz
+                    solveQuizVC.isSolvable = self.isSolvable
+                    solveQuizVC.showCorrectAnswer = self.correctAnswer
+                    solveQuizVC.submissionId = self.quiz.studentSubmissions.id
+                    solveQuizVC.isAnswers = self.isAnswers
+                    solveQuizVC.isQuestionsOnly = !self.isAnswers
+                    self.navigationController?.pushViewController(solveQuizVC, animated: true)
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    @IBAction func openQuizAnswers() {
+        self.isAnswers = true
+        self.correctAnswer = false
+        if quiz.state.elementsEqual("finished") {
+            self.isSolvable = false
+            self.correctAnswer = true
+            getQuizDetails()
+        } else {
+            self.isSolvable = false
+            if quiz.studentSubmissions.isSubmitted {
+                getQuizDetails()   // show quiz
+            } else {
+                getSolveQuizDetails()
+            }
+        }
+    }
+//    MARK: - UI Setup
     func setUpDatesUi() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
@@ -150,7 +219,6 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         dueDayLabel.text = newDateFormat.string(from: endDate!)
         newDateFormat.dateFormat = "MMM"
         dueMonthLabel.text = newDateFormat.string(from: endDate!)
-        
         if let quizStringDate = quiz.endDate {
             quizDateView.isHidden = false
             quizDateLabel.isHidden = false
@@ -190,12 +258,14 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
         quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
         quizClockImage.image = #imageLiteral(resourceName: "greenHour")
-        
-        if let _ = quiz.studentSubmissions.id {
+        //check the availability of a submission
+        if let submission = quiz.studentSubmissions, submission.isSubmitted == true {
             solveQuizButton.isHidden = true
+            quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
+            quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
+            quizClockImage.image = nil
             quizDateLabel.text = "Solved".localized
             quizTotalGradeLabel.text = Language.language == .arabic ? "من \(quiz.totalScore ?? 0)" :  "Out of \(quiz.totalScore ?? 0)"
-            //                studentFinishedQuizView.isHidden = false
         } else {
             studentFinishedQuizView.isHidden = true
             solveQuizButton.isHidden = false
@@ -211,7 +281,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         solveQuizButton.isHidden = true
         quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
         quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-        quizClockImage.image = #imageLiteral(resourceName: "1")
+        quizClockImage.image = nil
         notStartedQuizView.isHidden = true
         studentFinishedQuizView.isHidden = false
         solveQuizButton.isHidden = true
