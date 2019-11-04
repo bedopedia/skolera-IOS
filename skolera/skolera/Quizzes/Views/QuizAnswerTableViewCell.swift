@@ -108,7 +108,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         matchLeftView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
         matchLeftView.layer.cornerRadius = 6
         matchTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-
+        answerTextView.isUserInteractionEnabled = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
