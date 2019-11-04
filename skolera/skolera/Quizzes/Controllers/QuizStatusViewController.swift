@@ -49,6 +49,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     var isSolvable = true
     var correctAnswer = true
     var isAnswers = false
+    var submissionDate: String!
 
     
 //    MARK: -Life Cycle
@@ -82,6 +83,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                     if let result = response as? [String : AnyObject] {
                         self.submission = Submission(result)
                         self.submissionId = self.submission.id
+                        self.submissionDate = self.submission.createdAt
                     }
                     if statusCode == 422 {
                         debugPrint(self.quiz.studentSubmissions)
@@ -107,6 +109,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
                 solveQuizVC.isSolvable = self.isSolvable
                 solveQuizVC.detailedQuiz = self.detailedQuiz
                 solveQuizVC.submissionId = self.submissionId
+                solveQuizVC.submissionDate = self.submissionDate
                 solveQuizVC.showCorrectAnswer = self.correctAnswer
                 self.navigationController?.pushViewController(solveQuizVC, animated: true)
             } else {
@@ -136,6 +139,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
         if let submissionId = quiz.studentSubmissions.id {
             self.startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             self.submissionId = submissionId
+            self.submissionDate = quiz.studentSubmissions.createdAt
             getSolveQuizDetails()
         } else {
             createSubmission()

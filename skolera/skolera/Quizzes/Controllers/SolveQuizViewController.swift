@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 import NVActivityIndicatorView
 import RichTextView
+import SwiftDate
 
 class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -26,15 +27,24 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet var backButtonAllignment: NSLayoutConstraint!
     
     var timer = Timer()
-    var isTimerRunning = false
-    //    var savedDuration = 0
-    //    var detailedDummyQuiz: DetailedQuiz!
+    var isTimerRunning: Bool!
     var detailedQuiz: DetailedQuiz! {
         didSet {
-            if isSolvable {
-                self.duration = self.detailedQuiz.duration * 60
-            }
             self.questions = self.detailedQuiz.questions
+        }
+    }
+    var submissionDate: String! {
+        didSet {
+            if isSolvable {
+                let time = DateInRegion() - (self.submissionDate.toDate()! + self.detailedQuiz.duration.minutes)
+                if time.toUnit(.second) ?? 0 < 0 {
+                    self.duration = 0
+                } else {
+                    self.duration = time.toUnit(.second)
+                }
+                
+                
+            }
         }
     }
     var submissionId: Int!
@@ -48,7 +58,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     var isAnswers = false
     var isSolvable = true
     var courseGroupId: Int!
-    var duration: Int!
+    var duration: Int!  //time in seconds
     var matchesMap: [String: Option]!
     var deletionFlag = false
     var options: [Option] = []
@@ -62,6 +72,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dataSource = self
         tableView.dropDelegate = self
         tableView.dragDelegate = self
+        isTimerRunning = false
         prevAnswers = [:]
         matchesMap = [:]
         NSLayoutConstraint.deactivate([outOfLabelHeight])
@@ -100,6 +111,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !isTimerRunning && isSolvable {
+            isTimerRunning = true
             runTimer()
         }
         NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
@@ -130,6 +142,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
         timerLabel.text = timeString(time: TimeInterval(duration))
         if duration < 1 {
             timer.invalidate()
+            isTimerRunning = false
             self.submitQuiz()
             navigateToHome()
         } else {
