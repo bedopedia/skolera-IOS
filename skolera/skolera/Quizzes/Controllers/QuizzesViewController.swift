@@ -168,23 +168,23 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func checkQuizSubmission(quizzes: [FullQuiz]) {
-//        for quiz in quizzes {
-//            if quiz.state.elementsEqual("running") {
-//                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
-//                    let now = DateInRegion()
-//                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .minute))
-//                    debugPrint(now.toISO(), totalTime.toISO())
-//                    if  totalTime.isAfterDate(now, granularity: .minute) {
-//                        count += 1
-//                        var parameters: [String: Any] = [:]
-//                        parameters["submission"] = ["id": submission.id ?? 0]
-//                        submitQuiz(parameters: parameters)
-//                    }
-//                } else {
-//                    continue
-//                }
-//            }
-//        }
+        for quiz in quizzes {
+            if quiz.state.elementsEqual("running") && (quiz.id % 2 == 1) {
+                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
+                    let now = DateInRegion()
+                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .minute))
+                    debugPrint(now.toISO(), totalTime.toISO())
+                    if  totalTime.isAfterDate(now, granularity: .minute) {
+                        count += 1
+                        var parameters: [String: Any] = [:]
+                        parameters["submission"] = ["id": submission.id ?? 0]
+                        submitQuiz(parameters: parameters)
+                    }
+                } else {
+                    continue
+                }
+            }
+        }
         if count == 0 {
             presentQuizzes()
         }

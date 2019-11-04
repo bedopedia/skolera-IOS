@@ -52,9 +52,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
             matchTextField.delegate = self
             matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 14)
-            if isAnswers {
-//                matchTextField.attributedText = self.answer.match.htmlToAttributedString ?? "".htmlToAttributedString
-            }
         }
     }
     
@@ -95,13 +92,7 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
     }
-    
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        // User finished typing (hit return): hide the keyboard.
-//        debugPrint(matchTextField.text)
-//        return true
-//    }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         matchLeftView.layer.borderWidth = 1
@@ -117,9 +108,6 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-//        debugPrint(matchTextField.text)
-//        call a closure to update the matches map, match string is available from which i can get the array index
-        debugPrint(textField.text)
         updateMatchAnswer(textField.text, matchString)
     }
 
