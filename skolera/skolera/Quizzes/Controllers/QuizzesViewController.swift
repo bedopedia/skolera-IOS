@@ -233,7 +233,6 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
-        
         return cell
     }
     
