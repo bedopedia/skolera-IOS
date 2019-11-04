@@ -42,8 +42,6 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 } else {
                     self.duration = time.toUnit(.second)
                 }
-                
-                
             }
         }
     }
@@ -103,8 +101,10 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
         }
-        timerLabel.text = timeString(time: TimeInterval(duration))
         headerTitle.text = detailedQuiz.name ?? ""
+        if isSolvable {
+            timerLabel.text = timeString(time: TimeInterval(self.duration ?? 0))
+        }
         setUpQuestions()
     }
     

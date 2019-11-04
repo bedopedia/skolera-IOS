@@ -169,10 +169,10 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     func checkQuizSubmission(quizzes: [FullQuiz]) {
         for quiz in quizzes {
-            if quiz.state.elementsEqual("running") && (quiz.id % 2 == 1) {
+            if quiz.state.elementsEqual("running") && (quiz.id % 2 == 1)  {
                 if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
                     let now = DateInRegion()
-                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .minute))
+                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .second))
                     debugPrint(now.toISO(), totalTime.toISO())
                     if  totalTime.isAfterDate(now, granularity: .minute) {
                         count += 1
@@ -197,7 +197,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             self.stopAnimating()
             if isSuccess {
                 if self.count == 0 {
-                    self.presentQuizzes()
+                    self.getQuizzes(pageId: self.pageId)
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
