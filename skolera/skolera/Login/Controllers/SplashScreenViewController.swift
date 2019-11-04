@@ -17,8 +17,8 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkUpdate(for: "1346646110")
-        //        navigationController?.isNavigationBarHidden = true
-        //        getMainScreen()
+//        let keychain = KeychainSwift()
+//        keychain.clear()
     }
     
     override func didReceiveMemoryWarning() {

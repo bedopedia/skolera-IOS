@@ -314,6 +314,7 @@
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
+		DCF6655823704C1200D31931 /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF6655723704C1200D31931 /* UserType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -643,6 +644,7 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		DCF6655723704C1200D31931 /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1107,6 +1109,7 @@
 				8AA44CD621904975007DB9C5 /* Localizable.swift */,
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
+				DCF6655723704C1200D31931 /* UserType.swift */,
 				8A793BBE234B74C0009D45B2 /* DummyResponse.swift */,
 			);
 			path = Helpers;
@@ -2081,6 +2084,7 @@
 				8A5F42E620B1B5C300FF93D1 /* ContactTeacherViewController.swift in Sources */,
 				8A5F42EE20B1CB5C00FF93D1 /* Message.swift in Sources */,
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
+				DCF6655823704C1200D31931 /* UserType.swift in Sources */,
 				8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
