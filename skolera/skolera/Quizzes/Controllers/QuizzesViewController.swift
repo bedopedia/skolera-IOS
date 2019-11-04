@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Alamofire
 import DateToolsSwift
+import SwiftDate
 
 class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -167,24 +168,17 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func checkQuizSubmission(quizzes: [FullQuiz]) {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en")
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-//        var submissionStartDate: Date!
 //        for quiz in quizzes {
 //            if quiz.state.elementsEqual("running") {
 //                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
-//                    let now = Date()
-//                    debugPrint(startDate)
-//                    submissionStartDate = dateFormatter.date(from: startDate)
-//                    let duration = submissionStartDate?.add(TimeChunk.dateComponents(seconds: 0, minutes: quiz.duration ?? 0, hours: 0, days: 0, weeks: 0, months: 0, years: 0))
-//                    if let calculatedTime = duration {
-//                        if now < calculatedTime {
-//                            count += 1
-//                            var parameters: [String: Any] = [:]
-//                            parameters["submission"] = ["id": submission.id ?? 0]
-//                            submitQuiz(parameters: parameters)
-//                        }
+//                    let now = DateInRegion()
+//                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .minute))
+//                    debugPrint(now.toISO(), totalTime.toISO())
+//                    if  totalTime.isAfterDate(now, granularity: .minute) {
+//                        count += 1
+//                        var parameters: [String: Any] = [:]
+//                        parameters["submission"] = ["id": submission.id ?? 0]
+//                        submitQuiz(parameters: parameters)
 //                    }
 //                } else {
 //                    continue
