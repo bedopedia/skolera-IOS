@@ -314,6 +314,7 @@
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
+		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
@@ -645,6 +646,7 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1112,8 +1114,8 @@
 				8AA44CD621904975007DB9C5 /* Localizable.swift */,
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
-				DCF6655723704C1200D31931 /* UserType.swift */,
 				8A793BBE234B74C0009D45B2 /* DummyResponse.swift */,
+				DC415C882370811B0036C93B /* UserType.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2099,7 +2101,6 @@
 				8A5F42E620B1B5C300FF93D1 /* ContactTeacherViewController.swift in Sources */,
 				8A5F42EE20B1CB5C00FF93D1 /* Message.swift in Sources */,
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
-				DCF6655823704C1200D31931 /* UserType.swift in Sources */,
 				8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
@@ -2141,6 +2142,7 @@
 				8A3923E7233CC7520001963A /* Questions.swift in Sources */,
 				8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */,
 				8A32B7FE2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift in Sources */,
+				DC415C892370811B0036C93B /* UserType.swift in Sources */,
 				8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */,
 				547A37932022153B00794441 /* Meta.swift in Sources */,
 				8A3DE99320BED37C00BACD0E /* GradeHeaderTableViewCell.swift in Sources */,
