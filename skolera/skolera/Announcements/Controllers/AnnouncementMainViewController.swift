@@ -19,6 +19,8 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         didSet {
             if self.announcements.isEmpty {
                 placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
             }
         }
     }
@@ -28,7 +30,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
-        announcements = []
         getAnnouncements()
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
         let backItem = UIBarButtonItem()
@@ -54,6 +55,9 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.announcements == nil {
+                self.announcements = []
+            }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
@@ -88,7 +92,11 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return announcements.count
+        if announcements == nil {
+            return 0
+        } else {
+            return announcements.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

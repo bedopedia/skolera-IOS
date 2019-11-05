@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="121"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="60V-zb-O15" id="xyX-Ws-iua">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="120.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="121"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnV-nx-HM3">
@@ -48,7 +46,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhg-Hj-8x2">
-                                                    <rect key="frame" x="338" y="45.5" width="30" height="30"/>
+                                                    <rect key="frame" x="345" y="45.5" width="30" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="FOV-Cd-N0E"/>
@@ -90,7 +88,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-8Y-Hx3">
-                                                    <rect key="frame" x="83" y="81.5" width="253" height="12.5"/>
+                                                    <rect key="frame" x="83" y="81.5" width="260" height="12.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -322,7 +320,7 @@ attachment.</string>
                                         <rect key="frame" x="0.0" y="28" width="382" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7T5-ng-bHs" id="yII-1Q-Hie">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="88.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Ow-1C-UuA">
@@ -740,6 +738,31 @@ attachment.</string>
                                     <action selector="createPost" destination="d49-6w-FWW" eventType="touchUpInside" id="Vql-rR-rqm"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3r-hS-aNF">
+                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ptL-HG-yr7">
+                                        <rect key="frame" x="135" y="265" width="144" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="144" id="MOc-Em-idX"/>
+                                            <constraint firstAttribute="height" constant="140" id="ik9-Ty-NDV"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any Posts for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qq7-lk-PO3">
+                                        <rect key="frame" x="87.5" y="429" width="239.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="qq7-lk-PO3" firstAttribute="centerX" secondItem="ptL-HG-yr7" secondAttribute="centerX" id="Kzc-ML-F6c"/>
+                                    <constraint firstItem="ptL-HG-yr7" firstAttribute="centerX" secondItem="V3r-hS-aNF" secondAttribute="centerX" id="Q2a-rZ-cL1"/>
+                                    <constraint firstItem="ptL-HG-yr7" firstAttribute="centerY" secondItem="V3r-hS-aNF" secondAttribute="centerY" constant="-44" id="WwJ-Ul-kDQ"/>
+                                    <constraint firstItem="qq7-lk-PO3" firstAttribute="top" secondItem="ptL-HG-yr7" secondAttribute="bottom" constant="24" id="hKg-LA-lmD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -747,10 +770,14 @@ attachment.</string>
                             <constraint firstAttribute="trailing" secondItem="Hcm-AZ-9AJ" secondAttribute="trailing" constant="24" id="4JB-nz-cBV"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="bottom" secondItem="Hcm-AZ-9AJ" secondAttribute="bottom" constant="24" id="9WG-wo-lTS"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="O80-2d-tY9" secondAttribute="trailing" id="DnI-9H-XX5"/>
+                            <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="V3r-hS-aNF" secondAttribute="trailing" id="Kf8-hK-kx1"/>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" id="SDx-AN-N5Y"/>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="SN1-P5-JU5"/>
                             <constraint firstAttribute="trailing" secondItem="M23-Aa-G1T" secondAttribute="trailing" id="VZf-kx-vfa"/>
+                            <constraint firstItem="V3r-hS-aNF" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="g7a-9t-XOX"/>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="top" secondItem="DLm-jw-B2Q" secondAttribute="top" id="mSF-we-e9G"/>
+                            <constraint firstItem="V3r-hS-aNF" firstAttribute="bottom" secondItem="DLm-jw-B2Q" secondAttribute="bottom" id="p5F-JX-8Ph"/>
+                            <constraint firstItem="V3r-hS-aNF" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" id="sbi-gY-72R"/>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="vQW-Gv-s2c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DLm-jw-B2Q"/>
@@ -759,6 +786,7 @@ attachment.</string>
                         <outlet property="backButton" destination="i3B-p2-qpb" id="p4y-x9-Zi7"/>
                         <outlet property="childImageView" destination="YCJ-Ej-6Xm" id="90n-8o-5e3"/>
                         <outlet property="createPostButton" destination="Hcm-AZ-9AJ" id="kpp-j1-79H"/>
+                        <outlet property="placeHolderView" destination="V3r-hS-aNF" id="WDu-Ey-wry"/>
                         <outlet property="tableView" destination="O80-2d-tY9" id="DOK-vh-e2d"/>
                         <outlet property="titleLabel" destination="Mgf-LZ-53c" id="I3p-dj-N0m"/>
                     </connections>
@@ -783,7 +811,7 @@ attachment.</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8YD-as-gYE" id="gSX-nA-JdJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vmQ-4j-a00">
@@ -1147,7 +1175,7 @@ attachment.</string>
                                 <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Reply" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0TN-iF-Khd">
-                                        <rect key="frame" x="16" y="7" width="340" height="30"/>
+                                        <rect key="frame" x="16" y="5" width="340" height="34"/>
                                         <color key="textColor" red="0.31962397694587708" green="0.37985637784004211" blue="0.42162775993347168" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="send"/>
@@ -1272,5 +1300,6 @@ attachment.</string>
         <image name="close" width="24" height="24"/>
         <image name="group3-1" width="85" height="85"/>
         <image name="multipleFileIco" width="16" height="18"/>
+        <image name="postsplaceholder" width="144" height="140"/>
     </resources>
 </document>
