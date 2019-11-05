@@ -314,9 +314,8 @@
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
-		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
-		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
-		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
+		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
+		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -646,9 +645,8 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
-		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
-		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
-		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
+		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
+		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -675,7 +673,6 @@
 				547DD3E6208D0C43008EED15 /* Date+Time.swift */,
 				8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */,
 				8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */,
-				DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1116,7 +1113,6 @@
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
 				8A793BBE234B74C0009D45B2 /* DummyResponse.swift */,
-				DC415C882370811B0036C93B /* UserType.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1257,7 +1253,6 @@
 				8A3923E4233CBD150001963A /* DetailedQuiz.swift */,
 				8A3923E6233CC7520001963A /* Questions.swift */,
 				8A3923E8233CC7710001963A /* Answers.swift */,
-				DCC0DDDD23587AA30061660B /* Submission.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1874,7 +1869,6 @@
 				"${BUILT_PRODUCTS_DIR}/ChattoAdditions/ChattoAdditions.framework",
 				"${BUILT_PRODUCTS_DIR}/DateToolsSwift/DateToolsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Device.swift/Device_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
@@ -1887,13 +1881,9 @@
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/YLProgressBar/YLProgressBar.framework",
-				"${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1906,7 +1896,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChattoAdditions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateToolsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Device_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
@@ -1919,13 +1908,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLProgressBar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iosMath.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2094,7 +2079,6 @@
 				8A94E45922DF826300A01B0C /* PostCourse.swift in Sources */,
 				545BBFFF2018CEC600A1F858 /* SchoolInfo.swift in Sources */,
 				545977DB202676B900263794 /* Label+KingfisherPlaceholder.swift in Sources */,
-				DCC0DDDE23587AA30061660B /* Submission.swift in Sources */,
 				8A6D362520B59A4200DD0445 /* DemoTextMessageHandler.swift in Sources */,
 				5402CA0D2045CE52009F583A /* ChildProfileFeaturesTableViewController.swift in Sources */,
 				8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */,
@@ -2137,7 +2121,6 @@
 				5402CA012045A2D4009F583A /* UIImageView+StudentImage.swift in Sources */,
 				8A456CAE22E9EE4700E854DD /* QuizTableViewCell.swift in Sources */,
 				8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */,
-				DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */,
 				8A94E45B22DF828500A01B0C /* Post.swift in Sources */,
 				546356DD201F669B0072F066 /* Config.swift in Sources */,
 				8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */,
@@ -2162,7 +2145,6 @@
 				8A3923E7233CC7520001963A /* Questions.swift in Sources */,
 				8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */,
 				8A32B7FE2312E48000317A79 /* QuizDetailsViewControllerTableViewCell.swift in Sources */,
-				DC415C892370811B0036C93B /* UserType.swift in Sources */,
 				8ABACE81222EB3F200EBC1F0 /* TabCollectionViewCell.swift in Sources */,
 				547A37932022153B00794441 /* Meta.swift in Sources */,
 				8A3DE99320BED37C00BACD0E /* GradeHeaderTableViewCell.swift in Sources */,
@@ -2437,7 +2419,6 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2460,7 +2441,6 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

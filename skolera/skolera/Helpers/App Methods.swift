@@ -59,10 +59,11 @@ func getHeaders() -> [String : String]
 {
     let keychain = KeychainSwift()
     var headers = [String : String]()
-    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN) ?? ""
-    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE) ?? ""
-    headers[UID] = keychain.get(UID) ?? ""
-    headers[CLIENT] = keychain.get(CLIENT) ?? ""
+    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN)!
+    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE)!
+    headers[UID] = keychain.get(UID)!
+    headers[CLIENT] = keychain.get(CLIENT)!
+    
     return headers
 }
 func parentId() -> String
@@ -77,12 +78,16 @@ func userId() -> String
 }
 
 //check if the imageurl is from local server or on amazon aws
-func getChildImageURL(urlString imageURL:String) -> URL! {
+func getChildImageURL(urlString imageURL:String) -> URL!
+{
     if imageURL.contains("amazon"){
         return URL(string: imageURL)
-    } else {
+    }
+    else
+    {
         return URL(string: "\(BASE_URL)/uploads/\(imageURL)")
     }
+    
 }
 
 func isParent() -> Bool {
@@ -90,9 +95,9 @@ func isParent() -> Bool {
     return keychain.get(USER_TYPE)!.elementsEqual("parent")
 }
 
-func getUserType() -> UserType {
+func getUserType() -> String {
     let keychain = KeychainSwift()
-    return UserType(rawValue: keychain.get(USER_TYPE)!) ?? UserType.student
+    return keychain.get(USER_TYPE)!
 }
 
 func isValidEmail(testStr:String) -> Bool {
@@ -113,10 +118,10 @@ func image( _ image:UIImage, withSize newSize:CGSize) -> UIImage {
 }
 
 func getMainColor() -> UIColor {
-    if getUserType() == UserType.student {
+     if getUserType().elementsEqual("student") {
         return #colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
     } else {
-        if getUserType() == UserType.parent {
+        if getUserType().elementsEqual("parent") {
             return #colorLiteral(red: 0.02352941176, green: 0.768627451, blue: 0.8, alpha: 1)
         } else {
             return #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)

@@ -30,9 +30,7 @@ class DetailedQuiz {
     let questions: [Questions]!
     let objectives: [Objectives]!
     let groupingStudents: [Any]!
-    //    let courseGroupsQuiz: [CourseGroupsQuiz]?
-    let hours: Int!
-    let minutes: Int!
+//    let courseGroupsQuiz: [CourseGroupsQuiz]?
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -71,8 +69,6 @@ class DetailedQuiz {
             chapter = nil
         }
         duration = dict["duration"] as? Int
-        hours = dict["hours"] as? Int
-        minutes = dict["minutes"] as? Int
         isQuestionsRandomized = dict["is_questions_randomized"] as? Bool
         numOfQuestionsPerPage = dict["num_of_questions_per_page"] as? Int
         state = dict["state"] as? String

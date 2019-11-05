@@ -85,7 +85,6 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
         quizVC.child = self.child
         quizVC.courseName = courses[indexPath.row].courseName
         quizVC.courseId = courses[indexPath.row].courseId
-        quizVC.courseGroupId = courses[indexPath.row].id
         self.navigationController?.pushViewController(quizVC, animated: true)
     }
 }

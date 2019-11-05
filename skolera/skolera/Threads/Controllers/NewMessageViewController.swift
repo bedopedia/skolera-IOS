@@ -38,11 +38,19 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if let parentVc = parent?.parent as? ChildHomeViewController {
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
+        }
+//        self.navigationController?.isNavigationBarHidden = true
     }
  
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-       
+        if let parentVC = parent?.parent as? ChildHomeViewController {
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,27 +67,18 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
         let parameters : Parameters = ["source" : "home"]
         getSubjectsApi(parameters: parameters, child: child) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            switch response.result{
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]] {
-                    for subject in result {
+            if isSuccess {
+               if let result = response as? [[String : AnyObject]] {
+                    for subject in result
+                    {
                         debugPrint("\(subject)\n")
                         self.subjects.append(Subject.init(fromDictionary: subject))
                     }
                     self.resultTableView.reloadData()
                     self.resultTableView.isHidden = false
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        })
-                } else if response.response?.statusCode == 401 || response.response?.statusCode == 500 {
-                    showReauthenticateAlert(viewController: self)
-                } else {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        })
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }

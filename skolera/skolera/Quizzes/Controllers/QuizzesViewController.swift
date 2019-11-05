@@ -9,8 +9,6 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
-import DateToolsSwift
-import SwiftDate
 
 class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -24,7 +22,6 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var pageId = 1
     var selectedSegment = 0
     var meta: Meta!
-    var count = 0
     private let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var tableView: UITableView!
@@ -146,58 +143,15 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
                     let quizResponse = QuizzesResponse(result)
                     if pageId == 1 {
                         self.quizzes = quizResponse.quizzes
-                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
                         self.meta = quizResponse.meta
                     } else {
                         self.quizzes.append(contentsOf: quizResponse.quizzes)
-                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
                     }
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
-    fileprivate func presentQuizzes() {
-        if self.selectedSegment == 1 {
-            self.setClosedQuizzes()
-        } else {
-            self.setOpenedQuizzes()
-        }
-    }
-    
-    func checkQuizSubmission(quizzes: [FullQuiz]) {
-        for quiz in quizzes {
-            if quiz.state.elementsEqual("running") {
-                if let submission = quiz.studentSubmissions, let startDate = submission.createdAt, !submission.isSubmitted {
-                    let now = DateInRegion()
-                    let totalTime = (startDate.toDate()!.dateByAdding(quiz.duration, .second))
-                    debugPrint(now.toISO(), totalTime.toISO())
-                    if  totalTime.isInPast {
-                        count += 1
-                        var parameters: [String: Any] = [:]
-                        parameters["submission"] = ["id": submission.id ?? 0]
-                        submitQuiz(parameters: parameters)
+                    if self.selectedSegment == 1 {
+                        self.setClosedQuizzes()
+                    } else {
+                        self.setOpenedQuizzes()
                     }
-                } else {
-                    continue
-                }
-            }
-        }
-        if count == 0 {
-            presentQuizzes()
-        }
-    }
-    
-    func submitQuiz(parameters: Parameters) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            self.count -= 1
-            self.stopAnimating()
-            if isSuccess {
-                if self.count == 0 {
-                    self.getQuizzes(pageId: self.pageId)
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -219,7 +173,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.quiz = self.filteredQuizzes[indexPath.row]
 //        cell.assignment = filteredAssignments[indexPath.row]
 //        debugPrint("Index path: ",indexPath.row)
-        if getUserType() != UserType.teacher {
+        if !getUserType().elementsEqual("teacher") {
             if indexPath.row >= filteredQuizzes.count - 2 {
                 if meta.totalPages > pageId {
                     pageId += 1
@@ -233,6 +187,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+        
         return cell
     }
     
@@ -242,12 +197,11 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isTeacher {
-            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
-            quizVC.child = self.child
-            quizVC.courseName = courseName
-            quizVC.courseGroupId = courseGroupId
-            quizVC.quiz = filteredQuizzes[indexPath.row]
-            self.navigationController?.pushViewController(quizVC, animated: true)
+//            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
+//            quizVC.child = self.child
+//            quizVC.courseName = courseName
+//            quizVC.quiz = filteredQuizzes[indexPath.row]
+//            self.navigationController?.pushViewController(quizVC, animated: true)
             debugPrint("show quiz details")
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)

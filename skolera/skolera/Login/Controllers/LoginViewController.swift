@@ -118,7 +118,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
                     keychain.set(String(parent.data.id), forKey: ID)
                     keychain.set(parent.data.userType, forKey: USER_TYPE)
-                    debugPrint(keychain.get(USER_TYPE))
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     self.updateLocale(parent: parent)
@@ -167,7 +166,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
+        setLocaleAPI(locale) { (isSuccess, statusCode, error) in
             if isSuccess {
                 if isParent() {
                     self.stopAnimating()
@@ -178,12 +177,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.data.userType.elementsEqual("student") {
-                        if let _ = parent.data.parentId {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                        } else {
-                            self.stopAnimating()
-                            showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
-                        }
+                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
                     } else {
                         self.stopAnimating()
                         ///////

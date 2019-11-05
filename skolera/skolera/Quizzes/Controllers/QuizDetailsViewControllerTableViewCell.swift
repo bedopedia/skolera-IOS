@@ -39,10 +39,7 @@ class QuizDetailsTableViewCell: UITableViewCell {
             lessonLabel.text = self.detailedQuiz.lesson?.name ?? ""
             bloomsLabel.text = self.detailedQuiz.blooms.joined(separator: ", ")
             courseGroupsLabel.text = getCourseGroupsString()
-            let quizObjectives = getObjectivesString()
-            if !quizObjectives.isEmpty {
-                objectivesLabel.text = quizObjectives
-            }
+            objectivesLabel.text = getObjectivesString()
         }
     }
     

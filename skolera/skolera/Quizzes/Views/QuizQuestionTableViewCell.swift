@@ -7,40 +7,37 @@
 //
 
 import UIKit
-import RichTextView
 
 class QuizQuestionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var questionNumberLabel: UILabel!
-    @IBOutlet weak var questionBodyView: RichTextView!
+    @IBOutlet weak var questionBodyLabel: UILabel!
+    @IBOutlet weak var questionImageView: UIImageView!
+    @IBOutlet weak var questtionNumberLabelWidth: NSLayoutConstraint!
+    
+    var questionType: QuestionTypes! {
+        didSet {
+                if self.questionType! == QuestionTypes.match {
+                self.questionNumberLabel.isHidden = false
+            } else {
+                self.questionNumberLabel.isHidden = true
+            }
+        }
+    }
     
     var question: Questions! {
-        didSet{
-            self.questionNumberLabel.isHidden = true
-//            questionBodyView.update(input: self.question.body)
-        }
-    }
-    var option: Option! {
-        didSet{
-            self.questionNumberLabel.isHidden = false
-            self.questionBodyView.layer.cornerRadius = 6
-//            questionBodyView.update(input: self.option.body)
-            
-        }
-    }
-    var questionType: QuestionTypes!
-    var matchIndex: Int! {
         didSet {
-            questionNumberLabel.text = "\(self.matchIndex ?? 0)"
+            questionBodyLabel.text = self.question.body
         }
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
+
 }
