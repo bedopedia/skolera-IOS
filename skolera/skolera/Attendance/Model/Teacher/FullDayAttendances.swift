@@ -11,7 +11,7 @@ import Foundation
 class FullDayAttendances {
     
     let attendances: [Attendances]!
-    let students: [AttendanceStudent]!
+    var students: [AttendanceStudent]!
     let timetableSlots: [TimetableSlots]!
     
     init(_ dict: [String: Any]) {
