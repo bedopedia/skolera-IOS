@@ -17,6 +17,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     var grades = [PostCourse]()
     //MARK: - Outlets
     
+    @IBOutlet var placeholderView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -30,6 +31,11 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if grades.isEmpty {
+            placeholderView.isHidden = false
+        } else {
+            placeholderView.isHidden = true
+        }
     }
     
     @IBAction func back() {
