@@ -39,8 +39,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             newThreadButton.tintColor = UIColor.clear
             newThreadButton.isEnabled = false
         }
- 
-        if getUserType().elementsEqual("teacher") {
+        let userType = getUserType()
+        if (userType == UserType.teacher) || (userType == UserType.hod) || (userType == UserType.admin) {
             leftHeaderButton.isHidden = true
         }
         threadsTableView.refreshControl = refreshControl

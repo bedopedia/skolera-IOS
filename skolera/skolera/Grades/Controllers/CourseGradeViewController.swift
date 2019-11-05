@@ -498,7 +498,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             item = semetersDic[coursePeriods[indexPath.section].name]![indexPath.row]
             title = self.coursePeriods[indexPath.section].name
-            publish = self.coursePeriods[indexPath.section].publish
+            publish = self.coursePeriods[indexPath.section].publish ?? true
         }
         
         if item is String {
