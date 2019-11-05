@@ -12,14 +12,23 @@ import NVActivityIndicatorView
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
-    var announcements = [Announcement]()
-    var meta: Meta?
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var placeHolderView: UIView!
+    
+    var announcements: [Announcement]! {
+        didSet {
+            if self.announcements.isEmpty {
+                placeHolderView.isHidden = false
+            }
+        }
+    }
+    var meta: Meta?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+        announcements = []
         getAnnouncements()
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
         let backItem = UIBarButtonItem()
