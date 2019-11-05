@@ -19,15 +19,23 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
     @IBOutlet weak var leftHeaderButton: UIButton!
+    @IBOutlet var placeholderView: UIView!
     
-    var threads: [Threads] = []
+    var threads: [Threads]! {
+        didSet {
+            if self.threads.isEmpty {
+                placeholderView.isHidden = false
+            } else {
+                placeholderView.isHidden = true
+            }
+        }
+    }
     var child: Child!
     var actor: Actor!
     private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.isNavigationBarHidden = false
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -49,10 +57,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-        }
         getThreads()
         
     }
@@ -60,10 +64,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.stopAnimating()
-        if let parentVc = parent?.parent as? ChildHomeViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-        }
     }
 
     @objc private func refreshData(_ sender: Any) {
@@ -72,23 +72,22 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         refreshControl.endRefreshing()
     }
 
-    func getThreads()
-    {
+    func getThreads() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = nil
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: GET_THREADS())
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             self.stopAnimating()
+            if self.threads == nil {
+                self.threads = []
+            }
             switch response.result{
             case .success(_):
-                self.threads = []
-                if let result = response.result.value as? [String: AnyObject]
-                {
+                if let result = response.result.value as? [String: AnyObject] {
                     debugPrint(result)
                     if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
-                        for thread in threadsJson
-                        {
+                        for thread in threadsJson {
                             self.threads.append(Threads.init(fromDictionary: thread))
                         }
                         self.threadsTableView.reloadData()
@@ -96,16 +95,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
                     showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                {
+                } else if response.response?.statusCode == 401 || response.response?.statusCode == 500 {
                     showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
+                } else {
                     showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
                 }
             }
@@ -132,7 +126,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.threads.count
+        if threads != nil {
+            return threads.count
+        } else {
+            return 0
+        }
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
