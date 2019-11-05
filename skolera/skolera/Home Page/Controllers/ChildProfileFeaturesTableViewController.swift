@@ -300,18 +300,19 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         self.navigationController?.pushViewController(bvc, animated: true)
     }
     func showWeeklyPlanner() {
-        if !self.weeklyPlans.isEmpty {
+//        if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
-            wvc.weeklyPlanner = self.weeklyPlans.first!
+            wvc.weeklyPlanner = self.weeklyPlans.first
             self.navigationController?.pushViewController(wvc, animated: true)
-        } else {
-            let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-            }))
-            alert.modalPresentationStyle = .fullScreen
-            self.present(alert, animated: true, completion: nil)
-        }
+//        }
+//    else {
+//            let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+//            }))
+//            alert.modalPresentationStyle = .fullScreen
+//            self.present(alert, animated: true, completion: nil)
+//        }
     }
     func showTimetable() {
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))

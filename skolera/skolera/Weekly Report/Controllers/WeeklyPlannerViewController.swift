@@ -23,6 +23,7 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var weeklyNoteBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var seeMoreFrame: CustomGradientView!
+    @IBOutlet var placeHolderView: UIView!
     
     var child : Child!
     
@@ -47,30 +48,37 @@ class WeeklyPlannerViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        if weeklyPlanner.weeklyNotes.isEmpty {
-            maxHeaderHeight = 50
-            headerHeightConstraint.constant = 50
+        if weeklyPlanner != nil {
+            if weeklyPlanner.weeklyNotes.isEmpty {
+                maxHeaderHeight = 50
+                headerHeightConstraint.constant = 50
+                
+            } else {
+                placeHolderView.isHidden = true
+                if let url = URL(string: weeklyPlanner.weeklyNotes.first?.imageUrl ?? "") {
+                    weeklyNoteImage.kf.setImage(with: url)
+                } else {
+                    weeklyNoteImage.isHidden = true
+                    weeklyNoteImageConstraint.constant = 0
+                    containerViewHeightConstraint.constant = 159
+                    maxHeaderHeight = 249
+                    headerHeightConstraint.constant = 249
+                }
+                weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
+                weeklyNoteLabel.text = (weeklyPlanner.weeklyNotes.first?.descriptionField ?? "").replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
+                weeklyNoteLabel.sizeToFit()
+                
+                if weeklyNoteLabel.frame.height >= 84 {
+                    seeMoreFrame.isHidden = false
+                } else {
+                    seeMoreFrame.isHidden = true
+                }
+                
+            }
         } else {
-            if let url = URL(string: weeklyPlanner.weeklyNotes.first?.imageUrl ?? "") {
-                weeklyNoteImage.kf.setImage(with: url)
-            } else {
-                weeklyNoteImage.isHidden = true
-                weeklyNoteImageConstraint.constant = 0
-                containerViewHeightConstraint.constant = 159
-                maxHeaderHeight = 249
-                headerHeightConstraint.constant = 249
-            }
-            weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
-            weeklyNoteLabel.text = (weeklyPlanner.weeklyNotes.first?.descriptionField ?? "").replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
-            weeklyNoteLabel.sizeToFit()
-            
-            if weeklyNoteLabel.frame.height >= 84 {
-                seeMoreFrame.isHidden = false
-            } else {
-                seeMoreFrame.isHidden = true
-            }
-            
+            placeHolderView.isHidden = false
         }
+        
         contianerView.layer.masksToBounds = false
         contianerView.layer.shadowColor = UIColor.black.cgColor
         contianerView.layer.shadowOffset = CGSize(width: 0, height: 2);
@@ -86,16 +94,17 @@ class WeeklyPlannerViewController: UIViewController {
         
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
         
-        for dailyNote in self.weeklyPlanner.dailyNotes {
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en")
-            formatter.dateFormat = "yyyy-MM-dd"
-            let date = formatter.date(from: dailyNote.date)
-            formatter.dateFormat = "EEEE"
-            let dayInWeek = formatter.string(from: date!)
-            dailyNotes[dayInWeek]?.append(dailyNote)
+        if weeklyPlanner != nil {
+            for dailyNote in self.weeklyPlanner.dailyNotes {
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en")
+                formatter.dateFormat = "yyyy-MM-dd"
+                let date = formatter.date(from: dailyNote.date)
+                formatter.dateFormat = "EEEE"
+                let dayInWeek = formatter.string(from: date!)
+                dailyNotes[dayInWeek]?.append(dailyNote)
+            }
         }
-        
         if !dailyNotes["Saturday"]!.isEmpty {
             self.activeDays.append("Saturday")
         }
