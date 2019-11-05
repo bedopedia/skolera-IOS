@@ -21,6 +21,11 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var filteredQuizzes: [FullQuiz]! {
         didSet {
             if self.filteredQuizzes.isEmpty {
+                if self.selectedSegment == 0 {
+                    self.placeHolderLabel.text = "You don't have any open quizzes for now".localized
+                } else {
+                    self.placeHolderLabel.text = "You don't have any closed quizzes for now".localized
+                }
                 placeHolderView.isHidden = false
             } else {
                 placeHolderView.isHidden = true
