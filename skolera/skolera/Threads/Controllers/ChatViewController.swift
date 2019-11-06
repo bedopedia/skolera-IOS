@@ -310,26 +310,15 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     
     private func uploadImage(imageData: Data, imageName: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        if !newThread {
-            let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
-            Alamofire.upload(
-                multipartFormData: { multipartFormData in
-                    multipartFormData.append("file attached".data(using: .utf8)!, withName: "body")
-                    multipartFormData.append("\(imageName)".data(using: .utf8)!, withName: "filename")
-                    multipartFormData.append(imageData, withName: "attachment", fileName: imageName, mimeType: "image/jpeg")
-            },
-                to: url, method: .post, headers: getHeaders(),
-                encodingCompletion: { encodingResult in
-                    self.stopAnimating()
-                    switch encodingResult {
-                    case .success(let upload, _, _):
-                        upload.responseJSON { response in
-                            debugPrint(response)
-                        }
-                    case .failure(let encodingError):
-                        print(encodingError)
-                    }
-            })
+            if !newThread {
+            uploadImageApi(threadId: thread.id, imageData: imageData, imageName: imageName) { (isSuccess, statusCode, error) in
+                self.stopAnimating()
+                if isSuccess {
+                    debugPrint(statusCode)
+                } else {
+                    debugPrint(error!)
+                }
+            }
         }
     }
     

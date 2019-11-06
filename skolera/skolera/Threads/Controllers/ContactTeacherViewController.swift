@@ -181,6 +181,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             guard self.threads.count > 0 else {
                 return
             }
+            guard indexPath.row < self.threads.count else {
+                return
+            }
             let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
             var messages: [ChatItemProtocol] = []
             let threadsMessages = self.threads[indexPath.row].messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
