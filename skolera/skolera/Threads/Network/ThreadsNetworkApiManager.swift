@@ -52,7 +52,7 @@ func setThreadSeenApi(parameters: Parameters,completion: @escaping ((Bool, Int, 
 }
 
 
- func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completion: @escaping ((Bool, Int, Error?) -> ())) {
+func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completion: @escaping ((Bool, Int, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = "\(String(format: SEND_MESSAGE(),threadId))/messages"
     Alamofire.upload(
@@ -74,5 +74,32 @@ func setThreadSeenApi(parameters: Parameters,completion: @escaping ((Bool, Int, 
                 completion(false, -1, encodingError)
             }
     })
-    
+}
+
+func sendMessageApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let url = String(format: GET_THREADS())
+    let headers : HTTPHeaders? = getHeaders()
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            debugPrint(response)
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            print(error.localizedDescription)
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
+func replyToMessageApi(threadId: Int, parameters: Parameters,completion: @escaping ((Bool, Int, Error?) -> ())) {
+    let url = String(format: SEND_MESSAGE(),threadId)
+    let headers : HTTPHeaders? = getHeaders()
+    Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, error)
+        }
+    }
 }
