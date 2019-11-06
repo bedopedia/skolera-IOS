@@ -12,9 +12,19 @@ import NVActivityIndicatorView
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
 
-    var announcements = [Announcement]()
-    var meta: Meta?
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var placeHolderView: UIView!
+    
+    var announcements: [Announcement]! {
+        didSet {
+            if self.announcements.isEmpty {
+                placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
+            }
+        }
+    }
+    var meta: Meta?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +55,9 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.announcements == nil {
+                self.announcements = []
+            }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
@@ -79,7 +92,11 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return announcements.count
+        if announcements == nil {
+            return 0
+        } else {
+            return announcements.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

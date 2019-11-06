@@ -17,13 +17,21 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var createPostButton: UIButton!
-    
+    @IBOutlet var placeHolderView: UIView!
     
     var child : Child!
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!
-    var posts: [Post] = []
+    var posts: [Post]! {
+        didSet {
+            if self.posts.isEmpty {
+                placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
+            }
+        }
+    }
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
@@ -55,7 +63,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.posts = []
         tableView.reloadData()
         getPosts()
     }
@@ -87,6 +94,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.posts == nil {
+                self.posts = []
+            }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
@@ -103,7 +113,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
 //    MARK: -Table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        if posts != nil {
+           return posts.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

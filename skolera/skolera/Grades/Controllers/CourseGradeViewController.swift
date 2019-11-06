@@ -16,10 +16,10 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var placeholderLabel: UILabel!
     
     var students: [Student] = []
 //    var assignAvg: [String: Double] = [:]
@@ -44,25 +44,22 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        if let grade = grade{
+        if let grade = grade {
             navbarTitleLabel.text = grade.name
         }
-        
 //        getAvgStudentGrades()
         getCourseGradingPeriods()
 //        getStudentGradeBook()
         tableView.delegate = self
         tableView.dataSource = self
-        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
             tableView.addSubview(refreshControl)
         }
-        
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         segmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .selected)
@@ -79,6 +76,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 segmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
+        
+//        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
+//         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,6 +96,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             handleCurrentSemester()
         }
+        checkData()
     }
     
     @objc private func refreshData(_ sender: Any) {
@@ -142,7 +143,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
 //        }
 //    }
     
-    private func getStudentGradeBook(){
+    private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters? = ["student_id" : child.actableId]
         let headers : HTTPHeaders? = getHeaders()
@@ -153,8 +154,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             switch response.result{
                 
             case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
-                {
+                if let result = response.result.value as? [String : AnyObject] {
                     let studentDic = (result["students"] as! [[String: AnyObject]])[0]
                     let assignmentsDic = studentDic["assignments"] as! [String: AnyObject]
                     var assignments: [Assignment] = []
@@ -214,19 +214,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                 gradeItems: gradeItems))
                     self.handleSemesters()
 //                    self.tableView.reloadData()
-                    
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
                     showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
+                } else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500 {
                     showReauthenticateAlert(viewController: self)
-                }
-                else
+                } else
                 {
                     showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
                 }
@@ -242,10 +237,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
             self.stopAnimating()
             switch response.result{
-                
             case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
+                if let result = response.result.value as? [[String : AnyObject]] {
                     debugPrint(response)
                     var courseGradingPeriods: [CourseGradingPeriods] = []
                     self.coursePeriods = []
@@ -266,20 +259,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     self.courseGradingPeriods = courseGradingPeriods
                     self.getStudentGradeBook()
 //                    self.tableView.reloadData()
-                    
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
+                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
                     showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
+                } else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500 {
                     showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
+                } else {
                     showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
                 }
             }
@@ -381,9 +368,43 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        checkData()
         tableView.reloadData()
     }
-    private func handleCurrentSemester(){
+    fileprivate func checkSemesterDict() {
+        var isEmptyFlag = true
+        let keys = semetersDic.keys
+        for key in keys {
+            if semetersDic[key]!.count > 0 {
+                isEmptyFlag = false
+                break
+            }
+        }
+        if isEmptyFlag {
+            placeholderView.isHidden = false
+        } else {
+            placeholderView.isHidden = true
+        }
+    }
+    
+    func checkData() {
+        if segmentControl.selectedSegmentIndex == 0 {
+            placeholderLabel.text = "You don't have any grades for now".localized
+            if courseGradingPeriods.count == 0 {
+                placeholderView.isHidden = false
+            } else {
+                checkSemesterDict()
+            }
+        } else {
+            placeholderLabel.text = "You don't have any current grades for now".localized
+            if courseSubPeriods.count == 0 {
+                placeholderView.isHidden = false
+            } else {
+                checkSemesterDict()
+            }
+        }
+    }
+    private func handleCurrentSemester() {
         self.semetersDic = [:]
         self.courseSubPeriods = []
         for sem in self.courseGradingPeriods {
@@ -553,14 +574,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         totGrade += round2Digits((i as! Assignment).total)
                     }
                 }
-                if totGrade > 0 && publish{
+                if totGrade > 0 && publish {
                     cell.gradeLabel.text = "\(grade)"
                     cell.totalGradeLabel.text = Language.language == .arabic ? "\(totGrade)/" : "/\(totGrade)"
                 } else {
                     cell.gradeLabel.text = ""
                     cell.totalGradeLabel.text = ""
                 }
-            } else if (item as! String).elementsEqual("Quizzes"){
+            } else if (item as! String).elementsEqual("Quizzes") {
                 var grade: Double = 0
                 var totGrade: Double = 0
                 for i in self.semetersDic[title]! {
@@ -569,7 +590,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         totGrade += round2Digits((i as! Quiz).total)
                     }
                 }
-                if totGrade > 0 && publish{
+                if totGrade > 0 && publish {
                     cell.gradeLabel.text = "\(grade)"
                     cell.totalGradeLabel.text = Language.language == .arabic ? "\(totGrade)/" : "/\(totGrade)"
                 } else {
@@ -666,7 +687,6 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     func round2Digits(_ double: Double) -> Double {
         let multiplier = pow(10, Double(2))
         return Darwin.round(double * multiplier) / multiplier
-        
     }
 
 }

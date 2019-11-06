@@ -389,7 +389,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qh3-6o-gHE">
-                                                            <rect key="frame" x="24.5" y="46.5" width="26.5" height="14"/>
+                                                            <rect key="frame" x="24.5" y="46.5" width="26.5" height="14.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="26.5" id="z6j-yE-42r"/>
                                                             </constraints>
@@ -406,7 +406,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w8C-Eg-vwW">
-                                                            <rect key="frame" x="101" y="30.5" width="259" height="16.5"/>
+                                                            <rect key="frame" x="101" y="29.5" width="259" height="18"/>
                                                             <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
                                                             <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -837,15 +837,44 @@
                                     <constraint firstAttribute="bottom" secondItem="NqM-na-xm7" secondAttribute="bottom" id="zvx-JC-o9H"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbC-iA-824">
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attendanceplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Ch7-aZ-obz">
+                                        <rect key="frame" x="115.5" y="189.5" width="144" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="L7U-yu-kl0"/>
+                                            <constraint firstAttribute="width" constant="144" id="qp9-g1-4T2"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any Attendance for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYp-V8-xLP">
+                                        <rect key="frame" x="46.5" y="353.5" width="282.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="uYp-V8-xLP" firstAttribute="top" secondItem="Ch7-aZ-obz" secondAttribute="bottom" constant="24" id="5i9-Zg-cOY"/>
+                                    <constraint firstItem="Ch7-aZ-obz" firstAttribute="centerY" secondItem="fbC-iA-824" secondAttribute="centerY" constant="-44" id="IaP-FZ-zuI"/>
+                                    <constraint firstItem="Ch7-aZ-obz" firstAttribute="centerX" secondItem="fbC-iA-824" secondAttribute="centerX" id="jTz-hc-wiF"/>
+                                    <constraint firstItem="uYp-V8-xLP" firstAttribute="centerX" secondItem="Ch7-aZ-obz" secondAttribute="centerX" id="vQY-IY-VwL"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fbC-iA-824" firstAttribute="leading" secondItem="agi-bZ-h94" secondAttribute="leading" id="1i3-8y-JZ5"/>
                             <constraint firstItem="j2H-mr-TXN" firstAttribute="top" secondItem="TFA-hA-Hkc" secondAttribute="bottom" id="2c1-ju-2bJ"/>
                             <constraint firstItem="j2H-mr-TXN" firstAttribute="leading" secondItem="6g3-dp-KRo" secondAttribute="leading" id="EzT-Rg-4y0"/>
                             <constraint firstItem="TFA-hA-Hkc" firstAttribute="top" secondItem="6g3-dp-KRo" secondAttribute="top" id="JrF-eT-DRw"/>
                             <constraint firstItem="6g3-dp-KRo" firstAttribute="bottom" secondItem="j2H-mr-TXN" secondAttribute="bottom" id="Nnd-YI-4a9"/>
+                            <constraint firstItem="fbC-iA-824" firstAttribute="trailing" secondItem="6g3-dp-KRo" secondAttribute="trailing" id="R5J-W0-g3z"/>
                             <constraint firstItem="6g3-dp-KRo" firstAttribute="trailing" secondItem="TFA-hA-Hkc" secondAttribute="trailing" id="UvT-NY-3pk"/>
                             <constraint firstItem="TFA-hA-Hkc" firstAttribute="leading" secondItem="agi-bZ-h94" secondAttribute="leading" id="Xxn-Ng-gA6"/>
+                            <constraint firstItem="6g3-dp-KRo" firstAttribute="bottom" secondItem="fbC-iA-824" secondAttribute="bottom" id="ZeZ-0B-Hpc"/>
+                            <constraint firstItem="fbC-iA-824" firstAttribute="top" secondItem="TFA-hA-Hkc" secondAttribute="bottom" id="oTC-8G-woc"/>
                             <constraint firstItem="6g3-dp-KRo" firstAttribute="trailing" secondItem="j2H-mr-TXN" secondAttribute="trailing" id="ukU-4f-9Lc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6g3-dp-KRo"/>
@@ -858,6 +887,7 @@
                         <outlet property="fullDayAttendanceBottomBorder" destination="2aN-yk-Jnh" id="Gz3-9C-wKo"/>
                         <outlet property="fullDayAttendanceButton" destination="Yc5-E9-JhH" id="3dU-I7-q6n"/>
                         <outlet property="leftLabel" destination="kx8-C0-zgw" id="6P2-Yv-8Zc"/>
+                        <outlet property="placeholderView" destination="fbC-iA-824" id="qAC-vl-efR"/>
                         <outlet property="slotAttendanceBottomBar" destination="lvG-zM-s1c" id="rBi-IK-Sd1"/>
                         <outlet property="slotAttendanceButton" destination="uoN-LV-4Iw" id="HEV-Sc-tZR"/>
                         <outlet property="tableView" destination="NqM-na-xm7" id="BJd-Ci-5vd"/>
@@ -865,7 +895,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Raz-WK-hWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="166" y="860"/>
+            <point key="canvasLocation" x="165.59999999999999" y="859.52023988005999"/>
         </scene>
         <!--Submit Excuse View Controller-->
         <scene sceneID="DMN-vE-6yT">
@@ -940,7 +970,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="excuseReason" translatesAutoresizingMaskIntoConstraints="NO" id="Aje-mw-oz3">
-                                <rect key="frame" x="107.5" y="120.5" width="160" height="160"/>
+                                <rect key="frame" x="147.5" y="120.5" width="80" height="80"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iM-Ci-XR6">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="175.5"/>
@@ -1094,12 +1124,13 @@
     </scenes>
     <resources>
         <image name="Advisement" width="512" height="512"/>
+        <image name="attendanceplaceholder" width="144" height="141"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="close" width="24" height="24"/>
         <image name="excuseReason" width="80" height="80"/>
         <image name="excused" width="16" height="16"/>
         <image name="late" width="16" height="16"/>
-        <image name="mydaysIco" width="18" height="18"/>
+        <image name="mydaysIco" width="24" height="24"/>
         <image name="present" width="16" height="16"/>
         <image name="unselectedSlot" width="24" height="24"/>
     </resources>

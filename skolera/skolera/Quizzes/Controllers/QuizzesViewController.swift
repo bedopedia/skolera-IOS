@@ -18,7 +18,20 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var courseName: String = ""
     var courseId: Int = 0
     var quizzes: [FullQuiz] = []
-    var filteredQuizzes: [FullQuiz] = []
+    var filteredQuizzes: [FullQuiz]! {
+        didSet {
+            if self.filteredQuizzes.isEmpty {
+                if self.selectedSegment == 0 {
+                    self.placeHolderLabel.text = "You don't have any open quizzes for now".localized
+                } else {
+                    self.placeHolderLabel.text = "You don't have any closed quizzes for now".localized
+                }
+                placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
+            }
+        }
+    }
     var isTeacher: Bool = false
     var courseGroupId = 0
     var pageId = 1
@@ -26,12 +39,14 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var meta: Meta!
     var count = 0
     private let refreshControl = UIRefreshControl()
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var placeHolderLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -57,7 +72,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             }
         } else {
             if isTeacher {
-               if #available(iOS 13.0, *) {
+                if #available(iOS 13.0, *) {
                     statusSegmentControl.selectedSegmentTintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
                 } else {
                     statusSegmentControl.tintColor = #colorLiteral(red: 0, green: 0.4959938526, blue: 0.8980392157, alpha: 1)
@@ -90,7 +105,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         }
         refreshControl.endRefreshing()
     }
-
+    
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -210,15 +225,19 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
 extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredQuizzes.count
+        if filteredQuizzes != nil {
+            return filteredQuizzes.count
+        } else {
+           return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizTableViewCell") as! QuizTableViewCell
         cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
-//        cell.assignment = filteredAssignments[indexPath.row]
-//        debugPrint("Index path: ",indexPath.row)
+        //        cell.assignment = filteredAssignments[indexPath.row]
+        //        debugPrint("Index path: ",indexPath.row)
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
                 if meta.totalPages > pageId {
