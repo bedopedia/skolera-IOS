@@ -66,7 +66,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
         
     }
     
-   
+    
     var chatInputPresenter: BasicChatInputBarPresenter!
     override func createChatInputView() -> UIView {
         if canSendMessage {
@@ -159,27 +159,18 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     func setThreadSeen(){
         if !newThread {
             startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-            let parameters : Parameters? = ["thread_ids": [self.thread.id]]
-            let headers : HTTPHeaders? = getHeaders()
-            let url = String(format: SET_THREAD_IS_SEEN())
-            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            let parameters : Parameters = ["thread_ids": [self.thread.id]]
+            setThreadSeenApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
                 self.stopAnimating()
-                switch response.result{
-                    
-                case .success(_):
+                if isSuccess {
                     debugPrint(response)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                    {
+                } else {
+                    //                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
                         showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                    }
-                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                    {
+                    } else if statusCode == 401 || statusCode == 500 {
                         showReauthenticateAlert(viewController: self)
-                    }
-                    else
-                    {
+                    } else {
                         debugPrint(error)
                     }
                 }
@@ -187,11 +178,8 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
         }
     }
     
-    
-    func send(message: String)
-    {
+    func send(message: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let headers : HTTPHeaders? = getHeaders()
         if newThread {
             let parameters : Parameters = [
                 "message_thread": [
@@ -206,32 +194,14 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                 ],
                 "user_ids": ["\(teacherId)", "\(userId())"]
             ]
-            
-            let url = String(format: GET_THREADS())
-            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+            sendMessageApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
                 self.stopAnimating()
-                switch response.result{
-                    
-                case .success(_):
-                    debugPrint(response)
+                if isSuccess {
                     self.dataSource.addTextMessage(message)
                     self.newThread = false
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                    {
-                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        })
-                    }
-                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                    {
-                        showReauthenticateAlert(viewController: self)
-                    }
-                    else
-                    {
-                        showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        })
-                    }
+                } else {
+                    print(error!.localizedDescription)
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
         } else {
@@ -246,38 +216,19 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                         ]]
                 ]
             ]
-            let url = String(format: SEND_MESSAGE(),thread.id)
-            Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+            replyToMessageApi(threadId: thread.id, parameters: parameters) { (isSuccess, statusCode, error) in
                 self.stopAnimating()
-                switch response.result{
-                    
-                case .success(_):
+                if isSuccess {
                     debugPrint("success")
-                     self.dataSource.addTextMessage(message)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                    {
-                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: {action in
-                        })
-                    }
-                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-                    {
-                        showReauthenticateAlert(viewController: self)
-                    }
-                    else
-                    {
-                        showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: {action in
-                        })
-                    }
+                    self.dataSource.addTextMessage(message)
+                } else {
+                    self.dataSource.addTextMessage(message)
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
         }
-        
-        
     }
     
-
     private func scaleImage(image: UIImage) {
         let newWidth:CGFloat = 400.0
         let scale = newWidth / (image.size.width)
@@ -322,30 +273,16 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     private func uploadImage(imageData: Data, imageName: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         if !newThread {
-            let url = "\(String(format: SEND_MESSAGE(),thread.id))/messages"
-            Alamofire.upload(
-                multipartFormData: { multipartFormData in
-                    multipartFormData.append("file attached".data(using: .utf8)!, withName: "body")
-                    multipartFormData.append("\(imageName)".data(using: .utf8)!, withName: "filename")
-                    multipartFormData.append(imageData, withName: "attachment", fileName: imageName, mimeType: "image/jpeg")
-            },
-                to: url, method: .post, headers: getHeaders(),
-                encodingCompletion: { encodingResult in
-                    self.stopAnimating()
-                    switch encodingResult {
-                    case .success(let upload, _, _):
-                        upload.responseJSON { response in
-                            debugPrint(response)
-                        }
-                    case .failure(let encodingError):
-                        print(encodingError)
-                    }
+            uploadImageApi(threadId: thread.id, imageData: imageData, imageName: imageName) { (isSuccess, statusCode, error) in
+                self.stopAnimating()
+                if isSuccess {
+                    debugPrint(statusCode)
+                } else {
+                    debugPrint(error!)
+                }
             }
-            )
         }
     }
-    
-    
 }
 
 extension ChatViewController: MessagesSelectorDelegate {

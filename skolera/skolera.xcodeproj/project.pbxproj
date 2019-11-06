@@ -316,6 +316,8 @@
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
+		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
+		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -644,6 +646,8 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
+		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
@@ -682,6 +686,7 @@
 		5402CA062045CDE4009F583A /* Grades */ = {
 			isa = PBXGroup;
 			children = (
+				DC69E45E23560A6A00A6FDF4 /* Network */,
 				543830AE204D631B00ABF477 /* Model */,
 				5402CA0A2045CE03009F583A /* Controllers */,
 				5402CA072045CDE4009F583A /* Views */,
@@ -1273,6 +1278,7 @@
 		8A5F42DB20B1A58000FF93D1 /* Threads */ = {
 			isa = PBXGroup;
 			children = (
+				DC69E461235612EC00A6FDF4 /* Network */,
 				8A5F42DC20B1A59500FF93D1 /* Model */,
 				8A5F42DE20B1A5A700FF93D1 /* Views */,
 				8A5F42DD20B1A59B00FF93D1 /* Controllers */,
@@ -1628,6 +1634,22 @@
 				23642A8526C6D081147E2780 /* Pods-skolera.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		DC69E45E23560A6A00A6FDF4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DC69E461235612EC00A6FDF4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2052,6 +2074,7 @@
 				8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */,
 				547DC22F201F404E004B7FA2 /* Constants.swift in Sources */,
 				8A6D362720B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift in Sources */,
+				DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */,
 				8A3923E9233CC7710001963A /* Answers.swift in Sources */,
 				547A37912022153B00794441 /* NotifcationResponse.swift in Sources */,
 				8AF6664723390ADE009C4EF2 /* TeacherCoursesViewController.swift in Sources */,
@@ -2064,6 +2087,7 @@
 				54CCF400206BEBA600824A3D /* BehaviorNotesResponse.swift in Sources */,
 				8A06B6D622F98B5100F5F85C /* BehaviorNotesApiManager.swift in Sources */,
 				8AE8D62122F7000400409CCD /* LoginApiManager.swift in Sources */,
+				DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */,
 				54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */,
 				8ADABB78230AE400001509EF /* EventsApiManager.swift in Sources */,
 				8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */,
