@@ -66,7 +66,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
         
     }
     
-   
+    
     var chatInputPresenter: BasicChatInputBarPresenter!
     override func createChatInputView() -> UIView {
         if canSendMessage {
@@ -165,7 +165,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                 if isSuccess {
                     debugPrint(response)
                 } else {
-//                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                    //                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                     if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
                         showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
                     } else if statusCode == 401 || statusCode == 500 {
@@ -177,44 +177,8 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
             }
         }
     }
-
-
     
-    
-//    func setThreadSeen(){
-//        if !newThread {
-//            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-//            let parameters : Parameters? = ["thread_ids": [self.thread.id]]
-//            let headers : HTTPHeaders? = getHeaders()
-//            let url = String(format: SET_THREAD_IS_SEEN())
-//            Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
-//                self.stopAnimating()
-//                switch response.result{
-//
-//                case .success(_):
-//                    debugPrint(response)
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-//                    {
-//                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-//                    }
-//                    else if response.response?.statusCode == 401 || response.response?.statusCode == 500
-//                    {
-//                        showReauthenticateAlert(viewController: self)
-//                    }
-//                    else
-//                    {
-//                        debugPrint(error)
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-    
-    func send(message: String)
-    {
+    func send(message: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         if newThread {
             let parameters : Parameters = [

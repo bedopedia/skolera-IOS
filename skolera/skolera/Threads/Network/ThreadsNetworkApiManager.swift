@@ -51,6 +51,7 @@ func setThreadSeenApi(parameters: Parameters,completion: @escaping ((Bool, Int, 
     }
 }
 
+//TODO: Send/ upload image of chatViewController
 
 func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completion: @escaping ((Bool, Int, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
