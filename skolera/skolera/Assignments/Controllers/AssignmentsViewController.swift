@@ -152,6 +152,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                             assignmentDetailsVC.assignment = assignment
                             debugPrint(self.parent, self.parent?.parent)
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+                        } else {
+                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+                            alert.modalPresentationStyle = .fullScreen
+                            self.present(alert, animated: true, completion: nil)
                         }
                     } else {
                         let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
