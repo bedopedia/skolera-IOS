@@ -51,3 +51,5 @@ func setThreadSeenApi(parameters: Parameters,completion: @escaping ((Bool, Int, 
     }
 }
 
+//TODO: Send/ upload image of chatViewController
+
