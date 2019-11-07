@@ -20,11 +20,20 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var isAnswerSelected = false {
         didSet {
-            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect) && self.isAnswerSelected {
-                answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+            if self.isAnswerSelected {
+                if questionType == QuestionTypes.multipleChoice {
+                    answerLeftImageView.image = #imageLiteral(resourceName: "multiplechoiceselected")
+                } else if questionType == QuestionTypes.multipleSelect {
+                    answerLeftImageView.image = #imageLiteral(resourceName: "multipleselectselected")
+                }
             } else {
                 self.setUnselectedImage()
             }
+//            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect) && self.isAnswerSelected {
+//                answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+//            } else {
+//                self.setUnselectedImage()
+//            }
         }
     }
     
@@ -62,17 +71,12 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
         case QuestionTypes.multipleChoice:
             self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
         case QuestionTypes.multipleSelect:
-            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "multipleselect")
         case QuestionTypes.reorder:
             self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
         }
     }
  
-    
-    func resetLeftImage() {
-        answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-    }
-    
     func hideMatchView() {
         matchLeftView.isHidden = true
         matchTextField.isHidden = true

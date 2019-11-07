@@ -117,9 +117,6 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
             interactionHandler: DemoPhotoMessageHandler(baseHandler: self.baseMessageHandler, viewController: self)
         )
         photoMessagePresenter.baseCellStyle = BaseMessageCollectionViewCellAvatarStyle()
-        
-        
-        
         return [
             DemoTextMessageModel.chatItemType: [textMessagePresenter],
             SendingStatusModel.chatItemType: [SendingStatusPresenterBuilder()],
@@ -138,7 +135,6 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     private func createTextInputItem() -> TextChatInputItem {
         let item = TextChatInputItem()
         item.textInputHandler = { [weak self] text in
-            
             self?.send(message: text)
             self?.collectionView.scrollToLast()
         }
@@ -156,7 +152,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
         return item
     }
     
-    func setThreadSeen(){
+    func setThreadSeen() {
         if !newThread {
             startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             let parameters : Parameters = ["thread_ids": [self.thread.id]]
@@ -186,7 +182,6 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                     "course_id": courseId,
                     "tag": ".",
                     "name": ".",
-                    
                     "messages_attributes": [[
                         "body": message.encode(),
                         "user_id": userId()

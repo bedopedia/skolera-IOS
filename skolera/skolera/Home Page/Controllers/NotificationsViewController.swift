@@ -76,7 +76,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         }
     }
     
-    func setNotificationsSeen(){
+    func setNotificationsSeen() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
             self.stopAnimating()
@@ -128,15 +128,11 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         let notification = notifications[indexPath.row]
         cell.notification = notification
         //Loading More
-        if indexPath.row == notifications.count - 1
-        {
-            if meta?.currentPage != meta?.totalPages
-            {
+        if indexPath.row == notifications.count - 1 {
+            if meta?.currentPage != meta?.totalPages {
                 getNotifcations(page: (meta?.currentPage)! + 1)
             }
         }
         return cell
     }
-    
-    
 }

@@ -9,9 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
-
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var placeHolderView: UIView!
     
