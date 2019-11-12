@@ -71,7 +71,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x9S-ZB-crC">
-                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                                <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnnouncementTableViewCell" rowHeight="56" id="tDa-P5-lRk" customClass="AnnouncementTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -84,7 +84,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjR-dj-RZp" customClass="CardView" customModule="skolera" customModuleProvider="target">
                                                     <rect key="frame" x="12" y="6" width="351" height="44"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="American History" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-UU-c9z">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-UU-c9z">
                                                             <rect key="frame" x="20" y="4.5" width="35" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="35" id="Skh-kI-IRx"/>
@@ -167,7 +167,7 @@
                             <constraint firstAttribute="trailing" secondItem="7Nc-c0-iGb" secondAttribute="trailing" id="bX3-8H-iud"/>
                             <constraint firstAttribute="trailing" secondItem="Awp-Bg-R8O" secondAttribute="trailing" id="dwi-Ov-cVO"/>
                             <constraint firstItem="7Nc-c0-iGb" firstAttribute="leading" secondItem="0lG-Oi-nfj" secondAttribute="leading" id="orE-3J-lUx"/>
-                            <constraint firstItem="x9S-ZB-crC" firstAttribute="top" secondItem="Awp-Bg-R8O" secondAttribute="bottom" id="qRk-Qa-q0Y"/>
+                            <constraint firstItem="x9S-ZB-crC" firstAttribute="top" secondItem="Awp-Bg-R8O" secondAttribute="bottom" constant="8" id="qRk-Qa-q0Y"/>
                             <constraint firstItem="0lG-Oi-nfj" firstAttribute="trailing" secondItem="x9S-ZB-crC" secondAttribute="trailing" id="uqN-Tj-vUV"/>
                             <constraint firstItem="7Nc-c0-iGb" firstAttribute="top" secondItem="Awp-Bg-R8O" secondAttribute="bottom" id="vob-Xx-5In"/>
                         </constraints>
@@ -176,6 +176,7 @@
                     <navigationItem key="navigationItem" id="R2d-DH-01V"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="headerView" destination="Awp-Bg-R8O" id="Vly-aE-EcQ"/>
                         <outlet property="placeHolderView" destination="7Nc-c0-iGb" id="rKl-U4-hgU"/>
                         <outlet property="tableView" destination="x9S-ZB-crC" id="CWh-a3-c0Q"/>
                     </connections>
@@ -294,7 +295,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="American History" width="900" height="773"/>
         <image name="announcmentsplaceholder" width="144" height="140"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="logo" width="131" height="24"/>
