@@ -973,16 +973,6 @@ attachment.</string>
                                                                 <constraint firstAttribute="height" constant="1" id="HTH-fg-ce6"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9T-7C-iz2">
-                                                            <rect key="frame" x="16" y="50" width="358" height="99"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="ahA-ie-XoK"/>
-                                                            </constraints>
-                                                            <string key="text">Last Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days agoLast Updated 2 days ago</string>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" red="0.36630782490000002" green="0.36279395219999999" blue="0.36657610540000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="322-lD-R0C">
                                                             <rect key="frame" x="0.0" y="153" width="390" height="60"/>
                                                             <subviews>
@@ -1108,23 +1098,27 @@ attachment.</string>
                                                                 <constraint firstItem="xDb-CL-HTx" firstAttribute="leading" secondItem="sFJ-gE-8j0" secondAttribute="trailing" constant="8" id="zgw-vH-Zee"/>
                                                             </constraints>
                                                         </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V88-yL-bWE" customClass="RichTextView" customModule="RichTextView">
+                                                            <rect key="frame" x="18" y="50" width="354" height="99"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="322-lD-R0C" secondAttribute="trailing" id="0qf-Jw-RoS"/>
                                                         <constraint firstItem="322-lD-R0C" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" id="0zy-TB-URd"/>
                                                         <constraint firstItem="Vyf-xC-i3V" firstAttribute="centerY" secondItem="jhT-w7-I9s" secondAttribute="centerY" id="6QR-p9-YRK"/>
-                                                        <constraint firstItem="w9T-7C-iz2" firstAttribute="top" secondItem="Fmv-uA-FQE" secondAttribute="bottom" constant="8" id="8fB-WK-cmP"/>
+                                                        <constraint firstItem="322-lD-R0C" firstAttribute="top" secondItem="V88-yL-bWE" secondAttribute="bottom" constant="4" id="Fx9-eB-KPD"/>
                                                         <constraint firstItem="Fmv-uA-FQE" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" id="GBT-7B-rU5"/>
                                                         <constraint firstItem="Vyf-xC-i3V" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jhT-w7-I9s" secondAttribute="trailing" constant="12" id="I8j-a3-IaQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="Fmv-uA-FQE" secondAttribute="trailing" id="L3h-V1-EdO"/>
-                                                        <constraint firstItem="322-lD-R0C" firstAttribute="top" secondItem="w9T-7C-iz2" secondAttribute="bottom" constant="4" id="T3a-LH-2Xy"/>
-                                                        <constraint firstItem="w9T-7C-iz2" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" constant="16" id="YHw-Me-k0y"/>
+                                                        <constraint firstItem="V88-yL-bWE" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" constant="18" id="TNR-QM-GcU"/>
                                                         <constraint firstAttribute="bottom" secondItem="322-lD-R0C" secondAttribute="bottom" id="brp-H4-wll"/>
-                                                        <constraint firstAttribute="trailing" secondItem="w9T-7C-iz2" secondAttribute="trailing" constant="16" id="c9y-B2-yrQ"/>
                                                         <constraint firstItem="jhT-w7-I9s" firstAttribute="top" secondItem="09x-9g-1Rb" secondAttribute="top" constant="12" id="cdV-Bb-ZdO"/>
                                                         <constraint firstItem="jhT-w7-I9s" firstAttribute="leading" secondItem="09x-9g-1Rb" secondAttribute="leading" constant="16" id="pHW-pi-frI"/>
+                                                        <constraint firstItem="V88-yL-bWE" firstAttribute="top" secondItem="Fmv-uA-FQE" secondAttribute="bottom" constant="8" id="reJ-LP-D19"/>
                                                         <constraint firstAttribute="trailing" secondItem="Vyf-xC-i3V" secondAttribute="trailing" constant="12" id="tQC-Ff-zaX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="V88-yL-bWE" secondAttribute="trailing" constant="18" id="usN-eA-ZxZ"/>
                                                         <constraint firstItem="Fmv-uA-FQE" firstAttribute="top" secondItem="jhT-w7-I9s" secondAttribute="bottom" constant="12" id="zwQ-9X-7c5"/>
                                                     </constraints>
                                                 </view>
@@ -1156,7 +1150,7 @@ attachment.</string>
                                             <outlet property="attachmentView" destination="322-lD-R0C" id="Xa2-rt-zpI"/>
                                             <outlet property="firstAttachment" destination="Xy5-55-bEj" id="dY9-hb-Vub"/>
                                             <outlet property="firstAttachmentView" destination="NAj-IZ-XPk" id="DuR-By-sgF"/>
-                                            <outlet property="postContent" destination="w9T-7C-iz2" id="ctP-He-77I"/>
+                                            <outlet property="postContent" destination="V88-yL-bWE" id="qLm-qb-urP"/>
                                             <outlet property="postDate" destination="Vyf-xC-i3V" id="Hy5-3B-KjV"/>
                                             <outlet property="postOwner" destination="jhT-w7-I9s" id="O9y-31-I8x"/>
                                             <outlet property="replyButton" destination="vwI-4Y-vsn" id="jYp-EZ-VXv"/>

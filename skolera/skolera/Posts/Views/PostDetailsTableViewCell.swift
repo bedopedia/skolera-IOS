@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import RichTextView
 
 class PostDetailsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postOwner: UILabel!
     @IBOutlet weak var postDate: UILabel!
-    @IBOutlet weak var postContent: UILabel!
+    @IBOutlet var postContent: RichTextView!
+    //    @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var attachmentView: UIView!
     @IBOutlet weak var attachmentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstAttachmentView: UIView!
@@ -38,7 +40,8 @@ class PostDetailsTableViewCell: UITableViewCell {
                 let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
                                                                       options: options,
                                                                       documentAttributes: nil)
-                postContent.attributedText = attributedString
+//                postContent.attributedText = attributedString
+                postContent.update(input: post.content ?? "")
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -94,7 +97,8 @@ class PostDetailsTableViewCell: UITableViewCell {
                 let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
                                                                       options: options,
                                                                       documentAttributes: nil)
-                postContent.attributedText = attributedString
+//                postContent.attributedText = attributedString
+                postContent.update(input: comment.content ?? "")
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
