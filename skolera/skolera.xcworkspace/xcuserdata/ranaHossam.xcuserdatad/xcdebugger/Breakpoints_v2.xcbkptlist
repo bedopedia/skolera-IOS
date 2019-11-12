@@ -263,22 +263,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E640D7DF-4D1D-464F-91A5-3DC61102CDAB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Helpers/App Methods.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "showReauthenticateAlert(viewController:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "93BD661F-E4CA-4F0F-8D3D-177C7880422D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -832,8 +816,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "getQuizDetails()"
-            landmarkType = "7">
+            landmarkName = "QuizStatusViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1120,7 +1104,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "solveQuizButtonAction()"
+            landmarkName = "setUpDatesUi()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1136,7 +1120,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
             endingLineNumber = "138"
-            landmarkName = "solveQuizButtonAction()"
+            landmarkName = "setUpDatesUi()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1152,7 +1136,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
             endingLineNumber = "141"
-            landmarkName = "solveQuizButtonAction()"
+            landmarkName = "setUpDatesUi()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1168,8 +1152,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "createSubmission()"
-            landmarkType = "7">
+            landmarkName = "QuizStatusViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1200,7 +1184,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
             endingLineNumber = "102"
-            landmarkName = "getSolveQuizDetails()"
+            landmarkName = "openQuizAnswers()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1232,7 +1216,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "getSolveQuizDetails()"
+            landmarkName = "createSubmission()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1360,7 +1344,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
             endingLineNumber = "162"
-            landmarkName = "openQuizQuestions()"
+            landmarkName = "setUpDatesUi()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1376,8 +1360,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "98"
             endingLineNumber = "98"
-            landmarkName = "QuizStatusViewController"
-            landmarkType = "3">
+            landmarkName = "openQuizQuestions()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "3B1110D1-AD2F-4402-B20A-A12EEBA8231C - c9543019e2462252"
@@ -1624,7 +1608,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
@@ -1634,6 +1618,38 @@
             endingLineNumber = "23"
             landmarkName = "configureCalendar(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C - a0dffdcf0b813345"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.AttendanceViewController.configureCalendar(JTAppleCalendar.JTAppleCalendarView) -&gt; JTAppleCalendar.ConfigurationParameters"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "284">
+               </Location>
+               <Location
+                  uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C - a0dffdcf0b813345"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.AttendanceViewController.configureCalendar(JTAppleCalendar.JTAppleCalendarView) -&gt; JTAppleCalendar.ConfigurationParameters"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "1324">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1831,22 +1847,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BDF8C980-7A1C-4CD4-AEAE-86DAB37B7DD1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "rightAction()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "66F5428A-C42E-403A-B572-93B33814DAF2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -1857,38 +1857,6 @@
             startingLineNumber = "83"
             endingLineNumber = "83"
             landmarkName = "leftAction()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "836ACCA2-673E-4F01-93E2-7CDA57DF4772"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "rightAction()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D383714B-4EEC-47A8-8460-604E0ADD5FB7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "openSettings()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1943,64 +1911,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "64947EE9-F2AA-4DD4-84FE-ECB6796E5EEE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Quizzes/Controllers/QuizzesGradesViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "getSubmissions()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0DD0EB97-018B-4403-A48B-D8A5A04EAEAD"
+            uuid = "78A34E29-6036-4191-A591-027AB9F93356"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "skolera/Grades/Controllers/CourseGradeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "getCourseGradingPeriods()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE2EEB97-38D7-4C5A-902F-3BA919340D2E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Grades/Controllers/CourseGradeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "getStudentGradeBook()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "734F7F2C-F322-4568-9E5A-F5B83325BB0A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Login/Controllers/SplashScreenViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "getMainScreen()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8CE7F7D4-DF79-4CCC-AD57-C1131584A02B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Login/Controllers/SplashScreenViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "getMainScreen()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
