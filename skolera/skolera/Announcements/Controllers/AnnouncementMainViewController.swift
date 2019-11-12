@@ -119,7 +119,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 72
     }
     
     

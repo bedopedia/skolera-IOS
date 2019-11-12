@@ -70,7 +70,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x9S-ZB-crC">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x9S-ZB-crC">
                                 <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -81,34 +81,46 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-UU-c9z">
-                                                    <rect key="frame" x="26" y="10.5" width="35" height="35"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjR-dj-RZp" customClass="CardView" customModule="skolera" customModuleProvider="target">
+                                                    <rect key="frame" x="12" y="6" width="351" height="44"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="American History" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-UU-c9z">
+                                                            <rect key="frame" x="20" y="4.5" width="35" height="35"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="35" id="Skh-kI-IRx"/>
+                                                                <constraint firstAttribute="width" constant="35" id="eyZ-bX-MuK"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfE-2E-5Uk">
+                                                            <rect key="frame" x="268.5" y="13" width="62.5" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URj-Bn-MTv">
+                                                            <rect key="frame" x="66" y="11.5" width="127" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="Skh-kI-IRx"/>
-                                                        <constraint firstAttribute="width" constant="35" id="eyZ-bX-MuK"/>
+                                                        <constraint firstItem="0QI-UU-c9z" firstAttribute="leading" secondItem="wjR-dj-RZp" secondAttribute="leading" constant="20" id="1Hj-3S-Ibe"/>
+                                                        <constraint firstAttribute="trailing" secondItem="YfE-2E-5Uk" secondAttribute="trailing" constant="20" id="6fq-BJ-Zu0"/>
+                                                        <constraint firstItem="URj-Bn-MTv" firstAttribute="leading" secondItem="0QI-UU-c9z" secondAttribute="trailing" constant="11" id="Fko-PB-AEA"/>
+                                                        <constraint firstItem="YfE-2E-5Uk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="URj-Bn-MTv" secondAttribute="trailing" constant="8" id="aey-Z6-egs"/>
+                                                        <constraint firstItem="YfE-2E-5Uk" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="pkg-TC-qi2"/>
+                                                        <constraint firstItem="0QI-UU-c9z" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="xcl-Mv-jM4"/>
+                                                        <constraint firstItem="URj-Bn-MTv" firstAttribute="centerY" secondItem="0QI-UU-c9z" secondAttribute="centerY" id="ylG-6g-WgK"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfE-2E-5Uk">
-                                                    <rect key="frame" x="296.5" y="19" width="62.5" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URj-Bn-MTv">
-                                                    <rect key="frame" x="72" y="17.5" width="127" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="YfE-2E-5Uk" secondAttribute="trailing" constant="16" id="FgJ-tD-bQ9"/>
-                                                <constraint firstItem="YfE-2E-5Uk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="URj-Bn-MTv" secondAttribute="trailing" constant="8" id="cQl-44-h5s"/>
-                                                <constraint firstItem="YfE-2E-5Uk" firstAttribute="centerY" secondItem="SJU-b9-0Sr" secondAttribute="centerY" id="eSp-h6-PYh"/>
-                                                <constraint firstItem="URj-Bn-MTv" firstAttribute="centerY" secondItem="0QI-UU-c9z" secondAttribute="centerY" id="hZQ-Cp-4Wi"/>
-                                                <constraint firstItem="0QI-UU-c9z" firstAttribute="leading" secondItem="SJU-b9-0Sr" secondAttribute="leading" constant="26" id="tnK-ws-BOl"/>
-                                                <constraint firstItem="0QI-UU-c9z" firstAttribute="centerY" secondItem="SJU-b9-0Sr" secondAttribute="centerY" id="wD5-22-2et"/>
-                                                <constraint firstItem="URj-Bn-MTv" firstAttribute="leading" secondItem="0QI-UU-c9z" secondAttribute="trailing" constant="11" id="yl3-jD-du1"/>
+                                                <constraint firstItem="wjR-dj-RZp" firstAttribute="top" secondItem="SJU-b9-0Sr" secondAttribute="top" constant="6" id="HLB-2p-6Is"/>
+                                                <constraint firstAttribute="bottom" secondItem="wjR-dj-RZp" secondAttribute="bottom" constant="6" id="M7q-A0-DJW"/>
+                                                <constraint firstItem="wjR-dj-RZp" firstAttribute="leading" secondItem="SJU-b9-0Sr" secondAttribute="leading" constant="12" id="Oau-RO-qLA"/>
+                                                <constraint firstAttribute="trailing" secondItem="wjR-dj-RZp" secondAttribute="trailing" constant="12" id="lK0-SF-gAe"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -282,6 +294,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="American History" width="900" height="773"/>
         <image name="announcmentsplaceholder" width="144" height="140"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="logo" width="131" height="24"/>
