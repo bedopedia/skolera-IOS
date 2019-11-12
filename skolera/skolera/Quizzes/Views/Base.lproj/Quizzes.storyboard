@@ -21,11 +21,11 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="QuizCourseTableViewCell" rowHeight="108" id="KIG-Aa-eik" customClass="QuizCourseTableViewCell" customModule="skolera" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuizCourseTableViewCell" rowHeight="108" id="KIG-Aa-eik" customClass="QuizCourseTableViewCell" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KIG-Aa-eik" id="KKD-MK-Gh6">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="108"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bq-lP-a4h">
@@ -75,7 +75,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RB0-zP-7Ya">
-                                                    <rect key="frame" x="344" y="43.5" width="21" height="21"/>
+                                                    <rect key="frame" x="363" y="43.5" width="21" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.8980392157" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -690,16 +690,16 @@
                                 <rect key="frame" x="0.0" y="224" width="414" height="638"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3" translatesAutoresizingMaskIntoConstraints="NO" id="USQ-bQ-L6N">
-                                        <rect key="frame" x="122" y="64" width="170" height="170"/>
+                                        <rect key="frame" x="37" y="64" width="340" height="340"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quiz not started yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PJ-A6-WGj">
-                                        <rect key="frame" x="133" y="250" width="148" height="20"/>
+                                        <rect key="frame" x="133" y="420" width="148" height="20"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will be able to solve quiz when it started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uET-7H-Wy2">
-                                        <rect key="frame" x="81.5" y="278" width="251" height="14.5"/>
+                                        <rect key="frame" x="81.5" y="448" width="251" height="14.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14.5" id="lIw-In-X2O"/>
                                         </constraints>
@@ -806,7 +806,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="4v9-53-L8F">
-                                                        <rect key="frame" x="366" y="15" width="8" height="12"/>
+                                                        <rect key="frame" x="358" y="9" width="16" height="24"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sel-SU-fde">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
@@ -839,7 +839,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="gFc-zF-PRB">
-                                                        <rect key="frame" x="366" y="15" width="8" height="12"/>
+                                                        <rect key="frame" x="358" y="9" width="16" height="24"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H03-bF-dQt">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
@@ -872,7 +872,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="AX5-sq-3Ha">
-                                                        <rect key="frame" x="366" y="15" width="8" height="12"/>
+                                                        <rect key="frame" x="358" y="9" width="16" height="24"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51K-Hb-ZrS">
                                                         <rect key="frame" x="0.0" y="0.0" width="390" height="42"/>
@@ -1123,7 +1123,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTp-6m-lu1">
-                                                    <rect key="frame" x="374" y="20" width="24" height="24"/>
+                                                    <rect key="frame" x="350" y="8" width="48" height="48"/>
                                                     <state key="normal" image="downloadAssignmentIcon"/>
                                                     <connections>
                                                         <action selector="openLink" destination="xZ5-qo-zkT" eventType="touchUpInside" id="2Ll-AN-kZW"/>
@@ -1889,7 +1889,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizSubmissionCheck" translatesAutoresizingMaskIntoConstraints="NO" id="kgr-NI-ikP">
-                                <rect key="frame" x="132" y="253" width="150" height="150"/>
+                                <rect key="frame" x="57" y="253" width="300" height="300"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
