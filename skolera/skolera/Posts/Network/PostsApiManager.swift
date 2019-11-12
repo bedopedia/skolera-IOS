@@ -67,7 +67,6 @@ func uploadFileApi(file: URL, postId: Int, fileName: String, completion: @escapi
     let url = UPLOAD_FILE_FOR_POST()
     Alamofire.upload(
         multipartFormData: { multipartFormData in
-            
             multipartFormData.append(fileName.data(using:.utf8)!, withName: "name")
             multipartFormData.append(file, withName: "file[file]" )
             multipartFormData.append(String(postId).data(using: .utf8)!, withName: "post_ids[]")

@@ -17,7 +17,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    
+    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var placeholderLabel: UILabel!
     
     var child : Child!
     var isTeacher: Bool = false
@@ -25,7 +26,20 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignments: [FullAssignment] = []
-    var filteredAssignments: [FullAssignment] = []
+    var filteredAssignments: [FullAssignment]! {
+        didSet {
+            if self.filteredAssignments.isEmpty {
+                if self.selectedSegment == 0{
+                    self.placeholderLabel.text = "You don't have any open assignments for now".localized
+                } else {
+                    self.placeholderLabel.text = "You don't have any closed assignments for now".localized
+                }
+                placeholderView.isHidden = false
+            } else {
+                placeholderView.isHidden = true
+            }
+        }
+    }
     var meta: Meta!
     var selectedSegment = 0
     private let refreshControl = UIRefreshControl()
@@ -138,6 +152,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                             assignmentDetailsVC.assignment = assignment
                             debugPrint(self.parent, self.parent?.parent)
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+                        } else {
+                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+                            alert.modalPresentationStyle = .fullScreen
+                            self.present(alert, animated: true, completion: nil)
                         }
                     } else {
                         let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
@@ -154,7 +173,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filteredAssignments.count
+        if filteredAssignments != nil {
+            return filteredAssignments.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

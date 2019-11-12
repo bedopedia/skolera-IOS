@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +25,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uct-pS-T91">
-                                <rect key="frame" x="0.0" y="475" width="375" height="192"/>
+                                <rect key="frame" x="0.0" y="455" width="375" height="212"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -35,7 +33,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wH6-H8-TJ6" id="ack-hm-IS3">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="71.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="349" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J0i-qo-t2z">
@@ -58,13 +56,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUI-Ot-vzL">
-                                                    <rect key="frame" x="87" y="25" width="202" height="21.5"/>
+                                                    <rect key="frame" x="87" y="25.5" width="209" height="21.5"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOF-3n-VUW">
-                                                    <rect key="frame" x="309" y="23.5" width="25" height="25"/>
+                                                    <rect key="frame" x="316" y="23.5" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="Y9d-ED-AGc"/>
                                                         <constraint firstAttribute="height" constant="25" id="gQ6-lL-Xf4"/>
@@ -107,7 +105,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anv-IM-0JI">
-                                <rect key="frame" x="0.0" y="80" width="375" height="395"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="395"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I7L-X3-4H9">
                                         <rect key="frame" x="4" y="345" width="367" height="50"/>
@@ -209,7 +207,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEr-Ns-Ki8">
-                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uQ-EC-8Bh">
                                         <rect key="frame" x="0.0" y="59" width="375" height="1"/>
@@ -260,19 +258,48 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                     <constraint firstItem="BOh-eT-UgF" firstAttribute="centerX" secondItem="ZEr-Ns-Ki8" secondAttribute="centerX" id="qse-6j-Zzh"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-pn-dcl">
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weeklyplannerplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="FbF-Tt-Uct">
+                                        <rect key="frame" x="115.5" y="189.5" width="144" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="Bzt-kf-g4i"/>
+                                            <constraint firstAttribute="width" constant="144" id="Idw-9L-6oX"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any Weekly plans for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gl7-c1-Qh4">
+                                        <rect key="frame" x="40.5" y="353.5" width="294.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="gl7-c1-Qh4" firstAttribute="centerX" secondItem="FbF-Tt-Uct" secondAttribute="centerX" id="QXB-DJ-nNq"/>
+                                    <constraint firstItem="FbF-Tt-Uct" firstAttribute="centerY" secondItem="Sg6-pn-dcl" secondAttribute="centerY" constant="-44" id="QmW-1s-h0z"/>
+                                    <constraint firstItem="gl7-c1-Qh4" firstAttribute="top" secondItem="FbF-Tt-Uct" secondAttribute="bottom" constant="24" id="ShX-3N-f2y"/>
+                                    <constraint firstItem="FbF-Tt-Uct" firstAttribute="centerX" secondItem="Sg6-pn-dcl" secondAttribute="centerX" id="xNe-WE-C2R"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="anv-IM-0JI" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="1Wd-At-tCa"/>
                             <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="uct-pS-T91" secondAttribute="trailing" id="6Qv-8C-762"/>
                             <constraint firstItem="anv-IM-0JI" firstAttribute="top" secondItem="ZEr-Ns-Ki8" secondAttribute="bottom" id="7lG-CT-yiu"/>
+                            <constraint firstItem="Sg6-pn-dcl" firstAttribute="trailing" secondItem="FNQ-9L-PzD" secondAttribute="trailing" id="9MK-GN-Ipx"/>
                             <constraint firstItem="uct-pS-T91" firstAttribute="top" secondItem="anv-IM-0JI" secondAttribute="bottom" id="GNU-Ay-sZ1"/>
                             <constraint firstItem="FNQ-9L-PzD" firstAttribute="trailing" secondItem="anv-IM-0JI" secondAttribute="trailing" id="Hdw-nQ-dxN"/>
+                            <constraint firstItem="FNQ-9L-PzD" firstAttribute="bottom" secondItem="Sg6-pn-dcl" secondAttribute="bottom" id="Nrr-pq-ohK"/>
                             <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="SSp-GX-6yn"/>
                             <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="trailing" secondItem="FNQ-9L-PzD" secondAttribute="trailing" id="aX8-Ty-VwC"/>
                             <constraint firstItem="uct-pS-T91" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="gwm-UY-Und"/>
                             <constraint firstItem="FNQ-9L-PzD" firstAttribute="bottom" secondItem="uct-pS-T91" secondAttribute="bottom" id="ong-ri-Weo"/>
+                            <constraint firstItem="Sg6-pn-dcl" firstAttribute="top" secondItem="ZEr-Ns-Ki8" secondAttribute="bottom" id="pY6-n6-x59"/>
                             <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="top" secondItem="FNQ-9L-PzD" secondAttribute="top" id="sAT-g8-5IP"/>
+                            <constraint firstItem="Sg6-pn-dcl" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="zAi-Yg-Eha"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FNQ-9L-PzD"/>
                     </view>
@@ -283,6 +310,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <outlet property="containerViewHeightConstraint" destination="ndU-hu-Go3" id="5fG-PE-99U"/>
                         <outlet property="contianerView" destination="gMf-sf-6Fj" id="dB6-AL-4B9"/>
                         <outlet property="headerHeightConstraint" destination="Ahh-wk-cQD" id="JWP-j9-sMr"/>
+                        <outlet property="placeHolderView" destination="Sg6-pn-dcl" id="Xh8-dm-Sru"/>
                         <outlet property="seeMoreFrame" destination="HBh-81-Ros" id="7KS-68-Q7S"/>
                         <outlet property="tableView" destination="uct-pS-T91" id="4ul-Mi-fdi"/>
                         <outlet property="weeklyNoteBottomConstraint" destination="IUb-sF-7Gi" id="DrT-S0-MYR"/>
@@ -294,7 +322,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l6u-Jw-jQ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-196" y="36"/>
+            <point key="canvasLocation" x="-196" y="35.532233883058474"/>
         </scene>
         <!--Subject Weekly Plan View Controller-->
         <scene sceneID="ZOF-Xb-mDZ">
@@ -305,12 +333,12 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uYb-kv-RdR">
-                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXF-Ba-tQY">
-                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oky-Rv-0jH">
                                         <rect key="frame" x="0.0" y="59" width="375" height="1"/>
@@ -380,5 +408,6 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
     <resources>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="logo" width="131" height="24"/>
+        <image name="weeklyplannerplaceholder" width="145" height="140"/>
     </resources>
 </document>

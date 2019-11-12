@@ -8,57 +8,75 @@
 //
 
 import UIKit
+import RichTextView
 
 class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var matchLeftView: UIView!
     @IBOutlet weak var matchTextField: UITextField!
-    @IBOutlet weak var answerTextLabel: UILabel!
+    @IBOutlet weak var answerTextView: RichTextView!
     @IBOutlet weak var answerLeftImageView: UIImageView!
-    @IBOutlet weak var answerRightImageView: UIImageView!
     @IBOutlet weak var cellView: UIView!
     
+    var isAnswerSelected = false {
+        didSet {
+            if self.isAnswerSelected {
+                if questionType == QuestionTypes.multipleChoice {
+                    answerLeftImageView.image = #imageLiteral(resourceName: "multiplechoiceselected")
+                } else if questionType == QuestionTypes.multipleSelect {
+                    answerLeftImageView.image = #imageLiteral(resourceName: "multipleselectselected")
+                }
+            } else {
+                self.setUnselectedImage()
+            }
+//            if (questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect) && self.isAnswerSelected {
+//                answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+//            } else {
+//                self.setUnselectedImage()
+//            }
+        }
+    }
+    
     var isAnswers = false
+    var updateMatchAnswer: ((String?, String) -> ())!
+    var matchString: String! {
+        didSet {
+            answerTextView.update(input: self.matchString)
+            answerTextView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9803921569, alpha: 1)
+        }
+    }
     var questionType: QuestionTypes! {
         didSet {
             self.hideMatchView()
             self.cellView.backgroundColor = .white
-            switch self.questionType! {
-            case QuestionTypes.match:
-                self.showMatchView()
-            case QuestionTypes.multipleChoice:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            case QuestionTypes.multipleSelect:
-                //set asset
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            case QuestionTypes.reorder:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
-            case QuestionTypes.trueOrFalse:
-                self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-            }
+            self.setUnselectedImage()
         }
     }
-    var answer: Answers! {
+    var answer: Answer! {
         didSet {
-            answerTextLabel.text = self.answer.body
-            matchTextField.delegate = self
-            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 16)
-            if isAnswers {
-                matchTextField.text = self.answer.match ?? ""
+//            Might be a redundant check
+            if questionType != QuestionTypes.match {
+                answerTextView.backgroundColor = .white
+                answerTextView.update(input: self.answer.body)
             }
+            matchTextField.delegate = self
+            matchTextField.font = UIFont(name: ".SFUIDisplay-Bold", size: 14)
         }
     }
     
-    func setSelectedImage() {
-        if questionType == QuestionTypes.multipleChoice || questionType == QuestionTypes.multipleSelect || questionType == QuestionTypes.trueOrFalse {
-            answerLeftImageView.image = #imageLiteral(resourceName: "selectedSlot")
+    private func setUnselectedImage() {
+        switch self.questionType! {
+        case QuestionTypes.match:
+            self.showMatchView()
+        case QuestionTypes.multipleChoice:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
+        case QuestionTypes.multipleSelect:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "multipleselect")
+        case QuestionTypes.reorder:
+            self.answerLeftImageView.image = #imageLiteral(resourceName: "quizReorder")
         }
     }
-    
-    func resetLeftImage() {
-        answerLeftImageView.image = #imageLiteral(resourceName: "unselectedSlot")
-    }
-    
+ 
     func hideMatchView() {
         matchLeftView.isHidden = true
         matchTextField.isHidden = true
@@ -78,19 +96,23 @@ class QuizAnswerTableViewCell: UITableViewCell, UITextFieldDelegate {
             currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         matchLeftView.layer.borderWidth = 1
         matchLeftView.layer.borderColor = #colorLiteral(red: 0.6470588235, green: 0.6784313725, blue: 0.7058823529, alpha: 1)
         matchLeftView.layer.cornerRadius = 6
-//        matchLeftView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        matchTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        answerTextView.isUserInteractionEnabled = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        updateMatchAnswer(textField.text, matchString)
     }
 
 }

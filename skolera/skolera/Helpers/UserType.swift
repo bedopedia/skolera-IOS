@@ -1,5 +1,5 @@
 //
-//  UserTypes.swift
+//  UserType.swift
 //  skolera
 //
 //  Created by Rana Hossam on 11/4/19.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 enum UserType: String {
     case teacher = "teacher"
     case student = "student"

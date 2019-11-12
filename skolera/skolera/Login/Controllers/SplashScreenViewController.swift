@@ -17,8 +17,8 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkUpdate(for: "1346646110")
-//        let keychain = KeychainSwift()
-//        keychain.clear()
+        navigationController?.isNavigationBarHidden = true
+        //        getMainScreen()
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,7 +115,11 @@ class SplashScreenViewController: UIViewController {
                         self.present(nvc, animated: true, completion: nil)
                     } else {
                         if parent.data.userType.elementsEqual("student") {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                            if let parentId = parent.data.parentId {
+                                self.getChildren(parentId: parentId, childId: parent.data.actableId)
+                            } else {
+                                showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
+                            }
                         } else {
                             let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                             childProfileVC.actor = parent.data
@@ -153,6 +157,8 @@ class SplashScreenViewController: UIViewController {
             data, response, error in
             if error != nil {
                 print(error!.localizedDescription)
+                self.navigationController?.isNavigationBarHidden = true
+                self.getMainScreen()
                 return
             }
             do {
@@ -165,22 +171,49 @@ class SplashScreenViewController: UIViewController {
                             if let result = resultArray.firstObject as? NSDictionary {
                                 let version = result["version"] as! String
                                 if let bundleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                                    if version != bundleVersion {
+                                    if version > bundleVersion {
                                         DispatchQueue.main.async {
                                             self.showUpdateAlert(version: version, appID: appId)
                                         }
+                                    } else {
+                                        DispatchQueue.main.async {
+                                            self.getMainScreen()
+                                        }
+                                    }
+                                } else {
+                                    DispatchQueue.main.async {
+                                        self.getMainScreen()
                                     }
                                 }
                                 
+                            } else {
+                                DispatchQueue.main.async {
+                                    self.getMainScreen()
+                                }
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.getMainScreen()
                             }
                         }
                         
+                    } else {
+                        DispatchQueue.main.async {
+                            self.getMainScreen()
+                        }
                     }
                     
+                } else {
+                    DispatchQueue.main.async {
+                        self.getMainScreen()
+                    }
                 }
                 
             } catch {
                 print(error)
+                DispatchQueue.main.async {
+                    self.getMainScreen()
+                }
                 
             }
         }

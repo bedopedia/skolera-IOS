@@ -16,15 +16,15 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var placeholderLabel: UILabel!
     
     var students: [Student] = []
-//    var assignAvg: [String: Double] = [:]
-//    var quizAvg: [String: Double] = [:]
-//    var gradeItemAvg: [String: Double] = [:]
+    //    var assignAvg: [String: Double] = [:]
+    //    var quizAvg: [String: Double] = [:]
+    //    var gradeItemAvg: [String: Double] = [:]
     
     
     //MARK: - Variables
@@ -33,7 +33,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     var courseGradingPeriods: [CourseGradingPeriods] = []
     var coursePeriods: [CourseGradingPeriods] = []
     var courseSubPeriods: [CourseGradingPeriods] = []
-//    var semeters: [String: [AnyObject]] = [:]
+    //    var semeters: [String: [AnyObject]] = [:]
     var semetersDic: [String: [AnyObject]] = [:]
     
     var currentSemester: String = ""
@@ -44,25 +44,22 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        if let grade = grade{
+        if let grade = grade {
             navbarTitleLabel.text = grade.name
         }
-        
 //        getAvgStudentGrades()
         getCourseGradingPeriods()
-//        getStudentGradeBook()
+        //        getStudentGradeBook()
         tableView.delegate = self
         tableView.dataSource = self
-        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
             tableView.addSubview(refreshControl)
         }
-        
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         segmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
         segmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .selected)
@@ -79,6 +76,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 segmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
+        
+//        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
+//         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,64 +96,57 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             handleCurrentSemester()
         }
+        checkData()
     }
     
     @objc private func refreshData(_ sender: Any) {
-        // Fetch Weather Data
         refreshControl.beginRefreshing()
-//        getAvgStudentGrades()
         getCourseGradingPeriods()
-//        getStudentGradeBook()
         refreshControl.endRefreshing()
     }
     
-//    private func getAvgStudentGrades(){
-//        SVProgressHUD.show(withStatus: "Loading".localized)
-//        let parameters : Parameters? = ["student_id" : child.actableId]
-//        let headers : HTTPHeaders? = getHeaders()
-//        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!)
-////        let url =  String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!, child.actableId!)
-//        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-//            SVProgressHUD.popActivity()
-//            switch response.result{
-//            case .success(_):
-//                if let result = response.result.value as? [String : AnyObject]
-//                {
-//                    self.assignAvg = (result["assignments_averages"] as! [String: Double])
-//                    self.quizAvg = (result["quizzes_averages"] as! [String: Double])
-//                    self.gradeItemAvg = (result["grades_averages"] as! [String: Double])
-//
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-//                {
-//                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-//                }
-//                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-//                {
-//                    showReauthenticateAlert(viewController: self)
-//                }
-//                else
-//                {
-//                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-//                }
-//            }
-//        }
-//    }
+    //    private func getAvgStudentGrades(){
+    //        SVProgressHUD.show(withStatus: "Loading".localized)
+    //        let parameters : Parameters? = ["student_id" : child.actableId]
+    //        let headers : HTTPHeaders? = getHeaders()
+    //        let url = String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!)
+    ////        let url =  String(format: GET_STUDENT_GRADE_AVG(), grade.courseId!,grade.id!, child.actableId!)
+    //        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+    //            SVProgressHUD.popActivity()
+    //            switch response.result{
+    //            case .success(_):
+    //                if let result = response.result.value as? [String : AnyObject]
+    //                {
+    //                    self.assignAvg = (result["assignments_averages"] as! [String: Double])
+    //                    self.quizAvg = (result["quizzes_averages"] as! [String: Double])
+    //                    self.gradeItemAvg = (result["grades_averages"] as! [String: Double])
+    //
+    //                }
+    //            case .failure(let error):
+    //                print(error.localizedDescription)
+    //                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
+    //                {
+    //                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
+    //                }
+    //                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
+    //                {
+    //                    showReauthenticateAlert(viewController: self)
+    //                }
+    //                else
+    //                {
+    //                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
+    //                }
+    //            }
+    //        }
+    //    }
     
-    private func getStudentGradeBook(){
+    private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters? = ["student_id" : child.actableId]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_STUDENT_GRADE_BOOK(), grade.courseId!, grade.id!)
-        debugPrint(url)
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+        let parameters : Parameters = ["student_id" : child.actableId]
+        getStudentGradeBookApi(parameters: parameters, grade: grade) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [String : AnyObject]
+            if isSuccess {
+                if let result = response as? [String : AnyObject]
                 {
                     let studentDic = (result["students"] as! [[String: AnyObject]])[0]
                     let assignmentsDic = studentDic["assignments"] as! [String: AnyObject]
@@ -167,9 +160,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                       total: assignDic["total"] as! Double,
                                                       grade: assignDic["grade"] as? Double ?? 0,
                                                       gradeView: assignDic["grade_view"] as? String ?? "\(assignDic["grade_view"] as? Double ?? 0)",
-                                                      feedback: assignDic["feedback"] as? String ?? "",
-                                                      createdAt: assignDic["end_date"] as! String,
-                                                      hideGrade: assignDic["hide_grade"] as? Bool ?? false))
+                            feedback: assignDic["feedback"] as? String ?? "",
+                            createdAt: assignDic["end_date"] as! String,
+                            hideGrade: assignDic["hide_grade"] as? Bool ?? false))
                     }
                     // parse quizzes
                     let quizzesJson = studentDic["quizzes"] as! [String: AnyObject]
@@ -183,9 +176,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                             total: quizDic["total"] as! Double,
                                             grade: quizDic["grade"] as? Double ?? 0,
                                             gradeView: quizDic["grade_view"] as? String ?? "\(quizDic["grade_view"] as? Double ?? 0)",
-                                            feedback: quizDic["feedback"] as? String ?? "",
-                                            createdAt: quizDic["end_date"] as! String,
-                                            hideGrade: quizDic["hide_grade"] as? Bool ?? false))
+                            feedback: quizDic["feedback"] as? String ?? "",
+                            createdAt: quizDic["end_date"] as! String,
+                            hideGrade: quizDic["hide_grade"] as? Bool ?? false))
                     }
                     // parse gradeItems
                     let gradeItemsJson = studentDic["grade_items"] as! [String: AnyObject]
@@ -199,53 +192,34 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                                                     total: gradeItemDic["total"] as! Double,
                                                     grade: gradeItemDic["grade"] as? Double ?? 0,
                                                     gradeView: gradeItemDic["grade_view"] as? String ?? "\(gradeItemDic["grade_view"] as? Double ?? 0)",
-                                                    feedback: gradeItemDic["feedback"] as? String ?? "",
-                                                    createdAt: gradeItemDic["end_date"] as! String,
-                                                    periodId: gradeItemDic["grading_period_id"] as! Int,
-                                                    hideGrade: gradeItemDic["hide_grade"] as? Bool ?? false))
+                            feedback: gradeItemDic["feedback"] as? String ?? "",
+                            createdAt: gradeItemDic["end_date"] as! String,
+                            periodId: gradeItemDic["grading_period_id"] as! Int,
+                            hideGrade: gradeItemDic["hide_grade"] as? Bool ?? false))
                     }
                     
                     
                     self.students.append(Student(id: studentDic["id"] as! Int,
-                                                name: studentDic["name"] as! String,
-                                                userId: studentDic["user_id"] as! Int,
-                                                assignments: assignments,
-                                                quizzes: quizzes,
-                                                gradeItems: gradeItems))
+                                                 name: studentDic["name"] as! String,
+                                                 userId: studentDic["user_id"] as! Int,
+                                                 assignments: assignments,
+                                                 quizzes: quizzes,
+                                                 gradeItems: gradeItems))
                     self.handleSemesters()
-//                    self.tableView.reloadData()
-                    
+                    //                    self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
-    private func getCourseGradingPeriods(){
+    private func getCourseGradingPeriods() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters? = ["course_id" : grade.courseId]
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_COURSE_GRADING_PERIODS())
-        Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
-            self.stopAnimating()
-            switch response.result{
-                
-            case .success(_):
-                if let result = response.result.value as? [[String : AnyObject]]
-                {
+        let parameters : Parameters = ["course_id" : grade.courseId]
+        getCourseGradingPeriodsApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
+            if isSuccess {
+                if let result = response as? [[String : AnyObject]] {
                     debugPrint(response)
                     var courseGradingPeriods: [CourseGradingPeriods] = []
                     self.coursePeriods = []
@@ -265,26 +239,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                     self.courseGradingPeriods = courseGradingPeriods
                     self.getStudentGradeBook()
-//                    self.tableView.reloadData()
-                    
+                    //                    self.tableView.reloadData()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
-                if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet
-                {
-                    showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                }
-                else if response.response?.statusCode == 401 ||  response.response?.statusCode == 500
-                {
-                    showReauthenticateAlert(viewController: self)
-                }
-                else
-                {
-                    showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG, completion: nil)
-                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
+    
     
     private func handleSemesters(){
         self.semetersDic = [:]
@@ -381,9 +343,43 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        checkData()
         tableView.reloadData()
     }
-    private func handleCurrentSemester(){
+    fileprivate func checkSemesterDict() {
+        var isEmptyFlag = true
+        let keys = semetersDic.keys
+        for key in keys {
+            if semetersDic[key]!.count > 0 {
+                isEmptyFlag = false
+                break
+            }
+        }
+        if isEmptyFlag {
+            placeholderView.isHidden = false
+        } else {
+            placeholderView.isHidden = true
+        }
+    }
+    
+    func checkData() {
+        if segmentControl.selectedSegmentIndex == 0 {
+            placeholderLabel.text = "You don't have any grades for now".localized
+            if courseGradingPeriods.count == 0 {
+                placeholderView.isHidden = false
+            } else {
+                checkSemesterDict()
+            }
+        } else {
+            placeholderLabel.text = "You don't have any current grades for now".localized
+            if courseSubPeriods.count == 0 {
+                placeholderView.isHidden = false
+            } else {
+                checkSemesterDict()
+            }
+        }
+    }
+    private func handleCurrentSemester() {
         self.semetersDic = [:]
         self.courseSubPeriods = []
         for sem in self.courseGradingPeriods {
@@ -553,14 +549,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         totGrade += round2Digits((i as! Assignment).total)
                     }
                 }
-                if totGrade > 0 && publish{
+                if totGrade > 0 && publish {
                     cell.gradeLabel.text = "\(grade)"
                     cell.totalGradeLabel.text = Language.language == .arabic ? "\(totGrade)/" : "/\(totGrade)"
                 } else {
                     cell.gradeLabel.text = ""
                     cell.totalGradeLabel.text = ""
                 }
-            } else if (item as! String).elementsEqual("Quizzes"){
+            } else if (item as! String).elementsEqual("Quizzes") {
                 var grade: Double = 0
                 var totGrade: Double = 0
                 for i in self.semetersDic[title]! {
@@ -569,7 +565,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         totGrade += round2Digits((i as! Quiz).total)
                     }
                 }
-                if totGrade > 0 && publish{
+                if totGrade > 0 && publish {
                     cell.gradeLabel.text = "\(grade)"
                     cell.totalGradeLabel.text = Language.language == .arabic ? "\(totGrade)/" : "/\(totGrade)"
                 } else {
@@ -607,11 +603,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 
                 cell.gradeWorldLabel.text = (item as! Assignment).feedback
-//                if Language.language == .arabic {
-//                    cell.avgGradeLabel.text = "الدرجه المتوسطه \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
-//                } else {
-//                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
-//                }
+                //                if Language.language == .arabic {
+                //                    cell.avgGradeLabel.text = "الدرجه المتوسطه \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
+                //                } else {
+                //                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.assignAvg["\((item as! Assignment).id)"] ?? (item as! Assignment).grade))"
+                //                }
             } else if item is Quiz {
                 cell.TitleLabel.text = (item as! Quiz).name
                 cell.avgGradeLabel.text = ""
@@ -622,11 +618,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 
                 cell.gradeWorldLabel.text = (item as! Quiz).feedback
-//                if Language.language == .arabic {
-//                    cell.avgGradeLabel.text = "الدرجه المتوسطه\(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
-//                } else {
-//                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
-//                }
+                //                if Language.language == .arabic {
+                //                    cell.avgGradeLabel.text = "الدرجه المتوسطه\(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
+                //                } else {
+                //                    cell.avgGradeLabel.text = "Avg. grade is \(round2Digits(self.quizAvg["\((item as! Quiz).id)"] ?? (item as! Quiz).grade))"
+                //                }
             } else if item is GradeItem {
                 cell.TitleLabel.text = (item as! GradeItem).name
                 cell.avgGradeLabel.text = ""
@@ -637,11 +633,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
                 cell.gradeWorldLabel.text = (item as! GradeItem).feedback
                 
-//                if Language.language == .arabic {
-//                    cell.avgGradeLabel.text = "الدرجة المتوسطه \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
-//                } else {
-//                    cell.avgGradeLabel.text = "Avg. grade is \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
-//                }
+                //                if Language.language == .arabic {
+                //                    cell.avgGradeLabel.text = "الدرجة المتوسطه \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
+                //                } else {
+                //                    cell.avgGradeLabel.text = "Avg. grade is \(Int(self.gradeItemAvg["\((item as! GradeItem).id)"] ?? (item as! GradeItem).grade))"
+                //                }
             }
             return cell
         }
@@ -666,7 +662,6 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     func round2Digits(_ double: Double) -> Double {
         let multiplier = pow(10, Double(2))
         return Darwin.round(double * multiplier) / multiplier
-        
     }
-
+    
 }

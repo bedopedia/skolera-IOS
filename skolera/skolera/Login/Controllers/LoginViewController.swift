@@ -14,7 +14,6 @@ import KeychainSwift
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
-    
     //MARKL - Variables
     var imageURL: String?
     
@@ -40,6 +39,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
     }
@@ -94,7 +94,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             authenticate(email: email, password: password)
         }
     }
-    
     /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenListViewController. Alert message is shown for wrong credentials on failure
     ///
     /// - Parameters:

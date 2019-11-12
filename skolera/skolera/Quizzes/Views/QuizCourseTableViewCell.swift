@@ -45,7 +45,7 @@ class QuizCourseTableViewCell: UITableViewCell {
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
                 quizDateLabel.text = newDateFormat.string(from: assignDate!)
-                if let status = course.quizState, status.elementsEqual("running") {
+                if Date() < (assignDate ?? Date()) {
                     quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
                     quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "greenHour")

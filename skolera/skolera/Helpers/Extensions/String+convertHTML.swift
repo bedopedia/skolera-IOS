@@ -7,11 +7,19 @@
 //
 
 import Foundation
+import UIKit
 extension String {
     var htmlToAttributedString: NSAttributedString? {
+//        var dict:NSDictionary?
+//        dict = NSMutableDictionary()
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.firstLineHeadIndent = 4.0
+        paragraphStyle.alignment = .center
+//        guard let data = htmlCSSString.data(using: .utf8) else { return NSAttributedString() }
         guard let data = data(using: .utf8) else { return NSAttributedString() }
         do {
             return try NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:  NSAttributedString.DocumentType.html], documentAttributes: nil)
+            
         } catch {
             return NSAttributedString()
         }

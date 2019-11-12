@@ -21,12 +21,10 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var assignForAllButton: UIButton!
     @IBOutlet weak var calendarImageView: UIImageView!
+    @IBOutlet var placeholderView: UIView!
     
     var courseGroupId: Int!
-
     var timeTableSlots: [TimetableSlots]!
-
-
     var day = Date().day
     var month = Date().month
     var year = Date().year
@@ -45,7 +43,15 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
     
     var slotAttendanceObject: FullDayAttendances!
-    var fullDayAttendanceObject: FullDayAttendances!
+    var fullDayAttendanceObject: FullDayAttendances! {
+        didSet {
+            if self.fullDayAttendanceObject.students.isEmpty {
+                placeholderView.isHidden = false
+            } else {
+                placeholderView.isHidden = true
+            }
+        }
+    }
     
     var studentsMap: [Int: [Attendances]]!  //childID, Attendances array
     var currentStudents: [AttendanceStudent]!
