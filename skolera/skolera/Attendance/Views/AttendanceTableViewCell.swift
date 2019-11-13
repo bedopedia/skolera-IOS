@@ -38,7 +38,7 @@ class AttendanceTableViewCell: UITableViewCell {
                 let month = formatter.string(from: attendance.date)
                 dayLabel.text = "\(day)"
                 monthLabel.text = month
-                messageLabel.text = attendance.comment
+                messageLabel.text = attendance.comment ?? "No description available".localized
             }
         }
     }
