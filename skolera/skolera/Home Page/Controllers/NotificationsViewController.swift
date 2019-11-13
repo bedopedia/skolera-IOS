@@ -15,6 +15,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
     @IBOutlet var placeholderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var fromChildrenList = false
     var notifications: [Notification]! {
@@ -41,6 +42,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         } else {
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
+        headerView.addShadow()
         getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -135,4 +137,8 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         }
         return cell
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 72
+//    }
 }
