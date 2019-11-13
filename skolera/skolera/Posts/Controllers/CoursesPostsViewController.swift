@@ -18,6 +18,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var createPostButton: UIButton!
     @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courseName: String = ""
@@ -41,6 +42,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
