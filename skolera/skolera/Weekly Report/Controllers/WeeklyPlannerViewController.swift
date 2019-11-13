@@ -24,9 +24,9 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var seeMoreFrame: CustomGradientView!
     @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
-    
     var maxHeaderHeight: CGFloat = 395
     let minHeaderHeight: CGFloat = 50
     var previousScrollOffset: CGFloat = 0
@@ -43,6 +43,7 @@ class WeeklyPlannerViewController: UIViewController {
     var selectedDay: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
@@ -154,12 +155,12 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
         let item = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
         cell.courseNameLabel.text = item.title
         cell.courseGradeLabel.isHidden = true
-        
+
         cell.courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
         //                courseImageView.image = getCourseImage(courseName: grade.name)
         cell.courseImageView.isHidden = false
         cell.subjectImageLabel.clipsToBounds = false
-        
+
         cell.courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
         cell.courseImageView.layer.shadowOpacity = 0.3
         cell.courseImageView.layer.shadowOffset = CGSize.zero
