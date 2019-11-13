@@ -107,18 +107,17 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
         return result
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return currentDataSource.count
-        return 10
+        return currentDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "behaviorNoteCell") as! BehaviorNoteTableViewCell
-//        cell.behaviorNote = currentDataSource[indexPath.row]
-//        if indexPath.row == currentDataSource.count - 1{
-//            if meta.currentPage != meta.totalPages{
-//                getBehaviorNotes(page: (meta.currentPage)! + 1)
-//            }
-//        }
+        cell.behaviorNote = currentDataSource[indexPath.row]
+        if indexPath.row == currentDataSource.count - 1{
+            if meta.currentPage != meta.totalPages{
+                getBehaviorNotes(page: (meta.currentPage)! + 1)
+            }
+        }
         return cell
     }
     func loadPositiveNotes(){

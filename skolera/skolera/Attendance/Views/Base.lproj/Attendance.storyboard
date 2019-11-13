@@ -86,7 +86,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ven-kB-p80">
-                                <rect key="frame" x="0.0" y="60" width="375" height="264"/>
+                                <rect key="frame" x="0.0" y="68" width="375" height="264"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSP-9H-yyC">
                                         <rect key="frame" x="16" y="8" width="187.5" height="20.5"/>
@@ -223,7 +223,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-Lu-fnc">
-                                <rect key="frame" x="0.0" y="324" width="375" height="343"/>
+                                <rect key="frame" x="0.0" y="332" width="375" height="335"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PvK-ai-lx6">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
@@ -372,7 +372,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e7v-yp-CAp">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="287"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="279"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="attendanceCell" rowHeight="77" id="oIL-ON-Lco" customClass="AttendanceTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -467,7 +467,7 @@
                             <constraint firstItem="H4j-Lu-fnc" firstAttribute="leading" secondItem="9ZF-oO-HgY" secondAttribute="leading" id="Tqh-dz-IaZ"/>
                             <constraint firstItem="hfi-3r-URu" firstAttribute="leading" secondItem="K78-kS-gAC" secondAttribute="leading" id="deP-Cs-2ox"/>
                             <constraint firstItem="hfi-3r-URu" firstAttribute="top" secondItem="9ZF-oO-HgY" secondAttribute="top" id="hMb-ME-7hr"/>
-                            <constraint firstItem="ven-kB-p80" firstAttribute="top" secondItem="hfi-3r-URu" secondAttribute="bottom" id="jmY-iu-1aU"/>
+                            <constraint firstItem="ven-kB-p80" firstAttribute="top" secondItem="hfi-3r-URu" secondAttribute="bottom" constant="8" id="jmY-iu-1aU"/>
                             <constraint firstItem="9ZF-oO-HgY" firstAttribute="bottom" secondItem="H4j-Lu-fnc" secondAttribute="bottom" id="kVh-VS-dP4"/>
                             <constraint firstItem="9ZF-oO-HgY" firstAttribute="leading" secondItem="ven-kB-p80" secondAttribute="leading" id="ryD-WW-RgM"/>
                             <constraint firstItem="ven-kB-p80" firstAttribute="width" secondItem="9ZF-oO-HgY" secondAttribute="width" id="tca-GA-x8t"/>
@@ -484,6 +484,7 @@
                         <outlet property="currentMonthLabel" destination="TSP-9H-yyC" id="MRu-tb-8XL"/>
                         <outlet property="excusedBottomBorderView" destination="6rb-80-0ei" id="RUv-Pb-zOr"/>
                         <outlet property="excusedDaysNumberLabel" destination="iuh-dC-iNz" id="xU6-2n-FgM"/>
+                        <outlet property="headerView" destination="hfi-3r-URu" id="S0w-Qb-eL4"/>
                         <outlet property="lateBottomBorderView" destination="qEh-Qs-Qxc" id="d0p-XD-mzh"/>
                         <outlet property="lateDaysNumberLabel" destination="rdj-kX-yYI" id="gcv-3P-Sdv"/>
                         <outlet property="tableView" destination="e7v-yp-CAp" id="fnx-FU-S7s"/>
