@@ -14,10 +14,12 @@ class TeacherCourseGroupViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var courseGroupTableView: UITableView!
     
+    @IBOutlet var headerView: UIView!
     var course: TeacherCourse!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = course.name 
         courseGroupTableView.delegate = self
