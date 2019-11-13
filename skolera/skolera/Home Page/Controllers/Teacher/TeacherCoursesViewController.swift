@@ -11,6 +11,7 @@ import NVActivityIndicatorView
 
 class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     var courses: [TeacherCourse] = []
     var actor: Actor!{
@@ -23,6 +24,7 @@ class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.navigationController?.delegate = self
