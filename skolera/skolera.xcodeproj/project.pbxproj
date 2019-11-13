@@ -317,6 +317,7 @@
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
+		DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8536F7237BF63500B12476 /* UIView+Shadow.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
@@ -651,6 +652,7 @@
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
+		DC8536F7237BF63500B12476 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -679,6 +681,7 @@
 				8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */,
 				8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */,
 				DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */,
+				DC8536F7237BF63500B12476 /* UIView+Shadow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2046,6 +2049,7 @@
 				5482DDD62056D01300647D57 /* AttendanceTableViewCell.swift in Sources */,
 				543830B0204D634500ABF477 /* CourseGrade.swift in Sources */,
 				8A6D360F20B5975700DD0445 /* SlidingDataSource.swift in Sources */,
+				DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */,
 				547A3788202210CB00794441 /* NotificationTableViewCell.swift in Sources */,
 				8AB5276E226DC77F006EA7FB /* CardView.swift in Sources */,
 				8A30E10422E0CF730030EE5D /* PostDetailsTableViewCell.swift in Sources */,

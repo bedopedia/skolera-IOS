@@ -24,11 +24,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         }
     }
     var meta: Meta?
-    var shadowOffsetWidth: Int = 0
-    var shadowOffsetHeight: Int = 2
-    var shadowColor: UIColor? = UIColor(red:136/255.0, green:167/255.0, blue:199/255.0,  alpha:1)
-    var shadowOpacity: Float = 0.21
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
@@ -42,9 +37,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         self.tableView.delegate = self
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        headerView.layer.shadowColor = shadowColor?.cgColor
-        headerView.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
-        headerView.layer.shadowOpacity = shadowOpacity
+        headerView.addShadow()
     }
 //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -103,13 +96,14 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
         } else {
             return announcements.count
         }
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
         let announcement = announcements[indexPath.row]
         cell.announcement = announcement
-        //Loading More
+        Loading More
         if indexPath.row == announcements.count - 1
         {
             if meta?.currentPage != meta?.totalPages
