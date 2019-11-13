@@ -15,6 +15,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courses: [PostCourse] = []
@@ -22,6 +23,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
