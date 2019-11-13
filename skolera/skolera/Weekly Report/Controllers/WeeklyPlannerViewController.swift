@@ -78,17 +78,13 @@ class WeeklyPlannerViewController: UIViewController {
         } else {
             placeHolderView.isHidden = false
         }
-        
         contianerView.layer.masksToBounds = false
         contianerView.layer.shadowColor = UIColor.black.cgColor
         contianerView.layer.shadowOffset = CGSize(width: 0, height: 2);
         contianerView.layer.shadowOpacity = 0.08
-        
-        
         let customView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
         customView.backgroundColor = UIColor.clear
         tableView.tableFooterView = customView
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
@@ -126,7 +122,6 @@ class WeeklyPlannerViewController: UIViewController {
             self.activeDays.append("Friday")
         }
         self.collectionView.reloadData()
-        
         tableView.delegate = self
         tableView.dataSource  = self
     }

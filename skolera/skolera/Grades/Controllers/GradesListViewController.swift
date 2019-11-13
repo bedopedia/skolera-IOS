@@ -17,6 +17,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     var grades = [PostCourse]()
     //MARK: - Outlets
     
+    @IBOutlet var headerView: UIView!
     @IBOutlet var placeholderView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
@@ -24,10 +25,12 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        tableView.rowHeight = 80
+//        tableView.rowHeight = 80
+        tableView.estimatedRowHeight = 108
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
@@ -43,20 +46,20 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     // MARK: - Table view data source
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+//
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return grades.count
     }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Subjects".localized
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 32
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Subjects".localized
+//    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 32
+//    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
