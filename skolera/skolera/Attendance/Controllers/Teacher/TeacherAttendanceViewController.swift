@@ -456,7 +456,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 108
+        return 124
     }
 }
 
