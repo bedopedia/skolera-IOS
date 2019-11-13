@@ -816,7 +816,7 @@ attachment.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GPW-UV-mvd">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GPW-UV-mvd">
                                 <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -827,35 +827,47 @@ attachment.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vmQ-4j-a00">
-                                                    <rect key="frame" x="34" y="20" width="40" height="49"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Lx-rU-L8C" customClass="CardView" customModule="skolera" customModuleProvider="target">
+                                                    <rect key="frame" x="12" y="8" width="390" height="73"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vmQ-4j-a00">
+                                                            <rect key="frame" x="20" y="12" width="40" height="49"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="AyW-m8-hHX"/>
+                                                                <constraint firstAttribute="height" constant="49" id="iWo-ER-XxC"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Numbers - Multiplication &amp; Division" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gj-AC-Kt5">
+                                                            <rect key="frame" x="76" y="24" width="286" height="17"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                            <color key="textColor" red="0.364662766456604" green="0.36473065614700317" blue="0.36465850472450256" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday at 08:06 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XyD-ow-vuw">
+                                                            <rect key="frame" x="76" y="45" width="129" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" red="0.65292328596115112" green="0.71725344657897949" blue="0.75491112470626831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="AyW-m8-hHX"/>
-                                                        <constraint firstAttribute="height" constant="49" id="iWo-ER-XxC"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="0Gj-AC-Kt5" secondAttribute="trailing" constant="20" id="6C8-fs-o8R"/>
+                                                        <constraint firstItem="0Gj-AC-Kt5" firstAttribute="top" secondItem="2Lx-rU-L8C" secondAttribute="topMargin" constant="16" id="Q1i-Fj-EXc"/>
+                                                        <constraint firstItem="XyD-ow-vuw" firstAttribute="top" secondItem="0Gj-AC-Kt5" secondAttribute="bottom" constant="4" id="YUw-k7-qaP"/>
+                                                        <constraint firstItem="vmQ-4j-a00" firstAttribute="leading" secondItem="2Lx-rU-L8C" secondAttribute="leading" constant="20" id="ZvO-qc-Mor"/>
+                                                        <constraint firstItem="vmQ-4j-a00" firstAttribute="centerY" secondItem="2Lx-rU-L8C" secondAttribute="centerY" id="efy-w1-BBm"/>
+                                                        <constraint firstItem="XyD-ow-vuw" firstAttribute="leading" secondItem="0Gj-AC-Kt5" secondAttribute="leading" id="rmo-ij-TPT"/>
+                                                        <constraint firstItem="0Gj-AC-Kt5" firstAttribute="leading" secondItem="vmQ-4j-a00" secondAttribute="trailing" constant="16" id="vhy-ei-rM5"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Numbers - Multiplication &amp; Division" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Gj-AC-Kt5">
-                                                    <rect key="frame" x="90" y="27" width="288" height="17"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <color key="textColor" red="0.364662766456604" green="0.36473065614700317" blue="0.36465850472450256" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday at 08:06 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XyD-ow-vuw">
-                                                    <rect key="frame" x="90" y="48" width="129" height="14.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.65292328596115112" green="0.71725344657897949" blue="0.75491112470626831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.99963921310000003" green="1" blue="0.99975615740000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="0Gj-AC-Kt5" firstAttribute="top" secondItem="gSX-nA-JdJ" secondAttribute="topMargin" constant="16" id="BE8-7g-GTl"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="0Gj-AC-Kt5" secondAttribute="trailing" constant="16" id="L9f-BG-Alo"/>
-                                                <constraint firstItem="0Gj-AC-Kt5" firstAttribute="leading" secondItem="vmQ-4j-a00" secondAttribute="trailing" constant="16" id="Wrw-M4-67z"/>
-                                                <constraint firstItem="vmQ-4j-a00" firstAttribute="leading" secondItem="gSX-nA-JdJ" secondAttribute="leading" constant="34" id="epN-6W-kTU"/>
-                                                <constraint firstItem="XyD-ow-vuw" firstAttribute="top" secondItem="0Gj-AC-Kt5" secondAttribute="bottom" constant="4" id="kYK-st-Esm"/>
-                                                <constraint firstItem="XyD-ow-vuw" firstAttribute="leading" secondItem="0Gj-AC-Kt5" secondAttribute="leading" id="olH-1U-BJQ"/>
-                                                <constraint firstItem="vmQ-4j-a00" firstAttribute="centerY" secondItem="gSX-nA-JdJ" secondAttribute="centerY" id="pwk-fF-LnY"/>
+                                                <constraint firstItem="2Lx-rU-L8C" firstAttribute="leading" secondItem="gSX-nA-JdJ" secondAttribute="leading" constant="12" id="5nd-VS-x6w"/>
+                                                <constraint firstAttribute="bottom" secondItem="2Lx-rU-L8C" secondAttribute="bottom" constant="8" id="6kG-k2-TdK"/>
+                                                <constraint firstAttribute="trailing" secondItem="2Lx-rU-L8C" secondAttribute="trailing" constant="12" id="PWr-sI-aTt"/>
+                                                <constraint firstItem="2Lx-rU-L8C" firstAttribute="top" secondItem="gSX-nA-JdJ" secondAttribute="top" constant="8" id="cS5-2K-AcX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -935,6 +947,7 @@ attachment.</string>
                     <connections>
                         <outlet property="backButton" destination="y6l-Yy-Lys" id="Tyy-dc-fsP"/>
                         <outlet property="childImageView" destination="1AI-Fe-hdE" id="qKv-lj-pcE"/>
+                        <outlet property="headerView" destination="wpN-nr-lTr" id="hai-Kw-Dgv"/>
                         <outlet property="tableView" destination="GPW-UV-mvd" id="kwU-Ej-62p"/>
                         <outlet property="titleLabel" destination="fOa-cJ-xRU" id="jbb-SV-gMM"/>
                     </connections>
