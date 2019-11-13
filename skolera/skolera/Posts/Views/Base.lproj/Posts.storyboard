@@ -461,7 +461,7 @@ attachment.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="O80-2d-tY9">
-                                <rect key="frame" x="0.0" y="112" width="414" height="750"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                                 <color key="backgroundColor" red="0.98028594255447388" green="0.98045331239700317" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostTableViewCell" rowHeight="255" id="4e5-kk-VsO" customClass="PostTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -783,7 +783,7 @@ attachment.</string>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="bottom" secondItem="Hcm-AZ-9AJ" secondAttribute="bottom" constant="24" id="9WG-wo-lTS"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="O80-2d-tY9" secondAttribute="trailing" id="DnI-9H-XX5"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="V3r-hS-aNF" secondAttribute="trailing" id="Kf8-hK-kx1"/>
-                            <constraint firstItem="O80-2d-tY9" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" constant="8" id="SDx-AN-N5Y"/>
+                            <constraint firstItem="O80-2d-tY9" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" id="SDx-AN-N5Y"/>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="SN1-P5-JU5"/>
                             <constraint firstAttribute="trailing" secondItem="M23-Aa-G1T" secondAttribute="trailing" id="VZf-kx-vfa"/>
                             <constraint firstItem="V3r-hS-aNF" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="g7a-9t-XOX"/>
@@ -1288,6 +1288,7 @@ attachment.</string>
                     <connections>
                         <outlet property="backButton" destination="sNd-OM-kOe" id="Xbv-gQ-t2F"/>
                         <outlet property="childImageView" destination="eXX-FL-dYR" id="7RV-Xq-py1"/>
+                        <outlet property="headerView" destination="OzV-9J-j59" id="LPe-Sf-Cmf"/>
                         <outlet property="replyTextField" destination="0TN-iF-Khd" id="hpV-bL-OHx"/>
                         <outlet property="replyView" destination="2zT-fD-Nw5" id="dHh-2B-cwP"/>
                         <outlet property="tableView" destination="2nF-0f-QtH" id="qaQ-2u-Aoc"/>
