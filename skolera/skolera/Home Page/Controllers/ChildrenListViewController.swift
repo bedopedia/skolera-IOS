@@ -22,6 +22,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     
     var refreshControl: UIRefreshControl!
     
+    @IBOutlet var headerView: UIView!
     /// children array acts as the data source for the tableView
     @IBOutlet weak var notificationButton: UIButton!
 //    @IBOutlet weak var signOutButton: UIBarButtonItem!
@@ -39,6 +40,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
+        headerView.addShadow()
 //        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
 //        let backItem = UIBarButtonItem()
 //        backItem.title = nil

@@ -103,7 +103,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
         let announcement = announcements[indexPath.row]
         cell.announcement = announcement
-        Loading More
+//        Loading More
         if indexPath.row == announcements.count - 1
         {
             if meta?.currentPage != meta?.totalPages
