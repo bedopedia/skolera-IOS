@@ -24,6 +24,7 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
 
     //MARK: - Outlets
     
+    @IBOutlet var headerView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -35,6 +36,7 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -105,17 +107,18 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
         return result
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentDataSource.count
+//        return currentDataSource.count
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "behaviorNoteCell") as! BehaviorNoteTableViewCell
-        cell.behaviorNote = currentDataSource[indexPath.row]
-        if indexPath.row == currentDataSource.count - 1{
-            if meta.currentPage != meta.totalPages{
-                getBehaviorNotes(page: (meta.currentPage)! + 1)
-            }
-        }
+//        cell.behaviorNote = currentDataSource[indexPath.row]
+//        if indexPath.row == currentDataSource.count - 1{
+//            if meta.currentPage != meta.totalPages{
+//                getBehaviorNotes(page: (meta.currentPage)! + 1)
+//            }
+//        }
         return cell
     }
     func loadPositiveNotes(){
