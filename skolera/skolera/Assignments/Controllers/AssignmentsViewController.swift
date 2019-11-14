@@ -148,11 +148,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 if let result = value as? [String : AnyObject] {
                     let assignment = FullAssignment(result)
                     if !self.isTeacher {
-                        if let description = assignment.description, !description.isEmpty {
-                            let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
+                        let description = assignment.description ?? ""
+                        if !description.isEmpty || assignment.uploadedFiles.count > 0 {
+                           let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
                             assignmentDetailsVC.child = self.child
                             assignmentDetailsVC.assignment = assignment
-                            debugPrint(self.parent, self.parent?.parent)
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                         } else {
                             let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
