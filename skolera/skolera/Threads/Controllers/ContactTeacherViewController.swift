@@ -20,6 +20,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
     @IBOutlet weak var leftHeaderButton: UIButton!
     @IBOutlet var placeholderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var threads: [Threads]! {
         didSet {
@@ -36,6 +37,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -111,7 +113,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 96
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
