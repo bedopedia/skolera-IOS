@@ -152,6 +152,31 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9Y-EJ-dZU">
+                                <rect key="frame" x="0.0" y="112" width="414" height="750"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizzesplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="WNB-hN-0Vo">
+                                        <rect key="frame" x="135" y="261" width="144" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="144" id="KGV-oY-ZWu"/>
+                                            <constraint firstAttribute="height" constant="140" id="YET-Vq-TR6"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any online quizzes for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBp-wZ-bXA">
+                                        <rect key="frame" x="56" y="425" width="302" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="fBp-wZ-bXA" firstAttribute="top" secondItem="WNB-hN-0Vo" secondAttribute="bottom" constant="24" id="7h8-HJ-feM"/>
+                                    <constraint firstItem="WNB-hN-0Vo" firstAttribute="centerX" secondItem="h9Y-EJ-dZU" secondAttribute="centerX" id="8q8-nH-G6B"/>
+                                    <constraint firstItem="fBp-wZ-bXA" firstAttribute="centerX" secondItem="WNB-hN-0Vo" secondAttribute="centerX" id="esc-Q2-CfW"/>
+                                    <constraint firstItem="WNB-hN-0Vo" firstAttribute="centerY" secondItem="h9Y-EJ-dZU" secondAttribute="centerY" constant="-44" id="k4Q-0V-U9k"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ood-9M-F9M">
                                 <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                                 <subviews>
@@ -211,10 +236,14 @@
                             <constraint firstItem="B3f-Nz-Qjd" firstAttribute="top" secondItem="ood-9M-F9M" secondAttribute="bottom" constant="8" id="3om-LB-gth"/>
                             <constraint firstItem="MS7-9i-8Sg" firstAttribute="bottom" secondItem="B3f-Nz-Qjd" secondAttribute="bottom" id="9BA-8F-T1J"/>
                             <constraint firstItem="B3f-Nz-Qjd" firstAttribute="leading" secondItem="MS7-9i-8Sg" secondAttribute="leading" id="ELQ-ZT-UXW"/>
+                            <constraint firstItem="h9Y-EJ-dZU" firstAttribute="leading" secondItem="MS7-9i-8Sg" secondAttribute="leading" id="QAl-EI-Hma"/>
+                            <constraint firstItem="h9Y-EJ-dZU" firstAttribute="trailing" secondItem="MS7-9i-8Sg" secondAttribute="trailing" id="RBA-YC-jH2"/>
                             <constraint firstItem="MS7-9i-8Sg" firstAttribute="trailing" secondItem="B3f-Nz-Qjd" secondAttribute="trailing" id="VxD-fx-s3T"/>
                             <constraint firstItem="MS7-9i-8Sg" firstAttribute="trailing" secondItem="ood-9M-F9M" secondAttribute="trailing" id="gbB-Dc-r8p"/>
+                            <constraint firstItem="h9Y-EJ-dZU" firstAttribute="top" secondItem="ood-9M-F9M" secondAttribute="bottom" constant="8" id="o6u-Nt-d06"/>
                             <constraint firstItem="ood-9M-F9M" firstAttribute="leading" secondItem="AAs-bF-63m" secondAttribute="leading" id="r6e-p3-AKi"/>
                             <constraint firstItem="ood-9M-F9M" firstAttribute="top" secondItem="MS7-9i-8Sg" secondAttribute="top" id="sIf-sf-yUm"/>
+                            <constraint firstItem="MS7-9i-8Sg" firstAttribute="bottom" secondItem="h9Y-EJ-dZU" secondAttribute="bottom" id="xbG-zW-w4f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MS7-9i-8Sg"/>
                     </view>
@@ -222,6 +251,7 @@
                         <outlet property="backButton" destination="bqC-SR-hVb" id="88D-Y8-Q1l"/>
                         <outlet property="childImageView" destination="CtU-cu-nb1" id="w3Z-nj-gm8"/>
                         <outlet property="headerView" destination="ood-9M-F9M" id="LoS-8j-POz"/>
+                        <outlet property="placeholderView" destination="h9Y-EJ-dZU" id="T47-it-m7m"/>
                         <outlet property="tableView" destination="B3f-Nz-Qjd" id="I0W-gm-3S1"/>
                     </connections>
                 </viewController>
@@ -526,6 +556,7 @@
                     <connections>
                         <outlet property="backButton" destination="VRu-5u-JTu" id="aUI-bf-bef"/>
                         <outlet property="childImageView" destination="67u-xV-GqS" id="Oa5-nR-jKk"/>
+                        <outlet property="headerView" destination="jgK-5E-OtH" id="Wsp-7M-d4j"/>
                         <outlet property="placeHolderLabel" destination="ZwU-uI-mVj" id="enc-RX-J6G"/>
                         <outlet property="placeHolderView" destination="74r-Zf-AzQ" id="dUa-1s-oFs"/>
                         <outlet property="statusSegmentControl" destination="acX-AN-ppS" id="z92-O5-E8j"/>

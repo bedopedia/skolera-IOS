@@ -975,6 +975,31 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLY-3W-v1Z">
+                                <rect key="frame" x="0.0" y="112" width="414" height="750"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assignmentsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="5oB-fo-zGD">
+                                        <rect key="frame" x="135" y="261" width="144" height="140"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="140" id="gKq-FX-9rO"/>
+                                            <constraint firstAttribute="width" constant="144" id="hSL-2a-PXt"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any assignments  for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7U8-Kt-pKO">
+                                        <rect key="frame" x="59.5" y="425" width="295" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="5oB-fo-zGD" firstAttribute="centerX" secondItem="tLY-3W-v1Z" secondAttribute="centerX" id="8k1-UQ-cU9"/>
+                                    <constraint firstItem="5oB-fo-zGD" firstAttribute="centerY" secondItem="tLY-3W-v1Z" secondAttribute="centerY" constant="-44" id="TAm-C4-riv"/>
+                                    <constraint firstItem="7U8-Kt-pKO" firstAttribute="top" secondItem="5oB-fo-zGD" secondAttribute="bottom" constant="24" id="cTV-gj-u2h"/>
+                                    <constraint firstItem="7U8-Kt-pKO" firstAttribute="centerX" secondItem="5oB-fo-zGD" secondAttribute="centerX" id="xuv-Gj-dNe"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXY-5C-woi">
                                 <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                                 <subviews>
@@ -1031,12 +1056,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kRH-TM-zC2" firstAttribute="top" secondItem="wXY-5C-woi" secondAttribute="bottom" constant="8" id="7a0-ng-WWs"/>
+                            <constraint firstAttribute="trailing" secondItem="tLY-3W-v1Z" secondAttribute="trailing" id="DFB-jt-SXm"/>
                             <constraint firstItem="kRH-TM-zC2" firstAttribute="leading" secondItem="Evv-25-dXf" secondAttribute="leading" id="DKd-Aw-wBI"/>
                             <constraint firstItem="Evv-25-dXf" firstAttribute="trailing" secondItem="kRH-TM-zC2" secondAttribute="trailing" id="LSC-fW-vs0"/>
                             <constraint firstItem="Evv-25-dXf" firstAttribute="bottom" secondItem="kRH-TM-zC2" secondAttribute="bottom" id="YHo-rO-Fre"/>
+                            <constraint firstItem="Evv-25-dXf" firstAttribute="bottom" secondItem="tLY-3W-v1Z" secondAttribute="bottom" id="ch3-rr-HRX"/>
                             <constraint firstItem="Evv-25-dXf" firstAttribute="trailing" secondItem="wXY-5C-woi" secondAttribute="trailing" id="cqa-XQ-KxI"/>
                             <constraint firstItem="wXY-5C-woi" firstAttribute="top" secondItem="Evv-25-dXf" secondAttribute="top" id="dv4-NA-KaY"/>
+                            <constraint firstItem="tLY-3W-v1Z" firstAttribute="top" secondItem="wXY-5C-woi" secondAttribute="bottom" constant="8" id="jHe-n5-2ds"/>
                             <constraint firstItem="wXY-5C-woi" firstAttribute="leading" secondItem="lit-eA-FDt" secondAttribute="leading" id="uc3-Ti-Dcc"/>
+                            <constraint firstItem="tLY-3W-v1Z" firstAttribute="leading" secondItem="Evv-25-dXf" secondAttribute="leading" id="yb6-fr-bBT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Evv-25-dXf"/>
                     </view>
@@ -1044,6 +1073,7 @@
                         <outlet property="backButton" destination="PSK-zs-F6S" id="lZm-Jq-Le0"/>
                         <outlet property="childImageView" destination="h6X-ja-xEn" id="EXX-Ev-Rsa"/>
                         <outlet property="headerView" destination="wXY-5C-woi" id="w2v-M1-O6o"/>
+                        <outlet property="placeHolderView" destination="tLY-3W-v1Z" id="wop-Dw-3fL"/>
                         <outlet property="tableView" destination="kRH-TM-zC2" id="EJH-6m-7z6"/>
                     </connections>
                 </viewController>

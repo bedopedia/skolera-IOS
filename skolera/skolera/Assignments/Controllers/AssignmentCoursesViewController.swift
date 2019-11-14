@@ -16,9 +16,18 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var placeHolderView: UIView!
     
     var child : Child!
-    var courses = [AssignmentCourse]()
+    var courses: [AssignmentCourse]! {
+        didSet{
+           if self.courses.isEmpty {
+                placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
+            }
+        }
+    }
     var meta: Meta!
     private let refreshControl = UIRefreshControl()
 
@@ -51,6 +60,9 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.courses == nil {
+                self.courses = []
+            }
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
@@ -66,7 +78,11 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
+        if courses == nil {
+            return 0
+        } else {
+            return courses.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

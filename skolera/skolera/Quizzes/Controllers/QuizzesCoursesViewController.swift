@@ -16,10 +16,19 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var placeholderView: UIView!
     
     
     var child : Child!
-    var courses = [QuizCourse]()
+    var courses: [QuizCourse]! {
+        didSet {
+            if self.courses.isEmpty {
+                placeholderView.isHidden = false
+            } else {
+                placeholderView.isHidden = true
+            }
+        }
+    }
     
     var meta: Meta!
     private let refreshControl = UIRefreshControl()
@@ -53,6 +62,9 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.courses == nil {
+                self.courses = []
+            }
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
@@ -69,7 +81,11 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
 
 extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
+        if courses != nil {
+            return courses.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
