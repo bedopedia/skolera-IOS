@@ -15,6 +15,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courses = [AssignmentCourse]()
@@ -23,6 +24,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
         tableView.delegate = self

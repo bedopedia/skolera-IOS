@@ -19,6 +19,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var placeholderView: UIView!
     @IBOutlet var placeholderLabel: UILabel!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var isTeacher: Bool = false
@@ -46,6 +47,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
