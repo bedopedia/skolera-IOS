@@ -16,9 +16,19 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var placeHolderView: UIView!
     
     var child : Child!
-    var courses: [PostCourse] = []
+    var courses: [PostCourse]! {
+        didSet {
+            if self.courses.isEmpty {
+                placeHolderView.isHidden = false
+            } else {
+                placeHolderView.isHidden = true
+            }
+        }
+    }
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -39,7 +49,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
-//    MARK: - Methods
+    //    MARK: - Methods
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         getCourses()
@@ -49,6 +59,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            if self.courses == nil {
+                self.courses = []
+            }
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.courses = result.map({ PostCourse($0) })
@@ -59,9 +72,13 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
- //    MARK: - Table View Methods
+    //    MARK: - Table View Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.courses.count
+        if courses != nil {
+           return courses.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,5 +94,5 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         postsVC.courseId = courses[indexPath.row].id!
         self.navigationController?.pushViewController(postsVC, animated: true)
     }
-
+    
 }
