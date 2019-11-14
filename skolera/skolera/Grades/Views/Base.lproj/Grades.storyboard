@@ -455,11 +455,6 @@
                             <constraint firstItem="M5t-R3-XuF" firstAttribute="bottom" secondItem="eFe-tC-e6z" secondAttribute="bottom" id="ogR-9z-lPI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="M5t-R3-XuF"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="eFe-tC-e6z"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="Vkd-Hb-XvM" id="l2A-Bw-hZW"/>
