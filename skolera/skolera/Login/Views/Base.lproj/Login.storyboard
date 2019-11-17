@@ -211,9 +211,14 @@
                                                     <action selector="login:" destination="iBz-ov-exH" eventType="touchUpInside" id="KSL-7K-uqN"/>
                                                 </connections>
                                             </button>
-                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7VN-3S-Lqh">
-                                                <rect key="frame" x="24" y="276" width="366" height="2"/>
+                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7VN-3S-Lqh">
+                                                <rect key="frame" x="24" y="275" width="366" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" red="0.15615364910000001" green="0.73169142009999999" blue="0.30433815720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="0pO-Fb-i6p"/>
+                                                </constraints>
+                                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </progressView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -221,7 +226,7 @@
                                             <constraint firstItem="yHf-na-Qrx" firstAttribute="top" secondItem="ZLs-WL-8Y3" secondAttribute="bottom" constant="38" id="3Nb-Jl-Zav"/>
                                             <constraint firstAttribute="trailing" secondItem="Wcb-kS-hTW" secondAttribute="trailing" constant="24" id="8DC-or-pfc"/>
                                             <constraint firstItem="Wcb-kS-hTW" firstAttribute="top" secondItem="yHf-na-Qrx" secondAttribute="bottom" constant="38" id="9Og-Ev-uTr"/>
-                                            <constraint firstItem="7VN-3S-Lqh" firstAttribute="top" secondItem="Wcb-kS-hTW" secondAttribute="bottom" id="EFw-Mm-IDa"/>
+                                            <constraint firstItem="7VN-3S-Lqh" firstAttribute="top" secondItem="Wcb-kS-hTW" secondAttribute="bottom" constant="-1" id="EFw-Mm-IDa"/>
                                             <constraint firstItem="7VN-3S-Lqh" firstAttribute="leading" secondItem="Wcb-kS-hTW" secondAttribute="leading" id="W0F-LZ-sfW"/>
                                             <constraint firstItem="XHD-cm-RIT" firstAttribute="leading" secondItem="0dl-oL-1dE" secondAttribute="leading" constant="24" id="Wbn-ey-9kU"/>
                                             <constraint firstItem="7VN-3S-Lqh" firstAttribute="width" secondItem="Wcb-kS-hTW" secondAttribute="width" id="XmB-wv-cPy"/>

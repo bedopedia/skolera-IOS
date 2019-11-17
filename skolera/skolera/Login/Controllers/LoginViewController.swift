@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
-        progressView.setProgress(0, animated: true)
+        progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
     }
     
     override func viewWillAppear(_ animated: Bool) {

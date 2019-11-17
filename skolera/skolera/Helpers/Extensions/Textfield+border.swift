@@ -20,13 +20,11 @@ extension UITextField {
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
     }
-    func active()
-    {
-        
-        self.layer.sublayers![0].borderColor = UIColor.appColors.green.cgColor
+    func active() {
+//        self.layer.sublayers![0].borderColor = UIColor.appColors.green.cgColor
+//        self.layer.sublayers![0].borderColor = UIColor.appColors.greyTextField.cgColor
     }
-    func inactive()
-    {
+    func inactive() {
         self.layer.sublayers![0].borderColor = UIColor.appColors.greyTextField.cgColor
     }
 }
