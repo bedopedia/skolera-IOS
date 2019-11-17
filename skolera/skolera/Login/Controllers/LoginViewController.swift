@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     //MARKL - Variables
     var imageURL: String?
+    var showPassword = false
     
     //MARK: - Outlets
     
@@ -30,10 +31,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
         self.emailTextField.underlined()
+        self.emailTextField.clearButtonMode = .never
         self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
 //        passwordTextField.isSecureTextEntry = false
+        passwordTextField.rightViewMode = .always
+//        let detailsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let detailsButton = passwordTextField.setView(.right, image: nil, width: 50)
+        detailsButton.setTitle("show", for: .normal)
+        detailsButton.setTitleColor(.black, for: .normal)
+        detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
                 self.schoolImageView.kf.setImage(with: url)
@@ -72,8 +80,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         switch textField {
         case emailTextField:
             passwordTextField.becomeFirstResponder()
-        case passwordTextField:
-            textField.resignFirstResponder()
+//        case passwordTextField:
+//            textField.resignFirstResponder()
         default:
             textField.resignFirstResponder()
         }
@@ -94,6 +102,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         } else {
             authenticate(email: email, password: password)
         }
+    }
+    @objc func togglePasswordFieldState (_ sender: UIButton) {
+        passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
+        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
+        sender.setTitle(buttonTitle, for: .normal)
     }
     /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenListViewController. Alert message is shown for wrong credentials on failure
     ///

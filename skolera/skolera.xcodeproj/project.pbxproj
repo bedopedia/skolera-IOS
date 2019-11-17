@@ -314,6 +314,7 @@
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
 		DC1CA712237DA26000E79769 /* PlaceHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */; };
+		DC1CA71423815FC900E79769 /* UITextField+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA71323815FC900E79769 /* UITextField+Views.swift */; };
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
@@ -649,6 +650,7 @@
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
 		DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTableViewCell.swift; sourceTree = "<group>"; };
+		DC1CA71323815FC900E79769 /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 				8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */,
 				DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */,
 				DC8536F7237BF63500B12476 /* UIView+Shadow.swift */,
+				DC1CA71323815FC900E79769 /* UITextField+Views.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1979,6 +1982,7 @@
 				8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */,
 				8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */,
 				8A6CA5EF22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift in Sources */,
+				DC1CA71423815FC900E79769 /* UITextField+Views.swift in Sources */,
 				8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */,
 				8A93357D22E0CD83007B287D /* PostDetailsViewController.swift in Sources */,
 				54970683208CECB50070CE46 /* TimeSlot.swift in Sources */,
