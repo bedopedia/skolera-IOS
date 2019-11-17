@@ -23,6 +23,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var schoolImageView: UIImageView!
+    @IBOutlet var progressView: UIProgressView!
     
     //MARK: - Life Cycle
     
@@ -35,9 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
-//        passwordTextField.isSecureTextEntry = false
         passwordTextField.rightViewMode = .always
-//        let detailsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         let detailsButton = passwordTextField.setView(.right, image: nil, width: 50)
         detailsButton.setTitle("show", for: .normal)
         detailsButton.setTitleColor(.black, for: .normal)
@@ -47,6 +47,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
+        progressView.setProgress(0, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,13 +81,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         switch textField {
         case emailTextField:
             passwordTextField.becomeFirstResponder()
-//        case passwordTextField:
-//            textField.resignFirstResponder()
+        case passwordTextField:
+            textField.resignFirstResponder()
         default:
             textField.resignFirstResponder()
         }
         return true
     }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let count = Float(textField.text?.count ?? 0)
+        progressView.setProgress( count / 6 , animated: true)
+    }
+    
+    
     //MARK: - Actions
     
     /// action when user presses login, shows alert messages if fields are empty, otherwise calls authenticate function with email and password
