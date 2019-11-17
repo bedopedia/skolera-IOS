@@ -123,3 +123,11 @@ func getMainColor() -> UIColor {
         }
     }
 }
+
+func assignPlaceholder(_ tableView: UITableView, imageName: String) {
+    DispatchQueue.main.async {
+        let placeholder = PlaceholderView(frame: tableView.frame)
+        placeholder.image = imageName
+        tableView.backgroundView = placeholder
+    }
+}

@@ -13,6 +13,11 @@ class PlaceholderView: UIView {
     @IBOutlet var placeholderImageView: UIImageView!
     @IBOutlet var placeholderLabel: UILabel!
     
+    var image: String {
+        get { return "" }
+        set { placeholderImageView.image = #imageLiteral(resourceName: newValue) }
+        
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()

@@ -844,31 +844,6 @@ attachment.</string>
                                     <action selector="createPost" destination="d49-6w-FWW" eventType="touchUpInside" id="Vql-rR-rqm"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3r-hS-aNF">
-                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ptL-HG-yr7">
-                                        <rect key="frame" x="135" y="265" width="144" height="140"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="144" id="MOc-Em-idX"/>
-                                            <constraint firstAttribute="height" constant="140" id="ik9-Ty-NDV"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any posts for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qq7-lk-PO3">
-                                        <rect key="frame" x="87.5" y="429" width="239" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="qq7-lk-PO3" firstAttribute="centerX" secondItem="ptL-HG-yr7" secondAttribute="centerX" id="Kzc-ML-F6c"/>
-                                    <constraint firstItem="ptL-HG-yr7" firstAttribute="centerX" secondItem="V3r-hS-aNF" secondAttribute="centerX" id="Q2a-rZ-cL1"/>
-                                    <constraint firstItem="ptL-HG-yr7" firstAttribute="centerY" secondItem="V3r-hS-aNF" secondAttribute="centerY" constant="-44" id="WwJ-Ul-kDQ"/>
-                                    <constraint firstItem="qq7-lk-PO3" firstAttribute="top" secondItem="ptL-HG-yr7" secondAttribute="bottom" constant="24" id="hKg-LA-lmD"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -876,14 +851,10 @@ attachment.</string>
                             <constraint firstAttribute="trailing" secondItem="Hcm-AZ-9AJ" secondAttribute="trailing" constant="24" id="4JB-nz-cBV"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="bottom" secondItem="Hcm-AZ-9AJ" secondAttribute="bottom" constant="24" id="9WG-wo-lTS"/>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="O80-2d-tY9" secondAttribute="trailing" id="DnI-9H-XX5"/>
-                            <constraint firstItem="DLm-jw-B2Q" firstAttribute="trailing" secondItem="V3r-hS-aNF" secondAttribute="trailing" id="Kf8-hK-kx1"/>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" id="SDx-AN-N5Y"/>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="SN1-P5-JU5"/>
                             <constraint firstAttribute="trailing" secondItem="M23-Aa-G1T" secondAttribute="trailing" id="VZf-kx-vfa"/>
-                            <constraint firstItem="V3r-hS-aNF" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="g7a-9t-XOX"/>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="top" secondItem="DLm-jw-B2Q" secondAttribute="top" id="mSF-we-e9G"/>
-                            <constraint firstItem="V3r-hS-aNF" firstAttribute="bottom" secondItem="DLm-jw-B2Q" secondAttribute="bottom" id="p5F-JX-8Ph"/>
-                            <constraint firstItem="V3r-hS-aNF" firstAttribute="top" secondItem="M23-Aa-G1T" secondAttribute="bottom" id="sbi-gY-72R"/>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="vQW-Gv-s2c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DLm-jw-B2Q"/>
@@ -893,7 +864,6 @@ attachment.</string>
                         <outlet property="childImageView" destination="YCJ-Ej-6Xm" id="90n-8o-5e3"/>
                         <outlet property="createPostButton" destination="Hcm-AZ-9AJ" id="kpp-j1-79H"/>
                         <outlet property="headerView" destination="M23-Aa-G1T" id="v6d-dQ-d9u"/>
-                        <outlet property="placeHolderView" destination="V3r-hS-aNF" id="WDu-Ey-wry"/>
                         <outlet property="tableView" destination="O80-2d-tY9" id="DOK-vh-e2d"/>
                         <outlet property="titleLabel" destination="Mgf-LZ-53c" id="I3p-dj-N0m"/>
                     </connections>

@@ -17,22 +17,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var createPostButton: UIButton!
-    @IBOutlet var placeHolderView: UIView!
     @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!
-    var posts: [Post]! {
-        didSet {
-            if self.posts.isEmpty {
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var posts: [Post]!
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
@@ -61,7 +52,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,6 +86,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            assignPlaceholder(self.tableView, imageName: "postsplaceholder")
             if self.posts == nil {
                 self.posts = []
             }
@@ -114,11 +105,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
 //    MARK: -Table view
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if posts != nil {
            return posts.count
         } else {
-            self.tableView.backgroundView = self.placeHolderView
             return 0
         }
     }
@@ -147,7 +138,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         postVC.courseName = self.courseName
         postVC.post = posts[indexPath.row]
         self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
-//        self.navigationController?.pushViewController(postVC, animated: true)
     }
 
 }
