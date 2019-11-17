@@ -14,19 +14,10 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
     @IBOutlet var headerView: UIView!
     
     var fromChildrenList = false
-    var notifications: [Notification]! {
-        didSet {
-            if self.notifications.isEmpty {
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var notifications: [Notification]!
     /// carries data for notifications pagination
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
@@ -93,6 +84,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            assignPlaceholder(self.tableView, imageName: "notificationsplaceholder")
             if self.notifications == nil {
                 self.notifications = []
             }

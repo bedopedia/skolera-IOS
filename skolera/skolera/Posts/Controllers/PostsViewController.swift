@@ -18,7 +18,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet var headerView: UIView!
     
     var child : Child!
-    var networkFlag = false
     var courses: [PostCourse]!
     private let refreshControl = UIRefreshControl()
     
@@ -53,7 +52,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             assignPlaceholder(self.tableView, imageName: "postsplaceholder")
-            self.networkFlag = true
             if self.courses == nil {
                 self.courses = []
             }
