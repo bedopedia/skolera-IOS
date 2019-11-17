@@ -33,6 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
+//        passwordTextField.isSecureTextEntry = false
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
                 self.schoolImageView.kf.setImage(with: url)
