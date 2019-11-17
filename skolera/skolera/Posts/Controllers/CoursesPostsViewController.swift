@@ -118,6 +118,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         if posts != nil {
            return posts.count
         } else {
+            self.tableView.backgroundView = self.placeHolderView
             return 0
         }
     }

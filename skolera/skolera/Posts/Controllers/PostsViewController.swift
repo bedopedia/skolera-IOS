@@ -53,6 +53,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
         
+        
     }
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)

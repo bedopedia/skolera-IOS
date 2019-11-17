@@ -359,7 +359,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfd-OK-d4G">
-                                <rect key="frame" x="16" y="68" width="24" height="24"/>
+                                <rect key="frame" x="16" y="68" width="48" height="48"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="close" destination="ol9-4m-4og" eventType="touchUpInside" id="rTt-Gm-QBA"/>
@@ -380,7 +380,7 @@
                                 <rect key="frame" x="16" y="401.5" width="382" height="370.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3-1" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-c2-cgj">
-                                        <rect key="frame" x="148.5" y="108" width="85" height="85"/>
+                                        <rect key="frame" x="106" y="23" width="170" height="170"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start adding your attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d3-RBD">
                                         <rect key="frame" x="93.5" y="201" width="195" height="17"/>

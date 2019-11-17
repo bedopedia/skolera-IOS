@@ -320,6 +320,8 @@
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
 		DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8536F7237BF63500B12476 /* UIView+Shadow.swift */; };
+		DC8FAAE9238194FD00B3B753 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */; };
+		DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
@@ -657,6 +659,8 @@
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
 		DC8536F7237BF63500B12476 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
+		DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
+		DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1127,6 +1131,8 @@
 				8AB5276D226DC77F006EA7FB /* CardView.swift */,
 				8A0F606723437D2500B75929 /* QuestionTypes.swift */,
 				DC415C882370811B0036C93B /* UserType.swift */,
+				DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */,
+				DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1791,6 +1797,7 @@
 				8A78A0192201F16B006A3E2D /* Assets.xcassets in Resources */,
 				5482DE552056DAB100647D57 /* Roboto Light.otf in Resources */,
 				5482DDF62056D4EE00647D57 /* SFUIText-HeavyItalic.otf in Resources */,
+				DC8FAAE9238194FD00B3B753 /* PlaceholderView.xib in Resources */,
 				5462A5AD2058401F00C6F5EE /* CircularStd-BoldItalic.otf in Resources */,
 				5482DE862056DAB100647D57 /* RobotoCondensed-LightItalic.ttf in Resources */,
 				5482DE672056DAB100647D57 /* Roboto Condensed Bold Italic.otf in Resources */,
@@ -2146,6 +2153,7 @@
 				5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */,
 				8A94E45522DF53F600A01B0C /* PostsViewController.swift in Sources */,
 				8A93357B22E0BE88007B287D /* AttachmentTableViewCell.swift in Sources */,
+				DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */,
 				8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */,
 				8A6CA5F322EF4E7A00DBE205 /* TeacherCourseDetailsTableViewController.swift in Sources */,
 				5402CA012045A2D4009F583A /* UIImageView+StudentImage.swift in Sources */,
