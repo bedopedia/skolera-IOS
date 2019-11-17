@@ -21,55 +21,8 @@
                                 <color key="backgroundColor" red="0.97931927442550659" green="0.9800599217414856" blue="0.97943395376205444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PlaceHolderTableViewCell" rowHeight="238" id="60V-zb-O15" customClass="PlaceHolderTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="238"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="60V-zb-O15" id="xyX-Ws-iua">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="238"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znt-vc-DZk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="238"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="i5Y-Az-KcA">
-                                                            <rect key="frame" x="135" y="-5" width="144" height="140"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="140" id="9ek-63-RZ3"/>
-                                                                <constraint firstAttribute="width" constant="144" id="UR6-fq-iEJ"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any courses for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhy-lS-SXr">
-                                                            <rect key="frame" x="79" y="159" width="256.5" height="19.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstItem="Lhy-lS-SXr" firstAttribute="centerX" secondItem="i5Y-Az-KcA" secondAttribute="centerX" id="1bY-0i-5Mh"/>
-                                                        <constraint firstItem="i5Y-Az-KcA" firstAttribute="centerY" secondItem="znt-vc-DZk" secondAttribute="centerY" constant="-54" id="3wi-MP-h2a"/>
-                                                        <constraint firstItem="i5Y-Az-KcA" firstAttribute="centerX" secondItem="znt-vc-DZk" secondAttribute="centerX" id="DcQ-Qs-yKX"/>
-                                                        <constraint firstItem="Lhy-lS-SXr" firstAttribute="top" secondItem="i5Y-Az-KcA" secondAttribute="bottom" constant="24" id="Mky-JJ-Wxy"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.97931927442550659" green="0.9800599217414856" blue="0.97943395376205444" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="znt-vc-DZk" secondAttribute="bottom" id="IJp-Nj-seD"/>
-                                                <constraint firstAttribute="trailing" secondItem="znt-vc-DZk" secondAttribute="trailing" id="Vnz-54-cGG"/>
-                                                <constraint firstItem="znt-vc-DZk" firstAttribute="leading" secondItem="xyX-Ws-iua" secondAttribute="leading" id="k6S-ff-zEJ"/>
-                                                <constraint firstItem="znt-vc-DZk" firstAttribute="top" secondItem="xyX-Ws-iua" secondAttribute="top" id="qFM-g8-q9N"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.97931927439999999" green="0.9800599217" blue="0.97943395379999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="placeHolderLabel" destination="Lhy-lS-SXr" id="oiG-jw-MFm"/>
-                                            <outlet property="placeHolderView" destination="znt-vc-DZk" id="Dbz-yt-Zau"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CourseGroupPostTableViewCell" rowHeight="176" id="GjP-xk-nWV" customClass="CourseGroupPostTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="266" width="414" height="176"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="176"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GjP-xk-nWV" id="zcD-VD-x2R">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="176"/>
@@ -187,31 +140,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="byV-Jn-jnK">
-                                <rect key="frame" x="0.0" y="112" width="414" height="784"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="postsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="tAY-8v-2wd">
-                                        <rect key="frame" x="135" y="278" width="144" height="140"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="144" id="7yK-6O-6lm"/>
-                                            <constraint firstAttribute="height" constant="140" id="w8k-aW-DvV"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any courses for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYW-XG-DSz">
-                                        <rect key="frame" x="79" y="442" width="256.5" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="yYW-XG-DSz" firstAttribute="centerX" secondItem="tAY-8v-2wd" secondAttribute="centerX" id="9xA-5d-K7O"/>
-                                    <constraint firstItem="tAY-8v-2wd" firstAttribute="centerX" secondItem="byV-Jn-jnK" secondAttribute="centerX" id="a73-gr-k9g"/>
-                                    <constraint firstItem="yYW-XG-DSz" firstAttribute="top" secondItem="tAY-8v-2wd" secondAttribute="bottom" constant="24" id="ecI-Xk-ksJ"/>
-                                    <constraint firstItem="tAY-8v-2wd" firstAttribute="centerY" secondItem="byV-Jn-jnK" secondAttribute="centerY" constant="-44" id="tdC-sa-0Wb"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Jc-Zw-oyl">
                                 <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                                 <subviews>
@@ -268,30 +196,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9Oa-zj-QXy" firstAttribute="trailing" secondItem="1Jc-Zw-oyl" secondAttribute="trailing" id="KQY-ij-xRc"/>
-                            <constraint firstAttribute="trailing" secondItem="byV-Jn-jnK" secondAttribute="trailing" id="QKV-7t-gGi"/>
                             <constraint firstItem="1Jc-Zw-oyl" firstAttribute="leading" secondItem="9Oa-zj-QXy" secondAttribute="leading" id="UaH-ZK-EJQ"/>
                             <constraint firstItem="9Oa-zj-QXy" firstAttribute="trailing" secondItem="DLk-xp-u5i" secondAttribute="trailing" id="cni-ql-sE5"/>
-                            <constraint firstItem="byV-Jn-jnK" firstAttribute="leading" secondItem="9Oa-zj-QXy" secondAttribute="leading" id="cy0-Gb-OvN"/>
-                            <constraint firstItem="byV-Jn-jnK" firstAttribute="top" secondItem="1Jc-Zw-oyl" secondAttribute="bottom" constant="8" id="gdw-xY-Oom"/>
                             <constraint firstItem="1Jc-Zw-oyl" firstAttribute="top" secondItem="9Oa-zj-QXy" secondAttribute="top" id="hjS-gu-YRS"/>
                             <constraint firstItem="DLk-xp-u5i" firstAttribute="top" secondItem="1Jc-Zw-oyl" secondAttribute="bottom" id="oKi-4J-Ni7"/>
                             <constraint firstItem="9Oa-zj-QXy" firstAttribute="bottom" secondItem="DLk-xp-u5i" secondAttribute="bottom" id="sAe-e5-tFA"/>
                             <constraint firstItem="DLk-xp-u5i" firstAttribute="leading" secondItem="9Oa-zj-QXy" secondAttribute="leading" id="uoc-8v-AI3"/>
-                            <constraint firstAttribute="bottom" secondItem="byV-Jn-jnK" secondAttribute="bottom" id="xKr-l2-ka7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Oa-zj-QXy"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="byV-Jn-jnK"/>
-                            </mask>
-                        </variation>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="backButton" destination="WFb-6o-JIf" id="aU8-7a-gtr"/>
                         <outlet property="childImageView" destination="pEP-x8-1Fs" id="DB4-PV-adI"/>
                         <outlet property="headerView" destination="1Jc-Zw-oyl" id="Ace-ys-ztV"/>
-                        <outlet property="placeHolderView" destination="byV-Jn-jnK" id="qxV-Uw-b6i"/>
                         <outlet property="tableView" destination="DLk-xp-u5i" id="fbf-YP-AX3"/>
                     </connections>
                 </viewController>
@@ -1383,6 +1301,5 @@ attachment.</string>
         <image name="close" width="24" height="24"/>
         <image name="group3-1" width="85" height="85"/>
         <image name="multipleFileIco" width="16" height="18"/>
-        <image name="postsplaceholder" width="144" height="140"/>
     </resources>
 </document>
