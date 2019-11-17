@@ -21,8 +21,7 @@ extension UITextField {
         self.layer.masksToBounds = true
     }
     func active() {
-//        self.layer.sublayers![0].borderColor = UIColor.appColors.green.cgColor
-//        self.layer.sublayers![0].borderColor = UIColor.appColors.greyTextField.cgColor
+        self.layer.sublayers![0].borderColor = UIColor.appColors.green.cgColor
     }
     func inactive() {
         self.layer.sublayers![0].borderColor = UIColor.appColors.greyTextField.cgColor
