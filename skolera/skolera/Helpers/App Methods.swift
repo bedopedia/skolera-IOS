@@ -124,7 +124,7 @@ func getMainColor() -> UIColor {
     }
 }
 
-func assignPlaceholder(_ tableView: UITableView, imageName: String) {
+func assignPlaceholder(_ tableView: UITableView, imageName: String, placeHolderLabelText: String = "") {
     DispatchQueue.main.async {
         let placeholder = PlaceholderView(frame: tableView.frame)
         placeholder.image = imageName

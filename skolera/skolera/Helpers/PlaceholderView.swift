@@ -18,6 +18,11 @@ class PlaceholderView: UIView {
         set { placeholderImageView.image = #imageLiteral(resourceName: newValue) }
         
     }
+    var placeholderText: String {
+        get { return "" }
+        set { placeholderLabel.text = newValue }
+        
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()

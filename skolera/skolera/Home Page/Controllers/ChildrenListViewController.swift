@@ -59,7 +59,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
     
-   
+
 
     // MARK: - Table view settings
     

@@ -17,7 +17,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     @IBOutlet var headerView: UIView!
     
     var fromChildrenList = false
-    var notifications: [Notification]!
+    var notifications: [Notification] = []
     /// carries data for notifications pagination
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
@@ -84,10 +84,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "notificationsplaceholder")
-            if self.notifications == nil {
-                self.notifications = []
-            }
+            assignPlaceholder(self.tableView, imageName: "notificationsplaceholder", placeHolderLabelText: "You don't have any notifications for now".localized)
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
@@ -110,11 +107,12 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
 
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if notifications != nil {
-            return notifications.count
-        } else {
-            return 0
-        }
+//        if notifications != nil {
+//            return notifications.count
+//        } else {
+//            return 0
+//        }
+        return notifications.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
