@@ -68,12 +68,12 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
 
 extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCourseTableViewCell") as! QuizCourseTableViewCell
-        cell.course = courses[indexPath.row]
+//        cell.course = courses[indexPath.row]
         return cell
     }
     

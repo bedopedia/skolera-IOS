@@ -17,8 +17,6 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
-    @IBOutlet var placeholderLabel: UILabel!
     @IBOutlet var headerView: UIView!
     
     var child : Child!
@@ -27,20 +25,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignments: [FullAssignment] = []
-    var filteredAssignments: [FullAssignment]! {
-        didSet {
-            if self.filteredAssignments.isEmpty {
-                if self.selectedSegment == 0{
-                    self.placeholderLabel.text = "You don't have any open assignments for now".localized
-                } else {
-                    self.placeholderLabel.text = "You don't have any closed assignments for now".localized
-                }
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var filteredAssignments: [FullAssignment] = []
     var meta: Meta!
     var selectedSegment = 0
     private let refreshControl = UIRefreshControl()
@@ -113,15 +98,17 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
 
     private func setOpenedAssignments() {
         filteredAssignments = assignments.filter({ $0.state.elementsEqual("running") })
+        assignPlaceholder(self.tableView, imageName: "assignmentsplaceholder", placeHolderLabelText: "You don't have any open assignments for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedAssignments() {
         filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
+        assignPlaceholder(self.tableView, imageName: "assignmentsplaceholder", placeHolderLabelText: "You don't have any closed assignments for now".localized)
         self.tableView.reloadData()
     }
 
-    func getAssignments(){
+    func getAssignments() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
@@ -175,11 +162,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredAssignments != nil {
-            return filteredAssignments.count
-        } else {
-            return 0
-        }
+        return filteredAssignments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

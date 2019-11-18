@@ -478,42 +478,13 @@
                                     <constraint firstItem="VRu-5u-JTu" firstAttribute="centerY" secondItem="jgK-5E-OtH" secondAttribute="centerY" id="xml-XK-6B9"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74r-Zf-AzQ">
-                                <rect key="frame" x="0.0" y="159" width="414" height="703"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quizzesplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="QuH-Vq-jbZ">
-                                        <rect key="frame" x="135" y="237.5" width="144" height="140"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="144" id="Knh-9Y-wkA"/>
-                                            <constraint firstAttribute="height" constant="140" id="YyP-4O-h28"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any online quizzes for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwU-uI-mVj">
-                                        <rect key="frame" x="56" y="401.5" width="302" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="QuH-Vq-jbZ" firstAttribute="centerX" secondItem="74r-Zf-AzQ" secondAttribute="centerX" id="0PH-MX-KnM"/>
-                                    <constraint firstItem="QuH-Vq-jbZ" firstAttribute="centerY" secondItem="74r-Zf-AzQ" secondAttribute="centerY" constant="-44" id="2KJ-0R-wm9"/>
-                                    <constraint firstItem="ZwU-uI-mVj" firstAttribute="centerX" secondItem="QuH-Vq-jbZ" secondAttribute="centerX" id="FbY-H6-aXG"/>
-                                    <constraint firstItem="ZwU-uI-mVj" firstAttribute="top" secondItem="QuH-Vq-jbZ" secondAttribute="bottom" constant="24" id="cKX-QX-dkG"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="74r-Zf-AzQ" firstAttribute="trailing" secondItem="QGt-OM-SJi" secondAttribute="trailing" id="69I-sG-nbO"/>
-                            <constraint firstItem="QGt-OM-SJi" firstAttribute="bottom" secondItem="74r-Zf-AzQ" secondAttribute="bottom" id="Kyb-Jj-ImU"/>
-                            <constraint firstItem="74r-Zf-AzQ" firstAttribute="leading" secondItem="QGt-OM-SJi" secondAttribute="leading" id="L7K-R1-tbP"/>
                             <constraint firstItem="acX-AN-ppS" firstAttribute="top" secondItem="jgK-5E-OtH" secondAttribute="bottom" constant="16" id="MnK-pz-vbJ"/>
                             <constraint firstItem="QGt-OM-SJi" firstAttribute="bottom" secondItem="bHm-LL-DhH" secondAttribute="bottom" id="Q1K-Zh-5Hh"/>
                             <constraint firstItem="bHm-LL-DhH" firstAttribute="leading" secondItem="QGt-OM-SJi" secondAttribute="leading" id="TJU-f8-D72"/>
                             <constraint firstItem="bHm-LL-DhH" firstAttribute="top" secondItem="acX-AN-ppS" secondAttribute="bottom" constant="16" id="aAC-tG-OcR"/>
-                            <constraint firstItem="74r-Zf-AzQ" firstAttribute="top" secondItem="acX-AN-ppS" secondAttribute="bottom" constant="8" id="afG-tm-mg1"/>
                             <constraint firstItem="jgK-5E-OtH" firstAttribute="leading" secondItem="W1k-OC-Nae" secondAttribute="leading" id="b5M-ru-502"/>
                             <constraint firstItem="QGt-OM-SJi" firstAttribute="trailing" secondItem="acX-AN-ppS" secondAttribute="trailing" constant="16" id="eKX-zI-Z0g"/>
                             <constraint firstItem="jgK-5E-OtH" firstAttribute="top" secondItem="QGt-OM-SJi" secondAttribute="top" id="hfp-7F-bGI"/>
@@ -527,8 +498,6 @@
                         <outlet property="backButton" destination="VRu-5u-JTu" id="aUI-bf-bef"/>
                         <outlet property="childImageView" destination="67u-xV-GqS" id="Oa5-nR-jKk"/>
                         <outlet property="headerView" destination="jgK-5E-OtH" id="Wsp-7M-d4j"/>
-                        <outlet property="placeHolderLabel" destination="ZwU-uI-mVj" id="enc-RX-J6G"/>
-                        <outlet property="placeHolderView" destination="74r-Zf-AzQ" id="dUa-1s-oFs"/>
                         <outlet property="statusSegmentControl" destination="acX-AN-ppS" id="z92-O5-E8j"/>
                         <outlet property="tableView" destination="bHm-LL-DhH" id="ett-Yl-MJr"/>
                         <outlet property="titleLabel" destination="Hmg-YX-CeH" id="OZp-Qg-dYi"/>
@@ -1943,7 +1912,6 @@
         <image name="group3" width="170" height="170"/>
         <image name="quizReorder" width="22" height="18"/>
         <image name="quizSubmissionCheck" width="150" height="150"/>
-        <image name="quizzesplaceholder" width="144" height="153"/>
         <image name="yellowHour" width="16" height="16"/>
     </resources>
 </document>
