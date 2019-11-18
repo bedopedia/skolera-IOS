@@ -31,7 +31,6 @@ class WeeklyPlannerViewController: UIViewController {
     let minHeaderHeight: CGFloat = 50
     var previousScrollOffset: CGFloat = 0
     var weeklyPlanner: WeeklyPlan!
-    
     var dailyNotes: [String: [DailyNote]] = ["Saturday":[],
                                              "Sunday": [],
                                              "Monday": [],
@@ -91,7 +90,6 @@ class WeeklyPlannerViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
         
         if weeklyPlanner != nil {

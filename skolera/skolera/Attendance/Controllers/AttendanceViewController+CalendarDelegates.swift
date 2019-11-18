@@ -20,7 +20,7 @@ extension AttendanceViewController : JTAppleCalendarViewDelegate, JTAppleCalenda
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let parameters = ConfigurationParameters(startDate: (child.attendances.first?.date)!, endDate: today, generateInDates: .forAllMonths, generateOutDates: .off)
+        let parameters = ConfigurationParameters(startDate: (child.attendances.first?.date) ?? today , endDate: today, generateInDates: .forAllMonths, generateOutDates: .off)
         return parameters
     }
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

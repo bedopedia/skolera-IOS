@@ -11,7 +11,7 @@ import NVActivityIndicatorView
 import Alamofire
 
 class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorViewable {
-
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var fullDayAttendanceButton: UIButton!
@@ -66,7 +66,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         tableView.dataSource = self
         tableView.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-
+        
         timeTableSlots = []
         selectedStudents = []
         currentStudents = []
@@ -139,7 +139,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         }
         self.tableView.reloadData()
     }
-
+    
     func highlightFullDayUi() {
         fullDayAttendanceButton.setTitleColor(#colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1), for: .normal)
         fullDayAttendanceBottomBorder.backgroundColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
@@ -159,7 +159,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         let dayInWeek = formatter.string(from: Date())
         return dayInWeek
     }
-  
+    
     func presentSlotsViewController() {
         if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName().lowercased())}) {
             let selectSlotsVc = SelectSlotsViewController.instantiate(fromAppStoryboard: .Attendance)
@@ -201,7 +201,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         parameters["attendance"] = ["attendances": attendancesKey]
         if let attendance = studentsMap[student.childId!]?.first {
             if let statusString = attendance.status, statusString.elementsEqual(status) {
-                debugPrint("same attendance state")
+                debugPrint("Skip this attendance")
             } else {
                 createNewAttendance(parameters)
             }
@@ -216,7 +216,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         var createNewAttendanceStudents: [Int] = []
         var attendanceParam: [String: Any] = [:]
         var slotId: Int!
-
+        
         if !self.isFullDay {
             if let slot = self.selectedSlot {
                 slotId = slot.id!
@@ -232,7 +232,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             attendanceParam["comment"] = ""
             attendanceParam["status"] = status
             if !isFullDay {
-               attendanceParam["timetable_slot_id"] = slotId!
+                attendanceParam["timetable_slot_id"] = slotId!
             }
             
             attendancesKey.append(attendanceParam)
@@ -242,7 +242,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
     
     func createNewAttendance(_ parameters: Parameters) {
-//        TO DO: must check that the latest attendance state is not the same
+        //        TO DO: must check that the latest attendance state is not the same
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         createFullDayAttendanceApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
@@ -265,7 +265,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             }
         } else {
             //delete attendance for selected students only
-            var students = studentsMap.filter { (childId, attendances) -> Bool in
+            let students = studentsMap.filter { (childId, attendances) -> Bool in
                 self.selectedStudents.contains(childId)
             }
             for student in students {
@@ -276,7 +276,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
                 }
             }
         }
-        
         selectedStudents = []
         parameters["ids"] = deletedAttendances
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -289,8 +288,8 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             }
         }
     }
-
-//    MARK: - IBActions
+    
+    //    MARK: - IBActions
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -385,7 +384,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
         } else {
             cell.deselectStudent()
         }
-
+        
         cell.didSelectStudent = { (selectedStudent) -> () in
             var isSelected = false
             isSelected = self.selectedStudents.contains(where: { (studentId) -> Bool in
@@ -427,7 +426,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 submitExcuse.didSubmit = { comment in
                     self.submitAttendance(student: selectedStudent, type: type, status: status, comment: comment)
                 }
-//                self.navigationController?.pushViewController(submitExcuse, animated: false)
+                //                self.navigationController?.pushViewController(submitExcuse, animated: false)
                 submitExcuse.modalPresentationStyle = .fullScreen
                 self.present(submitExcuse, animated: true, completion: nil)
             }
@@ -438,18 +437,18 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 first.id > second.id
             }.first
             if let _ = attendance?.timetableSlotId {
-                    if isFullDay {
-                        cell.resetAll()
-                    } else {
-                        cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
-                    }
-                } else {    //case fullday
-                    if !isFullDay {
-                        cell.resetAll()
-                    } else {
-                        cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
-                    }
+                if isFullDay {
+                    cell.resetAll()
+                } else {
+                    cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
                 }
+            } else {    //case fullday
+                if !isFullDay {
+                    cell.resetAll()
+                } else {
+                    cell.applyState(attendanceCase: AttendanceCases(rawValue: attendance!.status!) ?? .present)
+                }
+            }
         }
         
         cell.student = self.currentStudents[indexPath.row]

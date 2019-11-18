@@ -21,7 +21,6 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
     var child : Child!
     var courseName: String = ""
-    
     var post: Post!
 
     override func viewDidLoad() {
