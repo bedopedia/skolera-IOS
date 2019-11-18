@@ -48,7 +48,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
                   endingLineNumber = "41"
-                  offsetFromSymbolStart = "843">
+                  offsetFromSymbolStart = "724">
                </Location>
                <Location
                   uuid = "D75EC2B2-7DDC-489A-BA0C-774F31446F8F - 4665860d81285161"
@@ -63,7 +63,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "42"
                   endingLineNumber = "42"
-                  offsetFromSymbolStart = "401">
+                  offsetFromSymbolStart = "344">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -832,8 +832,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "QuizStatusViewController"
-            landmarkType = "3">
+            landmarkName = "getQuizDetails()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1120,7 +1120,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "setUpDatesUi()"
+            landmarkName = "solveQuizButtonAction()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1136,7 +1136,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
             endingLineNumber = "138"
-            landmarkName = "setUpDatesUi()"
+            landmarkName = "solveQuizButtonAction()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1152,7 +1152,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
             endingLineNumber = "141"
-            landmarkName = "setUpDatesUi()"
+            landmarkName = "solveQuizButtonAction()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1168,8 +1168,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "QuizStatusViewController"
-            landmarkType = "3">
+            landmarkName = "createSubmission()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1200,7 +1200,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
             endingLineNumber = "102"
-            landmarkName = "openQuizAnswers()"
+            landmarkName = "getSolveQuizDetails()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1232,7 +1232,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "createSubmission()"
+            landmarkName = "getSolveQuizDetails()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1360,7 +1360,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
             endingLineNumber = "162"
-            landmarkName = "setUpDatesUi()"
+            landmarkName = "openQuizQuestions()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1376,8 +1376,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "98"
             endingLineNumber = "98"
-            landmarkName = "openQuizQuestions()"
-            landmarkType = "7">
+            landmarkName = "QuizStatusViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "3B1110D1-AD2F-4402-B20A-A12EEBA8231C - c9543019e2462252"
@@ -1624,7 +1624,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
@@ -1634,38 +1634,6 @@
             endingLineNumber = "23"
             landmarkName = "configureCalendar(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C - a0dffdcf0b813345"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "skolera.AttendanceViewController.configureCalendar(JTAppleCalendar.JTAppleCalendarView) -&gt; JTAppleCalendar.ConfigurationParameters"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "284">
-               </Location>
-               <Location
-                  uuid = "3F401F02-9EF5-4B60-A291-94BF091B772C - a0dffdcf0b813345"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "skolera.AttendanceViewController.configureCalendar(JTAppleCalendar.JTAppleCalendarView) -&gt; JTAppleCalendar.ConfigurationParameters"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Attendance/Controllers/AttendanceViewController+CalendarDelegates.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "1324">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1864,7 +1832,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D383714B-4EEC-47A8-8460-604E0ADD5FB7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
@@ -1921,6 +1889,70 @@
             startingLineNumber = "101"
             endingLineNumber = "101"
             landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "64947EE9-F2AA-4DD4-84FE-ECB6796E5EEE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Quizzes/Controllers/QuizzesGradesViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "getSubmissions()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0DD0EB97-018B-4403-A48B-D8A5A04EAEAD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Grades/Controllers/CourseGradeViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "getStudentGradeBook()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "734F7F2C-F322-4568-9E5A-F5B83325BB0A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Login/Controllers/SplashScreenViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "getMainScreen()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8CE7F7D4-DF79-4CCC-AD57-C1131584A02B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Login/Controllers/SplashScreenViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "getMainScreen()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

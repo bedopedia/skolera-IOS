@@ -29,8 +29,6 @@ class TimetableViewController: UIViewController, EventDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        
-        //////////////
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
