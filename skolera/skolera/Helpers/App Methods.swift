@@ -128,6 +128,7 @@ func assignPlaceholder(_ tableView: UITableView, imageName: String, placeHolderL
     DispatchQueue.main.async {
         let placeholder = PlaceholderView(frame: tableView.frame)
         placeholder.image = imageName
+        placeholder.placeholderText = placeHolderLabelText
         tableView.backgroundView = placeholder
     }
 }

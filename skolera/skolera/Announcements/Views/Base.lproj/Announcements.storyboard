@@ -131,45 +131,16 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Nc-c0-iGb">
-                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="announcmentsplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="EXB-hq-LFz">
-                                        <rect key="frame" x="115.5" y="189.5" width="144" height="140"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="144" id="49o-8t-LR0"/>
-                                            <constraint firstAttribute="height" constant="140" id="n98-Ch-NOu"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any Announcements for now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmw-cl-Si5">
-                                        <rect key="frame" x="29" y="353.5" width="317.5" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="EXB-hq-LFz" firstAttribute="centerX" secondItem="7Nc-c0-iGb" secondAttribute="centerX" id="B8I-QT-kfp"/>
-                                    <constraint firstItem="nmw-cl-Si5" firstAttribute="top" secondItem="EXB-hq-LFz" secondAttribute="bottom" constant="24" id="Nb0-Xc-GB2"/>
-                                    <constraint firstItem="nmw-cl-Si5" firstAttribute="centerX" secondItem="EXB-hq-LFz" secondAttribute="centerX" id="NoO-kH-U5H"/>
-                                    <constraint firstItem="EXB-hq-LFz" firstAttribute="centerY" secondItem="7Nc-c0-iGb" secondAttribute="centerY" constant="-44" id="n25-GV-LoK"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Awp-Bg-R8O" firstAttribute="leading" secondItem="JkZ-3K-8ZC" secondAttribute="leading" id="1IV-sa-aiZ"/>
                             <constraint firstItem="Awp-Bg-R8O" firstAttribute="top" secondItem="0lG-Oi-nfj" secondAttribute="top" id="5vA-ch-XKd"/>
                             <constraint firstAttribute="bottom" secondItem="x9S-ZB-crC" secondAttribute="bottom" id="6qx-L8-Xb5"/>
-                            <constraint firstAttribute="bottom" secondItem="7Nc-c0-iGb" secondAttribute="bottom" id="807-J5-p1h"/>
                             <constraint firstItem="x9S-ZB-crC" firstAttribute="leading" secondItem="JkZ-3K-8ZC" secondAttribute="leading" id="NOc-jx-eAD"/>
-                            <constraint firstAttribute="trailing" secondItem="7Nc-c0-iGb" secondAttribute="trailing" id="bX3-8H-iud"/>
                             <constraint firstAttribute="trailing" secondItem="Awp-Bg-R8O" secondAttribute="trailing" id="dwi-Ov-cVO"/>
-                            <constraint firstItem="7Nc-c0-iGb" firstAttribute="leading" secondItem="0lG-Oi-nfj" secondAttribute="leading" id="orE-3J-lUx"/>
                             <constraint firstItem="x9S-ZB-crC" firstAttribute="top" secondItem="Awp-Bg-R8O" secondAttribute="bottom" constant="8" id="qRk-Qa-q0Y"/>
                             <constraint firstItem="0lG-Oi-nfj" firstAttribute="trailing" secondItem="x9S-ZB-crC" secondAttribute="trailing" id="uqN-Tj-vUV"/>
-                            <constraint firstItem="7Nc-c0-iGb" firstAttribute="top" secondItem="Awp-Bg-R8O" secondAttribute="bottom" id="vob-Xx-5In"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0lG-Oi-nfj"/>
                     </view>
@@ -177,7 +148,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="headerView" destination="Awp-Bg-R8O" id="Vly-aE-EcQ"/>
-                        <outlet property="placeHolderView" destination="7Nc-c0-iGb" id="rKl-U4-hgU"/>
                         <outlet property="tableView" destination="x9S-ZB-crC" id="CWh-a3-c0Q"/>
                     </connections>
                 </viewController>
@@ -295,7 +265,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="announcmentsplaceholder" width="144" height="140"/>
         <image name="chevronLeft" width="11" height="16"/>
         <image name="logo" width="131" height="24"/>
         <image name="settings" width="32" height="32"/>
