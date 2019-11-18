@@ -112,13 +112,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     private func setOpenedQuizzes() {
         filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("running") })
-        assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any open quizzes for now".localized)
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any open quizzes for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedQuizzes() {
         filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
-        assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any closed quizzes for now".localized)
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any closed quizzes for now".localized)
         self.tableView.reloadData()
     }
     
@@ -144,7 +144,6 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     func getQuizzes(pageId: Int) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
-            assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any quizzes for now".localized)
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
@@ -222,8 +221,6 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizTableViewCell") as! QuizTableViewCell
         cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
-        //        cell.assignment = filteredAssignments[indexPath.row]
-        //        debugPrint("Index path: ",indexPath.row)
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
                 if meta.totalPages > pageId {
@@ -242,7 +239,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 144
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

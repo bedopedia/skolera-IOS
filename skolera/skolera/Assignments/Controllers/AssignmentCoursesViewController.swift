@@ -51,7 +51,6 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "assignmentsplaceholder", placeHolderLabelText: "You don't have any courses for now".localized)
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
@@ -62,6 +61,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "assignmentsplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
     
@@ -77,7 +77,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 108
+        return 112
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

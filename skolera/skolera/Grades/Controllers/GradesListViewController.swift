@@ -32,7 +32,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        assignPlaceholder(self.tableView, imageName: "gradesplaceholder", placeHolderLabelText: "You don't have any courses for now".localized)
+        handleEmptyDate(tableView: self.tableView, dataSource: self.grades, imageName: "gradesplaceholder", placeholderText: "You don't have any courses for now".localized)
     }
     
     @IBAction func back() {

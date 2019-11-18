@@ -98,13 +98,13 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
 
     private func setOpenedAssignments() {
         filteredAssignments = assignments.filter({ $0.state.elementsEqual("running") })
-        assignPlaceholder(self.tableView, imageName: "assignmentsplaceholder", placeHolderLabelText: "You don't have any open assignments for now".localized)
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any open assignments for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedAssignments() {
         filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
-        assignPlaceholder(self.tableView, imageName: "assignmentsplaceholder", placeHolderLabelText: "You don't have any closed assignments for now".localized)
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any closed assignments for now".localized)
         self.tableView.reloadData()
     }
 
@@ -173,7 +173,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 144
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -84,17 +84,16 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "notificationsplaceholder", placeHolderLabelText: "You don't have any notifications for now".localized)
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
                     self.notifications.append(contentsOf: notificationResponse.notifications)
                     self.meta = notificationResponse.meta
-                    self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.notifications, imageName: "notificationsplaceholder", placeholderText: "You don't have any notifications for now".localized)
         }
     }
     
@@ -102,16 +101,10 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         self.navigationController?.popViewController(animated: true)
     }
 
-
 }
 
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if notifications != nil {
-//            return notifications.count
-//        } else {
-//            return 0
-//        }
         return notifications.count
     }
     

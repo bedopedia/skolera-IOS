@@ -51,7 +51,6 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any courses for now".localized)
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
@@ -62,23 +61,24 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "quizzesplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
 }
 
 extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCourseTableViewCell") as! QuizCourseTableViewCell
-//        cell.course = courses[indexPath.row]
+        cell.course = courses[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 108
+        return 112
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

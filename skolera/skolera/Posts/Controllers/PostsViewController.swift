@@ -18,7 +18,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet var headerView: UIView!
     
     var child : Child!
-    var courses: [PostCourse]!
+    var courses: [PostCourse] = []
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -51,10 +51,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "postsplaceholder", placeHolderLabelText: "You don't have any courses for now".localized)
-            if self.courses == nil {
-                self.courses = []
-            }
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.courses = result.map({ PostCourse($0) })
@@ -63,15 +59,12 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "postsplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
     //    MARK: - Table View Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if courses != nil, courses.count > 0 {
-           return courses.count
-        } else {
-            return 0
-        }
+        return courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

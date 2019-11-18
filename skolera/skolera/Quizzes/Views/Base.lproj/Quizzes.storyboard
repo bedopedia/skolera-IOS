@@ -32,12 +32,12 @@
                                                     <rect key="frame" x="12" y="12" width="390" height="103"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bq-lP-a4h">
-                                                            <rect key="frame" x="83" y="16" width="56.5" height="21.5"/>
+                                                            <rect key="frame" x="83" y="16" width="56.5" height="27"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pattern assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QF-3u-2HU">
-                                                            <rect key="frame" x="83" y="41.5" width="135.5" height="20"/>
+                                                            <rect key="frame" x="83" y="47" width="135.5" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="1gt-nb-jgY"/>
                                                             </constraints>
@@ -46,7 +46,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxz-3U-ODf">
-                                                            <rect key="frame" x="83" y="69.5" width="159" height="24"/>
+                                                            <rect key="frame" x="83" y="75" width="159" height="24"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowHour" translatesAutoresizingMaskIntoConstraints="NO" id="1GX-np-F4f">
                                                                     <rect key="frame" x="8" y="4" width="16" height="16"/>
@@ -119,6 +119,7 @@
                                                         <constraint firstItem="9QF-3u-2HU" firstAttribute="leading" secondItem="7bq-lP-a4h" secondAttribute="leading" id="Mvs-be-7b7"/>
                                                         <constraint firstItem="vxz-3U-ODf" firstAttribute="leading" secondItem="9QF-3u-2HU" secondAttribute="leading" id="O0I-vj-dHY"/>
                                                         <constraint firstItem="RB0-zP-7Ya" firstAttribute="centerY" secondItem="uHb-mk-Ywx" secondAttribute="centerY" id="T2B-NA-dPa"/>
+                                                        <constraint firstAttribute="bottom" secondItem="vxz-3U-ODf" secondAttribute="bottom" constant="4" id="T4e-VL-uWN"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="RB0-zP-7Ya" secondAttribute="trailing" constant="16" id="Wcf-l9-22M"/>
                                                         <constraint firstItem="vxz-3U-ODf" firstAttribute="top" secondItem="9QF-3u-2HU" secondAttribute="bottom" constant="8" id="Zlf-d6-mnD"/>
                                                         <constraint firstItem="oWP-da-ySH" firstAttribute="top" secondItem="uHb-mk-Ywx" secondAttribute="top" constant="16" id="b47-tV-ynm"/>
@@ -270,7 +271,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pattern assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gxh-a0-Ku4">
-                                                            <rect key="frame" x="24" y="55.5" width="169.5" height="21"/>
+                                                            <rect key="frame" x="24" y="55.5" width="169.5" height="30.5"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -297,7 +298,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NZP-wZ-IfB">
-                                                            <rect key="frame" x="24" y="82.5" width="159" height="24"/>
+                                                            <rect key="frame" x="24" y="92" width="159" height="24"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowHour" translatesAutoresizingMaskIntoConstraints="NO" id="3eR-dZ-WGr">
                                                                     <rect key="frame" x="8" y="4" width="16" height="16"/>
@@ -375,6 +376,7 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="twj-mJ-Et4" secondAttribute="trailing" constant="30" id="4g7-sy-Kag"/>
+                                                        <constraint firstAttribute="bottom" secondItem="NZP-wZ-IfB" secondAttribute="bottom" constant="4" id="6oY-VA-hL5"/>
                                                         <constraint firstItem="KBj-QR-KLR" firstAttribute="leading" secondItem="Jn7-6l-svi" secondAttribute="leading" constant="24" id="7fI-3W-rVo"/>
                                                         <constraint firstItem="Y2T-2J-Bh5" firstAttribute="centerX" secondItem="twj-mJ-Et4" secondAttribute="centerX" id="7zT-qo-KU5"/>
                                                         <constraint firstItem="Gxh-a0-Ku4" firstAttribute="top" secondItem="kZm-Gb-zFk" secondAttribute="bottom" constant="4" id="8xv-RM-f0r"/>

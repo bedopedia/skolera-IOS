@@ -86,7 +86,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            assignPlaceholder(self.tableView, imageName: "postsplaceholder", placeHolderLabelText: "You don't have any posts for now".localized)
             if self.posts == nil {
                 self.posts = []
             }
@@ -101,6 +100,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.posts ?? [], imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
         }
     }
     

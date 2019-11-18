@@ -69,7 +69,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getThreadsApi { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            assignPlaceholder(self.threadsTableView, imageName: "messagesplaceholder",placeHolderLabelText: "You don't have any messages for now".localized)
             if isSuccess {
                 if let result = response as? [String: AnyObject] {
                     debugPrint(result)
@@ -83,6 +82,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.threadsTableView, dataSource: self.threads, imageName: "messagesplaceholder", placeholderText: "You don't have any messages for now".localized)
         }
     }
 
