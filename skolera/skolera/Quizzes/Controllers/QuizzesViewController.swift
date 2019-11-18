@@ -239,7 +239,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 144
+        return 144  
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

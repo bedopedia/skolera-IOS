@@ -16,7 +16,7 @@ target 'skolera' do
   #Custom Progress Bar
   pod 'YLProgressBar'
   #Calendar View For Attendance Screen
-  pod 'JTAppleCalendar'
+  pod 'JTAppleCalendar', '7.1.6'
   #Timetable
   pod 'CalendarKit', '0.3.1'
   #Firebase
@@ -45,4 +45,6 @@ target 'skolera' do
   #RichText
   pod 'RichTextView'
   pod 'SwiftDate', '~> 5.0'
+  pod 'SkyFloatingLabelTextField', '~> 3.0'
+  
 end

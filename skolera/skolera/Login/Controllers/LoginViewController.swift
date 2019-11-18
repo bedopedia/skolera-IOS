@@ -11,6 +11,7 @@ import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
 import KeychainSwift
+import SkyFloatingLabelTextField
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
@@ -20,20 +21,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     //MARK: - Outlets
     
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var schoolImageView: UIImageView!
     @IBOutlet var progressView: UIProgressView!
     
     //MARK: - Life Cycle
     
+    fileprivate func setUpFloatingText() {
+        emailTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        emailTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        emailTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        emailTextField.selectedLineHeight = 1
+        emailTextField.selectedLineColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        
+        passwordTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        passwordTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        passwordTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        passwordTextField.selectedLineHeight = 1
+        passwordTextField.selectedLineColor = .clear
+    }
+    
     /// calls service to load school image
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-        self.emailTextField.underlined()
+//        self.emailTextField.underlined()
         self.emailTextField.clearButtonMode = .never
-        self.passwordTextField.underlined()
+//        self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         passwordTextField.rightViewMode = .always
@@ -48,6 +63,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }
         progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        setUpFloatingText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +81,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     ///
     /// - Parameter textField: selected textfield
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.active()
+//        textField.active()
     }
     
     /// reset text field bottom border to grey when not active
