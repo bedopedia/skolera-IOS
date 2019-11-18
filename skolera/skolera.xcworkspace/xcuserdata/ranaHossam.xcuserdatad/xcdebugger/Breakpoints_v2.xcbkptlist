@@ -14,8 +14,8 @@
             filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "openNewMessage()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,11 +30,26 @@
             filePath = "skolera/Announcements/Controllers/AnnouncementTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "getAnnouncements(page:)"
             landmarkType = "7">
             <Locations>
+               <Location
+                  uuid = "D75EC2B2-7DDC-489A-BA0C-774F31446F8F - 9ae952cb4693a531"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 0 of skolera.AnnouncementTableViewController.getAnnouncements(page: Swift.Int) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Announcements/Controllers/AnnouncementTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "0">
+               </Location>
                <Location
                   uuid = "D75EC2B2-7DDC-489A-BA0C-774F31446F8F - 7b8d072cccd60816"
                   shouldBeEnabled = "Yes"
@@ -48,22 +63,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
                   endingLineNumber = "41"
-                  offsetFromSymbolStart = "724">
-               </Location>
-               <Location
-                  uuid = "D75EC2B2-7DDC-489A-BA0C-774F31446F8F - 4665860d81285161"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in skolera.AnnouncementTableViewController.getAnnouncements(page: Swift.Int) -&gt; ()"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Announcements/Controllers/AnnouncementTableViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "344">
+                  offsetFromSymbolStart = "44">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -1200,7 +1200,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
             endingLineNumber = "168"
-            landmarkName = "presentQuizzes()"
+            landmarkName = "getQuizzes(pageId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1664,8 +1664,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "163"
             endingLineNumber = "163"
-            landmarkName = "QuizzesViewController"
-            landmarkType = "3">
+            landmarkName = "getQuizzes(pageId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1680,7 +1680,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "presentQuizzes()"
+            landmarkName = "getQuizzes(pageId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1742,8 +1742,8 @@
             filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "openNewMessage()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1758,8 +1758,8 @@
             filePath = "skolera/Home Page/Controllers/ChildHomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "leftAction()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1824,7 +1824,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
             endingLineNumber = "198"
-            landmarkName = "submitQuiz(parameters:)"
+            landmarkName = "checkQuizSubmission(quizzes:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1840,7 +1840,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
             endingLineNumber = "150"
-            landmarkName = "getQuizzes(pageId:)"
+            landmarkName = "getTeacherQuizzes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1856,7 +1856,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
             endingLineNumber = "147"
-            landmarkName = "getQuizzes(pageId:)"
+            landmarkName = "getTeacherQuizzes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1872,7 +1872,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "182"
             endingLineNumber = "182"
-            landmarkName = "checkQuizSubmission(quizzes:)"
+            landmarkName = "presentQuizzes()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1904,7 +1904,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "submitQuiz(parameters:)"
+            landmarkName = "checkQuizSubmission(quizzes:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1921,6 +1921,38 @@
             startingLineNumber = "68"
             endingLineNumber = "68"
             landmarkName = "textFieldDidBeginEditing(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A9CC9E7-4C41-4FBD-97FE-0358FC3C687B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Announcements/Controllers/AnnouncementTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "getAnnouncements(page:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E927852E-B918-48A5-BCFF-C9F96658A8F0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Announcements/Controllers/AnnouncementTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

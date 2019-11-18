@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+
 class AnnouncementTableViewController: UITableViewController, NVActivityIndicatorViewable {
 
     var announcements = [Announcement]()
