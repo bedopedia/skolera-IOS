@@ -223,22 +223,40 @@
                                                 </constraints>
                                                 <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </progressView>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVF-EF-TEi">
+                                                <rect key="frame" x="24" y="232" width="366" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iR-ob-8u3">
+                                                <rect key="frame" x="24" y="320" width="366" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="yHf-na-Qrx" firstAttribute="top" secondItem="ZLs-WL-8Y3" secondAttribute="bottom" constant="38" id="3Nb-Jl-Zav"/>
+                                            <constraint firstItem="FVF-EF-TEi" firstAttribute="leading" secondItem="yHf-na-Qrx" secondAttribute="leading" id="5Z0-fi-cv8"/>
                                             <constraint firstAttribute="trailing" secondItem="Wcb-kS-hTW" secondAttribute="trailing" constant="24" id="8DC-or-pfc"/>
                                             <constraint firstItem="Wcb-kS-hTW" firstAttribute="top" secondItem="yHf-na-Qrx" secondAttribute="bottom" constant="38" id="9Og-Ev-uTr"/>
+                                            <constraint firstItem="FVF-EF-TEi" firstAttribute="trailing" secondItem="yHf-na-Qrx" secondAttribute="trailing" id="Dq6-c6-7mw"/>
                                             <constraint firstItem="7VN-3S-Lqh" firstAttribute="top" secondItem="Wcb-kS-hTW" secondAttribute="bottom" constant="-1" id="EFw-Mm-IDa"/>
+                                            <constraint firstItem="4iR-ob-8u3" firstAttribute="trailing" secondItem="Wcb-kS-hTW" secondAttribute="trailing" id="IYp-lM-vJf"/>
+                                            <constraint firstItem="4iR-ob-8u3" firstAttribute="leading" secondItem="Wcb-kS-hTW" secondAttribute="leading" id="PFa-ZY-yrh"/>
                                             <constraint firstItem="7VN-3S-Lqh" firstAttribute="leading" secondItem="Wcb-kS-hTW" secondAttribute="leading" id="W0F-LZ-sfW"/>
                                             <constraint firstItem="XHD-cm-RIT" firstAttribute="leading" secondItem="0dl-oL-1dE" secondAttribute="leading" constant="24" id="Wbn-ey-9kU"/>
                                             <constraint firstItem="7VN-3S-Lqh" firstAttribute="width" secondItem="Wcb-kS-hTW" secondAttribute="width" id="XmB-wv-cPy"/>
                                             <constraint firstItem="ZLs-WL-8Y3" firstAttribute="centerX" secondItem="0dl-oL-1dE" secondAttribute="centerX" id="aH6-m5-jvh"/>
                                             <constraint firstItem="yHf-na-Qrx" firstAttribute="leading" secondItem="XHD-cm-RIT" secondAttribute="leading" id="bpy-WC-g2w"/>
+                                            <constraint firstItem="4iR-ob-8u3" firstAttribute="top" secondItem="Wcb-kS-hTW" secondAttribute="bottom" constant="4" id="cCq-gE-huc"/>
                                             <constraint firstAttribute="trailing" secondItem="yHf-na-Qrx" secondAttribute="trailing" constant="24" id="dXR-Ey-Tyf"/>
                                             <constraint firstItem="ZLs-WL-8Y3" firstAttribute="top" secondItem="0dl-oL-1dE" secondAttribute="top" constant="70" id="ig4-sq-44R">
                                                 <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                                             </constraint>
+                                            <constraint firstItem="FVF-EF-TEi" firstAttribute="top" secondItem="yHf-na-Qrx" secondAttribute="bottom" constant="4" id="m9g-jl-91u"/>
                                             <constraint firstItem="XHD-cm-RIT" firstAttribute="top" secondItem="Wcb-kS-hTW" secondAttribute="bottom" constant="50" id="riX-5Z-q9m">
                                                 <variation key="heightClass=regular-widthClass=compact" constant="34"/>
                                             </constraint>
@@ -269,7 +287,9 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="emailErrorLabel" destination="FVF-EF-TEi" id="JSn-4k-I8b"/>
                         <outlet property="emailTextField" destination="yHf-na-Qrx" id="FTl-ob-HQA"/>
+                        <outlet property="passwordErrorLabel" destination="4iR-ob-8u3" id="Pnb-Wm-JEq"/>
                         <outlet property="passwordTextField" destination="Wcb-kS-hTW" id="U8S-Rx-oxF"/>
                         <outlet property="progressView" destination="7VN-3S-Lqh" id="7pI-MB-7Bh"/>
                         <outlet property="schoolImageView" destination="ZLs-WL-8Y3" id="lpo-lp-gRq"/>

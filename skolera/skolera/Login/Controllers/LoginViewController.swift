@@ -25,6 +25,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var schoolImageView: UIImageView!
     @IBOutlet var progressView: UIProgressView!
+    @IBOutlet var passwordErrorLabel: UILabel!
+    @IBOutlet var emailErrorLabel: UILabel!
     
     //MARK: - Life Cycle
     
@@ -53,9 +55,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.passwordTextField.delegate = self
         passwordTextField.rightViewMode = .always
         passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        let detailsButton = passwordTextField.setView(.right, image: nil, width: 50)
-        detailsButton.setTitle("show", for: .normal)
-        detailsButton.setTitleColor(.black, for: .normal)
+        let detailsButton = passwordTextField.setView(.right, image: #imageLiteral(resourceName: "show-password"), width: 50)
+//        detailsButton.setTitle("show", for: .normal)
+//        detailsButton.setTitleColor(.black, for: .normal)
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
@@ -77,18 +79,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.view.endEditing(true)
     }
     
+    fileprivate func hideErrorLabels() {
+        emailErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+    }
+    
     /// sets text field bottom border to green when active
     ///
     /// - Parameter textField: selected textfield
     func textFieldDidBeginEditing(_ textField: UITextField) {
 //        textField.active()
+        if let floatingTextField = textField as? SkyFloatingLabelTextField {
+            floatingTextField.lineColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+            hideErrorLabels()
+        }
     }
     
     /// reset text field bottom border to grey when not active
     ///
     /// - Parameter textField: textfield user ended editing
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.inactive()
+//        textField.inactive()
+        if let floatingTextField = textField as? SkyFloatingLabelTextField {
+            floatingTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            hideErrorLabels()
+        }
     }
     /// moves to next text field if user presses continue, if last one keyboard is dismissed
     ///
@@ -110,7 +125,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         progressView.setProgress( count / 6 , animated: true)
     }
     
-    
     //MARK: - Actions
     
     /// action when user presses login, shows alert messages if fields are empty, otherwise calls authenticate function with email and password
@@ -120,17 +134,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         if email.isEmpty {
-            showAlert(viewController: self, title: MISSING_FIELD, message: MISSING_EMAIL, completion: nil)
+            emailErrorLabel.isHidden = false
+            emailErrorLabel.text = "Email is empty"
+            emailTextField.lineColor = UIColor.red
         } else if password.isEmpty {
-            showAlert(viewController: self, title: MISSING_FIELD, message: MISSING_PASSWORD, completion: nil)
+            passwordErrorLabel.isHidden = false
+            passwordErrorLabel.text = "Password is empty"
+            passwordTextField.lineColor = UIColor.red
+        } else if passwordTextField.text?.count ?? 0 < 6 {
+            passwordErrorLabel.isHidden = false
+            passwordErrorLabel.text = "Password length should be more than 6 characters"
+            passwordTextField.lineColor = UIColor.red
         } else {
             authenticate(email: email, password: password)
         }
     }
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
-        sender.setTitle(buttonTitle, for: .normal)
+//        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
+        let buttonImage = passwordTextField.isSecureTextEntry ? #imageLiteral(resourceName: "show-password") : #imageLiteral(resourceName: "hide-password")
+        sender.setImage(buttonImage, for: .normal)
+//        sender.setTitle(buttonTitle, for: .normal)
     }
     /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenListViewController. Alert message is shown for wrong credentials on failure
     ///
@@ -155,7 +179,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
                     keychain.set(String(parent.data.id), forKey: ID)
                     keychain.set(parent.data.userType, forKey: USER_TYPE)
-                    debugPrint(keychain.get(USER_TYPE))
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     self.updateLocale(parent: parent)
