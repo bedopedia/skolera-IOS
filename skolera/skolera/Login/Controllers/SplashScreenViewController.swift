@@ -62,8 +62,10 @@ class SplashScreenViewController: UIViewController {
             BASE_URL = keychain.get("BASE_URL")
             self.updateLocale()
         } else {
-            let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-            self.navigationController?.pushViewController(schoolCodevc, animated: false)
+            DispatchQueue.main.async {
+                let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                self.navigationController?.pushViewController(schoolCodevc, animated: false)
+            }
         }
     }
     

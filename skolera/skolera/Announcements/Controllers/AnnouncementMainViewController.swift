@@ -8,6 +8,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SwiftDate
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -66,6 +67,11 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
                             let announcement = Announcement(fromDictionary: item)
                             self.announcements.append(announcement)
                         }
+                    }
+                    self.announcements.sort { (firstAnnouncement, secondAnnoucement) -> Bool in
+                        let firstDate = firstAnnouncement.endAt.toISODate() ?? DateInRegion()
+                        let secondDate = secondAnnoucement.endAt.toISODate() ?? DateInRegion()
+                        return firstDate < secondDate
                     }
                     self.tableView.reloadData()
                 }
