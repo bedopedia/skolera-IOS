@@ -18,20 +18,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var courseName: String = ""
     var courseId: Int = 0
     var quizzes: [FullQuiz] = []
-    var filteredQuizzes: [FullQuiz]! {
-        didSet {
-            if self.filteredQuizzes.isEmpty {
-                if self.selectedSegment == 0 {
-                    self.placeHolderLabel.text = "You don't have any open quizzes for now".localized
-                } else {
-                    self.placeHolderLabel.text = "You don't have any closed quizzes for now".localized
-                }
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var filteredQuizzes: [FullQuiz] = []
     var isTeacher: Bool = false
     var courseGroupId = 0
     var pageId = 1
@@ -45,8 +32,6 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var placeHolderView: UIView!
-    @IBOutlet var placeHolderLabel: UILabel!
     @IBOutlet var headerView: UIView!
     
     
@@ -127,11 +112,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     private func setOpenedQuizzes() {
         filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("running") })
+        assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any open quizzes for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedQuizzes() {
         filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
+        assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any closed quizzes for now".localized)
         self.tableView.reloadData()
     }
     
@@ -157,6 +144,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     func getQuizzes(pageId: Int) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
+            assignPlaceholder(self.tableView, imageName: "quizzesplaceholder", placeHolderLabelText: "You don't have any quizzes for now".localized)
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
@@ -227,11 +215,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
 extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredQuizzes != nil {
-            return filteredQuizzes.count
-        } else {
-           return 0
-        }
+        return filteredQuizzes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
