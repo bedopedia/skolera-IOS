@@ -7,11 +7,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SFUIText-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Splash Screen View Controller-->
         <scene sceneID="Ugx-Eb-cBq">
@@ -67,7 +62,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="reC-uW-MZr">
-                                                <rect key="frame" x="24" y="277.66666666666669" width="366" height="48"/>
+                                                <rect key="frame" x="24" y="698" width="366" height="48"/>
                                                 <color key="backgroundColor" red="0.15686274509803921" green="0.73333333333333328" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="Ykf-Gm-JD4"/>
@@ -86,42 +81,43 @@
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cover_photo" translatesAutoresizingMaskIntoConstraints="NO" id="5C0-TK-eVL">
-                                                <rect key="frame" x="80.333333333333329" y="50" width="253.33333333333337" height="60.666666666666657"/>
+                                                <rect key="frame" x="97" y="120.00000000000001" width="220" height="60.666666666666671"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="220" id="WqC-2m-LQk"/>
+                                                </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38l-9d-Ndb">
-                                                <rect key="frame" x="23.999999999999993" y="169.66666666666666" width="102.33333333333331" height="20"/>
-                                                <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="1"/>
-                                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="17"/>
-                                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter school code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ggd-KG-MBM">
-                                                <rect key="frame" x="24" y="207.66666666666666" width="366" height="30"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter school code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ggd-KG-MBM" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <rect key="frame" x="24" y="598" width="366" height="54"/>
                                                 <color key="tintColor" red="0.15615364910000001" green="0.73169142009999999" blue="0.30433815720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="EBM-Bl-rUO"/>
+                                                    <constraint firstAttribute="height" constant="54" id="EBM-Bl-rUO"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="continue"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Enter school code"/>
+                                                </userDefinedRuntimeAttributes>
                                             </textField>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwE-VS-rRu">
+                                                <rect key="frame" x="24" y="660" width="366" height="14.333333333333371"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="5C0-TK-eVL" firstAttribute="top" secondItem="WSh-h3-ZM8" secondAttribute="top" constant="50" id="1JJ-CO-GaO"/>
+                                            <constraint firstItem="5C0-TK-eVL" firstAttribute="top" secondItem="WSh-h3-ZM8" secondAttribute="top" constant="120" id="1JJ-CO-GaO"/>
+                                            <constraint firstItem="reC-uW-MZr" firstAttribute="leading" secondItem="ggd-KG-MBM" secondAttribute="leading" id="3QN-JV-Q3y"/>
+                                            <constraint firstItem="kwE-VS-rRu" firstAttribute="leading" secondItem="ggd-KG-MBM" secondAttribute="leading" id="7Bx-AF-OX9"/>
                                             <constraint firstAttribute="trailing" secondItem="ggd-KG-MBM" secondAttribute="trailing" constant="24" id="85s-Xe-nFr"/>
-                                            <constraint firstItem="ggd-KG-MBM" firstAttribute="top" secondItem="38l-9d-Ndb" secondAttribute="bottom" constant="18" id="9dY-Hq-mVb"/>
-                                            <constraint firstItem="ggd-KG-MBM" firstAttribute="leading" secondItem="38l-9d-Ndb" secondAttribute="leading" id="KUg-p6-U9J"/>
-                                            <constraint firstItem="5C0-TK-eVL" firstAttribute="width" secondItem="WSh-h3-ZM8" secondAttribute="width" multiplier="0.6" constant="4.8000000000000114" id="SmP-US-66c"/>
+                                            <constraint firstItem="reC-uW-MZr" firstAttribute="top" secondItem="ggd-KG-MBM" secondAttribute="bottom" constant="46" id="Lud-zL-y2w"/>
+                                            <constraint firstAttribute="bottom" secondItem="reC-uW-MZr" secondAttribute="bottom" constant="72" id="MeX-lt-49L"/>
                                             <constraint firstItem="reC-uW-MZr" firstAttribute="centerX" secondItem="WSh-h3-ZM8" secondAttribute="centerX" id="Z0b-77-Gq2"/>
-                                            <constraint firstItem="reC-uW-MZr" firstAttribute="top" secondItem="ggd-KG-MBM" secondAttribute="bottom" constant="70" id="bJv-pn-rZK">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="40"/>
-                                            </constraint>
-                                            <constraint firstItem="38l-9d-Ndb" firstAttribute="top" secondItem="5C0-TK-eVL" secondAttribute="bottom" constant="75" id="cbY-uE-4Tj">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="59"/>
-                                            </constraint>
+                                            <constraint firstItem="kwE-VS-rRu" firstAttribute="trailing" secondItem="ggd-KG-MBM" secondAttribute="trailing" id="Zgb-94-tEJ"/>
                                             <constraint firstItem="5C0-TK-eVL" firstAttribute="centerX" secondItem="WSh-h3-ZM8" secondAttribute="centerX" id="j6L-nZ-oWW"/>
-                                            <constraint firstItem="38l-9d-Ndb" firstAttribute="leading" secondItem="WSh-h3-ZM8" secondAttribute="leading" constant="24" id="n9g-Q2-I4o"/>
-                                            <constraint firstItem="reC-uW-MZr" firstAttribute="leading" secondItem="38l-9d-Ndb" secondAttribute="leading" id="o4h-Hp-1PE"/>
+                                            <constraint firstItem="kwE-VS-rRu" firstAttribute="top" secondItem="ggd-KG-MBM" secondAttribute="bottom" constant="8" id="ufe-sf-Hxf"/>
+                                            <constraint firstItem="ggd-KG-MBM" firstAttribute="leading" secondItem="WSh-h3-ZM8" secondAttribute="leading" constant="24" id="xfd-Zt-IK6"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -146,6 +142,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="MbX-s1-sFV"/>
                     <connections>
+                        <outlet property="errorLabel" destination="kwE-VS-rRu" id="Eh7-RF-6oV"/>
                         <outlet property="schoolCodeTextField" destination="ggd-KG-MBM" id="eVP-bI-DN2"/>
                     </connections>
                 </viewController>
@@ -185,7 +182,7 @@
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" smartDashesType="no" textContentType="email"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username / email"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Username/email"/>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZLs-WL-8Y3" userLabel="School Image View">
@@ -221,17 +218,17 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="0pO-Fb-i6p"/>
                                                 </constraints>
-                                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="trackTintColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </progressView>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVF-EF-TEi">
-                                                <rect key="frame" x="24" y="232" width="366" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <rect key="frame" x="24" y="232" width="366" height="14.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iR-ob-8u3">
-                                                <rect key="frame" x="24" y="320" width="366" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <rect key="frame" x="24" y="320" width="366" height="14.333333333333314"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

@@ -10,7 +10,7 @@ import Foundation
 
 //Alert Messages
 let MISSING_FIELD = "Missing Field"
-let MISSING_SCHOOL_CODE = "Please enter school code"
+let MISSING_SCHOOL_CODE = "Please enter school code".localized
 let INVALID = "Invalid"
 let INVALID_SCHOOL_CODE = "Invalid school code"
 let MISSING_EMAIL = "Please enter email"

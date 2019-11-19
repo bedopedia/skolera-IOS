@@ -30,46 +30,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     //MARK: - Life Cycle
     
-    fileprivate func setUpFloatingText() {
-        emailTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        emailTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-        emailTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        emailTextField.selectedLineHeight = 1
-        emailTextField.selectedLineColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        
-        passwordTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        passwordTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-        passwordTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        passwordTextField.selectedLineHeight = 1
-        passwordTextField.selectedLineColor = .clear
-    }
-    
-    /// calls service to load school image
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-//        self.emailTextField.underlined()
+        //        self.emailTextField.underlined()
         self.emailTextField.clearButtonMode = .never
-//        self.passwordTextField.underlined()
+        //        self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         passwordTextField.rightViewMode = .always
-        passwordTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        passwordTextField.addTarget(self, action: #selector(self.passwordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        emailTextField.addTarget(self, action: #selector(self.emailFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         let detailsButton = passwordTextField.setView(.right, image: #imageLiteral(resourceName: "show-password"), width: 50)
-//        detailsButton.setTitle("show", for: .normal)
-//        detailsButton.setTitleColor(.black, for: .normal)
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
-        progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
         setUpFloatingText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    fileprivate func setUpFloatingText() {
+        emailTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        emailTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        emailTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        emailTextField.selectedLineHeight = 1
+        emailTextField.selectedLineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        passwordTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        passwordTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        passwordTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        passwordTextField.selectedLineHeight = 1
+        passwordTextField.selectedLineColor = .clear
     }
     
     //MARK: - Keyboard Settings
@@ -79,35 +75,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.view.endEditing(true)
     }
     
-    fileprivate func hideErrorLabels() {
-        emailErrorLabel.isHidden = true
-        passwordErrorLabel.isHidden = true
-    }
-    
-    /// sets text field bottom border to green when active
-    ///
-    /// - Parameter textField: selected textfield
     func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.active()
-        if let floatingTextField = textField as? SkyFloatingLabelTextField {
-            floatingTextField.lineColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-            hideErrorLabels()
-        }
+        //        textField.active()
     }
     
-    /// reset text field bottom border to grey when not active
-    ///
-    /// - Parameter textField: textfield user ended editing
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        textField.inactive()
-        if let floatingTextField = textField as? SkyFloatingLabelTextField {
-            floatingTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-            hideErrorLabels()
-        }
+        //        textField.inactive()
     }
-    /// moves to next text field if user presses continue, if last one keyboard is dismissed
-    ///
-    /// - Parameter textField: current textfield
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case emailTextField:
@@ -120,42 +95,73 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         return true
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
+    @objc func passwordFieldDidChange(_ textField: UITextField) {
         let count = Float(textField.text?.count ?? 0)
+        progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
         progressView.setProgress( count / 6 , animated: true)
+        passwordErrorLabel.isHidden = true
     }
-    
+    @objc func emailFieldDidChange(_ textField: UITextField) {
+        if let floatingTextField = textField as? SkyFloatingLabelTextField {
+            if let text = floatingTextField.text, text.count > 0 {
+                floatingTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+                floatingTextField.selectedLineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+                emailErrorLabel.isHidden = true
+            }
+        }
+    }
+    enum ErrorCases: String {
+        case emptyName = "emptyUname"
+        case emptyPassword = "emptyPassword"
+        case invalidPassword = "invalid"
+    }
     //MARK: - Actions
     
-    /// action when user presses login, shows alert messages if fields are empty, otherwise calls authenticate function with email and password
-    ///
+    fileprivate func setErrorView(textField: SkyFloatingLabelTextField, label: UILabel, errorText: String, isPassword: Bool = false) {
+        textField.lineColor = UIColor.red
+        textField.selectedLineColor = UIColor.red
+        label.isHidden = false
+        label.text = errorText
+        if isPassword {
+            progressView.setProgress(0, animated: true)
+            progressView.trackTintColor = UIColor.red
+        }
+    }
+    
+    func setErrorUi(_ errorCase: ErrorCases) {
+        switch errorCase {
+        case .emptyName:
+            setErrorView(textField: emailTextField, label: emailErrorLabel, errorText: "Email is empty")
+        case .emptyPassword:
+            setErrorView(textField: passwordTextField, label: passwordErrorLabel, errorText: "Password is empty", isPassword: true)
+        case .invalidPassword:
+            setErrorView(textField: passwordTextField, label: passwordErrorLabel, errorText: "Password length should be more than 6 characters", isPassword: true)
+        }
+    }
+    
     /// - Parameter sender: login button
     @IBAction func login(_ sender: UIButton) {
         guard let email = emailTextField.text else {return}
         guard let password = passwordTextField.text else {return}
         if email.isEmpty {
-            emailErrorLabel.isHidden = false
-            emailErrorLabel.text = "Email is empty"
-            emailTextField.lineColor = UIColor.red
+            setErrorUi(.emptyName)
         } else if password.isEmpty {
-            passwordErrorLabel.isHidden = false
-            passwordErrorLabel.text = "Password is empty"
-            passwordTextField.lineColor = UIColor.red
+            setErrorUi(.emptyPassword)
         } else if passwordTextField.text?.count ?? 0 < 6 {
-            passwordErrorLabel.isHidden = false
-            passwordErrorLabel.text = "Password length should be more than 6 characters"
-            passwordTextField.lineColor = UIColor.red
+            setErrorUi(.invalidPassword)
         } else {
             authenticate(email: email, password: password)
         }
     }
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-//        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
+        //        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
         let buttonImage = passwordTextField.isSecureTextEntry ? #imageLiteral(resourceName: "show-password") : #imageLiteral(resourceName: "hide-password")
         sender.setImage(buttonImage, for: .normal)
-//        sender.setTitle(buttonTitle, for: .normal)
+        //        sender.setTitle(buttonTitle, for: .normal)
     }
+    
+    //    MARK:- Network calls
     /// service call to authenticate user, saves headers needed for future service calls: access-token,client,uid,token type. Navigates to ChildrenListViewController. Alert message is shown for wrong credentials on failure
     ///
     /// - Parameters:
