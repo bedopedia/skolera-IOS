@@ -40,14 +40,15 @@ pod 'Device.swift'
 
 ```swift
 import Device
+
 // Use import Device_swift if you're using Cocoapods
 
 let deviceType = UIDevice.current.deviceType
 
 switch deviceType {
-case .iPhone6SPlus: print("Do stuff for iPhone6S Plus")
-case .iPadMini: print("Do stuff for iPad mini")
-default: print("Check other available cases of DeviceType")
+  case .iPhone6SPlus: print("Do stuff for iPhone6S Plus")
+  case .iPadMini: print("Do stuff for iPad mini")
+  default: print("Check other available cases of DeviceType")
 }
 ```
 

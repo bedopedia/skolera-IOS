@@ -23,14 +23,16 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     var actor: Actor! {
         didSet {
             if actor != nil {
-                addActorImage()
-                childNameLabel.text = actor.name
-                childGradeLabel.text = actor.actableType
-                for child in childViewControllers {
-                    if let actorTableViewController = child as? ActorFeaturesTableViewController {
-                        actorTableViewController.actor = self.actor
-                        actorTableViewController.getTimeTable()
-                        self.actorTableViewController = actorTableViewController
+                if getUserType() == UserType.teacher {
+                    addActorImage()
+                    childNameLabel.text = actor.name
+                    childGradeLabel.text = actor.actableType
+                    for child in childViewControllers {
+                        if let actorTableViewController = child as? ActorFeaturesTableViewController {
+                            actorTableViewController.actor = self.actor
+                            actorTableViewController.getTimeTable()
+                            self.actorTableViewController = actorTableViewController
+                        }
                     }
                 }
             }
