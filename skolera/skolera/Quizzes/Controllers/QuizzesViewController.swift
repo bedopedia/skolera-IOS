@@ -18,20 +18,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     var courseName: String = ""
     var courseId: Int = 0
     var quizzes: [FullQuiz] = []
-    var filteredQuizzes: [FullQuiz]! {
-        didSet {
-            if self.filteredQuizzes.isEmpty {
-                if self.selectedSegment == 0 {
-                    self.placeHolderLabel.text = "You don't have any open quizzes for now".localized
-                } else {
-                    self.placeHolderLabel.text = "You don't have any closed quizzes for now".localized
-                }
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var filteredQuizzes: [FullQuiz] = []
     var isTeacher: Bool = false
     var courseGroupId = 0
     var pageId = 1
@@ -45,12 +32,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var placeHolderView: UIView!
-    @IBOutlet var placeHolderLabel: UILabel!
+    @IBOutlet var headerView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
@@ -125,11 +112,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     private func setOpenedQuizzes() {
         filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("running") })
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any open quizzes for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedQuizzes() {
         filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any closed quizzes for now".localized)
         self.tableView.reloadData()
     }
     
@@ -225,19 +214,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
 extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredQuizzes != nil {
-            return filteredQuizzes.count
-        } else {
-           return 0
-        }
+        return filteredQuizzes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizTableViewCell") as! QuizTableViewCell
         cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
-        //        cell.assignment = filteredAssignments[indexPath.row]
-        //        debugPrint("Index path: ",indexPath.row)
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
                 if meta.totalPages > pageId {
@@ -256,7 +239,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 144  
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

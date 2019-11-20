@@ -17,21 +17,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var createPostButton: UIButton!
-    @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!
-    var posts: [Post]! {
-        didSet {
-            if self.posts.isEmpty {
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var posts: [Post]!
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
@@ -41,6 +33,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
@@ -59,7 +52,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -108,10 +100,12 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.posts ?? [], imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
         }
     }
     
 //    MARK: -Table view
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if posts != nil {
            return posts.count
@@ -144,7 +138,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         postVC.courseName = self.courseName
         postVC.post = posts[indexPath.row]
         self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
-//        self.navigationController?.pushViewController(postVC, animated: true)
     }
 
 }

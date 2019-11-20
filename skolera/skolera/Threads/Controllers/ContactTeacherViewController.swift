@@ -19,23 +19,16 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
     @IBOutlet weak var leftHeaderButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var headerView: UIView!
     
-    var threads: [Threads]! {
-        didSet {
-            if self.threads.isEmpty {
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var threads: [Threads] = []
     var child: Child!
     var actor: Actor!
     private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -76,9 +69,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getThreadsApi { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            if self.threads == nil {
-                self.threads = []
-            }
             if isSuccess {
                 if let result = response as? [String: AnyObject] {
                     debugPrint(result)
@@ -92,6 +82,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.threadsTableView, dataSource: self.threads, imageName: "messagesplaceholder", placeholderText: "You don't have any messages for now".localized)
         }
     }
 
@@ -111,16 +102,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 96
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if threads != nil {
-            return threads.count
-        } else {
-            return 0
-        }
-       
+        return threads.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

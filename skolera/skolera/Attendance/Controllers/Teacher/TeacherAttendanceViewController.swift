@@ -43,15 +43,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
     
     var slotAttendanceObject: FullDayAttendances!
-    var fullDayAttendanceObject: FullDayAttendances! {
-        didSet {
-            if self.fullDayAttendanceObject.students.isEmpty {
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var fullDayAttendanceObject: FullDayAttendances!
     
     var studentsMap: [Int: [Attendances]]!  //childID, Attendances array
     var currentStudents: [AttendanceStudent]!
@@ -100,6 +92,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     func getSlotData() {
         getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
+            assignPlaceholder(self.tableView, imageName: "attendanceplaceholder", placeHolderLabelText: "You don't have any attendances for now".localized)
             if isSuccess {
                 self.slotAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
                 self.timeTableSlots = self.slotAttendanceObject.timetableSlots
@@ -456,7 +449,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 108
+        return 124
     }
 }
 

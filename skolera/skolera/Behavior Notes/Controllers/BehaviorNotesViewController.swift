@@ -24,6 +24,7 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
 
     //MARK: - Outlets
     
+    @IBOutlet var headerView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
@@ -35,6 +36,7 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }

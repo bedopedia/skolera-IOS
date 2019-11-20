@@ -14,6 +14,7 @@ class AssignmentDetailsViewController: UIViewController {
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var assignment: FullAssignment!
@@ -21,6 +22,7 @@ class AssignmentDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
@@ -58,9 +60,11 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentContentTableViewCell") as! AssignmentContentTableViewCell
             if let content = self.assignment.content {
-                cell.label.attributedText = content.htmlToAttributedString
+//                cell.label.attributedText = content.htmlToAttributedString
+                cell.label.update(input: content)
             } else {
-                cell.label.text = "No content".localized
+//                cell.label.text = "No content".localized
+                cell.label.update(input: "No content".localized)
             }
             return cell
         } else {

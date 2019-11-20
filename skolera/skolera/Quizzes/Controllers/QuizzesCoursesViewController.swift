@@ -15,16 +15,16 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
-    
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
-    var courses = [QuizCourse]()
-    
+    var courses: [QuizCourse] = []
     var meta: Meta!
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
         tableView.delegate = self
@@ -61,6 +61,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "quizzesplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
 }
@@ -77,7 +78,7 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 108
+        return 112
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -47,6 +47,7 @@ class AttendanceViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     
+    @IBOutlet var headerView: UIView!
     //Numbers for different attendance type
     @IBOutlet weak var lateDaysNumberLabel: UILabel!
     @IBOutlet weak var absentDaysNumberLabel: UILabel!
@@ -63,6 +64,7 @@ class AttendanceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         self.view.layoutIfNeeded()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension

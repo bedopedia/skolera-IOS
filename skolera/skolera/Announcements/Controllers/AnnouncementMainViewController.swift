@@ -11,19 +11,11 @@ import NVActivityIndicatorView
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var headerView: UIView!
     
-    var announcements: [Announcement]! {
-        didSet {
-            if self.announcements.isEmpty {
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var announcements: [Announcement] = []
     var meta: Meta?
-    
+    private let refreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
@@ -35,8 +27,16 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         navigationItem.backBarButtonItem = backItem
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        tableView.refreshControl = refreshControl
+       refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        headerView.addShadow()
+    }
+    @objc private func refreshData(_ sender: Any) {
+        refreshControl.beginRefreshing()
+        getAnnouncements()
+        refreshControl.endRefreshing()
     }
 //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -53,9 +53,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            if self.announcements == nil {
-                self.announcements = []
-            }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
@@ -72,11 +69,11 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.announcements, imageName: "announcmentsplaceholder", placeholderText: "You don't have any announcements for now".localized)
         }
     }
     
     @IBAction func logout() {
-        
         let parentController = parent?.parent
         if let mainViewController = parentController as? TeacherContainerViewController {
             mainViewController.logout()
@@ -90,20 +87,15 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if announcements == nil {
-            return 0
-        } else {
-            return announcements.count
-        }
+        return announcements.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
         let announcement = announcements[indexPath.row]
         cell.announcement = announcement
-        //Loading More
-        if indexPath.row == announcements.count - 1
-        {
+//        Loading More
+        if indexPath.row == announcements.count - 1 {
             if meta?.currentPage != meta?.totalPages
             {
                 getAnnouncements(page: (meta?.currentPage)! + 1)
@@ -119,7 +111,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 72
     }
     
     

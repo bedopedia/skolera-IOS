@@ -10,9 +10,12 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 import KeychainSwift
+import SkyFloatingLabelTextField
+
 class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     //MARK: - Outlets
-    @IBOutlet weak var schoolCodeTextField: UITextField!
+    @IBOutlet weak var schoolCodeTextField: SkyFloatingLabelTextField!
+    @IBOutlet var errorLabel: UILabel!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -23,13 +26,30 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
-        schoolCodeTextField.underlined()
+//        schoolCodeTextField.underlined()
+        schoolCodeTextField.tintColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        schoolCodeTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        schoolCodeTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+        schoolCodeTextField.selectedLineHeight = 1
+        schoolCodeTextField.selectedLineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        schoolCodeTextField.placeholder = "Enter the school code".localized
+        schoolCodeTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+//        let count = Float(textField.text?.count ?? 0)
+//        progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+//        progressView.setProgress( count / 6 , animated: true)
+//        passwordErrorLabel.isHidden = true
+        if let floatingField = textField as? SkyFloatingLabelTextField, let text = floatingField.text, text.count > 0 {
+            floatingField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            floatingField.selectedLineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            errorLabel.isHidden = true
+        }
+    }
     //MARK: - Keyboard Settings
     
     /// dismiss keyboard when clicked anywhere other than text fields
@@ -41,21 +61,21 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     ///
     /// - Parameter textField: selected textfield
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.active()
+//        textField.active()
     }
     
     /// reset text field bottom border to grey when not active
     ///
     /// - Parameter textField: textfield user ended editing
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.inactive()
+//        textField.inactive()
     }
     
     /// dismisses schoolCode text field if user presses continue
     ///
     /// - Parameter textField: schoolField textfield
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.inactive()
+//        textField.inactive()
         textField.resignFirstResponder()
         return true
     }
@@ -65,9 +85,12 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     ///
     /// - Parameter sender: continue button
     @IBAction func pressContinue(_ sender: UIButton) {
-        guard let schoolcode = schoolCodeTextField.text else { return}
-        if schoolcode == "" {
-            showAlert(viewController: self, title: MISSING_FIELD , message: MISSING_SCHOOL_CODE, completion: nil)
+        guard let schoolcode = schoolCodeTextField.text else { return }
+        if schoolcode.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = MISSING_SCHOOL_CODE
+            schoolCodeTextField.lineColor = UIColor.red
+            schoolCodeTextField.selectedLineColor = UIColor.red
         } else {
             getSchoolBy(code: schoolcode.replacingOccurrences(of: " ", with: ""))
         }

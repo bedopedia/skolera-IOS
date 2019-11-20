@@ -123,3 +123,27 @@ func getMainColor() -> UIColor {
         }
     }
 }
+
+func handleEmptyDate(tableView: UITableView, dataSource: [Any], imageName: String, placeholderText: String) {
+    DispatchQueue.main.async {
+        if dataSource.count == 0 {
+            assignPlaceholder(tableView, imageName: "notificationsplaceholder", placeHolderLabelText: "You don't have any notifications for now".localized)
+        } else {
+            restore(tableView)
+        }
+        tableView.reloadData()
+    }
+}
+
+func assignPlaceholder(_ tableView: UITableView, imageName: String, placeHolderLabelText: String = "") {
+    DispatchQueue.main.async {
+        let placeholder = PlaceholderView(frame: tableView.frame)
+        placeholder.image = imageName
+        placeholder.placeholderText = placeHolderLabelText
+        tableView.backgroundView = placeholder
+    }
+}
+
+func restore(_ tableView: UITableView) {
+    tableView.backgroundView = nil
+}

@@ -15,6 +15,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Child!
     var courses: [PostCourse] = []
@@ -22,6 +23,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
@@ -30,14 +32,16 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.refreshControl = refreshControl
+        tableView.estimatedRowHeight = 85
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
+        
         
     }
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
-//    MARK: - Methods
+    //    MARK: - Methods
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         getCourses()
@@ -55,11 +59,12 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "postsplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
- //    MARK: - Table View Methods
+    //    MARK: - Table View Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.courses.count
+        return courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,4 +81,16 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.pushViewController(postsVC, animated: true)
     }
 
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if let result = self.courses {
+//            if result.isEmpty {
+//                return tableView.bounds.size.height
+//            } else {
+//                return UITableViewAutomaticDimension
+//            }
+//        } else {
+//            return tableView.bounds.size.height
+//        }
+//    }
+//
 }

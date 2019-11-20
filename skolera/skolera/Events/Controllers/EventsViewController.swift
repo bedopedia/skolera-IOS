@@ -22,6 +22,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet var headerView: UIView!
     
     enum weekDays : Int{
         case sunday = 0
@@ -53,7 +54,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0

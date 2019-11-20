@@ -15,6 +15,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var headerView: UIView!
     
     private var submissions: [AssignmentStudentSubmission] = []
     var courseId: Int = 0
@@ -24,6 +25,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = assignment.name
         tableView.delegate = self

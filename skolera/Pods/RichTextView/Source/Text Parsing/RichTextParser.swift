@@ -7,6 +7,7 @@
 //
 
 import Down
+import DTCoreText
 
 class RichTextParser {
 
@@ -14,6 +15,7 @@ class RichTextParser {
         static let mathTagName = "math"
         static let interactiveElementTagName = "interactive-element"
         static let latexRegex = "\\[\(ParserConstants.mathTagName)\\](.*?)\\[\\/\(ParserConstants.mathTagName)\\]"
+        static let latexRegexCaptureGroupIndex = 0
         static let interactiveElementRegex = """
         \\[\(ParserConstants.interactiveElementTagName)\\sid=.+?\\].*?\\[\\/\(ParserConstants.interactiveElementTagName)\\]
         """
@@ -60,24 +62,7 @@ class RichTextParser {
         }
     }
 
-    // MARK: - Helpers
-
     func getAttributedText(from input: String) -> ParserConstants.RichTextWithErrors {
-        if Thread.isMainThread {
-            return self.getAttributedTextFromDown(with: input)
-        }
-
-        var output = NSAttributedString(string: "")
-        var parsingErrors: [ParsingError]?
-
-        DispatchQueue.main.sync {
-            (output, parsingErrors) = self.getAttributedTextFromDown(with: input)
-        }
-
-        return (output, parsingErrors)
-    }
-
-    private func getAttributedTextFromDown(with input: String) -> ParserConstants.RichTextWithErrors {
         let strippedInput = self.stripCodeTagsIfNecessary(from: input)
         let strippedInputAsMutableAttributedString = NSMutableAttributedString(string: strippedInput)
         let strippedInputWithSpecialDataTypesHandled = self.getAttributedStringWithSpecialDataTypesHandled(
@@ -111,6 +96,8 @@ class RichTextParser {
         return (outputAttributedStringToReturn.trimmingTrailingNewlinesAndWhitespaces(), allParsingErrors)
     }
 
+    // MARK: - Helpers
+
     private func parseHTMLAndMarkdown(inAttributes attributes: [NSAttributedString.Key: Any],
                                       range: NSRange,
                                       entireAttributedString: NSAttributedString) -> (NSMutableAttributedString?, ParsingError?) {
@@ -120,7 +107,9 @@ class RichTextParser {
         let relevantString = entireAttributedString.string[
             max(range.lowerBound, 0)..<min(range.upperBound, entireAttributedString.string.count)
         ]
-        guard let attributedInput = try? Down(markdownString: relevantString).toAttributedString(.unsafe, stylesheet: nil) else {
+        guard let inputAsHTMLString = try? Down(markdownString: relevantString).toHTML([.unsafe, .hardBreaks]),
+            let htmlData = inputAsHTMLString.data(using: .utf8),
+            let attributedInput = NSAttributedString(htmlData: htmlData, options: [DTUseiOS6Attributes: true], documentAttributes: nil) else {
             return (nil, ParsingError.attributedTextGeneration(text: relevantString))
         }
         let mutableAttributedInput = NSMutableAttributedString(attributedString: attributedInput)
@@ -136,9 +125,7 @@ class RichTextParser {
         let interactiveElementPositions = self.extractPositions(
             fromRanges: mutableAttributedString.string.ranges(of: ParserConstants.interactiveElementRegex, options: .regularExpression)
         )
-        let latexPositions = self.extractPositions(
-            fromRanges: mutableAttributedString.string.ranges(of: ParserConstants.latexRegex, options: .regularExpression)
-        )
+        let latexPositions = self.extractPositions(fromRanges: self.getLatexRanges(inText: mutableAttributedString.string))
         let splitPositions = interactiveElementPositions + latexPositions
         if splitPositions.isEmpty {
             return (mutableAttributedString.trimmingTrailingNewlinesAndWhitespaces(), nil)
@@ -203,7 +190,7 @@ class RichTextParser {
     }
 
     func isTextLatex(_ text: String) -> Bool {
-        return text.ranges(of: ParserConstants.latexRegex, options: .regularExpression).count != 0
+        return !self.getLatexRanges(inText: text).isEmpty
     }
 
     func isTextInteractiveElement(_ text: String) -> Bool {
@@ -226,5 +213,16 @@ class RichTextParser {
 
     private func stripCodeTagsIfNecessary(from input: String) -> String {
         return input.replacingOccurrences(of: "[code]", with: "`").replacingOccurrences(of: "[/code]", with: "`")
+    }
+
+    private func getLatexRanges(inText text: String) -> [Range<String.Index>] {
+        guard let regex = try? NSRegularExpression(pattern: ParserConstants.latexRegex, options: [.caseInsensitive, .dotMatchesLineSeparators]) else {
+            return []
+        }
+        let range = NSRange(location: 0, length: text.count)
+        let matches = regex.matches(in: text, range: range)
+        return matches.compactMap { match in
+            return Range<String.Index>(match.range(at: ParserConstants.latexRegexCaptureGroupIndex), in: text)
+        }
     }
 }

@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import RichTextView
 
 class AssignmentContentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var label: RichTextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

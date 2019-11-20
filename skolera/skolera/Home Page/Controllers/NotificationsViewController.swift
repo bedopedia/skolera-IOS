@@ -14,18 +14,10 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var headerView: UIView!
     
     var fromChildrenList = false
-    var notifications: [Notification]! {
-        didSet {
-            if self.notifications.isEmpty {
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var notifications: [Notification] = []
     /// carries data for notifications pagination
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
@@ -41,6 +33,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         } else {
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
+        headerView.addShadow()
         getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -91,19 +84,16 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
-            if self.notifications == nil {
-                self.notifications = []
-            }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
                     self.notifications.append(contentsOf: notificationResponse.notifications)
                     self.meta = notificationResponse.meta
-                    self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.notifications, imageName: "notificationsplaceholder", placeholderText: "You don't have any notifications for now".localized)
         }
     }
     
@@ -111,16 +101,11 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
         self.navigationController?.popViewController(animated: true)
     }
 
-
 }
 
 extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if notifications != nil {
-            return notifications.count
-        } else {
-            return 0
-        }
+        return notifications.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -135,4 +120,8 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         }
         return cell
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 72
+//    }
 }
