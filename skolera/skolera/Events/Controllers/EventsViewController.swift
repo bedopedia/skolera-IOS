@@ -388,7 +388,7 @@ extension EventsViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         UIView.setAnimationsEnabled(false)
         debugPrint(cVCalendarView.calendarMode.rawValue, percentage)
-         
+        cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
         UIView.setAnimationsEnabled(true )
     }
     
