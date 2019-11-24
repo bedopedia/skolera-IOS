@@ -15,11 +15,10 @@ import CVCalendar
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
     
-    @IBOutlet weak var weekDaysStackView: UIStackView!
     @IBOutlet weak var currentMonthLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
-    @IBOutlet weak var calendarView: JTAppleCalendarView!
+//    @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var eventsCollectionView: UICollectionView!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -54,8 +53,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var eventsCount = 0
     var vacationsCount = 0
     var personalCount = 0
-    var maxHeight = CGFloat(300)
-    var minHeight = CGFloat(50)
+    var maxHeight = CGFloat(224)
+    var minHeight = CGFloat(48)
     var previousScrollOffset: CGFloat = 0
     private let refreshControl = UIRefreshControl()
     
@@ -63,14 +62,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         super.viewDidLoad()
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        calendarView.minimumLineSpacing = 0
-        calendarView.minimumInteritemSpacing = 0
-        calendarView.scrollToDate(today, animateScroll: false)
-        calendarView.calendarDataSource = self
-        calendarView.calendarDelegate = self
-        calendarView.semanticContentAttribute = .forceLeftToRight
-        calendarView.visibleDates { visibleDates in self.updateCurrentMonthLabel(from: visibleDates) }
-        setupWeekDaysLabels()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -107,6 +98,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         super.viewDidLayoutSubviews()
         menuView.commitMenuViewUpdate()
         cVCalendarView.commitCalendarViewUpdate()
+        cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     @IBAction func back(){
@@ -137,16 +129,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         currentMonthLabel.text = formatter.string(from: date!)
     }
     
-    fileprivate func setupWeekDaysLabels() {
-        for index in 0..<weekDaysStackView.arrangedSubviews.count {
-            let weekDayLabel : UILabel = weekDaysStackView.arrangedSubviews[index] as! UILabel
-            weekDayLabel.text = calendar.veryShortWeekdaySymbols[index]
-            //            if offDays.contains(AttendanceViewController.weekDays(rawValue: index)!) {
-            //                weekDayLabel.textColor = UIColor.appColors.offDaysColor
-            //            }
-        }
-    }
-    
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
@@ -159,7 +141,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
                     self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
-                    self.calendarView.reloadData()
+//                    reload calendar data
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
                 }
@@ -178,20 +160,36 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy/MM/dd"
-        let date2 = dateformatter.string(from: dayView.date.convertedDate()!)
-        let dateArray = [Date(), dateformatter.date(from: "2019/11/19")!]
-        for date in dateArray {
-            if date2.elementsEqual(dateformatter.string(from: date)) {
-                return true
-            }
+//        let dateformatter = DateFormatter()
+//        dateformatter.dateFormat = "yyyy/MM/dd"
+//        let date2 = dateformatter.string(from: dayView.date.convertedDate()!)
+//        let dateArray = [Date(), dateformatter.date(from: "2019/11/19")!]
+//        for date in dateArray {
+//            if date2.elementsEqual(dateformatter.string(from: date)) {
+//                return true
+//            }
+//        }
+//        return false
+        if dayView.date.day % 3 == 0 {
+            return true
         }
         return false
     }
-    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
-        return [UIColor.red]
+//    changes the default color (used for the current day in calendar)
+    func dotMarkerColor() -> UIColor {
+        return .blue
     }
+    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
+        return numberOfDots(dayView: dayView)
+    }
+    func numberOfDots(dayView: DayView) -> [UIColor] {
+        if (dayView.date.month == Date().month) && dayView.date.day == Date().day {
+            return [UIColor.blue]
+        }
+//        should be an empty array
+        return [UIColor.blue, UIColor.red]
+    }
+    
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
         return false
     }
@@ -204,13 +202,13 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
 //        CGFloat(18)
 //    }
-//    func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
-//        return 10
-////        return  dayView.dayLabel.frame.maxY + 16
-//    }
-        func shouldAnimateResizing() -> Bool {
-            return false
-        }
+    func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
+        return 16
+//        return  dayView.dayLabel.frame.maxY + 16
+    }
+    func shouldAnimateResizing() -> Bool {
+        return true
+    }
     //    called at switching the whole page
     func toggleDateAnimationDuration() -> Double {
         return 0
@@ -241,7 +239,7 @@ extension EventsViewController: CVCalendarViewAppearanceDelegate {
 //    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
 //        return 8
 //    }
-//    func spaceBetweenDayViews() -> CGFloat { return 0 }
+    func spaceBetweenDayViews() -> CGFloat { return 8 }
 //    func dayLabelFont(by weekDay: Weekday, status: CVStatus, present: CVPresent) -> UIFont { return UIFont.systemFont(ofSize: 18) }
 }
 
@@ -343,7 +341,6 @@ extension EventsViewController {
     func scrollViewDidStopScrolling() {
         let range = self.maxHeight - self.minHeight
         let midPoint = self.minHeight + (range / 2)
-        
         if self.calendarHeightConstraint.constant > midPoint {
             self.expandView()
         } else {
@@ -387,11 +384,11 @@ extension EventsViewController {
         let percentage = openAmount / range
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         UIView.setAnimationsEnabled(false)
-        debugPrint(cVCalendarView.calendarMode.rawValue, percentage)
         cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-        UIView.setAnimationsEnabled(true )
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0.5))) {
+            UIView.setAnimationsEnabled(true)
+        }
     }
-    
 }
 
 
