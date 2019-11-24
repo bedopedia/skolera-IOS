@@ -10,8 +10,10 @@ import UIKit
 import JTAppleCalendar
 import Alamofire
 import NVActivityIndicatorView
+import CVCalendar
 
-class EventsViewController: UIViewController, NVActivityIndicatorViewable {
+class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
+    
     
     @IBOutlet weak var weekDaysStackView: UIStackView!
     @IBOutlet weak var currentMonthLabel: UILabel!
@@ -21,8 +23,10 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var eventsCollectionView: UICollectionView!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet var headerView: UIView!
+    @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var cVCalendarView: CVCalendarView!
+    @IBOutlet var menuView: CVCalendarMenuView!
     
     enum weekDays : Int{
         case sunday = 0
@@ -50,6 +54,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     var eventsCount = 0
     var vacationsCount = 0
     var personalCount = 0
+    var maxHeight = CGFloat(300)
+    var minHeight = CGFloat(50)
+    var previousScrollOffset: CGFloat = 0
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -67,7 +74,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-
+        
         eventsCollectionView.delegate = self
         eventsCollectionView.dataSource = self
         createEventButton.layer.borderColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
@@ -76,18 +83,38 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        
+        // Appearance delegate [Unnecessary]
+        self.cVCalendarView.calendarAppearanceDelegate = self
+        
+        // Animator delegate [Unnecessary]
+        self.cVCalendarView.animatorDelegate = self
+        
+        // Menu delegate [Required]
+        self.menuView.menuViewDelegate = self
+        
+        // Calendar delegate [Required]
+        self.cVCalendarView.calendarDelegate = self
+        
+        self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getEvents()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        menuView.commitMenuViewUpdate()
+        cVCalendarView.commitCalendarViewUpdate()
+    }
+    
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func toggleToToday() {
-        calendarView.scrollToDate(today)
+    @IBAction func todayMonthView() {
+        self.cVCalendarView.toggleCurrentDayView()
     }
     
     @IBAction func createNewEvent() {
@@ -100,8 +127,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         refreshControl.beginRefreshing()
         getEvents()
         refreshControl.endRefreshing()
-        }
-
+    }
+    
     func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo) {
         let date = visibleDates.monthDates.first?.date
         let formatter = DateFormatter()
@@ -114,9 +141,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         for index in 0..<weekDaysStackView.arrangedSubviews.count {
             let weekDayLabel : UILabel = weekDaysStackView.arrangedSubviews[index] as! UILabel
             weekDayLabel.text = calendar.veryShortWeekdaySymbols[index]
-//            if offDays.contains(AttendanceViewController.weekDays(rawValue: index)!) {
-//                weekDayLabel.textColor = UIColor.appColors.offDaysColor
-//            }
+            //            if offDays.contains(AttendanceViewController.weekDays(rawValue: index)!) {
+            //                weekDayLabel.textColor = UIColor.appColors.offDaysColor
+            //            }
         }
     }
     
@@ -141,7 +168,83 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
+//    MARK:- Calendar methods
+    func presentationMode() -> CalendarMode {
+        .monthView
+    }
+    
+    func firstWeekday() -> Weekday {
+        Weekday.sunday
+    }
+    
+    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        let date2 = dateformatter.string(from: dayView.date.convertedDate()!)
+        let dateArray = [Date(), dateformatter.date(from: "2019/11/19")!]
+        for date in dateArray {
+            if date2.elementsEqual(dateformatter.string(from: date)) {
+                return true
+            }
+        }
+        return false
+    }
+    func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
+        return [UIColor.red]
+    }
+    func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
+        return false
+    }
+//    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
+//        return CGFloat(16)
+//    }
+//    func dayLabelWeekdayFont() -> UIFont {
+//        UIFont.systemFont(ofSize: 18)
+//    }
+//    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
+//        CGFloat(18)
+//    }
+//    func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
+//        return 10
+////        return  dayView.dayLabel.frame.maxY + 16
+//    }
+        func shouldAnimateResizing() -> Bool {
+            return false
+        }
+    //    called at switching the whole page
+    func toggleDateAnimationDuration() -> Double {
+        return 0
+    }
+    
+    func toggleState (state: CalendarMode) {
+        cVCalendarView.changeMode(state)
+        cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
+    }
 }
+//MARK: - Calendar appearance delegate
+extension EventsViewController: CVCalendarViewAppearanceDelegate {
+//    func dotMarkerColor() -> UIColor {
+//        return #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+//    }
+//    menu color
+//    func dayOfWeekTextColor() -> UIColor { return .black }
+//    func dayLabelSize(by weekDay: Weekday, status: CVStatus, present: CVPresent) -> CGFloat {
+//        return 8
+//    }
+//
+//    func dayLabelWeekdayHighlightedTextSize() -> CGFloat {
+//        20
+//    }
+//    func dayLabelPresentWeekdayTextSize() -> CGFloat {
+//        return 12
+//    }
+//    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
+//        return 8
+//    }
+//    func spaceBetweenDayViews() -> CGFloat { return 0 }
+//    func dayLabelFont(by weekDay: Weekday, status: CVStatus, present: CVPresent) -> UIFont { return UIFont.systemFont(ofSize: 18) }
+}
+
 
 extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -172,7 +275,7 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        selectedEventsPosition = indexPath.row
+        //        selectedEventsPosition = indexPath.row
         oldSelectedEventsPosition = selectedEventsPosition
         selectedEventsPosition = indexPath.row
         filteredEvents = events
@@ -197,6 +300,101 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
     
 }
 
+extension EventsViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
+        let absoluteTop: CGFloat = 0
+        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
+        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y <= 0
+        if canAnimateView(scrollView) {
+            // Calculate new View height
+            var newHeight = self.calendarHeightConstraint.constant
+            if isScrollingDown {
+                newHeight = max(self.minHeight, self.calendarHeightConstraint.constant - abs(scrollDiff))
+            } else if isScrollingUp {
+                newHeight = min(self.maxHeight, self.calendarHeightConstraint.constant + abs(scrollDiff))
+            }
+            
+            // View needs to animate
+            if newHeight != self.calendarHeightConstraint.constant {
+                self.calendarHeightConstraint.constant = newHeight
+                if isScrollingUp {
+                    self.expandView()
+                    self.setScrollPosition(0)
+                } else {
+                    self.setScrollPosition(self.previousScrollOffset)
+                    self.updateView()
+                }
+            }
+            self.previousScrollOffset = scrollView.contentOffset.y
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.scrollViewDidStopScrolling()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.scrollViewDidStopScrolling()
+        }
+    }
+    
+    func scrollViewDidStopScrolling() {
+        let range = self.maxHeight - self.minHeight
+        let midPoint = self.minHeight + (range / 2)
+        
+        if self.calendarHeightConstraint.constant > midPoint {
+            self.expandView()
+        } else {
+            self.collapseView()
+        }
+    }
+    
+    func canAnimateView(_ scrollView: UIScrollView) -> Bool {
+        // Calculate the size of the scrollView when View is collapsed
+        let scrollViewMaxHeight = scrollView.frame.height + self.calendarHeightConstraint.constant - minHeight
+        
+        // Make sure that when View is collapsed, there is still room to scroll
+        return scrollView.contentSize.height > scrollViewMaxHeight
+    }
+    
+    public func collapseView() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.calendarHeightConstraint.constant = self.minHeight
+            self.updateView()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func expandView() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.calendarHeightConstraint.constant = self.maxHeight
+            self.updateView()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func setScrollPosition(_ position: CGFloat) {
+        self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
+    }
+    
+    func updateView() {
+        let range = self.maxHeight - self.minHeight
+        let openAmount = self.calendarHeightConstraint.constant - self.minHeight
+        let percentage = openAmount / range
+        calendarHeightConstraint.constant = minHeight + (range * percentage)
+        UIView.setAnimationsEnabled(false)
+        debugPrint(cVCalendarView.calendarMode.rawValue, percentage)
+         
+        UIView.setAnimationsEnabled(true )
+    }
+    
+}
+
+
 extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
     }
@@ -216,30 +414,29 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
         updateCurrentMonthLabel(from: visibleDates)
     }
     
-//    func getAttendanceForDate(date: Date) -> Attendance? {
-//        let days = child.attendances.filter { (attendance) -> Bool in
-//            let formatter = DateFormatter()
-//            formatter.locale = Locale(identifier: "en")
-//            formatter.dateFormat = "yyyy-MM-dd"
-//            return formatter.string(from: attendance.date) == formatter.string(from: date)
-//        }
-//        return days.first
-//    }
+    //    func getAttendanceForDate(date: Date) -> Attendance? {
+    //        let days = child.attendances.filter { (attendance) -> Bool in
+    //            let formatter = DateFormatter()
+    //            formatter.locale = Locale(identifier: "en")
+    //            formatter.dateFormat = "yyyy-MM-dd"
+    //            return formatter.string(from: attendance.date) == formatter.string(from: date)
+    //        }
+    //        return days.first
+    //    }
     
-    func getEventForDate(date: Date) -> StudentEvent?
-    {
+    func getEventForDate(date: Date) -> StudentEvent? {
         let days = events.filter { (event) -> Bool in
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-//            formatter.string(from: )
+            //            formatter.string(from: )
             let start: Date = formatter.date(from: event.startDate!)!
             let end: Date = formatter.date(from: event.endDate!)!
             guard start < end else {
                 return false
             }
             let dateInterval: DateInterval = DateInterval(start: start, end: end)
-//            let dateIsInInterval: Bool = dateInterval.contains(date) // true
+            //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
             return dateInterval.contains(date)
         }
         return days.first
@@ -255,7 +452,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "attendanceCell") as! AttendanceTableViewCell
         cell.borderColor = currentBorderColor
         cell.event = filteredEvents[indexPath.row]
-//        cell.attendance = currentDataSource[indexPath.row]
+        //        cell.attendance = currentDataSource[indexPath.row]
         return cell
     }
 }
