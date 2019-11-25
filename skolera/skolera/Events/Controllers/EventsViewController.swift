@@ -38,7 +38,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     var child : Child!
-    let calendar = Calendar.current
+//    let calendar = Calendar.current
     var currentBorderColor: UIColor = .black
     let today = Date()
     
@@ -57,6 +57,15 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var minHeight = CGFloat(48)
     var previousScrollOffset: CGFloat = 0
     private let refreshControl = UIRefreshControl()
+    var currentCalendar: Calendar?
+    private var randomNumberOfDotMarkersForDay = [Int]()
+    
+    
+    fileprivate func updateCurrentLabel() {
+        if let currentCalendar = currentCalendar {
+            currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +97,16 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         self.cVCalendarView.calendarDelegate = self
         
         self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
+        
+        currentCalendar = Calendar.init(identifier: .gregorian)
+        currentCalendar?.timeZone = TimeZone.current
+
+        updateCurrentLabel()
+    }
+    
+    override func awakeFromNib() {
+//        currentCalendar = Calendar(identifier: .gregorian)
+//        currentCalendar?.timeZone = .current
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -108,6 +127,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     
     @IBAction func todayMonthView() {
         self.cVCalendarView.toggleCurrentDayView()
+        updateCurrentLabel()
     }
     
     @IBAction func createNewEvent() {
@@ -154,19 +174,19 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         }
     }
 //    MARK:- Calendar methods
-    
-    func didShowNextMonthView(_ date: Date) {
-        debugPrint("next", date)
-//        cVCalendarView.contentController.refreshDots()
-        cVCalendarView.contentController.refreshPresentedMonth()
-    }
-    
-    func didShowPreviousMonthView(_ date: Date) {
-        cVCalendarView.contentController.refreshPresentedMonth()
-        debugPrint("prev")
+
+    func calendar() -> Calendar? {
+//        currentCalendar = Calendar(identifier: .gregorian)
+//        currentCalendar?.timeZone = .current
+        
+        let timeZoneBias = 0 // (UTC+08:00)
+        currentCalendar = Calendar(identifier: .gregorian)
+        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
+            currentCalendar?.timeZone = timeZone
+        }
+        return currentCalendar
     }
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
-        debugPrint("day is selected")
     }
     
     func presentationMode() -> CalendarMode {
@@ -178,36 +198,42 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
 
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        if let studentEvent = getEventForDate(optionalDate: dayView.date.convertedDate()) {
-//            debugPrint(dayView.date.convertedDate(), studentEvent.endDate!)
+        let dotDate = dayView.date.convertedDate() ?? Date()
+        let tempEvent = events.filter({
+            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
+        })
+        if !tempEvent.isEmpty {
             return true
-        } else {
-            return false
         }
-
+        return false
     }
     
-    func getEventForDate(optionalDate: Date!) -> StudentEvent? {
-//        debugPrint("opt", optionalDate)
-        guard let date = optionalDate else {
-            return nil
-        }
-        let days = events.filter { (event) -> Bool in
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en")
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-            //            formatter.string(from: )
-            let start: Date = formatter.date(from: event.startDate!)!
-            let end: Date = formatter.date(from: event.endDate!)!
-            guard start < end else {
-                return false
-            }
-            let dateInterval: DateInterval = DateInterval(start: start, end: end)
-            //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
-            return dateInterval.contains(date)
-        }
-        return days.first
-    }
+//    func getEventForDate(optionalDate: Date!) -> StudentEvent? {
+////        debugPrint("opt", optionalDate)
+//
+//        guard let date = optionalDate else {
+//            return nil
+//        }
+//
+//
+//        let days = events.filter { (event) -> Bool in
+//            let formatter = DateFormatter()
+//            formatter.locale = Locale(identifier: "en")
+//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+//            //            formatter.string(from: )
+//            let start: Date = formatter.date(from: event.startDate!)!
+//            let end: Date = formatter.date(from: event.endDate!)!
+//            guard start < end else {
+//                return false
+//            }
+//            let dateInterval: DateInterval = DateInterval(start: start, end: end)
+//            //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
+//            return date.day % 2 == 0
+////            return dateInterval.contains(date)
+//        }
+//        return days.first
+//    }
+    
 //    changes the default color (used for the current day in calendar)
     func dotMarkerColor() -> UIColor {
         return .blue
@@ -216,11 +242,21 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         return numberOfDots(dayView: dayView)
     }
     func numberOfDots(dayView: DayView) -> [UIColor] {
-        if let studentEvent = getEventForDate(optionalDate: dayView.date.convertedDate()!) {
-            return [UIColor.blue]
+//        return [UIColor.blue]
+        let dotDate = dayView.date.convertedDate() ?? Date()
+        let tempEvent = events.filter({
+            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
+        })
+        if tempEvent.isEmpty {
+          return []
+        } else if tempEvent.count == 1 {
+            return [getEventColor(event: tempEvent.first!)]
+        } else if tempEvent.count == 2 {
+            return [getEventColor(event: tempEvent.first!), getEventColor(event: tempEvent[1])]
         } else {
-            return []
+            return [getEventColor(event: tempEvent.first!), getEventColor(event: tempEvent[1]), getEventColor(event: tempEvent[2])]
         }
+
     }
     
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
@@ -251,23 +287,20 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         cVCalendarView.changeMode(state)
         cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
-//    func setupDotMarkerFor(event: StudentEvent?) {
-//
-//            if let day = event {
-//                switch day.type {
-//                case "academic":
-//                    dotMarkerView.backgroundColor = #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
-//                case "event":
-//                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
-//                case "vacations":
-//                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
-//                case "personal":
-//                    dotMarkerView.backgroundColor = #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
-//                default:
-//                    dotMarkerView.backgroundColor = .black
-//                }
-//            }
-//    }
+    func getEventColor(event: StudentEvent) -> UIColor {
+        switch event.type {
+        case "academic":
+            return #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
+        case "event":
+            return #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
+        case "vacations":
+            return #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
+        case "personal":
+            return #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
+        default:
+            return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+    }
     
 }
 //MARK: - Calendar appearance delegate
@@ -442,47 +475,6 @@ extension EventsViewController {
     }
 }
 
-
-extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarViewDelegate {
-    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-    }
-    
-    func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
-        cell.setupDayLabel(cellState: cellState)
-//        cell.setupDotMarkerFor(event: getEventForDate(date: date), forCellState: cellState)
-        return cell
-    }
-    
-    func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let parameters = ConfigurationParameters(startDate: Date(dateString: "1-1-2000", format: "d-M-y"), endDate: Date(dateString: "1-1-2026", format: "d-M-y"), generateInDates: .forAllMonths, generateOutDates: .off)
-        return parameters
-    }
-    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
-        updateCurrentMonthLabel(from: visibleDates)
-    }
-//    func getEventForDate(optionalDate: Date!) -> StudentEvent? {
-//        guard let date = optionalDate else {
-//            return nil
-//        }
-//        let days = events.filter { (event) -> Bool in
-//            let formatter = DateFormatter()
-//            formatter.locale = Locale(identifier: "en")
-//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-//            //            formatter.string(from: )
-//            let start: Date = formatter.date(from: event.startDate!)!
-//            let end: Date = formatter.date(from: event.endDate!)!
-//            guard start < end else {
-//                return false
-//            }
-//            let dateInterval: DateInterval = DateInterval(start: start, end: end)
-//            //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
-//            return dateInterval.contains(date)
-//        }
-//        return days.first
-//    }
-}
-
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredEvents.count
@@ -505,5 +497,52 @@ extension CVCalendarContentViewController {
                 dayView.setupDotMarker()
             }
         }
+    }
+}
+
+extension Date {
+    func convertToLocalTime(fromTimeZone timeZoneAbbreviation: String) -> Date? {
+        let timeZone = TimeZone.current
+//        if let timeZone = TimeZone(abbreviation: timeZoneAbbreviation) {
+            let targetOffset = TimeInterval(timeZone.secondsFromGMT(for: self))
+            let localOffeset = TimeInterval(TimeZone.autoupdatingCurrent.secondsFromGMT(for: self))
+            return self.addingTimeInterval(targetOffset - localOffeset)
+//        }
+//        return nil
+    }
+}
+
+
+extension EventsViewController {
+    func toggleMonthViewWithMonthOffset(offset: Int) {
+        guard let currentCalendar = currentCalendar else { return }
+        
+        var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
+        
+        components.month! += offset
+        
+        let resultDate = currentCalendar.date(from: components)!
+        
+        self.cVCalendarView.toggleViewWithDate(resultDate)
+    }
+    
+    
+    func didShowNextMonthView(_ date: Date) {
+        guard let currentCalendar = currentCalendar else { return }
+        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
+    }
+    
+    
+    func didShowPreviousMonthView(_ date: Date) {
+        guard let currentCalendar = currentCalendar else { return }
+        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
+    }
+  
+    func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
+        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+    }
+  
+    func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
+        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
     }
 }
