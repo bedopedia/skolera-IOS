@@ -100,25 +100,17 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
-
         updateCurrentLabel()
-    }
-    
-    override func awakeFromNib() {
-//        currentCalendar = Calendar(identifier: .gregorian)
-//        currentCalendar?.timeZone = .current
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getEvents()
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         menuView.commitMenuViewUpdate()
         cVCalendarView.commitCalendarViewUpdate()
-//        cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     @IBAction func back(){
@@ -207,32 +199,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         }
         return false
     }
-    
-//    func getEventForDate(optionalDate: Date!) -> StudentEvent? {
-////        debugPrint("opt", optionalDate)
-//
-//        guard let date = optionalDate else {
-//            return nil
-//        }
-//
-//
-//        let days = events.filter { (event) -> Bool in
-//            let formatter = DateFormatter()
-//            formatter.locale = Locale(identifier: "en")
-//            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-//            //            formatter.string(from: )
-//            let start: Date = formatter.date(from: event.startDate!)!
-//            let end: Date = formatter.date(from: event.endDate!)!
-//            guard start < end else {
-//                return false
-//            }
-//            let dateInterval: DateInterval = DateInterval(start: start, end: end)
-//            //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
-//            return date.day % 2 == 0
-////            return dateInterval.contains(date)
-//        }
-//        return days.first
-//    }
+    func shouldAutoSelectDayOnWeekChange() -> Bool {
+        false
+    }
+    func shouldAutoSelectDayOnMonthChange() -> Bool {
+        false
+    }
     
 //    changes the default color (used for the current day in calendar)
     func dotMarkerColor() -> UIColor {
