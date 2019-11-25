@@ -94,11 +94,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         getEvents()
     }
     
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         menuView.commitMenuViewUpdate()
         cVCalendarView.commitCalendarViewUpdate()
-        cVCalendarView.contentController.refreshPresentedMonth()
+//        cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     @IBAction func back(){
@@ -135,7 +136,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
-                    debugPrint(result)
+//                    debugPrint(result)
                     self.events = result.map{ StudentEvent($0) }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
@@ -153,6 +154,21 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         }
     }
 //    MARK:- Calendar methods
+    
+    func didShowNextMonthView(_ date: Date) {
+        debugPrint("next", date)
+//        cVCalendarView.contentController.refreshDots()
+        cVCalendarView.contentController.refreshPresentedMonth()
+    }
+    
+    func didShowPreviousMonthView(_ date: Date) {
+        cVCalendarView.contentController.refreshPresentedMonth()
+        debugPrint("prev")
+    }
+    func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
+        debugPrint("day is selected")
+    }
+    
     func presentationMode() -> CalendarMode {
         .monthView
     }
@@ -163,7 +179,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
         if let studentEvent = getEventForDate(optionalDate: dayView.date.convertedDate()) {
-            debugPrint(dayView.date.convertedDate(), studentEvent.endDate!)
+//            debugPrint(dayView.date.convertedDate(), studentEvent.endDate!)
             return true
         } else {
             return false
@@ -478,5 +494,16 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.event = filteredEvents[indexPath.row]
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
+    }
+}
+
+extension CVCalendarContentViewController {
+    public func refreshDots() {
+        refreshPresentedMonth()
+        for weekV in presentedMonthView.weekViews {
+            for dayView in weekV.dayViews {
+                dayView.setupDotMarker()
+            }
+        }
     }
 }
