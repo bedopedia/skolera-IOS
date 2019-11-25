@@ -179,6 +179,15 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         return currentCalendar
     }
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
+        let dotDate = dayView.date.convertedDate() ?? Date()
+        let index = events.firstIndex { (studentEvent) -> Bool in
+             studentEvent.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
+        }
+        if let arrayIndex = index {
+            debugPrint(arrayIndex)
+            let frame = tableView.rectForRow(at: IndexPath.init(row: arrayIndex, section: 0))
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: frame.minY)
+        }
     }
     
     func presentationMode() -> CalendarMode {
@@ -208,27 +217,32 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     
 //    changes the default color (used for the current day in calendar)
     func dotMarkerColor() -> UIColor {
-        return .blue
+        return .black
     }
+    
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
         return numberOfDots(dayView: dayView)
     }
-    func numberOfDots(dayView: DayView) -> [UIColor] {
-//        return [UIColor.blue]
+    
+    func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
         let dotDate = dayView.date.convertedDate() ?? Date()
-        let tempEvent = events.filter({
+        let dayEvents = events.filter({
             $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
         })
-        if tempEvent.isEmpty {
+        return dayEvents
+    }
+    
+    func numberOfDots(dayView: DayView) -> [UIColor] {
+        let tempEvents = getEventsForDayView(dayView: dayView)
+        if tempEvents.isEmpty {
           return []
-        } else if tempEvent.count == 1 {
-            return [getEventColor(event: tempEvent.first!)]
-        } else if tempEvent.count == 2 {
-            return [getEventColor(event: tempEvent.first!), getEventColor(event: tempEvent[1])]
+        } else if tempEvents.count == 1 {
+            return [getEventColor(event: tempEvents.first!)]
+        } else if tempEvents.count == 2 {
+            return [getEventColor(event: tempEvents.first!), getEventColor(event: tempEvents[1])]
         } else {
-            return [getEventColor(event: tempEvent.first!), getEventColor(event: tempEvent[1]), getEventColor(event: tempEvent[2])]
+            return [getEventColor(event: tempEvents.first!), getEventColor(event: tempEvents[1]), getEventColor(event: tempEvents[2])]
         }
-
     }
     
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
@@ -320,7 +334,6 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         } else {
             cell.numberLabel.text = "\(events.count)"
         }
-        
         return cell
     }
     
