@@ -174,14 +174,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
-        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
         for event in self.events {
             if let startDate = dateFormatter.date(from: event.startDate) {
                 let dateString = formatter.string(from: startDate)
-                debugPrint(startDate, dateString, event.startDate)
                 if let priorEvents = eventsDict[dateString] {
                     var tempEvents = priorEvents
                     tempEvents.append(event)
@@ -196,7 +194,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 
     func calendar() -> Calendar? {
         currentCalendar = Calendar(identifier: .gregorian)
-//        currentCalendar?.timeZone = .current
+        currentCalendar?.timeZone = TimeZone(identifier: "UTC")!
 //        let timeZoneBias = 0 // (UTC+08:00)
 //        currentCalendar = Calendar(identifier: .gregorian)
 //        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
@@ -224,17 +222,24 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         Weekday.sunday
     }
 
-    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
+    func getIsoDate(dayView: DayView) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "yyyy/MM/dd"
         dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+        return dateFormatter.string(from: dayView.date.convertedDate()!)
+    }
+    
+    func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
         if let date = dayView.date.convertedDate() {
-            debugPrint(date, dateFormatter.string(from: date))
-            
+            let dateString = getIsoDate(dayView: dayView)
+            debugPrint(date, dateString)
+            if let events = eventsDict[dateString], !events.isEmpty {
+                return true
+            } else {
+                return false
+            }
         }
-        
-        
         return false
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
@@ -250,7 +255,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
-        return numberOfDots(dayView: dayView)
+        return dotsColors(dayView: dayView)
     }
     
     func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
@@ -261,16 +266,17 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         return dayEvents
     }
     
-    func numberOfDots(dayView: DayView) -> [UIColor] {
-        let tempEvents = getEventsForDayView(dayView: dayView)
-        if tempEvents.isEmpty {
-          return []
-        } else if tempEvents.count == 1 {
-            return [getEventColor(event: tempEvents.first!)]
-        } else if tempEvents.count == 2 {
-            return [getEventColor(event: tempEvents.first!), getEventColor(event: tempEvents[1])]
+    func dotsColors(dayView: DayView) -> [UIColor] {
+        if let events = eventsDict[getIsoDate(dayView: dayView)], !events.isEmpty {
+            if events.count == 1 {
+                return [getEventColor(event: events.first!)]
+            } else if events.count == 2 {
+                return [getEventColor(event: events.first!), getEventColor(event: events[1])]
+            } else {
+                return [getEventColor(event: events.first!), getEventColor(event: events[1]), getEventColor(event: events[2])]
+            }
         } else {
-            return [getEventColor(event: tempEvents.first!), getEventColor(event: tempEvents[1]), getEventColor(event: tempEvents[2])]
+           return []
         }
     }
     
