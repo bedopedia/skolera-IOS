@@ -171,6 +171,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func setUpEvents() {
+        eventsDict = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
@@ -230,26 +231,18 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-//        if let date = dayView.date.convertedDate() {
-//            let dateString = getIsoDate(dayView: dayView)
-////            let dateString = "\(dayView.date.year)/\(dayView.date.month)/\(dayView.date.day)"
-//            debugPrint(dayView.date.day, date, dateString)
-//            if let events = eventsDict[dateString], !events.isEmpty {
-//                return true
-//            } else {
-//                return false
-//            }
-//        }
-//        return false
-        
-        let dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
-        debugPrint(dateString)
+        var dateString = ""
+        if dayView.date.month == 0 {
+            dateString = "\(dayView.date.year)/12/\(String(format: "%02d", dayView.date.day))"
+        } else {
+            dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+        }
+//        debugPrint(dateString)
         if let events = eventsDict[dateString], !events.isEmpty {
             return true
         } else {
             return false
         }
-
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
         false
@@ -276,7 +269,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotsColors(dayView: DayView) -> [UIColor] {
-        let dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+        var dateString = ""
+        if dayView.date.month == 0 {
+            dateString = "\(dayView.date.year)/12/\(String(format: "%02d", dayView.date.day))"
+        } else {
+            dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+        }
         if let events = eventsDict[dateString], !events.isEmpty {
             if events.count == 1 {
                 return [getEventColor(event: events.first!)]
@@ -531,19 +529,6 @@ extension CVCalendarContentViewController {
     }
 }
 
-extension Date {
-    func convertToLocalTime(fromTimeZone timeZoneAbbreviation: String) -> Date? {
-        let timeZone = TimeZone.current
-//        if let timeZone = TimeZone(abbreviation: timeZoneAbbreviation) {
-            let targetOffset = TimeInterval(timeZone.secondsFromGMT(for: self))
-            let localOffeset = TimeInterval(TimeZone.autoupdatingCurrent.secondsFromGMT(for: self))
-            return self.addingTimeInterval(targetOffset - localOffeset)
-//        }
-//        return nil
-    }
-}
-
-
 extension EventsViewController {
     func toggleMonthViewWithMonthOffset(offset: Int) {
         guard let currentCalendar = currentCalendar else { return }
@@ -557,12 +542,10 @@ extension EventsViewController {
         self.cVCalendarView.toggleViewWithDate(resultDate)
     }
     
-    
     func didShowNextMonthView(_ date: Date) {
         guard let currentCalendar = currentCalendar else { return }
         currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
     }
-    
     
     func didShowPreviousMonthView(_ date: Date) {
         guard let currentCalendar = currentCalendar else { return }
