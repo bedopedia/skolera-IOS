@@ -208,7 +208,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
              studentEvent.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
         }
         if let arrayIndex = index {
-            debugPrint(arrayIndex)
             let frame = tableView.rectForRow(at: IndexPath.init(row: arrayIndex, section: 0))
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: frame.minY)
         }
@@ -231,16 +230,26 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        if let date = dayView.date.convertedDate() {
-            let dateString = getIsoDate(dayView: dayView)
-            debugPrint(date, dateString)
-            if let events = eventsDict[dateString], !events.isEmpty {
-                return true
-            } else {
-                return false
-            }
+//        if let date = dayView.date.convertedDate() {
+//            let dateString = getIsoDate(dayView: dayView)
+////            let dateString = "\(dayView.date.year)/\(dayView.date.month)/\(dayView.date.day)"
+//            debugPrint(dayView.date.day, date, dateString)
+//            if let events = eventsDict[dateString], !events.isEmpty {
+//                return true
+//            } else {
+//                return false
+//            }
+//        }
+//        return false
+        
+        let dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+        debugPrint(dateString)
+        if let events = eventsDict[dateString], !events.isEmpty {
+            return true
+        } else {
+            return false
         }
-        return false
+
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
         false
@@ -267,7 +276,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotsColors(dayView: DayView) -> [UIColor] {
-        if let events = eventsDict[getIsoDate(dayView: dayView)], !events.isEmpty {
+        let dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+        if let events = eventsDict[dateString], !events.isEmpty {
             if events.count == 1 {
                 return [getEventColor(event: events.first!)]
             } else if events.count == 2 {
