@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import JTAppleCalendar
-//import CVCalendar
+import CVCalendar
 
 class AttendanceViewController: UIViewController {
     
@@ -22,9 +21,6 @@ class AttendanceViewController: UIViewController {
         case saturday = 6
     }
     
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var calendarBottomConstraint: NSLayoutConstraint!
     //MARK: - Variables
     var child : Child!
     let calendar = Calendar.current
@@ -36,27 +32,22 @@ class AttendanceViewController: UIViewController {
     //MARK: - Outlets
     
     //calendar outlets
-    @IBOutlet weak var calendarView: JTAppleCalendarView!
     
-    @IBOutlet weak var weekDaysStackView: UIStackView!
-    //    @IBOutlet weak var menuView: CVCalendarMenuView!
-//    @IBOutlet weak var calendarView: CVCalendarView!
+    @IBOutlet weak var menuView: CVCalendarMenuView!
+    @IBOutlet weak var calendarView: CVCalendarView!
     @IBOutlet weak var currentMonthLabel: UILabel!
-    
-    //NavBar Image View
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
-    
     @IBOutlet var headerView: UIView!
-    //Numbers for different attendance type
     @IBOutlet weak var lateDaysNumberLabel: UILabel!
     @IBOutlet weak var absentDaysNumberLabel: UILabel!
     @IBOutlet weak var excusedDaysNumberLabel: UILabel!
-    
-    //border under each attendance type
     @IBOutlet weak var lateBottomBorderView: UIView!
     @IBOutlet weak var excusedBottomBorderView: UIView!
     @IBOutlet weak var absentBottomBorderView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
+    
     
     //MARK: - Life Cycle
     
@@ -71,51 +62,25 @@ class AttendanceViewController: UIViewController {
         loadLateDays()
         loadExcusedDays()
         loadAbsentDays()
-        
-        calendarView.minimumLineSpacing = 0
-        calendarView.minimumInteritemSpacing = 0
-        calendarView.scrollToDate(today, animateScroll: false)
-        calendarView.calendarDataSource = self
-        calendarView.calendarDelegate = self
-        calendarView.semanticContentAttribute = .forceLeftToRight
-  
         offDays.insert(.friday)
         offDays.insert(.saturday)
         setupWeekDaysLabels()
-        calendarView.visibleDates { visibleDates in self.updateCurrentMonthLabel(from: visibleDates) }
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
+        
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo)
-    {
-        let date = visibleDates.monthDates.first?.date
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en")
-        formatter.dateFormat = "MMMM yyyy"
-        currentMonthLabel.text = formatter.string(from: date!)
-    }
-    fileprivate func setupWeekDaysLabels() {
-        for index in 0..<weekDaysStackView.arrangedSubviews.count {
-            let weekDayLabel : UILabel = weekDaysStackView.arrangedSubviews[index] as! UILabel
-            weekDayLabel.text = calendar.veryShortWeekdaySymbols[index]
-            if offDays.contains(AttendanceViewController.weekDays(rawValue: index)!)
-            {
-                weekDayLabel.textColor = UIColor.appColors.offDaysColor
-            }
-        }
-    }
     //MARK: - Actions
     
-    @IBAction func toggleToToday(_ sender: UIButton) {
-        calendarView.scrollToDate(today)
+    @IBAction func toggleToToday() {
+//        calendarView.
     }
     
     @IBAction func switchToLate(_ sender: UIButton) {

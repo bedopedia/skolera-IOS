@@ -19,7 +19,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet weak var currentMonthLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
-//    @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var eventsCollectionView: UICollectionView!
     @IBOutlet weak var createEventButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
