@@ -38,14 +38,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     var child : Child!
-//    let calendar = Calendar.current
     var currentBorderColor: UIColor = .black
-    let today = Date()
-    
-    
     var oldSelectedEventsPosition: Int = -1
     var selectedEventsPosition: Int = 0
-    
     var events: [StudentEvent] = []
     var filteredEvents: [StudentEvent] = []
     
@@ -59,8 +54,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
-    private var randomNumberOfDotMarkersForDay = [Int]()
-    
     
     fileprivate func updateCurrentLabel() {
         if let currentCalendar = currentCalendar {
@@ -139,14 +132,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         getEvents()
         refreshControl.endRefreshing()
     }
-    
-    func updateCurrentMonthLabel(from visibleDates: DateSegmentInfo) {
-        let date = visibleDates.monthDates.first?.date
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en")
-        formatter.dateFormat = "MMMM yyyy"
-        currentMonthLabel.text = formatter.string(from: date!)
-    }
+
 //    func getEvents() {
 //        let result = getDummyEvents()
 //        self.events = result.map{ StudentEvent($0) }
@@ -225,6 +211,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //        }
         return currentCalendar
     }
+    
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
         let dotDate = dayView.date.convertedDate() ?? Date()
         let index = events.firstIndex { (studentEvent) -> Bool in
@@ -259,7 +246,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         } else {
             dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
         }
-        debugPrint("\(dayView.date.month)")
+//        debugPrint("\(dayView.date.month)")
         if let events = eventsDict[dateString], !events.isEmpty {
             return true
         } else {
@@ -282,13 +269,13 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         return dotsColors(dayView: dayView)
     }
     
-    func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
-        let dotDate = dayView.date.convertedDate() ?? Date()
-        let dayEvents = events.filter({
-            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
-        })
-        return dayEvents
-    }
+//    func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
+//        let dotDate = dayView.date.convertedDate() ?? Date()
+//        let dayEvents = events.filter({
+//            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
+//        })
+//        return dayEvents
+//    }
     
     func dotsColors(dayView: DayView) -> [UIColor] {
         var dateString = ""
@@ -537,17 +524,6 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.event = filteredEvents[indexPath.row]
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
-    }
-}
-
-extension CVCalendarContentViewController {
-    public func refreshDots() {
-        refreshPresentedMonth()
-        for weekV in presentedMonthView.weekViews {
-            for dayView in weekV.dayViews {
-                dayView.setupDotMarker()
-            }
-        }
     }
 }
 
