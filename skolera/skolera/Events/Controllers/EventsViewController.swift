@@ -110,10 +110,14 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         getEvents()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    fileprivate func commitCalendarViews() {
         menuView.commitMenuViewUpdate()
         cVCalendarView.commitCalendarViewUpdate()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        commitCalendarViews()
     }
     
     @IBAction func back(){
@@ -144,14 +148,27 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         formatter.dateFormat = "MMMM yyyy"
         currentMonthLabel.text = formatter.string(from: date!)
     }
-    
+//    func getEvents() {
+//        let result = getDummyEvents()
+//        self.events = result.map{ StudentEvent($0) }
+//        self.filteredEvents = self.events
+//        self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
+//        self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
+//        self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
+//        self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
+//        //                    reload calendar data
+//        self.setUpEvents()
+//        self.cVCalendarView.contentController.refreshPresentedMonth()
+//        self.tableView.reloadData()
+//        self.eventsCollectionView.reloadData()
+//    }
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
-//                    debugPrint(result)
+                    debugPrint(result)
                     self.events = result.map{ StudentEvent($0) }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
@@ -160,6 +177,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
 //                    reload calendar data
                     self.setUpEvents()
+                    self.commitCalendarViews()
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
@@ -171,7 +189,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func setUpEvents() {
-        eventsDict = [:]
+//        eventsDict = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
@@ -179,18 +197,23 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
         for event in self.events {
-            if let startDate = dateFormatter.date(from: event.startDate) {
-                let dateString = formatter.string(from: startDate)
-                if let priorEvents = eventsDict[dateString] {
-                    var tempEvents = priorEvents
-                    tempEvents.append(event)
-                    eventsDict[dateString] = tempEvents
-                } else {
-                    eventsDict[dateString] = [event]
+            if let startDate = dateFormatter.date(from: event.startDate), let endDate = dateFormatter.date(from: event.endDate) {
+                let difference =  Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+                for index in 0...difference {
+                    let daysOffset = startDate.add(.init(seconds: 0, minutes: 0, hours: 0, days: index, weeks: 0, months: 0, years: 0))
+                    let dateString = formatter.string(from: daysOffset)
+                    if let priorEvents = eventsDict[dateString] {
+                        var tempEvents = priorEvents
+                        tempEvents.append(event)
+                        eventsDict[dateString] = tempEvents
+                    } else {
+                        eventsDict[dateString] = [event]
+                    }
                 }
             }
         }
     }
+    
 //    MARK:- Calendar methods
 
     func calendar() -> Calendar? {
@@ -237,7 +260,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         } else {
             dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
         }
-//        debugPrint(dateString)
+        debugPrint("\(dayView.date.month)")
         if let events = eventsDict[dateString], !events.isEmpty {
             return true
         } else {
@@ -545,6 +568,7 @@ extension EventsViewController {
     func didShowNextMonthView(_ date: Date) {
         guard let currentCalendar = currentCalendar else { return }
         currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
+//        self.cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     func didShowPreviousMonthView(_ date: Date) {
