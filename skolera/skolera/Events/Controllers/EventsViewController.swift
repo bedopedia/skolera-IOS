@@ -11,6 +11,7 @@ import JTAppleCalendar
 import Alamofire
 import NVActivityIndicatorView
 import CVCalendar
+import SwiftDate
 
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
@@ -58,6 +59,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var previousScrollOffset: CGFloat = 0
     private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
+    var eventsDict: [String: [StudentEvent]] = [:]
     private var randomNumberOfDotMarkersForDay = [Int]()
     
     
@@ -69,6 +71,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        eventsDict = [:]
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
@@ -156,6 +159,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
 //                    reload calendar data
+                    self.setUpEvents()
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
@@ -165,12 +169,34 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             }
         }
     }
+    
+    func setUpEvents() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.timeZone = .current
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        for event in self.events {
+            if let startDate = dateFormatter.date(from: event.startDate) {
+                let dateString = formatter.string(from: startDate)
+                debugPrint(startDate, dateString, event.startDate)
+                if let priorEvents = eventsDict[dateString] {
+                    var tempEvents = priorEvents
+                    tempEvents.append(event)
+                    eventsDict[dateString] = tempEvents
+                } else {
+                    eventsDict[dateString] = [event]
+                }
+            }
+        }
+    }
 //    MARK:- Calendar methods
 
     func calendar() -> Calendar? {
         currentCalendar = Calendar(identifier: .gregorian)
-        currentCalendar?.timeZone = .current
-        
+//        currentCalendar?.timeZone = .current
 //        let timeZoneBias = 0 // (UTC+08:00)
 //        currentCalendar = Calendar(identifier: .gregorian)
 //        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
@@ -199,13 +225,16 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
 
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        let dotDate = dayView.date.convertedDate() ?? Date()
-        let tempEvent = events.filter({
-            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
-        })
-        if !tempEvent.isEmpty {
-            return true
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+        if let date = dayView.date.convertedDate() {
+            debugPrint(date, dateFormatter.string(from: date))
+            
         }
+        
+        
         return false
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
