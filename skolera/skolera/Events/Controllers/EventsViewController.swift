@@ -168,14 +168,14 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //    MARK:- Calendar methods
 
     func calendar() -> Calendar? {
-//        currentCalendar = Calendar(identifier: .gregorian)
-//        currentCalendar?.timeZone = .current
-        
-        let timeZoneBias = 0 // (UTC+08:00)
         currentCalendar = Calendar(identifier: .gregorian)
-        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
-            currentCalendar?.timeZone = timeZone
-        }
+        currentCalendar?.timeZone = .current
+        
+//        let timeZoneBias = 0 // (UTC+08:00)
+//        currentCalendar = Calendar(identifier: .gregorian)
+//        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
+//            currentCalendar?.timeZone = timeZone
+//        }
         return currentCalendar
     }
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
@@ -454,9 +454,10 @@ extension EventsViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         UIView.setAnimationsEnabled(false)
         cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0.5))) {
-            UIView.setAnimationsEnabled(true)
-        }
+        UIView.setAnimationsEnabled(true)
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
+//            UIView.setAnimationsEnabled(true)
+//        }
     }
 }
 
