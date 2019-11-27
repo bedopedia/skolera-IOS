@@ -503,7 +503,7 @@ extension EventsViewController {
             self.updateCurrentLabel()
             UIView.setAnimationsEnabled(true)
         }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //            UIView.setAnimationsEnabled(true)
 //        }
     }
