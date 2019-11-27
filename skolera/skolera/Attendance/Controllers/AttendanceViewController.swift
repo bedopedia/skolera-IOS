@@ -51,7 +51,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
     
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -72,18 +71,13 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         }
         // Appearance delegate [Unnecessary]
         self.calendarView.calendarAppearanceDelegate = self
-        
         // Animator delegate [Unnecessary]
         self.calendarView.animatorDelegate = self
-        
         // Menu delegate [Required]
         self.menuView.menuViewDelegate = self
-        
         // Calendar delegate [Required]
         self.calendarView.calendarDelegate = self
-        
         self.calendarView!.changeDaysOutShowingState(shouldShow: true)
-        
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
         setUpAttendances()
@@ -92,33 +86,70 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        commitCalendarViews()
-    }
-
-    func getAttendanceForDate(date: Date) -> Attendance? {
-        let days = child.attendances.filter { (attendance) -> Bool in
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "en")
-            formatter.dateFormat = "yyyy/MM/dd"
-            return formatter.string(from: attendance.date) == formatter.string(from: date)
-        }
-        return days.first
-    }
-    
-    func calendar() -> Calendar? {
-        currentCalendar = Calendar(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone(identifier: "UTC")!
-        return currentCalendar
+        commitCalendarViews(calendarView: calendarView, menuView: menuView)
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    fileprivate func commitCalendarViews() {
-        menuView.commitMenuViewUpdate()
-        calendarView.commitCalendarViewUpdate()
+    func setUpAttendances() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.timeZone = .current
+        for attendance in self.child.attendances {
+            let dateString = formatter.string(from: attendance.date)
+            if let priorAttendances = attendancesDict[dateString] {
+                var tempAttendances = priorAttendances
+                tempAttendances.append(attendance)
+                attendancesDict[dateString] = tempAttendances
+            } else {
+                attendancesDict[dateString] = [attendance]
+            }
+        }
     }
+    
+    //MARK: - Actions
+    
+    @IBAction func toggleToToday() {
+        self.calendarView.toggleCurrentDayView()
+        updateCurrentLabel()
+    }
+    
+    @IBAction func switchToLate() {
+        lateBottomBorderView.isHidden = false
+        excusedBottomBorderView.isHidden = true
+        absentBottomBorderView.isHidden = true
+        loadLateDays()
+    }
+    
+    @IBAction func switchToExcused() {
+        lateBottomBorderView.isHidden = true
+        excusedBottomBorderView.isHidden = false
+        absentBottomBorderView.isHidden = true
+        loadExcusedDays()
+    }
+    
+    @IBAction func switchToAbsent() {
+        lateBottomBorderView.isHidden = true
+        excusedBottomBorderView.isHidden = true
+        absentBottomBorderView.isHidden = false
+        loadAbsentDays()
+    }
+    
+    //    func getAttendanceForDate(date: Date) -> Attendance? {
+    //        let days = child.attendances.filter { (attendance) -> Bool in
+    //            let formatter = DateFormatter()
+    //            formatter.locale = Locale(identifier: "en")
+    //            formatter.dateFormat = "yyyy/MM/dd"
+    //            return formatter.string(from: attendance.date) == formatter.string(from: date)
+    //        }
+    //        return days.first
+    //    }
+}
+
+//MARK: Calendar extension
+extension AttendanceViewController {
     
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
         if let studentAttendances = attendancesDict[getDateString(dayView)], let attendance = studentAttendances.first, !attendance.status.elementsEqual("present") {
@@ -140,7 +171,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
                     self.tableView.scrollToRow(at: IndexPath(row: arrayIndex, section: 0), at: .middle, animated: true)
                 }
             }
-        }     
+        }
     }
     
     func presentationMode() -> CalendarMode {
@@ -150,21 +181,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     func firstWeekday() -> Weekday {
         Weekday.sunday
     }
-    func setUpAttendances() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        formatter.timeZone = .current
-        for attendance in self.child.attendances {
-            let dateString = formatter.string(from: attendance.date)
-            if let priorAttendances = attendancesDict[dateString] {
-                var tempAttendances = priorAttendances
-                tempAttendances.append(attendance)
-                attendancesDict[dateString] = tempAttendances
-            } else {
-                attendancesDict[dateString] = [attendance]
-            }
-        }
-    }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
         var dateString = ""
@@ -173,7 +189,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         } else {
             dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
         }
-//        debugPrint("\(dayView.date.month)")
+        //        debugPrint("\(dayView.date.month)")
         if let attendances = attendancesDict[dateString], !attendances.isEmpty {
             return true
         } else {
@@ -222,7 +238,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         false
     }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
-            return 16
+        return 16
     }
     func shouldAnimateResizing() -> Bool {
         return true
@@ -239,36 +255,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
             currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
         }
     }
-    //MARK: - Actions
-    
-    @IBAction func toggleToToday() {
-        self.calendarView.toggleCurrentDayView()
-        updateCurrentLabel()
-    }
-    
-    @IBAction func switchToLate() {
-        lateBottomBorderView.isHidden = false
-        excusedBottomBorderView.isHidden = true
-        absentBottomBorderView.isHidden = true
-        loadLateDays()
-    }
-    
-    @IBAction func switchToExcused() {
-        lateBottomBorderView.isHidden = true
-        excusedBottomBorderView.isHidden = false
-        absentBottomBorderView.isHidden = true
-        loadExcusedDays()
-    }
-    
-    @IBAction func switchToAbsent() {
-        lateBottomBorderView.isHidden = true
-        excusedBottomBorderView.isHidden = true
-        absentBottomBorderView.isHidden = false
-        loadAbsentDays()
-    }
-}
-//MARK: - CVCalendar Convenience APIs
-extension AttendanceViewController {
     func toggleMonthViewWithMonthOffset(offset: Int) {
         guard let currentCalendar = currentCalendar else { return }
         var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
@@ -280,22 +266,23 @@ extension AttendanceViewController {
     func didShowNextMonthView(_ date: Date) {
         guard let currentCalendar = currentCalendar else { return }
         currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
-//        self.cVCalendarView.contentController.refreshPresentedMonth()
+        //        self.cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     func didShowPreviousMonthView(_ date: Date) {
         guard let currentCalendar = currentCalendar else { return }
         currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
     }
-  
+    
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
         print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
     }
-  
+    
     func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
         print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
     }
 }
+//MARK:- Collapse Extension
 
 extension AttendanceViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -388,8 +375,8 @@ extension AttendanceViewController {
             self.updateCurrentLabel()
             UIView.setAnimationsEnabled(true)
         }
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
-//            UIView.setAnimationsEnabled(true)
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
+        //            UIView.setAnimationsEnabled(true)
+        //        }
     }
 }

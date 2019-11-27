@@ -159,3 +159,13 @@ func getDateString(_ dayView: DayView) -> String {
     }
     return dateString
 }
+func commitCalendarViews(calendarView: CVCalendarView, menuView: CVCalendarMenuView) {
+    menuView.commitMenuViewUpdate()
+    calendarView.commitCalendarViewUpdate()
+}
+
+func calendar() -> Calendar? {
+    var currentCalendar = Calendar(identifier: .gregorian)
+    currentCalendar.timeZone = TimeZone(identifier: "UTC")!
+    return currentCalendar
+}

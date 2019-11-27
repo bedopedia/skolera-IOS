@@ -102,51 +102,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         getEvents()
     }
     
-    fileprivate func commitCalendarViews() {
-        menuView.commitMenuViewUpdate()
-        cVCalendarView.commitCalendarViewUpdate()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        commitCalendarViews()
-    }
-    
-    @IBAction func back(){
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func todayMonthView() {
-        self.cVCalendarView.toggleCurrentDayView()
-        updateCurrentLabel()
-    }
-    
-    @IBAction func createNewEvent() {
-        let createEventVC = CreateEventViewController.instantiate(fromAppStoryboard: .Events)
-        createEventVC.child = child
-        self.navigationController?.pushViewController(createEventVC, animated: true)
-    }
-    
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         getEvents()
         refreshControl.endRefreshing()
     }
-
-//    func getEvents() {
-//        let result = getDummyEvents()
-//        self.events = result.map{ StudentEvent($0) }
-//        self.filteredEvents = self.events
-//        self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
-//        self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
-//        self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
-//        self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
-//        //                    reload calendar data
-//        self.setUpEvents()
-//        self.cVCalendarView.contentController.refreshPresentedMonth()
-//        self.tableView.reloadData()
-//        self.eventsCollectionView.reloadData()
-//    }
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
@@ -163,7 +123,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //                    select the first tab
                     self.selectAllEvents()
                     self.setUpEvents()
-                    self.commitCalendarViews()
+                    DispatchQueue.main.async {
+                        commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
+                    }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
@@ -199,15 +161,25 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             }
         }
     }
-    
-//    MARK:- Calendar methods
-
-    func calendar() -> Calendar? {
-        currentCalendar = Calendar(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone(identifier: "UTC")!
-        return currentCalendar
+//    MARK: - IBActions
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
     }
-        
+    
+    @IBAction func todayMonthView() {
+        self.cVCalendarView.toggleCurrentDayView()
+        updateCurrentLabel()
+    }
+    
+    @IBAction func createNewEvent() {
+        let createEventVC = CreateEventViewController.instantiate(fromAppStoryboard: .Events)
+        createEventVC.child = child
+        self.navigationController?.pushViewController(createEventVC, animated: true)
+    }
+}
+//    MARK:- Calendar extension
+extension EventsViewController {
+    
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
         if let studentEvents = eventsDict[getDateString(dayView)], let event = studentEvents.first {
             let index = events.firstIndex { (studentEvent) -> Bool in
@@ -228,7 +200,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     func firstWeekday() -> Weekday {
         Weekday.sunday
     }
-
+    
     func getIsoDate(dayView: DayView) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
@@ -251,7 +223,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         false
     }
     
-//    changes the default color (used for the current day in calendar)
+    //    changes the default color (used for the current day in calendar)
     func dotMarkerColor() -> UIColor {
         return .black
     }
@@ -260,13 +232,13 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         return dotsColors(dayView: dayView)
     }
     
-//    func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
-//        let dotDate = dayView.date.convertedDate() ?? Date()
-//        let dayEvents = events.filter({
-//            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
-//        })
-//        return dayEvents
-//    }
+    //    func getEventsForDayView(dayView: DayView) -> [StudentEvent] {
+    //        let dotDate = dayView.date.convertedDate() ?? Date()
+    //        let dayEvents = events.filter({
+    //            $0.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
+    //        })
+    //        return dayEvents
+    //    }
     
     func dotsColors(dayView: DayView) -> [UIColor] {
         if let events = eventsDict[getDateString(dayView)], !events.isEmpty {
@@ -278,25 +250,25 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                 return [getEventColor(event: events.first!), getEventColor(event: events[1]), getEventColor(event: events[2])]
             }
         } else {
-           return []
+            return []
         }
     }
     
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
         return false
     }
-//    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
-//        return CGFloat(16)
-//    }
-//    func dayLabelWeekdayFont() -> UIFont {
-//        UIFont.systemFont(ofSize: 18)
-//    }
-//    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
-//        CGFloat(18)
-//    }
+    //    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
+    //        return CGFloat(16)
+    //    }
+    //    func dayLabelWeekdayFont() -> UIFont {
+    //        UIFont.systemFont(ofSize: 18)
+    //    }
+    //    func dayLabelPresentWeekdayHighlightedTextSize() -> CGFloat {
+    //        CGFloat(18)
+    //    }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
         return 16
-//        return  dayView.dayLabel.frame.maxY + 16
+        //        return  dayView.dayLabel.frame.maxY + 16
     }
     func shouldAnimateResizing() -> Bool {
         return true
@@ -325,7 +297,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         }
     }
-    
 }
 //MARK: - Calendar appearance delegate
 extension EventsViewController: CVCalendarViewAppearanceDelegate {
@@ -350,8 +321,7 @@ extension EventsViewController: CVCalendarViewAppearanceDelegate {
     func spaceBetweenDayViews() -> CGFloat { return 8 }
 //    func dayLabelFont(by weekDay: Weekday, status: CVStatus, present: CVPresent) -> UIFont { return UIFont.systemFont(ofSize: 18) }
 }
-
-
+//MARK: - Collection view extension
 extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
@@ -411,7 +381,7 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         eventsCollectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
     }
 }
-
+//MARK:- Collapse Extension
 extension EventsViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
