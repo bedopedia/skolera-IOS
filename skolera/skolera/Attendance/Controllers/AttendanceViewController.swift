@@ -81,7 +81,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
         setUpAttendances()
-        updateCurrentLabel()
+        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,7 +113,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     
     @IBAction func toggleToToday() {
         self.calendarView.toggleCurrentDayView()
-        updateCurrentLabel()
+//        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
     }
     
     @IBAction func switchToLate() {
@@ -246,15 +246,10 @@ extension AttendanceViewController {
     
     func toggleState (state: CalendarMode) {
         calendarView.changeMode(state)
-        self.updateCurrentLabel()
+        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
         calendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     
-    fileprivate func updateCurrentLabel() {
-        if let currentCalendar = currentCalendar {
-            currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
-        }
-    }
     func toggleMonthViewWithMonthOffset(offset: Int) {
         guard let currentCalendar = currentCalendar else { return }
         var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
@@ -262,24 +257,24 @@ extension AttendanceViewController {
         let resultDate = currentCalendar.date(from: components)!
         self.calendarView.toggleViewWithDate(resultDate)
     }
-    
     func didShowNextMonthView(_ date: Date) {
-        guard let currentCalendar = currentCalendar else { return }
-        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
-        //        self.cVCalendarView.contentController.refreshPresentedMonth()
     }
     
     func didShowPreviousMonthView(_ date: Date) {
-        guard let currentCalendar = currentCalendar else { return }
-        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
     }
     
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
-        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+//        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+//        updateCurrentLabel()
+        
     }
     
     func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
-        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+//        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+//        updateCurrentLabel()
+    }
+    func presentedDateUpdated(_ date: CVDate) {
+        updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
     }
 }
 //MARK:- Collapse Extension
@@ -372,7 +367,7 @@ extension AttendanceViewController {
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
             self.calendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-            self.updateCurrentLabel()
+            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
             UIView.setAnimationsEnabled(true)
         }
         //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {

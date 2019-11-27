@@ -169,3 +169,9 @@ func calendar() -> Calendar? {
     currentCalendar.timeZone = TimeZone(identifier: "UTC")!
     return currentCalendar
 }
+
+func updateCurrentLabel(_ date: Date = Date(), currentCalendar: Calendar?, label: UILabel) {
+    if let calendar = currentCalendar {
+        label.text = CVDate(date: date, calendar: calendar).globalDescription
+    }
+}

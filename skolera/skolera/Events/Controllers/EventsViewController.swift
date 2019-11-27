@@ -54,13 +54,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
-    
-    fileprivate func updateCurrentLabel() {
-        if let currentCalendar = currentCalendar {
-            currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
-        }
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         eventsDict = [:]
@@ -95,7 +89,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
-        updateCurrentLabel()
+        updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -168,7 +162,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     
     @IBAction func todayMonthView() {
         self.cVCalendarView.toggleCurrentDayView()
-        updateCurrentLabel()
+//        updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
     }
     
     @IBAction func createNewEvent() {
@@ -199,14 +193,6 @@ extension EventsViewController {
     
     func firstWeekday() -> Weekday {
         Weekday.sunday
-    }
-    
-    func getIsoDate(dayView: DayView) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
-        return dateFormatter.string(from: dayView.date.convertedDate()!)
     }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
@@ -280,7 +266,7 @@ extension EventsViewController {
     
     func toggleState (state: CalendarMode) {
         cVCalendarView.changeMode(state)
-        updateCurrentLabel()
+        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
         cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     func getEventColor(event: StudentEvent) -> UIColor {
@@ -296,6 +282,39 @@ extension EventsViewController {
         default:
             return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         }
+    }
+    
+    func presentedDateUpdated(_ date: CVDate) {
+        updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
+    }
+    func toggleMonthViewWithMonthOffset(offset: Int) {
+        guard let currentCalendar = currentCalendar else { return }
+        var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
+        components.month! += offset
+        let resultDate = currentCalendar.date(from: components)!
+        self.cVCalendarView.toggleViewWithDate(resultDate)
+    }
+    
+    func didShowNextMonthView(_ date: Date) {
+    }
+    
+    func didShowPreviousMonthView(_ date: Date) {
+    }
+    
+    func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
+        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+    }
+    
+    func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
+        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+    }
+    
+    func getIsoDate(dayView: DayView) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+        return dateFormatter.string(from: dayView.date.convertedDate()!)
     }
 }
 //MARK: - Calendar appearance delegate
@@ -470,7 +489,7 @@ extension EventsViewController {
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
             self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-            self.updateCurrentLabel()
+            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
             UIView.setAnimationsEnabled(true)
         }
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -493,35 +512,3 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension EventsViewController {
-    func toggleMonthViewWithMonthOffset(offset: Int) {
-        guard let currentCalendar = currentCalendar else { return }
-        
-        var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
-        
-        components.month! += offset
-        
-        let resultDate = currentCalendar.date(from: components)!
-        
-        self.cVCalendarView.toggleViewWithDate(resultDate)
-    }
-    
-    func didShowNextMonthView(_ date: Date) {
-        guard let currentCalendar = currentCalendar else { return }
-        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
-//        self.cVCalendarView.contentController.refreshPresentedMonth()
-    }
-    
-    func didShowPreviousMonthView(_ date: Date) {
-        guard let currentCalendar = currentCalendar else { return }
-        currentMonthLabel.text = CVDate(date: date, calendar: currentCalendar).globalDescription
-    }
-  
-    func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
-        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
-    }
-  
-    func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
-        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
-    }
-}
