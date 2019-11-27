@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import KeychainSwift
 import Alamofire
+import CVCalendar
+
 //alert messages
 func showAlert(viewController: UIViewController, title: String, message: String,completion : ((UIAlertAction)->Void)?) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -146,4 +148,14 @@ func assignPlaceholder(_ tableView: UITableView, imageName: String, placeHolderL
 
 func restore(_ tableView: UITableView) {
     tableView.backgroundView = nil
+}
+
+func getDateString(_ dayView: DayView) -> String {
+    var dateString = ""
+    if dayView.date.month == 0 {
+        dateString = "\(dayView.date.year)/12/\(String(format: "%02d", dayView.date.day))"
+    } else {
+        dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
+    }
+    return dateString
 }

@@ -160,7 +160,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
                     self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
-//                    reload calendar data
+//                    select the first tab
+                    self.selectAllEvents()
                     self.setUpEvents()
                     self.commitCalendarViews()
                     self.cVCalendarView.contentController.refreshPresentedMonth()
@@ -174,7 +175,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func setUpEvents() {
-//        eventsDict = [:]
+        eventsDict = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
@@ -204,22 +205,19 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     func calendar() -> Calendar? {
         currentCalendar = Calendar(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone(identifier: "UTC")!
-//        let timeZoneBias = 0 // (UTC+08:00)
-//        currentCalendar = Calendar(identifier: .gregorian)
-//        if let timeZone = TimeZone(secondsFromGMT: -timeZoneBias * 60) {
-//            currentCalendar?.timeZone = timeZone
-//        }
         return currentCalendar
     }
-    
+        
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
-        let dotDate = dayView.date.convertedDate() ?? Date()
-        let index = events.firstIndex { (studentEvent) -> Bool in
-             studentEvent.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
-        }
-        if let arrayIndex = index {
-            let frame = tableView.rectForRow(at: IndexPath.init(row: arrayIndex, section: 0))
-            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: frame.minY)
+        if let studentEvents = eventsDict[getDateString(dayView)], let event = studentEvents.first {
+            let index = events.firstIndex { (studentEvent) -> Bool in
+                studentEvent.id == event.id
+            }
+            if let arrayIndex = index {
+                if self.filteredEvents.count > arrayIndex {
+                    self.tableView.scrollToRow(at: IndexPath(row: arrayIndex, section: 0), at: .middle, animated: true)
+                }
+            }
         }
     }
     
@@ -240,14 +238,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func dotMarker(shouldShowOnDayView dayView: DayView) -> Bool {
-        var dateString = ""
-        if dayView.date.month == 0 {
-            dateString = "\(dayView.date.year)/12/\(String(format: "%02d", dayView.date.day))"
-        } else {
-            dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
-        }
-//        debugPrint("\(dayView.date.month)")
-        if let events = eventsDict[dateString], !events.isEmpty {
+        if let events = eventsDict[getDateString(dayView)], !events.isEmpty {
             return true
         } else {
             return false
@@ -278,13 +269,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //    }
     
     func dotsColors(dayView: DayView) -> [UIColor] {
-        var dateString = ""
-        if dayView.date.month == 0 {
-            dateString = "\(dayView.date.year)/12/\(String(format: "%02d", dayView.date.day))"
-        } else {
-            dateString = "\(dayView.date.year)/\((String(format: "%02d", dayView.date.month)))/\(String(format: "%02d", dayView.date.day))"
-        }
-        if let events = eventsDict[dateString], !events.isEmpty {
+        if let events = eventsDict[getDateString(dayView)], !events.isEmpty {
             if events.count == 1 {
                 return [getEventColor(event: events.first!)]
             } else if events.count == 2 {
@@ -416,7 +401,14 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         self.tableView.reloadData()
         collectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
     }
-    
+    func selectAllEvents() {
+        filteredEvents = events
+        currentBorderColor = .black
+        oldSelectedEventsPosition = selectedEventsPosition
+        selectedEventsPosition = 0
+        eventsCollectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .left, animated: true)
+        eventsCollectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
+    }
 }
 
 extension EventsViewController {
