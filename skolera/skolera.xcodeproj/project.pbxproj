@@ -156,7 +156,6 @@
 		8A0F606823437D2500B75929 /* QuestionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0F606723437D2500B75929 /* QuestionTypes.swift */; };
 		8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */; };
 		8A119507231BFF3200691398 /* TeacherAttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */; };
-		8A119509231C2C1200691398 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119508231C2C1200691398 /* AttendanceCases.swift */; };
 		8A12408E233111F6000A3195 /* SubmitExcuseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A12408D233111F6000A3195 /* SubmitExcuseViewController.swift */; };
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1688AA22FAF46900900AA6 /* AssignmentsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */; };
@@ -313,6 +312,7 @@
 		8AF8F73B22E9EB3100544744 /* QuizStudentSubmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */; };
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
+		DC168463238D64AF004828F8 /* DummyEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC168462238D64AF004828F8 /* DummyEvents.swift */; };
 		DC1CA712237DA26000E79769 /* PlaceHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */; };
 		DC1CA71423815FC900E79769 /* UITextField+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA71323815FC900E79769 /* UITextField+Views.swift */; };
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
@@ -322,6 +322,7 @@
 		DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8536F7237BF63500B12476 /* UIView+Shadow.swift */; };
 		DC8FAAE9238194FD00B3B753 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */; };
 		DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */; };
+		DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
@@ -478,7 +479,6 @@
 		8A0F606723437D2500B75929 /* QuestionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypes.swift; sourceTree = "<group>"; };
 		8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceViewController.swift; sourceTree = "<group>"; };
 		8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceTableViewCell.swift; sourceTree = "<group>"; };
-		8A119508231C2C1200691398 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		8A12408D233111F6000A3195 /* SubmitExcuseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitExcuseViewController.swift; sourceTree = "<group>"; };
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsApiManager.swift; sourceTree = "<group>"; };
@@ -651,6 +651,7 @@
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		DC168462238D64AF004828F8 /* DummyEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyEvents.swift; sourceTree = "<group>"; };
 		DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTableViewCell.swift; sourceTree = "<group>"; };
 		DC1CA71323815FC900E79769 /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
@@ -661,6 +662,7 @@
 		DC8536F7237BF63500B12476 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 		DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1118,7 +1120,6 @@
 			isa = PBXGroup;
 			children = (
 				8A6D360520B5964D00DD0445 /* Chat */,
-				8A119508231C2C1200691398 /* AttendanceCases.swift */,
 				5402C9FF2045A261009F583A /* Extensions */,
 				54EB93122015F88E001DD93F /* Routes.swift */,
 				54EB93142015F90E001DD93F /* AppStoryboard.swift */,
@@ -1133,6 +1134,8 @@
 				DC415C882370811B0036C93B /* UserType.swift */,
 				DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */,
 				DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */,
+				DC168462238D64AF004828F8 /* DummyEvents.swift */,
+				DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1886,6 +1889,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/CVCalendar/CVCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/CalendarKit/CalendarKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Chatto/Chatto.framework",
@@ -1921,6 +1925,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CVCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CalendarKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chatto.framework",
@@ -2063,6 +2068,7 @@
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
 				8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
+				DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */,
 				8A583B3E232E6B9700F6A71E /* SelectSlotsViewController.swift in Sources */,
 				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
@@ -2179,7 +2185,6 @@
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,
 				8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */,
-				8A119509231C2C1200691398 /* AttendanceCases.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
 				8A8079CF2340C3B800C4DC16 /* QuizQuestionTableViewCell.swift in Sources */,
 				8A32B7FC2312DF6C00317A79 /* QuizDetailsViewController.swift in Sources */,
@@ -2199,6 +2204,7 @@
 				54EB92FE2015ED1D001DD93F /* AppDelegate.swift in Sources */,
 				54970688208CEE270070CE46 /* TimetableViewController.swift in Sources */,
 				54CCF3FE206BEBA600824A3D /* BehaviorNotesReceiver.swift in Sources */,
+				DC168463238D64AF004828F8 /* DummyEvents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2465,7 +2471,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.5;
+				MARKETING_VERSION = 2.8.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2488,7 +2494,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.5;
+				MARKETING_VERSION = 2.8.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

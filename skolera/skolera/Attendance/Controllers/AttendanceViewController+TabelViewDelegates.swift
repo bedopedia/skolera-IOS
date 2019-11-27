@@ -25,7 +25,6 @@ extension AttendanceViewController: UITableViewDelegate,UITableViewDataSource{
         return result
     }
     var excusedDays: [Attendance]{
-        
         let result = child.attendances.filter({ (attendance) -> Bool in
             return attendance.status == "excused"
         })
