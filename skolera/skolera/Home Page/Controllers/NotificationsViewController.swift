@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
 class NotificationsViewController: UIViewController, NVActivityIndicatorViewable,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
@@ -21,6 +22,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     /// carries data for notifications pagination
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
+    var networkSucceeded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         headerView.addShadow()
-        getNotifcations()
+//        getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
@@ -43,7 +45,7 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     override func viewDidAppear(_ animated: Bool) {
        super.viewDidAppear(animated)
     }
-    
+  
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1 && fromChildrenList
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -103,20 +105,33 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
 
 }
 
-extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
+extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewDelegate {
+ 
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "notificationCell"
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        if networkSucceeded {
+            return notifications.count
+        } else {
+            return 6
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! NotificationTableViewCell
-        let notification = notifications[indexPath.row]
-        cell.notification = notification
-        //Loading More
-        if indexPath.row == notifications.count - 1 {
-            if meta?.currentPage != meta?.totalPages {
-                getNotifcations(page: (meta?.currentPage)! + 1)
+        if networkSucceeded {
+            let notification = notifications[indexPath.row]
+            cell.notification = notification
+            //Loading More
+            if indexPath.row == notifications.count - 1 {
+                if meta?.currentPage != meta?.totalPages {
+                    getNotifcations(page: (meta?.currentPage)! + 1)
+                }
             }
+        } else {
+            cell.showShimmer()
         }
         return cell
     }
