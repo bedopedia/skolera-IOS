@@ -121,14 +121,26 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     }
     
     func didSelectDayView(_ dayView: DayView, animationDidFinish: Bool) {
-//        let dotDate = dayView.date.convertedDate() ?? Date()
-//        let index = events.firstIndex { (studentEvent) -> Bool in
-//             studentEvent.startDate.toISODate()?.compare(toDate: dotDate.inDefaultRegion(), granularity: .day) == .orderedSame
-//        }
-//        if let arrayIndex = index {
-//            let frame = tableView.rectForRow(at: IndexPath.init(row: arrayIndex, section: 0))
-//            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: frame.minY)
-//        }
+        if let studentAttendances = attendancesDict[getDateString(dayView)], let attendance = studentAttendances.first, !attendance.status.elementsEqual("present") {
+            if attendance.status.elementsEqual("absent") {
+                switchToAbsent()
+                loadAbsentDays()
+            } else if attendance.status.elementsEqual("excused") {
+                switchToExcused()
+                loadExcusedDays()
+            } else {
+                switchToLate()
+                loadLateDays()
+            }
+            let index = currentDataSource.firstIndex { (studentAttendance) -> Bool in
+                studentAttendance.id == attendance.id
+            }
+            if let arrayIndex = index {
+                if self.currentDataSource.count > arrayIndex {
+                    self.tableView.scrollToRow(at: IndexPath(row: arrayIndex, section: 0), at: .middle, animated: true)
+                }
+            }
+        }     
     }
     
     func presentationMode() -> CalendarMode {
@@ -139,7 +151,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         Weekday.sunday
     }
     func setUpAttendances() {
-//        attendancesDict = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
@@ -212,7 +223,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
             return 16
-    //        return  dayView.dayLabel.frame.maxY + 16
     }
     func shouldAnimateResizing() -> Bool {
         return true
@@ -220,7 +230,14 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     
     func toggleState (state: CalendarMode) {
         calendarView.changeMode(state)
+        self.updateCurrentLabel()
         calendarView!.changeDaysOutShowingState(shouldShow: true)
+    }
+    
+    fileprivate func updateCurrentLabel() {
+        if let currentCalendar = currentCalendar {
+            currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
+        }
     }
     //MARK: - Actions
     
@@ -229,26 +246,21 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         updateCurrentLabel()
     }
     
-    @IBAction func switchToLate(_ sender: UIButton) {
+    @IBAction func switchToLate() {
         lateBottomBorderView.isHidden = false
         excusedBottomBorderView.isHidden = true
         absentBottomBorderView.isHidden = true
         loadLateDays()
     }
-    fileprivate func updateCurrentLabel() {
-        if let currentCalendar = currentCalendar {
-            currentMonthLabel.text = CVDate(date: Date(), calendar: currentCalendar).globalDescription
-        }
-    }
-
-    @IBAction func switchToExcused(_ sender: UIButton) {
+    
+    @IBAction func switchToExcused() {
         lateBottomBorderView.isHidden = true
         excusedBottomBorderView.isHidden = false
         absentBottomBorderView.isHidden = true
         loadExcusedDays()
     }
     
-    @IBAction func switchToAbsent(_ sender: UIButton) {
+    @IBAction func switchToAbsent() {
         lateBottomBorderView.isHidden = true
         excusedBottomBorderView.isHidden = true
         absentBottomBorderView.isHidden = false
@@ -370,9 +382,12 @@ extension AttendanceViewController {
         let openAmount = self.calendarHeightConstraint.constant - self.minHeight
         let percentage = openAmount / range
         calendarHeightConstraint.constant = minHeight + (range * percentage)
-        UIView.setAnimationsEnabled(false)
-        calendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-        UIView.setAnimationsEnabled(true)
+        DispatchQueue.main.async {
+            UIView.setAnimationsEnabled(false)
+            self.calendarView.changeMode(percentage == 0 ? .weekView : .monthView)
+            self.updateCurrentLabel()
+            UIView.setAnimationsEnabled(true)
+        }
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
 //            UIView.setAnimationsEnabled(true)
 //        }

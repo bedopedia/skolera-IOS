@@ -156,7 +156,6 @@
 		8A0F606823437D2500B75929 /* QuestionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0F606723437D2500B75929 /* QuestionTypes.swift */; };
 		8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */; };
 		8A119507231BFF3200691398 /* TeacherAttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */; };
-		8A119509231C2C1200691398 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A119508231C2C1200691398 /* AttendanceCases.swift */; };
 		8A12408E233111F6000A3195 /* SubmitExcuseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A12408D233111F6000A3195 /* SubmitExcuseViewController.swift */; };
 		8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */; };
 		8A1688AA22FAF46900900AA6 /* AssignmentsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */; };
@@ -323,6 +322,7 @@
 		DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8536F7237BF63500B12476 /* UIView+Shadow.swift */; };
 		DC8FAAE9238194FD00B3B753 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */; };
 		DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */; };
+		DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
@@ -479,7 +479,6 @@
 		8A0F606723437D2500B75929 /* QuestionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypes.swift; sourceTree = "<group>"; };
 		8A119504231BEAFF00691398 /* TeacherAttendanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceViewController.swift; sourceTree = "<group>"; };
 		8A119506231BFF3200691398 /* TeacherAttendanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherAttendanceTableViewCell.swift; sourceTree = "<group>"; };
-		8A119508231C2C1200691398 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		8A12408D233111F6000A3195 /* SubmitExcuseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitExcuseViewController.swift; sourceTree = "<group>"; };
 		8A128C6822E0913200253A49 /* CoursesPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesPostsViewController.swift; sourceTree = "<group>"; };
 		8A1688A922FAF46900900AA6 /* AssignmentsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsApiManager.swift; sourceTree = "<group>"; };
@@ -663,6 +662,7 @@
 		DC8536F7237BF63500B12476 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 		DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1120,7 +1120,6 @@
 			isa = PBXGroup;
 			children = (
 				8A6D360520B5964D00DD0445 /* Chat */,
-				8A119508231C2C1200691398 /* AttendanceCases.swift */,
 				5402C9FF2045A261009F583A /* Extensions */,
 				54EB93122015F88E001DD93F /* Routes.swift */,
 				54EB93142015F90E001DD93F /* AppStoryboard.swift */,
@@ -1136,6 +1135,7 @@
 				DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */,
 				DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */,
 				DC168462238D64AF004828F8 /* DummyEvents.swift */,
+				DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2068,6 +2068,7 @@
 				8A8A7391222C5B9C00972BE6 /* WeeklyPlan.swift in Sources */,
 				8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */,
 				8A6D362120B599CF00DD0445 /* TimeSeparatorModel.swift in Sources */,
+				DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */,
 				8A583B3E232E6B9700F6A71E /* SelectSlotsViewController.swift in Sources */,
 				8A1B1B702313D50C007EC17B /* CreatePostViewController.swift in Sources */,
 				8A8A7395222C5BC300972BE6 /* DailyNote.swift in Sources */,
@@ -2184,7 +2185,6 @@
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,
 				8AB3E10E22F83CD600D3F76F /* HomeApiManager.swift in Sources */,
-				8A119509231C2C1200691398 /* AttendanceCases.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
 				8A8079CF2340C3B800C4DC16 /* QuizQuestionTableViewCell.swift in Sources */,
 				8A32B7FC2312DF6C00317A79 /* QuizDetailsViewController.swift in Sources */,

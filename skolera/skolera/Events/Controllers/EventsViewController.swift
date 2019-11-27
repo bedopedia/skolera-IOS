@@ -308,6 +308,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     
     func toggleState (state: CalendarMode) {
         cVCalendarView.changeMode(state)
+        updateCurrentLabel()
         cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     func getEventColor(event: StudentEvent) -> UIColor {
@@ -496,9 +497,12 @@ extension EventsViewController {
         let openAmount = self.calendarHeightConstraint.constant - self.minHeight
         let percentage = openAmount / range
         calendarHeightConstraint.constant = minHeight + (range * percentage)
-        UIView.setAnimationsEnabled(false)
-        cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-        UIView.setAnimationsEnabled(true)
+        DispatchQueue.main.async {
+            UIView.setAnimationsEnabled(false)
+            self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
+            self.updateCurrentLabel()
+            UIView.setAnimationsEnabled(true)
+        }
 //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
 //            UIView.setAnimationsEnabled(true)
 //        }
