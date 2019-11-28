@@ -36,14 +36,20 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         headerView.addShadow()
-//        getNotifcations()
+        getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+//        tableView.showAnimatedGradientSkeleton()
     }
     override func viewDidAppear(_ animated: Bool) {
-       super.viewDidAppear(animated)
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.layoutSkeletonIfNeeded()
     }
   
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -83,9 +89,10 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     ///
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showAnimatedGradientSkeleton()
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+//            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
@@ -121,18 +128,21 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! NotificationTableViewCell
-        if networkSucceeded {
+        //        if networkSucceeded {
+        if notifications.count > indexPath.row {
             let notification = notifications[indexPath.row]
             cell.notification = notification
-            //Loading More
-            if indexPath.row == notifications.count - 1 {
-                if meta?.currentPage != meta?.totalPages {
-                    getNotifcations(page: (meta?.currentPage)! + 1)
-                }
-            }
-        } else {
-            cell.showShimmer()
         }
+        //Loading More
+        if indexPath.row == notifications.count - 1 {
+            if meta?.currentPage != meta?.totalPages {
+                getNotifcations(page: (meta?.currentPage)! + 1)
+            }
+        }
+//        }
+//        else {
+//            cell.showShimmer()
+//        }
         return cell
     }
     
