@@ -16,12 +16,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.rowHeight = UITableViewAutomaticDimension
-            tableView.estimatedRowHeight = 200
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     
     var child : Child!
     var courses: [PostCourse]!
@@ -31,6 +26,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        tableView.register(UINib(nibName: "SkeletonTableViewCell", bundle: nil), forCellReuseIdentifier: "SkeletonTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
@@ -41,6 +37,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.estimatedRowHeight = 85
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
+//        tableView.register(BehaviorNoteTableViewCell.self, forCellReuseIdentifier: "behaviorNoteCell")
+        
+
     }
    
     @IBAction func back(){
@@ -56,6 +55,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.showAnimatedSkeleton()
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
+            self.tableView.reloadData()
             self.courses = []
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
@@ -99,7 +99,8 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "CourseGroupPostTableViewCell"
+        return "SkeletonTableViewCell"
+//        //////////////////
     }
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        if let result = self.courses {
