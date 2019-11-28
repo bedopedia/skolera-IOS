@@ -7,12 +7,16 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
+import SkeletonView
 
-class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class TeacherCoursesViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var headerView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            self.tableView.rowHeight = 80
+        }
+    }
     var courses: [TeacherCourse] = []
     var actor: Actor!{
         didSet {
@@ -30,29 +34,29 @@ class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        if actor != nil {
+//            getCourses()
+//        }
+//    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if actor != nil {
-            getCourses()
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        debugPrint(parent, parent?.parent)
-        if let parentVC = parent?.parent as? TeacherContainerViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let parentVc = parent?.parent as? TeacherContainerViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        debugPrint(parent, parent?.parent)
+//        if let parentVC = parent?.parent as? TeacherContainerViewController {
+////            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+////            parentVC.headerView.isHidden = false
+//        }
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        if let parentVc = parent?.parent as? TeacherContainerViewController {
+////            parentVc.headerHeightConstraint.constant = 0
+////            parentVc.headerView.isHidden = true
+//        }
+//    }
 //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
@@ -64,9 +68,9 @@ class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func getCourses() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showSkeleton()
         getCoursesForTeacherAPI(teacherActableId: actor.actableId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     let teacherCourses: [TeacherCourse] = result.map({ TeacherCourse($0) })
@@ -97,17 +101,28 @@ class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         }
     }
 
-
 }
 
-extension TeacherCoursesViewController: UITableViewDelegate, UITableViewDataSource {
+extension TeacherCoursesViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "TeacherCourseTableViewCell"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.courses.count
+        if !courses.isEmpty {
+            return courses.count
+        } else {
+            return 6
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeacherCourseTableViewCell") as! TeacherCourseTableViewCell
-        cell.course = courses[indexPath.row]
+        if courses.count > indexPath.row {
+            cell.hideSkeleton()
+            cell.course = courses[indexPath.row]
+        }
         return cell
     }
     

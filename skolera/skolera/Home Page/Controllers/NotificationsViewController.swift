@@ -17,7 +17,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     @IBOutlet var headerView: UIView!
     
     var fromChildrenList = false
-    var notifications: [Notification] = []
+    var notifications: [Notification]!
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
     
@@ -93,6 +93,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
             if page == 1 {
                 self.tableView.hideSkeleton()
                 self.tableView.reloadData()
+                self.notifications = []
             }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
@@ -120,8 +121,12 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !notifications.isEmpty {
-            return notifications.count
+        if notifications != nil {
+            if !notifications.isEmpty {
+                return notifications.count
+            } else {
+                return 0
+            }
         } else {
             return 6
         }
@@ -129,17 +134,19 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! NotificationTableViewCell
-        if notifications.count > indexPath.row {
-            cell.hideSkeleton()
-            let notification = notifications[indexPath.row]
-            cell.notification = notification
-        }
-        //Loading More
-        if indexPath.row == notifications.count - 1 {
-            if meta?.currentPage != meta?.totalPages {
-                getNotifcations(page: (meta?.currentPage)! + 1)
+        if let tempNotifications = notifications {
+            if tempNotifications.count > indexPath.row {
+                cell.hideSkeleton()
+                let notification = notifications[indexPath.row]
+                cell.notification = notification
+            }
+            if indexPath.row == notifications.count - 1 {
+                if meta?.currentPage != meta?.totalPages {
+                    getNotifcations(page: (meta?.currentPage)! + 1)
+                }
             }
         }
+        //Loading More
         return cell
     }
     
