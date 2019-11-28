@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
 import Alamofire
 import SkeletonView
 
-class NotificationsViewController: UIViewController, NVActivityIndicatorViewable,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
@@ -19,10 +18,8 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     
     var fromChildrenList = false
     var notifications: [Notification] = []
-    /// carries data for notifications pagination
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
-    var networkSucceeded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,9 +75,9 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     }
     
     func setNotificationsSeen() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showAnimatedSkeleton()
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             debugPrint("Notification is Seen")
         }
     }
@@ -89,10 +86,14 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     ///
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
-        self.tableView.showAnimatedGradientSkeleton()
+        if page == 1 {
+            tableView.showAnimatedGradientSkeleton()
+        }
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
-//            self.stopAnimating()
-            self.tableView.hideSkeleton()
+            if page == 1 {
+                self.tableView.hideSkeleton()
+                self.tableView.reloadData()
+            }
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     let notificationResponse = NotifcationResponse.init(fromDictionary: result)
@@ -119,7 +120,7 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if networkSucceeded {
+        if !notifications.isEmpty {
             return notifications.count
         } else {
             return 6
@@ -128,8 +129,8 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! NotificationTableViewCell
-        //        if networkSucceeded {
         if notifications.count > indexPath.row {
+            cell.hideSkeleton()
             let notification = notifications[indexPath.row]
             cell.notification = notification
         }
@@ -139,10 +140,6 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
                 getNotifcations(page: (meta?.currentPage)! + 1)
             }
         }
-//        }
-//        else {
-//            cell.showShimmer()
-//        }
         return cell
     }
     
