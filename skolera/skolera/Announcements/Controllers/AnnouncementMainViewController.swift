@@ -36,9 +36,9 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         headerView.addShadow()
         fixTableViewHeight()
-        tableView.showAnimatedSkeleton()
         self.tableView.reloadData()
-//        getAnnouncements()
+        tableView.showAnimatedSkeleton()
+        getAnnouncements()
         
     }
     @objc private func refreshData(_ sender: Any) {
@@ -62,9 +62,9 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     func getAnnouncements(page: Int = 1) {
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
             if page == 1 {
-//                self.tableView.hideSkeleton()
-//                self.tableView.rowHeight = UITableViewAutomaticDimension
-//                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.hideSkeleton()
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
             }
             if self.announcements == nil {
                 self.announcements = []
@@ -77,7 +77,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
                     if let announcementsResponse =  result["announcements"] as? [[String: AnyObject]] {
                         for item in announcementsResponse {
                             let announcement = Announcement(fromDictionary: item)
-//                            self.announcements.append(announcement)
+                            self.announcements.append(announcement)
                         }
                     }
                     self.tableView.reloadData()
@@ -143,6 +143,5 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "AnnouncementTableViewCell"
     }
-    
     
 }
