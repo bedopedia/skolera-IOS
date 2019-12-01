@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
+import Alamofire
 
-class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     //TODO:- REMAINING SCREEN FOR GRADES DETAILS
     //MARK: - Variables
     var child : Child!
     /// date source for tableView
-    var grades = [PostCourse]()
+    var gradesCourses = [PostCourse]()
     //MARK: - Outlets
     
     @IBOutlet var headerView: UIView!
@@ -32,22 +34,38 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        handleEmptyDate(tableView: self.tableView, dataSource: self.grades, imageName: "gradesplaceholder", placeholderText: "You don't have any courses for now".localized)
+        getGradesCourses()
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    private func getGradesCourses() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
+                    self.gradesCourses = result.map({ PostCourse($0) })
+                    self.tableView.reloadData()
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.gradesCourses, imageName: "gradesplaceholder", placeholderText: "You don't have any courses for now".localized)
+        }
+    }
 
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return grades.count
+        return gradesCourses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
-        cell.grade = grades[indexPath.row]
+        cell.grade = gradesCourses[indexPath.row]
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

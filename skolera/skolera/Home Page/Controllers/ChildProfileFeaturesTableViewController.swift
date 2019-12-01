@@ -25,7 +25,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
-    var grades = [PostCourse]()
+    var gradesCourses = [PostCourse]()
     var timeslots = [TimeSlot]()
     var weeklyPlans: [WeeklyPlan] = []
     var today: Date!
@@ -34,7 +34,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     var child : Child!{
         didSet{
             if child != nil{
-                getGrades()
                 getBehaviorNotesCount()
                 getTimeTable()
                 getWeeklyReport()
@@ -147,54 +146,27 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         self.navigationController?.pushViewController(eventsVC, animated: true)
     }
     
-    /// service call to get total courses grades, average grade is set on completion
-    private func getGrades() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    self.grades = result.map({ PostCourse($0) })
-                    self.tableView.reloadData()
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
+//    MARK:- Network Calls
     
-    func getPostsCoursesApi(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-        let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_POSTS_COURSES(), childId)
-        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-            switch response.result{
-            case .success(_):
-                completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
-            case .failure(let error):
-                completion(false, response.response?.statusCode ?? 0, nil, error)
-            }
-        }
-    }
-    
-    private func getCourseGroups() {
-        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    var courseGroups = [Int: CourseGroup]()
-                    for courseGroup in result{
-                        let temp = CourseGroup.init(fromDictionary: courseGroup)
-                        courseGroups[temp.courseId] = temp
-                    }
-//                    for grade in self.grades{
-//                        grade.courseGroup = courseGroups[grade.courseId]
+//    private func getCourseGroups() {
+//        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
+//            self.stopAnimating()
+//            if isSuccess {
+//                if let result = value as? [[String : AnyObject]] {
+//                    var courseGroups = [Int: CourseGroup]()
+//                    for courseGroup in result{
+//                        let temp = CourseGroup.init(fromDictionary: courseGroup)
+//                        courseGroups[temp.courseId] = temp
 //                    }
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
+////                    for grade in self.grades{
+////                        grade.courseGroup = courseGroups[grade.courseId]
+////                    }
+//                }
+//            } else {
+//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+//            }
+//        }
+//    }
     
     private func getBehaviorNotesCount() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -284,7 +256,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     func showCoursesGrades() {
         let gtvc = GradesListViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
-        gtvc.grades = self.grades
+//        gtvc.grades = self.gradesCourses
         self.navigationController?.pushViewController(gtvc, animated: true)
     }
     
