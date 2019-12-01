@@ -27,10 +27,15 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
-//    var isRetrievingData = true
+    var isRetrievingData = true
 
     
 //    MARK: - Lifecycle
+    fileprivate func fixSkeletonHeight() {
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = 200
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -50,10 +55,10 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
             }
         }
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = 200
+        fixSkeletonHeight()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        self.tableView.showAnimatedSkeleton()
         getPosts()
     }
     
@@ -65,25 +70,23 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         debugPrint("create post")
         let createPost = CreatePostViewController.instantiate(fromAppStoryboard: .Posts)
         createPost.courseGroup = courseGroup
-//        self.present(createPost, animated: true, completion: nil)
         self.navigationController?.pushViewController(createPost, animated: true)
     }
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
         getPosts()
+        fixSkeletonHeight()
+        self.tableView.showAnimatedSkeleton()
         refreshControl.endRefreshing()
     }
 
     func getPosts(page: Int = 1){
-//        isRetrievingData = true
+        isRetrievingData = true
         var id: Int
         if isTeacher {
             id = courseGroup.id
         } else {
             id = courseId
-        }
-        if page == 1 {
-            self.tableView.showAnimatedSkeleton()
         }
         getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
             if self.posts == nil {
@@ -91,21 +94,21 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             }
             if page == 1 {
                 self.tableView.hideSkeleton()
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
             }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
                         self.posts.append(contentsOf: postsArray.map({ Post($0) }))
                         self.meta = Meta(fromDictionary: result["meta"] as! [String : Any])
-                        self.tableView.rowHeight = UITableViewAutomaticDimension
-                        self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                         self.tableView.reloadData()
                     }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-//            self.isRetrievingData = false
+            self.isRetrievingData = false
             handleEmptyDate(tableView: self.tableView, dataSource: self.posts ?? [], imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
         }
     }
@@ -130,8 +133,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             cell.hideSkeleton()
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
-//            if indexPath.row == posts.count - 1  && !isRetrievingData {
-            if indexPath.row == posts.count - 1 {
+            if indexPath.row == posts.count - 3  && !isRetrievingData {
                 if meta.currentPage != meta.totalPages{
                     getPosts(page: (meta.currentPage)! + 1)
                 }
