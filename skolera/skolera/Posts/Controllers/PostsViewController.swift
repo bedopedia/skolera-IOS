@@ -9,24 +9,22 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
-import SkeletonView
 
-class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource  {
+class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
-    @IBOutlet weak var tableView: UITableView!
     
     var child : Child!
-    var courses: [PostCourse]!
+    var courses: [PostCourse] = []
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        tableView.register(UINib(nibName: "SkeletonTableViewCell", bundle: nil), forCellReuseIdentifier: "SkeletonTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
@@ -37,8 +35,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.estimatedRowHeight = 85
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
+        
+        
     }
-   
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -49,11 +48,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         refreshControl.endRefreshing()
     }
     func getCourses(){
-        self.tableView.showAnimatedSkeleton()
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
-            self.tableView.hideSkeleton()
-            self.tableView.reloadData()
-            self.courses = []
+            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.courses = result.map({ PostCourse($0) })
@@ -67,23 +64,12 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     //    MARK: - Table View Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if courses != nil {
-            if !courses.isEmpty {
-                return courses.count
-            } else {
-                return 0
-            }
-        } else {
-            return 6
-        }
+        return courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CourseGroupPostTableViewCell") as! CourseGroupPostTableViewCell
-        if courses != nil {
-            cell.hideSkeleton()
-            cell.course = self.courses[indexPath.row]
-        }
+        cell.course = self.courses[indexPath.row]
         return cell
     }
     
@@ -95,10 +81,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.pushViewController(postsVC, animated: true)
     }
 
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "SkeletonTableViewCell"
-//        //////////////////
-    }
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        if let result = self.courses {
 //            if result.isEmpty {
