@@ -36,7 +36,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             if child != nil{
                 getBehaviorNotesCount()
                 getTimeTable()
-                getWeeklyReport()
+//                getWeeklyReport()
                 let presentDays = child.attendances.filter({ attendance -> Bool in
                     return attendance.status == "present"
                 }).count
@@ -147,27 +147,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
 //    MARK:- Network Calls
-    
-//    private func getCourseGroups() {
-//        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
-//            self.stopAnimating()
-//            if isSuccess {
-//                if let result = value as? [[String : AnyObject]] {
-//                    var courseGroups = [Int: CourseGroup]()
-//                    for courseGroup in result{
-//                        let temp = CourseGroup.init(fromDictionary: courseGroup)
-//                        courseGroups[temp.courseId] = temp
-//                    }
-////                    for grade in self.grades{
-////                        grade.courseGroup = courseGroups[grade.courseId]
-////                    }
-//                }
-//            } else {
-//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-//            }
-//        }
-//    }
-    
+
     private func getBehaviorNotesCount() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
@@ -179,26 +159,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
                     self.otherBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.other!)"
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
-    private func getWeeklyReport() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "d/M/y"
-        formatter.locale = Locale(identifier: "en")
-        getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
-                    if !weeklyPlanResponse.weeklyPlans.isEmpty {
-                        self.weeklyPlans = weeklyPlanResponse.weeklyPlans
-                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -250,6 +210,27 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             }
         }
     }
+    
+    //    private func getCourseGroups() {
+    //        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
+    //            self.stopAnimating()
+    //            if isSuccess {
+    //                if let result = value as? [[String : AnyObject]] {
+    //                    var courseGroups = [Int: CourseGroup]()
+    //                    for courseGroup in result{
+    //                        let temp = CourseGroup.init(fromDictionary: courseGroup)
+    //                        courseGroups[temp.courseId] = temp
+    //                    }
+    ////                    for grade in self.grades{
+    ////                        grade.courseGroup = courseGroups[grade.courseId]
+    ////                    }
+    //                }
+    //            } else {
+    //                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+    //            }
+    //        }
+    //    }
+        
     //MARK: - Actions
     
     /// move to grades screen to show courses grades
@@ -275,7 +256,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
 //        if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
-            wvc.weeklyPlanner = self.weeklyPlans.first
+//            wvc.weeklyPlanner = self.weeklyPlans.first
             self.navigationController?.pushViewController(wvc, animated: true)
 //        }
 //    else {
