@@ -41,13 +41,18 @@ class CourseGroupPostTableViewCell: UITableViewCell {
                                                                       options: options,
                                                                       documentAttributes: nil)
                 postText.attributedText = attributedString
+            } else {
+                courseImageView.layer.shadowColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
             }
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        courseImageView.layer.cornerRadius = 27.5
+        courseImageView.layer.borderWidth = 1
+        courseImageView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        courseImageView.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

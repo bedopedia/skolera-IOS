@@ -20,7 +20,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var child : Child!
     var courses: [PostCourse]!
-    private let refreshControl = UIRefreshControl()
     
     fileprivate func fixTableViewHeight() {
         tableView.rowHeight = 170
@@ -37,35 +36,25 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         fixTableViewHeight()
         getCourses()
-        
-        
     }
+    
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
-    //    MARK: - Methods
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
-        fixTableViewHeight()
-        getCourses()
-        refreshControl.endRefreshing()
-    }
+//        MARK: - Methods
     func getCourses() {
         tableView.showAnimatedSkeleton()
         getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
-            if self.courses == nil {
-                self.courses = []
-            }
+            self.courses = []
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.courses = result.map({ PostCourse($0) })
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)

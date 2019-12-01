@@ -78,16 +78,7 @@
                                                                 <constraint firstAttribute="width" constant="55" id="cCF-04-2tJ"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                    <real key="value" value="27.5"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                                    <integer key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
@@ -99,10 +90,19 @@
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <real key="value" value="27.5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                                    <integer key="value" value="1"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUA-Ju-k0S">
-                                                            <rect key="frame" x="87" y="73.5" width="243" height="62.5"/>
+                                                            <rect key="frame" x="87" y="73.5" width="233" height="62.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -128,11 +128,11 @@
                                                         <constraint firstItem="uUA-Ju-k0S" firstAttribute="top" secondItem="CFr-hL-d4L" secondAttribute="bottom" constant="8" id="SOY-pG-gA1"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="centerY" secondItem="3ne-Ct-2EQ" secondAttribute="centerY" id="T8n-vd-dMI"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="width" secondItem="3ne-Ct-2EQ" secondAttribute="width" id="YnF-yr-vTH"/>
+                                                        <constraint firstItem="Hii-FK-8os" firstAttribute="leading" secondItem="uUA-Ju-k0S" secondAttribute="trailing" constant="12" id="Z9g-75-lcd"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="leading" secondItem="gBd-2c-ooP" secondAttribute="leading" constant="16" id="bgz-l4-RjO"/>
                                                         <constraint firstItem="CFr-hL-d4L" firstAttribute="top" secondItem="YGS-6g-zQw" secondAttribute="bottom" constant="8" id="c9x-5H-w9q"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="uUA-Ju-k0S" secondAttribute="bottom" constant="8" id="on7-pD-Ut4"/>
                                                         <constraint firstItem="uUA-Ju-k0S" firstAttribute="leading" secondItem="CFr-hL-d4L" secondAttribute="leading" id="tsa-AL-Cmc"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="uUA-Ju-k0S" secondAttribute="trailing" constant="52" id="x2B-UE-c5X"/>
                                                         <constraint firstItem="YGS-6g-zQw" firstAttribute="top" secondItem="bBY-g2-59r" secondAttribute="top" id="xWW-VF-Ob6"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -309,7 +309,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfd-OK-d4G">
-                                <rect key="frame" x="16" y="68" width="48" height="48"/>
+                                <rect key="frame" x="16" y="68" width="24" height="24"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="close" destination="ol9-4m-4og" eventType="touchUpInside" id="rTt-Gm-QBA"/>
@@ -330,7 +330,7 @@
                                 <rect key="frame" x="16" y="401.5" width="382" height="370.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3-1" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-c2-cgj">
-                                        <rect key="frame" x="106" y="23" width="170" height="170"/>
+                                        <rect key="frame" x="148.5" y="108" width="85" height="85"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start adding your attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d3-RBD">
                                         <rect key="frame" x="93.5" y="201" width="195" height="17"/>

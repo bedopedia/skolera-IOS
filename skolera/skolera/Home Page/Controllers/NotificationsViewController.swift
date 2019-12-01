@@ -38,7 +38,6 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-//        tableView.showAnimatedGradientSkeleton()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -87,7 +86,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     /// - Parameter page: page number
     func getNotifcations(page: Int = 1) {
         if page == 1 {
-            tableView.showAnimatedGradientSkeleton()
+            tableView.showAnimatedSkeleton()
         }
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             if page == 1 {
