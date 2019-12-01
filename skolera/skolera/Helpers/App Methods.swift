@@ -129,7 +129,7 @@ func getMainColor() -> UIColor {
 func handleEmptyDate(tableView: UITableView, dataSource: [Any], imageName: String, placeholderText: String) {
     DispatchQueue.main.async {
         if dataSource.count == 0 {
-            assignPlaceholder(tableView, imageName: "notificationsplaceholder", placeHolderLabelText: "You don't have any notifications for now".localized)
+            assignPlaceholder(tableView, imageName: imageName, placeHolderLabelText: placeholderText.localized)
         } else {
             restore(tableView)
         }
