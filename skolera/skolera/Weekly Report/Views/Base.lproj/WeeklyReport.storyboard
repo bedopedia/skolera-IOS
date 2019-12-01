@@ -132,7 +132,7 @@
                                         </collectionViewFlowLayout>
                                         <cells/>
                                     </collectionView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-sf-6Fj">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-sf-6Fj">
                                         <rect key="frame" x="12" y="15.5" width="351" height="305.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="uQ0-eY-WyZ">
@@ -318,10 +318,11 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <outlet property="backButton" destination="9gY-pp-U7y" id="jGQ-u1-2r4"/>
                         <outlet property="childImageView" destination="EgB-HE-NNw" id="ejK-8G-K6u"/>
                         <outlet property="collectionView" destination="I7L-X3-4H9" id="cTE-fw-lZj"/>
+                        <outlet property="containerView" destination="gMf-sf-6Fj" id="JFf-ba-Jgu"/>
                         <outlet property="containerViewHeightConstraint" destination="ndU-hu-Go3" id="5fG-PE-99U"/>
                         <outlet property="contianerView" destination="gMf-sf-6Fj" id="dB6-AL-4B9"/>
                         <outlet property="headerHeightConstraint" destination="Ahh-wk-cQD" id="JWP-j9-sMr"/>
-                        <outlet property="headerView" destination="ZEr-Ns-Ki8" id="nbT-wY-BpN"/>
+                        <outlet property="headerView" destination="gMf-sf-6Fj" id="VlO-gi-FTj"/>
                         <outlet property="placeHolderView" destination="Sg6-pn-dcl" id="Xh8-dm-Sru"/>
                         <outlet property="seeMoreFrame" destination="HBh-81-Ros" id="7KS-68-Q7S"/>
                         <outlet property="tableView" destination="uct-pS-T91" id="4ul-Mi-fdi"/>

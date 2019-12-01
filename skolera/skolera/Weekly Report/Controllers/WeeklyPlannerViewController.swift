@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
+import Alamofire
 
-class WeeklyPlannerViewController: UIViewController {
+class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var contianerView: UIView!
@@ -25,6 +27,7 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var seeMoreFrame: CustomGradientView!
     @IBOutlet var placeHolderView: UIView!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var containerView: UIView!
     
     var child : Child!
     var maxHeaderHeight: CGFloat = 395
@@ -41,6 +44,8 @@ class WeeklyPlannerViewController: UIViewController {
     
     var activeDays: [String] = []
     var selectedDay: Int = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.addShadow()
@@ -48,6 +53,43 @@ class WeeklyPlannerViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
+        tableView.delegate = self
+        tableView.dataSource  = self
+        getWeeklyReport()
+    }
+    
+    @IBAction func back(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func seeMore(){
+        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
+        self.navigationController?.pushViewController(announcementsVc, animated: true)
+    }
+    
+    private func getWeeklyReport() {
+           startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+           let formatter: DateFormatter = DateFormatter()
+           formatter.dateFormat = "d/M/y"
+           formatter.locale = Locale(identifier: "en")
+           getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
+               self.stopAnimating()
+               if isSuccess {
+                   if let result = value as? [String : AnyObject] {
+                       let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
+                       if !weeklyPlanResponse.weeklyPlans.isEmpty {
+                        self.weeklyPlanner = weeklyPlanResponse.weeklyPlans.first
+                       }
+                    self.handleWeeklyReport()
+                   }
+               } else {
+                   showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+               }
+           }
+       }
+    
+    fileprivate func handleWeeklyReport() {
         if weeklyPlanner != nil {
             if weeklyPlanner.weeklyNotes.isEmpty {
                 maxHeaderHeight = 50
@@ -55,6 +97,7 @@ class WeeklyPlannerViewController: UIViewController {
                 
             } else {
                 placeHolderView.isHidden = true
+                containerView.isHidden = false
                 if let url = URL(string: weeklyPlanner.weeklyNotes.first?.imageUrl ?? "") {
                     weeklyNoteImage.kf.setImage(with: url)
                 } else {
@@ -122,18 +165,6 @@ class WeeklyPlannerViewController: UIViewController {
             self.activeDays.append("Friday")
         }
         self.collectionView.reloadData()
-        tableView.delegate = self
-        tableView.dataSource  = self
-    }
-    
-    @IBAction func back(){
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func seeMore(){
-        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
-        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
-        self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
 }
 
