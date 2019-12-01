@@ -13,25 +13,25 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SkeletonTableViewCell" rowHeight="119" id="KGk-i7-Jjw" customClass="SkeletonTableViewCell" customModule="skolera" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="80R-sy-9un">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wnm-OZ-A4J">
-                                <rect key="frame" x="16" y="16" width="68" height="68"/>
+                                <rect key="frame" x="16" y="16" width="55" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="PWC-d9-3yg"/>
-                                    <constraint firstAttribute="height" constant="68" id="TLw-qa-4QS"/>
+                                    <constraint firstAttribute="width" constant="55" id="PWC-d9-3yg"/>
+                                    <constraint firstAttribute="height" constant="55" id="TLw-qa-4QS"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7y9-0j-4Om">
-                                <rect key="frame" x="108" y="39.5" width="196" height="21"/>
+                                <rect key="frame" x="95" y="33" width="209" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -43,8 +43,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="wnm-OZ-A4J" secondAttribute="bottom" constant="16" id="0Yv-nA-Z7k"/>
-                            <constraint firstAttribute="height" constant="100" id="1h9-jS-rgs"/>
                             <constraint firstItem="wnm-OZ-A4J" firstAttribute="leading" secondItem="80R-sy-9un" secondAttribute="leading" constant="16" id="DJ2-o2-zzo"/>
+                            <constraint firstAttribute="height" constant="87" id="FKj-9C-OsT"/>
                             <constraint firstAttribute="trailing" secondItem="7y9-0j-4Om" secondAttribute="trailing" constant="16" id="ICT-gq-F21"/>
                             <constraint firstItem="7y9-0j-4Om" firstAttribute="leading" secondItem="wnm-OZ-A4J" secondAttribute="trailing" constant="24" id="Kz7-TJ-Z0a"/>
                             <constraint firstItem="7y9-0j-4Om" firstAttribute="centerY" secondItem="wnm-OZ-A4J" secondAttribute="centerY" id="hhw-ln-pjQ"/>

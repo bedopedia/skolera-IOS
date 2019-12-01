@@ -5,19 +5,13 @@
 //  Created by Yehia Beram on 7/18/19.
 //  Copyright © 2019 Skolera. All rights reserved.
 //
-
 import UIKit
+import NVActivityIndicatorView
 import Alamofire
-import SkeletonView
 
-class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
+class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable{
     
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            self.tableView.estimatedRowHeight = 100
-            self.tableView.rowHeight = UITableViewAutomaticDimension
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
@@ -88,13 +82,10 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             id = courseId
         }
-        if page == 1 {
-            self.tableView.showAnimatedSkeleton()
-        }
-        self.tableView.showAnimatedSkeleton()
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
-            if page == 1 {
-                self.tableView.hideSkeleton()
+            self.stopAnimating()
+            if self.posts == nil {
                 self.posts = []
             }
             if isSuccess {
@@ -116,33 +107,26 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if posts != nil {
-            if !posts.isEmpty {
-                return posts.count
-            } else {
-                return 0
-            }
+           return posts.count
         } else {
-            return 6
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
-        if posts != nil {
-            cell.hideSkeleton()
-            cell.post = posts[indexPath.row]
-            if indexPath.row == posts.count - 1{
-                if meta.currentPage != meta.totalPages{
-                    getPosts(page: (meta.currentPage)! + 1)
-                }
+        cell.post = posts[indexPath.row]
+        if indexPath.row == posts.count - 1{
+            if meta.currentPage != meta.totalPages{
+                getPosts(page: (meta.currentPage)! + 1)
             }
-            cell.openAttachment = {
-                let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
-                filesVC.child = self.child
-                filesVC.courseName = self.courseName
-                filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
-                self.navigationController?.pushViewController(filesVC, animated: true)
-            }
+        }
+        cell.openAttachment = {
+            let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
+            filesVC.child = self.child
+            filesVC.courseName = self.courseName
+            filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
+            self.navigationController?.pushViewController(filesVC, animated: true)
         }
         return cell
     }
@@ -153,10 +137,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         postVC.courseName = self.courseName
         postVC.post = posts[indexPath.row]
         self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "PostTableViewCell"
     }
 
 }
