@@ -37,9 +37,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.estimatedRowHeight = 85
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         getCourses()
-//        tableView.register(BehaviorNoteTableViewCell.self, forCellReuseIdentifier: "behaviorNoteCell")
-        
-
     }
    
     @IBAction func back(){
