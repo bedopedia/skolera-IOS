@@ -48,6 +48,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         threadsTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         fixTableViewHeight()
+        threadsTableView.showAnimatedSkeleton()
         getThreads()
     }
     
@@ -58,6 +59,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
+        threadsTableView.showAnimatedSkeleton()
         getThreads()
         refreshControl.endRefreshing()
     }
@@ -66,7 +68,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         threadsTableView.rowHeight = 96
     }
     func getThreads() {
-        threadsTableView.showAnimatedSkeleton()
         if threads == nil {
             threads = []
         }

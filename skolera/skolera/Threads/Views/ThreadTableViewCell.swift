@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ThreadTableViewCell: UITableViewCell {
     @IBOutlet weak var threadImage: UIImageView!
     @IBOutlet weak var threadTitle: UILabel!
@@ -33,7 +32,5 @@ class ThreadTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         threadImage.childImageView(url: "" , placeholder: "", textSize: 20, borderWidth: 0)
     }
-    
-    
 
 }
