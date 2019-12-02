@@ -104,11 +104,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if announcements != nil {
-            if !announcements.isEmpty {
-                return announcements.count
-            } else {
-                return 0
-            }
+            return announcements.count
         } else {
             return 6
         }

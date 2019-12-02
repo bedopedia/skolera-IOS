@@ -28,8 +28,10 @@ class ThreadTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        threadImage.childImageView(url: "" , placeholder: "", textSize: 20, backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
     
     
