@@ -67,9 +67,12 @@ class AssignmentCourseTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
+    override func prepareForReuse() {
+        courseImageView.layer.shadowColor = UIColor.clear.cgColor
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

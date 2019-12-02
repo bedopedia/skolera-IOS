@@ -9,8 +9,9 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
-class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -18,7 +19,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet var headerView: UIView!
     
     var child : Child!
-    var courses: [AssignmentCourse] = []
+    var courses: [AssignmentCourse]!
     var meta: Meta!
     private let refreshControl = UIRefreshControl()
 
@@ -32,10 +33,16 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getCourses()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+    
+    fileprivate func fixTableViewHeight() {
+        tableView.rowHeight = 140
+        tableView.estimatedRowHeight = 140
     }
     
     @IBAction func back() {
@@ -43,41 +50,53 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     }
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getCourses()
         refreshControl.endRefreshing()
     }
 
     func getCourses() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if courses == nil {
+            courses = []
+        }
         getAssignmentCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     debugPrint(result)
                     let assignmentCourses: [AssignmentCourse] = result.map({ AssignmentCourse($0) })
                     self.courses = assignmentCourses
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-            handleEmptyDate(tableView: self.tableView, dataSource: self.courses, imageName: "assignmentsplaceholder", placeholderText: "You don't have any courses for now".localized)
+            handleEmptyDate(tableView: self.tableView, dataSource: self.courses ?? [], imageName: "assignmentsplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courses.count
+        if courses != nil {
+            return courses.count
+        }
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentCourseTableViewCell") as! AssignmentCourseTableViewCell
-        cell.course = courses[indexPath.row]
+        if courses != nil {
+            cell.hideSkeleton()
+            cell.course = courses[indexPath.row]
+        }
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 112
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AssignmentCourseTableViewCell"
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
