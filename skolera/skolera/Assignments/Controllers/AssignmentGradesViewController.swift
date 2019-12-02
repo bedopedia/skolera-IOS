@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
 class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewable {
 
@@ -30,6 +31,8 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         titleLabel.text = assignment.name
         tableView.delegate = self
         tableView.dataSource = self
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getSubmissions()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
@@ -40,17 +43,24 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     }
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getSubmissions()
         refreshControl.endRefreshing()
     }
 
+    func fixTableViewHeight() {
+        tableView.rowHeight = 132
+        tableView.estimatedRowHeight = 132
+    }
     private func getSubmissions() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
                     self.submissions = result.map { AssignmentStudentSubmission($0) }
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -104,13 +114,14 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
 
 }
 
-extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDelegate {
+extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return submissions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentSubmissionTableViewCell", for: indexPath) as! StudentSubmissionTableViewCell
+        cell.hideSkeleton()
         cell.studentSubmission = self.submissions[indexPath.row]
         return cell
     }
@@ -128,6 +139,10 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
             self.present(feedbackDialog, animated: true, completion: nil)
         }
         
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "StudentSubmissionTableViewCell"
     }
     
     

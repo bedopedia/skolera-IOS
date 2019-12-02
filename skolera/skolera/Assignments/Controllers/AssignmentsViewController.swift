@@ -9,8 +9,9 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
-class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -68,7 +69,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
+        fixTableViewHeight()
+        self.tableView.showAnimatedSkeleton()
         getAssignments()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
@@ -77,7 +79,10 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    func fixTableViewHeight() {
+        tableView.rowHeight = 144
+        tableView.estimatedRowHeight = 144
+    }
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -92,6 +97,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     @objc private func refreshData(_ sender: Any) {
         refreshControl.beginRefreshing()
+        fixTableViewHeight()
+        self.tableView.showAnimatedSkeleton()
         getAssignments()
         refreshControl.endRefreshing()
     }
@@ -109,12 +116,13 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func getAssignments() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
                     } else {
@@ -167,6 +175,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
+        cell.hideSkeleton()
         cell.nameLabel.text = courseName
         cell.assignment = filteredAssignments[indexPath.row]
         return cell
@@ -179,5 +188,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
             
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AssignmentTableViewCell"
     }
 }

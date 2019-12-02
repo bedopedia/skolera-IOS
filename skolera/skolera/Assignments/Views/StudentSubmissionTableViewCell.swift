@@ -60,9 +60,13 @@ class StudentSubmissionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        courseImageView.layer.cornerRadius = courseImageView.frame.height / 2
     }
 
+    override func prepareForReuse() {
+        courseImageView.layer.shadowColor = UIColor.clear.cgColor
+        courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
