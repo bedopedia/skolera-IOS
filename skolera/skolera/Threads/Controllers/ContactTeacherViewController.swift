@@ -110,7 +110,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             return 6
         }
     }
-    
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "ThreadTableViewCell"
     }

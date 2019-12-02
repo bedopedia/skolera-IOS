@@ -11,21 +11,22 @@ import UIKit
 import Kingfisher
 ///get the circular view with a green border
 extension UIImageView {
-    func childImageView(url : String, placeholder: String, textSize: Int, backgroundColor: UIColor = UIColor.appColors.green)
+    func childImageView(url : String, placeholder: String, textSize: Int, borderWidth: Int = 2)
     {
         // setting up placeholder
         let temp = UILabel()
         temp.textAlignment = .center
-        temp.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: backgroundColor)
+        temp.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
         temp.font = UIFont.systemFont(ofSize: CGFloat(textSize), weight: UIFont.Weight.semibold)
         temp.text = placeholder
         //setting student image view to circle with green border
         self.kf.setImage(with: getChildImageURL(urlString: url), placeholder: temp)
-        setChildImageViewToCircle()
+        setChildImageViewToCircle(borderWidth: borderWidth)
+
     }
     
-    fileprivate func setChildImageViewToCircle() {
-        self.layer.borderWidth = 2
+    fileprivate func setChildImageViewToCircle(borderWidth: Int = 2) {
+        self.layer.borderWidth = CGFloat(borderWidth)
         self.layer.masksToBounds = true
         self.clipsToBounds = true
         self.layer.borderColor = UIColor.appColors.green.cgColor

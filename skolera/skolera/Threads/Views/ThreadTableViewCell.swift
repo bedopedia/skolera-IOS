@@ -31,7 +31,7 @@ class ThreadTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        threadImage.childImageView(url: "" , placeholder: "", textSize: 20, backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        threadImage.childImageView(url: "" , placeholder: "", textSize: 20, borderWidth: 0)
     }
     
     
