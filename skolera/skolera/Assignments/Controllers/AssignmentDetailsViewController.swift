@@ -47,10 +47,8 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     self.assignment = FullAssignment(result)
-                    DispatchQueue.main.async {
-                        self.titleLabel.text = self.assignment.name
-                        self.tableView.reloadData()
-                    }
+                    self.titleLabel.text = self.assignment.name
+                    self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)

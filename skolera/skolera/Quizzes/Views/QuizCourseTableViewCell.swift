@@ -14,7 +14,12 @@ class QuizCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectImageLabel: UILabel!
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var quizName: UILabel!
-    @IBOutlet weak var quizDateView: UIView!
+    @IBOutlet weak var quizDateView: UIView! {
+        didSet {
+            quizDateView.layer.cornerRadius = quizDateView.frame.height / 2
+            quizDateView.layer.masksToBounds = true
+        }
+    }
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var numberOfQuizLabel: UILabel!
