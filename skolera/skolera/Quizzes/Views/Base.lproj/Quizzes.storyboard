@@ -1251,7 +1251,13 @@
                                                 <constraint firstItem="kZb-Oa-NYN" firstAttribute="leading" secondItem="Gle-Op-iVn" secondAttribute="leading" constant="12" id="eSh-xB-lfO"/>
                                                 <constraint firstAttribute="bottom" secondItem="kZb-Oa-NYN" secondAttribute="bottom" constant="12" id="fBv-vH-8Hy"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="courseImageView" destination="Urg-Dj-myb" id="nwj-24-2gM"/>
                                             <outlet property="feedbackLabel" destination="7lL-pd-H8d" id="Ibu-dS-HFq"/>
@@ -1261,6 +1267,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

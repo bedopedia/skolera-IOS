@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class AssignmentDetailsViewController: UIViewController {
+
+class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
@@ -18,7 +20,8 @@ class AssignmentDetailsViewController: UIViewController {
     
     var child : Child!
     var assignment: FullAssignment!
-    
+    var courseId: Int!
+    var assignmentId: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,33 +30,43 @@ class AssignmentDetailsViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        titleLabel.text = assignment.name
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        getAssignmentDetails(assignmentId: assignmentId!)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func getAssignmentDetails(assignmentId: Int) {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.assignment = FullAssignment(result)
+                    DispatchQueue.main.async {
+                        self.titleLabel.text = self.assignment.name
+                        self.tableView.reloadData()
+                    }
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
     }
-    */
 
 }
 
 extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + self.assignment.uploadedFiles.count
+        if assignment != nil {
+            return 1 + self.assignment.uploadedFiles.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

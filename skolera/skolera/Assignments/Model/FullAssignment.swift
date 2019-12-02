@@ -41,6 +41,7 @@ class FullAssignment {
     let courseGroups: [Any]!
     let objectives: [Any]!
     let uploadedFiles: [UploadedFile]!
+    let uploadedFilesCount: Int!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -74,7 +75,7 @@ class FullAssignment {
         gradingPeriodLock = dict["grading_period_lock"] as? Bool
         courseGroups = []
         objectives = dict["objectives"] as? [Any]
-        
+        uploadedFilesCount = dict["uploaded_files_count"] as? Int
         if let uploadedFilesDictArray = dict["uploaded_files"] as? [[String: Any]] {
             uploadedFiles = uploadedFilesDictArray.map { UploadedFile($0) }
         } else {
