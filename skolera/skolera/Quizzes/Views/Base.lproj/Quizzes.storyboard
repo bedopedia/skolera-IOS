@@ -32,7 +32,7 @@
                                                     <rect key="frame" x="12" y="12" width="390" height="103"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bq-lP-a4h">
-                                                            <rect key="frame" x="83" y="16" width="56.5" height="27"/>
+                                                            <rect key="frame" x="83" y="16" width="56.5" height="23"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
@@ -40,7 +40,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pattern assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QF-3u-2HU">
-                                                            <rect key="frame" x="83" y="47" width="135.5" height="20"/>
+                                                            <rect key="frame" x="83" y="43" width="135.5" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="1gt-nb-jgY"/>
                                                             </constraints>
@@ -52,7 +52,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vxz-3U-ODf">
-                                                            <rect key="frame" x="83" y="75" width="159" height="24"/>
+                                                            <rect key="frame" x="83" y="71" width="159" height="24"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowHour" translatesAutoresizingMaskIntoConstraints="NO" id="1GX-np-F4f">
                                                                     <rect key="frame" x="8" y="4" width="16" height="16"/>
@@ -85,7 +85,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RB0-zP-7Ya">
-                                                            <rect key="frame" x="353" y="46.5" width="21" height="21"/>
+                                                            <rect key="frame" x="353" y="42.5" width="21" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.8980392157" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -132,7 +132,7 @@
                                                         <constraint firstItem="7bq-lP-a4h" firstAttribute="leading" secondItem="oWP-da-ySH" secondAttribute="trailing" constant="12" id="9mu-lX-EI0"/>
                                                         <constraint firstItem="9QF-3u-2HU" firstAttribute="leading" secondItem="7bq-lP-a4h" secondAttribute="leading" id="Mvs-be-7b7"/>
                                                         <constraint firstItem="vxz-3U-ODf" firstAttribute="leading" secondItem="9QF-3u-2HU" secondAttribute="leading" id="O0I-vj-dHY"/>
-                                                        <constraint firstAttribute="bottom" secondItem="vxz-3U-ODf" secondAttribute="bottom" constant="4" id="T4e-VL-uWN"/>
+                                                        <constraint firstAttribute="bottom" secondItem="vxz-3U-ODf" secondAttribute="bottom" constant="8" id="T4e-VL-uWN"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="RB0-zP-7Ya" secondAttribute="trailing" constant="8" id="Wcf-l9-22M"/>
                                                         <constraint firstItem="vxz-3U-ODf" firstAttribute="top" secondItem="9QF-3u-2HU" secondAttribute="bottom" constant="8" id="Zlf-d6-mnD"/>
                                                         <constraint firstItem="oWP-da-ySH" firstAttribute="top" secondItem="uHb-mk-Ywx" secondAttribute="top" constant="16" id="b47-tV-ynm"/>

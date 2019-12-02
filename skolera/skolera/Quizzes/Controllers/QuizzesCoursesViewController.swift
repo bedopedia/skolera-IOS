@@ -49,8 +49,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 120
-        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = 124
+        tableView.estimatedRowHeight = 124
     }
     
     @IBAction func back() {
@@ -101,7 +101,7 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 124
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
