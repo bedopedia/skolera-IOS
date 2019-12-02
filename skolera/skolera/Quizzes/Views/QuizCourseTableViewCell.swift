@@ -75,6 +75,9 @@ class QuizCourseTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    override func prepareForReuse() {
+        courseImageView.layer.shadowColor = UIColor.clear.cgColor
+    }
     
     func getText(name: String) -> String {
         let shortcut = name.replacingOccurrences(of: "&", with: "")
