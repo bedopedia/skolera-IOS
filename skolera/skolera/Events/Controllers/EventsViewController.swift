@@ -12,6 +12,7 @@ import Alamofire
 import NVActivityIndicatorView
 import CVCalendar
 import SwiftDate
+import SkeletonView
 
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
@@ -21,7 +22,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var eventsCollectionView: UICollectionView!
     @IBOutlet weak var createEventButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.rowHeight = 80
+        }
+    }
     @IBOutlet var headerView: UIView!
     @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
     @IBOutlet var cVCalendarView: CVCalendarView!
@@ -62,7 +67,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         eventsDict = [:]
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         
@@ -95,6 +100,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.tableView.showAnimatedSkeleton()
         getEvents()
     }
     
@@ -104,12 +110,12 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //        refreshControl.endRefreshing()
 //    }
     func getEvents() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+//            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
-                    debugPrint(result)
                     self.events = result.map{ StudentEvent($0) }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
@@ -123,6 +129,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                         commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
                 }
@@ -491,7 +499,7 @@ extension EventsViewController {
     }
 }
 
-extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
+extension EventsViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredEvents.count
     }
@@ -499,9 +507,13 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "attendanceCell") as! AttendanceTableViewCell
         cell.borderColor = currentBorderColor
+        cell.hideSkeleton()
         cell.event = filteredEvents[indexPath.row]
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "attendanceCell"
     }
 }
 
