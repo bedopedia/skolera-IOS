@@ -51,7 +51,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var maxHeight = CGFloat(224)
     var minHeight = CGFloat(48)
     var previousScrollOffset: CGFloat = 0
-    private let refreshControl = UIRefreshControl()
+//    private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
 
@@ -70,8 +70,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         createEventButton.layer.borderWidth = 1
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+//        tableView.refreshControl = refreshControl
+//        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
         // Appearance delegate [Unnecessary]
         self.cVCalendarView.calendarAppearanceDelegate = self
@@ -96,11 +96,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         getEvents()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
-        getEvents()
-        refreshControl.endRefreshing()
-    }
+//    @objc private func refreshData(_ sender: Any) {
+//        refreshControl.beginRefreshing()
+//        getEvents()
+//        refreshControl.endRefreshing()
+//    }
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
@@ -154,6 +154,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                 }
             }
         }
+//        for event in eventsDict {
+//            debugPrint(event.value.first?.startDate)
+//        }
     }
 //    MARK: - IBActions
     @IBAction func back(){
@@ -210,9 +213,9 @@ extension EventsViewController {
     }
     
     //    changes the default color (used for the current day in calendar)
-    func dotMarkerColor() -> UIColor {
-        return .black
-    }
+//    func dotMarkerColor() -> UIColor {
+//        return .black
+//    }
     
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
         return dotsColors(dayView: dayView)
@@ -488,7 +491,7 @@ extension EventsViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
-            self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
+            self.cVCalendarView.changeMode(percentage == 0 ? .monthView : .weekView)
             updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
             UIView.setAnimationsEnabled(true)
         }
