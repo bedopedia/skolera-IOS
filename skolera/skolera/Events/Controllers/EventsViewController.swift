@@ -26,6 +26,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
     @IBOutlet var cVCalendarView: CVCalendarView!
     @IBOutlet var menuView: CVCalendarMenuView!
+    @IBOutlet var collectionViewTopConstraint: NSLayoutConstraint!
     
     enum weekDays : Int{
         case sunday = 0
@@ -54,6 +55,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
 //    private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
+    var firstScroll = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,9 +156,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                 }
             }
         }
-//        for event in eventsDict {
-//            debugPrint(event.value.first?.startDate)
-//        }
     }
 //    MARK: - IBActions
     @IBAction func back(){
@@ -212,7 +211,7 @@ extension EventsViewController {
         false
     }
     
-    //    changes the default color (used for the current day in calendar)
+//        changes the default color (used for the current day in calendar)
 //    func dotMarkerColor() -> UIColor {
 //        return .black
 //    }
@@ -246,9 +245,10 @@ extension EventsViewController {
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
         return false
     }
-    //    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
-    //        return CGFloat(16)
-    //    }
+//    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
+//        return CGFloat(8)
+//    }
+    
     //    func dayLabelWeekdayFont() -> UIFont {
     //        UIFont.systemFont(ofSize: 18)
     //    }
@@ -257,7 +257,6 @@ extension EventsViewController {
     //    }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
         return 16
-        //        return  dayView.dayLabel.frame.maxY + 16
     }
     func shouldAnimateResizing() -> Bool {
         return true
@@ -272,6 +271,7 @@ extension EventsViewController {
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
         cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
+    
     func getEventColor(event: StudentEvent) -> UIColor {
         switch event.type {
         case "academic":
@@ -290,20 +290,7 @@ extension EventsViewController {
     func presentedDateUpdated(_ date: CVDate) {
         updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
     }
-    func toggleMonthViewWithMonthOffset(offset: Int) {
-        guard let currentCalendar = currentCalendar else { return }
-        var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
-        components.month! += offset
-        let resultDate = currentCalendar.date(from: components)!
-        self.cVCalendarView.toggleViewWithDate(resultDate)
-    }
-    
-    func didShowNextMonthView(_ date: Date) {
-    }
-    
-    func didShowPreviousMonthView(_ date: Date) {
-    }
-    
+        
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
         print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
     }
@@ -406,6 +393,10 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
 //MARK:- Collapse Extension
 extension EventsViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if firstScroll {
+            self.maxHeight = cVCalendarView.frame.height
+            firstScroll = false
+        }
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
         let absoluteTop: CGFloat = 0
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
@@ -491,13 +482,12 @@ extension EventsViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
-            self.cVCalendarView.changeMode(percentage == 0 ? .monthView : .weekView)
+            self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
+            self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
             updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+            self.cVCalendarView.contentController.refreshPresentedMonth()
             UIView.setAnimationsEnabled(true)
         }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            UIView.setAnimationsEnabled(true)
-//        }
     }
 }
 
