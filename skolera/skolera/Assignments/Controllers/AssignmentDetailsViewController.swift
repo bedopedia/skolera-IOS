@@ -8,13 +8,19 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SkeletonView
 
 
 class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.rowHeight = 100
+            tableView.estimatedRowHeight = 100
+        }
+    }
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
@@ -41,13 +47,15 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
     }
     
     private func getAssignmentDetails(assignmentId: Int) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showSkeleton()
         getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     self.assignment = FullAssignment(result)
                     self.titleLabel.text = self.assignment.name
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -58,7 +66,7 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
 
 }
 
-extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if assignment != nil {
             return 1 + self.assignment.uploadedFiles.count
@@ -80,6 +88,7 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell
+            cell.hideSkeleton()
             cell.uploadedFile = self.assignment.uploadedFiles[indexPath.row - 1]
             return cell
         }
@@ -91,6 +100,10 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
                 UIApplication.shared.open(url)
             }
         }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AttachmentTableViewCell"
     }
     
 }
