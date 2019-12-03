@@ -11,6 +11,7 @@ import NVActivityIndicatorView
 import Alamofire
 import KeychainSwift
 import Firebase
+import SkeletonView
 
 class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
@@ -43,6 +44,9 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if !isParent() {
             backButton.isHidden = true
+            if let featureTVC = childViewControllers[0] as? ChildProfileFeaturesTableViewController {
+                featureTVC.tableView.showAnimatedSkeleton()
+            }
             setLocalization()
             InstanceID.instanceID().instanceID { (result, error) in
                 if let error = error {
@@ -189,10 +193,10 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
 
     
     func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
+//            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -203,7 +207,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
     //service call to change localization
     func setLocalization() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
@@ -214,7 +218,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            self.stopAnimating()
+//            self.stopAnimating()
             switch response.result{
             case .success(_):
                 //do nothing

@@ -11,8 +11,9 @@ import Alamofire
 import YLProgressBar
 import DateToolsSwift
 import NVActivityIndicatorView
+import SkeletonView
 
-class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
+class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
     //MARK: - Outlets
     @IBOutlet weak var presentDaysLabel: UILabel!
@@ -76,10 +77,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
+        tableView.register(UINib(nibName: "SkeletonTableViewCell", bundle: nil), forCellReuseIdentifier: "SkeletonTableViewCell")
+        self.tableView.rowHeight = 80
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
+        cell?.hideSkeleton()
         switch cell?.reuseIdentifier{
         case "mainAttendanceCell":
             showAttendance()
@@ -104,10 +108,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "SkeletonTableViewCell"
+    }
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y: CGFloat = scrollView.contentOffset.y
         scrollHandler(y)
-        
     }
     
     //MARK: - Methods
@@ -149,10 +156,10 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
 //    MARK:- Network Calls
 
     private func getBehaviorNotesCount() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+//        self.tableView.showAnimatedSkeleton()
         let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
         getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.getTimeTable()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
@@ -167,9 +174,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     private func getTimeTable() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getTimeTableAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
-           self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
                     for timeslotDictionary in result {
@@ -205,6 +211,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                 } else {
                     self.disableTimeTable = true
                 }
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
