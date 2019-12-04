@@ -75,18 +75,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        tableView.rowHeight = 144
-        tableView.estimatedRowHeight = 144
-        if isTeacher {
-            getTeacherQuizzes()
-        } else {
-            getQuizzes(pageId: pageId)
-        }
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
+        tableView.rowHeight = 144
+        tableView.estimatedRowHeight = 144
         if isTeacher {
             getTeacherQuizzes()
         } else {

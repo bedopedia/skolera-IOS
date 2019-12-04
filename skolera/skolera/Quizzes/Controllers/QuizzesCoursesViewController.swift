@@ -34,14 +34,11 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-        fixTableViewHeight()
-        self.tableView.showAnimatedSkeleton()
-        getCourses()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
         fixTableViewHeight()
         self.tableView.showAnimatedSkeleton()
         getCourses()

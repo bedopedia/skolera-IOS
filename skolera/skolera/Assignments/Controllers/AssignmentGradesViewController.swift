@@ -32,19 +32,16 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         titleLabel.text = assignment.name
         tableView.delegate = self
         tableView.dataSource = self
-        fixTableViewHeight()
-        tableView.showAnimatedSkeleton()
-        getSubmissions()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
         fixTableViewHeight()
         tableView.showAnimatedSkeleton()
         getSubmissions()

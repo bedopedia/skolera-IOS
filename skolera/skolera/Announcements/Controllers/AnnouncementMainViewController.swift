@@ -17,10 +17,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     var announcements: [Announcement]!
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
-    fileprivate func fixTableViewHeight() {
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = 100
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,22 +27,23 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         headerView.addShadow()
-        fixTableViewHeight()
-        self.tableView.reloadData()
-        tableView.showAnimatedSkeleton()
-        getAnnouncements()
-        
+        refreshData()
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    
+    @objc private func refreshData() {
         fixTableViewHeight()
         tableView.showAnimatedSkeleton()
         getAnnouncements()
         refreshControl.endRefreshing()
+    }
+    
+    fileprivate func fixTableViewHeight() {
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = 100
     }
     //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -57,7 +54,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
     
     func getAnnouncements(page: Int = 1) {
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in

@@ -69,11 +69,9 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
-        fixTableViewHeight()
-        self.tableView.showAnimatedSkeleton()
-        getAssignments()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     @IBAction func back() {
@@ -95,8 +93,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             setOpenedAssignments()
         }
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
         fixTableViewHeight()
         self.tableView.showAnimatedSkeleton()
         getAssignments()

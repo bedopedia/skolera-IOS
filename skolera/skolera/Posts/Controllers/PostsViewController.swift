@@ -21,12 +21,6 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var child : Child!
     var courses: [PostCourse]!
     
-    fileprivate func fixTableViewHeight() {
-        tableView.rowHeight = 170
-        tableView.estimatedRowHeight = 170
-        tableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.addShadow()
@@ -38,6 +32,12 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         fixTableViewHeight()
         getCourses()
+    }
+    
+    fileprivate func fixTableViewHeight() {
+        tableView.rowHeight = 170
+        tableView.estimatedRowHeight = 170
+        tableView.reloadData()
     }
     
     @IBAction func back(){

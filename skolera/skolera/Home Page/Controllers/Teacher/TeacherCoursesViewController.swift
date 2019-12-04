@@ -12,11 +12,7 @@ import SkeletonView
 class TeacherCoursesViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var headerView: UIView!
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            self.tableView.rowHeight = 80
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     var courses: [TeacherCourse] = []
     var actor: Actor!{
         didSet {
@@ -29,6 +25,7 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.addShadow()
+        self.tableView.rowHeight = 80
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.navigationController?.delegate = self

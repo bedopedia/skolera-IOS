@@ -31,10 +31,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
 
     
 //    MARK: - Lifecycle
-    fileprivate func fixSkeletonHeight() {
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = 200
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +51,10 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
             }
         }
-        fixSkeletonHeight()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.tableView.showAnimatedSkeleton()
-        getPosts()
+        refreshData()
     }
     
     @IBAction func back(){
@@ -72,12 +67,17 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         createPost.courseGroup = courseGroup
         self.navigationController?.pushViewController(createPost, animated: true)
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    
+    @objc private func refreshData() {
         getPosts()
         fixSkeletonHeight()
         self.tableView.showAnimatedSkeleton()
         refreshControl.endRefreshing()
+    }
+    
+    fileprivate func fixSkeletonHeight() {
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = 200
     }
 
     func getPosts(page: Int = 1){

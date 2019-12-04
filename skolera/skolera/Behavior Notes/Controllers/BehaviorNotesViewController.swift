@@ -28,12 +28,7 @@ class BehaviorNotesViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            self.tableView.estimatedRowHeight = 80
-            self.tableView.rowHeight = UITableViewAutomaticDimension
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     
     //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -60,18 +55,22 @@ class BehaviorNotesViewController: UIViewController {
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
-        getBehaviorNotes()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
-    @objc private func refreshData(_ sender: Any) {
-            // Fetch Weather Data
-            refreshControl.beginRefreshing()
-            getBehaviorNotes()
-            refreshControl.endRefreshing()
-        }
-
+   
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        getBehaviorNotes()
+        refreshControl.endRefreshing()
+    }
+    
+    func fixTableViewHeight() {
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = 80
+    }
+       
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -90,7 +89,7 @@ class BehaviorNotesViewController: UIViewController {
     }
 }
 
-extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource{
+extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     
     var positiveNotes: [BehaviorNote]! {
         let result = behaviorNotes.filter { (behaviorNote) -> Bool in
@@ -177,6 +176,8 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
                     self.meta = behaviorNotesResponse.meta
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.loadPositiveNotes()
                 }
             } else {

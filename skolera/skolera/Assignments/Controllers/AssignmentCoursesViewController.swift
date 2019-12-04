@@ -33,11 +33,19 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @objc private func refreshData() {
         fixTableViewHeight()
         tableView.showAnimatedSkeleton()
         getCourses()
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.endRefreshing()
     }
     
     fileprivate func fixTableViewHeight() {
@@ -45,17 +53,6 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         tableView.estimatedRowHeight = 140
     }
     
-    @IBAction func back() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
-        fixTableViewHeight()
-        tableView.showAnimatedSkeleton()
-        getCourses()
-        refreshControl.endRefreshing()
-    }
-
     func getCourses() {
         if courses == nil {
             courses = []

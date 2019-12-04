@@ -23,8 +23,6 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         tableView.delegate = self
         if !fromChildrenList {
@@ -37,10 +35,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,12 +53,16 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
 
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
         getNotifcations()
         refreshControl.endRefreshing()
     }
 
+    func fixTableViewHeight() {
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = 100
+    }
+    
     @IBAction func logout () {
         if let mainViewController = parent as? TeacherContainerViewController {
             mainViewController.logout()
@@ -91,6 +90,8 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             if page == 1 {
                 self.tableView.hideSkeleton()
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                 self.tableView.reloadData()
                 self.notifications = []
             }

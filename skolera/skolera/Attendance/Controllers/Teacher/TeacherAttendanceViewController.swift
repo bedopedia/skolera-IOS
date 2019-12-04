@@ -81,7 +81,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
     
     func getFullDayData() {
-//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 self.fullDayAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
@@ -114,7 +113,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         guard slotAttendanceObject != nil else {
             return
         }
-        
         if isFullDay {
             for student in self.fullDayAttendanceObject.students {
                 self.currentStudents.append(student)

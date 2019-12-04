@@ -46,10 +46,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             leftHeaderButton.isHidden = true
         }
         threadsTableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixTableViewHeight()
-        threadsTableView.showAnimatedSkeleton()
-        getThreads()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,8 +55,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         self.stopAnimating()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
+        fixTableViewHeight()
         threadsTableView.showAnimatedSkeleton()
         getThreads()
         refreshControl.endRefreshing()

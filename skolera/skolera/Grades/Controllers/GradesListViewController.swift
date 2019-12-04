@@ -37,6 +37,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.showAnimatedSkeleton()
         getGradesCourses()
     }
+    
     func fixTableViewHeight() {
         tableView.rowHeight = 85
         tableView.estimatedRowHeight = 85

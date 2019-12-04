@@ -15,12 +15,7 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.rowHeight = 100
-            tableView.estimatedRowHeight = 100
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
@@ -39,6 +34,8 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
         getAssignmentDetails(assignmentId: assignmentId!)
     }
     
