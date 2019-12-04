@@ -93,9 +93,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                 self.posts = []
             }
             if page == 1 {
-                self.tableView.hideSkeleton()
                 self.tableView.rowHeight = UITableViewAutomaticDimension
                 self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.hideSkeleton()
             }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
