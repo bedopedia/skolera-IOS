@@ -60,8 +60,8 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
 
     func fixTableViewHeight() {
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 124
+        tableView.rowHeight = 124
     }
     
     @IBAction func logout () {
