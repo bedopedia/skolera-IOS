@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SkeletonTableViewCell" rowHeight="119" id="KGk-i7-Jjw" customClass="SkeletonTableViewCell" customModule="skolera" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="80R-sy-9un">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wnm-OZ-A4J">
+                                <rect key="frame" x="16" y="16" width="55" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="PWC-d9-3yg"/>
+                                    <constraint firstAttribute="height" constant="55" id="TLw-qa-4QS"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7y9-0j-4Om">
+                                <rect key="frame" x="95" y="33" width="209" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wnm-OZ-A4J" secondAttribute="bottom" constant="16" id="0Yv-nA-Z7k"/>
+                            <constraint firstItem="wnm-OZ-A4J" firstAttribute="leading" secondItem="80R-sy-9un" secondAttribute="leading" constant="16" id="DJ2-o2-zzo"/>
+                            <constraint firstAttribute="height" constant="87" id="FKj-9C-OsT"/>
+                            <constraint firstAttribute="trailing" secondItem="7y9-0j-4Om" secondAttribute="trailing" constant="16" id="ICT-gq-F21"/>
+                            <constraint firstItem="7y9-0j-4Om" firstAttribute="leading" secondItem="wnm-OZ-A4J" secondAttribute="trailing" constant="24" id="Kz7-TJ-Z0a"/>
+                            <constraint firstItem="7y9-0j-4Om" firstAttribute="centerY" secondItem="wnm-OZ-A4J" secondAttribute="centerY" id="hhw-ln-pjQ"/>
+                            <constraint firstItem="wnm-OZ-A4J" firstAttribute="top" secondItem="80R-sy-9un" secondAttribute="top" constant="16" id="pXS-Mh-V0m"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="80R-sy-9un" secondAttribute="trailing" id="23w-pK-LGA"/>
+                    <constraint firstItem="80R-sy-9un" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3hI-ZC-b6E"/>
+                    <constraint firstItem="80R-sy-9un" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Ggc-x5-hMV"/>
+                    <constraint firstAttribute="bottom" secondItem="80R-sy-9un" secondAttribute="bottom" id="muj-24-KGR"/>
+                </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                </userDefinedRuntimeAttributes>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="137.68115942028987" y="100.44642857142857"/>
+        </tableViewCell>
+    </objects>
+</document>

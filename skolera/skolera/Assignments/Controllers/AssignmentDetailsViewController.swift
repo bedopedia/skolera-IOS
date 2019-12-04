@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
+import SkeletonView
 
-class AssignmentDetailsViewController: UIViewController {
+
+class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
@@ -18,7 +21,8 @@ class AssignmentDetailsViewController: UIViewController {
     
     var child : Child!
     var assignment: FullAssignment!
-    
+    var courseId: Int!
+    var assignmentId: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,33 +31,45 @@ class AssignmentDetailsViewController: UIViewController {
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        titleLabel.text = assignment.name
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
+        getAssignmentDetails(assignmentId: assignmentId!)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func getAssignmentDetails(assignmentId: Int) {
+        self.tableView.showSkeleton()
+        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
+            self.tableView.hideSkeleton()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    self.assignment = FullAssignment(result)
+                    self.titleLabel.text = self.assignment.name
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.reloadData()
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
     }
-    */
 
 }
 
-extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + self.assignment.uploadedFiles.count
+        if assignment != nil {
+            return 1 + self.assignment.uploadedFiles.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,6 +85,7 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentTableViewCell") as! AttachmentTableViewCell
+            cell.hideSkeleton()
             cell.uploadedFile = self.assignment.uploadedFiles[indexPath.row - 1]
             return cell
         }
@@ -80,6 +97,10 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
                 UIApplication.shared.open(url)
             }
         }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AttachmentTableViewCell"
     }
     
 }

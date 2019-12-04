@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
 class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -21,7 +22,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var assignForAllButton: UIButton!
     @IBOutlet weak var calendarImageView: UIImageView!
-    @IBOutlet var placeholderView: UIView!
     
     var courseGroupId: Int!
     var timeTableSlots: [TimetableSlots]!
@@ -69,6 +69,9 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         isFullDay = true
         leftLabel.text = "\(getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
         studentsMap = [:]
+        self.tableView.rowHeight = 124
+        self.tableView.estimatedRowHeight = 124
+        self.tableView.showAnimatedSkeleton()
         getFullDayData()
     }
     
@@ -78,7 +81,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
     
     func getFullDayData() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getFullDayAttendanceStudentsApi(courseGroupId: courseGroupId, startDate: "\(day)%2F\(month)%2F\(year)", endDate: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 self.fullDayAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
@@ -91,7 +93,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     
     func getSlotData() {
         getSlotAttendanceStudentsApi(courseGroupId: courseGroupId, date: "\(day)%2F\(month)%2F\(year)") { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             assignPlaceholder(self.tableView, imageName: "attendanceplaceholder", placeHolderLabelText: "You don't have any attendances for now".localized)
             if isSuccess {
                 self.slotAttendanceObject = value.map{FullDayAttendances($0 as! [String : Any])}
@@ -111,7 +113,6 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         guard slotAttendanceObject != nil else {
             return
         }
-        
         if isFullDay {
             for student in self.fullDayAttendanceObject.students {
                 self.currentStudents.append(student)
@@ -361,7 +362,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     }
 }
 //MARK: Table View Extension
-extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource {
+extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.studentsMap.count
@@ -443,13 +444,16 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                 }
             }
         }
-        
+        cell.hideSkeleton()
         cell.student = self.currentStudents[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 124
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "teacherAttendanceCell"
     }
 }
 

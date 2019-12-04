@@ -31,6 +31,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     var previousScrollOffset: CGFloat = 0
     var currentCalendar: Calendar?
     var attendancesDict: [String: [Attendance]] = [:]
+    var firstScroll = true
     
     //MARK: - Outlets
     
@@ -197,9 +198,9 @@ extension AttendanceViewController {
         }
     }
     
-    func dotMarkerColor() -> UIColor {
-        return .black
-    }
+//    func dotMarkerColor() -> UIColor {
+//        return .black
+//    }
     
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
         return dotsColors(dayView: dayView)
@@ -281,6 +282,10 @@ extension AttendanceViewController {
 
 extension AttendanceViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if firstScroll {
+            self.maxHeight = calendarView.frame.height
+            firstScroll = false
+        }
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
         let absoluteTop: CGFloat = 0
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop

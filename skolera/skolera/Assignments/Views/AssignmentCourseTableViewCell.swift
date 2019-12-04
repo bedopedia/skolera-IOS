@@ -14,7 +14,12 @@ class AssignmentCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectImageLabel: UILabel!
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var assignmentName: UILabel!
-    @IBOutlet weak var assignmentDateView: UIView!
+    @IBOutlet weak var assignmentDateView: UIView!{
+        didSet {
+            assignmentDateView.layer.cornerRadius = assignmentDateView.frame.height / 2
+            assignmentDateView.layer.masksToBounds = true
+        }
+    }
     @IBOutlet weak var assignmentClockImage: UIImageView!
     @IBOutlet weak var assignmentDateLabel: UILabel!
     @IBOutlet weak var numberOfAssignmentLabel: UILabel!
@@ -67,9 +72,12 @@ class AssignmentCourseTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
+    override func prepareForReuse() {
+        courseImageView.layer.shadowColor = UIColor.clear.cgColor
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

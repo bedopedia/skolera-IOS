@@ -324,6 +324,8 @@
 		DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */; };
 		DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
+		DCC414A12390274500E70EF6 /* SkeletonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */; };
+		DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -664,6 +666,8 @@
 		DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
+		DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTableViewCell.swift; sourceTree = "<group>"; };
+		DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1136,6 +1140,8 @@
 				DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */,
 				DC168462238D64AF004828F8 /* DummyEvents.swift */,
 				DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */,
+				DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */,
+				DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1815,6 +1821,7 @@
 				54EB93032015ED1D001DD93F /* Login.storyboard in Resources */,
 				5462A5AC2058401F00C6F5EE /* CircularStd-Black.otf in Resources */,
 				5482DDF52056D4EB00647D57 /* SFUIText-Heavy.otf in Resources */,
+				DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */,
 				5462A5AA2058401F00C6F5EE /* CircularStd-BookItalic.otf in Resources */,
 				5482DDF22056D4E300647D57 /* SFUIText-BoldItalicG1.otf in Resources */,
 				5482DE012056D50F00647D57 /* SFUIText-RegularG2.otf in Resources */,
@@ -1913,6 +1920,7 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
@@ -1949,6 +1957,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
@@ -2060,6 +2069,7 @@
 				8A6D361F20B5999100DD0445 /* SendingStatusCollectionViewCell.swift in Sources */,
 				8A12408E233111F6000A3195 /* SubmitExcuseViewController.swift in Sources */,
 				540890742068259100CC59A0 /* AttendanceViewController+CalendarDelegates.swift in Sources */,
+				DCC414A12390274500E70EF6 /* SkeletonTableViewCell.swift in Sources */,
 				8A06B6DD22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift in Sources */,
 				8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */,
 				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,

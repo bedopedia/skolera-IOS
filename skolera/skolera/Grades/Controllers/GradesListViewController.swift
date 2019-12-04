@@ -9,13 +9,14 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
-class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
     //TODO:- REMAINING SCREEN FOR GRADES DETAILS
     //MARK: - Variables
     var child : Child!
     /// date source for tableView
-    var gradesCourses = [PostCourse]()
+    var gradesCourses: [PostCourse]!
     //MARK: - Outlets
     
     @IBOutlet var headerView: UIView!
@@ -29,12 +30,17 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 85
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getGradesCourses()
+    }
+    
+    func fixTableViewHeight() {
+        tableView.rowHeight = 85
+        tableView.estimatedRowHeight = 85
     }
     
     @IBAction func back() {
@@ -42,30 +48,41 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     private func getGradesCourses() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if gradesCourses == nil {
+            gradesCourses = []
+        }
         getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.gradesCourses = result.map({ PostCourse($0) })
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = 85
                     self.tableView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-            handleEmptyDate(tableView: self.tableView, dataSource: self.gradesCourses, imageName: "gradesplaceholder", placeholderText: "You don't have any courses for now".localized)
+            handleEmptyDate(tableView: self.tableView, dataSource: self.gradesCourses ?? [], imageName: "gradesplaceholder", placeholderText: "You don't have any courses for now".localized)
         }
     }
 
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gradesCourses.count
+        if gradesCourses != nil {
+            return gradesCourses.count
+        } else {
+            return 6
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
-        cell.grade = gradesCourses[indexPath.row]
+        if gradesCourses != nil {
+            cell.hideSkeleton()
+            cell.grade = gradesCourses[indexPath.row]
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -74,6 +91,9 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         cgVC.child = child
         cgVC.grade = cell.grade
         self.navigationController?.pushViewController(cgVC, animated: true)
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "courseGradeCell"
     }
 
 }

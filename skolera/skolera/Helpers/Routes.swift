@@ -127,7 +127,7 @@ func GET_POSTS_COURSES() -> String {
 }
 
 func GET_STUDENT_POSTS() -> String {
-    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=10"
+    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=20"
 }
 
 func COMMENTS_URL() -> String {

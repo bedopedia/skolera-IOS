@@ -12,15 +12,12 @@ import Alamofire
 import Kingfisher
 import Firebase
 import NVActivityIndicatorView
-
-
+import SkeletonView
 
 class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
-    
-    var refreshControl: UIRefreshControl!
     
     @IBOutlet var headerView: UIView!
     /// children array acts as the data source for the tableView
@@ -37,9 +34,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 100;
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
-        self.tableView.addSubview(refreshControl)
         headerView.addShadow()
 //        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
 //        let backItem = UIBarButtonItem()
@@ -65,10 +59,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     
     /// sevice call to set firebase token
     func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
@@ -77,19 +69,19 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         }
     }
     
-    
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
-        self.refreshControl.endRefreshing()
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showAnimatedSkeleton()
         getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
                     for child in result {
                         self.kids.append(Child.init(fromDictionary: child))
                     }
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -157,18 +149,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         notificationsVC.fromChildrenList = true
         self.navigationController?.pushViewController(notificationsVC, animated: true)
     }
-    
-    /// refreshes table if user dragged table down for refresh
-    ///
-    /// - Parameter sender: table refresh control
-    @IBAction func refresh(_ sender: UIRefreshControl) {
-        self.refreshControl?.beginRefreshing()
-        kids.removeAll()
-        getChildren()
-    }
 }
 
-extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -176,7 +159,6 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kids.count
     }
-    
     
     /// picks a child from children array by its index and fill a cell with his data
     ///
@@ -186,15 +168,10 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     /// - Returns: ChildrenTableViewCell filled with its contents
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
+        cell.hideSkeleton()
         cell.child = kids[indexPath.row]
         return cell
     }
-    
-    /// navigate to the child profile screen for the selected child
-    ///
-    /// - Parameters:
-    ///   - tableView: the screen tableview
-    ///   - indexPath: cell row and section
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
         let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
@@ -205,8 +182,13 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         self.navigationController?.pushViewController(childProfileVC, animated: true)
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "childCell"
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
-        
     }
+    
+    
 }

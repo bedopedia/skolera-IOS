@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
 class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewable {
 
@@ -21,6 +22,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignment: FullAssignment!
+    var assignmentId: Int!
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -30,27 +32,35 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         titleLabel.text = assignment.name
         tableView.delegate = self
         tableView.dataSource = self
-        getSubmissions()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getSubmissions()
         refreshControl.endRefreshing()
     }
 
+    func fixTableViewHeight() {
+        tableView.rowHeight = 132
+        tableView.estimatedRowHeight = 132
+    }
+    
     private func getSubmissions() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+        getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignmentId!) { (isSuccess, statusCode, value, error) in
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
                     self.submissions = result.map { AssignmentStudentSubmission($0) }
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -63,18 +73,18 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["grade": grade,
                                       "student_id": submission.studentId ?? 0,
-                                      "assignment_id": assignment.id!,
+                                      "assignment_id": assignmentId!,
                                       "course_group_id": courseGroupId,
                                       "student_status": "present",
                                       "course_id": courseId
         ]
-        submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id, parameters: parameters) { (isSuccess, statusCode, value, error) in
+        submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignmentId!, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if feedback.isEmpty {
                     self.stopAnimating()
                     self.getSubmissions()
                 } else {
-                    self.submitFeedback(submissionId: self.assignment.id!, studentId: submission.studentId, feedback: feedback)
+                    self.submitFeedback(submissionId: self.assignmentId!, studentId: submission.studentId, feedback: feedback)
                 }
             } else {
                 self.stopAnimating()
@@ -104,13 +114,14 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
 
 }
 
-extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDelegate {
+extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return submissions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentSubmissionTableViewCell", for: indexPath) as! StudentSubmissionTableViewCell
+        cell.hideSkeleton()
         cell.studentSubmission = self.submissions[indexPath.row]
         return cell
     }
@@ -128,6 +139,10 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
             self.present(feedbackDialog, animated: true, completion: nil)
         }
         
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "StudentSubmissionTableViewCell"
     }
     
     

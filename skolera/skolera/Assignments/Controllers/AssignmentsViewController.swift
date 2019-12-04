@@ -9,8 +9,9 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
-class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -68,16 +69,18 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
-        getAssignments()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    func fixTableViewHeight() {
+        tableView.rowHeight = 144
+        tableView.estimatedRowHeight = 144
+    }
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -90,8 +93,9 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             setOpenedAssignments()
         }
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        self.tableView.showAnimatedSkeleton()
         getAssignments()
         refreshControl.endRefreshing()
     }
@@ -109,50 +113,17 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     func getAssignments() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
                     } else {
                         self.setClosedAssignments()
-                    }
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
-    private func getAssignmentDetails(assignmentId: Int) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let assignment = FullAssignment(result)
-                    if !self.isTeacher {
-                        let description = assignment.description ?? ""
-                        if !description.isEmpty || assignment.uploadedFiles.count > 0 {
-                           let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
-                            assignmentDetailsVC.child = self.child
-                            assignmentDetailsVC.assignment = assignment
-                            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
-                        } else {
-                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
-                            alert.modalPresentationStyle = .fullScreen
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    } else {
-                        let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
-                        assignmentDetailsVC.courseId = self.courseId
-                        assignmentDetailsVC.courseGroupId = self.courseGroupId
-                        assignmentDetailsVC.assignment = assignment
-                        self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                     }
                 }
             } else {
@@ -167,6 +138,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
+        cell.hideSkeleton()
         cell.nameLabel.text = courseName
         cell.assignment = filteredAssignments[indexPath.row]
         return cell
@@ -177,7 +149,32 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
-            
+        let assignment = filteredAssignments[indexPath.row]
+        if !self.isTeacher {
+            let description = assignment.description ?? ""
+            if !description.isEmpty || assignment.uploadedFilesCount > 0 {
+                let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
+                assignmentDetailsVC.child = self.child
+                assignmentDetailsVC.courseId = self.courseId
+                assignmentDetailsVC.assignmentId = assignment.id
+                self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+                alert.modalPresentationStyle = .fullScreen
+                self.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
+            assignmentDetailsVC.courseId = self.courseId
+            assignmentDetailsVC.courseGroupId = self.courseGroupId
+            assignmentDetailsVC.assignment = assignment
+            assignmentDetailsVC.assignmentId = assignment.id
+            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
+        }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AssignmentTableViewCell"
     }
 }

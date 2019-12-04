@@ -89,4 +89,15 @@ class NotificationTableViewCell: UITableViewCell {
         }
     }
     
+    func showShimmer() {
+        notificationImageView.showAnimatedSkeleton()
+        notificationDetailsLabel.showAnimatedSkeleton()
+        studentNameLabel.showAnimatedSkeleton()
+        dateTimeLabel.showAnimatedSkeleton()
+//        notificationImageView.showAnimatedGradientSkeleton()
+//        notificationDetailsLabel.showAnimatedGradientSkeleton()
+//        studentNameLabel.showAnimatedGradientSkeleton()
+//        dateTimeLabel.showAnimatedGradientSkeleton()
+    }
+    
 }

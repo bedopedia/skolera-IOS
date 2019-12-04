@@ -12,6 +12,7 @@ import Alamofire
 import NVActivityIndicatorView
 import CVCalendar
 import SwiftDate
+import SkeletonView
 
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
@@ -26,6 +27,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet var calendarHeightConstraint: NSLayoutConstraint!
     @IBOutlet var cVCalendarView: CVCalendarView!
     @IBOutlet var menuView: CVCalendarMenuView!
+    @IBOutlet var collectionViewTopConstraint: NSLayoutConstraint!
     
     enum weekDays : Int{
         case sunday = 0
@@ -51,16 +53,17 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var maxHeight = CGFloat(224)
     var minHeight = CGFloat(48)
     var previousScrollOffset: CGFloat = 0
-    private let refreshControl = UIRefreshControl()
+//    private let refreshControl = UIRefreshControl()
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
+    var firstScroll = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
         eventsDict = [:]
         headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         
@@ -68,10 +71,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         eventsCollectionView.dataSource = self
         createEventButton.layer.borderColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
         createEventButton.layer.borderWidth = 1
+        tableView.rowHeight = 80
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+//        tableView.refreshControl = refreshControl
+//        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
         // Appearance delegate [Unnecessary]
         self.cVCalendarView.calendarAppearanceDelegate = self
@@ -93,21 +97,15 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.tableView.showAnimatedSkeleton()
         getEvents()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
-        getEvents()
-        refreshControl.endRefreshing()
-    }
     func getEvents() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
-                    debugPrint(result)
                     self.events = result.map{ StudentEvent($0) }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
@@ -121,6 +119,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                         commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
                 }
@@ -209,10 +209,10 @@ extension EventsViewController {
         false
     }
     
-    //    changes the default color (used for the current day in calendar)
-    func dotMarkerColor() -> UIColor {
-        return .black
-    }
+//        changes the default color (used for the current day in calendar)
+//    func dotMarkerColor() -> UIColor {
+//        return .black
+//    }
     
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
         return dotsColors(dayView: dayView)
@@ -243,9 +243,10 @@ extension EventsViewController {
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: DayView) -> Bool {
         return false
     }
-    //    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
-    //        return CGFloat(16)
-    //    }
+//    func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
+//        return CGFloat(8)
+//    }
+    
     //    func dayLabelWeekdayFont() -> UIFont {
     //        UIFont.systemFont(ofSize: 18)
     //    }
@@ -254,7 +255,6 @@ extension EventsViewController {
     //    }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
         return 16
-        //        return  dayView.dayLabel.frame.maxY + 16
     }
     func shouldAnimateResizing() -> Bool {
         return true
@@ -269,6 +269,7 @@ extension EventsViewController {
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
         cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
     }
+    
     func getEventColor(event: StudentEvent) -> UIColor {
         switch event.type {
         case "academic":
@@ -287,20 +288,7 @@ extension EventsViewController {
     func presentedDateUpdated(_ date: CVDate) {
         updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
     }
-    func toggleMonthViewWithMonthOffset(offset: Int) {
-        guard let currentCalendar = currentCalendar else { return }
-        var components = Manager.componentsForDate(Date(), calendar: currentCalendar) // from today
-        components.month! += offset
-        let resultDate = currentCalendar.date(from: components)!
-        self.cVCalendarView.toggleViewWithDate(resultDate)
-    }
-    
-    func didShowNextMonthView(_ date: Date) {
-    }
-    
-    func didShowPreviousMonthView(_ date: Date) {
-    }
-    
+        
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
         print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
     }
@@ -403,6 +391,10 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
 //MARK:- Collapse Extension
 extension EventsViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if firstScroll {
+            self.maxHeight = cVCalendarView.frame.height
+            firstScroll = false
+        }
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
         let absoluteTop: CGFloat = 0
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
@@ -489,16 +481,15 @@ extension EventsViewController {
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
             self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
+            self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
             updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+            self.cVCalendarView.contentController.refreshPresentedMonth()
             UIView.setAnimationsEnabled(true)
         }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            UIView.setAnimationsEnabled(true)
-//        }
     }
 }
 
-extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
+extension EventsViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredEvents.count
     }
@@ -506,9 +497,13 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "attendanceCell") as! AttendanceTableViewCell
         cell.borderColor = currentBorderColor
+        cell.hideSkeleton()
         cell.event = filteredEvents[indexPath.row]
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "attendanceCell"
     }
 }
 

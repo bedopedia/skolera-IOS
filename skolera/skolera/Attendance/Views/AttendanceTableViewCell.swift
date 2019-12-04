@@ -54,7 +54,7 @@ class AttendanceTableViewCell: UITableViewCell {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
                 dateFormatter.locale = Locale(identifier: "en")
-                let date = dateFormatter.date(from:self.event.startDate)
+                let date = dateFormatter.date(from:self.event.startDate) 
                 let components = calendar.dateComponents([.year, .month, .day, .hour], from: date!)
                 let day = components.day!
                 dayLabel.text = "\(day)"
