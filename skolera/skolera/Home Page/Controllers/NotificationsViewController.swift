@@ -31,11 +31,11 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
         headerView.addShadow()
-        getNotifcations()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,6 +54,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
 
     
     @objc private func refreshData() {
+        fixTableViewHeight()
         getNotifcations()
         refreshControl.endRefreshing()
     }
