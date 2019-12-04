@@ -74,9 +74,10 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
     
     func setNotificationsSeen() {
-        self.tableView.showAnimatedSkeleton()
+//        fixTableViewHeight()
+//        self.tableView.showAnimatedSkeleton()
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            self.tableView.hideSkeleton()
+//            self.tableView.hideSkeleton()
             debugPrint("Notification is Seen")
         }
     }
