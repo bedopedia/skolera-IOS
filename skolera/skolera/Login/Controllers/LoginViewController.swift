@@ -283,12 +283,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     } else {
                         self.stopAnimating()
                         ///////
-                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                        if !parent.data.userType.elementsEqual("teacher") {
+//                            childProfileVC.otherUser = true
+//                        }
+//                        childProfileVC.actor = parent.data
+//                        let nvc = UINavigationController(rootViewController: childProfileVC)
+//                        nvc.isNavigationBarHidden = true
+//                        nvc.modalPresentationStyle = .fullScreen
+//                        self.present(nvc, animated: true, completion: nil)
+                        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        tabBarVC.actor = parent.data
                         if !parent.data.userType.elementsEqual("teacher") {
-                            childProfileVC.otherUser = true
+                            tabBarVC.otherUser = true
                         }
-                        childProfileVC.actor = parent.data
-                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        let nvc = UINavigationController(rootViewController: tabBarVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)

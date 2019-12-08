@@ -72,9 +72,6 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     
     @IBAction func logout() {
         let parentController = parent?.parent
-//        if let mainViewController = parentController as? TeacherContainerViewController {
-//            mainViewController.logout()
-//        }
         if let mainViewController = parentController as? TabBarViewController {
             mainViewController.logout()
         }

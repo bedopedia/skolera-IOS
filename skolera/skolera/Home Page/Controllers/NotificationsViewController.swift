@@ -65,11 +65,12 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
     
     @IBAction func logout () {
-        if let mainViewController = parent as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parent as? ChildHomeViewController {
-            mainViewController.openSettings()
+        if let mainViewController = parent as? TabBarViewController {
+            if getUserType() == UserType.teacher {
+                mainViewController.logout()
+            } else {
+                mainViewController.openSettings()
+            }
         }
     }
     

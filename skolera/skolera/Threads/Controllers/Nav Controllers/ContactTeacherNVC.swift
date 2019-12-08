@@ -15,6 +15,7 @@ class ContactTeacherNVC: UINavigationController {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.child = self.child
+                    self.nameTabBarItem()
                 }
             }
         }
@@ -25,6 +26,7 @@ class ContactTeacherNVC: UINavigationController {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.actor = self.actor
+                    self.nameTabBarItem()
                 }
             }
         }
@@ -32,7 +34,6 @@ class ContactTeacherNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.isHidden = true
-        tabBarItem.title = "Messages"
 //        debugPrint("contact teacher nvc")
 //        self.interactivePopGestureRecognizer?.isEnabled = true
 //        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
@@ -45,6 +46,12 @@ class ContactTeacherNVC: UINavigationController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    func nameTabBarItem () {
+        tabBarItem.title = "Messages"
+        tabBarItem.image = #imageLiteral(resourceName: "messagesNormal")
+        tabBarItem.selectedImage = UIImage(named: "teacherActiveMessage")?.withRenderingMode(
+            .alwaysOriginal)
+    }
     
 
     /*

@@ -90,7 +90,7 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     
     @IBAction func logout() {
         let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
+        if let mainViewController = parentController as? TabBarViewController {
             mainViewController.logout()
         }
     }
