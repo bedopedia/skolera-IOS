@@ -121,12 +121,17 @@ class SplashScreenViewController: UIViewController {
                                 showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
                             }
                         } else {
-                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.actor = parent.data
+//                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                            childProfileVC.actor = parent.data
+//                            if !parent.data.userType.elementsEqual("teacher") {
+//                                childProfileVC.otherUser = true
+//                            }
+                            let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            tabBarVC.actor = parent.data
                             if !parent.data.userType.elementsEqual("teacher") {
-                                childProfileVC.otherUser = true
+                                tabBarVC.otherUser = true
                             }
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            let nvc = UINavigationController(rootViewController: tabBarVC)
                             nvc.isNavigationBarHidden = true
                             nvc.modalPresentationStyle = .fullScreen
                             self.present(nvc, animated: true, completion: nil)

@@ -326,6 +326,7 @@
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 		DCC414A12390274500E70EF6 /* SkeletonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */; };
 		DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */; };
+		DCC69663239D190B0087682C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC69662239D190B0087682C /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -668,6 +669,7 @@
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTableViewCell.swift; sourceTree = "<group>"; };
 		DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonTableViewCell.xib; sourceTree = "<group>"; };
+		DCC69662239D190B0087682C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -873,6 +875,7 @@
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
 				8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */,
+				DCC69662239D190B0087682C /* TabBarViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2174,6 +2177,7 @@
 				8A5F42E820B1C5EA00FF93D1 /* ThreadTableViewCell.swift in Sources */,
 				5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */,
 				8A94E45522DF53F600A01B0C /* PostsViewController.swift in Sources */,
+				DCC69663239D190B0087682C /* TabBarViewController.swift in Sources */,
 				8A93357B22E0BE88007B287D /* AttachmentTableViewCell.swift in Sources */,
 				DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */,
 				8AF5119D21E74D8600106EF2 /* Announcement.swift in Sources */,

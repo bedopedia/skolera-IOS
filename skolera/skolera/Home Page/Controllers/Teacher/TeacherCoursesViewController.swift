@@ -26,34 +26,14 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
         super.viewDidLoad()
         headerView.addShadow()
         self.tableView.rowHeight = 80
+        self.tableView.estimatedRowHeight = 80
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.tableView.showSkeleton()
     }
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        if actor != nil {
-//            getCourses()
-//        }
-//    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        debugPrint(parent, parent?.parent)
-//        if let parentVC = parent?.parent as? TeacherContainerViewController {
-////            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-////            parentVC.headerView.isHidden = false
-//        }
-//    }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        if let parentVc = parent?.parent as? TeacherContainerViewController {
-////            parentVc.headerHeightConstraint.constant = 0
-////            parentVc.headerView.isHidden = true
-//        }
-//    }
+
 //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
@@ -65,7 +45,6 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     }
 
     func getCourses() {
-        self.tableView.showSkeleton()
         getCoursesForTeacherAPI(teacherActableId: actor.actableId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
@@ -93,7 +72,10 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     
     @IBAction func logout() {
         let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
+//        if let mainViewController = parentController as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+        if let mainViewController = parentController as? TabBarViewController {
             mainViewController.logout()
         }
     }
