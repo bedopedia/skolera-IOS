@@ -48,6 +48,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         threadsTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixTableViewHeight()
+        refreshData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

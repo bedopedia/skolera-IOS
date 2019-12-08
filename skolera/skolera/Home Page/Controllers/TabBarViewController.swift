@@ -43,6 +43,10 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
                     actorViewController.actor = self.actor
                 }
+//                    should check the usertype
+                else if let contactTeacherNVC = child as? ContactTeacherNVC {
+                    contactTeacherNVC.actor = self.actor
+                }
             }
         }
     }

@@ -19,12 +19,24 @@ class ContactTeacherNVC: UINavigationController {
             }
         }
     }
+    
+    var actor: Actor! {
+        didSet {
+            for child in childViewControllers {
+                if let contactTeacher = child as? ContactTeacherViewController {
+                    contactTeacher.actor = self.actor
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.isHidden = true
+        tabBarItem.title = "Messages"
 //        debugPrint("contact teacher nvc")
 //        self.interactivePopGestureRecognizer?.isEnabled = true
 //        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
+        
         
     }
     
