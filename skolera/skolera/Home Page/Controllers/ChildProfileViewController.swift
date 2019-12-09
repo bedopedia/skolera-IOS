@@ -109,7 +109,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBAction func settingsButton() {
         
         let parentController = parent?.parent
-        if let mainViewController = parentController as? ChildHomeViewController {
+        if let mainViewController = parentController as? TabBarViewController {
             mainViewController.openSettings()
         }
     }
