@@ -74,12 +74,14 @@ class SplashScreenViewController: UIViewController {
                     for childJson in result {
                         let child = Child.init(fromDictionary: childJson)
                         if child.id == childId {
-                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.child = child
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
+//                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                            for the child profile VC
+                            tabBarVC.child = child
+                            tabBarVC.assignmentsText = ""
+                            tabBarVC.quizzesText = ""
+                            tabBarVC.eventsText = ""
+                            let nvc = UINavigationController(rootViewController: tabBarVC)
                             nvc.isNavigationBarHidden = true
                             nvc.modalPresentationStyle = .fullScreen
                             self.present(nvc, animated: true, completion: nil)

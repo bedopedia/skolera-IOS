@@ -60,8 +60,42 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        if isParent() {
+//            selectFourthTab()
+//            firstLabel.text = "Announcments".localized
+//            secondLabel.text = "Messages".localized
+//            thirdLabel.text = "Notifications".localized
+//            fourthLabel.text = "Menu".localized
+//        } else {
+//            selectFirstTab()
+//            firstLabel.text = "Home".localized
+//            secondLabel.text = "Messages".localized
+//            thirdLabel.text = "Notifications".localized
+//            fourthLabel.text = "Announcments".localized
+//
+//        }
+        self.addChildImage()
+        self.addChildData()
     }
+  
     
+//        
+//        @IBAction func leftAction() {
+//            if isParent() {
+//                self.navigationController?.popViewController(animated: true)
+//            } else {
+//                openNewMessage()
+//            }
+//        }
+//        
+//        @IBAction func rightAction() {
+//            if isParent() {
+//                openNewMessage()
+//            } else {
+//                openSettings()
+//            }
+//        }
+//    
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -71,24 +105,6 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         return true
     }
 
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 0
-//            parentVC.headerView.isHidden = true
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-        }
-        //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
-    }
     
     @IBAction func settingsButton() {
         

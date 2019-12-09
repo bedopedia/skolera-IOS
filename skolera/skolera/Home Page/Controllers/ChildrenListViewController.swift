@@ -174,12 +174,12 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
-        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        childProfileVC.child = cell.child
-        childProfileVC.assignmentsText = ""
-        childProfileVC.quizzesText = ""
-        childProfileVC.eventsText = ""
-        self.navigationController?.pushViewController(childProfileVC, animated: true)
+        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        tabBarVC.child = cell.child
+        tabBarVC.assignmentsText = ""
+        tabBarVC.quizzesText = ""
+        tabBarVC.eventsText = ""
+        self.navigationController?.pushViewController(tabBarVC, animated: true)
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {

@@ -306,7 +306,6 @@
                                             <action selector="logout" destination="edB-J8-WxP" eventType="touchUpInside" id="LME-Ox-c4H"/>
                                             <action selector="logout" destination="Z4O-kc-n7U" eventType="touchUpInside" id="Mho-5C-8uX"/>
                                             <action selector="logout" destination="nuY-Lb-wXn" eventType="touchUpInside" id="pWB-zJ-ukF"/>
-                                            <action selector="rightAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="FQj-Gn-S3X"/>
                                             <action selector="settingsButton" destination="gLf-a4-ZMc" eventType="touchUpInside" id="grf-ju-5eh"/>
                                         </connections>
                                     </button>
@@ -326,7 +325,6 @@
                                         <state key="normal" image="chevronLeft"/>
                                         <connections>
                                             <action selector="backAction" destination="gLf-a4-ZMc" eventType="touchUpInside" id="uUm-nL-YL5"/>
-                                            <action selector="leftAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="L01-Hq-lf3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -587,7 +585,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8we-f2-87S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="48" y="-1260"/>
+            <point key="canvasLocation" x="-19" y="-1295"/>
         </scene>
         <!--AnnouncementsTableViewNVC-->
         <scene sceneID="w4V-8a-9Qg">
@@ -618,11 +616,11 @@
             <objects>
                 <viewController storyboardIdentifier="NotificationsViewController" id="edB-J8-WxP" customClass="NotificationsViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pUr-t5-n2x">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="685"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2CQ-vh-Woh">
-                                <rect key="frame" x="0.0" y="60" width="414" height="627"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="625"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="notificationCell" rowHeight="100" id="os1-IS-XoS" customClass="NotificationTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -734,7 +732,6 @@
                                             <action selector="logout" destination="Z4O-kc-n7U" eventType="touchUpInside" id="2TS-HZ-CbI"/>
                                             <action selector="logout" destination="nuY-Lb-wXn" eventType="touchUpInside" id="umq-zD-Xeq"/>
                                             <action selector="logout" destination="edB-J8-WxP" eventType="touchUpInside" id="zkm-du-fRd"/>
-                                            <action selector="rightAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="tac-t4-vUO"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RwT-Op-U3A">
@@ -753,7 +750,6 @@
                                         <state key="normal" image="chevronLeft"/>
                                         <connections>
                                             <action selector="backButtonAction" destination="edB-J8-WxP" eventType="touchUpInside" id="GPw-0X-ly1"/>
-                                            <action selector="leftAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="5Fz-rV-5BR"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1221,7 +1217,6 @@
                                         <connections>
                                             <action selector="logout" destination="Z4O-kc-n7U" eventType="touchUpInside" id="UPK-9I-I3H"/>
                                             <action selector="logout" destination="nuY-Lb-wXn" eventType="touchUpInside" id="acx-L0-hgt"/>
-                                            <action selector="rightAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="Ta7-fi-5AB"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3n7-QN-i1x">
@@ -1238,9 +1233,6 @@
                                             <constraint firstAttribute="height" constant="30" id="icb-mk-oMz"/>
                                         </constraints>
                                         <state key="normal" image="chevronLeft"/>
-                                        <connections>
-                                            <action selector="leftAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="vqr-h9-0H7"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1545,15 +1537,16 @@
                     </tabBar>
                     <connections>
                         <segue destination="Bk9-iX-KFO" kind="relationship" relationship="viewControllers" id="uuj-up-nD2"/>
-                        <segue destination="BIW-W7-utO" kind="relationship" relationship="viewControllers" id="j6Y-8N-oqF"/>
                         <segue destination="pF6-QC-P7s" kind="relationship" relationship="viewControllers" id="lEK-Ze-A4H"/>
+                        <segue destination="BIW-W7-utO" kind="relationship" relationship="viewControllers" id="j6Y-8N-oqF"/>
                         <segue destination="edB-J8-WxP" kind="relationship" relationship="viewControllers" id="9Hf-OD-Fzg"/>
                         <segue destination="ikF-tN-SxR" kind="relationship" relationship="viewControllers" id="D5g-td-RSS"/>
+                        <segue destination="OVD-oC-ruo" kind="relationship" relationship="viewControllers" id="bka-2O-Tgj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cAQ-uz-EMe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4051" y="-127"/>
+            <point key="canvasLocation" x="-2717" y="-183"/>
         </scene>
         <!--Actor View Controller-->
         <scene sceneID="a2y-N6-Rrf">
@@ -1603,7 +1596,6 @@
                                         <state key="normal" image="settings"/>
                                         <connections>
                                             <action selector="logout" destination="Z4O-kc-n7U" eventType="touchUpInside" id="Np6-se-vCn"/>
-                                            <action selector="rightAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="xvz-nu-Pgo"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-ga-hDn">
@@ -1620,9 +1612,6 @@
                                             <constraint firstAttribute="width" constant="30" id="SUI-BA-8Tk"/>
                                         </constraints>
                                         <state key="normal" image="chevronLeft"/>
-                                        <connections>
-                                            <action selector="leftAction" destination="pNG-dJ-lpF" eventType="touchUpInside" id="99N-vf-eXI"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1682,7 +1671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GWn-DV-S3g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="936.23188405797111" y="772.41847826086962"/>
+            <point key="canvasLocation" x="964" y="728"/>
         </scene>
         <!--Actor Features Table View Controller-->
         <scene sceneID="knP-w4-kfx">
@@ -1974,11 +1963,14 @@
             </objects>
             <point key="canvasLocation" x="2868.115942028986" y="1455.9782608695652"/>
         </scene>
-        <!--Child Profile FeaturesNVC-->
+        <!--Home-->
         <scene sceneID="GsW-7h-Zx3">
             <objects>
                 <navigationController storyboardIdentifier="ChildProfileFeaturesNVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="OVD-oC-ruo" customClass="ChildProfileFeaturesNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="unselectedCourses" selectedImage="studentActiveBookIcon" id="T1v-Th-FYD">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yGt-uy-33k">
@@ -1991,7 +1983,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pqd-gT-635" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="802.89855072463774" y="-525"/>
+            <point key="canvasLocation" x="730" y="-973"/>
         </scene>
         <!--Courses-->
         <scene sceneID="fBk-pd-2Zl">
@@ -2033,7 +2025,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dcd-lZ-zEi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-48" y="765"/>
+            <point key="canvasLocation" x="-87" y="728"/>
         </scene>
     </scenes>
     <resources>
@@ -2056,6 +2048,7 @@
         <image name="profileattendanceIco" width="33" height="30"/>
         <image name="quizzesIco" width="27" height="32"/>
         <image name="settings" width="32" height="32"/>
+        <image name="studentActiveBookIcon" width="16" height="21"/>
         <image name="teacherActiveAnnouncment" width="48" height="34"/>
         <image name="teacherActiveCourse" width="48" height="34"/>
         <image name="teacherActiveMenu" width="48" height="34"/>
@@ -2069,8 +2062,9 @@
         <image name="weeklyPlanner" width="24" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9Hf-OD-Fzg"/>
-        <segue reference="j6Y-8N-oqF"/>
-        <segue reference="lEK-Ze-A4H"/>
+        <segue reference="953-a2-BoA"/>
+        <segue reference="YSP-NV-DlE"/>
+        <segue reference="yTp-dm-llu"/>
+        <segue reference="E7U-la-Ad1"/>
     </inferredMetricsTieBreakers>
 </document>

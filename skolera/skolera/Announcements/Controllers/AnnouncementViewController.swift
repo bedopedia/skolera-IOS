@@ -62,25 +62,6 @@ class AnnouncementViewController: UIViewController {
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        debugPrint("parent: \(parent), \(parent?.parent)")
-//        if let parentVc = parent?.parent as? ChildHomeViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-//        }
-//        //        self.navigationController?.isNavigationBarHidden = true
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        debugPrint(parent?.parent)
-//        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-//        }
-//    }
 
     /*
     // MARK: - Navigation

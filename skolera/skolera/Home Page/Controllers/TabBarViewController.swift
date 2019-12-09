@@ -15,11 +15,15 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
 
     var actor: Actor!
     var otherUser: Bool = false
+    var child: Child!
+    var assignmentsText: String!
+    var quizzesText: String!
+    var eventsText: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as! UIGestureRecognizerDelegate
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         //        if otherUser {
         //            menuButton.isHidden = true
         //            coursesButton.isHidden = true
@@ -35,13 +39,32 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         tabBar.unselectedItemTintColor = .black
         tabBar.itemPositioning = .centered
         UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -2)
-
-    }
-
-        // Do any additional setup after loading the view.
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        debugPrint("count", viewControllers?.count)
+        
+      
+        let announcementsVC: AnnouncementsTableViewNVC = AnnouncementsTableViewNVC.instantiate(fromAppStoryboard: .Announcements)
+        let notificationsVC: NotificationsViewController = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        let childProfile: ChildProfileFeaturesNVC = ChildProfileFeaturesNVC.instantiate(fromAppStoryboard: .HomeScreen)
+        let teacherProfile: ActorNvc = ActorNvc.instantiate(fromAppStoryboard: .HomeScreen)
+        let teacherCourses: TeacherCoursesTableViewNVC = TeacherCoursesTableViewNVC.instantiate(fromAppStoryboard: .HomeScreen)
+        let messages: ContactTeacherNVC = ContactTeacherNVC.instantiate(fromAppStoryboard: .Threads)
+        let userType = getUserType()
+        switch userType {
+        case .teacher:
+            viewControllers? = [teacherCourses, announcementsVC, messages, notificationsVC, teacherProfile]
+        case .student:
+            viewControllers? = [childProfile, messages, notificationsVC, announcementsVC]
+            if let controllers = viewControllers {
+                for view in controllers {
+                    debugPrint("view", view)
+                }
+            }
+            
+        case .parent:
+            viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
+        default:
+            viewControllers? = [announcementsVC,  messages, notificationsVC]
+        }
+        
         if let tabViewControllers = viewControllers {
             for child in tabViewControllers {
                 if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesViewController {
@@ -49,17 +72,21 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
                     actorViewController.actor = self.actor
                 }
-//                    should check the usertype
+                    //                    should check the usertype
                 else if let contactTeacherNVC = child as? ContactTeacherNVC {
                     contactTeacherNVC.actor = self.actor
                 }
                 else if let announcementsNVC = child as? AnnouncementsTableViewNVC {
                     announcementsNVC.nameTabBarItem()
+                } else if let childProfileNVC = child as? ChildProfileFeaturesNVC {
+                    childProfileNVC.child = self.child
+                    childProfileNVC.eventsText = ""
+                    childProfileNVC.assignmentsText = ""
+                    childProfileNVC.quizzesText = ""
                 }
             }
         }
     }
-    
 
     @IBAction func logout() {
            let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
