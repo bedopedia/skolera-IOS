@@ -27,13 +27,14 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
     var child: Child!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
-    let maxHeight: CGFloat = 143
+    let maxHeight: CGFloat = 160
     let minHeight: CGFloat = 12
     
     //MARK: - Life Cycle
@@ -41,6 +42,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     /// sets basic screen details, sends current child to embedded ChildProfileFeaturesTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerHeightConstraint.constant =  UIApplication.shared.statusBarFrame.height + 60
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if !isParent() {
             backButton.isHidden = true
