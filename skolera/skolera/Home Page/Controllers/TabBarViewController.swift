@@ -20,7 +20,6 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as! UIGestureRecognizerDelegate
-        
         //        if otherUser {
         //            menuButton.isHidden = true
         //            coursesButton.isHidden = true
@@ -30,6 +29,13 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         //        } else {
         //            selectMenu()
         //    }
+        
+        let fontAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 10.0), NSAttributedStringKey.backgroundColor: UIColor.black]
+        UIBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
+        tabBar.unselectedItemTintColor = .black
+        tabBar.itemPositioning = .centered
+        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -2)
+
     }
 
         // Do any additional setup after loading the view.
