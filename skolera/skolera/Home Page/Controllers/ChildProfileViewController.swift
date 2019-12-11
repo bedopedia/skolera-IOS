@@ -76,6 +76,8 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
 //            fourthLabel.text = "Announcments".localized
 //
 //        }
+        tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
+        .alwaysOriginal)
         self.addChildImage()
         self.addChildData()
     }
