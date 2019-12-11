@@ -46,6 +46,9 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             tabBar.tintColor = getMainColor()
         case .student:
             viewControllers? = [childProfile, messages, notificationsVC, announcementsVC]
+            if let tabItem = tabBar.items?[3] {
+                updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
+            }
             tabBar.tintColor = getMainColor()
         case .parent:
             viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
