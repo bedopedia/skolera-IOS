@@ -49,8 +49,18 @@ class ContactTeacherNVC: UINavigationController {
     func nameTabBarItem () {
         tabBarItem.title = "Messages"
         tabBarItem.image = #imageLiteral(resourceName: "messagesNormal")
-        tabBarItem.selectedImage = UIImage(named: "teacherActiveMessage")?.withRenderingMode(
-            .alwaysOriginal)
+        let userType = getUserType()
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveMessage")?.withRenderingMode(
+                .alwaysOriginal)
+        }
+        
     }
     
 

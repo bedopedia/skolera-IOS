@@ -76,8 +76,18 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
 //            fourthLabel.text = "Announcments".localized
 //
 //        }
-        tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
-        .alwaysOriginal)
+        if getUserType() == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
+            .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "unselectedCourses")
+            tabBarItem.title = "Courses".localized
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMoreIcon")?.withRenderingMode(
+            .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "parentMoreIcon")
+            tabBarItem.title = "Menu".localized
+//            #imageLiteral(resourceName: "parentActiveMoreIcon")
+        }
         self.addChildImage()
         self.addChildData()
     }
