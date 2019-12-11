@@ -39,6 +39,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
     //MARK: - Life Cycle
     
+   
     /// sets basic screen details, sends current child to embedded ChildProfileFeaturesTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,32 +63,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-//        if isParent() {
-//            selectFourthTab()
-//            firstLabel.text = "Announcments".localized
-//            secondLabel.text = "Messages".localized
-//            thirdLabel.text = "Notifications".localized
-//            fourthLabel.text = "Menu".localized
-//        } else {
-//            selectFirstTab()
-//            firstLabel.text = "Home".localized
-//            secondLabel.text = "Messages".localized
-//            thirdLabel.text = "Notifications".localized
-//            fourthLabel.text = "Announcments".localized
-//
-//        }
-        if getUserType() == .student {
-            tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
-            .alwaysOriginal)
-            tabBarItem.image = #imageLiteral(resourceName: "unselectedCourses")
-            tabBarItem.title = "Courses".localized
-        } else {
-            tabBarItem.selectedImage = UIImage(named: "parentActiveMoreIcon")?.withRenderingMode(
-            .alwaysOriginal)
-            tabBarItem.image = #imageLiteral(resourceName: "parentMoreIcon")
-            tabBarItem.title = "Menu".localized
-//            #imageLiteral(resourceName: "parentActiveMoreIcon")
-        }
+//        updateTabBarItem(tab: .home, tabBarItem: tabBarItem)
         self.addChildImage()
         self.addChildData()
     }

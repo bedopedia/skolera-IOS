@@ -33,36 +33,37 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         //        } else {
         //            selectMenu()
         //    }
-        
+        let userType = getUserType()
         let fontAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 10.0), NSAttributedStringKey.backgroundColor: UIColor.black]
         UIBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
         tabBar.unselectedItemTintColor = .black
         tabBar.itemPositioning = .centered
         UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -2)
-        
-      
         let announcementsVC: AnnouncementsTableViewNVC = AnnouncementsTableViewNVC.instantiate(fromAppStoryboard: .Announcements)
         let notificationsVC: NotificationsViewController = NotificationsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         let childProfile: ChildProfileFeaturesNVC = ChildProfileFeaturesNVC.instantiate(fromAppStoryboard: .HomeScreen)
         let teacherProfile: ActorNvc = ActorNvc.instantiate(fromAppStoryboard: .HomeScreen)
         let teacherCourses: TeacherCoursesTableViewNVC = TeacherCoursesTableViewNVC.instantiate(fromAppStoryboard: .HomeScreen)
         let messages: ContactTeacherNVC = ContactTeacherNVC.instantiate(fromAppStoryboard: .Threads)
-        let userType = getUserType()
         switch userType {
         case .teacher:
             viewControllers? = [teacherCourses, announcementsVC, messages, notificationsVC, teacherProfile]
+            tabBar.tintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         case .student:
             viewControllers? = [childProfile, messages, notificationsVC, announcementsVC]
+            tabBar.tintColor = #colorLiteral(red: 0.9215686275, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
             if let controllers = viewControllers {
                 for view in controllers {
-                    debugPrint("view", view)
+                    debugPrint("tab view", view)
                 }
             }
-            
         case .parent:
             viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
+            tabBar.selectedItem = tabBar.items?.last
+            tabBar.tintColor = #colorLiteral(red: 0.02352941176, green: 0.768627451, blue: 0.8, alpha: 1)
         default:
             viewControllers? = [announcementsVC,  messages, notificationsVC]
+            tabBar.tintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
         }
         
         if let tabViewControllers = viewControllers {

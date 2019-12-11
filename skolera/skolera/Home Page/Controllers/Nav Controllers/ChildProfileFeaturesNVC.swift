@@ -26,6 +26,7 @@ class ChildProfileFeaturesNVC: UINavigationController, UIGestureRecognizerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isNavigationBarHidden = true
+        updateTabBarItem(tab: .home, tabBarItem: tabBarItem)
 //        self.delegate = self
 //        self.interactivePopGestureRecognizer?.delegate = self
     }
@@ -46,6 +47,20 @@ class ChildProfileFeaturesNVC: UINavigationController, UIGestureRecognizerDelega
 //            }
 //        }
     }
+    fileprivate func updateTabBarItem(tab: Tabs, tabBarItem: UITabBarItem) {
+        if getUserType() == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
+                .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "unselectedCourses")
+            tabBarItem.title = "Home".localized
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMoreIcon")?.withRenderingMode(
+                .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "parentMoreIcon")
+            tabBarItem.title = "Menu".localized
+            //            #imageLiteral(resourceName: "parentActiveMoreIcon")
+        }
+       }
     
     // MARK: - Swipe
 //    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {

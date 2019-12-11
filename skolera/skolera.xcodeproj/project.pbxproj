@@ -316,6 +316,7 @@
 		DC1CA712237DA26000E79769 /* PlaceHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */; };
 		DC1CA71423815FC900E79769 /* UITextField+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA71323815FC900E79769 /* UITextField+Views.swift */; };
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
+		DC5774EA23A1356600BDB769 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5774E923A1356600BDB769 /* Tabs.swift */; };
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
@@ -658,6 +659,7 @@
 		DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTableViewCell.swift; sourceTree = "<group>"; };
 		DC1CA71323815FC900E79769 /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
+		DC5774E923A1356600BDB769 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
@@ -1145,6 +1147,7 @@
 				DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */,
 				DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */,
 				DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */,
+				DC5774E923A1356600BDB769 /* Tabs.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2003,6 +2006,7 @@
 				8A97C2C922E5D1BC00D72D33 /* AssignmentContentTableViewCell.swift in Sources */,
 				547605AB202091E100369BE0 /* Attendance.swift in Sources */,
 				54797C3D201DF058000547E4 /* App Methods.swift in Sources */,
+				DC5774EA23A1356600BDB769 /* Tabs.swift in Sources */,
 				547DD3E5208D0C2A008EED15 /* Time.swift in Sources */,
 				8A842F5C22F0592E000BA70B /* TeacherCourseTableViewCell.swift in Sources */,
 				543830B4204DA07D00ABF477 /* SplashScreenViewController.swift in Sources */,
