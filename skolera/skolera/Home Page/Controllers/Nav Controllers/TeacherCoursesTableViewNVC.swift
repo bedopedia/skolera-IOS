@@ -15,7 +15,7 @@ class TeacherCoursesTableViewNVC: UINavigationController {
         self.isNavigationBarHidden = true
 //        tabBarItem.selectedImage = UIImage(named: "teacherActiveCourse")?.withRenderingMode(
 //        .alwaysOriginal)
-//        updateTabBarItem(tab: .courses, tabBarItem: tabBarItem)
+        updateTabBarItem(tab: .courses, tabBarItem: tabBarItem)
 //        self.interactivePopGestureRecognizer?.isEnabled = true
 //        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
     }
