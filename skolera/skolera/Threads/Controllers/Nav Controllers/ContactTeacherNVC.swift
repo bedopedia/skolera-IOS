@@ -15,7 +15,8 @@ class ContactTeacherNVC: UINavigationController {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.child = self.child
-                    self.nameTabBarItem()
+//                    self.nameTabBarItem()
+                    updateTabBarItem(tab: .messages, tabBarItem: tabBarItem)
                 }
             }
         }
@@ -26,7 +27,8 @@ class ContactTeacherNVC: UINavigationController {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.actor = self.actor
-                    self.nameTabBarItem()
+//                    self.nameTabBarItem()
+                    updateTabBarItem(tab: .messages, tabBarItem: tabBarItem)
                 }
             }
         }

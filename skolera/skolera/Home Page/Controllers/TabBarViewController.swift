@@ -24,15 +24,6 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
-        //        if otherUser {
-        //            menuButton.isHidden = true
-        //            coursesButton.isHidden = true
-        //            menuLabel.isHidden = true
-        //            coursesLabel.isHidden = true
-        //            selectAnnouncements()
-        //        } else {
-        //            selectMenu()
-        //    }
         let userType = getUserType()
         let fontAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 10.0), NSAttributedStringKey.backgroundColor: UIColor.black]
         UIBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
@@ -48,24 +39,22 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         switch userType {
         case .teacher:
             viewControllers? = [teacherCourses, announcementsVC, messages, notificationsVC, teacherProfile]
-            tabBar.tintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+            if let tabItem = tabBar.items?[1] {
+                updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
+            }
+            self.selectedIndex = 4
+            tabBar.tintColor = getMainColor()
         case .student:
             viewControllers? = [childProfile, messages, notificationsVC, announcementsVC]
-            tabBar.tintColor = #colorLiteral(red: 0.9215686275, green: 0.5098039216, blue: 0.4078431373, alpha: 1)
-            if let controllers = viewControllers {
-                for view in controllers {
-                    debugPrint("tab view", view)
-                }
-            }
+            tabBar.tintColor = getMainColor()
         case .parent:
             viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
-            tabBar.selectedItem = tabBar.items?.last
-            tabBar.tintColor = #colorLiteral(red: 0.02352941176, green: 0.768627451, blue: 0.8, alpha: 1)
+            self.selectedIndex = 3
+            tabBar.tintColor = getMainColor()
         default:
             viewControllers? = [announcementsVC,  messages, notificationsVC]
-            tabBar.tintColor = #colorLiteral(red: 0, green: 0.4941176471, blue: 0.8980392157, alpha: 1)
+            tabBar.tintColor = getMainColor()
         }
-        
         if let tabViewControllers = viewControllers {
             for child in tabViewControllers {
                 if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesViewController {
@@ -73,7 +62,6 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
                     actorViewController.actor = self.actor
                 }
-                    //                    should check the usertype
                 else if let contactTeacherNVC = child as? ContactTeacherNVC {
                     contactTeacherNVC.actor = self.actor
                 }

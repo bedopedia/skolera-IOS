@@ -14,13 +14,7 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     var courses: [TeacherCourse] = []
-    var actor: Actor!{
-        didSet {
-            if actor != nil {
-                getCourses()
-            }
-        }
-    }
+    var actor: Actor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +26,9 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.tableView.showSkeleton()
+        if actor != nil {
+            getCourses()
+        }
     }
 
 //    MARK: - Swipe

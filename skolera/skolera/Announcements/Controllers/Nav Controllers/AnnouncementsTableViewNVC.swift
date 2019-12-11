@@ -13,22 +13,23 @@ class AnnouncementsTableViewNVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isNavigationBarHidden = true
+        updateTabBarItem(tab: .announcements, tabBarItem: tabBarItem)
     }
     
     func nameTabBarItem () {
-        tabBarItem.title = "Announcements"
-        tabBarItem.image = #imageLiteral(resourceName: "announcmentsNormal")
-        let userType = getUserType()
-        if userType == .student {
-            tabBarItem.selectedImage = UIImage(named: "studentActiveAnnouncmentsIcon")?.withRenderingMode(
-                .alwaysOriginal)
-        } else if userType == .parent {
-            tabBarItem.selectedImage = UIImage(named: "parentActiveAnnouncmentsIcon")?.withRenderingMode(
-                .alwaysOriginal)
-        } else {
-            tabBarItem.selectedImage = UIImage(named: "teacherActiveAnnouncment")?.withRenderingMode(
-                .alwaysOriginal)
-        }
+//        tabBarItem.title = "Announcements"
+//        tabBarItem.image = #imageLiteral(resourceName: "announcmentsNormal")
+//        let userType = getUserType()
+//        if userType == .student {
+//            tabBarItem.selectedImage = UIImage(named: "studentActiveAnnouncmentsIcon")?.withRenderingMode(
+//                .alwaysOriginal)
+//        } else if userType == .parent {
+//            tabBarItem.selectedImage = UIImage(named: "parentActiveAnnouncmentsIcon")?.withRenderingMode(
+//                .alwaysOriginal)
+//        } else {
+//            tabBarItem.selectedImage = UIImage(named: "teacherActiveAnnouncment")?.withRenderingMode(
+//                .alwaysOriginal)
+//        }
     }
     
     

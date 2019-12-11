@@ -36,17 +36,18 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         refreshData()
-        let userType = getUserType()
-        if userType == .student {
-            tabBarItem.selectedImage = UIImage(named: "studentActiveNotificationIcon")?.withRenderingMode(
-                .alwaysOriginal)
-        } else if userType == .parent {
-            tabBarItem.selectedImage = UIImage(named: "parentActiveNotificationIcon")?.withRenderingMode(
-            .alwaysOriginal)
-        } else {
-            tabBarItem.selectedImage = UIImage(named: "teacherActiveNotification")?.withRenderingMode(
-                .alwaysOriginal)
-        }
+//        let userType = getUserType()
+//        if userType == .student {
+//            tabBarItem.selectedImage = UIImage(named: "studentActiveNotificationIcon")?.withRenderingMode(
+//                .alwaysOriginal)
+//        } else if userType == .parent {
+//            tabBarItem.selectedImage = UIImage(named: "parentActiveNotificationIcon")?.withRenderingMode(
+//            .alwaysOriginal)
+//        } else {
+//            tabBarItem.selectedImage = UIImage(named: "teacherActiveNotification")?.withRenderingMode(
+//                .alwaysOriginal)
+//        }
+        updateTabBarItem(tab: .notifications, tabBarItem: tabBarItem)
         
     }
     
