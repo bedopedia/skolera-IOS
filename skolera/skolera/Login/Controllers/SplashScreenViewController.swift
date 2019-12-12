@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import KeychainSwift
+//import KeychainSwift
 import Alamofire
 import Firebase
 //import NRAppUpdate
 
 class SplashScreenViewController: UIViewController {
+    
+    let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +28,11 @@ class SplashScreenViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    fileprivate func login(_ keychain: KeychainSwift) {
-        BASE_URL = keychain.get("BASE_URL")
+    fileprivate func login() {
+        BASE_URL = userDefault.string(forKey: "BASE_URL") ?? ""
         var parameters : Parameters = [:]
-        if let email = keychain.get("email") {
-            if let password = keychain.get("password") {
+        if let email = userDefault.string(forKey: "email") {
+            if let password = userDefault.string(forKey: "password") {
                 parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
             }
         } else {
@@ -41,11 +43,10 @@ class SplashScreenViewController: UIViewController {
                 if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
                     UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    let keychain = KeychainSwift()
-                    keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                    keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
-                    keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
-                    keychain.set(String(parent.data.id), forKey: ID)
+                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
+                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
+                    self.userDefault.set(String(parent.data.id), forKey: ID)
                     self.updateLocale()
                 }
             } else {
@@ -57,9 +58,8 @@ class SplashScreenViewController: UIViewController {
     
     /// acts as Launch Screen till the system either auto login the user if his credentials are saved, or shows the SchoolCode screen to login otherwise
     private func getMainScreen() {
-        let keychain = KeychainSwift()
-        if keychain.get(ACCESS_TOKEN) != nil {
-            BASE_URL = keychain.get("BASE_URL")
+        if userDefault.string(forKey: ACCESS_TOKEN) != nil {
+            BASE_URL = userDefault.string(forKey: "BASE_URL") ?? ""
             self.updateLocale()
         } else {
             DispatchQueue.main.async {
@@ -137,8 +137,7 @@ class SplashScreenViewController: UIViewController {
                 }
             } else {
                 if statusCode == 401 {
-                    let keychain = KeychainSwift()
-                    self.login(keychain)
+                    self.login()
                 } else {
                     showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                         let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
@@ -224,7 +223,6 @@ class SplashScreenViewController: UIViewController {
     }
     
      func showUpdateAlert(version: String, appID: String) {
-        
         let itunesUrlString =  "https://itunes.apple.com/app/id\(appID)"
         let itunesUrl = URL(string: itunesUrlString)
         let alert = UIAlertController(title: "Update Available", message: "A new version of app is available. Please update to version now. \(version)", preferredStyle: .alert)
