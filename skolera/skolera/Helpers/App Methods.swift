@@ -129,6 +129,7 @@ func getMainColor() -> UIColor {
 func handleEmptyDate(tableView: UITableView, dataSource: [Any], imageName: String, placeholderText: String) {
     DispatchQueue.main.async {
         if dataSource.count == 0 {
+            debugPrint("localized", placeholderText)
             assignPlaceholder(tableView, imageName: imageName, placeHolderLabelText: placeholderText.localized)
         } else {
             restore(tableView)

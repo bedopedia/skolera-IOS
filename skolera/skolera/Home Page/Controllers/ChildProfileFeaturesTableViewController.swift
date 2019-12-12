@@ -79,6 +79,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         navigationItem.backBarButtonItem = backItem
         tableView.register(UINib(nibName: "SkeletonTableViewCell", bundle: nil), forCellReuseIdentifier: "SkeletonTableViewCell")
         self.tableView.rowHeight = 80
+//        self.tableView.contentInset.bottom = self.tabBarController?.tabBar.frame.height ?? 0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
