@@ -22,18 +22,18 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     
     var actor: Actor! {
         didSet {
-            if actor != nil {
-                addActorImage()
-                childNameLabel.text = actor.name
-                childGradeLabel.text = actor.actableType
-                for child in childViewControllers {
-                    if let actorTableViewController = child as? ActorFeaturesTableViewController {
-                        actorTableViewController.actor = self.actor
-                        actorTableViewController.getTimeTable()
-                        self.actorTableViewController = actorTableViewController
-                    }
-                }
-            }
+//            if actor != nil {
+//                addActorImage()
+//                childNameLabel.text = actor.name
+//                childGradeLabel.text = actor.actableType
+//                for child in childViewControllers {
+//                    if let actorTableViewController = child as? ActorFeaturesTableViewController {
+//                        actorTableViewController.actor = self.actor
+//                        actorTableViewController.getTimeTable()
+//                        self.actorTableViewController = actorTableViewController
+//                    }
+//                }
+//            }
         }
     }
     
@@ -41,23 +41,20 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
         super.viewDidLoad()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-    }
-  
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
-        if let parentVC = parent?.parent as? TeacherContainerViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
+        if actor != nil {
+            addActorImage()
+            childNameLabel.text = actor.name
+            childGradeLabel.text = actor.actableType
+            for child in childViewControllers {
+                if let actorTableViewController = child as? ActorFeaturesTableViewController {
+                    actorTableViewController.actor = self.actor
+                    actorTableViewController.getTimeTable()
+                    self.actorTableViewController = actorTableViewController
+                }
+            }
         }
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let parentVc = parent?.parent as? TeacherContainerViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-        }
-    }
+
     
 //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -93,7 +90,7 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     
     @IBAction func logout() {
         let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
+        if let mainViewController = parentController as? TabBarViewController {
             mainViewController.logout()
         }
     }

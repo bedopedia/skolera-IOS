@@ -79,21 +79,21 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
         }
     }
     
-    @IBAction func leftAction() {
-        if isParent() {
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            openNewMessage()
-        }
-    }
-    
-    @IBAction func rightAction() {
-        if isParent() {
-            openNewMessage()
-        } else {
-            openSettings()
-        }
-    }
+//    @IBAction func leftAction() {
+//        if isParent() {
+//            self.navigationController?.popViewController(animated: true)
+//        } else {
+//            openNewMessage()
+//        }
+//    }
+//    
+//    @IBAction func rightAction() {
+//        if isParent() {
+//            openNewMessage()
+//        } else {
+//            openSettings()
+//        }
+//    }
     
     func openSettings() {
         let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)

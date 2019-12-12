@@ -233,21 +233,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 if let result = value as? [[String : AnyObject]] {
                     for childJson in result {
                         let child = Child.init(fromDictionary: childJson)
-                        if child.id == childId {
-                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.child = child
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            nvc.isNavigationBarHidden = true
-                            nvc.modalPresentationStyle = .fullScreen
-                            self.present(nvc, animated: true, completion: nil)
-                            break
-                        }
+                        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        //                            for the child profile VC
+                        tabBarVC.child = child
+                        tabBarVC.assignmentsText = ""
+                        tabBarVC.quizzesText = ""
+                        tabBarVC.eventsText = ""
+                        let nvc = UINavigationController(rootViewController: tabBarVC)
+                        nvc.isNavigationBarHidden = true
+                        nvc.modalPresentationStyle = .fullScreen
+                        self.present(nvc, animated: true, completion: nil)
+                        break
                     }
                 }
-            } else {
+            }
+            else {
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)
@@ -255,53 +255,62 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }
     }
-    
-    private func updateLocale(parent: ParentResponse) {
-        var locale = ""
-        if Locale.current.languageCode!.elementsEqual("ar") {
-            locale = "ar"
-        } else {
-            locale = "en"
-        }
-        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
-            if isSuccess {
-                if isParent() {
+
+private func updateLocale(parent: ParentResponse) {
+    var locale = ""
+    if Locale.current.languageCode!.elementsEqual("ar") {
+        locale = "ar"
+    } else {
+        locale = "en"
+    }
+    setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
+        if isSuccess {
+            if isParent() {
+                self.stopAnimating()
+                let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                let nvc = UINavigationController(rootViewController: childrenTVC)
+                nvc.isNavigationBarHidden = true
+                nvc.modalPresentationStyle = .fullScreen
+                self.present(nvc, animated: true, completion: nil)
+            } else {
+                if parent.data.userType.elementsEqual("student") {
+                    if let _ = parent.data.parentId {
+                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
+                    } else {
+                        self.stopAnimating()
+                        showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
+                    }
+                } else {
                     self.stopAnimating()
-                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                    let nvc = UINavigationController(rootViewController: childrenTVC)
+                    ///////
+                    //                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    //                        if !parent.data.userType.elementsEqual("teacher") {
+                    //                            childProfileVC.otherUser = true
+                    //                        }
+                    //                        childProfileVC.actor = parent.data
+                    //                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                    //                        nvc.isNavigationBarHidden = true
+                    //                        nvc.modalPresentationStyle = .fullScreen
+                    //                        self.present(nvc, animated: true, completion: nil)
+                    let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    tabBarVC.actor = parent.data
+                    if !parent.data.userType.elementsEqual("teacher") {
+                        tabBarVC.otherUser = true
+                    }
+                    let nvc = UINavigationController(rootViewController: tabBarVC)
                     nvc.isNavigationBarHidden = true
                     nvc.modalPresentationStyle = .fullScreen
                     self.present(nvc, animated: true, completion: nil)
-                } else {
-                    if parent.data.userType.elementsEqual("student") {
-                        if let _ = parent.data.parentId {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                        } else {
-                            self.stopAnimating()
-                            showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
-                        }
-                    } else {
-                        self.stopAnimating()
-                        ///////
-                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        if !parent.data.userType.elementsEqual("teacher") {
-                            childProfileVC.otherUser = true
-                        }
-                        childProfileVC.actor = parent.data
-                        let nvc = UINavigationController(rootViewController: childProfileVC)
-                        nvc.isNavigationBarHidden = true
-                        nvc.modalPresentationStyle = .fullScreen
-                        self.present(nvc, animated: true, completion: nil)
-                    }
                 }
-            } else {
-                self.stopAnimating()
-                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                })
             }
+        } else {
+            self.stopAnimating()
+            showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+                let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                self.navigationController?.pushViewController(schoolCodevc, animated: false)
+            })
         }
     }
 }
 
+}

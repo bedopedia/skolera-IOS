@@ -48,6 +48,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         threadsTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixTableViewHeight()
+        refreshData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -90,11 +91,12 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func logout() {
         let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parentController as? ChildHomeViewController {
-            mainViewController.openSettings()
+        if let mainViewController = parentController as? TabBarViewController {
+            if getUserType() == UserType.teacher {
+                mainViewController.logout()
+            } else {
+                mainViewController.openSettings()
+            }
         }
     }
    

@@ -129,6 +129,7 @@ func getMainColor() -> UIColor {
 func handleEmptyDate(tableView: UITableView, dataSource: [Any], imageName: String, placeholderText: String) {
     DispatchQueue.main.async {
         if dataSource.count == 0 {
+            debugPrint("localized", placeholderText)
             assignPlaceholder(tableView, imageName: imageName, placeHolderLabelText: placeholderText.localized)
         } else {
             restore(tableView)
@@ -174,4 +175,73 @@ func updateCurrentLabel(_ date: Date = Date(), currentCalendar: Calendar?, label
     if let calendar = currentCalendar {
         label.text = CVDate(date: date, calendar: calendar).globalDescription
     }
+}
+
+func updateTabBarItem(tab: Tabs, tabBarItem: UITabBarItem) {
+    let userType = getUserType()
+    switch tab {
+    case .home:
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveBookIcon")?.withRenderingMode(
+                .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "unselectedCourses")
+            tabBarItem.title = "Home".localized
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMoreIcon")?.withRenderingMode(
+                .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "parentMoreIcon")
+            tabBarItem.title = "Menu".localized
+        }
+        else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveMenu")?.withRenderingMode(
+                .alwaysOriginal)
+            tabBarItem.image = #imageLiteral(resourceName: "parentMoreIcon")
+            tabBarItem.title = "Menu".localized
+        }
+    case .announcements:
+        tabBarItem.title = "Announcements".localized
+        tabBarItem.image = #imageLiteral(resourceName: "announcmentsNormal")
+        let userType = getUserType()
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveAnnouncmentsIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveAnnouncmentsIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveAnnouncment")?.withRenderingMode(
+                .alwaysOriginal)
+        }
+    case .messages:
+        tabBarItem.title = "Messages".localized
+        tabBarItem.image = #imageLiteral(resourceName: "messagesNormal")
+        let userType = getUserType()
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveMessage")?.withRenderingMode(
+                .alwaysOriginal)
+        }
+    case .notifications:
+        tabBarItem.title = "Notifications".localized
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveNotificationIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveNotificationIcon")?.withRenderingMode(
+            .alwaysOriginal)
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveNotification")?.withRenderingMode(
+                .alwaysOriginal)
+        }
+    case .courses:
+        tabBarItem.title = "Courses".localized
+        tabBarItem.selectedImage = UIImage(named: "teacherActiveCourse")?.withRenderingMode(
+        .alwaysOriginal)
+    }
+    
 }

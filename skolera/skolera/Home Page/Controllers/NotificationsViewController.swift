@@ -36,6 +36,9 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         refreshData()
+        setNotificationsSeen()
+        updateTabBarItem(tab: .notifications, tabBarItem: tabBarItem)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,18 +68,18 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
     
     @IBAction func logout () {
-        if let mainViewController = parent as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parent as? ChildHomeViewController {
-            mainViewController.openSettings()
+        if let mainViewController = parent as? TabBarViewController {
+            if getUserType() == UserType.teacher {
+                mainViewController.logout()
+            } else {
+                mainViewController.openSettings()
+            }
         }
     }
     
     func setNotificationsSeen() {
-        self.tableView.showAnimatedSkeleton()
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            self.tableView.hideSkeleton()
+            self.tabBarItem.badgeValue = nil
             debugPrint("Notification is Seen")
         }
     }

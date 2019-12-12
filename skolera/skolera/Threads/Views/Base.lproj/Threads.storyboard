@@ -241,6 +241,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="headerView" destination="bVO-6d-zUR" id="8AJ-ok-c4z"/>
                         <outlet property="leftHeaderButton" destination="FEl-Wy-MTa" id="f1z-TV-1vm"/>
@@ -426,6 +427,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ContactTeacherNVC" automaticallyAdjustsScrollViewInsets="NO" id="6Jg-3P-vpb" customClass="ContactTeacherNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iYi-Bb-wHl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

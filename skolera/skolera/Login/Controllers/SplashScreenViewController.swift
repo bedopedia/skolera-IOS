@@ -74,12 +74,14 @@ class SplashScreenViewController: UIViewController {
                     for childJson in result {
                         let child = Child.init(fromDictionary: childJson)
                         if child.id == childId {
-                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.child = child
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
+//                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                            for the child profile VC
+                            tabBarVC.child = child
+                            tabBarVC.assignmentsText = ""
+                            tabBarVC.quizzesText = ""
+                            tabBarVC.eventsText = ""
+                            let nvc = UINavigationController(rootViewController: tabBarVC)
                             nvc.isNavigationBarHidden = true
                             nvc.modalPresentationStyle = .fullScreen
                             self.present(nvc, animated: true, completion: nil)
@@ -121,12 +123,17 @@ class SplashScreenViewController: UIViewController {
                                 showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
                             }
                         } else {
-                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.actor = parent.data
+//                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                            childProfileVC.actor = parent.data
+//                            if !parent.data.userType.elementsEqual("teacher") {
+//                                childProfileVC.otherUser = true
+//                            }
+                            let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            tabBarVC.actor = parent.data
                             if !parent.data.userType.elementsEqual("teacher") {
-                                childProfileVC.otherUser = true
+                                tabBarVC.otherUser = true
                             }
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
+                            let nvc = UINavigationController(rootViewController: tabBarVC)
                             nvc.isNavigationBarHidden = true
                             nvc.modalPresentationStyle = .fullScreen
                             self.present(nvc, animated: true, completion: nil)

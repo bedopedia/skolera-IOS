@@ -27,20 +27,23 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
     var child: Child!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
-    let maxHeight: CGFloat = 143
+    let maxHeight: CGFloat = 160
     let minHeight: CGFloat = 12
     
     //MARK: - Life Cycle
     
+   
     /// sets basic screen details, sends current child to embedded ChildProfileFeaturesTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerHeightConstraint.constant =  UIApplication.shared.statusBarFrame.height + 60
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if !isParent() {
             backButton.isHidden = true
@@ -60,8 +63,29 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        updateTabBarItem(tab: .home, tabBarItem: tabBarItem)
+        self.addChildImage()
+        self.addChildData()
     }
+  
     
+//        
+//        @IBAction func leftAction() {
+//            if isParent() {
+//                self.navigationController?.popViewController(animated: true)
+//            } else {
+//                openNewMessage()
+//            }
+//        }
+//        
+//        @IBAction func rightAction() {
+//            if isParent() {
+//                openNewMessage()
+//            } else {
+//                openSettings()
+//            }
+//        }
+//    
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -72,28 +96,10 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     }
 
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 0
-//            parentVC.headerView.isHidden = true
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-        }
-        //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
-    }
-    
     @IBAction func settingsButton() {
         
         let parentController = parent?.parent
-        if let mainViewController = parentController as? ChildHomeViewController {
+        if let mainViewController = parentController as? TabBarViewController {
             mainViewController.openSettings()
         }
     }
