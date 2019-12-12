@@ -383,7 +383,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sLx-iR-K6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1710.144927536232" y="-525.40760869565224"/>
+            <point key="canvasLocation" x="1574" y="-973"/>
         </scene>
         <!--AnnouncementsTableViewNVC-->
         <scene sceneID="w4V-8a-9Qg">
@@ -989,7 +989,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhN-rJ-r4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2594.202898550725" y="-525"/>
+            <point key="canvasLocation" x="2516" y="-973"/>
         </scene>
         <!--Teacher Courses View Controller-->
         <scene sceneID="Grp-KU-Qxt">
@@ -1339,7 +1339,7 @@
                         <segue destination="BIW-W7-utO" kind="relationship" relationship="viewControllers" id="j6Y-8N-oqF"/>
                         <segue destination="edB-J8-WxP" kind="relationship" relationship="viewControllers" id="9Hf-OD-Fzg"/>
                         <segue destination="ikF-tN-SxR" kind="relationship" relationship="viewControllers" id="D5g-td-RSS"/>
-                        <segue destination="OVD-oC-ruo" kind="relationship" relationship="viewControllers" id="oP7-pt-KO5"/>
+                        <segue destination="OVD-oC-ruo" kind="relationship" relationship="viewControllers" id="aF2-aA-E6J"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cAQ-uz-EMe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1503,7 +1503,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timetable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imk-hZ-S2u">
-                                                    <rect key="frame" x="89" y="29.666666666666671" width="79.333333333333314" height="21"/>
+                                                    <rect key="frame" x="89" y="29.666666666666671" width="88.333333333333314" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1765,12 +1765,10 @@
         <scene sceneID="GsW-7h-Zx3">
             <objects>
                 <navigationController storyboardIdentifier="ChildProfileFeaturesNVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="OVD-oC-ruo" customClass="ChildProfileFeaturesNVC" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Home" image="unselectedCourses" id="T1v-Th-FYD">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yGt-uy-33k">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
