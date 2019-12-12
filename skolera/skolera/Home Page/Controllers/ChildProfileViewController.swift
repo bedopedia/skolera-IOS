@@ -9,7 +9,6 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
-import KeychainSwift
 import Firebase
 
 class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, UINavigationControllerDelegate {

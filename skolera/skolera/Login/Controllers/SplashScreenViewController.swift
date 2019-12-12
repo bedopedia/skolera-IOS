@@ -7,10 +7,8 @@
 //
 
 import UIKit
-//import KeychainSwift
 import Alamofire
 import Firebase
-//import NRAppUpdate
 
 class SplashScreenViewController: UIViewController {
     

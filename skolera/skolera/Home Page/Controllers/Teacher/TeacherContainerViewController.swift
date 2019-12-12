@@ -8,7 +8,6 @@
 
 import UIKit
 import NVActivityIndicatorView
-import KeychainSwift
 import Alamofire
 
 class TeacherContainerViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
@@ -215,8 +214,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            let keychain = KeychainSwift()
-            keychain.clear()
+            clearUserDefaults()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
