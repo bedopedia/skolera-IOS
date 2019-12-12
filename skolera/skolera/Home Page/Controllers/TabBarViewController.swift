@@ -42,6 +42,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             if let tabItem = tabBar.items?[1] {
                 updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
             }
+            updateBadgeNumber(arrayIndex: 3)
             self.selectedIndex = 4
             tabBar.tintColor = getMainColor()
         case .student:
@@ -49,14 +50,17 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             if let tabItem = tabBar.items?[3] {
                 updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
             }
+            updateBadgeNumber(arrayIndex: 2)
             tabBar.tintColor = getMainColor()
         case .parent:
             viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
             self.selectedIndex = 3
             tabBar.tintColor = getMainColor()
+            updateBadgeNumber(arrayIndex: 2)
         default:
             viewControllers? = [announcementsVC,  messages, notificationsVC]
             tabBar.tintColor = getMainColor()
+            updateBadgeNumber(arrayIndex: 2)
         }
         if let tabViewControllers = viewControllers {
             for child in tabViewControllers {
@@ -77,6 +81,21 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                     childProfileNVC.quizzesText = ""
                 }
             }
+        }
+    }
+    
+    fileprivate func updateBadgeNumber(arrayIndex: Int) {
+        if let notificationItem = tabBar.items?[arrayIndex] {
+            notificationItem.badgeValue = getBadgeValue()
+        }
+    }
+    
+    func getBadgeValue() -> String {
+        let badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        if badgeNumber < 99 &&  badgeNumber > 0 {
+            return "\(badgeNumber)"
+        } else {
+            return "+99"
         }
     }
 

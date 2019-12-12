@@ -36,17 +36,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         refreshData()
-//        let userType = getUserType()
-//        if userType == .student {
-//            tabBarItem.selectedImage = UIImage(named: "studentActiveNotificationIcon")?.withRenderingMode(
-//                .alwaysOriginal)
-//        } else if userType == .parent {
-//            tabBarItem.selectedImage = UIImage(named: "parentActiveNotificationIcon")?.withRenderingMode(
-//            .alwaysOriginal)
-//        } else {
-//            tabBarItem.selectedImage = UIImage(named: "teacherActiveNotification")?.withRenderingMode(
-//                .alwaysOriginal)
-//        }
+        setNotificationsSeen()
         updateTabBarItem(tab: .notifications, tabBarItem: tabBarItem)
         
     }
@@ -88,10 +78,8 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
     
     func setNotificationsSeen() {
-//        fixTableViewHeight()
-//        self.tableView.showAnimatedSkeleton()
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-//            self.tableView.hideSkeleton()
+            self.tabBarItem.badgeValue = nil
             debugPrint("Notification is Seen")
         }
     }
