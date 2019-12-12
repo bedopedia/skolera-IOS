@@ -36,30 +36,30 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 100
         tableView.estimatedRowHeight = 100
-        getAssignmentDetails(assignmentId: assignmentId!)
+//        getAssignmentDetails(assignmentId: assignmentId!)
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func getAssignmentDetails(assignmentId: Int) {
-        self.tableView.showSkeleton()
-        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
-            self.tableView.hideSkeleton()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    self.assignment = FullAssignment(result)
-                    self.titleLabel.text = self.assignment.name
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
-                    self.tableView.reloadData()
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
+//    private func getAssignmentDetails(assignmentId: Int) {
+//        self.tableView.showSkeleton()
+//        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
+//            self.tableView.hideSkeleton()
+//            if isSuccess {
+//                if let result = value as? [String : AnyObject] {
+//                    self.assignment = FullAssignment(result)
+//                    self.titleLabel.text = self.assignment.name
+//                    self.tableView.rowHeight = UITableViewAutomaticDimension
+//                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+//                    self.tableView.reloadData()
+//                }
+//            } else {
+//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+//            }
+//        }
+//    }
 
 }
 
