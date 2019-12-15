@@ -68,12 +68,14 @@ class NotificationsViewController: UIViewController, NVActivityIndicatorViewable
     }
 
     @IBAction func logout () {
-        if let mainViewController = parent as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parent as? ChildHomeViewController {
-            mainViewController.openSettings()
-        }
+//        if let mainViewController = parent as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+//        if let mainViewController = parent as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     func setNotificationsSeen() {

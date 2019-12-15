@@ -314,6 +314,8 @@
 		8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */; };
 		8AFD9EB622E354C80084FD45 /* Posts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD9EB822E354C80084FD45 /* Posts.storyboard */; };
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
+		DC47E72623A63375002A1FEE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E72523A63375002A1FEE /* SettingsViewController.swift */; };
+		DC47E72823A63A3C002A1FEE /* SettingsTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */; };
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
@@ -647,6 +649,8 @@
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
 		AB5034E0C48E8A9D990D5C1C /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
+		DC47E72523A63375002A1FEE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableTableViewController.swift; sourceTree = "<group>"; };
 		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
@@ -855,6 +859,8 @@
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
 				8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */,
+				DC47E72523A63375002A1FEE /* SettingsViewController.swift */,
+				DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1996,6 +2002,7 @@
 				54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */,
 				8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */,
 				8A8079CB2340C38400C4DC16 /* QuizAnswerLabelTableViewCell.swift in Sources */,
+				DC47E72623A63375002A1FEE /* SettingsViewController.swift in Sources */,
 				8A3923E5233CBD150001963A /* DetailedQuiz.swift in Sources */,
 				8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */,
 				8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */,
@@ -2067,6 +2074,7 @@
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
 				8ADABB7A230AEAF7001509EF /* Event.swift in Sources */,
 				8A3923EB233CF4FB0001963A /* SolveQuizViewController.swift in Sources */,
+				DC47E72823A63A3C002A1FEE /* SettingsTableTableViewController.swift in Sources */,
 				8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */,
 				8A7C4A3A2327DCC900984A53 /* ContactTeacherNVC.swift in Sources */,
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,
