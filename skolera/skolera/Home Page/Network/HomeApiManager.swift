@@ -149,6 +149,7 @@ func changePasswordAPI(userId: Int, parameters: Parameters, completion: @escapin
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
+            debugPrint(response.result)
             completion(false, response.response?.statusCode ?? 0, response.result.value, error)
         }
     }

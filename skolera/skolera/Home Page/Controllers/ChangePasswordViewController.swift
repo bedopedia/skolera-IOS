@@ -85,6 +85,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         }
     }
     
+//    must pass the user id if this the the first login
     func changePassword() {
         var parameters: Parameters = [:]
         let user: [String: Any] = [ "current_password": oldPasswordTextField.text ?? "",
@@ -96,6 +97,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         parameters["user"] = user
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         changePasswordAPI(userId: Int(userId())!, parameters: parameters) { (isSuccess, statusCode, response, error) in
+            self.stopAnimating()
             if isSuccess {
                 self.close()
             } else {
@@ -103,9 +105,13 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 } else {
                     if let result = response as? [String: Any] {
-                        if let reasons = result["reasons"] as? [String] {
-                            showNoticeBar(message: reasons.first ?? "")
+                        if let reasons = result["reasons"] as? [Any], let reason = reasons.first, let messageString = reason as? String {
+                            showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, message: messageString)
+                        } else {
+                            showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                         }
+                    } else {
+                       showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                     }
                 }
             }
