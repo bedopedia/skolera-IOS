@@ -17,6 +17,8 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var updateButton: UIButton!
     @IBOutlet var oldPasswordBorder: UIView!
     @IBOutlet var newPasswordBorder: UIView!
+    @IBOutlet var newPasswordErrorLabel: UILabel!
+    @IBOutlet var oldPasswordErrorLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,6 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         detailsButton.setTitle("show", for: .normal)
-        
         detailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
         let newDetailsButton = newPasswordTextField.setView(.right, image: nil, width: 200)
         newDetailsButton.addTarget(self, action: #selector(toggleNewPasswordFieldState(_:)), for: .touchUpInside)
@@ -40,6 +41,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         let count = Float(textField.text?.count ?? 0)
         if count > 0 {
             oldPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
+            oldPasswordErrorLabel.isHidden = true
         }
     }
     
@@ -47,6 +49,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         let count = Float(textField.text?.count ?? 0)
         if count > 0 {
             newPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
+            newPasswordErrorLabel.isHidden = true
         }
     }
 
@@ -68,9 +71,13 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     
     @IBAction func updatePassword() {
         if oldPasswordTextField.text!.isEmpty {
+            oldPasswordErrorLabel.isHidden = false
+            oldPasswordErrorLabel.text = "Password is missing".localized
             oldPasswordBorder.backgroundColor = .red
         }
         if newPasswordTextField.text!.isEmpty {
+            newPasswordErrorLabel.isHidden = false
+            newPasswordErrorLabel.text = "Password is missing".localized
             newPasswordBorder.backgroundColor = .red
         }
         if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty) {
