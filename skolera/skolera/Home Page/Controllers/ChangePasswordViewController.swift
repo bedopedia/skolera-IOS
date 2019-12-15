@@ -24,6 +24,15 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         newPasswordTextField.delegate = self
         updateButton.backgroundColor = getMainColor()
         oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
+        detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
+        detailsButton.setTitle("show", for: .normal)
+        
+        detailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
+        let newDetailsButton = newPasswordTextField.setView(.right, image: nil, width: 200)
+        newDetailsButton.addTarget(self, action: #selector(toggleNewPasswordFieldState(_:)), for: .touchUpInside)
+        newDetailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
+        newDetailsButton.setTitle("show", for: .normal)
         newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
@@ -39,6 +48,18 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         if count > 0 {
             newPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
         }
+    }
+
+    @objc func togglePasswordFieldState (_ sender: UIButton) {
+        oldPasswordTextField.isSecureTextEntry = !oldPasswordTextField.isSecureTextEntry
+        let buttonTitle = oldPasswordTextField.isSecureTextEntry ?  "show" :  "hide"
+        sender.setTitle(buttonTitle, for: .normal)
+    }
+    
+    @objc func toggleNewPasswordFieldState (_ sender: UIButton) {
+        newPasswordTextField.isSecureTextEntry = !newPasswordTextField.isSecureTextEntry
+        let buttonTitle = newPasswordTextField.isSecureTextEntry ?  "show" :  "hide"
+        sender.setTitle(buttonTitle, for: .normal)
     }
 
     @IBAction func close() {
@@ -64,7 +85,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
                               "password": newPasswordTextField.text ?? "",
                               "password_confirmation": newPasswordTextField.text ?? "",
                               "reset_password": true
-]
+        ]
         parameters["user"] = user
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         changePasswordAPI(userId: Int(userId())!, parameters: parameters) { (isSuccess, statusCode, response, error) in

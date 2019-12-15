@@ -319,6 +319,7 @@
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
+		DC8572E523A689F00089D2CB /* UITextField+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8572E423A689F00089D2CB /* UITextField+Views.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 		DCCB70B623A66B1600F09AD5 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */; };
 /* End PBXBuildFile section */
@@ -656,6 +657,7 @@
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
+		DC8572E423A689F00089D2CB /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -685,6 +687,7 @@
 				8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */,
 				8A1C370D22F1B82700041BAE /* URL+QueryParams.swift */,
 				DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */,
+				DC8572E423A689F00089D2CB /* UITextField+Views.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2096,6 +2099,7 @@
 				547A37912022153B00794441 /* NotifcationResponse.swift in Sources */,
 				8AF6664723390ADE009C4EF2 /* TeacherCoursesViewController.swift in Sources */,
 				546356EA201F68E90072F066 /* Parent.swift in Sources */,
+				DC8572E523A689F00089D2CB /* UITextField+Views.swift in Sources */,
 				8A3A217520D9121900539E1C /* Assignment.swift in Sources */,
 				8A94E45722DF569E00A01B0C /* CourseGroupPostTableViewCell.swift in Sources */,
 				8AF8F73922E9EA6A00544744 /* FullQuiz.swift in Sources */,
@@ -2457,7 +2461,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.7;
+				MARKETING_VERSION = 2.8.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2480,7 +2484,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.7;
+				MARKETING_VERSION = 2.8.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
