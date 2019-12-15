@@ -1863,22 +1863,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5BA802CF-E587-48AE-ACFC-EE3306DAE3EB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Controllers/ChildProfileViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "ChildProfileViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "2B2CAD2D-CA4C-403C-BAC2-C8B9F7A8D955"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1904,8 +1888,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
             endingLineNumber = "158"
-            landmarkName = "openAssignments()"
-            landmarkType = "7">
+            landmarkName = "ChildProfileViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1986,6 +1970,54 @@
             endingLineNumber = "16"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "509C9904-BE11-4D70-A05E-BD405AEEE086"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Home Page/Network/HomeApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "changePasswordAPI(userId:parameters:completion:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "509C9904-BE11-4D70-A05E-BD405AEEE086 - a6db2f9c27541cfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.changePasswordAPI(userId: Swift.Int, parameters: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Home%20Page/Network/HomeApiManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "220">
+               </Location>
+               <Location
+                  uuid = "509C9904-BE11-4D70-A05E-BD405AEEE086 - 47e0fe16380e506"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in skolera.changePasswordAPI(userId: Swift.Int, parameters: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Home%20Page/Network/HomeApiManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
+                  offsetFromSymbolStart = "116">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

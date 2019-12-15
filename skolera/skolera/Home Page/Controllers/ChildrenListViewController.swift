@@ -18,7 +18,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var userId: Int!
     var refreshControl: UIRefreshControl!
     
     /// children array acts as the data source for the tableView
@@ -38,10 +38,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
-//        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-//        let backItem = UIBarButtonItem()
-//        backItem.title = nil
-//        navigationItem.backBarButtonItem = backItem
         getChildren()
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
@@ -142,6 +138,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 //        self.present(alert, animated: true, completion: nil)
         
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        settingsVC.userId = userId
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
