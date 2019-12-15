@@ -11,8 +11,21 @@ import NVActivityIndicatorView
 
 class SettingsTableTableViewController: UITableViewController {
     
+    @IBOutlet var versionLabel: UILabel!
+    @IBOutlet var languageLabel: UILabel!
+    @IBOutlet var changeLanguageImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if Language.language == .arabic {
+            languageLabel.text = "اللغة (العربية)"
+            versionLabel.text = "اصدار 2.8.9"
+            changeLanguageImageView.image = #imageLiteral(resourceName: "chevronLeft")
+        } else {
+            languageLabel.text = "Language (English)"
+            versionLabel.text = "Version 2.8.9"
+            changeLanguageImageView.image = #imageLiteral(resourceName: "chevronRight")
+        }
     }
     
     // MARK: - Table view data source
