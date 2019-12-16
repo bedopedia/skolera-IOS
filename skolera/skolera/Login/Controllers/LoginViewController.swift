@@ -118,7 +118,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
-                    self.updateLocale(parent: parent)
+                    debugPrint(parent.data.passwordChanged)
+                    if let passwordChanged = parent.data.passwordChanged, passwordChanged {
+                       self.updateLocale(parent: parent)
+                    } else {
+                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        changePasswordVC.isFirstLogin = true
+                        self.present(changePasswordVC, animated: true, completion: nil)
+                    }
                 }
             } else {
                 self.stopAnimating()
@@ -185,7 +192,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         }
                     } else {
                         self.stopAnimating()
-                        ///////
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         if !parent.data.userType.elementsEqual("teacher") {
                             childProfileVC.otherUser = true
@@ -199,6 +205,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 }
             } else {
                 self.stopAnimating()
+//                if statusCode == 406 {
+//                    let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                    self.present(changePasswordVC, animated: true, completion: nil)
+//                } else {
+//                    showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
+//                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+//                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
+//                    })
+//                }
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)

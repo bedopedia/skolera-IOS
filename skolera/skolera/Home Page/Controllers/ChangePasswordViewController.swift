@@ -109,6 +109,11 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         changePasswordAPI(userId: Int(userId())!, parameters: parameters) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
             if isSuccess {
+//                if self.isFirstLogin {
+////                    redirect to login screen
+//                } else {
+//                   self.close()
+//                }
                 self.close()
             } else {
                 if statusCode == 201 {

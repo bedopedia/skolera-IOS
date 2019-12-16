@@ -42,7 +42,7 @@ class Actor : NSObject, NSCoding{
 	var unseenNotifications : Int!
 	var userType : String!
 	var username : String!
-
+    var passwordChanged: Bool!
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -88,6 +88,7 @@ class Actor : NSObject, NSCoding{
 		unseenNotifications = dictionary["unseen_notifications"] as? Int
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
+        passwordChanged = dictionary["password_changed"] as? Bool
 	}
 
 	/**
