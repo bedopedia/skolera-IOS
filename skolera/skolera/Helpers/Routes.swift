@@ -237,3 +237,7 @@ func DELETE_ANSWER_SUBMISSIONS() -> String {
 func SUBMIT_QUIZ() -> String {
     return "\(BASE_URL!)/api/active_quizzes/submit_quiz"
 }
+
+func CHANGE_PASSWORD(userId: Int) -> String {
+    return "\(BASE_URL!)/api/users/\(userId)"
+}

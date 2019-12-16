@@ -140,3 +140,16 @@ func getCoursesForTeacherAPI(teacherActableId: Int, completion: @escaping ((Bool
         }
     }
 }
+
+func changePasswordAPI(userId: Int, parameters: Parameters, completion: @escaping ((Bool, Int, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = CHANGE_PASSWORD(userId: userId)
+    Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result {
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, error)
+        }
+    }
+}

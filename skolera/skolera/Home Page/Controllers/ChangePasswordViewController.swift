@@ -31,6 +31,37 @@ class ChangePasswordViewController: UIViewController {
         
     }
     
+//    @IBAction func changePassword(){
+//        oldPasswordTextField.resignFirstResponder()
+//        newPasswordTextField.resignFirstResponder()
+//        confirmPasswordTextField.resignFirstResponder()
+//        if oldPasswordTextField.text!.isEmpty ||
+//            newPasswordTextField.text!.isEmpty ||
+//            confirmPasswordTextField.text!.isEmpty {
+//            showNoticeBar(message: "Enter all fields please".localized)
+//        } else if !newPasswordTextField.text!.elementsEqual(confirmPasswordTextField.text!){
+//            showNoticeBar(message: "Passwords doesn't match".localized)
+//        } else {
+//            showLoading()
+//            let parameters = [OLD_PASSWORD: oldPasswordTextField.text!, PASSWORD: newPasswordTextField.text!]
+//            EndPoints.userUpdate(userId: keychain.get(ID)!, parameters: parameters) { (statusCode, isSuccess, response) in
+//                self.hideLoading()
+//                if isSuccess {
+//                  //  logChangePasswordEvent(userId: self.keychain.get(ID)!)
+//                    self.close()
+//                } else {
+//                    if statusCode == EHttpStatusCode.INVALID_CREDENTIAL.rawValue {
+//                        logOut(viewController: self)
+//                    } else {
+//                        showNoticeBar(message: response)
+//                    }
+//                }
+//            }
+//        }
+//        
+//    }
+
+    
 }
 
 extension ChangePasswordViewController: UITextFieldDelegate {
