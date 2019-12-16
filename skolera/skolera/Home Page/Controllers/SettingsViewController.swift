@@ -9,10 +9,10 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-    
+    @IBOutlet var backButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-//
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
     }
     

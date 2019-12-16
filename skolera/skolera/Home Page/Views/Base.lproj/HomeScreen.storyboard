@@ -1886,7 +1886,7 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="backButton" destination="hfJ-Tv-V5S" id="5Cn-cA-pGM"/>
+                        <outlet property="backButton" destination="0F1-CZ-b7N" id="328-aT-pGJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dEJ-TN-RuP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2129,8 +2129,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFB-TD-83S">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egY-pr-CyY">
-                                                            <rect key="frame" x="20" y="14.666666666666664" width="52" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egY-pr-CyY">
+                                                            <rect key="frame" x="20.000000000000004" y="14.666666666666664" width="61.333333333333343" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" red="0.95686274509803915" green="0.2627450980392157" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2162,9 +2162,9 @@
                     </tableView>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="changeLanguageImageView" destination="oXu-K7-HVP" id="2Ka-7b-aLY"/>
-                        <outlet property="languageLabel" destination="kKf-y4-a5H" id="P2W-5p-7Kd"/>
-                        <outlet property="versionLabel" destination="0eg-MA-lAF" id="Srn-4T-PJV"/>
+                        <outlet property="changeLanguageImageView" destination="abI-nm-TEw" id="JvP-Nl-haC"/>
+                        <outlet property="languageLabel" destination="ce0-1N-9u1" id="GDn-pS-RVg"/>
+                        <outlet property="versionLabel" destination="gSB-o4-dBN" id="3JI-pM-imj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rm-fP-GxD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
