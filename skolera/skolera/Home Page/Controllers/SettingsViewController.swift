@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, NVActivityIndicatorViewable {
+
     @IBOutlet var backButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()

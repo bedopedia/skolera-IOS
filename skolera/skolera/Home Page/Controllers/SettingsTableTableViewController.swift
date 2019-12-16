@@ -20,11 +20,14 @@ class SettingsTableTableViewController: UITableViewController {
         if Language.language == .arabic {
             languageLabel.text = "اللغة (العربية)"
             versionLabel.text = "اصدار 2.8.9"
-            changeLanguageImageView.image = #imageLiteral(resourceName: "chevronLeft")
+            changeLanguageImageView.image = #imageLiteral(resourceName: "backButton")
         } else {
             languageLabel.text = "Language (English)"
             versionLabel.text = "Version 2.8.9"
-            changeLanguageImageView.image = #imageLiteral(resourceName: "chevronRight")
+            if #available(iOS 13.0, *) {
+                changeLanguageImageView.image = #imageLiteral(resourceName: "chevronRight")
+            }
+            
         }
     }
     
@@ -35,7 +38,7 @@ class SettingsTableTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 8
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -52,15 +55,15 @@ class SettingsTableTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
             alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
-        } else if indexPath.row == 2 {
+        } else if indexPath.row == 3 {
             //            change password
             
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == 4 {
             let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-                //                if(self.isAnimating) {
-                //                    self.stopAnimating()
-                //                }
+                if let settingsVC = self.parent as? SettingsViewController, settingsVC.isAnimating {
+                    settingsVC.stopAnimating()
+                }
                 self.sendFCM(token: "")
                 clearUserDefaults()
                 let nvc = UINavigationController()
@@ -73,7 +76,7 @@ class SettingsTableTableViewController: UITableViewController {
             alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
             
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 6 {
             let url = URL(string: "https://itunes.apple.com/app/id1346646110")
             var stringToShare = ""
             stringToShare = "https://itunes.apple.com/app/id1346646110"
@@ -83,7 +86,7 @@ class SettingsTableTableViewController: UITableViewController {
                 activityItems: objectsToShare,
                 applicationActivities: nil)
             present(activityController, animated: true, completion: nil)
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 7 {
             if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "1346646110") {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
@@ -131,10 +134,14 @@ class SettingsTableTableViewController: UITableViewController {
     }
     
     func sendFCM(token: String) {
-        //    startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if let settingsVC = self.parent as? SettingsViewController{
+            settingsVC.startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        }
         let parameters: [String: Any] = ["user": ["mobile_device_token": token]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            //        self.stopAnimating()
+            if let settingsVC = self.parent as? SettingsViewController{
+                settingsVC.stopAnimating()
+            }
             if isSuccess {
                 debugPrint("UPDATED_FCM_SUCCESSFULLY")
             } else {
