@@ -316,6 +316,8 @@
 		DC1CA712237DA26000E79769 /* PlaceHolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */; };
 		DC1CA71423815FC900E79769 /* UITextField+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1CA71323815FC900E79769 /* UITextField+Views.swift */; };
 		DC415C892370811B0036C93B /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC415C882370811B0036C93B /* UserType.swift */; };
+		DC47E72623A63375002A1FEE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E72523A63375002A1FEE /* SettingsViewController.swift */; };
+		DC47E72823A63A3C002A1FEE /* SettingsTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */; };
 		DC5774EA23A1356600BDB769 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5774E923A1356600BDB769 /* Tabs.swift */; };
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
@@ -659,6 +661,8 @@
 		DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTableViewCell.swift; sourceTree = "<group>"; };
 		DC1CA71323815FC900E79769 /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
 		DC415C882370811B0036C93B /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
+		DC47E72523A63375002A1FEE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableTableViewController.swift; sourceTree = "<group>"; };
 		DC5774E923A1356600BDB769 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
@@ -877,6 +881,8 @@
 				547A378520220A5900794441 /* NotificationsTableViewController.swift */,
 				5402CA022045A658009F583A /* ChildProfileViewController.swift */,
 				8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */,
+				DC47E72523A63375002A1FEE /* SettingsViewController.swift */,
+				DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */,
 				DCC69662239D190B0087682C /* TabBarViewController.swift */,
 			);
 			path = Controllers;
@@ -2036,6 +2042,7 @@
 				54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */,
 				8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */,
 				8A8079CB2340C38400C4DC16 /* QuizAnswerLabelTableViewCell.swift in Sources */,
+				DC47E72623A63375002A1FEE /* SettingsViewController.swift in Sources */,
 				8A3923E5233CBD150001963A /* DetailedQuiz.swift in Sources */,
 				8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */,
 				8A8A7397222D92F400972BE6 /* WeeklyNote.swift in Sources */,
@@ -2111,6 +2118,7 @@
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
 				8ADABB7A230AEAF7001509EF /* Event.swift in Sources */,
 				8A3923EB233CF4FB0001963A /* SolveQuizViewController.swift in Sources */,
+				DC47E72823A63A3C002A1FEE /* SettingsTableTableViewController.swift in Sources */,
 				8A02C5422309AE9E005BBA04 /* CreateEventViewController.swift in Sources */,
 				8A7C4A3A2327DCC900984A53 /* ContactTeacherNVC.swift in Sources */,
 				54CCF403206BEBA600824A3D /* BehaviorNote.swift in Sources */,

@@ -882,35 +882,35 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="positiveIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6B5-ou-aAg">
-                                                    <rect key="frame" x="73" y="46" width="24" height="24"/>
+                                                    <rect key="frame" x="73" y="46" width="48" height="48"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="negativeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="NMP-fH-5dl">
-                                                    <rect key="frame" x="125" y="46" width="24" height="24"/>
+                                                    <rect key="frame" x="149" y="58" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="5Mj-qh-wBt"/>
                                                         <constraint firstAttribute="height" constant="24" id="hsJ-HL-vOm"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHs-Xg-P4e">
-                                                    <rect key="frame" x="105" y="58" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="129" y="70" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
                                                     <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FhW-S7-4tV">
-                                                    <rect key="frame" x="157" y="58" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="181" y="70" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
                                                     <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwV-rZ-YGv">
-                                                    <rect key="frame" x="209" y="58" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="233" y="70" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="otherIcon" translatesAutoresizingMaskIntoConstraints="NO" id="LUu-01-rfX">
-                                                    <rect key="frame" x="177" y="46" width="24" height="24"/>
+                                                    <rect key="frame" x="201" y="58" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="ZN1-EW-9Uh"/>
                                                     </constraints>
@@ -2384,6 +2384,7 @@
         <image name="behaviorNotesIco" width="32" height="32"/>
         <image name="calendarIco" width="32" height="32"/>
         <image name="chevronLeft" width="11" height="16"/>
+        <image name="chevronRight" width="8" height="12"/>
         <image name="gradesIco" width="32" height="32"/>
         <image name="logo" width="131" height="24"/>
         <image name="messagesNormal" width="48" height="34"/>

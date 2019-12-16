@@ -96,11 +96,12 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
 
     
     @IBAction func settingsButton() {
-        
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? TabBarViewController {
-            mainViewController.openSettings()
-        }
+//        let parentController = parent?.parent
+//        if let mainViewController = parentController as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @IBAction func backAction() {

@@ -89,14 +89,15 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func logout() {
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? TabBarViewController {
-            if getUserType() == UserType.teacher {
-                mainViewController.logout()
-            } else {
-                mainViewController.openSettings()
-            }
-        }
+//        let parentController = parent?.parent
+//        if let mainViewController = parentController as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+//        if let mainViewController = parentController as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -68,13 +68,14 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     }
     
     @IBAction func logout () {
-        if let mainViewController = parent as? TabBarViewController {
-            if getUserType() == UserType.teacher {
-                mainViewController.logout()
-            } else {
-                mainViewController.openSettings()
-            }
-        }
+//        if let mainViewController = parent as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+//        if let mainViewController = parent as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     func setNotificationsSeen() {
