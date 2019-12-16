@@ -75,6 +75,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
 //            mainViewController.openSettings()
 //        }
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        
         self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     

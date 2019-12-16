@@ -2383,7 +2383,7 @@
         <!--Change Password View Controller-->
         <scene sceneID="7Oy-Aw-nlk">
             <objects>
-                <viewController storyboardIdentifier="ChangePasswordViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="pgv-zI-gVb" customClass="ChangePasswordViewController" customModule="_elagi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangePasswordViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="pgv-zI-gVb" customClass="ChangePasswordViewController" customModule="skolera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="emc-GK-6xy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2460,8 +2460,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="changePassword" destination="pgv-zI-gVb" eventType="touchUpInside" id="qOh-6U-ihm"/>
-                                            <action selector="updatePassword" destination="pgv-zI-gVb" eventType="touchUpInside" id="9Sr-cw-htk"/>
+                                            <action selector="updatePassword" destination="pgv-zI-gVb" eventType="touchUpInside" id="hve-M6-Mz5"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvV-eh-dD4">
@@ -2552,6 +2551,7 @@
                         <outlet property="confirmPasswordTextField" destination="ihm-2z-9k9" id="wo5-gc-v9f"/>
                         <outlet property="newPasswordTextField" destination="yvV-eh-dD4" id="ZRG-cn-Gbr"/>
                         <outlet property="oldPasswordTextField" destination="6cN-jX-obN" id="dv2-mf-Mag"/>
+                        <outlet property="updateButton" destination="zAO-sc-eQH" id="BHq-IK-ahM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KhC-0B-R6v" userLabel="First Responder" sceneMemberID="firstResponder"/>

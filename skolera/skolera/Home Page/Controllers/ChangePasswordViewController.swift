@@ -15,14 +15,14 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var oldPasswordTextField: UITextField!
     @IBOutlet var newPasswordTextField: UITextField!
     @IBOutlet var confirmPasswordTextField: UITextField!
-    
-    var userId: Int!
-    
+    @IBOutlet var updateButton: UIButton!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         oldPasswordTextField.delegate = self
         newPasswordTextField.delegate = self
         confirmPasswordTextField.delegate = self
+        updateButton.backgroundColor = getMainColor()
     }
     
 
@@ -43,19 +43,32 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     }
     
     func changePassword() {
-        let parameters: Parameters = [:]
+        var parameters: Parameters = [:]
+        let user: [String: Any] = [ "current_password": oldPasswordTextField.text ?? "",
+                              "id": userId(),
+                              "password": newPasswordTextField.text ?? "",
+                              "password_confirmation": confirmPasswordTextField.text ?? "",
+                              "reset_password": true
+]
+        parameters["user"] = user
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        changePasswordAPI(userId: userId, parameters: parameters) { (isSuccess, statusCode, error) in
+        changePasswordAPI(userId: Int(userId())!, parameters: parameters) { (isSuccess, statusCode, response, error) in
             if isSuccess {
                 self.close()
             } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                if statusCode == 201 {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                } else {
+                    if let result = response as? [String: Any] {
+                        if let reasons = result["reasons"] as? [String] {
+                            showNoticeBar(message: reasons.first ?? "")
+                        }
+                    }
+                }
             }
         }
     }
 
-
-    
 }
 
 extension ChangePasswordViewController: UITextFieldDelegate {

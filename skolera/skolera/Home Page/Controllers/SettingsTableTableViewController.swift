@@ -57,6 +57,7 @@ class SettingsTableTableViewController: UITableViewController {
         } else if indexPath.row == 3 {
             //            change password
             let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//            changePasswordVC.userId =
             self.present(changePasswordVC, animated: true, completion: nil)
             
         } else if indexPath.row == 4 {

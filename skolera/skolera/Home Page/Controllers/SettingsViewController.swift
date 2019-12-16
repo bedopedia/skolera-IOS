@@ -12,6 +12,9 @@ import NVActivityIndicatorView
 class SettingsViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet var backButton: UIButton!
+    
+    var userId: Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
