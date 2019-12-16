@@ -22,29 +22,33 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var titleLabel: UILabel!
     
     var isFirstLogin = false
+    var themeColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        oldPasswordTextField.delegate = self
-        newPasswordTextField.delegate = self
-        oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
-        detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
-        detailsButton.setTitle("show".localized, for: .normal)
-        detailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
-        let newDetailsButton = newPasswordTextField.setView(.right, image: nil, width: 200)
-        newDetailsButton.addTarget(self, action: #selector(toggleNewPasswordFieldState(_:)), for: .touchUpInside)
-        newDetailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
-        newDetailsButton.setTitle("show".localized, for: .normal)
-        newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        oldPasswordTextField.placeholder = "Old password".localized
-        newPasswordTextField.placeholder = "New password".localized
         if isFirstLogin {
             titleLabel.text = "Please choose a new password".localized
         } else {
             titleLabel.text = "Change password".localized
             updateButton.backgroundColor = getMainColor()
+            themeColor = getMainColor()
         }
+        oldPasswordTextField.delegate = self
+        newPasswordTextField.delegate = self
+        oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
+        detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
+        detailsButton.setTitleColor(themeColor, for: .normal)
+        detailsButton.setTitle("show".localized, for: .normal)
+//        detailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
+        let newDetailsButton = newPasswordTextField.setView(.right, image: nil, width: 200)
+        newDetailsButton.addTarget(self, action: #selector(toggleNewPasswordFieldState(_:)), for: .touchUpInside)
+//        newDetailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
+        newDetailsButton.setTitleColor(themeColor, for: .normal)
+        newDetailsButton.setTitle("show".localized, for: .normal)
+        newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        oldPasswordTextField.placeholder = "Old password".localized
+        newPasswordTextField.placeholder = "New password".localized
     }
     
     @objc func oldPasswordFieldDidChange(_ textField: UITextField) {
@@ -63,16 +67,27 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         }
     }
 
+    
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         oldPasswordTextField.isSecureTextEntry = !oldPasswordTextField.isSecureTextEntry
         let buttonTitle = oldPasswordTextField.isSecureTextEntry ?  "show".localized :  "hide".localized
+        updateButtonColor(buttonTitle, sender)
         sender.setTitle(buttonTitle, for: .normal)
     }
     
     @objc func toggleNewPasswordFieldState (_ sender: UIButton) {
         newPasswordTextField.isSecureTextEntry = !newPasswordTextField.isSecureTextEntry
         let buttonTitle = newPasswordTextField.isSecureTextEntry ?  "show".localized :  "hide".localized
+        updateButtonColor(buttonTitle, sender)
         sender.setTitle(buttonTitle, for: .normal)
+    }
+    
+    fileprivate func updateButtonColor(_ buttonTitle: String, _ sender: UIButton) {
+        if buttonTitle.elementsEqual("hide".localized) {
+            sender.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
+        } else {
+            sender.setTitleColor(themeColor, for: .normal)
+        }
     }
 
     @IBAction func close() {
