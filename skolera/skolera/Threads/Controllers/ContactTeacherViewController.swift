@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KeychainSwift
 import NVActivityIndicatorView
 import Alamofire
 import Chatto

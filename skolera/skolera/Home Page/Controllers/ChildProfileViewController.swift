@@ -9,7 +9,6 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
-import KeychainSwift
 import Firebase
 import SkeletonView
 

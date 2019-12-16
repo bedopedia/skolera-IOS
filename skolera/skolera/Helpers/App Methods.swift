@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import KeychainSwift
 import Alamofire
 import CVCalendar
 
@@ -25,8 +24,7 @@ func showAlert(viewController: UIViewController, title: String, message: String,
 func showReauthenticateAlert(viewController: UIViewController) {
     let alertController = UIAlertController(title: "Session ended", message: "Please login again", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default, handler: {(ACTION: UIAlertAction) -> Void in
-        let keychain = KeychainSwift()
-        keychain.clear()
+        clearUserDefaults()
         let nvc = UINavigationController()
         let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
         nvc.pushViewController(schoolCodeVC, animated: true)
@@ -57,25 +55,24 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
     }
 }
 //request helpers
-func getHeaders() -> [String : String]
-{
-    let keychain = KeychainSwift()
+func getHeaders() -> [String : String] {
+    let userDefault = UserDefaults.standard
     var headers = [String : String]()
-    headers[ACCESS_TOKEN] = keychain.get(ACCESS_TOKEN) ?? ""
-    headers[TOKEN_TYPE] = keychain.get(TOKEN_TYPE) ?? ""
-    headers[UID] = keychain.get(UID) ?? ""
-    headers[CLIENT] = keychain.get(CLIENT) ?? ""
+    headers[ACCESS_TOKEN] = userDefault.string(forKey: ACCESS_TOKEN) ?? ""
+    headers[TOKEN_TYPE] = userDefault.string(forKey: TOKEN_TYPE) ?? ""
+    headers[UID] = userDefault.string(forKey: UID) ?? ""
+    headers[CLIENT] = userDefault.string(forKey: CLIENT) ?? ""
     return headers
 }
-func parentId() -> String
-{
-    let keychain = KeychainSwift()
-    return keychain.get(ACTABLE_ID)!
+
+func parentId() -> String {
+    let userDefault = UserDefaults.standard
+    return userDefault.string(forKey: ACTABLE_ID)!
 }
-func userId() -> String
-{
-    let keychain = KeychainSwift()
-    return keychain.get(ID)!
+
+func userId() -> String {
+    let userDefault = UserDefaults.standard
+    return userDefault.string(forKey: ID)!
 }
 
 //check if the imageurl is from local server or on amazon aws
@@ -88,13 +85,13 @@ func getChildImageURL(urlString imageURL:String) -> URL! {
 }
 
 func isParent() -> Bool {
-    let keychain = KeychainSwift()
-    return keychain.get(USER_TYPE)!.elementsEqual("parent")
+    let userDefault = UserDefaults.standard
+    return userDefault.string(forKey: USER_TYPE)!.elementsEqual("parent")
 }
 
 func getUserType() -> UserType {
-    let keychain = KeychainSwift()
-    return UserType(rawValue: keychain.get(USER_TYPE)!) ?? UserType.student
+    let userDefault = UserDefaults.standard
+    return UserType(rawValue: userDefault.string(forKey: USER_TYPE)!) ?? UserType.student
 }
 
 func isValidEmail(testStr:String) -> Bool {
@@ -244,4 +241,17 @@ func updateTabBarItem(tab: Tabs, tabBarItem: UITabBarItem) {
         .alwaysOriginal)
     }
     
+}
+
+func clearUserDefaults() {
+    let userDefault = UserDefaults.standard
+    userDefault.removeObject(forKey: ACCESS_TOKEN)
+    userDefault.removeObject(forKey: CLIENT)
+    userDefault.removeObject(forKey: ACTABLE_ID)
+    userDefault.removeObject(forKey: ID)
+    userDefault.removeObject(forKey: "email")
+    userDefault.removeObject(forKey: "password")
+    userDefault.removeObject(forKey: TOKEN_TYPE)
+    userDefault.removeObject(forKey: UID)
+    userDefault.removeObject(forKey: USER_TYPE)
 }

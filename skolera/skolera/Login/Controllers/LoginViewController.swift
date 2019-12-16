@@ -10,13 +10,13 @@ import UIKit
 import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
-import KeychainSwift
 import SkyFloatingLabelTextField
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
     //MARKL - Variables
     var imageURL: String?
+    let userDefault = UserDefaults.standard
     var showPassword = false
     
     
@@ -205,16 +205,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
                     UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    let keychain = KeychainSwift()
-                    keychain.set(email, forKey: "email")
-                    keychain.set(password, forKey: "password")
-                    keychain.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                    keychain.set(headers[CLIENT] as! String, forKey: CLIENT)
-                    keychain.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
-                    keychain.set(headers[UID] as! String, forKey: UID)
-                    keychain.set(String(parent.data.actableId),forKey: ACTABLE_ID)
-                    keychain.set(String(parent.data.id), forKey: ID)
-                    keychain.set(parent.data.userType, forKey: USER_TYPE)
+                    self.userDefault.set(email, forKey: "email")
+                    self.userDefault.set(password, forKey: "password")
+                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
+                    self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
+                    self.userDefault.set(headers[UID] as! String, forKey: UID)
+                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
+                    self.userDefault.set(String(parent.data.id), forKey: ID)
+                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     self.updateLocale(parent: parent)

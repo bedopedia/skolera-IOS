@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KeychainSwift
 import Alamofire
 import Firebase
 import UserNotifications

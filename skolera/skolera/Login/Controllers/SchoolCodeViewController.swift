@@ -9,10 +9,12 @@
 import UIKit
 import Alamofire
 import NVActivityIndicatorView
-import KeychainSwift
 import SkyFloatingLabelTextField
 
 class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
+    
+    let userDefault = UserDefaults.standard
+    
     //MARK: - Outlets
     @IBOutlet weak var schoolCodeTextField: SkyFloatingLabelTextField!
     @IBOutlet var errorLabel: UILabel!
@@ -108,8 +110,7 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
                 if let result = value as? [String : AnyObject] {
                     let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
                     BASE_URL = herukoSchoolInfo.url!
-                    let keychain = KeychainSwift()
-                    keychain.set(BASE_URL, forKey: "BASE_URL")
+                    self.userDefault.set(BASE_URL, forKey: "BASE_URL")
                     self.moveToLoginVC(schoolInfo: herukoSchoolInfo)
                 } else {
                     showAlert(viewController: self, title: INVALID, message: INVALID_SCHOOL_CODE, completion: nil)

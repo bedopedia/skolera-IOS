@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import KeychainSwift
 import Firebase
 import NVActivityIndicatorView
 class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
@@ -111,8 +110,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            let keychain = KeychainSwift()
-            keychain.clear()
+            clearUserDefaults()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)

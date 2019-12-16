@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KeychainSwift
 import Alamofire
 import Kingfisher
 import Firebase
@@ -125,8 +124,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            let keychain = KeychainSwift()
-            keychain.clear()
+            clearUserDefaults()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)
