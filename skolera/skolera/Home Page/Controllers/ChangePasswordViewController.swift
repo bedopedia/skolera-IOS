@@ -27,7 +27,6 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         super.viewDidLoad()
         oldPasswordTextField.delegate = self
         newPasswordTextField.delegate = self
-        updateButton.backgroundColor = getMainColor()
         oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
@@ -44,6 +43,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
             titleLabel.text = "Please choose a new password".localized
         } else {
             titleLabel.text = "Change password".localized
+            updateButton.backgroundColor = getMainColor()
         }
     }
     
