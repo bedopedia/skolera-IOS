@@ -2469,7 +2469,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIX-78-ZEt">
-                                <rect key="frame" x="12" y="278" width="390" height="240"/>
+                                <rect key="frame" x="12" y="282" width="390" height="240"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change password" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-SU-Y63">
                                         <rect key="frame" x="27" y="28" width="130" height="19.333333333333329"/>
@@ -2489,7 +2489,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-jX-obN">
-                                        <rect key="frame" x="27.999999999999993" y="65.333333333333314" width="99.333333333333314" height="20"/>
+                                        <rect key="frame" x="28" y="65.333333333333314" width="334" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
                                         <userDefinedRuntimeAttributes>
@@ -2526,7 +2526,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvV-eh-dD4">
-                                        <rect key="frame" x="27.999999999999993" y="110.33333333333331" width="106.33333333333331" height="20"/>
+                                        <rect key="frame" x="28" y="110.33333333333331" width="334" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES" textContentType="new-password"/>
                                         <userDefinedRuntimeAttributes>
@@ -2561,7 +2561,7 @@
                                     <constraint firstItem="J69-j7-9e8" firstAttribute="top" secondItem="yvV-eh-dD4" secondAttribute="bottom" constant="8" id="2b8-jd-Q0Q"/>
                                     <constraint firstItem="6cN-jX-obN" firstAttribute="top" secondItem="pwY-SU-Y63" secondAttribute="bottom" constant="18" id="5mG-pt-8UG"/>
                                     <constraint firstAttribute="trailing" secondItem="Z00-3d-vjN" secondAttribute="trailing" constant="20" id="7Ha-sn-sHd"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6cN-jX-obN" secondAttribute="trailing" constant="28" id="8ax-XU-aFQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="6cN-jX-obN" secondAttribute="trailing" constant="28" id="8ax-XU-aFQ"/>
                                     <constraint firstItem="yvV-eh-dD4" firstAttribute="top" secondItem="CqD-dc-zCD" secondAttribute="bottom" constant="16" id="BiQ-yX-AIL"/>
                                     <constraint firstAttribute="bottom" secondItem="zAO-sc-eQH" secondAttribute="bottom" constant="13" id="CsI-yC-0CV"/>
                                     <constraint firstItem="pwY-SU-Y63" firstAttribute="leading" secondItem="sIX-78-ZEt" secondAttribute="leading" constant="27" id="D1Y-dP-Cnd"/>
@@ -2584,7 +2584,7 @@
                                     <constraint firstItem="Zxv-Zy-RwN" firstAttribute="top" secondItem="CqD-dc-zCD" secondAttribute="bottom" constant="4" id="hW5-Vc-Xvf"/>
                                     <constraint firstItem="Zxv-Zy-RwN" firstAttribute="trailing" secondItem="CqD-dc-zCD" secondAttribute="trailing" id="x3o-GK-Wqz"/>
                                     <constraint firstItem="jVu-Yx-1T2" firstAttribute="trailing" secondItem="J69-j7-9e8" secondAttribute="trailing" id="xl2-pj-wSg"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yvV-eh-dD4" secondAttribute="trailing" constant="28" id="y4v-SK-SC9"/>
+                                    <constraint firstAttribute="trailing" secondItem="yvV-eh-dD4" secondAttribute="trailing" constant="28" id="y4v-SK-SC9"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -2593,13 +2593,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RcE-re-gXs">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="278"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="282"/>
                                 <connections>
                                     <action selector="close" destination="pgv-zI-gVb" eventType="touchUpInside" id="xP1-j2-DVe"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QKg-PU-6PI">
-                                <rect key="frame" x="0.0" y="518" width="414" height="218"/>
+                                <rect key="frame" x="0.0" y="522" width="414" height="214"/>
                                 <connections>
                                     <action selector="close" destination="pgv-zI-gVb" eventType="touchUpInside" id="TkU-yD-ezH"/>
                                 </connections>
@@ -2617,7 +2617,7 @@
                             <constraint firstItem="RcE-re-gXs" firstAttribute="leading" secondItem="gSh-HB-7v8" secondAttribute="leading" id="TAz-do-rmu"/>
                             <constraint firstItem="QKg-PU-6PI" firstAttribute="top" secondItem="sIX-78-ZEt" secondAttribute="bottom" id="ZkL-qd-qe7"/>
                             <constraint firstItem="gSh-HB-7v8" firstAttribute="trailing" secondItem="QKg-PU-6PI" secondAttribute="trailing" id="dFG-St-Slo"/>
-                            <constraint firstItem="sIX-78-ZEt" firstAttribute="centerY" secondItem="gSh-HB-7v8" secondAttribute="centerY" constant="30" id="f3n-yw-iuM"/>
+                            <constraint firstItem="sIX-78-ZEt" firstAttribute="centerY" secondItem="gSh-HB-7v8" secondAttribute="centerY" constant="34" id="f3n-yw-iuM"/>
                             <constraint firstItem="RcE-re-gXs" firstAttribute="top" secondItem="gSh-HB-7v8" secondAttribute="top" id="yVD-TF-kEA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gSh-HB-7v8"/>
