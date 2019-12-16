@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 
-class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewable {
+class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewable, UITextFieldDelegate {
     
     @IBOutlet var oldPasswordTextField: UITextField!
     @IBOutlet var newPasswordTextField: UITextField!
@@ -40,10 +40,8 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         detailsButton.setTitleColor(themeColor, for: .normal)
         detailsButton.setTitle("show".localized, for: .normal)
-//        detailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
         let newDetailsButton = newPasswordTextField.setView(.right, image: nil, width: 200)
         newDetailsButton.addTarget(self, action: #selector(toggleNewPasswordFieldState(_:)), for: .touchUpInside)
-//        newDetailsButton.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
         newDetailsButton.setTitleColor(themeColor, for: .normal)
         newDetailsButton.setTitle("show".localized, for: .normal)
         newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
@@ -66,7 +64,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
             newPasswordErrorLabel.isHidden = true
         }
     }
-
+    
     
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         oldPasswordTextField.isSecureTextEntry = !oldPasswordTextField.isSecureTextEntry
@@ -82,6 +80,28 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         sender.setTitle(buttonTitle, for: .normal)
     }
     
+    @IBAction func close() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func updatePassword() {
+        if oldPasswordTextField.text!.isEmpty {
+            showErrorViewForOld(message: "Password is missing".localized)
+        }
+        if newPasswordTextField.text!.isEmpty {
+            showErrorViewForNew(message: "Password is missing".localized)
+        }
+        if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty) {
+            
+            if oldPasswordTextField.text?.elementsEqual(newPasswordTextField.text ?? "") ?? false {
+                showErrorViewForOld(message: "You cannot choose the same password".localized)
+                showErrorViewForNew(message: "You cannot choose the same password".localized)
+            } else {
+                changePassword()
+            }
+        }
+    }
+    
     fileprivate func updateButtonColor(_ buttonTitle: String, _ sender: UIButton) {
         if buttonTitle.elementsEqual("hide".localized) {
             sender.setTitleColor(#colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1), for: .normal)
@@ -89,35 +109,26 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
             sender.setTitleColor(themeColor, for: .normal)
         }
     }
-
-    @IBAction func close() {
-        self.dismiss(animated: true, completion: nil)
+    func showErrorViewForOld(message: String) {
+        oldPasswordErrorLabel.isHidden = false
+        oldPasswordErrorLabel.text = message.localized
+        oldPasswordBorder.backgroundColor = .red
     }
     
-    @IBAction func updatePassword() {
-        if oldPasswordTextField.text!.isEmpty {
-            oldPasswordErrorLabel.isHidden = false
-            oldPasswordErrorLabel.text = "Password is missing".localized
-            oldPasswordBorder.backgroundColor = .red
-        }
-        if newPasswordTextField.text!.isEmpty {
-            newPasswordErrorLabel.isHidden = false
-            newPasswordErrorLabel.text = "Password is missing".localized
-            newPasswordBorder.backgroundColor = .red
-        }
-        if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty) {
-            changePassword()
-        }
+    func showErrorViewForNew(message: String) {
+        newPasswordErrorLabel.isHidden = false
+        newPasswordErrorLabel.text = message.localized
+        newPasswordBorder.backgroundColor = .red
     }
     
-//    must pass the user id if this the the first login
+    //    must pass the user id if this the the first login
     func changePassword() {
         var parameters: Parameters = [:]
         let user: [String: Any] = [ "current_password": oldPasswordTextField.text ?? "",
-                              "id": userId(),
-                              "password": newPasswordTextField.text ?? "",
-                              "password_confirmation": newPasswordTextField.text ?? "",
-                              "reset_password": true
+                                    "id": userId(),
+                                    "password": newPasswordTextField.text ?? "",
+                                    "password_confirmation": newPasswordTextField.text ?? "",
+                                    "reset_password": true
         ]
         parameters["user"] = user
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -129,32 +140,26 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
                 if statusCode == 201 {
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 } else {
-                    if let result = response as? [String: Any] {
-                        if let reasons = result["reasons"] as? [Any], let reason = reasons.first, let messageString = reason as? String {
-                            showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, message: messageString)
-                        } else {
-                            showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                    if let data = response, let serverResponse = String(data: data as! Data, encoding: String.Encoding.utf8) {
+                        do {
+                            let output = try JSONSerialization.jsonObject(with: serverResponse.data(using: .utf8)!, options: .allowFragments) as? [String:Any]
+                            debugPrint ("\(String(describing: output))")
+                            if let reasons = output?["reasons"] as? [Any], let reason = reasons.first, let messageString = reason as? String {
+                                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, message: messageString)
+                            } else {
+                                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                            }
+                        }
+                        catch {
+                            debugPrint (error)
                         }
                     } else {
-                       showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                        showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                     }
                 }
             }
         }
     }
-
+    
 }
 
-extension ChangePasswordViewController: UITextFieldDelegate {
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        if textField == oldPasswordTextField {
-//            newPasswordTextField.becomeFirstResponder()
-//        } else if textField == newPasswordTextField {
-//            confirmPasswordTextField.becomeFirstResponder()
-//        } else if textField == confirmPasswordTextField {
-////            changePassword()
-//        }
-//        return true
-//    }
-
-}
