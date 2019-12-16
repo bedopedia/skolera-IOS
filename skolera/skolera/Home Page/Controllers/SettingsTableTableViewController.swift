@@ -27,7 +27,6 @@ class SettingsTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            //            change language
             let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
                 if Language.language == .arabic {
@@ -42,14 +41,13 @@ class SettingsTableTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         } else if indexPath.row == 2 {
             //            change password
-        } else if indexPath.row == 3 {
-            //            logout
             
+        } else if indexPath.row == 5 {
             let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-//                if(self.isAnimating) {
-//                    self.stopAnimating()
-//                }
+                //                if(self.isAnimating) {
+                //                    self.stopAnimating()
+                //                }
                 self.sendFCM(token: "")
                 clearUserDefaults()
                 let nvc = UINavigationController()
@@ -62,10 +60,20 @@ class SettingsTableTableViewController: UITableViewController {
             alert.modalPresentationStyle = .fullScreen
             self.present(alert, animated: true, completion: nil)
             
+        } else if indexPath.row == 3 {
+            let url = URL(string: "https://itunes.apple.com/app/id1346646110")
+            var stringToShare = ""
+            stringToShare = "https://itunes.apple.com/app/id1346646110"
+            //            let imageToShare = UIImage(named: "logo")
+            let objectsToShare = [stringToShare, url!] as [Any]
+            let activityController = UIActivityViewController(
+                activityItems: objectsToShare,
+                applicationActivities: nil)
+            present(activityController, animated: true, completion: nil)
         } else if indexPath.row == 4 {
-            //        share app
-        } else if indexPath.row == 5 {
-            //           rate app
+            if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "1346646110") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
     
