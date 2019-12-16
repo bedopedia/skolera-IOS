@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Alamofire
-import NoticeBar
 
 //alert messages
 func showAlert(viewController: UIViewController, title: String, message: String,completion : ((UIAlertAction)->Void)?) {
@@ -141,10 +140,3 @@ func clearUserDefaults() {
     userDefault.removeObject(forKey: USER_TYPE)
 }
 
-func showNoticeBar(message: String) {
-    let config = NoticeBarConfig(title: message, image: nil, textColor: UIColor.white, backgroundColor: UIColor.red, barStyle: .onTabbar, animationType: NoticeBarAnimationType.bottom )
-    let noticeBar = NoticeBar(config: config)
-    noticeBar.show(duration: 2) { (finish) in
-        
-    }
-}
