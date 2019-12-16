@@ -90,7 +90,6 @@ class TeacherCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     
     @IBAction func logout() {
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        settingsVC.userId = actor.actableId
         navigationController?.pushViewController(settingsVC, animated: true)
     }
 

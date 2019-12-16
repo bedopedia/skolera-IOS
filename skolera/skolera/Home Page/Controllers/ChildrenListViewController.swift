@@ -111,34 +111,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     ///
     /// - Parameter sender: logout button
     @IBAction func logout() {
-//        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-//            if Language.language == .arabic {
-//                self.showChangeLanguageConfirmation(language: .english)
-//            } else{
-//                self.showChangeLanguageConfirmation(language: .arabic)
-//            }
-//
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-//            if(self.isAnimating) {
-//                self.stopAnimating()
-//            }
-//            self.sendFCM(token: "")
-//            clearUserDefaults()
-//            let nvc = UINavigationController()
-//            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-//            nvc.pushViewController(schoolCodeVC, animated: true)
-//            nvc.modalPresentationStyle = .fullScreen
-//            self.present(nvc, animated: true, completion: nil)
-//        }))
-//        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-//        alert.modalPresentationStyle = .fullScreen
-//        self.present(alert, animated: true, completion: nil)
-        
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        settingsVC.userId = userId
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     

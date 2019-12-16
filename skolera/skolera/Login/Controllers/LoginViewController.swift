@@ -119,17 +119,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     debugPrint(parent.data.passwordChanged)
-//                    if let passwordChanged = parent.data.passwordChanged, passwordChanged {
-//                       self.updateLocale(parent: parent)
-//                    } else {
-//                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-//                        changePasswordVC.isFirstLogin = true
-//                        self.present(changePasswordVC, animated: true, completion: nil)
-//                    }
-                    self.stopAnimating()
-                    let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                    changePasswordVC.isFirstLogin = true
-                    self.present(changePasswordVC, animated: true, completion: nil)
+                    if let passwordChanged = parent.data.passwordChanged, passwordChanged {
+                       self.updateLocale(parent: parent)
+                    } else {
+                        self.stopAnimating()
+                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        changePasswordVC.isFirstLogin = true
+                        self.present(changePasswordVC, animated: true, completion: nil)
+                    }
                 }
             } else {
                 self.stopAnimating()
