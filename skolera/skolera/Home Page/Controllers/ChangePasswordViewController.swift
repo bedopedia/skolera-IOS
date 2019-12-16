@@ -14,30 +14,45 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     
     @IBOutlet var oldPasswordTextField: UITextField!
     @IBOutlet var newPasswordTextField: UITextField!
-    @IBOutlet var confirmPasswordTextField: UITextField!
     @IBOutlet var updateButton: UIButton!
-        
+    @IBOutlet var oldPasswordBorder: UIView!
+    @IBOutlet var newPasswordBorder: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         oldPasswordTextField.delegate = self
         newPasswordTextField.delegate = self
-        confirmPasswordTextField.delegate = self
         updateButton.backgroundColor = getMainColor()
+        oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
+    @objc func oldPasswordFieldDidChange(_ textField: UITextField) {
+        let count = Float(textField.text?.count ?? 0)
+        if count > 0 {
+            oldPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
+        }
+    }
+    
+    @objc func newPasswordFieldDidChange(_ textField: UITextField) {
+        let count = Float(textField.text?.count ?? 0)
+        if count > 0 {
+            newPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
+        }
+    }
 
     @IBAction func close() {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func updatePassword() {
-        if oldPasswordTextField.text!.isEmpty ||
-            newPasswordTextField.text!.isEmpty ||
-            confirmPasswordTextField.text!.isEmpty {
-            showNoticeBar(message: "Enter all fields please".localized)
-        } else if !newPasswordTextField.text!.elementsEqual(confirmPasswordTextField.text!){
-            showNoticeBar(message: "Passwords doesn't match".localized)
-        } else {
+        if oldPasswordTextField.text!.isEmpty {
+            oldPasswordBorder.backgroundColor = .red
+        }
+        if newPasswordTextField.text!.isEmpty {
+            newPasswordBorder.backgroundColor = .red
+        }
+        if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty) {
             changePassword()
         }
     }
@@ -47,7 +62,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         let user: [String: Any] = [ "current_password": oldPasswordTextField.text ?? "",
                               "id": userId(),
                               "password": newPasswordTextField.text ?? "",
-                              "password_confirmation": confirmPasswordTextField.text ?? "",
+                              "password_confirmation": newPasswordTextField.text ?? "",
                               "reset_password": true
 ]
         parameters["user"] = user
@@ -72,15 +87,15 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
 }
 
 extension ChangePasswordViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == oldPasswordTextField {
-            newPasswordTextField.becomeFirstResponder()
-        } else if textField == newPasswordTextField {
-            confirmPasswordTextField.becomeFirstResponder()
-        } else if textField == confirmPasswordTextField {
-//            changePassword()
-        }
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        if textField == oldPasswordTextField {
+//            newPasswordTextField.becomeFirstResponder()
+//        } else if textField == newPasswordTextField {
+//            confirmPasswordTextField.becomeFirstResponder()
+//        } else if textField == confirmPasswordTextField {
+////            changePassword()
+//        }
+//        return true
+//    }
 
 }
