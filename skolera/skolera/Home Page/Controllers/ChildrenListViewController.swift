@@ -136,7 +136,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 //        self.present(alert, animated: true, completion: nil)
         
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        settingsVC.userId = userId
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     

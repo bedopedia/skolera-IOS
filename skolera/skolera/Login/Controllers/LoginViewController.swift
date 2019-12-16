@@ -282,7 +282,6 @@ private func updateLocale(parent: ParentResponse) {
                 } else {
                     self.stopAnimating()
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                    childrenTVC.userId = parent.data.actableId
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
                     nvc.modalPresentationStyle = .fullScreen

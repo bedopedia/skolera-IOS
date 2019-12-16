@@ -76,7 +76,6 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
                 } else {
                     if let result = response as? [String: Any] {
                         if let reasons = result["reasons"] as? [String] {
-                            showNoticeBar(message: reasons.first ?? "")
                         }
                     }
                 }

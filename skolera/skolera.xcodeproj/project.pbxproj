@@ -327,10 +327,10 @@
 		DC8FAAEB2381951800B3B753 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */; };
 		DCA5E4C4238E95FC0044B504 /* AttendanceCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
-		DCCB70B623A66B1600F09AD5 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */; };
 		DCC414A12390274500E70EF6 /* SkeletonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */; };
 		DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */; };
 		DCC69663239D190B0087682C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC69662239D190B0087682C /* TabBarViewController.swift */; };
+		DCCB70B623A66B1600F09AD5 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -674,10 +674,10 @@
 		DC8FAAEA2381951800B3B753 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		DCA5E4C3238E95FC0044B504 /* AttendanceCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceCases.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
-		DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		DCC4149F2390274500E70EF6 /* SkeletonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTableViewCell.swift; sourceTree = "<group>"; };
 		DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonTableViewCell.xib; sourceTree = "<group>"; };
 		DCC69662239D190B0087682C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1932,7 +1932,6 @@
 				"${BUILT_PRODUCTS_DIR}/NRAppUpdate/NRAppUpdate.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
-				"${BUILT_PRODUCTS_DIR}/NoticeBar/NoticeBar.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -1970,7 +1969,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NRAppUpdate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NoticeBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
