@@ -157,6 +157,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         }
     }
     
+//    check for 406 in failure display the dialogue with a different title
     private func updateLocale(parent: ParentResponse) {
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
