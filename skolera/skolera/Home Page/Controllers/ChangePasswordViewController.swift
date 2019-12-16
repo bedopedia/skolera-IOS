@@ -8,12 +8,15 @@
 
 import UIKit
 import Alamofire
+import NVActivityIndicatorView
 
-class ChangePasswordViewController: UIViewController {
+class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet var oldPasswordTextField: UITextField!
     @IBOutlet var newPasswordTextField: UITextField!
     @IBOutlet var confirmPasswordTextField: UITextField!
+    
+    var userId: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,38 +31,29 @@ class ChangePasswordViewController: UIViewController {
     }
     
     @IBAction func updatePassword() {
-        
+        if oldPasswordTextField.text!.isEmpty ||
+            newPasswordTextField.text!.isEmpty ||
+            confirmPasswordTextField.text!.isEmpty {
+            showNoticeBar(message: "Enter all fields please".localized)
+        } else if !newPasswordTextField.text!.elementsEqual(confirmPasswordTextField.text!){
+            showNoticeBar(message: "Passwords doesn't match".localized)
+        } else {
+            changePassword()
+        }
     }
     
-//    @IBAction func changePassword(){
-//        oldPasswordTextField.resignFirstResponder()
-//        newPasswordTextField.resignFirstResponder()
-//        confirmPasswordTextField.resignFirstResponder()
-//        if oldPasswordTextField.text!.isEmpty ||
-//            newPasswordTextField.text!.isEmpty ||
-//            confirmPasswordTextField.text!.isEmpty {
-//            showNoticeBar(message: "Enter all fields please".localized)
-//        } else if !newPasswordTextField.text!.elementsEqual(confirmPasswordTextField.text!){
-//            showNoticeBar(message: "Passwords doesn't match".localized)
-//        } else {
-//            showLoading()
-//            let parameters = [OLD_PASSWORD: oldPasswordTextField.text!, PASSWORD: newPasswordTextField.text!]
-//            EndPoints.userUpdate(userId: keychain.get(ID)!, parameters: parameters) { (statusCode, isSuccess, response) in
-//                self.hideLoading()
-//                if isSuccess {
-//                  //  logChangePasswordEvent(userId: self.keychain.get(ID)!)
-//                    self.close()
-//                } else {
-//                    if statusCode == EHttpStatusCode.INVALID_CREDENTIAL.rawValue {
-//                        logOut(viewController: self)
-//                    } else {
-//                        showNoticeBar(message: response)
-//                    }
-//                }
-//            }
-//        }
-//        
-//    }
+    func changePassword() {
+        let parameters: Parameters = [:]
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        changePasswordAPI(userId: userId, parameters: parameters) { (isSuccess, statusCode, error) in
+            if isSuccess {
+                self.close()
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+
 
     
 }
