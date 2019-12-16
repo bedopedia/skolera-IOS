@@ -10,9 +10,6 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var languageLabel: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 //
@@ -20,7 +17,6 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func logout() {
-//        self.dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
     }
 
