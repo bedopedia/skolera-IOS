@@ -17,6 +17,10 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var updateButton: UIButton!
     @IBOutlet var oldPasswordBorder: UIView!
     @IBOutlet var newPasswordBorder: UIView!
+    @IBOutlet var newPasswordErrorLabel: UILabel!
+    @IBOutlet var oldPasswordErrorLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
