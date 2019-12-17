@@ -106,7 +106,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    debugPrint(parent.data.passwordChanged)
+                    debugPrint(parent.data.id)
+                    debugPrint(parent.data.actableId)
 //                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
                     self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                     self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
@@ -124,8 +125,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                        self.updateLocale(parent: parent)
                     } else {
                         self.stopAnimating()
+                        self.emailTextField.text = ""
+                        self.passwordTextField.text = ""
                         let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        changePasswordVC.actableId = parent.data.actableId
+//                        use id rather than the actableId
+                        changePasswordVC.actableId = parent.data.id
                         changePasswordVC.isFirstLogin = true
                         self.present(changePasswordVC, animated: true, completion: nil)
                     }
