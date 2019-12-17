@@ -106,19 +106,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    self.userDefault.set(email, forKey: "email")
-                    self.userDefault.set(password, forKey: "password")
+                    debugPrint(parent.data.id)
+                    debugPrint(parent.data.actableId)
+//                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
                     self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                     self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
                     self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
                     self.userDefault.set(headers[UID] as! String, forKey: UID)
-                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                    self.userDefault.set(String(parent.data.id), forKey: ID)
-                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
-                    self.emailTextField.text = ""
-                    self.passwordTextField.text = ""
-                    self.updateLocale(parent: parent)
+                    if let passwordChanged = parent.data.passwordChanged, passwordChanged {
+                        UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
+                        self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
+                        self.userDefault.set(email, forKey: "email")
+                        self.userDefault.set(password, forKey: "password")
+                        self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
+                        self.userDefault.set(String(parent.data.id), forKey: ID)
+                        self.emailTextField.text = ""
+                        self.passwordTextField.text = ""
+                       self.updateLocale(parent: parent)
+                    } else {
+                        self.stopAnimating()
+                        self.emailTextField.text = ""
+                        self.emailTextField.becomeFirstResponder()
+                        self.passwordTextField.text = ""
+                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                        use id rather than the actableId
+                        changePasswordVC.actableId = parent.data.id
+                        changePasswordVC.isFirstLogin = true
+                        self.present(changePasswordVC, animated: true, completion: nil)
+                    }
                 }
             } else {
                 self.stopAnimating()
@@ -157,6 +172,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         }
     }
     
+//    check for 406 in failure display the dialogue with a different title
     private func updateLocale(parent: ParentResponse) {
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
@@ -169,6 +185,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 if isParent() {
                     self.stopAnimating()
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    childrenTVC.userId = parent.data.actableId
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
                     nvc.modalPresentationStyle = .fullScreen
@@ -183,7 +200,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         }
                     } else {
                         self.stopAnimating()
-                        ///////
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         if !parent.data.userType.elementsEqual("teacher") {
                             childProfileVC.otherUser = true

@@ -18,7 +18,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var userId: Int!
     var refreshControl: UIRefreshControl!
     
     /// children array acts as the data source for the tableView
@@ -38,10 +38,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
-//        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-//        let backItem = UIBarButtonItem()
-//        backItem.title = nil
-//        navigationItem.backBarButtonItem = backItem
         getChildren()
         InstanceID.instanceID().instanceID { (result, error) in
             if let error = error {
@@ -115,31 +111,8 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     ///
     /// - Parameter sender: logout button
     @IBAction func logout() {
-        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-            if Language.language == .arabic {
-                self.showChangeLanguageConfirmation(language: .english)
-            } else{
-                self.showChangeLanguageConfirmation(language: .arabic)
-            }
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(self.isAnimating) {
-                self.stopAnimating()
-            }
-            self.sendFCM(token: "")
-            clearUserDefaults()
-            let nvc = UINavigationController()
-            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-            nvc.pushViewController(schoolCodeVC, animated: true)
-            nvc.modalPresentationStyle = .fullScreen
-            self.present(nvc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        alert.modalPresentationStyle = .fullScreen
-        self.present(alert, animated: true, completion: nil)
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     /// shows notification screen modally

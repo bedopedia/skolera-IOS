@@ -93,10 +93,8 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     }
     
     @IBAction func logout() {
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
   
     
