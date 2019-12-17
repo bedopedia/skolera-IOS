@@ -144,7 +144,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
             if isSuccess {
                 self.close()
             } else {
-                if statusCode == 201 {
+                if statusCode == 401 {
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 } else {
                     if let data = response, let serverResponse = String(data: data as! Data, encoding: String.Encoding.utf8) {
