@@ -2039,54 +2039,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B4B125AC-66D6-45CB-AD99-E6540B15B0BF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "skolera/Home Page/Network/HomeApiManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "changePasswordAPI(userId:parameters:completion:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "B4B125AC-66D6-45CB-AD99-E6540B15B0BF - a6db2f9c27541cfd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "skolera.changePasswordAPI(userId: Swift.Int, parameters: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Home%20Page/Network/HomeApiManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "220">
-               </Location>
-               <Location
-                  uuid = "B4B125AC-66D6-45CB-AD99-E6540B15B0BF - 47e0fe16380e506"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in skolera.changePasswordAPI(userId: Swift.Int, parameters: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "skolera"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Home%20Page/Network/HomeApiManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "116">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B3BBCF23-1840-479F-B9C3-5B989D1910A0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -2097,6 +2049,134 @@
             startingLineNumber = "150"
             endingLineNumber = "150"
             landmarkName = "changePasswordAPI(userId:parameters:completion:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8EB68291-3482-4C75-BD98-FC54D7830298"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Login/Network/LoginApiManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "setLocaleAPI(_:completion:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D36FCE5-C085-4BC4-8B69-270BDAADF597"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Login/Controllers/SplashScreenViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "updateLocale()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0D36FCE5-C085-4BC4-8B69-270BDAADF597 - 426f088333c9c21d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.SplashScreenViewController.(updateLocale in _6FB1BBD2E201C3733570894D5845D9F4)() -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Login/Controllers/SplashScreenViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "106"
+                  endingLineNumber = "106"
+                  offsetFromSymbolStart = "672">
+               </Location>
+               <Location
+                  uuid = "0D36FCE5-C085-4BC4-8B69-270BDAADF597 - 5917a86e6cfb9538"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in skolera.SplashScreenViewController.(updateLocale in _6FB1BBD2E201C3733570894D5845D9F4)() -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Login/Controllers/SplashScreenViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7A53DDC6-653F-4D07-B475-8F193CA2145C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Login/Controllers/LoginViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "updateLocale(parent:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7A53DDC6-653F-4D07-B475-8F193CA2145C - 5e23098498209409"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.LoginViewController.(updateLocale in _56E80D11864225A22E9EFCD8D0A8A312)(parent: skolera.ParentResponse) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Login/Controllers/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177"
+                  offsetFromSymbolStart = "688">
+               </Location>
+               <Location
+                  uuid = "7A53DDC6-653F-4D07-B475-8F193CA2145C - ef2fbb143479f225"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool, Swift.Int, Swift.Optional&lt;Any&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in skolera.LoginViewController.(updateLocale in _56E80D11864225A22E9EFCD8D0A8A312)(parent: skolera.ParentResponse) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Login/Controllers/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178"
+                  offsetFromSymbolStart = "256">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "65DE519E-D445-44B1-B2AE-4C88E8F88A67"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Helpers/App Methods.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "userId()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
