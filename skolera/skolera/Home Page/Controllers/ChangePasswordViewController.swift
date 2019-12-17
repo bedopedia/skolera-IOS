@@ -22,6 +22,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var titleLabel: UILabel!
     
     var isFirstLogin = false
+    var actableId: Int!
     var themeColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
     
     override func viewDidLoad() {
@@ -124,15 +125,21 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     //    must pass the user id if this the the first login
     func changePassword() {
         var parameters: Parameters = [:]
+        var id = 0
+        if isFirstLogin {
+            id = actableId
+        } else {
+            id = Int(userId())!
+        }
         let user: [String: Any] = [ "current_password": oldPasswordTextField.text ?? "",
-                                    "id": userId(),
+                                    "id": id,
                                     "password": newPasswordTextField.text ?? "",
                                     "password_confirmation": newPasswordTextField.text ?? "",
                                     "reset_password": true
         ]
         parameters["user"] = user
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        changePasswordAPI(userId: Int(userId())!, parameters: parameters) { (isSuccess, statusCode, response, error) in
+        changePasswordAPI(userId: id, parameters: parameters) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
             if isSuccess {
                 self.close()

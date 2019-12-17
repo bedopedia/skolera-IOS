@@ -106,24 +106,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    self.userDefault.set(email, forKey: "email")
-                    self.userDefault.set(password, forKey: "password")
-                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
-                    self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
-                    self.userDefault.set(headers[UID] as! String, forKey: UID)
-                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                    self.userDefault.set(String(parent.data.id), forKey: ID)
-                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
-                    self.emailTextField.text = ""
-                    self.passwordTextField.text = ""
                     debugPrint(parent.data.passwordChanged)
                     if let passwordChanged = parent.data.passwordChanged, passwordChanged {
+                        UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
+                        self.userDefault.set(email, forKey: "email")
+                        self.userDefault.set(password, forKey: "password")
+                        self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                        self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
+                        self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
+                        self.userDefault.set(headers[UID] as! String, forKey: UID)
+                        self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
+                        self.userDefault.set(String(parent.data.id), forKey: ID)
+                        self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
+                        self.emailTextField.text = ""
+                        self.passwordTextField.text = ""
                        self.updateLocale(parent: parent)
                     } else {
                         self.stopAnimating()
                         let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        changePasswordVC.actableId = parent.data.actableId
                         changePasswordVC.isFirstLogin = true
                         self.present(changePasswordVC, animated: true, completion: nil)
                     }
