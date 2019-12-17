@@ -23,7 +23,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     @IBOutlet weak var notificationButton: UIButton!
 //    @IBOutlet weak var signOutButton: UIBarButtonItem!
     var kids = [Child]()
-    var userId!
+    var userId: Int!
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
