@@ -56,7 +56,7 @@ class SplashScreenViewController: UIViewController {
     
     /// acts as Launch Screen till the system either auto login the user if his credentials are saved, or shows the SchoolCode screen to login otherwise
     private func getMainScreen() {
-        if userDefault.string(forKey: ACCESS_TOKEN) != nil {
+        if (userDefault.string(forKey: ACCESS_TOKEN) != nil) && (userDefault.string(forKey: ID) != nil) {
             BASE_URL = userDefault.string(forKey: "BASE_URL") ?? ""
             self.updateLocale()
         } else {
@@ -111,6 +111,7 @@ class SplashScreenViewController: UIViewController {
                     let parent = ParentResponse(fromDictionary: result)
                     if isParent() {
                         let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childrenTVC.userId = parent.data.actableId
                         let nvc = UINavigationController(rootViewController: childrenTVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen

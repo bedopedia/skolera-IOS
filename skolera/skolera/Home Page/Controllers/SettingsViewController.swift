@@ -13,11 +13,10 @@ class SettingsViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet var backButton: UIButton!
     
-    var userId: Int!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+//
         // Do any additional setup after loading the view.
     }
     
@@ -27,7 +26,6 @@ class SettingsViewController: UIViewController, NVActivityIndicatorViewable {
 
     /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -36,4 +34,3 @@ class SettingsViewController: UIViewController, NVActivityIndicatorViewable {
     */
 
 }
-

@@ -198,32 +198,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     ///   - email: entered user email
     ///   - password: entered user password
     func authenticate( email: String, password: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
-        loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    self.userDefault.set(email, forKey: "email")
-                    self.userDefault.set(password, forKey: "password")
-                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
-                    self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
-                    self.userDefault.set(headers[UID] as! String, forKey: UID)
-                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                    self.userDefault.set(String(parent.data.id), forKey: ID)
-                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
-                    self.emailTextField.text = ""
-                    self.passwordTextField.text = ""
-                    self.updateLocale(parent: parent)
+            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+            let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
+            loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
+                if isSuccess {
+                    if let result = value as? [String : AnyObject] {
+                        let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
+                        debugPrint(parent.data.passwordChanged)
+    //                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
+                        self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                        self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
+                        self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
+                        self.userDefault.set(headers[UID] as! String, forKey: UID)
+                        if let passwordChanged = parent.data.passwordChanged, passwordChanged {
+                            UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
+                            self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
+                            self.userDefault.set(email, forKey: "email")
+                            self.userDefault.set(password, forKey: "password")
+                            self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
+                            self.userDefault.set(String(parent.data.id), forKey: ID)
+                            self.emailTextField.text = ""
+                            self.passwordTextField.text = ""
+                           self.updateLocale(parent: parent)
+                        } else {
+                            self.stopAnimating()
+                            let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                            changePasswordVC.actableId = parent.data.actableId
+                            changePasswordVC.isFirstLogin = true
+                            self.present(changePasswordVC, animated: true, completion: nil)
+                        }
+                    }
+                } else {
+                    self.stopAnimating()
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
                 }
-            } else {
-                self.stopAnimating()
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
             }
         }
-    }
     
     func getChildren(parentId: Int, childId: Int) {
         getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in

@@ -97,11 +97,6 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
     @IBAction func settingsButton() {
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        if isParent() {
-            settingsVC.userId = child.parentId
-        } else {
-            settingsVC.userId = child.actableId
-        }
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
