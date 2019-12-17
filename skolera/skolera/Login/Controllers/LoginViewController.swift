@@ -126,6 +126,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     } else {
                         self.stopAnimating()
                         self.emailTextField.text = ""
+                        self.emailTextField.becomeFirstResponder()
                         self.passwordTextField.text = ""
                         let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
 //                        use id rather than the actableId
@@ -212,15 +213,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 }
             } else {
                 self.stopAnimating()
-//                if statusCode == 406 {
-//                    let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-//                    self.present(changePasswordVC, animated: true, completion: nil)
-//                } else {
-//                    showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-//                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-//                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
-//                    })
-//                }
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)
