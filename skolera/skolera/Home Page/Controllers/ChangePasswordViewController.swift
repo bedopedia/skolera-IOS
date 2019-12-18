@@ -27,11 +27,13 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     var isFirstLogin = false
     var actableId: Int!
     var themeColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
+    var oldPasswordText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if isFirstLogin {
             titleLabel.text = "Please choose a new password".localized
+            oldPasswordTextField.text = oldPasswordText
         } else {
             titleLabel.text = "Change password".localized
             updateButton.backgroundColor = getMainColor()

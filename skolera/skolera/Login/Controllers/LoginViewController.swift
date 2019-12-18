@@ -132,6 +132,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
 //                        use id rather than the actableId
                         changePasswordVC.actableId = parent.data.id
                         changePasswordVC.isFirstLogin = true
+                        changePasswordVC.oldPasswordText = self.passwordTextField.text ?? ""
                         self.present(changePasswordVC, animated: true, completion: nil)
                     }
                 }
