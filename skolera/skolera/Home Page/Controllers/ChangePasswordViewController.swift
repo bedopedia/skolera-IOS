@@ -31,6 +31,9 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        oldPasswordTextField.placeholder = "Old password".localized
+        newPasswordTextField.placeholder = "New password".localized
+        confirmNewPasswordTextField.placeholder = "Confirm new password".localized
         if isFirstLogin {
             titleLabel.text = "Please choose a new password".localized
             oldPasswordTextField.text = oldPasswordText
@@ -57,11 +60,6 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         confirmDetailsButton.addTarget(self, action: #selector(togglePasswordConfirmationFieldState(_:)), for: .touchUpInside)
         confirmDetailsButton.setTitleColor(themeColor, for: .normal)
         confirmDetailsButton.setTitle("show".localized, for: .normal)
-        
-        oldPasswordTextField.placeholder = "Old password".localized
-        newPasswordTextField.placeholder = "New password".localized
-        confirmNewPasswordTextField.placeholder = "Confirm new password".localized
-        
     }
     
     @objc func oldPasswordFieldDidChange(_ textField: UITextField) {

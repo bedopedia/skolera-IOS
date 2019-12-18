@@ -125,14 +125,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                        self.updateLocale(parent: parent)
                     } else {
                         self.stopAnimating()
-                        self.emailTextField.text = ""
-                        self.emailTextField.becomeFirstResponder()
-                        self.passwordTextField.text = ""
                         let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
 //                        use id rather than the actableId
                         changePasswordVC.actableId = parent.data.id
                         changePasswordVC.isFirstLogin = true
                         changePasswordVC.oldPasswordText = self.passwordTextField.text ?? ""
+                        self.emailTextField.text = ""
+                        self.emailTextField.becomeFirstResponder()
+                        self.passwordTextField.text = ""
                         self.present(changePasswordVC, animated: true, completion: nil)
                     }
                 }
