@@ -20,6 +20,9 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet var newPasswordErrorLabel: UILabel!
     @IBOutlet var oldPasswordErrorLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var confirmNewPasswordTextField: UITextField!
+    @IBOutlet var confirmNewPasswordErrorLabel: UILabel!
+    @IBOutlet var confirmNewPasswordBorder: UIView!
     
     var isFirstLogin = false
     var actableId: Int!
@@ -36,6 +39,7 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         }
         oldPasswordTextField.delegate = self
         newPasswordTextField.delegate = self
+        confirmNewPasswordTextField.delegate = self
         oldPasswordTextField.addTarget(self, action: #selector(self.oldPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         let detailsButton = oldPasswordTextField.setView(.right, image: nil, width: 200)
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
@@ -46,8 +50,16 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         newDetailsButton.setTitleColor(themeColor, for: .normal)
         newDetailsButton.setTitle("show".localized, for: .normal)
         newPasswordTextField.addTarget(self, action: #selector(self.newPasswordFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        confirmNewPasswordTextField.addTarget(self, action: #selector(self.confirmNewPasswordFieldDidChange), for: UIControl.Event.editingChanged)
+        let confirmDetailsButton = confirmNewPasswordTextField.setView(.right, image: nil, width: 200)
+        confirmDetailsButton.addTarget(self, action: #selector(togglePasswordConfirmationFieldState(_:)), for: .touchUpInside)
+        confirmDetailsButton.setTitleColor(themeColor, for: .normal)
+        confirmDetailsButton.setTitle("show".localized, for: .normal)
+        
         oldPasswordTextField.placeholder = "Old password".localized
         newPasswordTextField.placeholder = "New password".localized
+        confirmNewPasswordTextField.placeholder = "Confirm new password".localized
+        
     }
     
     @objc func oldPasswordFieldDidChange(_ textField: UITextField) {
@@ -77,6 +89,22 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
     @objc func toggleNewPasswordFieldState (_ sender: UIButton) {
         newPasswordTextField.isSecureTextEntry = !newPasswordTextField.isSecureTextEntry
         let buttonTitle = newPasswordTextField.isSecureTextEntry ?  "show".localized :  "hide".localized
+        updateButtonColor(buttonTitle, sender)
+        sender.setTitle(buttonTitle, for: .normal)
+    }
+    
+    @objc func confirmNewPasswordFieldDidChange(_ textField: UITextField) {
+        let count = Float(textField.text?.count ?? 0)
+        if count > 0 {
+            confirmNewPasswordBorder.backgroundColor = #colorLiteral(red: 0.7215686275, green: 0.7215686275, blue: 0.7215686275, alpha: 1)
+            confirmNewPasswordErrorLabel.isHidden = true
+        }
+    }
+    
+    
+    @objc func togglePasswordConfirmationFieldState (_ sender: UIButton) {
+        confirmNewPasswordTextField.isSecureTextEntry = !confirmNewPasswordTextField.isSecureTextEntry
+        let buttonTitle = confirmNewPasswordTextField.isSecureTextEntry ?  "show".localized :  "hide".localized
         updateButtonColor(buttonTitle, sender)
         sender.setTitle(buttonTitle, for: .normal)
     }
