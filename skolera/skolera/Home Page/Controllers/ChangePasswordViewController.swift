@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 
-class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewable, UITextFieldDelegate {
+class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewable {
     
     @IBOutlet var oldPasswordTextField: UITextField!
     @IBOutlet var newPasswordTextField: UITextField!
@@ -120,13 +120,22 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         if newPasswordTextField.text!.isEmpty {
             showErrorViewForNew(message: "Password is missing".localized)
         }
-        if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty) {
+        if confirmNewPasswordTextField.text!.isEmpty {
+            showErrorViewForNewConfirm(message: "Password is missing".localized)
+        }
+        if (!oldPasswordTextField.text!.isEmpty && !newPasswordTextField.text!.isEmpty && !confirmNewPasswordTextField.text!.isEmpty) {
             
             if oldPasswordTextField.text?.elementsEqual(newPasswordTextField.text ?? "") ?? false {
                 showErrorViewForOld(message: "You cannot choose the same password".localized)
                 showErrorViewForNew(message: "You cannot choose the same password".localized)
             } else {
-                changePassword()
+                if !(confirmNewPasswordTextField.text?.elementsEqual(newPasswordTextField.text ?? "") ?? false) {
+                    showErrorViewForNew(message: "Old and new passwords do not match".localized)
+                    showErrorViewForNewConfirm(message: "Old and new passwords do not match".localized)
+                } else {
+                    changePassword()
+                    
+                }
             }
         }
     }
@@ -148,6 +157,12 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
         newPasswordErrorLabel.isHidden = false
         newPasswordErrorLabel.text = message.localized
         newPasswordBorder.backgroundColor = .red
+    }
+    
+    func showErrorViewForNewConfirm(message: String) {
+        confirmNewPasswordErrorLabel.isHidden = false
+        confirmNewPasswordErrorLabel.text = message.localized
+        confirmNewPasswordBorder.backgroundColor = .red
     }
     
     //    must pass the user id if this the the first login
@@ -195,6 +210,18 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
             }
         }
     }
-    
+}
+
+extension ChangePasswordViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == oldPasswordTextField {
+            newPasswordTextField.becomeFirstResponder()
+        } else if textField == newPasswordTextField{
+            confirmNewPasswordTextField.becomeFirstResponder()
+        } else {
+            updateButton.becomeFirstResponder()
+        }
+        return true
+    }
 }
 
