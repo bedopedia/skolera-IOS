@@ -130,8 +130,8 @@ class ChangePasswordViewController: UIViewController, NVActivityIndicatorViewabl
                 showErrorViewForNew(message: "You cannot choose the same password".localized)
             } else {
                 if !(confirmNewPasswordTextField.text?.elementsEqual(newPasswordTextField.text ?? "") ?? false) {
-                    showErrorViewForNew(message: "Old and new passwords do not match".localized)
-                    showErrorViewForNewConfirm(message: "Old and new passwords do not match".localized)
+                    showErrorViewForNew(message: "Password and confirmation do not match".localized)
+                    showErrorViewForNewConfirm(message: "Password and confirmation do not match".localized)
                 } else {
                     changePassword()
                     
