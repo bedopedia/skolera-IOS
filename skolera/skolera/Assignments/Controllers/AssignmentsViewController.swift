@@ -138,40 +138,6 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    private func getAssignmentDetails(assignmentId: Int) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let assignment = FullAssignment(result)
-                    if !self.isTeacher {
-                        let description = assignment.description ?? ""
-                        if !description.isEmpty || assignment.uploadedFiles.count > 0 {
-                           let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
-                            assignmentDetailsVC.child = self.child
-                            assignmentDetailsVC.assignment = assignment
-                            self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
-                        } else {
-                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
-                            alert.modalPresentationStyle = .fullScreen
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    } else {
-                        let assignmentDetailsVC: AssignmentGradesViewController = AssignmentGradesViewController.instantiate(fromAppStoryboard: .Assignments)
-                        assignmentDetailsVC.courseId = self.courseId
-                        assignmentDetailsVC.courseGroupId = self.courseGroupId
-                        assignmentDetailsVC.assignment = assignment
-                        self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
-                    }
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if filteredAssignments != nil {
             return filteredAssignments.count
