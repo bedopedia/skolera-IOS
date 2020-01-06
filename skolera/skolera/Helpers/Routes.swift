@@ -92,6 +92,12 @@ func GET_THREADS() -> String
 {
     return "\(BASE_URL!)/api/threads"
 }
+// for the uploaded files
+func GET_MESSAGES() -> String
+{
+    return "\(BASE_URL!)/api/threads/%d/messages"
+}
+
 func GET_THREADS_COURSE_GROUPS() -> String
 {
     return "\(BASE_URL!)/api/students/%d/course_groups"
