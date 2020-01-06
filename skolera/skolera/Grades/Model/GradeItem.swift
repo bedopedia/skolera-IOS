@@ -35,7 +35,7 @@ class GradeItem {
         gradeView = dict["grade_view"] as? String ?? "\(dict["grade_view"] as? Double ?? 0)"
         total = dict["total"] as? Double
         grade = dict["grade"] as? Double
-        createdAt = dict["end_date"] as? String
+        createdAt = dict["created_at"] as? String
         periodId = dict["period_id"] as? Int
     }
 

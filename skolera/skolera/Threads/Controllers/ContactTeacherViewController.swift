@@ -75,9 +75,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getThreadsApi { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
-            if self.threads == nil {
-                self.threads = []
-            }
+            self.threads = []
             if isSuccess {
                 if let result = response as? [String: AnyObject] {
                     debugPrint(result)

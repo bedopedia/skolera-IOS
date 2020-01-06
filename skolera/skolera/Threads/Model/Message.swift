@@ -38,9 +38,9 @@ class Message : NSObject, NSCoding{
         if let uploadedFiles = dictionary["uploaded_files"] as? [[String: Any]], let uploadedFile = uploadedFiles.first, uploadedFile.count > 0 {
             debugPrint(uploadedFile)
             attachmentUrl = uploadedFile["url"] as? String
-            let splittedArray = attachmentUrl.split(separator: ".")
-            ext = String(splittedArray.last ?? "") 
             filename = uploadedFile["name"] as? String
+            let splittedArray = filename.split(separator: ".")
+            ext = String(splittedArray.last ?? "") 
         }
     }
     

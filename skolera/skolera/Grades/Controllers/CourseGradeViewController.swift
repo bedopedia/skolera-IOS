@@ -151,7 +151,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 if let result = response as? [String : AnyObject] {
 //                    let studentDic = (result["students"] as! [[String: AnyObject]])[0]
                     let gradeBook = GradeBook(result)
-                    let assignmentsDic = result["assignments"] as! [String: AnyObject]
+//                    let assignmentsDic = result["assignments"] as! [String: AnyObject]
                     var assignments: [Assignment] = gradeBook.categories?.first?.assignments ?? []
                     // parse assignments
 //                    for assignJson in assignmentsDic {
@@ -176,12 +176,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
 //                        gradeItems.append(GradeItem(gradeItemDic))
 //                    }
                     
-//                    self.students.append(Student(id: studentDic["id"] as! Int,
-//                                                 name: studentDic["name"] as! String,
-//                                                 userId: studentDic["user_id"] as! Int,
-//                                                 assignments: assignments,
-//                                                 quizzes: quizzes,
-//                                                 gradeItems: gradeItems))
+                    self.students.append(Student(id: self.child.actableId,
+                                                 name: self.child.name,
+                                                 userId: self.child.userId,
+                                                 assignments: assignments,
+                                                 quizzes: quizzes,
+                                                 gradeItems: gradeItems))
                     self.handleSemesters()
                     //                    self.tableView.reloadData()
                 }

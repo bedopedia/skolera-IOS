@@ -30,7 +30,7 @@ class User : NSObject, NSCoding{
         avatarUrl = dictionary["avatar_url"] as? String
         firstname = dictionary["firstname"] as? String
         gender = dictionary["gender"] as? String
-        id = dictionary["id"] as? Int
+        id = dictionary["user_id"] as? Int
         lastname = dictionary["lastname"] as? String
         name = dictionary["name"] as? String
         nameWithTitle = dictionary["name_with_title"] as? String
