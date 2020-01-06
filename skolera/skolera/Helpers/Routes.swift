@@ -52,7 +52,9 @@ func GET_COURSE_GRADING_PERIODS() -> String
 }
 func GET_STUDENT_GRADE_BOOK() -> String
 {
-    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
+//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=6"
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
+//    https://mnslms.skolera.com/api/courses/1/course_groups/1/student_grade_book?student_id=6
 }
 func GET_STUDENT_GRADE_AVG() -> String
 {

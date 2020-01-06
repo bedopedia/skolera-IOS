@@ -317,6 +317,9 @@
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
+		DCA3B67823C3769B00EA1757 /* GradeBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA3B67723C3769B00EA1757 /* GradeBook.swift */; };
+		DCA3B67A23C378A500EA1757 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA3B67923C378A500EA1757 /* Category.swift */; };
+		DCA3B67C23C3889E00EA1757 /* DummyGradebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA3B67B23C3889E00EA1757 /* DummyGradebook.swift */; };
 		DCC0DDDE23587AA30061660B /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0DDDD23587AA30061660B /* Submission.swift */; };
 /* End PBXBuildFile section */
 
@@ -651,6 +654,9 @@
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
+		DCA3B67723C3769B00EA1757 /* GradeBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeBook.swift; sourceTree = "<group>"; };
+		DCA3B67923C378A500EA1757 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		DCA3B67B23C3889E00EA1757 /* DummyGradebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyGradebook.swift; sourceTree = "<group>"; };
 		DCC0DDDD23587AA30061660B /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -725,6 +731,9 @@
 				8A3A217620D913F500539E1C /* Quiz.swift */,
 				8A3A217820D9186B00539E1C /* GradeItem.swift */,
 				8AE5560F20DC03DD00800D7E /* Grade.swift */,
+				DCA3B67723C3769B00EA1757 /* GradeBook.swift */,
+				DCA3B67923C378A500EA1757 /* Category.swift */,
+				DCA3B67B23C3889E00EA1757 /* DummyGradebook.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1986,6 +1995,7 @@
 				8AF8F73722E9EA0800544744 /* QuizzesResponse.swift in Sources */,
 				8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */,
 				8AE5561020DC03DD00800D7E /* Grade.swift in Sources */,
+				DCA3B67A23C378A500EA1757 /* Category.swift in Sources */,
 				8A6D361520B5980400DD0445 /* DemoTextMessageModel.swift in Sources */,
 				54CCF3F5206BD96500824A3D /* BehaviorNotesViewController.swift in Sources */,
 				8A93357722E0B277007B287D /* PostComment.swift in Sources */,
@@ -2032,6 +2042,7 @@
 				8A6D360B20B5969E00DD0445 /* MessagesSelectorProtocol.swift in Sources */,
 				54D3EDDB207FF98D00BCDA80 /* CourseGroup.swift in Sources */,
 				8A48DA5922B1563000260C7D /* AssignmentCourseTableViewCell.swift in Sources */,
+				DCA3B67823C3769B00EA1757 /* GradeBook.swift in Sources */,
 				8A1688AE22FB1D9200900AA6 /* SubmissionFeedback.swift in Sources */,
 				8A6D361F20B5999100DD0445 /* SendingStatusCollectionViewCell.swift in Sources */,
 				8A12408E233111F6000A3195 /* SubmitExcuseViewController.swift in Sources */,
@@ -2073,6 +2084,7 @@
 				8A06B6D922F98D3700F5F85C /* PostsApiManager.swift in Sources */,
 				8A5F42EA20B1CB1800FF93D1 /* Threads.swift in Sources */,
 				8AF66649233923C5009C4EF2 /* AnnouncementMainViewController.swift in Sources */,
+				DCA3B67C23C3889E00EA1757 /* DummyGradebook.swift in Sources */,
 				54640B0A20559A9800A13CCB /* AttendanceViewController.swift in Sources */,
 				8A5F42EC20B1CB3300FF93D1 /* Participant.swift in Sources */,
 				8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */,
@@ -2443,7 +2455,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.7;
+				MARKETING_VERSION = 2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2466,7 +2478,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.8.7;
+				MARKETING_VERSION = 2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
