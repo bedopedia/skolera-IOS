@@ -50,7 +50,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         if let grade = grade {
             navbarTitleLabel.text = grade.name
         }
-//        getAvgStudentGrades()
+        //        getAvgStudentGrades()
         getCourseGradingPeriods()
         //        getStudentGradeBook()
         tableView.delegate = self
@@ -77,8 +77,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         
-//        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
-//         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
+        //        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
+        //         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -144,41 +144,66 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-//        let parameters : Parameters = ["student_id" : child.actableId]
-        getStudentGradeBookApi(studentId: child.actableId!, grade: grade) { (isSuccess, statusCode, response, error) in
+        let parameters : Parameters = ["student_id" : child.actableId]
+        getStudentGradeBookApi(parameters: parameters, grade: grade) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
             if isSuccess {
-                if let result = response as? [String : AnyObject] {
-//                    let studentDic = (result["students"] as! [[String: AnyObject]])[0]
-                    let gradeBook = GradeBook(result)
-//                    let assignmentsDic = result["assignments"] as! [String: AnyObject]
-                    var assignments: [Assignment] = gradeBook.categories?.first?.assignments ?? []
+                if let result = response as? [String : AnyObject]
+                {
+                    let studentDic = (result["students"] as! [[String: AnyObject]])[0]
+                    let assignmentsDic = studentDic["assignments"] as! [String: AnyObject]
+                    var assignments: [Assignment] = []
                     // parse assignments
-//                    for assignJson in assignmentsDic {
-//                        let assignDic = assignJson.value as! [String: AnyObject]
-//                        debugPrint(assignDic)
-//                        assignments.append(Assignment(assignDic))
-//                    }
+                    for assignJson in assignmentsDic {
+                        var assignDic = assignJson.value as! [String: AnyObject]
+                        debugPrint(assignDic)
+                        assignments.append(Assignment(id: assignDic["id"] as! Int,
+                                                      name: assignDic["name"] as! String,
+                                                      total: assignDic["total"] as! Double,
+                                                      grade: assignDic["grade"] as? Double ?? 0,
+                                                      gradeView: assignDic["grade_view"] as? String ?? "\(assignDic["grade_view"] as? Double ?? 0)",
+                            feedback: assignDic["feedback"] as? String ?? "",
+                            createdAt: assignDic["end_date"] as! String,
+                            hideGrade: assignDic["hide_grade"] as? Bool ?? false))
+                    }
                     // parse quizzes
-//                    let quizzesJson = studentDic["quizzes"] as! [String: AnyObject]
-                    var quizzes: [Quiz] = gradeBook.categories?.first?.quizzes ?? []
-//                    for quizJson in quizzesJson {
-//                        let quizDic = quizJson.value as! [String: AnyObject]
-//                        debugPrint(quizDic)
-//                        quizzes.append(Quiz(quizDic))
-//                    }
+                    let quizzesJson = studentDic["quizzes"] as! [String: AnyObject]
+                    var quizzes: [Quiz] = []
+                    for quizJson in quizzesJson {
+                        var quizDic = quizJson.value as! [String: AnyObject]
+                        debugPrint(quizDic)
+                        quizzes.append(Quiz(id: quizDic["id"] as! Int,
+                                            name: quizDic["name"] as! String,
+                                            totalScore: quizDic["total_score"] as! Double,
+                                            total: quizDic["total"] as! Double,
+                                            grade: quizDic["grade"] as? Double ?? 0,
+                                            gradeView: quizDic["grade_view"] as? String ?? "\(quizDic["grade_view"] as? Double ?? 0)",
+                            feedback: quizDic["feedback"] as? String ?? "",
+                            createdAt: quizDic["end_date"] as! String,
+                            hideGrade: quizDic["hide_grade"] as? Bool ?? false))
+                    }
                     // parse gradeItems
-//                    let gradeItemsJson = studentDic["grade_items"] as! [String: AnyObject]
-                    var gradeItems: [GradeItem] = gradeBook.categories?.first?.gradeItems ?? []
-//                    for gradeItemJson in gradeItemsJson {
-//                        debugPrint(gradeItemsJson)
-//                        let gradeItemDic = gradeItemJson.value as! [String: AnyObject]
-//                        gradeItems.append(GradeItem(gradeItemDic))
-//                    }
+                    let gradeItemsJson = studentDic["grade_items"] as! [String: AnyObject]
+                    var gradeItems: [GradeItem] = []
+                    for gradeItemJson in gradeItemsJson {
+                        debugPrint(gradeItemsJson)
+                        var gradeItemDic = gradeItemJson.value as! [String: AnyObject]
+                        gradeItems.append(GradeItem(id: gradeItemDic["id"] as! Int,
+                                                    name: gradeItemDic["name"] as! String,
+                                                    maxGrade: gradeItemDic["max_grade"] as! Int,
+                                                    total: gradeItemDic["total"] as! Double,
+                                                    grade: gradeItemDic["grade"] as? Double ?? 0,
+                                                    gradeView: gradeItemDic["grade_view"] as? String ?? "\(gradeItemDic["grade_view"] as? Double ?? 0)",
+                            feedback: gradeItemDic["feedback"] as? String ?? "",
+                            createdAt: gradeItemDic["end_date"] as! String,
+                            periodId: gradeItemDic["grading_period_id"] as! Int,
+                            hideGrade: gradeItemDic["hide_grade"] as? Bool ?? false))
+                    }
                     
-                    self.students.append(Student(id: self.child.actableId,
-                                                 name: self.child.name,
-                                                 userId: self.child.userId,
+                    
+                    self.students.append(Student(id: studentDic["id"] as! Int,
+                                                 name: studentDic["name"] as! String,
+                                                 userId: studentDic["user_id"] as! Int,
                                                  assignments: assignments,
                                                  quizzes: quizzes,
                                                  gradeItems: gradeItems))
@@ -197,7 +222,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         getCourseGradingPeriodsApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
             if isSuccess {
                 if let result = response as? [[String : AnyObject]] {
-//                    debugPrint(response)
+                    //                    debugPrint(response)
                     var courseGradingPeriods: [CourseGradingPeriods] = []
                     self.coursePeriods = []
                     for courseGroup in result{
