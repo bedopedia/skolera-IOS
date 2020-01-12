@@ -52,7 +52,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         if let grade = grade {
             navbarTitleLabel.text = grade.name
         }
-//        getAvgStudentGrades()
+        //        getAvgStudentGrades()
         getCourseGradingPeriods()
         //        getStudentGradeBook()
         tableView.delegate = self
@@ -79,8 +79,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         
-//        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
-//         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
+        //        (self.semetersDic[courseSubPeriods[section].name]?.count) ?? 0
+        //         (self.semetersDic[coursePeriods[section].name]?.count) ?? 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -141,6 +141,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     //            }
     //        }
     //    }
+    
+    
     
     private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -222,7 +224,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         getCourseGradingPeriodsApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
             if isSuccess {
                 if let result = response as? [[String : AnyObject]] {
-                    debugPrint(response)
+                    //                    debugPrint(response)
                     var courseGradingPeriods: [CourseGradingPeriods] = []
                     self.coursePeriods = []
                     for courseGroup in result{

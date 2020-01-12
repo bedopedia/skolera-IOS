@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lightbox
 
 class AnnouncementViewController: UIViewController {
 
@@ -39,7 +40,7 @@ class AnnouncementViewController: UIViewController {
                 self.announcementImage.isHidden = false
                 let url = URL(string: weeklyNote.imageUrl)
                 announcementImage.kf.setImage(with: url)
-            }
+           }
         } else {
             titleLabel.text = announcement.title
             //        announcementHeader.text = announcement.title
@@ -62,6 +63,39 @@ class AnnouncementViewController: UIViewController {
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func displayImage() {
+        if let url = URL(string: announcement.imageURL) {
+            let images = [
+                LightboxImage(imageURL: url, text: announcement.title ?? "")
+            ]
+            let controller = LightboxController(images: images)
+            controller.pageDelegate = self
+            controller.dismissalDelegate = self
+            controller.modalPresentationStyle = .fullScreen
+            controller.dynamicBackground = true
+            present(controller, animated: true, completion: nil)
+        }
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        debugPrint("parent: \(parent), \(parent?.parent)")
+//        if let parentVc = parent?.parent as? ChildHomeViewController {
+//            parentVc.headerHeightConstraint.constant = 0
+//            parentVc.headerView.isHidden = true
+//        }
+//        //        self.navigationController?.isNavigationBarHidden = true
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        debugPrint(parent?.parent)
+//        if let parentVC = parent?.parent as? ChildHomeViewController {
+//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+//            parentVC.headerView.isHidden = false
+//        }
+//    }
 
     /*
     // MARK: - Navigation
@@ -73,4 +107,19 @@ class AnnouncementViewController: UIViewController {
     }
     */
 
+}
+
+
+extension AnnouncementViewController: LightboxControllerPageDelegate {
+
+  func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    debugPrint(page)
+  }
+}
+
+extension AnnouncementViewController: LightboxControllerDismissalDelegate {
+
+  func lightboxControllerWillDismiss(_ controller: LightboxController) {
+//    dismiss(animated: false, completion: nil)
+  }
 }

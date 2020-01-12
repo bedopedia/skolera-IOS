@@ -31,3 +31,35 @@ class Quiz{
         self.hideGrade = hideGrade
     }
 }
+
+//class Quiz{
+//    var id: Int!
+//    var name: String!
+//    var total: Double!
+//    var grade: Double!
+//    var gradeView: String!
+//    var createdAt: String!
+//    var hideGrade: Bool!
+//    let status: String!
+//    let categoryId: Int!
+//    let type: String!
+//    let feedback: String!
+//    let feedbackId: String!
+//
+//    init(_ dict: [String: Any]) {
+//
+//        id = dict["id"] as? Int
+//        name = dict["name"] as? String
+//        status = dict["status"] as? String
+//        categoryId = dict["category_id"] as? Int
+//        type = dict["type"] as? String
+//        total = dict["total"] as? Double
+//        grade = dict["grade"] as? Double
+//        hideGrade = dict["hide_grade"] as? Bool ?? false
+//        feedback = dict["feedback_content"] as? String ?? ""
+//        feedbackId = dict["feedback_id"] as? String
+//        gradeView = dict["grade_view"] as? String ?? "\(dict["grade_view"] as? Double ?? 0)"
+//        createdAt = dict["end_date"] as? String
+//
+//    }
+//}

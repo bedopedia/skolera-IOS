@@ -38,6 +38,20 @@ func getThreadsApi(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     }
 }
 
+func getMessagesApi(threadId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: GET_MESSAGES(), threadId)
+    debugPrint(url)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
 func setThreadSeenApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: SET_THREAD_IS_SEEN())

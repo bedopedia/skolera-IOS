@@ -32,8 +32,15 @@ class Message : NSObject, NSCoding{
         id = dictionary["id"] as? Int
         threadId = dictionary["thread_id"] as? Int
         updatedAt = dictionary["updated_at"] as? String
-        if let userData = dictionary["user"] as? [String:Any]{
+        if let userData = dictionary["sender_data"] as? [String:Any] {
             user = User(fromDictionary: userData)
+        }
+        if let uploadedFiles = dictionary["uploaded_files"] as? [[String: Any]], let uploadedFile = uploadedFiles.first, uploadedFile.count > 0 {
+            debugPrint(uploadedFile)
+            attachmentUrl = uploadedFile["url"] as? String
+            filename = uploadedFile["name"] as? String
+            let splittedArray = filename.split(separator: ".")
+            ext = String(splittedArray.last ?? "") 
         }
     }
     

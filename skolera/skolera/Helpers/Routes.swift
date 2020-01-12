@@ -53,6 +53,8 @@ func GET_COURSE_GRADING_PERIODS() -> String
 func GET_STUDENT_GRADE_BOOK() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
+//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
+
 }
 func GET_STUDENT_GRADE_AVG() -> String
 {
@@ -90,6 +92,12 @@ func GET_THREADS() -> String
 {
     return "\(BASE_URL!)/api/threads"
 }
+// for the uploaded files
+func GET_MESSAGES() -> String
+{
+    return "\(BASE_URL!)/api/threads/%d/messages"
+}
+
 func GET_THREADS_COURSE_GROUPS() -> String
 {
     return "\(BASE_URL!)/api/students/%d/course_groups"
