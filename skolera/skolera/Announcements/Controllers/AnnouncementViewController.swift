@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lightbox
 
 class AnnouncementViewController: UIViewController {
 
@@ -39,7 +40,7 @@ class AnnouncementViewController: UIViewController {
                 self.announcementImage.isHidden = false
                 let url = URL(string: weeklyNote.imageUrl)
                 announcementImage.kf.setImage(with: url)
-            }
+           }
         } else {
             titleLabel.text = announcement.title
             //        announcementHeader.text = announcement.title
@@ -61,6 +62,20 @@ class AnnouncementViewController: UIViewController {
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func displayImage() {
+        if let url = URL(string: announcement.imageURL) {
+            let images = [
+                LightboxImage(imageURL: url, text: announcement.title ?? "")
+            ]
+            let controller = LightboxController(images: images)
+            controller.pageDelegate = self
+            controller.dismissalDelegate = self
+            controller.modalPresentationStyle = .fullScreen
+            controller.dynamicBackground = true
+            present(controller, animated: true, completion: nil)
+        }
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -92,4 +107,19 @@ class AnnouncementViewController: UIViewController {
     }
     */
 
+}
+
+
+extension AnnouncementViewController: LightboxControllerPageDelegate {
+
+  func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    debugPrint(page)
+  }
+}
+
+extension AnnouncementViewController: LightboxControllerDismissalDelegate {
+
+  func lightboxControllerWillDismiss(_ controller: LightboxController) {
+//    dismiss(animated: false, completion: nil)
+  }
 }
