@@ -23,7 +23,8 @@ class AnnouncementTableViewCell: UITableViewCell {
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
             let date = dateFormatter.date(from: announcement.createdAt)!
-            dateFormatter.dateFormat = "HH:MM a"
+            dateFormatter.dateFormat = "hh:mm a"
+            debugPrint(date)
             //showing date
             itemDate.text = dateFormatter.string(from: date)
             if announcement.imageURL != nil {
