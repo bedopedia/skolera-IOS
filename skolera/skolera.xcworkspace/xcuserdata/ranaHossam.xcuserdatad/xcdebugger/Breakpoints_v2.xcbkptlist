@@ -1184,7 +1184,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
             endingLineNumber = "167"
-            landmarkName = "presentQuizzes()"
+            landmarkName = "getQuizzes(pageId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1712,7 +1712,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "submitQuiz(parameters:)"
+            landmarkName = "checkQuizSubmission(quizzes:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1744,8 +1744,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
             endingLineNumber = "181"
-            landmarkName = "checkQuizSubmission(quizzes:)"
-            landmarkType = "7">
+            landmarkName = "QuizzesViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1776,8 +1776,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "196"
             endingLineNumber = "196"
-            landmarkName = "QuizzesViewController"
-            landmarkType = "3">
+            landmarkName = "checkQuizSubmission(quizzes:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1968,8 +1968,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
             endingLineNumber = "158"
-            landmarkName = "ChildProfileViewController"
-            landmarkType = "3">
+            landmarkName = "openAssignments()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2222,6 +2222,70 @@
                   startingLineNumber = "16"
                   endingLineNumber = "16"
                   offsetFromSymbolStart = "116">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ADF5AD2F-1772-4519-99B0-BDF3602D8FA6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Grades/Network/GradesNetworkManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "getStudentGradeBookApi(parameters:grade:completion:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "88786DA1-E7AC-4934-8ED4-D18FCA1CB831"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "skolera/Helpers/App Methods.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "showNetworkFailureError(viewController:statusCode:error:isLoginError:errorAction:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "88786DA1-E7AC-4934-8ED4-D18FCA1CB831 - 7a2b84a553c6fb3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "skolera.showNetworkFailureError(viewController: __C.UIViewController, statusCode: Swift.Int, error: Swift.Error, isLoginError: Swift.Bool, errorAction: () -&gt; ()) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Helpers/App%20Methods.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "1440">
+               </Location>
+               <Location
+                  uuid = "88786DA1-E7AC-4934-8ED4-D18FCA1CB831 - 56c8edae373a4bc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (__C.UIAlertAction) -&gt; () in skolera.showNetworkFailureError(viewController: __C.UIViewController, statusCode: Swift.Int, error: Swift.Error, isLoginError: Swift.Bool, errorAction: () -&gt; ()) -&gt; ()"
+                  moduleName = "skolera"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ranaHossam/Documents/skolera-IOS/skolera/skolera/Helpers/App%20Methods.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "112">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -211,7 +211,13 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     //                    self.tableView.reloadData()
                 }
             } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                if statusCode == 403 {
+                    showAlert(viewController: self, title: "Skolera", message: "Sorry, but you're not authorized to view this page".localized, completion: { action in
+                        self.back()
+                    })
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                }
             }
         }
     }

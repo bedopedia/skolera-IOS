@@ -12,6 +12,8 @@ import Alamofire
 import Firebase
 import NRAppUpdate
 import DateToolsSwift
+import FirebaseInstanceID
+
 class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
     
     var actor: Actor!

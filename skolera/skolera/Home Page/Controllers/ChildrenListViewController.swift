@@ -11,6 +11,7 @@ import Alamofire
 import Kingfisher
 import Firebase
 import NVActivityIndicatorView
+import FirebaseInstanceID
 
 
 

@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Alamofire
 import Firebase
+import FirebaseInstanceID
 
 class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 

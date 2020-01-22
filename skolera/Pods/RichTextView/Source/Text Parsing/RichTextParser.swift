@@ -7,17 +7,20 @@
 //
 
 import Down
-import DTCoreText
 
 class RichTextParser {
 
     enum ParserConstants {
         static let mathTagName = "math"
         static let interactiveElementTagName = "interactive-element"
+        static let highlightedElementTagName = "highlighted-element"
         static let latexRegex = "\\[\(ParserConstants.mathTagName)\\](.*?)\\[\\/\(ParserConstants.mathTagName)\\]"
         static let latexRegexCaptureGroupIndex = 0
         static let interactiveElementRegex = """
         \\[\(ParserConstants.interactiveElementTagName)\\sid=.+?\\].*?\\[\\/\(ParserConstants.interactiveElementTagName)\\]
+        """
+        static let highlightedElementRegex = """
+        \\[\(ParserConstants.highlightedElementTagName)\\sid=.+?\\].*?\\[\\/\(ParserConstants.highlightedElementTagName)\\]
         """
         typealias RichTextWithErrors = (output: NSAttributedString, errors: [ParsingError]?)
     }
@@ -29,6 +32,7 @@ class RichTextParser {
     let textColor: UIColor
     let latexTextBaselineOffset: CGFloat
     let interactiveTextColor: UIColor
+    let attributes: [String: [NSAttributedString.Key: Any]]?
 
     // MARK: - Init
 
@@ -36,12 +40,14 @@ class RichTextParser {
          font: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize),
          textColor: UIColor = UIColor.black,
          latexTextBaselineOffset: CGFloat = 0,
-         interactiveTextColor: UIColor = UIColor.blue) {
+         interactiveTextColor: UIColor = UIColor.blue,
+         attributes: [String: [NSAttributedString.Key: Any]]? = nil) {
         self.latexParser = latexParser
         self.font = font
         self.textColor = textColor
         self.latexTextBaselineOffset = latexTextBaselineOffset
         self.interactiveTextColor = interactiveTextColor
+        self.attributes = attributes
     }
 
     // MARK: - Utility Functions
@@ -107,12 +113,25 @@ class RichTextParser {
         let relevantString = entireAttributedString.string[
             max(range.lowerBound, 0)..<min(range.upperBound, entireAttributedString.string.count)
         ]
-        guard let inputAsHTMLString = try? Down(markdownString: relevantString).toHTML([.unsafe, .hardBreaks]),
-            let htmlData = inputAsHTMLString.data(using: .utf8),
-            let attributedInput = NSAttributedString(htmlData: htmlData, options: [DTUseiOS6Attributes: true], documentAttributes: nil) else {
+        let cleanRelevantString = relevantString.replaceTrailingWhiteSpaceWithNonBreakingSpace().replaceLeadingWhiteSpaceWithNonBreakingSpace()
+        guard let inputAsHTMLString = try? Down(markdownString: cleanRelevantString).toHTML([.unsafe, .hardBreaks]),
+            let htmlData = inputAsHTMLString.data(using: .utf8) else {
+                return (nil, ParsingError.attributedTextGeneration(text: relevantString))
+        }
+        var attributedString: NSAttributedString?
+        if Thread.isMainThread {
+            attributedString = try? NSAttributedString(data: htmlData, options:
+                [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+        } else {
+            DispatchQueue.main.sync {
+                attributedString = try? NSAttributedString(data: htmlData, options:
+                    [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+            }
+        }
+        guard let attributedStringNonOptional = attributedString else {
             return (nil, ParsingError.attributedTextGeneration(text: relevantString))
         }
-        let mutableAttributedInput = NSMutableAttributedString(attributedString: attributedInput)
+        let mutableAttributedInput = NSMutableAttributedString(attributedString: attributedStringNonOptional)
         if !attributes.isEmpty {
             mutableAttributedInput.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttributedInput.length))
         }
@@ -125,8 +144,11 @@ class RichTextParser {
         let interactiveElementPositions = self.extractPositions(
             fromRanges: mutableAttributedString.string.ranges(of: ParserConstants.interactiveElementRegex, options: .regularExpression)
         )
+        let highlightedElementPositions = self.extractPositions(
+            fromRanges: mutableAttributedString.string.ranges(of: ParserConstants.highlightedElementRegex, options: .regularExpression)
+        )
         let latexPositions = self.extractPositions(fromRanges: self.getLatexRanges(inText: mutableAttributedString.string))
-        let splitPositions = interactiveElementPositions + latexPositions
+        let splitPositions = interactiveElementPositions + latexPositions + highlightedElementPositions
         if splitPositions.isEmpty {
             return (mutableAttributedString.trimmingTrailingNewlinesAndWhitespaces(), nil)
         }
@@ -150,6 +172,8 @@ class RichTextParser {
         for attributedString in attributedStringComponents {
             if self.isTextInteractiveElement(attributedString.string) {
                 output.append(self.extractInteractiveElement(from: attributedString))
+            } else if self.isTextHighlightedElement(attributedString.string) {
+                output.append(self.extractHighlightedElement(from: attributedString))
             } else if self.isTextLatex(attributedString.string) {
                 if let attributedLatexString = self.extractLatex(from: attributedString.string) {
                     output.append(attributedLatexString)
@@ -172,7 +196,8 @@ class RichTextParser {
             from: input,
             textColor: self.textColor,
             baselineOffset: self.latexTextBaselineOffset,
-            fontSize: self.font.pointSize
+            fontSize: self.font.pointSize,
+            height: calculateContentHeight()
         )
     }
 
@@ -185,7 +210,21 @@ class RichTextParser {
             .foregroundColor: self.interactiveTextColor,
             .font: self.font
         ].merging(input.attributes(at: 0, effectiveRange: nil)) { (current, _) in current }
-        let mutableAttributedInput = NSMutableAttributedString(string: " " + interactiveElementText + " ", attributes: attributes)
+        let mutableAttributedInput = NSMutableAttributedString(string: interactiveElementText, attributes: attributes)
+        return mutableAttributedInput
+    }
+
+    func extractHighlightedElement(from input: NSAttributedString) -> NSMutableAttributedString {
+        let highlightedElementTagName = ParserConstants.highlightedElementTagName
+        let highlightedElementID = input.string.getSubstring(inBetween: "[\(highlightedElementTagName) id=", and: "]") ?? input.string
+        let highlightedElementText = input.string.getSubstring(inBetween: "]", and: "[/\(highlightedElementTagName)]") ?? input.string
+        guard let richTextAttributes = self.attributes?[highlightedElementID] else {
+            return NSMutableAttributedString(string: highlightedElementText)
+        }
+        let attributes: [NSAttributedString.Key: Any] = [.highlight: highlightedElementID]
+        .merging(input.attributes(at: 0, effectiveRange: nil)) { (current, _) in current }
+        .merging(richTextAttributes) { (current, _) in current }
+        let mutableAttributedInput = NSMutableAttributedString(string: highlightedElementText, attributes: attributes)
         return mutableAttributedInput
     }
 
@@ -195,6 +234,10 @@ class RichTextParser {
 
     func isTextInteractiveElement(_ text: String) -> Bool {
         return text.ranges(of: ParserConstants.interactiveElementRegex, options: .regularExpression).count != 0
+    }
+
+    func isTextHighlightedElement(_ text: String) -> Bool {
+        return text.ranges(of: ParserConstants.highlightedElementRegex, options: .regularExpression).count != 0
     }
 
     private func extractPositions(fromRanges ranges: [Range<String.Index>]) -> [String.Index] {
@@ -224,5 +267,15 @@ class RichTextParser {
         return matches.compactMap { match in
             return Range<String.Index>(match.range(at: ParserConstants.latexRegexCaptureGroupIndex), in: text)
         }
+    }
+
+    private func calculateContentHeight() -> CGFloat {
+        let frame = NSString(string: "").boundingRect(
+            with: CGSize(width: 0, height: .max),
+            options: [.usesFontLeading, .usesLineFragmentOrigin],
+            attributes: [.font: self.font],
+            context: nil)
+
+        return frame.size.height
     }
 }

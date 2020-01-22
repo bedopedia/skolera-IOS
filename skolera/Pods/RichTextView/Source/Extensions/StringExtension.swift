@@ -7,6 +7,23 @@
 //
 
 extension String {
+    func replaceTrailingWhiteSpaceWithNonBreakingSpace() -> String {
+        var newString = self
+        while newString.last?.isWhitespace == true {
+            newString = String(newString.dropLast())
+            newString = newString.replacingCharacters(in: newString.endIndex..., with: "&nbsp;")
+        }
+        return newString
+    }
+
+    func replaceLeadingWhiteSpaceWithNonBreakingSpace() -> String {
+        var newString = self
+        while newString.first?.isWhitespace == true {
+            newString = newString.replacingCharacters(in: ...newString.startIndex, with: "&nbsp;")
+        }
+        return newString
+    }
+
     func getSubstring(inBetween firstTag: String, and secondTag: String) -> String? {
         return (self.range(of: firstTag)?.upperBound).flatMap { substringFrom in
             (self.range(of: secondTag, range: substringFrom..<self.endIndex)?.lowerBound).map { substringTo in
@@ -62,6 +79,9 @@ extension String {
     func split(atPositions positions: [Index]) -> [String] {
         var substrings = [String]()
         var start = 0
+        var positions = positions
+        positions.sort()
+        positions = positions.filter { return $0 > self.startIndex && $0 < self.endIndex }
         while start < positions.count {
             let substring: String = {
                 let startIndex = positions[start]
@@ -79,6 +99,9 @@ extension String {
             if !substring.isEmpty {
                 substrings.append(substring)
             }
+        }
+        if substrings.isEmpty {
+            return [self]
         }
         return substrings
     }
