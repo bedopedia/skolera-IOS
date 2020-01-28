@@ -145,6 +145,8 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
 
 @property(nonatomic, readwrite, strong) FIRInstanceID *instanceID;
 
+@property(nonatomic, readwrite, assign) BOOL isClientSetup;
+
 @property(nonatomic, readwrite, strong) FIRMessagingClient *client;
 @property(nonatomic, readwrite, strong) GULReachabilityChecker *reachability;
 @property(nonatomic, readwrite, strong) FIRMessagingDataMessageManager *dataMessageManager;
@@ -223,13 +225,6 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
       [FIRDependency dependencyWithProtocol:@protocol(FIRAnalyticsInterop) isRequired:NO];
   FIRComponentCreationBlock creationBlock =
       ^id _Nullable(FIRComponentContainer *container, BOOL *isCacheable) {
-    if (!container.app.isDefaultApp) {
-      // Only start for the default FIRApp.
-      FIRMessagingLoggerDebug(kFIRMessagingMessageCodeFIRApp001,
-                              @"Firebase Messaging only works with the default app.");
-      return nil;
-    }
-
     // Ensure it's cached so it returns the same instance every time messaging is called.
     *isCacheable = YES;
     id<FIRAnalyticsInterop> analytics = FIR_COMPONENT(FIRAnalyticsInterop, container);
@@ -238,19 +233,28 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
                                  withInstanceID:[FIRInstanceID instanceID]
                                withUserDefaults:[GULUserDefaults standardUserDefaults]];
     [messaging start];
-    [messaging configureNotificationSwizzlingIfEnabled];
     return messaging;
   };
   FIRComponent *messagingProvider =
       [FIRComponent componentWithProtocol:@protocol(FIRMessagingInstanceProvider)
-                      instantiationTiming:FIRInstantiationTimingEagerInDefaultApp
+                      instantiationTiming:FIRInstantiationTimingLazy
                              dependencies:@[ analyticsDep ]
                            creationBlock:creationBlock];
 
   return @[ messagingProvider ];
 }
 
-- (void)configureNotificationSwizzlingIfEnabled {
++ (void)configureWithApp:(FIRApp *)app {
+  if (!app.isDefaultApp) {
+    // Only configure for the default FIRApp.
+    FIRMessagingLoggerDebug(kFIRMessagingMessageCodeFIRApp001,
+                            @"Firebase Messaging only works with the default app.");
+    return;
+  }
+  [[FIRMessaging messaging] configureMessaging:app];
+}
+
+- (void)configureMessaging:(FIRApp *)app {
   // Swizzle remote-notification-related methods (app delegate and UNUserNotificationCenter)
   if ([FIRMessagingRemoteNotificationsProxy canSwizzleMethods]) {
     NSString *docsURLString = @"https://firebase.google.com/docs/cloud-messaging/ios/client"
@@ -268,10 +272,6 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
 }
 
 - (void)start {
-  [self setupFileManagerSubDirectory];
-  [self setupNotificationListeners];
-
-#if !TARGET_OS_WATCH
   // Print the library version for logging.
   NSString *currentLibraryVersion = FIRMessagingCurrentLibraryVersion();
   FIRMessagingLoggerInfo(kFIRMessagingMessageCodeMessagingPrintLibraryVersion,
@@ -285,6 +285,7 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
                                                                           withHost:hostname];
   [self.reachability start];
 
+  [self setupFileManagerSubDirectory];
   // setup FIRMessaging objects
   [self setupRmqManager];
   [self setupClient];
@@ -292,7 +293,8 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
   [self setupDataMessageManager];
   [self setupTopics];
 
-#endif
+  self.isClientSetup = YES;
+  [self setupNotificationListeners];
 }
 
 - (void)setupFileManagerSubDirectory {
@@ -373,6 +375,7 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
   self.rmq2Manager = nil;
   self.dataMessageManager = nil;
   self.client = nil;
+  self.isClientSetup = NO;
   FIRMessagingLoggerDebug(kFIRMessagingMessageCodeMessaging001, @"Did successfully teardown");
 }
 
@@ -686,7 +689,7 @@ const BOOL FIRMessagingIsAPNSSyncMessage(NSDictionary *message) {
 }
 
 - (BOOL)shouldBeConnectedAutomatically {
-#if TARGET_OS_OSX || TARGET_OS_WATCH
+#if TARGET_OS_OSX
     return NO;
 #else
   // We require a token from Instance ID
