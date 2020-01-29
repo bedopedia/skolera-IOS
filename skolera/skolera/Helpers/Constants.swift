@@ -25,6 +25,7 @@ let ACCESS_TOKEN = "access-token"
 let CLIENT = "client"
 let TOKEN_TYPE = "token-type"
 let UID = "uid"
+let MOBILE_VERSION = "Mobile-Version"
 
 //User id
 let ACTABLE_ID = "actable_id"

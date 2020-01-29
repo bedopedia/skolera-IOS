@@ -25,7 +25,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
-    var grades = [PostCourse]()
+    var gradesSubjects = [ShortCourseGroup]()
     var timeslots = [TimeSlot]()
     var weeklyPlans: [WeeklyPlan] = []
     var today: Date!
@@ -34,7 +34,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     var child : Child!{
         didSet{
             if child != nil{
-                getGrades()
+                getGradesSubjects()
                 getBehaviorNotesCount()
                 getTimeTable()
                 getWeeklyReport()
@@ -148,13 +148,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     /// service call to get total courses grades, average grade is set on completion
-    private func getGrades() {
+    private func getGradesSubjects() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getPostsCoursesApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getCourseGroupShortListApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
-                    self.grades = result.map({ PostCourse($0) })
+                    self.gradesSubjects = result.map({ ShortCourseGroup($0)})
                     self.tableView.reloadData()
                 }
             } else {
@@ -163,9 +163,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
-    func getPostsCoursesApi(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    func getCourseGroupShortListApi(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
         let headers : HTTPHeaders? = getHeaders()
-        let url = String(format: GET_POSTS_COURSES(), childId)
+        let url = String(format: GET_SHORT_COURSE_GROUPS(), childId)
         Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
             switch response.result{
             case .success(_):
@@ -284,7 +284,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     func showCoursesGrades() {
         let gtvc = GradesListViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
-        gtvc.grades = self.grades
+        gtvc.gradesSubjects = self.gradesSubjects
         self.navigationController?.pushViewController(gtvc, animated: true)
     }
     

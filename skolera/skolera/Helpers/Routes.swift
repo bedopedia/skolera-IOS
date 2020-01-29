@@ -52,8 +52,8 @@ func GET_COURSE_GRADING_PERIODS() -> String
 }
 func GET_STUDENT_GRADE_BOOK() -> String
 {
-    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
-//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
+//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/grades?student_id=%d"
 
 }
 func GET_STUDENT_GRADE_AVG() -> String
@@ -132,6 +132,10 @@ func GET_QUIZZES_COURSES() -> String {
 
 func GET_POSTS_COURSES() -> String {
     return "\(BASE_URL!)/api/students/%d/course_groups_recent_posts"
+}
+
+func GET_SHORT_COURSE_GROUPS() -> String {
+    return "\(BASE_URL!)/api/students/%d/course_groups_short_list"
 }
 
 func GET_STUDENT_POSTS() -> String {

@@ -54,13 +54,16 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
     }
 }
 //request helpers
-func getHeaders() -> [String : String] {
+func getHeaders(addMobileVersion: Bool = false) -> [String : String] {
     let userDefault = UserDefaults.standard
     var headers = [String : String]()
     headers[ACCESS_TOKEN] = userDefault.string(forKey: ACCESS_TOKEN) ?? ""
     headers[TOKEN_TYPE] = userDefault.string(forKey: TOKEN_TYPE) ?? ""
     headers[UID] = userDefault.string(forKey: UID) ?? ""
     headers[CLIENT] = userDefault.string(forKey: CLIENT) ?? ""
+    if addMobileVersion {
+        headers[MOBILE_VERSION] = "application/vnd.skolera.v1"
+    }
     return headers
 }
 
