@@ -299,7 +299,23 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 let assignment = item as! StudentGrade
                 cell.TitleLabel.text = assignment.name
                 cell.avgGradeLabel.text = ""
-                cell.gradeLabel.text = "\(assignment.gradeView) / \(assignment.total)"
+                if let gradeViewAsNumber = Double(assignment.gradeView) {
+                    if (assignment.total - floor(assignment.total) > 0.000001) && (gradeViewAsNumber - floor(gradeViewAsNumber) > 0.000001){
+                        cell.gradeLabel.text = "\(gradeViewAsNumber) / \(assignment.total)"
+                    } else if (assignment.total - floor(assignment.total) > 0.000001){
+                        cell.gradeLabel.text = "\(Int(gradeViewAsNumber)) / \(assignment.total)"
+                    } else if (gradeViewAsNumber - floor(gradeViewAsNumber) > 0.000001) {
+                        cell.gradeLabel.text = "\(gradeViewAsNumber) / \(Int(assignment.total))"
+                    } else {
+                         cell.gradeLabel.text = "\(Int(gradeViewAsNumber)) / \(Int(assignment.total))"
+                    }
+                } else {
+                    if (assignment.total - floor(assignment.total) > 0.000001) {
+                         cell.gradeLabel.text = "\(assignment.gradeView) / \(assignment.total)"
+                    } else {
+                        cell.gradeLabel.text = "\(assignment.gradeView) / \(Int(assignment.total))"
+                    }
+                }
                 cell.gradeWorldLabel.text = ""
             }
             return cell

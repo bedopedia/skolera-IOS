@@ -238,7 +238,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classwork #1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObW-Pl-axn">
-                                                    <rect key="frame" x="16" y="26.5" width="255" height="19.5"/>
+                                                    <rect key="frame" x="16" y="26.5" width="98" height="19.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19.5" id="a7r-ZQ-4AK"/>
                                                     </constraints>
@@ -247,9 +247,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="28/30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OT0-ut-8LS">
-                                                    <rect key="frame" x="279" y="26.5" width="80" height="19.5"/>
+                                                    <rect key="frame" x="122" y="26.5" width="237" height="19.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="CLU-qe-7Od"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="CLU-qe-7Od"/>
                                                         <constraint firstAttribute="height" constant="19.5" id="FUZ-it-zrT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
