@@ -54,7 +54,11 @@ class CourseGradeCell: UITableViewCell {
 //            return "\(shortcut.first!)"
             return String(shortcut.prefix(2))
         } else {
-            return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
+            if shortcut.split(separator: " ")[1].first!.isPunctuation {
+                return "\(shortcut.split(separator: " ")[0].first!)"
+            } else {
+                return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
+            }
         }
         
     }

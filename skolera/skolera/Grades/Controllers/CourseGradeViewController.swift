@@ -174,28 +174,34 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             let semEndDate = dateFormatter.date(from: semester.endDate ?? "")
             if Date().isBetween(semStartDate!, and: semEndDate!) {
                 if let semseterName = semester.name {
-                    self.semesterTitles.append(semseterName)
-                    self.semestersDic[semseterName] = []
                     if let mySubGradingPeriod = semester.subGradingPeriods, mySubGradingPeriod.count > 0  {
+                        self.semesterTitles.append(semseterName)
+                        self.semestersDic[semseterName] = []
                         for subSemester in mySubGradingPeriod {
-                            if let subSemesterName = subSemester.name {
-                                self.semesterTitles.append(subSemesterName)
-                                self.semestersDic[subSemesterName] = []
-                                if let subSemesterAssignments = subSemester.assignments, subSemesterAssignments.count > 0 {
-                                    semestersDic[subSemesterName]?.append("Assignments".localized as AnyObject)
-                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterAssignments)
-                                }
-                                if let subSemesterQuizzes = subSemester.quizzes, subSemesterQuizzes.count > 0 {
-                                    semestersDic[subSemesterName]?.append("Quizzes".localized as AnyObject)
-                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterQuizzes)
-                                }
-                                if let subSemesterGradeItems = subSemester.gradeItems, subSemesterGradeItems.count > 0 {
-                                    semestersDic[subSemesterName]?.append("Grade Items".localized as AnyObject)
-                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterGradeItems)
+                            let subSemStartDate = dateFormatter.date(from: subSemester.startDate ?? "")
+                            let subSemEndDate = dateFormatter.date(from: subSemester.endDate ?? "")
+                            if Date().isBetween(subSemStartDate!, and: subSemEndDate!) {
+                                if let subSemesterName = subSemester.name {
+                                    self.semesterTitles.append(subSemesterName)
+                                    self.semestersDic[subSemesterName] = []
+                                    if let subSemesterAssignments = subSemester.assignments, subSemesterAssignments.count > 0 {
+                                        semestersDic[subSemesterName]?.append("Assignments".localized as AnyObject)
+                                        semestersDic[subSemesterName]?.append(contentsOf: subSemesterAssignments)
+                                    }
+                                    if let subSemesterQuizzes = subSemester.quizzes, subSemesterQuizzes.count > 0 {
+                                        semestersDic[subSemesterName]?.append("Quizzes".localized as AnyObject)
+                                        semestersDic[subSemesterName]?.append(contentsOf: subSemesterQuizzes)
+                                    }
+                                    if let subSemesterGradeItems = subSemester.gradeItems, subSemesterGradeItems.count > 0 {
+                                        semestersDic[subSemesterName]?.append("Grade Items".localized as AnyObject)
+                                        semestersDic[subSemesterName]?.append(contentsOf: subSemesterGradeItems)
+                                    }
                                 }
                             }
                         }
                     } else {
+                        self.semesterTitles.append(semseterName)
+                        self.semestersDic[semseterName] = []
                         if let semesterAssignments = semester.assignments, semesterAssignments.count > 0 {
                             semestersDic[semseterName]?.append("Assignments".localized as AnyObject)
                             semestersDic[semester.name ?? ""]?.append(contentsOf: semesterAssignments)
@@ -299,22 +305,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 let assignment = item as! StudentGrade
                 cell.TitleLabel.text = assignment.name
                 cell.avgGradeLabel.text = ""
-                if let gradeViewAsNumber = Double(assignment.gradeView) {
-                    if (assignment.total - floor(assignment.total) > 0.000001) && (gradeViewAsNumber - floor(gradeViewAsNumber) > 0.000001){
-                        cell.gradeLabel.text = "\(gradeViewAsNumber) / \(assignment.total)"
-                    } else if (assignment.total - floor(assignment.total) > 0.000001){
-                        cell.gradeLabel.text = "\(Int(gradeViewAsNumber)) / \(assignment.total)"
-                    } else if (gradeViewAsNumber - floor(gradeViewAsNumber) > 0.000001) {
-                        cell.gradeLabel.text = "\(gradeViewAsNumber) / \(Int(assignment.total))"
-                    } else {
-                         cell.gradeLabel.text = "\(Int(gradeViewAsNumber)) / \(Int(assignment.total))"
-                    }
+                let mGradeView = assignment.gradeView.replacingOccurrences(of: ".0", with: "")
+                if (assignment.total - floor(assignment.total) > 0.000001) {
+                    cell.gradeLabel.text = "\(mGradeView) / \(assignment.total)"
                 } else {
-                    if (assignment.total - floor(assignment.total) > 0.000001) {
-                         cell.gradeLabel.text = "\(assignment.gradeView) / \(assignment.total)"
-                    } else {
-                        cell.gradeLabel.text = "\(assignment.gradeView) / \(Int(assignment.total))"
-                    }
+                    cell.gradeLabel.text = "\(mGradeView) / \(Int(assignment.total))"
                 }
                 cell.gradeWorldLabel.text = ""
             }
