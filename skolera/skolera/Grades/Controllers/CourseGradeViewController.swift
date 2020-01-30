@@ -20,14 +20,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var placeholderView: UIView!
     @IBOutlet var placeholderLabel: UILabel!
-
+    
     
     //MARK: - Variables
     var child : Child!
     var grade: ShortCourseGroup!
     var courseGradingPeriods: [GradingPeriod] = []
-    var currentCourseGradingPeriods: [GradingPeriod] = []
     var semestersDic: [String: [AnyObject]] = [:]
+    var semesterTitles: [String] = []
     
     private let refreshControl = UIRefreshControl()
     
@@ -100,7 +100,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 if let result = response as? [String : AnyObject] {
                     let gradingPeriods = result["grading_periods"] as! [[String: AnyObject]]
                     self.courseGradingPeriods = gradingPeriods.map({ GradingPeriod($0)})
-                    self.handelSemesters()
+                    self.segmentControl.selectedSegmentIndex == 0 ? self.handelSemesters() : self.handleCurrentSemester()
                     self.tableView.reloadData()
                 }
             } else {
@@ -118,39 +118,46 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func handelSemesters(){
         self.semestersDic = [:]
+        self.semesterTitles = []
         for semester in self.courseGradingPeriods {
-            self.semestersDic[semester.name ?? ""] = []
-            if semester.subGradingPeriods?.isEmpty ?? true {
-                if !(semester.assignments?.isEmpty ?? true) {
-                    semestersDic[semester.name ?? ""]?.append("Assignments".localized as AnyObject)
-                    semestersDic[semester.name ?? ""]?.append(contentsOf: semester.assignments ?? [])
-                }
-                if !(semester.quizzes?.isEmpty ?? true) {
-                    semestersDic[semester.name ?? ""]?.append("Quizzes".localized as AnyObject)
-                    semestersDic[semester.name ?? ""]?.append(contentsOf: semester.quizzes ?? [])
-                }
-                if !(semester.gradeItems?.isEmpty ?? true) {
-                    semestersDic[semester.name ?? ""]?.append("Grade Items".localized as AnyObject)
-                    semestersDic[semester.name ?? ""]?.append(contentsOf: semester.gradeItems ?? [])
-                }
-            } else {
-                for subSemester in semester.subGradingPeriods! {
-                    self.semestersDic[subSemester.name ?? ""] = []
-                    if !(subSemester.assignments?.isEmpty ?? true) {
-                        semestersDic[subSemester.name ?? ""]?.append("Assignments".localized as AnyObject)
-                        semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.assignments ?? [])
+            if let semesterName = semester.name {
+                self.semesterTitles.append(semesterName)
+                self.semestersDic[semesterName] = []
+                if let mySubGradingPeriod = semester.subGradingPeriods, mySubGradingPeriod.count > 0 {
+                    for subSemester in mySubGradingPeriod {
+                        if let subSemesterName = subSemester.name {
+                            self.semestersDic[subSemesterName] = []
+                            self.semesterTitles.append(subSemesterName)
+                            if let subSemesterAssignments = subSemester.assignments, subSemesterAssignments.count > 0 {
+                                semestersDic[subSemesterName]?.append("Assignments".localized as AnyObject)
+                                semestersDic[subSemesterName]?.append(contentsOf: subSemesterAssignments)
+                            }
+                            if let subSemesterQuizzes = subSemester.quizzes, subSemesterQuizzes.count > 0 {
+                                semestersDic[subSemesterName]?.append("Quizzes".localized as AnyObject)
+                                semestersDic[subSemesterName]?.append(contentsOf: subSemesterQuizzes)
+                            }
+                            if let subSemesterGradeItems = subSemester.gradeItems, subSemesterGradeItems.count > 0 {
+                                semestersDic[subSemesterName]?.append("Grade Items".localized as AnyObject)
+                                semestersDic[subSemesterName]?.append(contentsOf: subSemesterGradeItems)
+                            }
+                        }
                     }
-                    if !(subSemester.quizzes?.isEmpty ?? true) {
-                        semestersDic[subSemester.name ?? ""]?.append("Quizzes".localized as AnyObject)
-                        semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.quizzes ?? [])
+                } else {
+                    if let semesterAssignments = semester.assignments, semesterAssignments.count > 0 {
+                        semestersDic[semesterName]?.append("Assignments".localized as AnyObject)
+                        semestersDic[semesterName]?.append(contentsOf: semesterAssignments)
                     }
-                    if !(semester.gradeItems?.isEmpty ?? true) {
-                        semestersDic[subSemester.name ?? ""]?.append("Grade Items".localized as AnyObject)
-                        semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.gradeItems ?? [])
+                    if let semesterQuizzes = semester.quizzes, semesterQuizzes.count > 0 {
+                        semestersDic[semesterName]?.append("Quizzes".localized as AnyObject)
+                        semestersDic[semesterName]?.append(contentsOf: semesterQuizzes)
+                    }
+                    if let semesterGradeItems = semester.gradeItems, semesterGradeItems.count > 0 {
+                        semestersDic[semesterName]?.append("Grade Items".localized as AnyObject)
+                        semestersDic[semesterName]?.append(contentsOf: semesterGradeItems)
                     }
                 }
+                
             }
-            
         }
         checkData()
         tableView.reloadData()
@@ -158,7 +165,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func handleCurrentSemester() {
         self.semestersDic = [:]
-        self.currentCourseGradingPeriods = []
+        self.semesterTitles = []
         for semester in self.courseGradingPeriods {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
@@ -166,35 +173,40 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             let semStartDate = dateFormatter.date(from: semester.startDate ?? "")
             let semEndDate = dateFormatter.date(from: semester.endDate ?? "")
             if Date().isBetween(semStartDate!, and: semEndDate!) {
-                self.semestersDic[semester.name ?? ""] = []
-                currentCourseGradingPeriods.append(semester)
-                if semester.subGradingPeriods?.isEmpty ?? true {
-                    if !(semester.assignments?.isEmpty ?? true) {
-                        semestersDic[semester.name ?? ""]?.append("Assignments".localized as AnyObject)
-                        semestersDic[semester.name ?? ""]?.append(contentsOf: semester.assignments ?? [])
-                    }
-                    if !(semester.quizzes?.isEmpty ?? true) {
-                        semestersDic[semester.name ?? ""]?.append("Quizzes".localized as AnyObject)
-                        semestersDic[semester.name ?? ""]?.append(contentsOf: semester.quizzes ?? [])
-                    }
-                    if !(semester.gradeItems?.isEmpty ?? true) {
-                        semestersDic[semester.name ?? ""]?.append("Grade Items".localized as AnyObject)
-                        semestersDic[semester.name ?? ""]?.append(contentsOf: semester.gradeItems ?? [])
-                    }
-                } else {
-                    for subSemester in semester.subGradingPeriods! {
-                        self.semestersDic[subSemester.name ?? ""] = []
-                        if !(subSemester.assignments?.isEmpty ?? true) {
-                            semestersDic[subSemester.name ?? ""]?.append("Assignments".localized as AnyObject)
-                            semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.assignments ?? [])
+                if let semseterName = semester.name {
+                    self.semesterTitles.append(semseterName)
+                    self.semestersDic[semseterName] = []
+                    if let mySubGradingPeriod = semester.subGradingPeriods, mySubGradingPeriod.count > 0  {
+                        for subSemester in mySubGradingPeriod {
+                            if let subSemesterName = subSemester.name {
+                                self.semesterTitles.append(subSemesterName)
+                                self.semestersDic[subSemesterName] = []
+                                if let subSemesterAssignments = subSemester.assignments, subSemesterAssignments.count > 0 {
+                                    semestersDic[subSemesterName]?.append("Assignments".localized as AnyObject)
+                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterAssignments)
+                                }
+                                if let subSemesterQuizzes = subSemester.quizzes, subSemesterQuizzes.count > 0 {
+                                    semestersDic[subSemesterName]?.append("Quizzes".localized as AnyObject)
+                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterQuizzes)
+                                }
+                                if let subSemesterGradeItems = subSemester.gradeItems, subSemesterGradeItems.count > 0 {
+                                    semestersDic[subSemesterName]?.append("Grade Items".localized as AnyObject)
+                                    semestersDic[subSemesterName]?.append(contentsOf: subSemesterGradeItems)
+                                }
+                            }
                         }
-                        if !(subSemester.quizzes?.isEmpty ?? true) {
-                            semestersDic[subSemester.name ?? ""]?.append("Quizzes".localized as AnyObject)
-                            semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.quizzes ?? [])
+                    } else {
+                        if let semesterAssignments = semester.assignments, semesterAssignments.count > 0 {
+                            semestersDic[semseterName]?.append("Assignments".localized as AnyObject)
+                            semestersDic[semester.name ?? ""]?.append(contentsOf: semesterAssignments)
                         }
-                        if !(semester.gradeItems?.isEmpty ?? true) {
-                            semestersDic[subSemester.name ?? ""]?.append("Grade Items".localized as AnyObject)
-                            semestersDic[subSemester.name ?? ""]?.append(contentsOf: subSemester.gradeItems ?? [])
+                        if let semesterQuizzes = semester.quizzes, semesterQuizzes.count > 0 {
+                            semestersDic[semseterName]?.append("Quizzes".localized as AnyObject)
+                            semestersDic[semseterName]?.append(contentsOf: semesterQuizzes)
+                        }
+                        if let semesterGradeItems = semester.gradeItems, semesterGradeItems.count > 0{
+                            semestersDic[semseterName]?.append("Grade Items".localized as AnyObject)
+                            semestersDic[semseterName]?.append(contentsOf: semesterGradeItems)
                         }
                     }
                 }
@@ -225,14 +237,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     func checkData() {
         if segmentControl.selectedSegmentIndex == 0 {
             placeholderLabel.text = "You don't have any grades for now".localized
-            if courseGradingPeriods.count == 0 {
+            if semesterTitles.count == 0 {
                 placeholderView.isHidden = false
             } else {
                 checkSemesterDict()
             }
         } else {
             placeholderLabel.text = "You don't have any current grades for now".localized
-            if currentCourseGradingPeriods.count == 0 {
+            if semesterTitles.count == 0 {
                 placeholderView.isHidden = false
             } else {
                 checkSemesterDict()
@@ -241,16 +253,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if segmentControl.selectedSegmentIndex == 1 {
-            return currentCourseGradingPeriods.count
-        } else {
-            return self.courseGradingPeriods.count
-        }
-        
+        return self.semesterTitles.count
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if segmentControl.selectedSegmentIndex == 1 {
-            if currentCourseGradingPeriods.isEmpty {
+            if semesterTitles.isEmpty {
                 return 0
             } else {
                 return 32
@@ -260,61 +268,29 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segmentControl.selectedSegmentIndex == 1 {
-            if let name = currentCourseGradingPeriods[section].name, let semesterData = semestersDic[name]{
-                return semesterData.count
-            } else {
-                return 0
-            }
+        if let semesterData = semestersDic[semesterTitles[section]]{
+            return semesterData.count
         } else {
-            if let name = courseGradingPeriods[section].name, let semesterData = semestersDic[name]{
-                return semesterData.count
-            } else {
-                return 0
-            }
-            
+            return 0
         }
-        
     }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if segmentControl.selectedSegmentIndex == 1 {
-            if currentCourseGradingPeriods.isEmpty {
-                return ""
-            } else {
-                return currentCourseGradingPeriods[section].name
-            }
-        } else {
-            return courseGradingPeriods[section].name
-        }
+        return semesterTitles[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var item:AnyObject?
-        var title: String = ""
-        if segmentControl.selectedSegmentIndex == 1 {
-            if let name = currentCourseGradingPeriods[indexPath.section].name, let semesterData = semestersDic[name]{
-                item = semesterData[indexPath.row]
-                title = self.currentCourseGradingPeriods[indexPath.section].name!
-            }
-        } else {
-            if let name = courseGradingPeriods[indexPath.section].name, let semesterData = semestersDic[name]{
-                item = semesterData[indexPath.row]
-                title = self.courseGradingPeriods[indexPath.section].name!
-            }
+        if let semesterData = semestersDic[semesterTitles[indexPath.section]]{
+            item = semesterData[indexPath.row]
         }
+        
         if item is String {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeHeaderTableViewCell", for: indexPath as IndexPath) as! GradeHeaderTableViewCell
             cell.selectionStyle = .none
             cell.titleNameLabel.text = item as? String
-            var grade: Double = 0
-            var totGrade: Double = 0
-            for i in self.semestersDic[title]! {
-                if i is StudentGrade {
-                    grade += round2Digits((i as! StudentGrade).grade)
-                    totGrade += round2Digits((i as! StudentGrade).total)
-                }
-            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeDetailTableViewCell", for: indexPath as IndexPath) as! GradeDetailTableViewCell
@@ -332,15 +308,10 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var item:AnyObject?
-        if segmentControl.selectedSegmentIndex == 1 {
-            if let name = currentCourseGradingPeriods[indexPath.section].name, let semesterData = semestersDic[name]{
-                item = semesterData[indexPath.row]
-            }
-        } else {
-            if let name = courseGradingPeriods[indexPath.section].name, let semesterData = semestersDic[name]{
-                item = semesterData[indexPath.row]
-            }
+        if  let semesterData = semestersDic[semesterTitles[indexPath.section]]{
+            item = semesterData[indexPath.row]
         }
+        
         if item is String {
             return 40
         } else {
