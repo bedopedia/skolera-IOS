@@ -50,15 +50,11 @@ class CourseGradeCell: UITableViewCell {
     
     func getText(name: String) -> String {
         let shortcut = name.replacingOccurrences(of: "&", with: "")
-        if shortcut.split(separator: " ").count == 1 {
+        if shortcut.split(separator: " ").count == 1 || (shortcut.split(separator: " ").count > 1 && shortcut.split(separator: " ")[1].first!.isPunctuation){
 //            return "\(shortcut.first!)"
             return String(shortcut.prefix(2))
         } else {
-            if shortcut.split(separator: " ")[1].first!.isPunctuation {
-                return "\(shortcut.split(separator: " ")[0].first!)"
-            } else {
                 return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
-            }
         }
         
     }
