@@ -302,16 +302,21 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeDetailTableViewCell", for: indexPath as IndexPath) as! GradeDetailTableViewCell
             cell.selectionStyle = .none
             if item is StudentGrade {
-                let assignment = item as! StudentGrade
-                cell.TitleLabel.text = assignment.name
+                let studentGrade = item as! StudentGrade
+                cell.TitleLabel.text = studentGrade.name
                 cell.avgGradeLabel.text = ""
-                let mGradeView = assignment.gradeView.replacingOccurrences(of: ".0", with: "")
-                if (assignment.total - floor(assignment.total) > 0.000001) {
-                    cell.gradeLabel.text = "\(mGradeView) / \(assignment.total)"
+                let mGradeView = studentGrade.gradeView.replacingOccurrences(of: ".0", with: "")
+                if mGradeView.contains("*") || Int(mGradeView) != nil {
+                    if (studentGrade.total - floor(studentGrade.total) > 0.000001) {
+                        cell.gradeLabel.text = "\(mGradeView) / \(studentGrade.total)"
+                    } else {
+                        cell.gradeLabel.text = "\(mGradeView) / \(Int(studentGrade.total))"
+                    }
                 } else {
-                    cell.gradeLabel.text = "\(mGradeView) / \(Int(assignment.total))"
+                    cell.gradeLabel.text = "\(mGradeView)"
                 }
                 cell.gradeWorldLabel.text = ""
+                
             }
             return cell
         }
@@ -334,5 +339,5 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         let multiplier = pow(10, Double(2))
         return Darwin.round(double * multiplier) / multiplier
     }
-    
+
 }
