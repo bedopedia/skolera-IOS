@@ -39,7 +39,7 @@ func getGradesAPI(childActableId: Int, completion: @escaping ((Bool, Int, Any?, 
 func getCourseGroupsAPI(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_COURSE_GROUPS(), childId)
-    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
@@ -48,6 +48,22 @@ func getCourseGroupsAPI(childId: Int, completion: @escaping ((Bool, Int, Any?, E
         }
     }
 }
+
+func getCourseGroupShortListApi(childId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+      let headers : HTTPHeaders? = getHeaders()
+      let url = String(format: GET_SHORT_COURSE_GROUPS(), childId)
+      debugPrint("GRADESURL: ", url)
+      debugPrint("HEADERS: ", headers)
+      Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+          switch response.result{
+          case .success(_):
+              completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+          case .failure(let error):
+              completion(false, response.response?.statusCode ?? 0, nil, error)
+          }
+      }
+  }
+  
 
 func getBehaviourNotesCountAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
