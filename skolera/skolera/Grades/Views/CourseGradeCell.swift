@@ -20,10 +20,10 @@ class CourseGradeCell: UITableViewCell {
     //MARK: - Variables
     
     /// grade object acts as the cell data source. Once set, it fills the cell with its contents
-    var gradeSubject: ShortCourseGroup!{
+    var courseGroup: ShortCourseGroup!{
         didSet{
-            if gradeSubject != nil{
-                courseNameLabel.text = gradeSubject.courseName ?? ""
+            if courseGroup != nil{
+                courseNameLabel.text = courseGroup.courseName ?? ""
                 courseGradeLabel.isHidden = true
                 courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
                 courseImageView.isHidden = false
@@ -34,16 +34,16 @@ class CourseGradeCell: UITableViewCell {
                 courseImageView.layer.shadowOffset = CGSize.zero
                 courseImageView.layer.shadowRadius = 10
                 courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-                let courseName = self.gradeSubject.courseName?.split(separator: " ") as? [String]
+                let courseName = self.courseGroup.courseName?.split(separator: " ") as? [String]
                 if courseName?.count == 1 {
-                    courseImageView.childImageView(url: "", placeholder: "\(self.gradeSubject.courseName?.dropFirst(1)))", textSize: 14)
+                    courseImageView.childImageView(url: "", placeholder: "\(self.courseGroup.courseName?.dropFirst(1)))", textSize: 14)
                 } else {
                     courseImageView.childImageView(url: "", placeholder: "\(courseName?.first?.first)\(courseName?[1].first))", textSize: 14)
                 }
                 subjectImageLabel.textAlignment = .center
                 subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
                 subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
-                subjectImageLabel.text = getText(name: gradeSubject.courseName ?? "")
+                subjectImageLabel.text = getText(name: courseGroup.courseName ?? "")
             }
         }
     }

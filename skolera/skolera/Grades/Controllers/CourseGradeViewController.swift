@@ -24,8 +24,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     //MARK: - Variables
     var child : Child!
-    var grade: ShortCourseGroup!
-    var courseGradingPeriods: [GradingPeriod] = []
+    var courseGroup: ShortCourseGroup!
+    var courseGradingPeriods: [GradingPeriodGrades] = []
     var semestersDic: [String: [AnyObject]] = [:]
     var semesterTitles: [String] = []
     
@@ -38,8 +38,8 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        if let grade = grade {
-            navbarTitleLabel.text = grade.courseName
+        if let courseGroup = courseGroup {
+            navbarTitleLabel.text = courseGroup.courseName
         }
         tableView.delegate = self
         tableView.dataSource = self
@@ -94,12 +94,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getStudentGradeBookApi(childId: child.actableId, gradeSubject: grade) { (isSuccess, statusCode, response, error) in
+        getStudentGradeBookApi(childId: child.actableId, gradeSubject: courseGroup) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = response as? [String : AnyObject] {
                     let gradingPeriods = result["grading_periods"] as! [[String: AnyObject]]
-                    self.courseGradingPeriods = gradingPeriods.map({ GradingPeriod($0)})
+                    self.courseGradingPeriods = gradingPeriods.map({ GradingPeriodGrades($0)})
                     self.segmentControl.selectedSegmentIndex == 0 ? self.handelSemesters() : self.handleCurrentSemester()
                     self.tableView.reloadData()
                 }

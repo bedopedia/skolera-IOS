@@ -56,6 +56,11 @@ func GET_STUDENT_GRADE_BOOK() -> String
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/grades?student_id=%d"
 
 }
+
+func GET_GRADING_PERIODS() ->String {
+    return "\(BASE_URL!)/api/grading_periods/course_grading_periods?course_id=%d"
+}
+
 func GET_STUDENT_GRADE_AVG() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade"

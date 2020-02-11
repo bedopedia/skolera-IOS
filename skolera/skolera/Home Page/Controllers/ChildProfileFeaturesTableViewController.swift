@@ -272,7 +272,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     func showCoursesGrades() {
         let gtvc = GradesListViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
-        gtvc.gradesSubjects = self.gradesSubjects
+        gtvc.courseGroups = self.gradesSubjects
         self.navigationController?.pushViewController(gtvc, animated: true)
     }
     
