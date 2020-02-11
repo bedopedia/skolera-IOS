@@ -8,9 +8,9 @@
 
 import Alamofire
 
-func getStudentGradeBookApi(childId: Int, gradeSubject: ShortCourseGroup, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-    let headers : HTTPHeaders? = getHeaders(addMobileVersion: true)
-    let url = String(format: GET_STUDENT_GRADE_BOOK(), gradeSubject.courseId!, gradeSubject.id!, childId)
+func getGradingPeriodApi(courseId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: GET_GRADING_PERIODS(), courseId)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
@@ -21,17 +21,15 @@ func getStudentGradeBookApi(childId: Int, gradeSubject: ShortCourseGroup, comple
     }
 }
     
-    func getGradingPeriodApi(courseId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-       let headers : HTTPHeaders? = getHeaders()
-       let url = String(format: GET_GRADING_PERIODS(), courseId)
-       Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
-           switch response.result{
-           case .success(_):
-               completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
-           case .failure(let error):
-               completion(false, response.response?.statusCode ?? 0, nil, error)
-           }
-       }
-
-
+func getStudentGradeBookApi(childId: Int, courseGroup: ShortCourseGroup, gradingPeriodId: Int, completion: @escaping ((Bool, Int, Any?, Error?) ->())) {
+    let headers : HTTPHeaders? = getHeaders(addMobileVersion: true)
+    let url = String(format: GET_STUDENT_GRADE_BOOK(), courseGroup.courseId!, courseGroup.id!, gradingPeriodId, childId)
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
 }

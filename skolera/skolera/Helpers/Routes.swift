@@ -52,8 +52,7 @@ func GET_COURSE_GRADING_PERIODS() -> String
 }
 func GET_STUDENT_GRADE_BOOK() -> String
 {
-//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
-    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/grades?student_id=%d"
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/student?grading_period_id=%d&student_id=%d"
 
 }
 

@@ -12,23 +12,23 @@ class StudentGrade {
     
     let id: Int
     let name: String
-    let gradingPeriodId: Int
-    let hideGrade: Bool
+    let categoryId: Int
     let type: String
-    let total: Double
-    let grade: Double
-    let status: Int
+    let dueDate: String
+    let total: Int
+    let grade: Int?
+    let hideGrade: Int
     let gradeView: String
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as! Int
         name = dict["name"] as! String
-        gradingPeriodId = dict["grading_period_id"] as! Int
-        hideGrade = dict["hide_grade"] as! Bool
+        categoryId = dict["category_id"] as! Int
         type = dict["type"] as! String
-        total = dict["total"] as! Double
-        grade = dict["grade"] as! Double
-        status = dict["status"] as? Int ?? 0
+        dueDate = dict["due_date"] as! String
+        total = dict["total"] as! Int
+        grade = dict["grade"] as? Int
+        hideGrade = dict["hide_grade"] as! Int
         gradeView = dict["grade_view"] as! String
     }
     
@@ -36,12 +36,12 @@ class StudentGrade {
         var jsonDict = [String: Any]()
         jsonDict["id"] = id
         jsonDict["name"] = name
-        jsonDict["grading_period_id"] = gradingPeriodId
-        jsonDict["hide_grade"] = hideGrade
+        jsonDict["category_id"] = categoryId
         jsonDict["type"] = type
+        jsonDict["due_date"] = dueDate
         jsonDict["total"] = total
         jsonDict["grade"] = grade
-        jsonDict["status"] = status
+        jsonDict["hide_grade"] = hideGrade
         jsonDict["grade_view"] = gradeView
         return jsonDict
     }

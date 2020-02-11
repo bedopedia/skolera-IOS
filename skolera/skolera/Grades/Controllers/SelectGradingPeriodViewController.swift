@@ -18,6 +18,7 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     @IBOutlet weak var selectQuarterTextFiled: UITextField!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var placeholderView: UIView!
     
     var gradingPeriods: [GradingPeriod] = []
     var showQuarter: Bool = false
@@ -27,7 +28,9 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let child = child{
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        }
         getGradingPeriods()
         tableView.delegate = self
         tableView.dataSource = self
@@ -47,13 +50,17 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
             self.stopAnimating()
             if isSuccess {
                 if let result = response as? [[String : AnyObject]] {
-                    for gradingPeriod in result
-                    {
-                        debugPrint("\(gradingPeriod)\n")
-                        self.gradingPeriods.append(GradingPeriod.init(gradingPeriod))
+                    if result.count == 0 {
+                        self.tableView.isHidden = true
+                        self.placeholderView.isHidden = false
+                    } else {
+                        for gradingPeriod in result {
+                            self.gradingPeriods.append(GradingPeriod.init(gradingPeriod))
+                        }
+                        self.tableView.reloadData()
+                        self.tableView.isHidden = false
+                        self.placeholderView.isHidden = true
                     }
-                    self.tableView.reloadData()
-                    self.tableView.isHidden = false
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -74,10 +81,8 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
         cell.selectionStyle = .none
         if showQuarter {
             cell.textLabel?.text = self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes[indexPath.row].name
-            cell.detailTextLabel?.text = ""
         } else {
             cell.textLabel?.text = self.gradingPeriods[indexPath.row].name
-            cell.detailTextLabel?.text = ""
         }
         
         return cell
@@ -85,7 +90,7 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if showQuarter {
-            openGradesScreen()
+            openGradesScreen(gradingPeriodId: self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes[indexPath.row].id)
         } else {
             if gradingPeriods[indexPath.row].subGradingPeriodsAttributes.count > 0 {
                 selectedPeriodPos = indexPath.row
@@ -99,17 +104,18 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
                 self.selectPeriodTextField.text = self.gradingPeriods[indexPath.row].name
             } else {
                 showQuarter = false
-                openGradesScreen()
+                openGradesScreen(gradingPeriodId: self.gradingPeriods[indexPath.row].id)
             }
             
             
         }
     }
     
-    func openGradesScreen() {
+    func openGradesScreen(gradingPeriodId: Int) {
         let courseGradeVC = CourseGradeViewController.instantiate(fromAppStoryboard: .Grades)
         courseGradeVC.child = child
         courseGradeVC.courseGroup = courseGroup
+        courseGradeVC.gradingPeriodId = gradingPeriodId
         self.navigationController?.navigationController?.pushViewController(courseGradeVC, animated: true)
         
     }

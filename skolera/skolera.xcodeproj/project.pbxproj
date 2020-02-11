@@ -141,11 +141,12 @@
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
-		72266D0023E075CD001BBF68 /* GradingPeriodGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72266CFF23E075CD001BBF68 /* GradingPeriodGrades.swift */; };
 		72266D0223E07A6F001BBF68 /* StudentGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72266D0123E07A6F001BBF68 /* StudentGrade.swift */; };
 		7281EC2923F2ADAE008EB38F /* SelectGradingPeriodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2823F2ADAE008EB38F /* SelectGradingPeriodViewController.swift */; };
 		7281EC2D23F2BB4F008EB38F /* ShortCourseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2C23F2BB4F008EB38F /* ShortCourseGroup.swift */; };
 		7281EC2F23F2BBD6008EB38F /* GradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2E23F2BBD6008EB38F /* GradingPeriod.swift */; };
+		7281EC3123F2D1A5008EB38F /* GradeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC3023F2D1A5008EB38F /* GradeCategory.swift */; };
+		7281EC3323F2D408008EB38F /* GradeInGradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC3223F2D408008EB38F /* GradeInGradingPeriod.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
@@ -456,11 +457,12 @@
 		54EB93122015F88E001DD93F /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
-		72266CFF23E075CD001BBF68 /* GradingPeriodGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingPeriodGrades.swift; sourceTree = "<group>"; };
 		72266D0123E07A6F001BBF68 /* StudentGrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGrade.swift; sourceTree = "<group>"; };
 		7281EC2823F2ADAE008EB38F /* SelectGradingPeriodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGradingPeriodViewController.swift; sourceTree = "<group>"; };
 		7281EC2C23F2BB4F008EB38F /* ShortCourseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCourseGroup.swift; sourceTree = "<group>"; };
 		7281EC2E23F2BBD6008EB38F /* GradingPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingPeriod.swift; sourceTree = "<group>"; };
+		7281EC3023F2D1A5008EB38F /* GradeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCategory.swift; sourceTree = "<group>"; };
+		7281EC3223F2D408008EB38F /* GradeInGradingPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeInGradingPeriod.swift; sourceTree = "<group>"; };
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
@@ -707,8 +709,8 @@
 			isa = PBXGroup;
 			children = (
 				544216E6204C604000BEB167 /* GradesListViewController.swift */,
-				54D3EDDC2080097A00BCDA80 /* CourseGradeViewController.swift */,
 				7281EC2823F2ADAE008EB38F /* SelectGradingPeriodViewController.swift */,
+				54D3EDDC2080097A00BCDA80 /* CourseGradeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -718,10 +720,11 @@
 			children = (
 				54D3EDDA207FF98D00BCDA80 /* CourseGroup.swift */,
 				8A5F42D920B1805900FF93D1 /* CourseGradingPeriods.swift */,
-				72266CFF23E075CD001BBF68 /* GradingPeriodGrades.swift */,
 				72266D0123E07A6F001BBF68 /* StudentGrade.swift */,
 				7281EC2C23F2BB4F008EB38F /* ShortCourseGroup.swift */,
 				7281EC2E23F2BBD6008EB38F /* GradingPeriod.swift */,
+				7281EC3023F2D1A5008EB38F /* GradeCategory.swift */,
+				7281EC3223F2D408008EB38F /* GradeInGradingPeriod.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2118,7 +2121,6 @@
 				8A5F42EE20B1CB5C00FF93D1 /* Message.swift in Sources */,
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
 				8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */,
-				72266D0023E075CD001BBF68 /* GradingPeriodGrades.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
 				8A8079CD2340C39A00C4DC16 /* QuizAnswerTableViewCell.swift in Sources */,
@@ -2127,6 +2129,7 @@
 				8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */,
 				8A5F42E820B1C5EA00FF93D1 /* ThreadTableViewCell.swift in Sources */,
 				5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */,
+				7281EC3123F2D1A5008EB38F /* GradeCategory.swift in Sources */,
 				8A94E45522DF53F600A01B0C /* PostsViewController.swift in Sources */,
 				7281EC2D23F2BB4F008EB38F /* ShortCourseGroup.swift in Sources */,
 				8A93357B22E0BE88007B287D /* AttachmentTableViewCell.swift in Sources */,
@@ -2166,6 +2169,7 @@
 				8A3DE99320BED37C00BACD0E /* GradeHeaderTableViewCell.swift in Sources */,
 				8A6D360D20B5973A00DD0445 /* DemoChatDataSource.swift in Sources */,
 				541C8DEA20690FFF009C2448 /* GradientView.swift in Sources */,
+				7281EC3323F2D408008EB38F /* GradeInGradingPeriod.swift in Sources */,
 				54EB92FE2015ED1D001DD93F /* AppDelegate.swift in Sources */,
 				54970688208CEE270070CE46 /* TimetableViewController.swift in Sources */,
 				54CCF3FE206BEBA600824A3D /* BehaviorNotesReceiver.swift in Sources */,
