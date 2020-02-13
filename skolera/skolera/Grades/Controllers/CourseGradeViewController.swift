@@ -143,6 +143,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
+        semesterTitles.append("Total")
         checkData()
         tableView.reloadData()
     }
@@ -209,6 +210,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if let gradeView = gradeCategory?.gradeView, let total = gradeCategory?.total {
             gradeHeaderView.gradeLabel.text = "\(gradeView)/\(total)"
+        } else {
+            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+            gradeHeaderView.gradeLabel.text = "\(gradingPeriodGrade.gradeView)/\(gradingPeriodGrade.total)"
         }
         
         return gradeHeaderView
