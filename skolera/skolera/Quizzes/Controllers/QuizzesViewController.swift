@@ -268,6 +268,11 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
 //            quizVC.quiz = filteredQuizzes[indexPath.row]
 //            self.navigationController?.pushViewController(quizVC, animated: true)
             debugPrint("show quiz details")
+            if !filteredQuizzes[indexPath.row].state.elementsEqual("running") {
+              let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+              quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
+              self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+            }
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName

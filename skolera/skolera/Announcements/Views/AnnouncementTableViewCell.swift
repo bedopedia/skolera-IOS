@@ -26,7 +26,7 @@ class AnnouncementTableViewCell: UITableViewCell {
             dateFormatter.dateFormat = "dd MMM yyyy"
             debugPrint(date)
             //showing date
-            itemDate.text = "\(dateFormatter.string(from: date)) "
+            itemDate.text = dateFormatter.string(from: date)
             if announcement.imageURL != nil {
                  itemImage.kf.setImage(with: URL(string: announcement.imageURL))
             }
