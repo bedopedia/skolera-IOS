@@ -78,9 +78,9 @@ func getBehaviourNotesCountAPI(parameters: Parameters, completion: @escaping ((B
     }
 }
 
-func getWeeklyReportsAPI(date: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func getWeeklyPlansAPI(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
-    let url = String(format: GET_WEEKLY_PLANNER(), date)
+    let url = String(format: GET_WEEKLY_PLANNER())
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { (response) in
         switch response.result {
         case .success(_):

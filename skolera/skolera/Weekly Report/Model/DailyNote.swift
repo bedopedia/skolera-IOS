@@ -10,13 +10,14 @@ import Foundation
 
 class DailyNote : NSObject, NSCoding{
     
-    var activities : String!
-    var classWork : String!
-    var date : String!
-    var homework : String!
     var id : Int!
     var title : String!
+    var classWork : String!
+    var homework : String!
+    var activities : String!
+    var date : String!
     var weeklyPlanId : Int!
+    var courseId: Int!
     
     
     /**
@@ -30,6 +31,7 @@ class DailyNote : NSObject, NSCoding{
         id = dictionary["id"] as? Int
         title = dictionary["title"] as? String
         weeklyPlanId = dictionary["weekly_plan_id"] as? Int
+        courseId = dictionary["course_id"] as? Int
     }
     
     /**
@@ -59,6 +61,9 @@ class DailyNote : NSObject, NSCoding{
         if weeklyPlanId != nil{
             dictionary["weekly_plan_id"] = weeklyPlanId
         }
+        if courseId != nil{
+            dictionary["course_id"] = courseId
+        }
         return dictionary
     }
     
@@ -75,6 +80,7 @@ class DailyNote : NSObject, NSCoding{
         id = aDecoder.decodeObject(forKey: "id") as? Int
         title = aDecoder.decodeObject(forKey: "title") as? String
         weeklyPlanId = aDecoder.decodeObject(forKey: "weekly_plan_id") as? Int
+        courseId = aDecoder.decodeObject(forKey: "course_id") as? Int
         
     }
     
@@ -105,7 +111,9 @@ class DailyNote : NSObject, NSCoding{
         if weeklyPlanId != nil{
             aCoder.encode(weeklyPlanId, forKey: "weekly_plan_id")
         }
-        
+        if courseId != nil{
+            aCoder.encode(courseId, forKey: "course_id")
+        }
     }
     
 }

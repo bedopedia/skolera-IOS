@@ -48,7 +48,7 @@ class WeeklyPlannerViewController: UIViewController {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         if weeklyPlanner != nil {
-            if weeklyPlanner.weeklyNotes.isEmpty {
+            if weeklyPlanner.dailyNotes.isEmpty {
                 maxHeaderHeight = 50
                 headerHeightConstraint.constant = 50
                 

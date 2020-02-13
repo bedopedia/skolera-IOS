@@ -1,12 +1,12 @@
 //
-//    WeeklyNote.swift
+//  WeeklyNote.swift
+//  skolera
 //
-//    Create by Yehia Beram on 4/3/2019
-//    Copyright © 2019 TrianglZ LLC. All rights reserved.
-//    Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
+//  Created by Salma Medhat on 2/13/20.
+//  Copyright © 2020 Skolera. All rights reserved.
+//
 
 import Foundation
-
 
 class WeeklyNote : NSObject, NSCoding{
     

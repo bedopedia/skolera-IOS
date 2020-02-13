@@ -27,7 +27,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     /// courses grades for this child, segued to grades screen
     var gradesSubjects = [ShortCourseGroup]()
     var timeslots = [TimeSlot]()
-    var weeklyPlans: [WeeklyPlan] = []
+    var weeklyPlan: [WeeklyPlan] = []
     var today: Date!
     var tomorrow: Date!
     /// Once set, get grades for this child
@@ -37,7 +37,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                 getGradesSubjects()
                 getBehaviorNotesCount()
                 getTimeTable()
-                getWeeklyReport()
+                getWeeklyPlanner()
                 let presentDays = child.attendances.filter({ attendance -> Bool in
                     return attendance.status == "present"
                 }).count
@@ -202,18 +202,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
-    private func getWeeklyReport() {
+    private func getWeeklyPlanner() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "d/M/y"
-        formatter.locale = Locale(identifier: "en")
-        getWeeklyReportsAPI(date: formatter.string(from: Date())) { (isSuccess, statusCode, value, error) in
+        getWeeklyPlansAPI() { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
-                    let weeklyPlanResponse = WeeklyPlanResponse(fromDictionary: result)
-                    if !weeklyPlanResponse.weeklyPlans.isEmpty {
-                        self.weeklyPlans = weeklyPlanResponse.weeklyPlans
+                    let weeklyPlanResponse = WeeklyPlanResponse(result)
+                    if !weeklyPlanResponse.weeklyPlan.isEmpty {
+                        self.weeklyPlan = weeklyPlanResponse.weeklyPlan
                     }
                 }
             } else {
@@ -291,7 +288,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
 //        if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
-            wvc.weeklyPlanner = self.weeklyPlans.first
+            wvc.weeklyPlanner = self.weeklyPlan.first
             self.navigationController?.pushViewController(wvc, animated: true)
 //        }
 //    else {

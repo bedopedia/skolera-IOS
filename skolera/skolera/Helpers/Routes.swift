@@ -79,7 +79,7 @@ func GET_BEHAVIOR_NOTES() -> String
 //WeeklyPlanner
 func GET_WEEKLY_PLANNER() -> String
 {
-    return "\(BASE_URL!)/api/weekly_plans?search_by_date=%@"
+    return "\(BASE_URL!)/api/weekly_plans?mobile=true"
 }
 //Timetable
 func GET_TIME_TABLE() -> String
