@@ -22,11 +22,11 @@ class AnnouncementTableViewCell: UITableViewCell {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-            let date = dateFormatter.date(from: announcement.createdAt)!
-            dateFormatter.dateFormat = "hh:mm a"
+            let date = dateFormatter.date(from: announcement.endAt)!
+            dateFormatter.dateFormat = "dd MMM yyyy"
             debugPrint(date)
             //showing date
-            itemDate.text = dateFormatter.string(from: date)
+            itemDate.text = "\(dateFormatter.string(from: date)) "
             if announcement.imageURL != nil {
                  itemImage.kf.setImage(with: URL(string: announcement.imageURL))
             }

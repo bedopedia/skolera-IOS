@@ -28,6 +28,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     var gradingPeriodGrade: GradeInGradingPeriod!
     var semesterDic: [String: [AnyObject]] = [:]
     var semesterTitles: [String] = []
+    var expandedCategories: [GradeCategory] = []
     
     private let refreshControl = UIRefreshControl()
     
@@ -49,6 +50,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             tableView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        
+        let tableViewHeaderNib = UINib.init(nibName: "GradeHeaderView", bundle: Bundle.main)
+        tableView.register(tableViewHeaderNib, forHeaderFooterViewReuseIdentifier: "GradeHeaderView")
         
         getStudentGradeBook()
     }
@@ -76,6 +80,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 if let result = response as? [String : AnyObject] {
                     debugPrint("GRADESSSS: ", result)
                     self.gradingPeriodGrade = GradeInGradingPeriod.init(result)
+                    self.expandCategories()
                     self.handelGrade()
                 }
             } else {
@@ -89,6 +94,15 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         
+    }
+    
+    func expandCategories(){
+        for category in gradingPeriodGrade.categories {
+            expandedCategories.append(category)
+            for subCategories in category.subCategories {
+                expandedCategories.append(subCategories)
+            }
+        }
     }
     
     private func handelGrade() {
@@ -153,14 +167,14 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func checkData() {
-            placeholderLabel.text = "You don't have any grades for now".localized
-            if semesterTitles.count == 0 {
-                placeholderView.isHidden = false
-                tableView.isHidden = true
-            } else {
-                checkSemesterDict()
-            }
-     
+        placeholderLabel.text = "You don't have any grades for now".localized
+        if semesterTitles.count == 0 {
+            placeholderView.isHidden = false
+            tableView.isHidden = true
+        } else {
+            checkSemesterDict()
+        }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -168,7 +182,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 32
+        return 42
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,13 +192,33 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             return 0
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return semesterTitles[section]
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let gradeHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GradeHeaderView") as! GradeHeaderView
+         
+        gradeHeaderView.titleLabel.text = semesterTitles[section]
+        
+        let gradeCategory = expandedCategories.first {
+            $0.name.elementsEqual(semesterTitles[section])
+        }
+        if let isParent = gradeCategory?.isParent, isParent {
+            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+        } else {
+            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1)
+        }
+        if let gradeView = gradeCategory?.gradeView, let total = gradeCategory?.total {
+            gradeHeaderView.gradeLabel.text = "\(gradeView)/\(total)"
+        }
+        
+        return gradeHeaderView
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var item:AnyObject?
+        //  var isParent: Bool?
+        
         if let semesterData = semesterDic[semesterTitles[indexPath.section]]{
             item = semesterData[indexPath.row]
         }
@@ -192,7 +226,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         if item is String {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeHeaderTableViewCell", for: indexPath as IndexPath) as! GradeHeaderTableViewCell
             cell.selectionStyle = .none
-            cell.titleNameLabel.text = item as? String
+            cell.titleNameLabel.text = (item as! String)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GradeDetailTableViewCell", for: indexPath as IndexPath) as! GradeDetailTableViewCell
@@ -203,7 +237,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.avgGradeLabel.text = ""
                 let mGradeView = studentGrade.gradeView.replacingOccurrences(of: ".0", with: "")
                 if mGradeView.contains("*") || Int(mGradeView) != nil {
-                    cell.gradeLabel.text = "\(mGradeView) / \(studentGrade.total)"
+                    cell.gradeLabel.text = "\(mGradeView)/\(studentGrade.total)"
                 } else {
                     cell.gradeLabel.text = "\(mGradeView)"
                 }
@@ -231,5 +265,5 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         let multiplier = pow(10, Double(2))
         return Darwin.round(double * multiplier) / multiplier
     }
-
+    
 }

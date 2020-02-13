@@ -25,7 +25,8 @@ class GradeCategory {
         let gradeItemsGrade: Int
         let gradeItems: [StudentGrade]
         let gradeView: String
-        let percentage: Int
+        let percentage: Double
+        var isParent = true
         let subCategories: [GradeCategory]
 
         init(_ dict: [String: Any]) {
@@ -61,10 +62,14 @@ class GradeCategory {
             
             
             gradeView = dict["grade_view"] as! String
-            percentage = dict["percentage"] as! Int
+            percentage = dict["percentage"] as! Double
 
             if let subCategoriesDictArray = dict["sub_categories"] as? [[String: Any]] {
-                subCategories = subCategoriesDictArray.map { GradeCategory($0) }
+                subCategories = subCategoriesDictArray.map { let gradeCatagory = GradeCategory($0)
+                    gradeCatagory.isParent = false
+                    return gradeCatagory
+                }
+                
             } else {
                 subCategories = []
             }

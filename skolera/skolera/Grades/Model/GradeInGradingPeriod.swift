@@ -23,7 +23,7 @@ class GradeInGradingPeriod {
     let categories: [GradeCategory]
     let total: Int
     let grade: String
-    let percentage: Int
+    let percentage: Double
     let gradeView: String
     let letterScale: String
     let gpaScale: String
@@ -48,7 +48,7 @@ class GradeInGradingPeriod {
         
         total = dict["total"] as! Int
         grade = dict["grade"] as! String
-        percentage = dict["percentage"] as! Int
+        percentage = dict["percentage"] as! Double
         gradeView = dict["grade_view"] as! String
         letterScale = dict["letter_scale"] as! String
         gpaScale = dict["gpa_scale"] as! String
@@ -64,7 +64,7 @@ class GradeInGradingPeriod {
         jsonDict["updated_at"] = updatedAt
         jsonDict["weight"] = weight
         jsonDict["lock"] = lock
-        jsonDict["publish"] = publish
+        jsonDict["publish"] = publish   
         jsonDict["courses_grading_period_id"] = coursesGradingPeriodId
         jsonDict["categories"] = categories.map { $0.toDictionary() }
         jsonDict["total"] = total

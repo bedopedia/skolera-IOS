@@ -14,7 +14,6 @@ class StudentGrade {
     let name: String
     let categoryId: Int
     let type: String
-    let dueDate: String
     let total: Int
     let grade: Int?
     let hideGrade: Int
@@ -25,7 +24,6 @@ class StudentGrade {
         name = dict["name"] as! String
         categoryId = dict["category_id"] as! Int
         type = dict["type"] as! String
-        dueDate = dict["due_date"] as! String
         total = dict["total"] as! Int
         grade = dict["grade"] as? Int
         hideGrade = dict["hide_grade"] as! Int
@@ -38,7 +36,6 @@ class StudentGrade {
         jsonDict["name"] = name
         jsonDict["category_id"] = categoryId
         jsonDict["type"] = type
-        jsonDict["due_date"] = dueDate
         jsonDict["total"] = total
         jsonDict["grade"] = grade
         jsonDict["hide_grade"] = hideGrade

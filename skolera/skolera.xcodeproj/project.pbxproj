@@ -142,6 +142,8 @@
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
 		72266D0223E07A6F001BBF68 /* StudentGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72266D0123E07A6F001BBF68 /* StudentGrade.swift */; };
+		7265634B23F429C600D7B030 /* GradeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7265634A23F429C600D7B030 /* GradeHeaderView.swift */; };
+		7265634D23F42A8500D7B030 /* GradeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7265634C23F42A8500D7B030 /* GradeHeaderView.xib */; };
 		7281EC2923F2ADAE008EB38F /* SelectGradingPeriodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2823F2ADAE008EB38F /* SelectGradingPeriodViewController.swift */; };
 		7281EC2D23F2BB4F008EB38F /* ShortCourseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2C23F2BB4F008EB38F /* ShortCourseGroup.swift */; };
 		7281EC2F23F2BBD6008EB38F /* GradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC2E23F2BBD6008EB38F /* GradingPeriod.swift */; };
@@ -458,6 +460,8 @@
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
 		72266D0123E07A6F001BBF68 /* StudentGrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGrade.swift; sourceTree = "<group>"; };
+		7265634A23F429C600D7B030 /* GradeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeHeaderView.swift; sourceTree = "<group>"; };
+		7265634C23F42A8500D7B030 /* GradeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GradeHeaderView.xib; sourceTree = "<group>"; };
 		7281EC2823F2ADAE008EB38F /* SelectGradingPeriodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGradingPeriodViewController.swift; sourceTree = "<group>"; };
 		7281EC2C23F2BB4F008EB38F /* ShortCourseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCourseGroup.swift; sourceTree = "<group>"; };
 		7281EC2E23F2BBD6008EB38F /* GradingPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingPeriod.swift; sourceTree = "<group>"; };
@@ -701,6 +705,8 @@
 				544216E8204C77B500BEB167 /* CourseGradeCell.swift */,
 				8A3DE99220BED37C00BACD0E /* GradeHeaderTableViewCell.swift */,
 				8A3DE99420BED3C300BACD0E /* GradeDetailTableViewCell.swift */,
+				7265634A23F429C600D7B030 /* GradeHeaderView.swift */,
+				7265634C23F42A8500D7B030 /* GradeHeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1743,6 +1749,7 @@
 				8AD548E823280FA500730B76 /* Announcements.storyboard in Resources */,
 				5482DE582056DAB100647D57 /* RobotoMono-MediumItalic.ttf in Resources */,
 				5482DE7B2056DAB100647D57 /* Roboto Condensed Bold.otf in Resources */,
+				7265634D23F42A8500D7B030 /* GradeHeaderView.xib in Resources */,
 				5482DDF12056D4DF00647D57 /* SFUIText-Bold.otf in Resources */,
 				5462A5A22058401F00C6F5EE /* CircularSawOutline Oblique.ttf in Resources */,
 				5482DDF32056D4E500647D57 /* SFUIText-BoldItalicG2.otf in Resources */,
@@ -2130,6 +2137,7 @@
 				8A5F42E820B1C5EA00FF93D1 /* ThreadTableViewCell.swift in Sources */,
 				5402CA032045A658009F583A /* ChildProfileViewController.swift in Sources */,
 				7281EC3123F2D1A5008EB38F /* GradeCategory.swift in Sources */,
+				7265634B23F429C600D7B030 /* GradeHeaderView.swift in Sources */,
 				8A94E45522DF53F600A01B0C /* PostsViewController.swift in Sources */,
 				7281EC2D23F2BB4F008EB38F /* ShortCourseGroup.swift in Sources */,
 				8A93357B22E0BE88007B287D /* AttachmentTableViewCell.swift in Sources */,
@@ -2439,7 +2447,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9.4;
+				MARKETING_VERSION = 2.9.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2462,7 +2470,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9.4;
+				MARKETING_VERSION = 2.9.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
