@@ -26,10 +26,16 @@ class WeeklyPlan {
         } else {
             generalNote = GeneralNote([:])
         }
-
-        dailyNotes = dict["daily_notes"] as! [String: [DailyNote]]
         
-        
+        if let jsonObject = dict["daily_notes"] as? [String: [AnyObject]]{
+            var dictDailyNotes: [String: [DailyNote]] = [:]
+            for (key, value) in jsonObject {
+                dictDailyNotes[key] = value.map{ DailyNote($0 as! [String : Any])}
+            }
+            dailyNotes = dictDailyNotes
+        } else {
+            dailyNotes = [:]
+        }
     }
 
     func toDictionary() -> [String: Any] {

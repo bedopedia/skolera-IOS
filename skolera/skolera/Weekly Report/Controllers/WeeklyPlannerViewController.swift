@@ -9,7 +9,7 @@
 import UIKit
 
 class WeeklyPlannerViewController: UIViewController {
-
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var contianerView: UIView!
     @IBOutlet weak var childImageView: UIImageView!
@@ -38,7 +38,7 @@ class WeeklyPlannerViewController: UIViewController {
                                              "Wednesday": [],
                                              "Thursday": [],
                                              "Friday": []]
-    
+    var dateStrings: [String] = []
     var activeDays: [String] = []
     var selectedDay: Int = 0
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class WeeklyPlannerViewController: UIViewController {
                 
             } else {
                 placeHolderView.isHidden = true
-                if let url = URL(string: weeklyPlanner.weeklyNotes.first?.imageUrl ?? "") {
+                if let url = URL(string: weeklyPlanner.generalNote.image ?? "") {
                     weeklyNoteImage.kf.setImage(with: url)
                 } else {
                     weeklyNoteImage.isHidden = true
@@ -63,8 +63,8 @@ class WeeklyPlannerViewController: UIViewController {
                     maxHeaderHeight = 249
                     headerHeightConstraint.constant = 249
                 }
-                weeklyNoteTitleLabel.text = weeklyPlanner.weeklyNotes.first?.title ?? ""
-                weeklyNoteLabel.text = (weeklyPlanner.weeklyNotes.first?.descriptionField ?? "").replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
+                weeklyNoteTitleLabel.text = weeklyPlanner.generalNote.title
+                weeklyNoteLabel.text = (weeklyPlanner.generalNote.description).replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
                 weeklyNoteLabel.sizeToFit()
                 
                 if weeklyNoteLabel.frame.height >= 84 {
@@ -91,16 +91,19 @@ class WeeklyPlannerViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
+        getDatesOfCurrentWeek()
         
         if weeklyPlanner != nil {
-            for dailyNote in self.weeklyPlanner.dailyNotes {
-                let formatter = DateFormatter()
-                formatter.locale = Locale(identifier: "en")
-                formatter.dateFormat = "yyyy-MM-dd"
-                let date = formatter.date(from: dailyNote.date)
-                formatter.dateFormat = "EEEE"
-                let dayInWeek = formatter.string(from: date!)
-                dailyNotes[dayInWeek]?.append(dailyNote)
+            for date in dateStrings {
+                if let myDailyNotes = self.weeklyPlanner.dailyNotes[date] {
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en")
+                    formatter.dateFormat = "yyyy-MM-dd"
+                    let date = formatter.date(from: date)
+                    formatter.dateFormat = "EEEE"
+                    let dayInWeek = formatter.string(from: date!)
+                    dailyNotes[dayInWeek] = myDailyNotes
+                }
             }
         }
         if !dailyNotes["Saturday"]!.isEmpty {
@@ -130,14 +133,31 @@ class WeeklyPlannerViewController: UIViewController {
         tableView.dataSource  = self
     }
     
+    func getDatesOfCurrentWeek() {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let dayOfWeek = calendar.component(.weekday, from: today)
+        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+        let days = (weekdays.lowerBound ..< weekdays.upperBound)
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }  // use `flatMap` in Xcode versions before 9.3
+        //            .filter { !calendar.isDateInWeekend($0) }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        for date in days {
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
+            print(formatter.string(from: modifiedDate!))
+            dateStrings.append(formatter.string(from: modifiedDate!))
+        }
+    }
+    
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func seeMore(){
-        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
-        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
-        self.navigationController?.pushViewController(announcementsVc, animated: true)
+        //        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+        //        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
+        //        self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
 }
 
@@ -169,7 +189,6 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
         cell.subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
         cell.subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
         cell.subjectImageLabel.text = cell.getText(name: item.title)
-        
         return cell
     }
     
@@ -263,10 +282,10 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func updateHeader() {
-//        let range = self.maxHeaderHeight - self.minHeaderHeight
-//        let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
-//        let percentage = openAmount / range
-//        titleLabel.alpha = percentage
+        //        let range = self.maxHeaderHeight - self.minHeaderHeight
+        //        let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
+        //        let percentage = openAmount / range
+        //        titleLabel.alpha = percentage
     }
 }
 
