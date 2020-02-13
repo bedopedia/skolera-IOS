@@ -14,7 +14,7 @@ class WeeklyPlan {
     let startDate: String
     let endDate: String
     let generalNote: GeneralNote
-    let dailyNotes: [String: DailyNote]
+    let dailyNotes: [String: [DailyNote]]
 
     init(_ dict: [String: Any]) {
         id = dict["id"] as! Int
@@ -27,7 +27,7 @@ class WeeklyPlan {
             generalNote = GeneralNote([:])
         }
 
-        dailyNotes = dict["daily_notes"] as! [String: DailyNote]
+        dailyNotes = dict["daily_notes"] as! [String: [DailyNote]]
         
         
     }
