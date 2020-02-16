@@ -193,11 +193,11 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
+        
         let gradeHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GradeHeaderView") as! GradeHeaderView
-         
+        
         gradeHeaderView.titleLabel.text = semesterTitles[section]
         
         let gradeCategory = expandedCategories.first {
@@ -209,10 +209,21 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1)
         }
         if let gradeView = gradeCategory?.gradeView, let total = gradeCategory?.total {
-            gradeHeaderView.gradeLabel.text = "\(gradeView)/\(total)"
+            let mGradeView = gradeView.replacingOccurrences(of: ".0", with: "")
+            if mGradeView.contains("*") || Double(mGradeView) != nil {
+                gradeHeaderView.gradeLabel.text = "\(mGradeView)/\(total)"
+            } else {
+                gradeHeaderView.gradeLabel.text = "\(mGradeView)"
+            }
+            
         } else {
             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
-            gradeHeaderView.gradeLabel.text = "\(gradingPeriodGrade.gradeView)/\(gradingPeriodGrade.total)"
+            let mGradeView = gradingPeriodGrade.gradeView.replacingOccurrences(of: ".0", with: "")
+            if mGradeView.contains("*") || Double(mGradeView) != nil {
+                gradeHeaderView.gradeLabel.text = "\(mGradeView)/\(gradingPeriodGrade.total)"
+            } else {
+                gradeHeaderView.gradeLabel.text = "\(mGradeView)"
+            }
         }
         
         return gradeHeaderView
@@ -240,7 +251,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.TitleLabel.text = studentGrade.name
                 cell.avgGradeLabel.text = ""
                 let mGradeView = studentGrade.gradeView.replacingOccurrences(of: ".0", with: "")
-                if mGradeView.contains("*") || Int(mGradeView) != nil {
+                if mGradeView.contains("*") || Double(mGradeView) != nil {
                     cell.gradeLabel.text = "\(mGradeView)/\(studentGrade.total)"
                 } else {
                     cell.gradeLabel.text = "\(mGradeView)"
