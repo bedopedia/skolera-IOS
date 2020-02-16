@@ -66,12 +66,12 @@ class WeeklyPlannerViewController: UIViewController {
                 weeklyNoteTitleLabel.text = weeklyPlanner.generalNote.title
                 weeklyNoteLabel.text = (weeklyPlanner.generalNote.description).replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
                 weeklyNoteLabel.sizeToFit()
-                
-                if weeklyNoteLabel.frame.height >= 84 {
-                    seeMoreFrame.isHidden = false
-                } else {
-                    seeMoreFrame.isHidden = true
-                }
+//
+//                if weeklyNoteLabel.frame.height >= 84 {
+//                    seeMoreFrame.isHidden = false
+//                } else {
+//                    seeMoreFrame.isHidden = true
+//                }
                 
             }
         } else {
@@ -155,9 +155,9 @@ class WeeklyPlannerViewController: UIViewController {
     }
     
     @IBAction func seeMore(){
-        //        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
-        //        announcementsVc.weeklyNote = self.weeklyPlanner.weeklyNotes.first!
-        //        self.navigationController?.pushViewController(announcementsVc, animated: true)
+                let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+                announcementsVc.weeklyNote = self.weeklyPlanner.generalNote
+                self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
 }
 

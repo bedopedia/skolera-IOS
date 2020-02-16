@@ -150,7 +150,6 @@
 		7281EC3123F2D1A5008EB38F /* GradeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC3023F2D1A5008EB38F /* GradeCategory.swift */; };
 		7281EC3323F2D408008EB38F /* GradeInGradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281EC3223F2D408008EB38F /* GradeInGradingPeriod.swift */; };
 		728E0AC023F56F2C003069DD /* GeneralNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728E0ABF23F56F2C003069DD /* GeneralNote.swift */; };
-		728E0AC223F57286003069DD /* WeeklyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728E0AC123F57286003069DD /* WeeklyNote.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
@@ -468,7 +467,6 @@
 		7281EC3023F2D1A5008EB38F /* GradeCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCategory.swift; sourceTree = "<group>"; };
 		7281EC3223F2D408008EB38F /* GradeInGradingPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeInGradingPeriod.swift; sourceTree = "<group>"; };
 		728E0ABF23F56F2C003069DD /* GeneralNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralNote.swift; sourceTree = "<group>"; };
-		728E0AC123F57286003069DD /* WeeklyNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNote.swift; sourceTree = "<group>"; };
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
@@ -1518,7 +1516,6 @@
 				8A8A7390222C5B9C00972BE6 /* WeeklyPlan.swift */,
 				8A8A7394222C5BC300972BE6 /* DailyNote.swift */,
 				728E0ABF23F56F2C003069DD /* GeneralNote.swift */,
-				728E0AC123F57286003069DD /* WeeklyNote.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1985,7 +1982,6 @@
 				54970683208CECB50070CE46 /* TimeSlot.swift in Sources */,
 				8A5BBB092327FD220056B157 /* ActorNvc.swift in Sources */,
 				8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */,
-				728E0AC223F57286003069DD /* WeeklyNote.swift in Sources */,
 				546356EC201F68E90072F066 /* Role.swift in Sources */,
 				8AF8F73722E9EA0800544744 /* QuizzesResponse.swift in Sources */,
 				8A6D362B20B59B0B00DD0445 /* DemoPhotoMessageHandler.swift in Sources */,
