@@ -14,7 +14,7 @@ class GradeCategory {
         let weight: Int
         let name: String
         let total: Int
-        let grade: String?
+        let grade: String
         let quizzesTotal: Int
         let quizzesGrade: Int
         let quizzes: [StudentGrade]
@@ -34,7 +34,7 @@ class GradeCategory {
             weight = dict["weight"] as! Int
             name = dict["name"] as! String
             total = dict["total"] as! Int
-            grade = dict["grade"] as? String
+            grade = dict["grade"] as! String
             
             quizzesTotal = dict["quizzes_total"] as! Int
             quizzesGrade = dict["quizzes_grade"] as! Int

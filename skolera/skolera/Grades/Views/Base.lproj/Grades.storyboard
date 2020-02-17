@@ -236,9 +236,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="28/30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OT0-ut-8LS">
-                                                    <rect key="frame" x="122" y="14.5" width="237" height="19.5"/>
+                                                    <rect key="frame" x="318.5" y="14.5" width="40.5" height="19.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="CLU-qe-7Od"/>
                                                         <constraint firstAttribute="height" constant="19.5" id="FUZ-it-zrT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
@@ -264,7 +263,6 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="iCh-Sx-rCn" secondAttribute="trailing" constant="1" id="Fsd-xz-NfZ"/>
                                                 <constraint firstItem="OT0-ut-8LS" firstAttribute="centerY" secondItem="ObW-Pl-axn" secondAttribute="centerY" id="Ja9-6h-6tG"/>
                                                 <constraint firstItem="Bg1-1e-q6k" firstAttribute="leading" secondItem="0ZY-gT-pBy" secondAttribute="leadingMargin" id="S9c-hG-bv9"/>
-                                                <constraint firstItem="OT0-ut-8LS" firstAttribute="leading" secondItem="ObW-Pl-axn" secondAttribute="trailing" constant="8" id="SDc-a9-e4j"/>
                                                 <constraint firstAttribute="trailing" secondItem="OT0-ut-8LS" secondAttribute="trailing" constant="16" id="VPv-bP-Ecg"/>
                                                 <constraint firstItem="iCh-Sx-rCn" firstAttribute="top" secondItem="OT0-ut-8LS" secondAttribute="bottom" constant="0.5" id="djL-gE-8XV"/>
                                                 <constraint firstItem="ObW-Pl-axn" firstAttribute="centerY" secondItem="0ZY-gT-pBy" secondAttribute="centerY" id="y3j-gD-g6N"/>
