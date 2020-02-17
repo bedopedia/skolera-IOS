@@ -127,7 +127,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         semesterDic[subcategory.name]?.append("Grade Items".localized as AnyObject)
                         semesterDic[subcategory.name]?.append(contentsOf: subcategory.gradeItems)
                     }
+                    semesterTitles.append("Total \(subcategory.name)")
                 }
+                semesterTitles.append("Category Total \(category.name)")
             } else {
                 if category.assignments.count > 0 {
                     semesterDic[category.name]?.append("Assignments".localized as AnyObject)
@@ -141,8 +143,15 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                     semesterDic[category.name]?.append("Grade Items".localized as AnyObject)
                     semesterDic[category.name]?.append(contentsOf: category.gradeItems)
                 }
+                semesterTitles.append("Category Total \(category.name)")
             }
         }
+        semesterTitles.append("Total(%)")
+        semesterTitles.append("Letter")
+        if !gradingPeriodGrade.gpaScale.contains("--"){
+            semesterTitles.append("GPA")
+        }
+        
         checkData()
         tableView.reloadData()
     }
@@ -192,23 +201,72 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        let gradeHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GradeHeaderView") as! GradeHeaderView
-         
-        gradeHeaderView.titleLabel.text = semesterTitles[section]
         
-        let gradeCategory = expandedCategories.first {
-            $0.name.elementsEqual(semesterTitles[section])
+        let gradeHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GradeHeaderView") as! GradeHeaderView
+        
+        let myGradeCategory = expandedCategories.first {
+            semesterTitles[section].contains($0.name)
         }
-        if let isParent = gradeCategory?.isParent, isParent {
-            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+        
+        if let gradeCategory = myGradeCategory {
+            if gradeCategory.isParent {
+                if semesterTitles[section].contains("Category Total") {
+                    gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9764705882, blue: 1, alpha: 1)
+                    gradeHeaderView.titleLabel.text = "Category Total".localized
+                    let mGrade = gradeCategory.grade.replacingOccurrences(of: ".0", with: "")
+                    if mGrade.contains("*") || Double(mGrade) != nil {
+                        gradeHeaderView.gradeLabel.text = "\(mGrade)/\(gradeCategory.total)"
+                    } else {
+                        gradeHeaderView.gradeLabel.text = "\(mGrade)"
+                    }
+                } else {
+                    gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9764705882, blue: 1, alpha: 1)
+                    gradeHeaderView.titleLabel.text = semesterTitles[section]
+                    let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
+                    if mGradeView.contains("*") || Double(mGradeView) != nil {
+                        gradeHeaderView.gradeLabel.text = "\(mGradeView)/\(gradeCategory.weight)"
+                    } else {
+                        gradeHeaderView.gradeLabel.text = "\(mGradeView)"
+                    }
+    
+                }
+            } else {
+                if semesterTitles[section].contains("Total") {
+                    gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1)
+                    gradeHeaderView.titleLabel.text = "Total".localized
+                    let mGrade = gradeCategory.grade.replacingOccurrences(of: ".0", with: "")
+                    if mGrade.contains("*") || Double(mGrade) != nil {
+                        gradeHeaderView.gradeLabel.text = "\(mGrade)/\(gradeCategory.total)"
+                    } else {
+                        gradeHeaderView.gradeLabel.text = "\(mGrade)"
+                    }
+                } else {
+                    gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8078431373, green: 0.9098039216, blue: 1, alpha: 1)
+                    gradeHeaderView.titleLabel.text = semesterTitles[section]
+                    let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
+                    if mGradeView.contains("*") || Double(mGradeView) != nil {
+                        gradeHeaderView.gradeLabel.text = "\(mGradeView)/\(gradeCategory.weight)"
+                    } else {
+                        gradeHeaderView.gradeLabel.text = "\(mGradeView)"
+                    }
+                }
+                
+            }
         } else {
-            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1)
-        }
-        if let gradeView = gradeCategory?.gradeView, let total = gradeCategory?.total {
-            gradeHeaderView.gradeLabel.text = "\(gradeView)/\(total)"
+            gradeHeaderView.titleLabel.text = semesterTitles[section]
+            gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9725490196, blue: 0.9725490196, alpha: 1)
+            if semesterTitles[section].elementsEqual("Total(%)"){
+                gradeHeaderView.titleLabel.text = "Total(%)".localized + "(%)"
+                gradeHeaderView.gradeLabel.text = "\(gradingPeriodGrade.grade)%"
+            } else if semesterTitles[section].elementsEqual("Letter") {
+                gradeHeaderView.titleLabel.text = semesterTitles[section]
+                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.letterScale
+            } else {
+                gradeHeaderView.titleLabel.text = semesterTitles[section]
+                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.gpaScale
+            }
         }
         
         return gradeHeaderView
@@ -236,7 +294,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.TitleLabel.text = studentGrade.name
                 cell.avgGradeLabel.text = ""
                 let mGradeView = studentGrade.gradeView.replacingOccurrences(of: ".0", with: "")
-                if mGradeView.contains("*") || Int(mGradeView) != nil {
+                if mGradeView.contains("*") || Double(mGradeView) != nil {
                     cell.gradeLabel.text = "\(mGradeView)/\(studentGrade.total)"
                 } else {
                     cell.gradeLabel.text = "\(mGradeView)"
@@ -257,7 +315,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
         if item is String {
             return 40
         } else {
-            return 71.5
+            return 52
         }
     }
     

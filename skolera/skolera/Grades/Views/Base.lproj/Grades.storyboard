@@ -219,15 +219,15 @@
                                 <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GradeDetailTableViewCell" rowHeight="72" id="lHg-aR-lXr" customClass="GradeDetailTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="72"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GradeDetailTableViewCell" rowHeight="48" id="lHg-aR-lXr" customClass="GradeDetailTableViewCell" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lHg-aR-lXr" id="0ZY-gT-pBy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Classwork #1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObW-Pl-axn">
-                                                    <rect key="frame" x="16" y="26.5" width="98" height="19.5"/>
+                                                    <rect key="frame" x="16" y="14.5" width="98" height="19.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19.5" id="a7r-ZQ-4AK"/>
                                                     </constraints>
@@ -236,9 +236,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="28/30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OT0-ut-8LS">
-                                                    <rect key="frame" x="122" y="26.5" width="237" height="19.5"/>
+                                                    <rect key="frame" x="318.5" y="14.5" width="40.5" height="19.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="CLU-qe-7Od"/>
                                                         <constraint firstAttribute="height" constant="19.5" id="FUZ-it-zrT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
@@ -246,13 +245,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avg. grade is 25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bg1-1e-q6k">
-                                                    <rect key="frame" x="15" y="46" width="105" height="17"/>
+                                                    <rect key="frame" x="15" y="34" width="105" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCh-Sx-rCn">
-                                                    <rect key="frame" x="323" y="46.5" width="36" height="17"/>
+                                                    <rect key="frame" x="323" y="34.5" width="36" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -264,7 +263,6 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="iCh-Sx-rCn" secondAttribute="trailing" constant="1" id="Fsd-xz-NfZ"/>
                                                 <constraint firstItem="OT0-ut-8LS" firstAttribute="centerY" secondItem="ObW-Pl-axn" secondAttribute="centerY" id="Ja9-6h-6tG"/>
                                                 <constraint firstItem="Bg1-1e-q6k" firstAttribute="leading" secondItem="0ZY-gT-pBy" secondAttribute="leadingMargin" id="S9c-hG-bv9"/>
-                                                <constraint firstItem="OT0-ut-8LS" firstAttribute="leading" secondItem="ObW-Pl-axn" secondAttribute="trailing" constant="8" id="SDc-a9-e4j"/>
                                                 <constraint firstAttribute="trailing" secondItem="OT0-ut-8LS" secondAttribute="trailing" constant="16" id="VPv-bP-Ecg"/>
                                                 <constraint firstItem="iCh-Sx-rCn" firstAttribute="top" secondItem="OT0-ut-8LS" secondAttribute="bottom" constant="0.5" id="djL-gE-8XV"/>
                                                 <constraint firstItem="ObW-Pl-axn" firstAttribute="centerY" secondItem="0ZY-gT-pBy" secondAttribute="centerY" id="y3j-gD-g6N"/>
@@ -278,7 +276,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GradeHeaderTableViewCell" rowHeight="40" id="je3-sa-pKD" customClass="GradeHeaderTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="76" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="je3-sa-pKD" id="bYD-D8-tFh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
