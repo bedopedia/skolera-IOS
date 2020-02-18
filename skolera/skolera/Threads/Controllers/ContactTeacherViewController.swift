@@ -124,7 +124,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCell(withIdentifier: "ThreadTableViewCell", for: indexPath) as! ThreadTableViewCell
         cell.selectionStyle = .none
         let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
-        var fullNameArr = fullName?.components(separatedBy: " ")
+        let fullNameArr = fullName?.components(separatedBy: " ")
         cell.threadTitle.text = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
         
         if self.threads[indexPath.row].courseName != nil {
@@ -136,7 +136,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 if let user = self.threads[indexPath.row].messages.first!.user {
                     cell.threadLatestMessage.text = "\(user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
                 } else {
-                    cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                    debugPrint("USER:", self.threads[indexPath.row])
+                    cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames ?? "Deleted user"): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
                 }
             }
         }
