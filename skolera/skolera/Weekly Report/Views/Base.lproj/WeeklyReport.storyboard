@@ -126,9 +126,21 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="uQ0-eY-WyZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="DVY-9x-xWN"/>
+                                                </constraints>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General Activities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XB-24-sCs">
+                                                <rect key="frame" x="12" y="150.5" width="133" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="HO3-x5-qYg"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-9v-8rF">
-                                                <rect key="frame" x="12" y="201.5" width="327" height="72"/>
+                                                <rect key="frame" x="12" y="179.5" width="327" height="72"/>
                                                 <string key="text">Dear Parents,
 MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will learn about "Healthy Food" on Thursday October 11, 2018.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -164,22 +176,13 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General Activities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XB-24-sCs">
-                                                <rect key="frame" x="12" y="172.5" width="133" height="21"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="21" id="HO3-x5-qYg"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="uQ0-eY-WyZ" firstAttribute="top" secondItem="gMf-sf-6Fj" secondAttribute="top" id="9hu-Xf-hDW"/>
                                             <constraint firstAttribute="bottom" secondItem="HBh-81-Ros" secondAttribute="bottom" id="BFm-sz-Hja"/>
                                             <constraint firstItem="HBh-81-Ros" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" id="D8D-Ud-ORB"/>
-                                            <constraint firstAttribute="bottom" secondItem="ijZ-9v-8rF" secondAttribute="bottom" constant="32" id="IUb-sF-7Gi"/>
+                                            <constraint firstAttribute="bottom" secondItem="ijZ-9v-8rF" secondAttribute="bottom" constant="54" id="IUb-sF-7Gi"/>
                                             <constraint firstAttribute="trailing" secondItem="uQ0-eY-WyZ" secondAttribute="trailing" id="Iiq-Iu-zSJ"/>
                                             <constraint firstItem="0XB-24-sCs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uQ0-eY-WyZ" secondAttribute="bottom" constant="12" id="OzE-VZ-bod"/>
                                             <constraint firstItem="0XB-24-sCs" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" constant="12" id="X1f-ZL-1JT"/>
@@ -312,6 +315,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <outlet property="tableView" destination="uct-pS-T91" id="4ul-Mi-fdi"/>
                         <outlet property="weeklyNoteBottomConstraint" destination="IUb-sF-7Gi" id="DrT-S0-MYR"/>
                         <outlet property="weeklyNoteImage" destination="uQ0-eY-WyZ" id="dAA-kk-hQx"/>
+                        <outlet property="weeklyNoteImageConstraint" destination="DVY-9x-xWN" id="TzB-jt-UMC"/>
                         <outlet property="weeklyNoteLabel" destination="ijZ-9v-8rF" id="rZ9-5C-ADG"/>
                         <outlet property="weeklyNoteTitleLabel" destination="0XB-24-sCs" id="g5D-YH-hgH"/>
                     </connections>

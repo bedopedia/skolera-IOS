@@ -66,9 +66,18 @@ class AnnouncementViewController: UIViewController {
     }
     
     @IBAction func displayImage() {
-        if let url = URL(string: announcement.imageURL) {
+        var imageString = ""
+        var titleString = ""
+        if let myAnnouncement = announcement {
+            imageString = myAnnouncement.imageURL
+            titleString = myAnnouncement.title ?? ""
+        } else if let myWeeklyNote = weeklyNote {
+            imageString = myWeeklyNote.image ?? ""
+            titleString = weeklyNote.title
+        }
+        if let url = URL(string: imageString) {
             let images = [
-                LightboxImage(imageURL: url, text: announcement.title ?? "")
+                LightboxImage(imageURL: url, text: titleString)
             ]
             let controller = LightboxController(images: images)
             controller.pageDelegate = self
@@ -97,16 +106,6 @@ class AnnouncementViewController: UIViewController {
     //            parentVC.headerView.isHidden = false
     //        }
     //    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
 

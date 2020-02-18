@@ -66,13 +66,6 @@ class WeeklyPlannerViewController: UIViewController {
                 weeklyNoteTitleLabel.text = weeklyPlanner.generalNote.title
                 weeklyNoteLabel.text = (weeklyPlanner.generalNote.description).replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
                 weeklyNoteLabel.sizeToFit()
-//
-//                if weeklyNoteLabel.frame.height >= 84 {
-//                    seeMoreFrame.isHidden = false
-//                } else {
-//                    seeMoreFrame.isHidden = true
-//                }
-                
             }
         } else {
             placeHolderView.isHidden = false
@@ -139,13 +132,11 @@ class WeeklyPlannerViewController: UIViewController {
         let dayOfWeek = calendar.component(.weekday, from: today)
         let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
         let days = (weekdays.lowerBound ..< weekdays.upperBound)
-            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }  // use `flatMap` in Xcode versions before 9.3
-        //            .filter { !calendar.isDateInWeekend($0) }
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         for date in days {
             let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
-            print(formatter.string(from: modifiedDate!))
             dateStrings.append(formatter.string(from: modifiedDate!))
         }
     }
