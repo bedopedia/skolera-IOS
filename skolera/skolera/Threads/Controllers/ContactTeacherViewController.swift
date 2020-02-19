@@ -123,9 +123,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ThreadTableViewCell", for: indexPath) as! ThreadTableViewCell
         cell.selectionStyle = .none
-        let fullName = self.threads[indexPath.row].othersNames ?? self.threads[indexPath.row].name
-        let fullNameArr = fullName?.components(separatedBy: " ")
-        cell.threadTitle.text = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
+        let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
+        let fullNameArr = fullName.components(separatedBy: " ")
+        cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
         
         if self.threads[indexPath.row].courseName != nil {
             cell.threadLatestMessage.text = self.threads[indexPath.row].courseName
@@ -142,7 +142,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
         
-        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr![0].first ?? Character(" "))\((fullNameArr?.last ?? " ").first ?? Character(" "))", textSize: 20)
+        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr[0].first ?? Character(" "))\((fullNameArr.last ?? " ").first ?? Character(" "))", textSize: 20)
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
