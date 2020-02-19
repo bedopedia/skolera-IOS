@@ -71,7 +71,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
                     self.announcements.sort { (firstAnnouncement, secondAnnoucement) -> Bool in
                         let firstDate = firstAnnouncement.endAt.toISODate() ?? DateInRegion()
                         let secondDate = secondAnnoucement.endAt.toISODate() ?? DateInRegion()
-                        return firstDate < secondDate
+                        return firstDate > secondDate
                     }
                     self.tableView.reloadData()
                 }
