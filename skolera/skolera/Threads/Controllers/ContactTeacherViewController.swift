@@ -136,7 +136,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 if let user = self.threads[indexPath.row].messages.first!.user {
                     cell.threadLatestMessage.text = "\(user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
                 } else {
-                    debugPrint("USER:", self.threads[indexPath.row])
                     cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames ?? "Deleted user"): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
                 }
             }

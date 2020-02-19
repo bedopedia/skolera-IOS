@@ -125,7 +125,7 @@ class WeeklyPlannerViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource  = self
     }
-    
+
     func getDatesOfCurrentWeek() {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())

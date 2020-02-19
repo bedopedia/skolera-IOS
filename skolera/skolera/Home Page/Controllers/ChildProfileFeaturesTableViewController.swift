@@ -22,12 +22,14 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
+    @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
     var gradesSubjects = [ShortCourseGroup]()
     var timeslots = [TimeSlot]()
     var weeklyPlan: [WeeklyPlan] = []
+    var weeklyPlannerDates: [String] = []
     var today: Date!
     var tomorrow: Date!
     /// Once set, get grades for this child
@@ -48,6 +50,14 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     presentDaysLabel.text = "present \(presentDays) out of \(child.attendances.count) days"
                 }
                 setProgressBarColor(absentDays: child.attendances.count - presentDays)
+                
+                getDatesOfCurrentWeek()
+                if Language.language == .arabic {
+                    weeklyPlannerDateLabel.text = "Starts from \(weeklyPlannerDates.first ?? "") to \(weeklyPlannerDates.last ?? "")"
+                } else {
+                    weeklyPlannerDateLabel.text = "Starts from \(weeklyPlannerDates.first ?? "") to \(weeklyPlannerDates.last ?? "")"
+                }
+               
             }
         }
     }
@@ -121,6 +131,21 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         attendanceProgressBar.trackTintColor = UIColor.appColors.progressBarBackgroundColor
         attendanceProgressBar.progressTintColors = [UIColor.appColors.progressBarColor1,UIColor.appColors.progressBarColor2]
     }
+    
+    func getDatesOfCurrentWeek() {
+          let calendar = Calendar.current
+          let today = calendar.startOfDay(for: Date())
+          let dayOfWeek = calendar.component(.weekday, from: today)
+          let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+          let days = (weekdays.lowerBound ..< weekdays.upperBound)
+              .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
+          let formatter = DateFormatter()
+          formatter.dateFormat = "EEE dd/MM"
+          for date in days {
+              let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
+              weeklyPlannerDates.append(formatter.string(from: modifiedDate!))
+          }
+      }
     
     private func openPosts(){
         let postsVC = PostsViewController.instantiate(fromAppStoryboard: .Posts)

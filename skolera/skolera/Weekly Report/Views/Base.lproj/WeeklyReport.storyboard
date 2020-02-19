@@ -124,8 +124,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-sf-6Fj">
                                         <rect key="frame" x="12" y="15.5" width="351" height="305.5"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="uQ0-eY-WyZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="351" height="24"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="uQ0-eY-WyZ">
+                                                <rect key="frame" x="0.0" y="114.5" width="351" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" id="DVY-9x-xWN"/>
                                                 </constraints>
@@ -179,15 +179,15 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="uQ0-eY-WyZ" firstAttribute="top" secondItem="gMf-sf-6Fj" secondAttribute="top" id="9hu-Xf-hDW"/>
+                                            <constraint firstItem="uQ0-eY-WyZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gMf-sf-6Fj" secondAttribute="top" id="9g4-K7-MY6"/>
                                             <constraint firstAttribute="bottom" secondItem="HBh-81-Ros" secondAttribute="bottom" id="BFm-sz-Hja"/>
                                             <constraint firstItem="HBh-81-Ros" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" id="D8D-Ud-ORB"/>
                                             <constraint firstAttribute="bottom" secondItem="ijZ-9v-8rF" secondAttribute="bottom" constant="54" id="IUb-sF-7Gi"/>
                                             <constraint firstAttribute="trailing" secondItem="uQ0-eY-WyZ" secondAttribute="trailing" id="Iiq-Iu-zSJ"/>
-                                            <constraint firstItem="0XB-24-sCs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uQ0-eY-WyZ" secondAttribute="bottom" constant="12" id="OzE-VZ-bod"/>
                                             <constraint firstItem="0XB-24-sCs" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" constant="12" id="X1f-ZL-1JT"/>
                                             <constraint firstItem="ijZ-9v-8rF" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" constant="12" id="gip-X5-wQs"/>
                                             <constraint firstItem="uQ0-eY-WyZ" firstAttribute="leading" secondItem="gMf-sf-6Fj" secondAttribute="leading" id="ipw-KK-ufS"/>
+                                            <constraint firstItem="0XB-24-sCs" firstAttribute="top" secondItem="uQ0-eY-WyZ" secondAttribute="bottom" constant="12" id="jHm-Cu-dPX"/>
                                             <constraint firstAttribute="trailing" secondItem="ijZ-9v-8rF" secondAttribute="trailing" constant="12" id="nFw-L5-3Gf"/>
                                             <constraint firstAttribute="height" constant="305.5" id="ndU-hu-Go3"/>
                                             <constraint firstItem="ijZ-9v-8rF" firstAttribute="top" secondItem="0XB-24-sCs" secondAttribute="bottom" constant="8" id="sSI-6n-TOf"/>

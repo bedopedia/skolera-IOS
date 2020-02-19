@@ -9,7 +9,7 @@
 import UIKit
 
 class SubjectWeeklyPlanViewController: UIViewController {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
@@ -28,7 +28,7 @@ class SubjectWeeklyPlanViewController: UIViewController {
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
 }
 
 extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataSource {
@@ -42,27 +42,30 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
             cell.itemImage.image = #imageLiteral(resourceName: "knowledge1")
             cell.itemTitle.text = "Classwork".localized
             if !dailyNote.classWork.isEmpty {
-                cell.itemText.text = dailyNote.classWork.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
+                cell.itemTextView.update(input: dailyNote.classWork)
             } else {
-                cell.itemText.text = "No classwork".localized
+                cell.itemTextView.update(input: "<p>\("No classwork".localized)</p>")
+                
             }
             
         } else if indexPath.row == 1 {
             cell.itemImage.image = #imageLiteral(resourceName: "2")
             cell.itemTitle.text = "Homework".localized
             if !dailyNote.homework.isEmpty {
-                cell.itemText.text = dailyNote.homework.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
+                cell.itemTextView.update(input: dailyNote.homework)
             } else {
-                cell.itemText.text = "No Homework".localized
+                cell.itemTextView.update(input: "<p>\("No homework".localized)</p>")
+                
             }
             
         } else if indexPath.row == 2 {
             cell.itemImage.image = #imageLiteral(resourceName: "3")
             cell.itemTitle.text = "Activity".localized
             if !dailyNote.activities.isEmpty {
-                cell.itemText.text = dailyNote.activities.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
+                cell.itemTextView.update(input: dailyNote.activities)
             } else {
-                cell.itemText.text = "No Activity".localized
+                cell.itemTextView.update(input: "<p>\("No activity".localized)</p>")
+                
             }
             
         }

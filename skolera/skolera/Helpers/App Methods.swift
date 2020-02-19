@@ -41,7 +41,7 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
-    } else if statusCode == 401 || statusCode == 500 {
+    } else if statusCode == 401 {
         if isLoginError {
             showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
         } else {
