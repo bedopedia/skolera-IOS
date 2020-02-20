@@ -50,13 +50,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     presentDaysLabel.text = "present \(presentDays) out of \(child.attendances.count) days"
                 }
                 setProgressBarColor(absentDays: child.attendances.count - presentDays)
-                
-                getDatesOfCurrentWeek()
-                if Language.language == .arabic {
-                    weeklyPlannerDateLabel.text = "Starts from \(weeklyPlannerDates.first ?? "") to \(weeklyPlannerDates.last ?? "")"
-                } else {
-                    weeklyPlannerDateLabel.text = "Starts from \(weeklyPlannerDates.first ?? "") to \(weeklyPlannerDates.last ?? "")"
-                }
                
             }
         }
@@ -132,19 +125,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         attendanceProgressBar.progressTintColors = [UIColor.appColors.progressBarColor1,UIColor.appColors.progressBarColor2]
     }
     
-    func getDatesOfCurrentWeek() {
-          let calendar = Calendar.current
-          let today = calendar.startOfDay(for: Date())
-          let dayOfWeek = calendar.component(.weekday, from: today)
-          let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
-          let days = (weekdays.lowerBound ..< weekdays.upperBound)
-              .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
-          let formatter = DateFormatter()
-          formatter.dateFormat = "EEE dd/MM"
-          for date in days {
-              let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
-              weeklyPlannerDates.append(formatter.string(from: modifiedDate!))
-          }
+    private func getDateByName(date: String) -> String {
+        let dateFormatter = DateFormatter()
+          dateFormatter.locale = Locale(identifier: "en")
+          dateFormatter.dateFormat = "yyyy-MM-dd"
+          let date = dateFormatter.date(from: date)!
+          dateFormatter.dateFormat = "EEE dd/MM"
+        return dateFormatter.string(from: date)
       }
     
     private func openPosts(){
@@ -236,6 +223,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     let weeklyPlanResponse = WeeklyPlanResponse(result)
                     if !weeklyPlanResponse.weeklyPlan.isEmpty {
                         self.weeklyPlan = weeklyPlanResponse.weeklyPlan
+                        if Language.language == .arabic {
+                            self.weeklyPlannerDateLabel.text = "تبدأ من \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) إلى \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            } else {
+                            self.weeklyPlannerDateLabel.text = "Starts from \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) to \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            }
+                    } else {
+                        self.weeklyPlannerDateLabel.text = "No Weekly Planner available".localized
                     }
                 }
             } else {
