@@ -97,6 +97,10 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             if self.posts == nil {
                 self.posts = []
             }
+            if page == 1 {
+                self.posts = []
+                self.tableView.reloadData()
+            }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
@@ -124,7 +128,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
         cell.post = posts[indexPath.row]
         if indexPath.row == posts.count - 1{
-            if meta.currentPage != meta.totalPages{
+            if meta.currentPage != meta.totalPages {
                 getPosts(page: (meta.currentPage)! + 1)
             }
         }

@@ -28,6 +28,7 @@ func getPostsForCourseApi(page: Int, courseId: Int, completion: @escaping ((Bool
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
+            debugPrint(response.result.value)
            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
            completion(false, response.response?.statusCode ?? 0, nil, error)

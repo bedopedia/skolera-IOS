@@ -21,7 +21,7 @@ class GradeInGradingPeriod {
     let publish: Bool
     let coursesGradingPeriodId: Int
     let categories: [GradeCategory]
-    let total: Int
+    let total: Double
     let grade: String
     let percentage: Double
     let gradeView: String
@@ -46,7 +46,7 @@ class GradeInGradingPeriod {
             categories = []
         }
         
-        total = dict["total"] as! Int
+        total = dict["total"] as! Double
         grade = dict["grade"] as! String
         percentage = dict["percentage"] as! Double
         gradeView = dict["grade_view"] as! String

@@ -14,7 +14,7 @@ class StudentGrade {
     let name: String
     let categoryId: Int
     let type: String
-    let total: Int
+    let total: Double
     let grade: Int?
     let hideGrade: Int
     let gradeView: String
@@ -24,7 +24,7 @@ class StudentGrade {
         name = dict["name"] as! String
         categoryId = dict["category_id"] as! Int
         type = dict["type"] as! String
-        total = dict["total"] as! Int
+        total = dict["total"] as! Double
         grade = dict["grade"] as? Int
         hideGrade = dict["hide_grade"] as! Int
         gradeView = dict["grade_view"] as! String

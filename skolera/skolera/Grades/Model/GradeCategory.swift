@@ -11,18 +11,18 @@ import Foundation
 class GradeCategory {
 
         let id: Int
-        let weight: Int
+        let weight: Double
         let name: String
-        let total: Int
+        let total: Double
         let grade: String
-        let quizzesTotal: Int
-        let quizzesGrade: Int
+        let quizzesTotal: Double
+        let quizzesGrade: Double
         let quizzes: [StudentGrade]
-        let assignmentsTotal: Int
-        let assignmentsGrade: Int
+        let assignmentsTotal: Double
+        let assignmentsGrade: Double
         let assignments: [StudentGrade]
-        let gradeItemsTotal: Int
-        let gradeItemsGrade: Int
+        let gradeItemsTotal: Double
+        let gradeItemsGrade: Double
         let gradeItems: [StudentGrade]
         let gradeView: String
         let percentage: Double
@@ -31,29 +31,29 @@ class GradeCategory {
 
         init(_ dict: [String: Any]) {
             id = dict["id"] as! Int
-            weight = dict["weight"] as! Int
+            weight = dict["weight"] as! Double
             name = dict["name"] as! String
-            total = dict["total"] as! Int
+            total = dict["total"] as! Double
             grade = dict["grade"] as! String
             
-            quizzesTotal = dict["quizzes_total"] as! Int
-            quizzesGrade = dict["quizzes_grade"] as! Int
+            quizzesTotal = dict["quizzes_total"] as! Double
+            quizzesGrade = dict["quizzes_grade"] as! Double
             if let quizzesDictArray = dict["quizzes"] as? [[String: Any]] {
                 quizzes = quizzesDictArray.map { StudentGrade($0) }
             } else {
                 quizzes = []
             }
             
-            assignmentsTotal = dict["assignments_total"] as! Int
-            assignmentsGrade = dict["assignments_grade"] as! Int
+            assignmentsTotal = dict["assignments_total"] as! Double
+            assignmentsGrade = dict["assignments_grade"] as! Double
             if let assignmentsDictArray = dict["assignments"] as? [[String: Any]] {
                 assignments = assignmentsDictArray.map { StudentGrade($0) }
             } else {
                 assignments = []
             }
             
-            gradeItemsTotal = dict["grade_items_total"] as! Int
-            gradeItemsGrade = dict["grade_items_grade"] as! Int
+            gradeItemsTotal = dict["grade_items_total"] as! Double
+            gradeItemsGrade = dict["grade_items_grade"] as! Double
             if let gradeItemsDictArray = dict["grade_items"] as? [[String: Any]] {
                 gradeItems = gradeItemsDictArray.map { StudentGrade($0) }
             } else {
