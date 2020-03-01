@@ -19,7 +19,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var createPostButton: UIButton!
     @IBOutlet var placeHolderView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!

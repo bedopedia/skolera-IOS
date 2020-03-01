@@ -214,7 +214,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            clearUserDefaults()
+            logOut()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)

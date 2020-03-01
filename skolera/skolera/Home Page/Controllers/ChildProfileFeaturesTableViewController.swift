@@ -33,7 +33,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     var today: Date!
     var tomorrow: Date!
     /// Once set, get grades for this child
-    var child : Child!{
+    var child : Actor!{
         didSet{
             if child != nil{
                 getGradesSubjects()
@@ -162,7 +162,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     /// service call to get total courses grades, average grade is set on completion
     private func getGradesSubjects() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getCourseGroupShortListApi(childId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getCourseGroupShortListApi(childId: child.childId!) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
@@ -198,7 +198,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     
     private func getBehaviorNotesCount() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
+        let parameters : Parameters = ["student_id" : child.childId,"user_type" : "Parents"]
         getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
@@ -240,7 +240,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     
     private func getTimeTable() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getTimeTableAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getTimeTableAPI(childActableId: child.childId!) { (isSuccess, statusCode, value, error) in
            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {

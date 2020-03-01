@@ -11,7 +11,7 @@ import UIKit
 class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //TODO:- REMAINING SCREEN FOR GRADES DETAILS
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     
     /// date source for tableView
     var courseGroups = [ShortCourseGroup]()

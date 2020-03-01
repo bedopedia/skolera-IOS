@@ -16,7 +16,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     
-    var child : Child!
+    var child : Actor!
     var courses: [PostCourse] = []
     private let refreshControl = UIRefreshControl()
     

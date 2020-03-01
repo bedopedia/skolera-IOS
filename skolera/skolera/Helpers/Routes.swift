@@ -18,6 +18,10 @@ func SIGN_IN() -> String {
     return "\(BASE_URL!)/api/auth/sign_in"
 }
 
+func GET_PROFILE() -> String {
+     return "\(BASE_URL!)/api/users/%@/getProfile"
+}
+
 func EDIT_USER() -> String {
     return "\(BASE_URL!)/api/users/%@"
 }
@@ -252,4 +256,8 @@ func DELETE_ANSWER_SUBMISSIONS() -> String {
 
 func SUBMIT_QUIZ() -> String {
     return "\(BASE_URL!)/api/active_quizzes/submit_quiz"
+}
+
+func LOGOUT() -> String {
+    return "\(BASE_URL!)/api/auth/sign_out"
 }

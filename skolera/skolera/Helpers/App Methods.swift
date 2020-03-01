@@ -23,7 +23,7 @@ func showAlert(viewController: UIViewController, title: String, message: String,
 func showReauthenticateAlert(viewController: UIViewController) {
     let alertController = UIAlertController(title: "Session ended", message: "Please login again", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default, handler: {(ACTION: UIAlertAction) -> Void in
-        clearUserDefaults()
+        logOut()
         let nvc = UINavigationController()
         let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
         nvc.pushViewController(schoolCodeVC, animated: true)
@@ -69,7 +69,7 @@ func getHeaders(addMobileVersion: Bool = false) -> [String : String] {
 
 func parentId() -> String {
     let userDefault = UserDefaults.standard
-    return userDefault.string(forKey: ACTABLE_ID)!
+    return userDefault.string(forKey: CHILD_ID)!
 }
 
 func userId() -> String {
@@ -125,14 +125,20 @@ func getMainColor() -> UIColor {
     }
 }
 
+func logOut() {
+     logoutAPI() { (isSuccess, statusCode, value, error)  in
+                         if isSuccess {
+                         clearUserDefaults()
+                         }
+               }
+}
+
 func clearUserDefaults() {
     let userDefault = UserDefaults.standard
     userDefault.removeObject(forKey: ACCESS_TOKEN)
     userDefault.removeObject(forKey: CLIENT)
-    userDefault.removeObject(forKey: ACTABLE_ID)
+    userDefault.removeObject(forKey: CHILD_ID)
     userDefault.removeObject(forKey: ID)
-    userDefault.removeObject(forKey: "email")
-    userDefault.removeObject(forKey: "password")
     userDefault.removeObject(forKey: TOKEN_TYPE)
     userDefault.removeObject(forKey: UID)
     userDefault.removeObject(forKey: USER_TYPE)

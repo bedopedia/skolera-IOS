@@ -25,40 +25,12 @@ class SplashScreenViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    fileprivate func login() {
-        BASE_URL = userDefault.string(forKey: "BASE_URL") ?? ""
-        var parameters : Parameters = [:]
-        if let email = userDefault.string(forKey: "email") {
-            if let password = userDefault.string(forKey: "password") {
-                parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
-            }
-        } else {
-            parameters = [:]
-        }
-        loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
-                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                    self.userDefault.set(String(parent.data.id), forKey: ID)
-                    self.updateLocale()
-                }
-            } else {
-                let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                self.navigationController?.pushViewController(schoolCodevc, animated: false)
-            }
-        }
-    }
-    
+        
     /// acts as Launch Screen till the system either auto login the user if his credentials are saved, or shows the SchoolCode screen to login otherwise
     private func getMainScreen() {
         if userDefault.string(forKey: ACCESS_TOKEN) != nil {
             BASE_URL = userDefault.string(forKey: "BASE_URL") ?? ""
-            self.updateLocale()
+            self.getProfile()
         } else {
             DispatchQueue.main.async {
                 let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
@@ -67,83 +39,71 @@ class SplashScreenViewController: UIViewController {
         }
     }
     
-    func getChildren(parentId: Int, childId: Int) {
-        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    for childJson in result {
-                        let child = Child.init(fromDictionary: childJson)
-                        if child.id == childId {
-                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.child = child
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            nvc.isNavigationBarHidden = true
-                            nvc.modalPresentationStyle = .fullScreen
-                            self.present(nvc, animated: true, completion: nil)
-                            break
-                        }
-                    }
-                }
-            } else {
-                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                })
-            }
-        }
-    }
-    
-    private func updateLocale() {
+    private func updateLocale(parent: Actor) {
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, value, error) in
+        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
             if isSuccess {
-                if let result = value as? [String: Any] {
-                    let parent = ParentResponse(fromDictionary: result)
-                    if isParent() {
-                        let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        let nvc = UINavigationController(rootViewController: childrenTVC)
+                if isParent() {
+                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let nvc = UINavigationController(rootViewController: childrenTVC)
+                    nvc.isNavigationBarHidden = true
+                    nvc.modalPresentationStyle = .fullScreen
+                    self.present(nvc, animated: true, completion: nil)
+                } else {
+                    if parent.userType.elementsEqual("student") {
+                        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childProfileVC.child = parent
+                        childProfileVC.assignmentsText = ""
+                        childProfileVC.quizzesText = ""
+                        childProfileVC.eventsText = ""
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)
                     } else {
-                        if parent.data.userType.elementsEqual("student") {
-                            if let parentId = parent.data.parentId {
-                                self.getChildren(parentId: parentId, childId: parent.data.actableId)
-                            } else {
-                                showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
-                            }
-                        } else {
-                            let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.actor = parent.data
-                            if !parent.data.userType.elementsEqual("teacher") {
-                                childProfileVC.otherUser = true
-                            }
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            nvc.isNavigationBarHidden = true
-                            nvc.modalPresentationStyle = .fullScreen
-                            self.present(nvc, animated: true, completion: nil)
+                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        if !parent.userType.elementsEqual("teacher") {
+                            childProfileVC.otherUser = true
                         }
+                        childProfileVC.actor = parent
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        nvc.isNavigationBarHidden = true
+                        nvc.modalPresentationStyle = .fullScreen
+                        self.present(nvc, animated: true, completion: nil)
                     }
                 }
             } else {
-                if statusCode == 401 {
-                    self.login()
-                } else {
-                    showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-                        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                    })
-                }
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
             }
         }
+    }
+
+    
+    func getProfile(){
+        if let userId =  userDefault.string(forKey: ID) {
+            getProfileAPI(id: Int(userId) ?? 0) { (isSuccess, statusCode, value, error)  in
+                      if isSuccess {
+                          if let result = value as? [String : AnyObject] {
+                              let parent : Actor = Actor.init(fromDictionary: result)
+                              UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
+                              self.updateLocale(parent: parent)
+                          }
+                      } else {
+                          let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                      }
+            }
+        } else {
+        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+        self.navigationController?.pushViewController(schoolCodevc, animated: false)
+        }
+        
     }
     
      func checkUpdate(for appId: String) {

@@ -57,10 +57,24 @@ func loginAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, [
     }
 }
 
+func getProfileAPI(id: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: GET_PROFILE(),"\(id)")
+     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+       switch response.result{
+         case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+         case .failure(let error):
+             completion(true, response.response?.statusCode ?? 0, response.result.value, error)
+         }
+     }
+}
+
 func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error?) -> ()) {
     let parameters : Parameters = ["parent_id" : parentId]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_CHILDREN(),"\(parentId)")
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
@@ -69,4 +83,16 @@ func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error
             completion(true, response.response?.statusCode ?? 0, response.result.value, error)
         }
     }
+}
+
+func logoutAPI(completion: @escaping (Bool, Int, Any?, Error?) -> ()){
+    let headers : HTTPHeaders? = getHeaders()
+        Alamofire.request(LOGOUT(), method: .delete, parameters: nil, headers: headers).validate().responseJSON { response in
+          switch response.result{
+            case .success(_):
+               completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+            case .failure(let error):
+                completion(true, response.response?.statusCode ?? 0, response.result.value, error)
+            }
+        }
 }

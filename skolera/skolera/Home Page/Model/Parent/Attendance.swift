@@ -23,9 +23,11 @@ class Attendance : NSObject, NSCoding{
 	 */
 	init(fromDictionary dictionary: [String:Any]){
         comment = dictionary["comment"] as? String
-		var time = dictionary["date"] as? Double
-        time = time! / 1000
-        date = Date(timeIntervalSince1970: time!)
+		let time = dictionary["date"] as? String
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        date = dateFormatter.date(from: time ?? "")
 		id = dictionary["id"] as? Int
 		status = dictionary["status"] as? String
 		studentId = dictionary["student_id"] as? Int

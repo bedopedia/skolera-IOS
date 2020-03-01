@@ -28,7 +28,7 @@ let UID = "uid"
 let MOBILE_VERSION = "Mobile-Version"
 
 //User id
-let ACTABLE_ID = "actable_id"
+let CHILD_ID = "child_id"
 let ID = "id"
 let USER_TYPE = "user_type"
 

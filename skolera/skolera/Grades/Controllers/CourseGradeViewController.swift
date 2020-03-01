@@ -22,7 +22,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     var courseGroup: ShortCourseGroup!
     var gradingPeriodId: Int!
     var gradingPeriodGrade: GradeInGradingPeriod!
@@ -74,7 +74,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func getStudentGradeBook() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getStudentGradeBookApi(childId: child.actableId, courseGroup: courseGroup, gradingPeriodId: gradingPeriodId) { (isSuccess, statusCode, response, error) in
+        getStudentGradeBookApi(childId: child.childId, courseGroup: courseGroup, gradingPeriodId: gradingPeriodId) { (isSuccess, statusCode, response, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = response as? [String : AnyObject] {

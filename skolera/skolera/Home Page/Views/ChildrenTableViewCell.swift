@@ -24,7 +24,7 @@ class ChildrenTableViewCell: UITableViewCell {
     //MARK: - Variables
     
     /// The child variable contains cell data, once set it fills cells contents
-    var child: Child!{
+    var child: Actor!{
         didSet{
             if child != nil{
                 

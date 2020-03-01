@@ -33,7 +33,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         case saturday = 6
     }
     
-    var child : Child!
+    var child : Actor!
     let calendar = Calendar.current
     var currentBorderColor: UIColor = .black
     let today = Date()
@@ -121,7 +121,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
+        getEventsAPI(userId: child.id, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {

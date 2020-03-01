@@ -28,7 +28,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Variables
-    var child: Child!
+    var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!

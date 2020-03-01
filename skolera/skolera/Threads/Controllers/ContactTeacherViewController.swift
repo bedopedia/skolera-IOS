@@ -29,7 +29,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
     }
-    var child: Child!
+    var child: Actor!
     var actor: Actor!
     private let refreshControl = UIRefreshControl()
 

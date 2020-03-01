@@ -26,7 +26,7 @@ class AttendanceViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var calendarBottomConstraint: NSLayoutConstraint!
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     let calendar = Calendar.current
     var currentDataSource = [Attendance]()
     var currentBorderColor: UIColor!

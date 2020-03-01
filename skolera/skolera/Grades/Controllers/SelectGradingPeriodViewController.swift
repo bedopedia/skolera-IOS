@@ -22,7 +22,7 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     
     var gradingPeriods: [GradingPeriod] = []
     var showQuarter: Bool = false
-    var child: Child!
+    var child: Actor!
     var courseGroup: ShortCourseGroup!
     var selectedPeriodPos: Int = -1
     

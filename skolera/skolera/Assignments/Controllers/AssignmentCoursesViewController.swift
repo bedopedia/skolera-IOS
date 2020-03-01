@@ -16,7 +16,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     
-    var child : Child!
+    var child : Actor!
     var courses = [AssignmentCourse]()
     var meta: Meta!
     private let refreshControl = UIRefreshControl()

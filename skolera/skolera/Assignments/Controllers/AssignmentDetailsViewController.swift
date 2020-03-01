@@ -15,7 +15,7 @@ class AssignmentDetailsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     
-    var child : Child!
+    var child : Actor!
     var assignment: FullAssignment!
     
     

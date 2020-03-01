@@ -10,7 +10,7 @@ import UIKit
 
 class ContactTeacherNVC: UINavigationController {
 
-    var child: Child! {
+    var child: Actor! {
         didSet {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {

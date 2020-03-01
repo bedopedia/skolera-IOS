@@ -14,7 +14,7 @@ import SwiftDate
 
 class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var courseId: Int = 0
     var quizzes: [FullQuiz] = []

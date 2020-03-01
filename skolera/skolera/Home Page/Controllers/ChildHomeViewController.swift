@@ -31,7 +31,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     @IBOutlet weak var notiificationsDotView: UIView!
     
     //MARK: - Variables
-    var child: Child!
+    var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
@@ -110,7 +110,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            clearUserDefaults()
+            logOut()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)

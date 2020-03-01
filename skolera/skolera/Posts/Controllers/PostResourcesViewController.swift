@@ -15,7 +15,7 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var attachments: [UploadedFile] = []
     

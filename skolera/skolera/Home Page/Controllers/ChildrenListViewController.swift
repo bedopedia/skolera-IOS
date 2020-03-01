@@ -25,7 +25,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     /// children array acts as the data source for the tableView
     @IBOutlet weak var notificationButton: UIButton!
 //    @IBOutlet weak var signOutButton: UIBarButtonItem!
-    var kids = [Child]()
+    var kids = [Actor]()
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
@@ -86,7 +86,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
                     for child in result {
-                        self.kids.append(Child.init(fromDictionary: child))
+                        self.kids.append(Actor.init(fromDictionary: child))
                     }
                     self.tableView.reloadData()
                 }
@@ -131,7 +131,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
                 self.stopAnimating()
             }
             self.sendFCM(token: "")
-            clearUserDefaults()
+            logOut()
             let nvc = UINavigationController()
             let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
             nvc.pushViewController(schoolCodeVC, animated: true)

@@ -25,7 +25,7 @@ class WeeklyPlannerViewController: UIViewController {
     @IBOutlet weak var seeMoreFrame: CustomGradientView!
     @IBOutlet var placeHolderView: UIView!
     
-    var child : Child!
+    var child : Actor!
     
     var maxHeaderHeight: CGFloat = 395
     let minHeaderHeight: CGFloat = 50
