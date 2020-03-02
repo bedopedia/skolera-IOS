@@ -31,8 +31,8 @@ func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int,
     }
 }
 
-func setLocaleAPI(_ locale: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-    let parameters: Parameters = ["user": ["language": locale]]
+func setLocaleAPI(_ locale: String, token: String, deviceId: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let parameters: Parameters = ["user": ["language": locale, "fcm_token": token, "device_id": deviceId]]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: EDIT_USER(), userId())
     Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -71,10 +71,9 @@ func getProfileAPI(id: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> 
 }
 
 func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error?) -> ()) {
-    let parameters : Parameters = ["parent_id" : parentId]
+    let parameters : Parameters = ["parent_id" : parentId, "mobile_api" : true]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_CHILDREN(),"\(parentId)")
-    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
@@ -85,7 +84,7 @@ func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error
     }
 }
 
-func logoutAPI(completion: @escaping (Bool, Int, Any?, Error?) -> ()){
+func logoutAPI(parameter: Parameters,completion: @escaping (Bool, Int, Any?, Error?) -> ()){
     let headers : HTTPHeaders? = getHeaders()
         Alamofire.request(LOGOUT(), method: .delete, parameters: nil, headers: headers).validate().responseJSON { response in
           switch response.result{

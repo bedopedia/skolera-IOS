@@ -126,11 +126,13 @@ func getMainColor() -> UIColor {
 }
 
 func logOut() {
-     logoutAPI() { (isSuccess, statusCode, value, error)  in
-                         if isSuccess {
-                         clearUserDefaults()
-                         }
-               }
+    let params = ["device_id" : UIDevice.current.identifierForVendor!.uuidString]
+    logoutAPI(parameter: params) { (isSuccess, statusCode, value, error)  in
+        if isSuccess {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            clearUserDefaults()
+        }
+    }
 }
 
 func clearUserDefaults() {

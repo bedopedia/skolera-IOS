@@ -75,7 +75,11 @@ class Actor : NSObject, NSCoding{
 		firstname = dictionary["firstname"] as? String
 		gender = dictionary["gender"] as? String
 		homeAddress = dictionary["home_address"] as AnyObject
-		id = dictionary["id"] as? Int
+        if let userId = dictionary["user_id"] as? Int {
+            id = userId
+        } else {
+            id = dictionary["id"] as? Int
+        }
 		isActive = dictionary["is_active"] as? Bool
 		lastSignInAt = dictionary["last_sign_in_at"] as? String
 		lastname = dictionary["lastname"] as? String

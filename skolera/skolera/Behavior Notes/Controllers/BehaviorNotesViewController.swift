@@ -19,7 +19,7 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
             self.tableView.reloadData()
         }
     }
-    var meta: BehaviorNotesResponseMeta!
+   // var meta: BehaviorNotesResponseMeta!
     private let refreshControl = UIRefreshControl()
 
     //MARK: - Outlets
@@ -111,11 +111,11 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "behaviorNoteCell") as! BehaviorNoteTableViewCell
         cell.behaviorNote = currentDataSource[indexPath.row]
-        if indexPath.row == currentDataSource.count - 1{
-            if meta.currentPage != meta.totalPages{
-                getBehaviorNotes(page: (meta.currentPage)! + 1)
-            }
-        }
+//        if indexPath.row == currentDataSource.count - 1{
+//            if meta.currentPage != meta.totalPages{
+//                getBehaviorNotes(page: (meta.currentPage)! + 1)
+//            }
+//        }
         return cell
     }
     func loadPositiveNotes(){
@@ -137,7 +137,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
-                    self.meta = behaviorNotesResponse.meta
+                 //   self.meta = behaviorNotesResponse.meta
                     self.loadPositiveNotes()
                 }
             } else {

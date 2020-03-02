@@ -58,8 +58,9 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentContentTableViewCell") as! AssignmentContentTableViewCell
             if let content = self.assignment.content {
-                cell.label.attributedText = content.htmlToAttributedString
+                cell.richTextView.update(input: content)
             } else {
+                cell.richTextView.update(input: "<p>\("No content".localized)</p>")
                 cell.label.text = "No content".localized
             }
             return cell

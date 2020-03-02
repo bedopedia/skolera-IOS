@@ -47,6 +47,7 @@ func getQuizzesForTeacherApi(courseGroupId: Int,completion: @escaping ((Bool, In
         .appending("fields%5Bstate%5D", value: "true")
         .appending("fields%5Bstudent_solve%5D", value: "true")
         .appending("course_group_ids[]", value: "\(courseGroupId)")
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

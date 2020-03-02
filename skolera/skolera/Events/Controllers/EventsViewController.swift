@@ -33,6 +33,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         case saturday = 6
     }
     
+    let userDefault = UserDefaults.standard
+    
     var child : Actor!
     let calendar = Calendar.current
     var currentBorderColor: UIColor = .black
@@ -236,13 +238,14 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+            formatter.timeZone = TimeZone.init(identifier: "UTC")
 //            formatter.string(from: )
             let start: Date = formatter.date(from: event.startDate!)!
             let end: Date = formatter.date(from: event.endDate!)!
             guard start < end else {
                 return false
             }
-            let dateInterval: DateInterval = DateInterval(start: start, end: end)
+            let dateInterval: DateInterval = DateInterval(start: start.addingTimeInterval(-(60 * 60 * 24)), end: end)
 //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
             return dateInterval.contains(date)
         }

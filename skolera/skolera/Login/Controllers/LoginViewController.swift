@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
+import FirebaseInstanceID
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
@@ -22,6 +23,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var schoolImageView: UIImageView!
+    
+    var token: String = ""
     
     //MARK: - Life Cycle
     
@@ -38,6 +41,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+                 if let error = error {
+                     print("Error fetching remote instange ID: \(error)")
+                 } else if let result = result {
+                     print("Remote instance ID token: \(result.token)")
+                    self.token =  result.token
+                 }
+             }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
+        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, error) in
             if isSuccess {
                 if isParent() {
                     self.stopAnimating()

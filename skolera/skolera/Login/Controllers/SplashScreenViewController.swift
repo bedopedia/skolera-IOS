@@ -9,16 +9,25 @@
 import UIKit
 import Alamofire
 import Firebase
+import FirebaseInstanceID
 
 class SplashScreenViewController: UIViewController {
     
     let userDefault = UserDefaults.standard
+    var token = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkUpdate(for: "1346646110")
         navigationController?.isNavigationBarHidden = true
-        //        getMainScreen()
+             InstanceID.instanceID().instanceID { (result, error) in
+                    if let error = error {
+                        print("Error fetching remote instange ID: \(error)")
+                    } else if let result = result {
+                        print("Remote instance ID token: \(result.token)")
+                       self.token =  result.token
+                    }
+                }
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,7 +55,7 @@ class SplashScreenViewController: UIViewController {
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
+        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, error) in
             if isSuccess {
                 if isParent() {
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
