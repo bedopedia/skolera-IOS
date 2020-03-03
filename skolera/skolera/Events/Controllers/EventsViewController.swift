@@ -66,7 +66,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        
         eventsCollectionView.delegate = self
         eventsCollectionView.dataSource = self
         createEventButton.layer.borderColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
