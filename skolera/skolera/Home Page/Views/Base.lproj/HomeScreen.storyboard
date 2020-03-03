@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -887,14 +887,20 @@
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="positiveIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6B5-ou-aAg">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emotion" translatesAutoresizingMaskIntoConstraints="NO" id="6B5-ou-aAg">
                                                     <rect key="frame" x="73" y="46" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="qfi-GV-uEi"/>
+                                                        <constraint firstAttribute="height" constant="24" id="xiw-uW-SHR"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="negativeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="NMP-fH-5dl">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anxious" translatesAutoresizingMaskIntoConstraints="NO" id="NMP-fH-5dl">
                                                     <rect key="frame" x="125" y="46" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="5Mj-qh-wBt"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="aVw-Us-HXW"/>
                                                         <constraint firstAttribute="height" constant="24" id="hsJ-HL-vOm"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ntj-Cp-aGe"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YHs-Xg-P4e">
@@ -915,7 +921,7 @@
                                                     <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="otherIcon" translatesAutoresizingMaskIntoConstraints="NO" id="LUu-01-rfX">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="LUu-01-rfX">
                                                     <rect key="frame" x="177" y="46" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="ZN1-EW-9Uh"/>
@@ -2386,19 +2392,19 @@
     <resources>
         <image name="abCancelBlack" width="16" height="16"/>
         <image name="announcmentsNormal" width="48" height="34"/>
+        <image name="anxious" width="170.66667175292969" height="170.66667175292969"/>
         <image name="assignmentsIco" width="38" height="32"/>
         <image name="backButton" width="11" height="16"/>
         <image name="behaviorNotesIco" width="32" height="32"/>
         <image name="calendarIco" width="32" height="32"/>
         <image name="chevronLeft" width="11" height="16"/>
+        <image name="emotion" width="170" height="170"/>
+        <image name="face" width="170.66667175292969" height="170.66667175292969"/>
         <image name="gradesIco" width="32" height="32"/>
         <image name="logo" width="131" height="24"/>
         <image name="messagesNormal" width="48" height="34"/>
-        <image name="negativeIcon" width="24" height="24"/>
         <image name="notificationNormal" width="48" height="34"/>
-        <image name="otherIcon" width="129.33332824707031" height="141.33332824707031"/>
         <image name="parentMoreIcon" width="48" height="34"/>
-        <image name="positiveIcon" width="24" height="24"/>
         <image name="postsIco" width="32" height="32"/>
         <image name="profileattendanceIco" width="33" height="30"/>
         <image name="quizzesIco" width="27" height="32"/>

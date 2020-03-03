@@ -160,8 +160,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
         if page == 1 {
             self.tableView.showAnimatedSkeleton()
         }
-        let parameters : Parameters = ["student_id" : child.childId,"user_type" : "Parents", "page": page, "per_page" : 20]
-        getBehaviorNotesAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
+        getBehaviorNotesAPI() { (isSuccess, statusCode, value, error) in
             if page == 1 {
                 self.tableView.hideSkeleton()
             }
