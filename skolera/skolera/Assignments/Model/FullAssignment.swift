@@ -76,7 +76,6 @@ class FullAssignment {
         courseGroups = []
         objectives = dict["objectives"] as? [Any]
         uploadedFilesCount = dict["uploaded_files_count"] as? Int
-        
         if let uploadedFilesDictArray = dict["uploaded_files"] as? [[String: Any]] {
             uploadedFiles = uploadedFilesDictArray.map { UploadedFile($0) }
         } else {

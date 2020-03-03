@@ -19,17 +19,14 @@ let INVALID_USER_INFO = "Invalid email/password"
 let ERROR = "Error"
 let NO_INTERNET = "No internet connection"
 let SOMETHING_WRONG = "Something went wrong, please try again".localized
-
 //Request Headers
 let ACCESS_TOKEN = "access-token"
 let CLIENT = "client"
 let TOKEN_TYPE = "token-type"
 let UID = "uid"
 let MOBILE_VERSION = "Mobile-Version"
-
 //User id
 let CHILD_ID = "child_id"
 let ID = "id"
 let USER_TYPE = "user_type"
-
 

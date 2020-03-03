@@ -8,26 +8,26 @@
 
 import UIKit
 import Alamofire
-import NVActivityIndicatorView
-class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable{
+import SkeletonView
+class BehaviorNotesViewController: UIViewController {
     //TODO:- Fix Cell Height
     //MARK: - Variables
     var child : Actor!
-    var behaviorNotes = [BehaviorNote]()
-    var currentDataSource = [BehaviorNote](){
+    var behaviorNotes: [BehaviorNote] = []
+    var currentDataSource: [BehaviorNote]! {
         didSet {
             self.tableView.reloadData()
         }
     }
-   // var meta: BehaviorNotesResponseMeta!
     private let refreshControl = UIRefreshControl()
 
     //MARK: - Outlets
     
+    @IBOutlet var headerView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
     
     //MARK: - Life Cycles
     override func viewDidLoad() {
@@ -35,10 +35,10 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
         statusSegmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
         statusSegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .selected)
         if isParent() {
@@ -54,18 +54,22 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
-        getBehaviorNotes()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
-
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
-    @objc private func refreshData(_ sender: Any) {
-            // Fetch Weather Data
-            refreshControl.beginRefreshing()
-            getBehaviorNotes()
-            refreshControl.endRefreshing()
-        }
-
+   
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        getBehaviorNotes()
+        refreshControl.endRefreshing()
+    }
+    
+    func fixTableViewHeight() {
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = 80
+    }
+       
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -84,38 +88,63 @@ class BehaviorNotesViewController: UIViewController, NVActivityIndicatorViewable
     }
 }
 
-extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSource{
+extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     
-    var positiveNotes: [BehaviorNote] {
+    var positiveNotes: [BehaviorNote]! {
         let result = behaviorNotes.filter { (behaviorNote) -> Bool in
             return behaviorNote.type == "Good"
         }
-        return result
+        if result.isEmpty {
+            return nil
+        } else {
+          return result
+        }
     }
-    var negativeNotes: [BehaviorNote] {
+    var negativeNotes: [BehaviorNote]! {
         let result = behaviorNotes.filter { (behaviorNote) -> Bool in
             return behaviorNote.type == "Bad"
         }
-        return result
+        if result.isEmpty {
+            return nil
+        } else {
+          return result
+        }
     }
-    var otherNotes: [BehaviorNote] {
+    var otherNotes: [BehaviorNote]! {
         let result = behaviorNotes.filter { (behaviorNote) -> Bool in
             return behaviorNote.type == "Other"
         }
-        return result
+        if result.isEmpty {
+            return nil
+        } else {
+          return result
+        }
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "behaviorNoteCell"
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentDataSource.count
+        if currentDataSource != nil {
+            if !currentDataSource.isEmpty {
+              return currentDataSource.count
+            } else {
+                return 6
+            }
+        } else {
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "behaviorNoteCell") as! BehaviorNoteTableViewCell
-        cell.behaviorNote = currentDataSource[indexPath.row]
-//        if indexPath.row == currentDataSource.count - 1{
-//            if meta.currentPage != meta.totalPages{
-//                getBehaviorNotes(page: (meta.currentPage)! + 1)
-//            }
-//        }
+        if self.currentDataSource != nil {
+            if self.currentDataSource.count > indexPath.row {
+                cell.hideSkeleton()
+                cell.behaviorNote = currentDataSource[indexPath.row]
+            }
+
+        }
         return cell
     }
     func loadPositiveNotes(){
@@ -129,15 +158,20 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func getBehaviorNotes(page: Int = 1){
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if page == 1 {
+            self.tableView.showAnimatedSkeleton()
+        }
         let parameters : Parameters = ["student_id" : child.childId,"user_type" : "Parents", "page": page, "per_page" : 20]
         getBehaviorNotesAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            if page == 1 {
+                self.tableView.hideSkeleton()
+            }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
-                 //   self.meta = behaviorNotesResponse.meta
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.loadPositiveNotes()
                 }
             } else {

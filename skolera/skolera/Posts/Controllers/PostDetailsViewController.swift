@@ -18,6 +18,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var replyTextField: UITextField!
     @IBOutlet weak var replyView: UIView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Actor!
     var courseName: String = ""
@@ -25,9 +26,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
+        headerView.addShadow()
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self

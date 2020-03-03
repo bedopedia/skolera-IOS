@@ -8,38 +8,45 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SkeletonView
 import SwiftDate
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var placeHolderView: UIView!
+    @IBOutlet var headerView: UIView!
     
-    var announcements: [Announcement]! {
-        didSet {
-            if self.announcements.isEmpty {
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var announcements: [Announcement]!
     var meta: Meta?
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
-        getAnnouncements()
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        headerView.addShadow()
+        refreshData()
     }
-//    MARK: - Swipe
+    
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
+        getAnnouncements()
+        refreshControl.endRefreshing()
+    }
+    
+    fileprivate func fixTableViewHeight() {
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = 100
+    }
+    //    MARK: - Swipe
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -48,12 +55,14 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
     
     func getAnnouncements(page: Int = 1) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            if page == 1 {
+                self.tableView.hideSkeleton()
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+            }
             if self.announcements == nil {
                 self.announcements = []
             }
@@ -78,41 +87,44 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.tableView, dataSource: self.announcements ?? [], imageName: "announcmentsplaceholder", placeholderText: "You don't have any announcements for now".localized)
         }
     }
     
     @IBAction func logout() {
-        
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parentController as? ChildHomeViewController {
-            mainViewController.openSettings()
-        }
+//        let parentController = parent?.parent
+//        if let mainViewController = parentController as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+//        if let mainViewController = parentController as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
-
+    
 }
 
-extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate {
+extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if announcements == nil {
-            return 0
-        } else {
+        if announcements != nil {
             return announcements.count
+        } else {
+            return 6
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
-        let announcement = announcements[indexPath.row]
-        cell.announcement = announcement
-        //Loading More
-        if indexPath.row == announcements.count - 1
-        {
-            if meta?.currentPage != meta?.totalPages
-            {
-                getAnnouncements(page: (meta?.currentPage)! + 1)
+        if announcements != nil {
+            cell.hideSkeleton()
+            let announcement = announcements[indexPath.row]
+            cell.announcement = announcement
+            //        Loading More
+            if indexPath.row == announcements.count - 1 {
+                if meta?.currentPage != meta?.totalPages {
+                    getAnnouncements(page: (meta?.currentPage)! + 1)
+                }
             }
         }
         return cell
@@ -123,10 +135,13 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
         announcementsVc.announcement = announcements[indexPath.row]
         self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 72
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AnnouncementTableViewCell"
+    }
     
 }

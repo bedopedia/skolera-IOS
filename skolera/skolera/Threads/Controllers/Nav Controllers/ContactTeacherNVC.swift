@@ -15,6 +15,20 @@ class ContactTeacherNVC: UINavigationController {
             for child in childViewControllers {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.child = self.child
+//                    self.nameTabBarItem()
+                    updateTabBarItem(tab: .messages, tabBarItem: tabBarItem)
+                }
+            }
+        }
+    }
+    
+    var actor: Actor! {
+        didSet {
+            for child in childViewControllers {
+                if let contactTeacher = child as? ContactTeacherViewController {
+                    contactTeacher.actor = self.actor
+//                    self.nameTabBarItem()
+                    updateTabBarItem(tab: .messages, tabBarItem: tabBarItem)
                 }
             }
         }
@@ -26,6 +40,7 @@ class ContactTeacherNVC: UINavigationController {
 //        self.interactivePopGestureRecognizer?.isEnabled = true
 //        self.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +48,22 @@ class ContactTeacherNVC: UINavigationController {
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    func nameTabBarItem () {
+        tabBarItem.title = "Messages"
+        tabBarItem.image = #imageLiteral(resourceName: "messagesNormal")
+        let userType = getUserType()
+        if userType == .student {
+            tabBarItem.selectedImage = UIImage(named: "studentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else if userType == .parent {
+            tabBarItem.selectedImage = UIImage(named: "parentActiveMessageIcon")?.withRenderingMode(
+                .alwaysOriginal)
+        } else {
+            tabBarItem.selectedImage = UIImage(named: "teacherActiveMessage")?.withRenderingMode(
+                .alwaysOriginal)
+        }
+        
+    }
     
 
     /*

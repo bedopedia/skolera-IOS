@@ -11,8 +11,7 @@ import RichTextView
 
 class AssignmentContentTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var richTextView: RichTextView!
+    @IBOutlet var label: RichTextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

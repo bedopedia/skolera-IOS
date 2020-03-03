@@ -11,8 +11,9 @@ import Alamofire
 import YLProgressBar
 import DateToolsSwift
 import NVActivityIndicatorView
+import SkeletonView
 
-class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
+class ChildProfileFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
     //MARK: - Outlets
     @IBOutlet weak var presentDaysLabel: UILabel!
@@ -23,6 +24,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
     @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
+    
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
@@ -54,6 +56,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             }
         }
     }
+
     
     var scrollHandler: ( (CGFloat) -> ())!
     
@@ -80,10 +83,14 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
+        tableView.register(UINib(nibName: "SkeletonTableViewCell", bundle: nil), forCellReuseIdentifier: "SkeletonTableViewCell")
+        self.tableView.rowHeight = 80
+//        self.tableView.contentInset.bottom = self.tabBarController?.tabBar.frame.height ?? 0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
+        cell?.hideSkeleton()
         switch cell?.reuseIdentifier{
         case "mainAttendanceCell":
             showAttendance()
@@ -108,10 +115,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "SkeletonTableViewCell"
+    }
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y: CGFloat = scrollView.contentOffset.y
         scrollHandler(y)
-        
     }
     
     //MARK: - Methods
@@ -159,6 +169,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         self.navigationController?.pushViewController(eventsVC, animated: true)
     }
     
+//    MARK:- Network Calls
+    
     /// service call to get total courses grades, average grade is set on completion
     private func getGradesSubjects() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
@@ -175,32 +187,31 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
-  
-    private func getCourseGroups() {
-        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    var courseGroups = [Int: CourseGroup]()
-                    for courseGroup in result{
-                        let temp = CourseGroup.init(fromDictionary: courseGroup)
-                        courseGroups[temp.courseId] = temp
+        private func getCourseGroups() {
+            getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
+                self.stopAnimating()
+                if isSuccess {
+                    if let result = value as? [[String : AnyObject]] {
+                        var courseGroups = [Int: CourseGroup]()
+                        for courseGroup in result{
+                            let temp = CourseGroup.init(fromDictionary: courseGroup)
+                            courseGroups[temp.courseId] = temp
+                        }
+    //                    for grade in self.grades{
+    //                        grade.courseGroup = courseGroups[grade.courseId]
+    //                    }
                     }
-//                    for grade in self.grades{
-//                        grade.courseGroup = courseGroups[grade.courseId]
-//                    }
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
-    }
     
     private func getBehaviorNotesCount() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = ["student_id" : child.childId,"user_type" : "Parents"]
+//        self.tableView.showAnimatedSkeleton()
+        let parameters : Parameters = ["student_id" : child.childId, "user_type" : "Parents"]
         getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.getTimeTable()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
@@ -239,9 +250,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     private func getTimeTable() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getTimeTableAPI(childActableId: child.childId!) { (isSuccess, statusCode, value, error) in
-           self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
                     for timeslotDictionary in result {
@@ -277,11 +287,16 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                 } else {
                     self.disableTimeTable = true
                 }
+                self.tableView.rowHeight = UITableViewAutomaticDimension
+                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
+
+        
     //MARK: - Actions
     
     /// move to grades screen to show courses grades

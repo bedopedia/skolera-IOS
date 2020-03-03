@@ -9,13 +9,45 @@
 import UIKit
 
 class ChildProfileFeaturesNVC: UINavigationController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+    var child: Actor! {
+        didSet {
+            if let childVc =  childViewControllers[0] as? ChildProfileViewController {
+                childVc.child = self.child
+                childVc.assignmentsText = self.assignmentsText
+                childVc.quizzesText = self.quizzesText
+                childVc.eventsText = self.eventsText
+            }
+        }
+    }
+    var assignmentsText : String!
+    var quizzesText : String!
+    var eventsText : String!
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isNavigationBarHidden = true
+        updateTabBarItem(tab: .home, tabBarItem: tabBarItem)
 //        self.delegate = self
 //        self.interactivePopGestureRecognizer?.delegate = self
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        if let childVc =  childViewControllers[0] as? ChildProfileViewController {
+//            childVc.child = self.child
+//            childVc.assignmentsText = self.assignmentsText
+//            childVc.quizzesText = self.quizzesText
+//            childVc.eventsText = self.eventsText
+//            childVc.addChildImage()
+//            childVc.addChildData()
+//        }
+        
+//        for child in childViewControllers {
+//            if let childNvc = child as? ContactTeacherNVC {
+//                childNvc.child = self.child
+//            }
+//        }
+    }
+    
     // MARK: - Swipe
 //    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
 //        let enable = self.navigationController?.viewControllers.count ?? 0 > 1

@@ -12,29 +12,23 @@ import Alamofire
 import Chatto
 import ChattoAdditions
 import AlamofireImage
+import SkeletonView
 
-class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NVActivityIndicatorViewable {
+class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource, NVActivityIndicatorViewable {
     @IBOutlet weak var threadsTableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
     @IBOutlet weak var leftHeaderButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var headerView: UIView!
     
-    var threads: [Threads]! {
-        didSet {
-            if self.threads.isEmpty {
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var threads: [Threads]!
     var child: Actor!
     var actor: Actor!
     private let refreshControl = UIRefreshControl()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -51,31 +45,33 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             leftHeaderButton.isHidden = true
         }
         threadsTableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        fixTableViewHeight()
+        refreshData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getThreads()
-        
-    }
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.stopAnimating()
     }
-
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        threadsTableView.showAnimatedSkeleton()
         getThreads()
         refreshControl.endRefreshing()
     }
-    
+    func fixTableViewHeight() {
+        threadsTableView.estimatedRowHeight = 96
+        threadsTableView.rowHeight = 96
+    }
     func getThreads() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if threads == nil {
+            threads = []
+        }
         getThreadsApi { (isSuccess, statusCode, response, error) in
-            self.stopAnimating()
             self.threads = []
+            self.threadsTableView.hideSkeleton()
             if isSuccess {
                 if let result = response as? [String: AnyObject] {
                     debugPrint(result)
@@ -89,82 +85,85 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            handleEmptyDate(tableView: self.threadsTableView, dataSource: self.threads ?? [], imageName: "messagesplaceholder", placeholderText: "You don't have any messages for now".localized)
         }
     }
-
+    
     @IBAction func logout() {
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? TeacherContainerViewController {
-            mainViewController.logout()
-        }
-        if let mainViewController = parentController as? ChildHomeViewController {
-            mainViewController.openSettings()
-        }
+//        let parentController = parent?.parent
+//        if let mainViewController = parentController as? TeacherContainerViewController {
+//            mainViewController.logout()
+//        }
+//        if let mainViewController = parentController as? ChildHomeViewController {
+//            mainViewController.openSettings()
+//        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+   
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 96
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if threads != nil {
             return threads.count
         } else {
-            return 0
+            return 6
         }
-       
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "ThreadTableViewCell"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ThreadTableViewCell", for: indexPath) as! ThreadTableViewCell
         cell.selectionStyle = .none
-        let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
-        let fullNameArr = fullName.components(separatedBy: " ")
-        cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
-        
-        if self.threads[indexPath.row].courseName != nil {
-            cell.threadLatestMessage.text = self.threads[indexPath.row].courseName
-        } else {
-            if self.threads[indexPath.row].messages.count == 0 {
-                cell.threadLatestMessage.text = ""
+        if threads != nil {
+            cell.hideSkeleton()
+            let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
+            let fullNameArr = fullName.components(separatedBy: " ")
+            cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
+                  
+            
+            if self.threads[indexPath.row].courseName != nil {
+                cell.threadLatestMessage.text = self.threads[indexPath.row].courseName
             } else {
-                if let user = self.threads[indexPath.row].messages.first!.user {
-                    cell.threadLatestMessage.text = "\(user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                if self.threads[indexPath.row].messages.count == 0 {
+                    cell.threadLatestMessage.text = ""
                 } else {
-                    cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames ?? "Deleted user"): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                    if let user = self.threads[indexPath.row].messages.first!.user {
+                        cell.threadLatestMessage.text = "\(user.name!): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                    } else {
+                        cell.threadLatestMessage.text = "\(self.threads[indexPath.row].othersNames ?? "Deleted user"): \(self.threads[indexPath.row].messages.first!.body!.htmlToString.trimmingCharacters(in: .whitespacesAndNewlines))"
+                    }
                 }
             }
-        }
-        
-        cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr[0].first ?? Character(" "))\((fullNameArr.last ?? " ").first ?? Character(" "))", textSize: 20)
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
-        let date = dateFormatter.date(from: self.threads[indexPath.row].lastAddedDate)!
-        if Calendar.current.isDateInToday(date){
-            
-            if Locale.current.languageCode!.elementsEqual("ar") {
-                cell.threadDate.text = "اليوم"
-            } else {
-                cell.threadDate.text = "Today"
-            }
-        } else if Calendar.current.isDateInYesterday(date){
-            if Locale.current.languageCode!.elementsEqual("ar") {
-                cell.threadDate.text = "الامس"
-            } else {
-                cell.threadDate.text = "Yesterday"
-            }
-        } else {
-            let formatter = DateFormatter()
+            cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr[0].first ?? Character(" "))\((fullNameArr.last ?? " ").first ?? Character(" "))", textSize: 20)
+            let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            formatter.dateFormat = "dd/MM/yyyy"
-            cell.threadDate.text = formatter.string(from: date)
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+            let date = dateFormatter.date(from: self.threads[indexPath.row].lastAddedDate)!
+            if Calendar.current.isDateInToday(date){
+                
+                if Locale.current.languageCode!.elementsEqual("ar") {
+                    cell.threadDate.text = "اليوم"
+                } else {
+                    cell.threadDate.text = "Today"
+                }
+            } else if Calendar.current.isDateInYesterday(date){
+                if Locale.current.languageCode!.elementsEqual("ar") {
+                    cell.threadDate.text = "الامس"
+                } else {
+                    cell.threadDate.text = "Yesterday"
+                }
+            } else {
+                let formatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                formatter.dateFormat = "dd/MM/yyyy"
+                cell.threadDate.text = formatter.string(from: date)
+            }
         }
         return cell
     }
@@ -300,7 +299,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         }
         self.navigationController?.pushViewController(newMessageVC, animated: true)
     }
-
+    
     
 }
 

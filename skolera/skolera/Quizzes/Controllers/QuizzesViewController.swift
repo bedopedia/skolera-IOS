@@ -11,27 +11,15 @@ import NVActivityIndicatorView
 import Alamofire
 import DateToolsSwift
 import SwiftDate
+import SkeletonView
 
 class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     var child : Actor!
     var courseName: String = ""
     var courseId: Int = 0
-    var quizzes: [FullQuiz] = []
-    var filteredQuizzes: [FullQuiz]! {
-        didSet {
-            if self.filteredQuizzes.isEmpty {
-                if self.selectedSegment == 0 {
-                    self.placeHolderLabel.text = "You don't have any open quizzes for now".localized
-                } else {
-                    self.placeHolderLabel.text = "You don't have any closed quizzes for now".localized
-                }
-                placeHolderView.isHidden = false
-            } else {
-                placeHolderView.isHidden = true
-            }
-        }
-    }
+    var quizzes: [FullQuiz]!
+    var filteredQuizzes: [FullQuiz] = []
     var isTeacher: Bool = false
     var courseGroupId = 0
     var pageId = 1
@@ -45,12 +33,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var placeHolderView: UIView!
-    @IBOutlet var placeHolderLabel: UILabel!
+    @IBOutlet var headerView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
@@ -86,17 +74,14 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
                 }
             }
         }
-        if isTeacher {
-            getTeacherQuizzes()
-        } else {
-            getQuizzes(pageId: pageId)
-        }
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
+        tableView.rowHeight = 144
+        tableView.estimatedRowHeight = 144
         if isTeacher {
             getTeacherQuizzes()
         } else {
@@ -124,19 +109,28 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     private func setOpenedQuizzes() {
-        filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("running") })
-        self.tableView.reloadData()
+        if quizzes != nil {
+            filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("running") })
+            handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any open quizzes for now".localized)
+            self.tableView.reloadData()
+        }
     }
     
     private func setClosedQuizzes() {
-        filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
-        self.tableView.reloadData()
+        if quizzes != nil {
+            filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
+            handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any closed quizzes for now".localized)
+            self.tableView.reloadData()
+        }
     }
     
     func getTeacherQuizzes() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if quizzes == nil {
+            quizzes = []
+        }
+        self.tableView.showAnimatedSkeleton()
         getQuizzesForTeacherApi(courseGroupId: courseGroupId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.quizzes = result.map({ FullQuiz($0) })
@@ -153,9 +147,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func getQuizzes(pageId: Int) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        if quizzes == nil {
+            quizzes = []
+        }
+        self.tableView.showAnimatedSkeleton()
         getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
@@ -206,10 +203,10 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func submitQuiz(parameters: Parameters) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showAnimatedSkeleton()
         submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.count -= 1
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if self.count == 0 {
                     self.getQuizzes(pageId: self.pageId)
@@ -222,22 +219,21 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
 }
 
-extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
+extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredQuizzes != nil {
-            return filteredQuizzes.count
-        } else {
-           return 0
-        }
+        return filteredQuizzes.count
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "QuizTableViewCell"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizTableViewCell") as! QuizTableViewCell
+        cell.hideSkeleton()
         cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
-        //        cell.assignment = filteredAssignments[indexPath.row]
-        //        debugPrint("Index path: ",indexPath.row)
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
                 if meta.totalPages > pageId {
@@ -256,7 +252,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 144  
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -269,10 +265,10 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate {
 //            self.navigationController?.pushViewController(quizVC, animated: true)
             debugPrint("show quiz details")
             if !filteredQuizzes[indexPath.row].state.elementsEqual("running") {
-              let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-              quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
-              self.navigationController?.pushViewController(quizDetailsVC, animated: true)
-            }
+                      let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+                      quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
+                      self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+                    }
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName

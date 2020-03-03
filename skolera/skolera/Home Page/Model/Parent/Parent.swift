@@ -13,7 +13,7 @@ class Actor : NSObject, NSCoding{
 	var actions : [AnyObject]!
 	var avatarUrl : String!
 	var childId : Int!
-	var children : [Child]!
+	//var children : [Child]!
 	var city : AnyObject!
 	var country : AnyObject!
 	var dateofbirth : AnyObject!
@@ -40,6 +40,7 @@ class Actor : NSObject, NSCoding{
 	var unseenNotifications : Int!
 	var userType : String!
 	var username : String!
+    var passwordChanged: Bool!
     //child ++
     var attendances : [Attendance]!
     var badges : [AnyObject]!
@@ -61,13 +62,13 @@ class Actor : NSObject, NSCoding{
 		actions = dictionary["actions"] as? [AnyObject]
 		avatarUrl = dictionary["avatar_url"] as? String
 		childId = dictionary["child_id"] as? Int
-		children = [Child]()
-		if let childrenArray = dictionary["children"] as? [[String:Any]]{
-			for dic in childrenArray{
-				let value = Child(fromDictionary: dic)
-				children.append(value)
-			}
-		}
+//		children = [Child]()
+//		if let childrenArray = dictionary["children"] as? [[String:Any]]{
+//			for dic in childrenArray{
+//				let value = Child(fromDictionary: dic)
+//				children.append(value)
+//			}
+//		}
 		city = dictionary["city"] as AnyObject
 		country = dictionary["country"] as AnyObject
 		dateofbirth = dictionary["dateofbirth"] as AnyObject
@@ -100,6 +101,7 @@ class Actor : NSObject, NSCoding{
 		unseenNotifications = dictionary["unseen_notifications"] as? Int
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
+        passwordChanged = dictionary["password_changed"] as? Bool
         
         attendances = [Attendance]()
         if let attendancesArray = dictionary["attendances"] as? [[String:Any]]{
@@ -135,13 +137,13 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			dictionary["child_id"] = childId
 		}
-		if children != nil{
-			var dictionaryElements = [[String:Any]]()
-			for childrenElement in children {
-				dictionaryElements.append(childrenElement.toDictionary())
-			}
-			dictionary["children"] = dictionaryElements
-		}
+//		if children != nil{
+//			var dictionaryElements = [[String:Any]]()
+//			for childrenElement in children {
+//				dictionaryElements.append(childrenElement.toDictionary())
+//			}
+//			dictionary["children"] = dictionaryElements
+//		}
 		if city != nil{
 			dictionary["city"] = city
 		}
@@ -264,7 +266,7 @@ class Actor : NSObject, NSCoding{
          actions = aDecoder.decodeObject(forKey: "actions") as? [AnyObject]
          avatarUrl = aDecoder.decodeObject(forKey: "avatar_url") as? String
          childId = aDecoder.decodeObject(forKey: "child_id") as? Int
-         children = aDecoder.decodeObject(forKey :"children") as? [Child]
+         //children = aDecoder.decodeObject(forKey :"children") as? [Child]
          city = aDecoder.decodeObject(forKey: "city") as AnyObject
          country = aDecoder.decodeObject(forKey: "country") as AnyObject
          dateofbirth = aDecoder.decodeObject(forKey: "dateofbirth") as AnyObject
@@ -318,9 +320,9 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			aCoder.encode(childId, forKey: "child_id")
 		}
-		if children != nil{
-			aCoder.encode(children, forKey: "children")
-		}
+//		if children != nil{
+//			aCoder.encode(children, forKey: "children")
+//		}
 		if city != nil{
 			aCoder.encode(city, forKey: "city")
 		}

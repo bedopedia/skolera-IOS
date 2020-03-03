@@ -15,18 +15,15 @@ extension UITextField {
         let border = CALayer()
         let width = CGFloat(1.0)
         border.borderColor = UIColor.appColors.greyTextField.cgColor
-        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.bounds.width, height: self.frame.size.height)
         border.borderWidth = width
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
     }
-    func active()
-    {
-        
+    func active() {
         self.layer.sublayers![0].borderColor = UIColor.appColors.green.cgColor
     }
-    func inactive()
-    {
+    func inactive() {
         self.layer.sublayers![0].borderColor = UIColor.appColors.greyTextField.cgColor
     }
 }

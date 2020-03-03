@@ -9,16 +9,16 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import SkeletonView
 
-class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusSegmentControl: UISegmentedControl!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var placeholderView: UIView!
-    @IBOutlet var placeholderLabel: UILabel!
+    @IBOutlet var headerView: UIView!
     
     var child : Actor!
     var isTeacher: Bool = false
@@ -26,26 +26,14 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignments: [FullAssignment] = []
-    var filteredAssignments: [FullAssignment]! {
-        didSet {
-            if self.filteredAssignments.isEmpty {
-                if self.selectedSegment == 0{
-                    self.placeholderLabel.text = "You don't have any open assignments for now".localized
-                } else {
-                    self.placeholderLabel.text = "You don't have any closed assignments for now".localized
-                }
-                placeholderView.isHidden = false
-            } else {
-                placeholderView.isHidden = true
-            }
-        }
-    }
+    var filteredAssignments: [FullAssignment] = []
     var meta: Meta!
     var selectedSegment = 0
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
@@ -81,16 +69,18 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
-        getAssignments()
         tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        refreshData()
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+    func fixTableViewHeight() {
+        tableView.rowHeight = 144
+        tableView.estimatedRowHeight = 144
+    }
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -103,29 +93,33 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             setOpenedAssignments()
         }
     }
-    @objc private func refreshData(_ sender: Any) {
-        refreshControl.beginRefreshing()
+    @objc private func refreshData() {
+        fixTableViewHeight()
+        self.tableView.showAnimatedSkeleton()
         getAssignments()
         refreshControl.endRefreshing()
     }
 
     private func setOpenedAssignments() {
         filteredAssignments = assignments.filter({ $0.state.elementsEqual("running") })
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any open assignments for now".localized)
         self.tableView.reloadData()
     }
     
     private func setClosedAssignments() {
         filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
+        handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any closed assignments for now".localized)
         self.tableView.reloadData()
     }
 
-    func getAssignments(){
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+    func getAssignments() {
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
                     } else {
@@ -139,22 +133,19 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredAssignments != nil {
-            return filteredAssignments.count
-        } else {
-            return 0
-        }
+        return filteredAssignments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
+        cell.hideSkeleton()
         cell.nameLabel.text = courseName
         cell.assignment = filteredAssignments[indexPath.row]
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        return 144
     }
     
     
@@ -196,4 +187,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "AssignmentTableViewCell"
+    }
 }

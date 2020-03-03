@@ -12,8 +12,6 @@ import Alamofire
 import Firebase
 import NRAppUpdate
 import DateToolsSwift
-import FirebaseInstanceID
-
 class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicatorViewable {
     
     var actor: Actor!
@@ -24,29 +22,9 @@ class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                print("Remote instance ID token: \(result.token)")
-                self.sendFCM(token: result.token)
-            }
-        }
         
     }
     
-    func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["fcm_token": token, "device_id": UIDevice.current.identifierForVendor!.uuidString]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
     
     func getTimeTable() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,7 +28,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zTM-Dz-iOt">
-                                <rect key="frame" x="16" y="96" width="343" height="29"/>
+                                <rect key="frame" x="16" y="76" width="343" height="32"/>
                                 <segments>
                                     <segment title="Positive"/>
                                     <segment title="Negative"/>
@@ -41,48 +39,78 @@
                                     <action selector="changeDataSource:" destination="gsJ-uA-0yv" eventType="valueChanged" id="uQT-xM-9GZ"/>
                                 </connections>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6Os-3J-CDr">
-                                <rect key="frame" x="0.0" y="140" width="375" height="527"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6Os-3J-CDr">
+                                <rect key="frame" x="0.0" y="123" width="375" height="544"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="behaviorNoteCell" rowHeight="86" id="g0V-5J-uya" customClass="BehaviorNoteTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="86"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="behaviorNoteCell" rowHeight="107" id="g0V-5J-uya" customClass="BehaviorNoteTableViewCell" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="107"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g0V-5J-uya" id="pum-CN-9N1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="85.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="107"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8B-Xh-1JB">
-                                                    <rect key="frame" x="16" y="8" width="53" height="20.5"/>
-                                                    <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="16"/>
-                                                    <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybf-fO-o99">
-                                                    <rect key="frame" x="16" y="33.5" width="344" height="18"/>
-                                                    <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
-                                                    <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDF-xA-hIi">
-                                                    <rect key="frame" x="16" y="56.5" width="344" height="18"/>
-                                                    <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
-                                                    <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPR-8j-ZGY" customClass="CardView" customModule="skolera" customModuleProvider="target">
+                                                    <rect key="frame" x="12" y="8" width="351" height="91"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Sender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8B-Xh-1JB">
+                                                            <rect key="frame" x="20" y="8" width="53" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="CircularStd-Bold" family="Circular Std" pointSize="16"/>
+                                                            <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybf-fO-o99">
+                                                            <rect key="frame" x="20" y="33.5" width="343" height="18"/>
+                                                            <fontDescription key="fontDescription" name="CircularStd-Medium" family="Circular Std" pointSize="14"/>
+                                                            <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDF-xA-hIi">
+                                                            <rect key="frame" x="20" y="56.5" width="343" height="18"/>
+                                                            <fontDescription key="fontDescription" name="CircularStd-Book" family="Circular Std" pointSize="14"/>
+                                                            <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="E8B-Xh-1JB" firstAttribute="leading" secondItem="kPR-8j-ZGY" secondAttribute="leading" constant="20" id="LRT-4g-Rd6"/>
+                                                        <constraint firstItem="Ybf-fO-o99" firstAttribute="trailing" secondItem="kPR-8j-ZGY" secondAttribute="trailingMargin" constant="20" id="PDB-EU-NDB"/>
+                                                        <constraint firstItem="Ybf-fO-o99" firstAttribute="leading" secondItem="E8B-Xh-1JB" secondAttribute="leading" id="Ry6-7W-dhQ"/>
+                                                        <constraint firstItem="Ybf-fO-o99" firstAttribute="top" secondItem="E8B-Xh-1JB" secondAttribute="bottom" constant="5" id="S5b-3N-08J"/>
+                                                        <constraint firstItem="E8B-Xh-1JB" firstAttribute="top" secondItem="kPR-8j-ZGY" secondAttribute="top" constant="8" id="TsM-4r-sPD"/>
+                                                        <constraint firstItem="uDF-xA-hIi" firstAttribute="trailing" secondItem="kPR-8j-ZGY" secondAttribute="trailingMargin" constant="20" id="XUC-dc-cd0"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uDF-xA-hIi" secondAttribute="bottom" constant="8" id="XhM-kg-AZd"/>
+                                                        <constraint firstItem="uDF-xA-hIi" firstAttribute="leading" secondItem="Ybf-fO-o99" secondAttribute="leading" id="abk-7l-Drp"/>
+                                                        <constraint firstItem="uDF-xA-hIi" firstAttribute="top" secondItem="Ybf-fO-o99" secondAttribute="bottom" constant="5" id="cae-dU-Gk3"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="uDF-xA-hIi" firstAttribute="trailing" secondItem="pum-CN-9N1" secondAttribute="trailingMargin" id="6ss-Ow-Amm"/>
-                                                <constraint firstItem="Ybf-fO-o99" firstAttribute="top" secondItem="E8B-Xh-1JB" secondAttribute="bottom" constant="5" id="Aer-uL-2qA"/>
-                                                <constraint firstItem="Ybf-fO-o99" firstAttribute="leading" secondItem="E8B-Xh-1JB" secondAttribute="leading" id="B2o-Yz-BNX"/>
-                                                <constraint firstItem="uDF-xA-hIi" firstAttribute="leading" secondItem="Ybf-fO-o99" secondAttribute="leading" id="WpL-4b-ib9"/>
-                                                <constraint firstItem="uDF-xA-hIi" firstAttribute="top" secondItem="Ybf-fO-o99" secondAttribute="bottom" constant="5" id="dsh-kB-Ij9"/>
-                                                <constraint firstItem="E8B-Xh-1JB" firstAttribute="top" secondItem="pum-CN-9N1" secondAttribute="top" constant="8" id="eXp-uH-6hZ"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uDF-xA-hIi" secondAttribute="bottom" priority="999" constant="8" id="gFc-sz-qlE"/>
-                                                <constraint firstItem="E8B-Xh-1JB" firstAttribute="leading" secondItem="pum-CN-9N1" secondAttribute="leading" constant="16" id="gSb-Iz-Tvh"/>
-                                                <constraint firstItem="Ybf-fO-o99" firstAttribute="trailing" secondItem="pum-CN-9N1" secondAttribute="trailingMargin" id="nw5-ce-64U"/>
+                                                <constraint firstAttribute="trailing" secondItem="kPR-8j-ZGY" secondAttribute="trailing" constant="12" id="7xj-is-nIH"/>
+                                                <constraint firstItem="kPR-8j-ZGY" firstAttribute="leading" secondItem="pum-CN-9N1" secondAttribute="leading" constant="12" id="aSH-jH-CfS"/>
+                                                <constraint firstAttribute="bottom" secondItem="kPR-8j-ZGY" secondAttribute="bottom" constant="8" id="bxf-oB-Mf9"/>
+                                                <constraint firstItem="kPR-8j-ZGY" firstAttribute="top" secondItem="pum-CN-9N1" secondAttribute="top" constant="8" id="dQa-ij-BYF"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </tableViewCellContentView>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="categoryLabel" destination="Ybf-fO-o99" id="b9T-iE-34c"/>
                                             <outlet property="contentLabel" destination="uDF-xA-hIi" id="jzL-DK-vnH"/>
@@ -90,9 +118,12 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cPp-xU-3qv">
-                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3VO-wu-1SL">
                                         <rect key="frame" x="0.0" y="59" width="375" height="1"/>
@@ -159,6 +190,7 @@
                     <connections>
                         <outlet property="backButton" destination="FaC-Zf-YXx" id="Kkp-VP-dnQ"/>
                         <outlet property="childImageView" destination="WbY-Vg-yUR" id="oEo-Gk-Xeq"/>
+                        <outlet property="headerView" destination="cPp-xU-3qv" id="qmc-UE-qVU"/>
                         <outlet property="statusSegmentControl" destination="zTM-Dz-iOt" id="r2R-7w-uPs"/>
                         <outlet property="tableView" destination="6Os-3J-CDr" id="nZM-uh-kQQ"/>
                     </connections>

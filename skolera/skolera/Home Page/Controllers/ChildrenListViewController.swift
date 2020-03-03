@@ -11,21 +11,19 @@ import Alamofire
 import Kingfisher
 import Firebase
 import NVActivityIndicatorView
-import FirebaseInstanceID
-
-
+import SkeletonView
 
 class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
     @IBOutlet weak var tableView: UITableView!
     
-    var refreshControl: UIRefreshControl!
-    
+    @IBOutlet var headerView: UIView!
     /// children array acts as the data source for the tableView
     @IBOutlet weak var notificationButton: UIButton!
 //    @IBOutlet weak var signOutButton: UIBarButtonItem!
     var kids = [Actor]()
+    var userId: Int!
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
@@ -36,58 +34,34 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 100;
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(getChildren), for: .valueChanged)
-        self.tableView.addSubview(refreshControl)
+        headerView.addShadow()
 //        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
 //        let backItem = UIBarButtonItem()
 //        backItem.title = nil
 //        navigationItem.backBarButtonItem = backItem
         getChildren()
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                print("Remote instance ID token: \(result.token)")
-                self.sendFCM(token: result.token)
-            }
-        }
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
     
-   
+
 
     // MARK: - Table view settings
     
-    /// sevice call to set firebase token
-    func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["fcm_token": token, "device_id": UIDevice.current.identifierForVendor!.uuidString]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
-    
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
-        self.refreshControl.endRefreshing()
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        self.tableView.showAnimatedSkeleton()
         getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
                     for child in result {
                         self.kids.append(Actor.init(fromDictionary: child))
                     }
+                    self.tableView.rowHeight = UITableViewAutomaticDimension
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -116,31 +90,34 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     ///
     /// - Parameter sender: logout button
     @IBAction func logout() {
-        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-            if Language.language == .arabic {
-                self.showChangeLanguageConfirmation(language: .english)
-            } else{
-                self.showChangeLanguageConfirmation(language: .arabic)
-            }
-            
-        }))
+//        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
+//        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
+//            if Language.language == .arabic {
+//                self.showChangeLanguageConfirmation(language: .english)
+//            } else{
+//                self.showChangeLanguageConfirmation(language: .arabic)
+//            }
+//
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
+//            if(self.isAnimating) {
+//                self.stopAnimating()
+//            }
+//            self.sendFCM(token: "")
+//            clearUserDefaults()
+//            let nvc = UINavigationController()
+//            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+//            nvc.pushViewController(schoolCodeVC, animated: true)
+//            nvc.modalPresentationStyle = .fullScreen
+//            self.present(nvc, animated: true, completion: nil)
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+//        alert.modalPresentationStyle = .fullScreen
+//        self.present(alert, animated: true, completion: nil)
         
-        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(self.isAnimating) {
-                self.stopAnimating()
-            }
-            self.sendFCM(token: "")
-            logOut()
-            let nvc = UINavigationController()
-            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-            nvc.pushViewController(schoolCodeVC, animated: true)
-            nvc.modalPresentationStyle = .fullScreen
-            self.present(nvc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        alert.modalPresentationStyle = .fullScreen
-        self.present(alert, animated: true, completion: nil)
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     /// shows notification screen modally
@@ -154,18 +131,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         notificationsVC.fromChildrenList = true
         self.navigationController?.pushViewController(notificationsVC, animated: true)
     }
-    
-    /// refreshes table if user dragged table down for refresh
-    ///
-    /// - Parameter sender: table refresh control
-    @IBAction func refresh(_ sender: UIRefreshControl) {
-        self.refreshControl?.beginRefreshing()
-        kids.removeAll()
-        getChildren()
-    }
 }
 
-extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -173,7 +141,6 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return kids.count
     }
-    
     
     /// picks a child from children array by its index and fill a cell with his data
     ///
@@ -183,27 +150,27 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     /// - Returns: ChildrenTableViewCell filled with its contents
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
+        cell.hideSkeleton()
         cell.child = kids[indexPath.row]
         return cell
     }
-    
-    /// navigate to the child profile screen for the selected child
-    ///
-    /// - Parameters:
-    ///   - tableView: the screen tableview
-    ///   - indexPath: cell row and section
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
-        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        childProfileVC.child = cell.child
-        childProfileVC.assignmentsText = ""
-        childProfileVC.quizzesText = ""
-        childProfileVC.eventsText = ""
-        self.navigationController?.pushViewController(childProfileVC, animated: true)
+        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        tabBarVC.child = cell.child
+        tabBarVC.assignmentsText = ""
+        tabBarVC.quizzesText = ""
+        tabBarVC.eventsText = ""
+        self.navigationController?.pushViewController(tabBarVC, animated: true)
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "childCell"
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
-        
     }
+    
+    
 }

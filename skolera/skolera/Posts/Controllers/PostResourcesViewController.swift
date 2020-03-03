@@ -14,6 +14,7 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerView: UIView!
     
     var child : Actor!
     var courseName: String = ""
@@ -21,6 +22,7 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self

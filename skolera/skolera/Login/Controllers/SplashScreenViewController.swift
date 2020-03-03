@@ -20,21 +20,21 @@ class SplashScreenViewController: UIViewController {
         super.viewDidLoad()
         checkUpdate(for: "1346646110")
         navigationController?.isNavigationBarHidden = true
-             InstanceID.instanceID().instanceID { (result, error) in
-                    if let error = error {
-                        print("Error fetching remote instange ID: \(error)")
-                    } else if let result = result {
-                        print("Remote instance ID token: \(result.token)")
-                       self.token =  result.token
-                    }
-                }
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instange ID: \(error)")
+            } else if let result = result {
+                print("Remote instance ID token: \(result.token)")
+                self.token =  result.token
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-        
+    
     /// acts as Launch Screen till the system either auto login the user if his credentials are saved, or shows the SchoolCode screen to login otherwise
     private func getMainScreen() {
         if userDefault.string(forKey: ACCESS_TOKEN) != nil {
@@ -65,57 +65,58 @@ class SplashScreenViewController: UIViewController {
                     self.present(nvc, animated: true, completion: nil)
                 } else {
                     if parent.userType.elementsEqual("student") {
-                        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        childProfileVC.child = parent
-                        childProfileVC.assignmentsText = ""
-                        childProfileVC.quizzesText = ""
-                        childProfileVC.eventsText = ""
-                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        //                            for the child profile VC
+                        tabBarVC.child = parent
+                        tabBarVC.assignmentsText = ""
+                        tabBarVC.quizzesText = ""
+                        tabBarVC.eventsText = ""
+                        let nvc = UINavigationController(rootViewController: tabBarVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)
                     } else {
-                        let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        tabBarVC.actor = parent
                         if !parent.userType.elementsEqual("teacher") {
-                            childProfileVC.otherUser = true
+                            tabBarVC.otherUser = true
                         }
-                        childProfileVC.actor = parent
-                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        let nvc = UINavigationController(rootViewController: tabBarVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)
                     }
                 }
             } else {
-                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                self.navigationController?.pushViewController(schoolCodevc, animated: false)
             }
         }
     }
-
+    
     
     func getProfile(){
         if let userId =  userDefault.string(forKey: ID) {
             getProfileAPI(id: Int(userId) ?? 0) { (isSuccess, statusCode, value, error)  in
-                      if isSuccess {
-                          if let result = value as? [String : AnyObject] {
-                              let parent : Actor = Actor.init(fromDictionary: result)
-                              UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
-                              self.updateLocale(parent: parent)
-                          }
-                      } else {
-                          let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                        self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                      }
+                if isSuccess {
+                    if let result = value as? [String : AnyObject] {
+                        let parent : Actor = Actor.init(fromDictionary: result)
+                        UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
+                        self.updateLocale(parent: parent)
+                    }
+                } else {
+                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
+                }
             }
         } else {
-        let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-        self.navigationController?.pushViewController(schoolCodevc, animated: false)
+            let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+            self.navigationController?.pushViewController(schoolCodevc, animated: false)
         }
         
     }
     
-     func checkUpdate(for appId: String) {
+    func checkUpdate(for appId: String) {
         let itunesUrlString =  "https://itunes.apple.com/jp/lookup/?id=\(appId)"
         let itunesUrl = URL(string: itunesUrlString)
         var request = URLRequest(url: itunesUrl!)
@@ -189,7 +190,7 @@ class SplashScreenViewController: UIViewController {
         task.resume()
     }
     
-     func showUpdateAlert(version: String, appID: String) {
+    func showUpdateAlert(version: String, appID: String) {
         let itunesUrlString =  "https://itunes.apple.com/app/id\(appID)"
         let itunesUrl = URL(string: itunesUrlString)
         let alert = UIAlertController(title: "Update Available", message: "A new version of app is available. Please update to version now. \(version)", preferredStyle: .alert)

@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ThreadTableViewCell: UITableViewCell {
     @IBOutlet weak var threadImage: UIImageView!
     @IBOutlet weak var threadTitle: UILabel!
@@ -28,10 +27,10 @@ class ThreadTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    
+    override func prepareForReuse() {
+        threadImage.childImageView(url: "" , placeholder: "", textSize: 20, borderWidth: 0)
+    }
 
 }

@@ -258,6 +258,10 @@ func SUBMIT_QUIZ() -> String {
     return "\(BASE_URL!)/api/active_quizzes/submit_quiz"
 }
 
+func CHANGE_PASSWORD(userId: Int) -> String {
+    return "\(BASE_URL!)/api/users/\(userId)"
+}
+
 func LOGOUT() -> String {
     return "\(BASE_URL!)/api/auth/sign_out"
 }

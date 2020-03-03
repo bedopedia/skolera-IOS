@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import Alamofire
 import Firebase
-import FirebaseInstanceID
+import SkeletonView
 
 class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
@@ -26,38 +26,56 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var notificationButton: UIBarButtonItem!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
     var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
-    let maxHeight: CGFloat = 143
+    let maxHeight: CGFloat = 160
     let minHeight: CGFloat = 12
     
     //MARK: - Life Cycle
     
+   
     /// sets basic screen details, sends current child to embedded ChildProfileFeaturesTableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerHeightConstraint.constant =  UIApplication.shared.statusBarFrame.height + 60
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if !isParent() {
             backButton.isHidden = true
-            setLocalization()
-            InstanceID.instanceID().instanceID { (result, error) in
-                if let error = error {
-                    print("Error fetching remote instange ID: \(error)")
-                } else if let result = result {
-                    print("Remote instance ID token: \(result.token)")
-                    self.sendFCM(token: result.token)
-                    debugPrint(result.token)
-                }
+            if let featureTVC = childViewControllers[0] as? ChildProfileFeaturesTableViewController {
+                featureTVC.tableView.showAnimatedSkeleton()
             }
+            setLocalization()
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        updateTabBarItem(tab: .home, tabBarItem: tabBarItem)
+        self.addChildImage()
+        self.addChildData()
     }
+  
     
+//        
+//        @IBAction func leftAction() {
+//            if isParent() {
+//                self.navigationController?.popViewController(animated: true)
+//            } else {
+//                openNewMessage()
+//            }
+//        }
+//        
+//        @IBAction func rightAction() {
+//            if isParent() {
+//                openNewMessage()
+//            } else {
+//                openSettings()
+//            }
+//        }
+//    
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -68,35 +86,13 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     }
 
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 0
-//            parentVC.headerView.isHidden = true
-        }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-        }
-        //        notificationButton.image = UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal)
-    }
-    
     @IBAction func settingsButton() {
-        
-        let parentController = parent?.parent
-        if let mainViewController = parentController as? ChildHomeViewController {
-            mainViewController.openSettings()
-        }
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @IBAction func backAction() {
         self.parent?.navigationController?.popViewController(animated: true)
-//        self.navigationController?.popViewController(animated: true)
     }
 
     //MARK: - methods
@@ -185,25 +181,10 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
-    
 
-    
-    func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["fcm_token": token, "device_id": UIDevice.current.identifierForVendor!.uuidString]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
     //service call to change localization
     func setLocalization() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
@@ -214,7 +195,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         let headers : HTTPHeaders? = getHeaders()
         let url = String(format: EDIT_USER(), userId())
         Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
-            self.stopAnimating()
+//            self.stopAnimating()
             switch response.result{
             case .success(_):
                 //do nothing
