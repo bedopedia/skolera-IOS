@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -829,37 +829,46 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="mainWeeklyPlannerCell" rowHeight="80" id="MnP-mx-69n">
-                                        <rect key="frame" x="0.0" y="518" width="414" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="mainWeeklyPlannerCell" rowHeight="90" id="XOe-SX-yTD">
+                                        <rect key="frame" x="0.0" y="518" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MnP-mx-69n" id="IJy-gF-r3F">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOe-SX-yTD" id="06A-EO-3Np">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weeklyPlanner" translatesAutoresizingMaskIntoConstraints="NO" id="6AE-gY-KhM">
-                                                    <rect key="frame" x="16" y="25" width="32" height="32"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weeklyPlanner" translatesAutoresizingMaskIntoConstraints="NO" id="OBl-Ni-cMa">
+                                                    <rect key="frame" x="16" y="29" width="32" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="32" id="3zI-rp-The"/>
-                                                        <constraint firstAttribute="height" constant="32" id="VwM-1v-lc7"/>
+                                                        <constraint firstAttribute="height" constant="32" id="FaJ-3v-jsY"/>
+                                                        <constraint firstAttribute="width" constant="32" id="ehz-c8-Cbg"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGu-ea-cTO">
-                                                    <rect key="frame" x="73" y="29.666666666666671" width="136" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly planner" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAc-Fk-lC2">
+                                                    <rect key="frame" x="73" y="26" width="136" height="21"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI  Text" pointSize="18"/>
                                                     <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No weekly planner available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67E-Mo-o2i">
+                                                    <rect key="frame" x="73" y="49" width="298" height="17"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="14"/>
+                                                    <color key="textColor" red="0.47843137250000001" green="0.53725490200000003" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="6AE-gY-KhM" firstAttribute="leading" secondItem="IJy-gF-r3F" secondAttribute="leading" constant="16" id="MbJ-C8-yE4"/>
-                                                <constraint firstItem="lGu-ea-cTO" firstAttribute="leading" secondItem="6AE-gY-KhM" secondAttribute="trailing" constant="25" id="c3J-tw-bmk"/>
-                                                <constraint firstItem="lGu-ea-cTO" firstAttribute="centerY" secondItem="IJy-gF-r3F" secondAttribute="centerY" id="eBz-gb-5Sh"/>
-                                                <constraint firstItem="6AE-gY-KhM" firstAttribute="top" secondItem="IJy-gF-r3F" secondAttribute="top" constant="25" id="p4r-8I-XCw"/>
+                                                <constraint firstItem="wAc-Fk-lC2" firstAttribute="top" secondItem="06A-EO-3Np" secondAttribute="topMargin" constant="15" id="F4Y-Rn-TG4"/>
+                                                <constraint firstItem="OBl-Ni-cMa" firstAttribute="leading" secondItem="06A-EO-3Np" secondAttribute="leading" constant="16" id="Qxc-SG-NGo"/>
+                                                <constraint firstItem="OBl-Ni-cMa" firstAttribute="centerY" secondItem="06A-EO-3Np" secondAttribute="centerY" id="hKg-gh-SwK"/>
+                                                <constraint firstItem="67E-Mo-o2i" firstAttribute="top" secondItem="wAc-Fk-lC2" secondAttribute="bottomMargin" constant="10" id="lmq-9n-VO2"/>
+                                                <constraint firstItem="67E-Mo-o2i" firstAttribute="leading" secondItem="wAc-Fk-lC2" secondAttribute="leading" id="pbV-zB-D9R"/>
+                                                <constraint firstItem="wAc-Fk-lC2" firstAttribute="leading" secondItem="OBl-Ni-cMa" secondAttribute="trailing" constant="25" id="wrY-zc-8Lt"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="67E-Mo-o2i" secondAttribute="trailing" constant="4" id="xhq-yi-7BM"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="mainBehaviorNotesCell" rowHeight="80" id="FyD-vg-81S">
-                                        <rect key="frame" x="0.0" y="598" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="608" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FyD-vg-81S" id="XHD-m0-hep">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -936,7 +945,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="mainCalendarCell" rowHeight="80" id="AIt-Ww-psD">
-                                        <rect key="frame" x="0.0" y="678" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="688" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIt-Ww-psD" id="d6X-yh-k4u">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -982,6 +991,7 @@
                         <outlet property="otherBehaviorNotesLabel" destination="OwV-rZ-YGv" id="uJa-xc-P2o"/>
                         <outlet property="positiveBehaviorNotesLabel" destination="YHs-Xg-P4e" id="R1H-60-Ndt"/>
                         <outlet property="presentDaysLabel" destination="w2F-iK-QYb" id="Bvz-Fb-Aqj"/>
+                        <outlet property="weeklyPlannerDateLabel" destination="67E-Mo-o2i" id="5ZC-Lc-fCe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhN-rJ-r4F" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -23,21 +23,25 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
+    @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
+    
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
-    var gradesCourses = [PostCourse]()
+    var gradesSubjects = [ShortCourseGroup]()
     var timeslots = [TimeSlot]()
-    var weeklyPlans: [WeeklyPlan] = []
+    var weeklyPlan: [WeeklyPlan] = []
+    var weeklyPlannerDates: [String] = []
     var today: Date!
     var tomorrow: Date!
     /// Once set, get grades for this child
-    var child : Child!{
+    var child : Actor!{
         didSet{
             if child != nil{
+                getGradesSubjects()
                 getBehaviorNotesCount()
                 getTimeTable()
-//                getWeeklyReport()
+                getWeeklyPlanner()
                 let presentDays = child.attendances.filter({ attendance -> Bool in
                     return attendance.status == "present"
                 }).count
@@ -48,9 +52,11 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     presentDaysLabel.text = "present \(presentDays) out of \(child.attendances.count) days"
                 }
                 setProgressBarColor(absentDays: child.attendances.count - presentDays)
+               
             }
         }
     }
+
     
     var scrollHandler: ( (CGFloat) -> ())!
     
@@ -129,6 +135,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         attendanceProgressBar.progressTintColors = [UIColor.appColors.progressBarColor1,UIColor.appColors.progressBarColor2]
     }
     
+    private func getDateByName(date: String) -> String {
+        let dateFormatter = DateFormatter()
+          dateFormatter.locale = Locale(identifier: "en")
+          dateFormatter.dateFormat = "yyyy-MM-dd"
+          let date = dateFormatter.date(from: date)!
+          dateFormatter.dateFormat = "EEE dd/MM"
+        return dateFormatter.string(from: date)
+      }
+    
     private func openPosts(){
         let postsVC = PostsViewController.instantiate(fromAppStoryboard: .Posts)
         postsVC.child = self.child
@@ -155,10 +170,46 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
 //    MARK:- Network Calls
-
+    
+    /// service call to get total courses grades, average grade is set on completion
+    private func getGradesSubjects() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getCourseGroupShortListApi(childId: child.childId!) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [[String : AnyObject]] {
+                    self.gradesSubjects = result.map({ ShortCourseGroup($0)})
+                    self.tableView.reloadData()
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+        private func getCourseGroups() {
+            getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
+                self.stopAnimating()
+                if isSuccess {
+                    if let result = value as? [[String : AnyObject]] {
+                        var courseGroups = [Int: CourseGroup]()
+                        for courseGroup in result{
+                            let temp = CourseGroup.init(fromDictionary: courseGroup)
+                            courseGroups[temp.courseId] = temp
+                        }
+    //                    for grade in self.grades{
+    //                        grade.courseGroup = courseGroups[grade.courseId]
+    //                    }
+                    }
+                } else {
+                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                }
+            }
+        }
+    
     private func getBehaviorNotesCount() {
 //        self.tableView.showAnimatedSkeleton()
-        let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents"]
+        let parameters : Parameters = ["student_id" : child.childId, "user_type" : "Parents"]
         getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.getTimeTable()
             if isSuccess {
@@ -174,8 +225,32 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         }
     }
     
+    private func getWeeklyPlanner() {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getWeeklyPlansAPI() { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    let weeklyPlanResponse = WeeklyPlanResponse(result)
+                    if !weeklyPlanResponse.weeklyPlan.isEmpty {
+                        self.weeklyPlan = weeklyPlanResponse.weeklyPlan
+                        if Language.language == .arabic {
+                            self.weeklyPlannerDateLabel.text = "تبدأ من \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) إلى \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            } else {
+                            self.weeklyPlannerDateLabel.text = "Starts from \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) to \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            }
+                    } else {
+                        self.weeklyPlannerDateLabel.text = "No Weekly Planner available".localized
+                    }
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
     private func getTimeTable() {
-        getTimeTableAPI(childActableId: child.actableId!) { (isSuccess, statusCode, value, error) in
+        getTimeTableAPI(childActableId: child.childId!) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
@@ -220,26 +295,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             }
         }
     }
-    
-    //    private func getCourseGroups() {
-    //        getCourseGroupsAPI(childId: child.id!) { (isSuccess, statusCode, value, error) in
-    //            self.stopAnimating()
-    //            if isSuccess {
-    //                if let result = value as? [[String : AnyObject]] {
-    //                    var courseGroups = [Int: CourseGroup]()
-    //                    for courseGroup in result{
-    //                        let temp = CourseGroup.init(fromDictionary: courseGroup)
-    //                        courseGroups[temp.courseId] = temp
-    //                    }
-    ////                    for grade in self.grades{
-    ////                        grade.courseGroup = courseGroups[grade.courseId]
-    ////                    }
-    //                }
-    //            } else {
-    //                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-    //            }
-    //        }
-    //    }
+
         
     //MARK: - Actions
     
@@ -247,7 +303,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     func showCoursesGrades() {
         let gtvc = GradesListViewController.instantiate(fromAppStoryboard: .Grades)
         gtvc.child = child
-//        gtvc.grades = self.gradesCourses
+        gtvc.courseGroups = self.gradesSubjects
         self.navigationController?.pushViewController(gtvc, animated: true)
     }
     
@@ -266,7 +322,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
 //        if !self.weeklyPlans.isEmpty {
             let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
             wvc.child = child
-//            wvc.weeklyPlanner = self.weeklyPlans.first
+            wvc.weeklyPlanner = self.weeklyPlan.first
             self.navigationController?.pushViewController(wvc, animated: true)
 //        }
 //    else {

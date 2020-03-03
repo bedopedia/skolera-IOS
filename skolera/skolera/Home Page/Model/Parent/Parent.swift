@@ -10,12 +10,10 @@ import Foundation
 
 class Actor : NSObject, NSCoding{
 
-	var actableId : Int!
-	var actableType : String!
 	var actions : [AnyObject]!
 	var avatarUrl : String!
 	var childId : Int!
-	var children : [Child]!
+	//var children : [Child]!
 	var city : AnyObject!
 	var country : AnyObject!
 	var dateofbirth : AnyObject!
@@ -42,25 +40,34 @@ class Actor : NSObject, NSCoding{
 	var unseenNotifications : Int!
 	var userType : String!
 	var username : String!
-    var passwordChanged: Bool!
-
+    //child ++
+    var attendances : [Attendance]!
+    var badges : [AnyObject]!
+    var code : String!
+    var levelId : Int!
+    var levelName : String!
+    var sectionName : String!
+    var stageName : String!
+    var todayWorkloadStatus : TodayWorkloadStatus!
+    
+    
+    
+    
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: [String:Any]){
-		actableId = dictionary["actable_id"] as? Int
-		actableType = dictionary["actable_type"] as? String
 		actions = dictionary["actions"] as? [AnyObject]
 		avatarUrl = dictionary["avatar_url"] as? String
 		childId = dictionary["child_id"] as? Int
-		children = [Child]()
-		if let childrenArray = dictionary["children"] as? [[String:Any]]{
-			for dic in childrenArray{
-				let value = Child(fromDictionary: dic)
-				children.append(value)
-			}
-		}
+//		children = [Child]()
+//		if let childrenArray = dictionary["children"] as? [[String:Any]]{
+//			for dic in childrenArray{
+//				let value = Child(fromDictionary: dic)
+//				children.append(value)
+//			}
+//		}
 		city = dictionary["city"] as AnyObject
 		country = dictionary["country"] as AnyObject
 		dateofbirth = dictionary["dateofbirth"] as AnyObject
@@ -68,7 +75,11 @@ class Actor : NSObject, NSCoding{
 		firstname = dictionary["firstname"] as? String
 		gender = dictionary["gender"] as? String
 		homeAddress = dictionary["home_address"] as AnyObject
-		id = dictionary["id"] as? Int
+        if let userId = dictionary["user_id"] as? Int {
+            id = userId
+        } else {
+            id = dictionary["id"] as? Int
+        }
 		isActive = dictionary["is_active"] as? Bool
 		lastSignInAt = dictionary["last_sign_in_at"] as? String
 		lastname = dictionary["lastname"] as? String
@@ -89,7 +100,24 @@ class Actor : NSObject, NSCoding{
 		unseenNotifications = dictionary["unseen_notifications"] as? Int
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
-        passwordChanged = dictionary["password_changed"] as? Bool
+        
+        attendances = [Attendance]()
+        if let attendancesArray = dictionary["attendances"] as? [[String:Any]]{
+            for dic in attendancesArray{
+                let value = Attendance(fromDictionary: dic)
+                attendances.append(value)
+            }
+        }
+        
+        badges = dictionary["badges"] as? [AnyObject]
+        code = dictionary["code"] as? String
+        levelId = dictionary["level_id"] as? Int
+        levelName = dictionary["level_name"] as? String
+        sectionName = dictionary["section_name"] as? String
+        stageName = dictionary["stage_name"] as? String
+        if let todayWorkloadStatusData = dictionary["today_workload_status"] as? [String:Any]{
+            todayWorkloadStatus = TodayWorkloadStatus(fromDictionary: todayWorkloadStatusData)
+        }
 	}
 
 	/**
@@ -98,12 +126,6 @@ class Actor : NSObject, NSCoding{
 	func toDictionary() -> [String:Any]
 	{
 		var dictionary = [String:Any]()
-		if actableId != nil{
-			dictionary["actable_id"] = actableId
-		}
-		if actableType != nil{
-			dictionary["actable_type"] = actableType
-		}
 		if actions != nil{
 			dictionary["actions"] = actions
 		}
@@ -113,13 +135,13 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			dictionary["child_id"] = childId
 		}
-		if children != nil{
-			var dictionaryElements = [[String:Any]]()
-			for childrenElement in children {
-				dictionaryElements.append(childrenElement.toDictionary())
-			}
-			dictionary["children"] = dictionaryElements
-		}
+//		if children != nil{
+//			var dictionaryElements = [[String:Any]]()
+//			for childrenElement in children {
+//				dictionaryElements.append(childrenElement.toDictionary())
+//			}
+//			dictionary["children"] = dictionaryElements
+//		}
 		if city != nil{
 			dictionary["city"] = city
 		}
@@ -198,6 +220,38 @@ class Actor : NSObject, NSCoding{
 		if username != nil{
 			dictionary["username"] = username
 		}
+        
+        if attendances != nil{
+            var dictionaryElements = [[String:Any]]()
+            for attendancesElement in attendances {
+                dictionaryElements.append(attendancesElement.toDictionary())
+            }
+            dictionary["attendances"] = dictionaryElements
+        }
+        
+        if badges != nil{
+            dictionary["badges"] = badges
+        }
+        
+        if code != nil{
+            dictionary["code"] = code
+        }
+        if levelId != nil{
+            dictionary["level_id"] = levelId
+        }
+        if levelName != nil{
+            dictionary["level_name"] = levelName
+        }
+        if sectionName != nil{
+            dictionary["section_name"] = sectionName
+        }
+        if stageName != nil{
+            dictionary["stage_name"] = stageName
+        }
+        if todayWorkloadStatus != nil{
+            dictionary["today_workload_status"] = todayWorkloadStatus.toDictionary()
+        }
+        
 		return dictionary
 	}
 
@@ -207,12 +261,10 @@ class Actor : NSObject, NSCoding{
     */
     @objc required init(coder aDecoder: NSCoder)
 	{
-         actableId = aDecoder.decodeObject(forKey: "actable_id") as? Int
-         actableType = aDecoder.decodeObject(forKey: "actable_type") as? String
          actions = aDecoder.decodeObject(forKey: "actions") as? [AnyObject]
          avatarUrl = aDecoder.decodeObject(forKey: "avatar_url") as? String
          childId = aDecoder.decodeObject(forKey: "child_id") as? Int
-         children = aDecoder.decodeObject(forKey :"children") as? [Child]
+         //children = aDecoder.decodeObject(forKey :"children") as? [Child]
          city = aDecoder.decodeObject(forKey: "city") as AnyObject
          country = aDecoder.decodeObject(forKey: "country") as AnyObject
          dateofbirth = aDecoder.decodeObject(forKey: "dateofbirth") as AnyObject
@@ -240,6 +292,15 @@ class Actor : NSObject, NSCoding{
          userType = aDecoder.decodeObject(forKey: "user_type") as? String
          username = aDecoder.decodeObject(forKey: "username") as? String
 
+        attendances = aDecoder.decodeObject(forKey :"attendances") as? [Attendance]
+        badges = aDecoder.decodeObject(forKey: "badges") as? [AnyObject]
+        code = aDecoder.decodeObject(forKey: "code") as? String
+        levelId = aDecoder.decodeObject(forKey: "level_id") as? Int
+        levelName = aDecoder.decodeObject(forKey: "level_name") as? String
+        sectionName = aDecoder.decodeObject(forKey: "section_name") as? String
+        stageName = aDecoder.decodeObject(forKey: "stage_name") as? String
+        todayWorkloadStatus = aDecoder.decodeObject(forKey: "today_workload_status") as? TodayWorkloadStatus
+                
 	}
 
     /**
@@ -248,12 +309,6 @@ class Actor : NSObject, NSCoding{
     */
     @objc func encode(with aCoder: NSCoder)
 	{
-		if actableId != nil{
-			aCoder.encode(actableId, forKey: "actable_id")
-		}
-		if actableType != nil{
-			aCoder.encode(actableType, forKey: "actable_type")
-		}
 		if actions != nil{
 			aCoder.encode(actions, forKey: "actions")
 		}
@@ -263,9 +318,9 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			aCoder.encode(childId, forKey: "child_id")
 		}
-		if children != nil{
-			aCoder.encode(children, forKey: "children")
-		}
+//		if children != nil{
+//			aCoder.encode(children, forKey: "children")
+//		}
 		if city != nil{
 			aCoder.encode(city, forKey: "city")
 		}
@@ -344,6 +399,31 @@ class Actor : NSObject, NSCoding{
 		if username != nil{
 			aCoder.encode(username, forKey: "username")
 		}
+        
+        if attendances != nil{
+            aCoder.encode(attendances, forKey: "attendances")
+        }
+        if badges != nil{
+            aCoder.encode(badges, forKey: "badges")
+        }
+        if code != nil{
+            aCoder.encode(code, forKey: "code")
+        }
+        if levelId != nil{
+            aCoder.encode(levelId, forKey: "level_id")
+        }
+        if levelName != nil{
+            aCoder.encode(levelName, forKey: "level_name")
+        }
+        if sectionName != nil{
+            aCoder.encode(sectionName, forKey: "section_name")
+        }
+        if stageName != nil{
+            aCoder.encode(stageName, forKey: "stage_name")
+        }
+        if todayWorkloadStatus != nil{
+            aCoder.encode(todayWorkloadStatus, forKey: "today_workload_status")
+        }
 
 	}
 

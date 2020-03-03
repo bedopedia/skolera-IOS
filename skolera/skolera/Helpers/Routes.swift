@@ -18,6 +18,10 @@ func SIGN_IN() -> String {
     return "\(BASE_URL!)/api/auth/sign_in"
 }
 
+func GET_PROFILE() -> String {
+     return "\(BASE_URL!)/api/users/%@/getProfile"
+}
+
 func EDIT_USER() -> String {
     return "\(BASE_URL!)/api/users/%@"
 }
@@ -52,10 +56,14 @@ func GET_COURSE_GRADING_PERIODS() -> String
 }
 func GET_STUDENT_GRADE_BOOK() -> String
 {
-    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book"
-//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
+    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/student?grading_period_id=%d&student_id=%d"
 
 }
+
+func GET_GRADING_PERIODS() ->String {
+    return "\(BASE_URL!)/api/grading_periods/course_grading_periods?course_id=%d"
+}
+
 func GET_STUDENT_GRADE_AVG() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade"
@@ -75,7 +83,7 @@ func GET_BEHAVIOR_NOTES() -> String
 //WeeklyPlanner
 func GET_WEEKLY_PLANNER() -> String
 {
-    return "\(BASE_URL!)/api/weekly_plans?search_by_date=%@"
+    return "\(BASE_URL!)/api/weekly_plans?mobile=true"
 }
 //Timetable
 func GET_TIME_TABLE() -> String
@@ -134,8 +142,12 @@ func GET_POSTS_COURSES() -> String {
     return "\(BASE_URL!)/api/students/%d/course_groups_recent_posts"
 }
 
+func GET_SHORT_COURSE_GROUPS() -> String {
+    return "\(BASE_URL!)/api/students/%d/course_groups_short_list"
+}
+
 func GET_STUDENT_POSTS() -> String {
-    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=20"
+    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=10"
 }
 
 func COMMENTS_URL() -> String {
@@ -246,6 +258,6 @@ func SUBMIT_QUIZ() -> String {
     return "\(BASE_URL!)/api/active_quizzes/submit_quiz"
 }
 
-func CHANGE_PASSWORD(userId: Int) -> String {
-    return "\(BASE_URL!)/api/users/\(userId)"
+func LOGOUT() -> String {
+    return "\(BASE_URL!)/api/auth/sign_out"
 }
