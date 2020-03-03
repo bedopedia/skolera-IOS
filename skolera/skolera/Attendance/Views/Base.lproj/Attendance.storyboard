@@ -11,9 +11,6 @@
         <array key="CircularStd-Medium.otf">
             <string>CircularStd-Medium</string>
         </array>
-        <array key="SFUIText-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Attendance View Controller-->
@@ -93,21 +90,21 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9S-CP-igK">
-                                <rect key="frame" x="16" y="76" width="43.5" height="20.5"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="17"/>
+                                <rect key="frame" x="16" y="76" width="40.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwd-gd-9by" customClass="CVCalendarView" customModule="CVCalendar">
-                                <rect key="frame" x="8" y="142.5" width="359" height="224"/>
+                                <rect key="frame" x="8" y="142" width="359" height="224"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="224" id="uaB-Rp-elK"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NcN-Gn-ESQ">
-                                <rect key="frame" x="313" y="70.5" width="46" height="32"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI  Text" pointSize="16"/>
+                                <rect key="frame" x="314" y="70" width="45" height="32"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <state key="normal" title="Today">
                                     <color key="titleColor" red="0.15615364910000001" green="0.73169142009999999" blue="0.30433815720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -116,14 +113,14 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KjQ-yr-V0J" customClass="CVCalendarMenuView" customModule="CVCalendar">
-                                <rect key="frame" x="8" y="102.5" width="359" height="40"/>
+                                <rect key="frame" x="8" y="102" width="359" height="40"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="KnU-lB-3cc"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-Lu-fnc">
-                                <rect key="frame" x="0.0" y="366.5" width="375" height="300.5"/>
+                                <rect key="frame" x="0.0" y="366" width="375" height="301"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PvK-ai-lx6">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
@@ -272,7 +269,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e7v-yp-CAp">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="244.5"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="245"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="attendanceCell" rowHeight="77" id="oIL-ON-Lco" customClass="AttendanceTableViewCell" customModule="skolera" customModuleProvider="target">
