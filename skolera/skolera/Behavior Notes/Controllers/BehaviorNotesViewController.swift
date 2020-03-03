@@ -35,7 +35,6 @@ class BehaviorNotesViewController: UIViewController {
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
-        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -128,7 +127,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
             if !currentDataSource.isEmpty {
               return currentDataSource.count
             } else {
-                return 6
+                return 0
             }
         } else {
             return 0
