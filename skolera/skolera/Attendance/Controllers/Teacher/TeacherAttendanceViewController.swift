@@ -421,7 +421,7 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
                     self.submitAttendance(student: selectedStudent, type: type, status: status, comment: comment)
                 }
                 //                self.navigationController?.pushViewController(submitExcuse, animated: false)
-                submitExcuse.modalPresentationStyle = .fullScreen
+                submitExcuse.modalPresentationStyle = .overCurrentContext
                 self.present(submitExcuse, animated: true, completion: nil)
             }
         }
