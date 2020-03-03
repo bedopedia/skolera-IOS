@@ -19,7 +19,7 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var assignment: FullAssignment!
     var courseId: Int!
     var assignmentId: Int!

@@ -18,7 +18,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courses: [AssignmentCourse]!
     var meta: Meta!
     private let refreshControl = UIRefreshControl()
@@ -57,7 +57,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         if courses == nil {
             courses = []
         }
-        getAssignmentCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
+        getAssignmentCoursesApi(childId: child.childId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {

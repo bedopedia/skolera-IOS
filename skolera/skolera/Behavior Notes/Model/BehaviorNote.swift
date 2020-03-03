@@ -18,7 +18,7 @@ class BehaviorNote : NSObject, NSCoding{
     var type : String!
 	var owner : BehaviorNotesOwner!
 	var receivers : [BehaviorNotesReceiver]!
-	var student : Child!
+	var student : Actor!
 
 
 	/**
@@ -44,7 +44,7 @@ class BehaviorNote : NSObject, NSCoding{
 			}
 		}
 		if let studentData = dictionary["student"] as? [String:Any]{
-			student = Child(fromDictionary: studentData)
+			student = Actor(fromDictionary: studentData)
 		}
         if let type = dictionary["type"] as? String{
             self.type = type
@@ -107,7 +107,7 @@ class BehaviorNote : NSObject, NSCoding{
         note = aDecoder.decodeObject(forKey: "note") as? String
         owner = aDecoder.decodeObject(forKey: "owner") as? BehaviorNotesOwner
         receivers = aDecoder.decodeObject(forKey :"receivers") as? [BehaviorNotesReceiver]
-        student = aDecoder.decodeObject(forKey: "student") as? Child
+        student = aDecoder.decodeObject(forKey: "student") as? Actor
         type = aDecoder.decodeObject(forKey: "type") as? String
 	}
 

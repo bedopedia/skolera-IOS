@@ -21,7 +21,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     }
     
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     var currentDataSource = [Attendance]()
     var currentBorderColor: UIColor!
     let today = Date()

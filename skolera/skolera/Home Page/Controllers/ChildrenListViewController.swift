@@ -22,7 +22,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     /// children array acts as the data source for the tableView
     @IBOutlet weak var notificationButton: UIButton!
 //    @IBOutlet weak var signOutButton: UIBarButtonItem!
-    var kids = [Child]()
+    var kids = [Actor]()
     var userId: Int!
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
@@ -40,14 +40,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 //        backItem.title = nil
 //        navigationItem.backBarButtonItem = backItem
         getChildren()
-        InstanceID.instanceID().instanceID { (result, error) in
-            if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                print("Remote instance ID token: \(result.token)")
-                self.sendFCM(token: result.token)
-            }
-        }
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -56,18 +48,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 
 
     // MARK: - Table view settings
-    
-    /// sevice call to set firebase token
-    func sendFCM(token: String) {
-        let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
     
     /// service call to get parent children, it adds them to the children array
     @objc func getChildren() {
@@ -78,7 +58,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
                 if let result = value as? [[String : AnyObject]] {
                     self.kids = []
                     for child in result {
-                        self.kids.append(Child.init(fromDictionary: child))
+                        self.kids.append(Actor.init(fromDictionary: child))
                     }
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension

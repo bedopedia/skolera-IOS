@@ -28,6 +28,7 @@ class TimeSlot : NSObject, NSCoding{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
         from = dateFormatter.date(from: (dictionary["from"] as? String)!)!
         to = dateFormatter.date(from: (dictionary["to"] as? String)!)!
 		id = dictionary["id"] as? Int

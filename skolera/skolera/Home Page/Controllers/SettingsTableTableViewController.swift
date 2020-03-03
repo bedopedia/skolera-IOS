@@ -65,8 +65,7 @@ class SettingsTableTableViewController: UITableViewController {
                 if let settingsVC = self.parent as? SettingsViewController, settingsVC.isAnimating {
                     settingsVC.stopAnimating()
                 }
-                self.sendFCM(token: "")
-                clearUserDefaults()
+                logOut()
                 let nvc = UINavigationController()
                 let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                 nvc.pushViewController(schoolCodeVC, animated: true)
@@ -105,22 +104,5 @@ class SettingsTableTableViewController: UITableViewController {
         }))
         alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func sendFCM(token: String) {
-        if let settingsVC = self.parent as? SettingsViewController{
-            settingsVC.startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        }
-        let parameters: [String: Any] = ["user": ["mobile_device_token": token]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            if let settingsVC = self.parent as? SettingsViewController{
-                settingsVC.stopAnimating()
-            }
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
     }
 }

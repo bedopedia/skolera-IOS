@@ -27,7 +27,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
     let toDatePickerView: UIDatePicker = UIDatePicker()
     var whenISODate: String = ""
     var toISODate: String = ""
-    var child : Child!
+    var child : Actor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +134,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
             eventsParameters["type"] = "personal"
             eventsParameters["all_day"] = false
             eventsParameters["cancel"] = false
-            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.userId!]]
+            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.id!]]
             let parameters = [ "event": eventsParameters ]
             startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
             createEventsAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in

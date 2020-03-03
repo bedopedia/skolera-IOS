@@ -9,7 +9,7 @@
 import UIKit
 
 class ChildProfileFeaturesNVC: UINavigationController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
-    var child: Child! {
+    var child: Actor! {
         didSet {
             if let childVc =  childViewControllers[0] as? ChildProfileViewController {
                 childVc.child = self.child

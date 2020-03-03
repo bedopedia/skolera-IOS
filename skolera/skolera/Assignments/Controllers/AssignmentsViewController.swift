@@ -20,7 +20,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var isTeacher: Bool = false
     var courseName: String = ""
     var courseId: Int = 0

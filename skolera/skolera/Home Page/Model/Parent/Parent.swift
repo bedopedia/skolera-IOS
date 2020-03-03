@@ -40,6 +40,7 @@ class Actor : NSObject, NSCoding{
 	var unseenNotifications : Int!
 	var userType : String!
 	var username : String!
+    var passwordChanged: Bool!
     //child ++
     var attendances : [Attendance]!
     var badges : [AnyObject]!
@@ -100,6 +101,7 @@ class Actor : NSObject, NSCoding{
 		unseenNotifications = dictionary["unseen_notifications"] as? Int
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
+        passwordChanged = dictionary["password_changed"] as? Bool
         
         attendances = [Attendance]()
         if let attendancesArray = dictionary["attendances"] as? [[String:Any]]{

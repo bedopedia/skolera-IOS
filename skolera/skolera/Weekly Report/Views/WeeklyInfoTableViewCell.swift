@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import RichTextView
 
 class WeeklyInfoTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var itemTitle: UILabel!
-    @IBOutlet weak var itemText: UILabel!
+    @IBOutlet weak var itemTextView: RichTextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

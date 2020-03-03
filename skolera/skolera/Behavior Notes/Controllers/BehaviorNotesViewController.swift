@@ -12,14 +12,13 @@ import SkeletonView
 class BehaviorNotesViewController: UIViewController {
     //TODO:- Fix Cell Height
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     var behaviorNotes: [BehaviorNote] = []
     var currentDataSource: [BehaviorNote]! {
         didSet {
             self.tableView.reloadData()
         }
     }
-    var meta: BehaviorNotesResponseMeta!
     private let refreshControl = UIRefreshControl()
 
     //MARK: - Outlets
@@ -144,11 +143,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.hideSkeleton()
                 cell.behaviorNote = currentDataSource[indexPath.row]
             }
-            if indexPath.row == currentDataSource.count - 1 {
-                if meta.currentPage != meta.totalPages{
-                    getBehaviorNotes(page: (meta.currentPage)! + 1)
-                }
-            }
+
         }
         return cell
     }
@@ -166,7 +161,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
         if page == 1 {
             self.tableView.showAnimatedSkeleton()
         }
-        let parameters : Parameters = ["student_id" : child.actableId,"user_type" : "Parents", "page": page, "per_page" : 20]
+        let parameters : Parameters = ["student_id" : child.childId,"user_type" : "Parents", "page": page, "per_page" : 20]
         getBehaviorNotesAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             if page == 1 {
                 self.tableView.hideSkeleton()
@@ -175,7 +170,6 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
-                    self.meta = behaviorNotesResponse.meta
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.loadPositiveNotes()

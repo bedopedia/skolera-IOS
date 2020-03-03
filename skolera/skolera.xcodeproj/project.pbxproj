@@ -153,6 +153,9 @@
 		72CE15F7240E8AE300AECC1C /* SelectGradingPeriodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15F6240E8AE300AECC1C /* SelectGradingPeriodViewController.swift */; };
 		72CE15FA240E8F1500AECC1C /* GradeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15F8240E8F1500AECC1C /* GradeHeaderView.swift */; };
 		72CE15FB240E8F1500AECC1C /* GradeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72CE15F9240E8F1500AECC1C /* GradeHeaderView.xib */; };
+		72CE15FD240E947C00AECC1C /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15FC240E947C00AECC1C /* AnnouncementViewController.swift */; };
+		72CE1600240EA0C800AECC1C /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72CE15FE240EA0C700AECC1C /* WeeklyInfoTableViewCell.xib */; };
+		72CE1601240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15FF240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
@@ -260,7 +263,6 @@
 		8A842F5C22F0592E000BA70B /* TeacherCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A842F5B22F0592E000BA70B /* TeacherCourseTableViewCell.swift */; };
 		8A8A738B222C57F300972BE6 /* WeeklyPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8A738A222C57F300972BE6 /* WeeklyPlannerViewController.swift */; };
 		8A8D428A21EC9B1100EF68E6 /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */; };
-		8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */; };
 		8A902A1C2311D04300ADFA89 /* TimeSeparatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */; };
 		8A9181532341F84500E8F6AF /* QuizSubmissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9181522341F84500E8F6AF /* QuizSubmissionViewController.swift */; };
 		8A92F56E20B2D6FF00914E08 /* String+convertHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */; };
@@ -291,8 +293,6 @@
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
 		8ABACE84222EC33A00EBC1F0 /* CustomGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */; };
 		8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */; };
-		8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */; };
-		8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
 		8AD1C6C4232F9B05006DA3A0 /* AttendanceApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */; };
 		8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */; };
@@ -481,6 +481,9 @@
 		72CE15F6240E8AE300AECC1C /* SelectGradingPeriodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectGradingPeriodViewController.swift; sourceTree = "<group>"; };
 		72CE15F8240E8F1500AECC1C /* GradeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeHeaderView.swift; sourceTree = "<group>"; };
 		72CE15F9240E8F1500AECC1C /* GradeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GradeHeaderView.xib; sourceTree = "<group>"; };
+		72CE15FC240E947C00AECC1C /* AnnouncementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		72CE15FE240EA0C700AECC1C /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
+		72CE15FF240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
@@ -600,7 +603,6 @@
 		8A842F5B22F0592E000BA70B /* TeacherCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8A8A738A222C57F300972BE6 /* WeeklyPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlannerViewController.swift; sourceTree = "<group>"; };
 		8A8D428921EC9B1100EF68E6 /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
-		8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		8A902A1B2311D04300ADFA89 /* TimeSeparatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeSeparatorPresenter.swift; sourceTree = "<group>"; };
 		8A9181522341F84500E8F6AF /* QuizSubmissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSubmissionViewController.swift; sourceTree = "<group>"; };
 		8A92F56D20B2D6FF00914E08 /* String+convertHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+convertHTML.swift"; sourceTree = "<group>"; };
@@ -634,8 +636,6 @@
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientView.swift; sourceTree = "<group>"; };
 		8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectWeeklyPlanViewController.swift; sourceTree = "<group>"; };
-		8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
-		8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
 		8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceApiManager.swift; sourceTree = "<group>"; };
 		8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullDayAttendances.swift; sourceTree = "<group>"; };
@@ -1527,8 +1527,8 @@
 				8A6A7C25222EAE9100F3EB85 /* TabsTableViewCell.xib */,
 				8ABACE7F222EB3F200EBC1F0 /* TabCollectionViewCell.swift */,
 				8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */,
-				8ABACE87222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift */,
-				8ABACE88222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib */,
+				72CE15FF240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift */,
+				72CE15FE240EA0C700AECC1C /* WeeklyInfoTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1592,7 +1592,7 @@
 			children = (
 				8A7C4A352327DAAC00984A53 /* Nav Controllers */,
 				8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */,
-				8A8D428B21ECF05C00EF68E6 /* AnnouncementViewController.swift */,
+				72CE15FC240E947C00AECC1C /* AnnouncementViewController.swift */,
 				8AF66648233923C5009C4EF2 /* AnnouncementMainViewController.swift */,
 			);
 			path = Controllers;
@@ -1801,10 +1801,10 @@
 				5482DE042056D51700647D57 /* SFUIText-SemiboldItalic.otf in Resources */,
 				5482DDFC2056D4FE00647D57 /* SFUIText-LightItalic.otf in Resources */,
 				5482DE702056DAB100647D57 /* RobotoMono-BoldItalic.ttf in Resources */,
-				8ABACE8A222FC21100EBC1F0 /* WeeklyInfoTableViewCell.xib in Resources */,
 				5482DE692056DAB100647D57 /* RobotoBoldCondensed.ttf in Resources */,
 				5482DE4A2056DAB100647D57 /* Roboto Medium Italic.otf in Resources */,
 				5482DE512056DAB100647D57 /* Roboto Condensed Italic.otf in Resources */,
+				72CE1600240EA0C800AECC1C /* WeeklyInfoTableViewCell.xib in Resources */,
 				8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */,
 				5482DE612056DAB100647D57 /* RobotoMono-Bold.ttf in Resources */,
 				8A6A7C27222EAE9100F3EB85 /* TabsTableViewCell.xib in Resources */,
@@ -2087,7 +2087,6 @@
 				72A7CFA3240E845900ED4ED0 /* HomeApiManager.swift in Sources */,
 				8A06B6DD22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift in Sources */,
 				8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */,
-				8A8D428C21ECF05C00EF68E6 /* AnnouncementViewController.swift in Sources */,
 				8A7EFF7B2327D2AB007D4842 /* ChildProfileFeaturesNVC.swift in Sources */,
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
 				8A5BBB072327FB1A0056B157 /* TeacherCoursesTableViewNVC.swift in Sources */,
@@ -2159,7 +2158,6 @@
 				8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */,
 				547A37942022153B00794441 /* Notification.swift in Sources */,
 				8AD1C6CD232FA974006DA3A0 /* AttendanceStudent.swift in Sources */,
-				8ABACE89222FC21100EBC1F0 /* WeeklyInfoTableViewCell.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
 				72A7CFA1240E82F500ED4ED0 /* Parent.swift in Sources */,
 				8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */,
@@ -2177,10 +2175,12 @@
 				54D3EDDD2080097A00BCDA80 /* CourseGradeViewController.swift in Sources */,
 				8AD1C6C9232FA7A0006DA3A0 /* Attendances.swift in Sources */,
 				72A7CF93240E823D00ED4ED0 /* StudentGrade.swift in Sources */,
+				72CE15FD240E947C00AECC1C /* AnnouncementViewController.swift in Sources */,
 				DCCB70B623A66B1600F09AD5 /* ChangePasswordViewController.swift in Sources */,
 				8A7E305B20BABF7800BF2985 /* Course.swift in Sources */,
 				8A6D361120B5979F00DD0445 /* DemoChatMessageFactory.swift in Sources */,
 				8A8079CD2340C39A00C4DC16 /* QuizAnswerTableViewCell.swift in Sources */,
+				72CE1601240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift in Sources */,
 				8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */,
 				8A93357122E0930E007B287D /* PostTableViewCell.swift in Sources */,
 				8A06B6DB22F9998900F5F85C /* AssignmentGradesViewController.swift in Sources */,

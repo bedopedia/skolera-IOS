@@ -18,7 +18,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courses: [QuizCourse]!
     var meta: Meta!
     private let refreshControl = UIRefreshControl()

@@ -29,7 +29,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
     
     //MARK: - Variables
-    var child: Child!
+    var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
@@ -50,15 +50,6 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
                 featureTVC.tableView.showAnimatedSkeleton()
             }
             setLocalization()
-            InstanceID.instanceID().instanceID { (result, error) in
-                if let error = error {
-                    print("Error fetching remote instange ID: \(error)")
-                } else if let result = result {
-                    print("Remote instance ID token: \(result.token)")
-                    self.sendFCM(token: result.token)
-                    debugPrint(result.token)
-                }
-            }
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -190,22 +181,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
     }
-    
 
-    
-    func sendFCM(token: String) {
-//        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-//            self.stopAnimating()
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
     //service call to change localization
     func setLocalization() {
 //        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)

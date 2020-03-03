@@ -42,7 +42,7 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     }
 
     func getCourses() {
-        getCoursesForTeacherAPI(teacherActableId: actor.actableId) { (isSuccess, statusCode, value, error) in
+        getCoursesForTeacherAPI(teacherActableId: actor.childId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {

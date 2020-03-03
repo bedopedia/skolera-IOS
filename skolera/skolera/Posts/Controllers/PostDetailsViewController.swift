@@ -20,7 +20,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var post: Post!
 

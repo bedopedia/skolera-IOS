@@ -18,7 +18,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courses: [PostCourse]!
     
     override func viewDidLoad() {

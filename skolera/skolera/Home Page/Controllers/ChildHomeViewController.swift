@@ -31,7 +31,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     @IBOutlet weak var notiificationsDotView: UIView!
     
     //MARK: - Variables
-    var child: Child!
+    var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
@@ -95,31 +95,32 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
 //    }
     
     func openSettings() {
-        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-            if Language.language == .arabic {
-                self.showChangeLanguageConfirmation(language: .english)
-            } else{
-                self.showChangeLanguageConfirmation(language: .arabic)
-            }
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-            if(self.isAnimating) {
-                self.stopAnimating()
-            }
-            self.sendFCM(token: "")
-            clearUserDefaults()
-            let nvc = UINavigationController()
-            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-            nvc.pushViewController(schoolCodeVC, animated: true)
-            nvc.modalPresentationStyle = .fullScreen
-            self.present(nvc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        alert.modalPresentationStyle = .fullScreen
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
+//        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
+//            if Language.language == .arabic {
+//                self.showChangeLanguageConfirmation(language: .english)
+//            } else{
+//                self.showChangeLanguageConfirmation(language: .arabic)
+//            }
+//
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
+//            if(self.isAnimating) {
+//                self.stopAnimating()
+//            }
+//            logOut()
+//            let nvc = UINavigationController()
+//            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
+//            nvc.pushViewController(schoolCodeVC, animated: true)
+//            nvc.modalPresentationStyle = .fullScreen
+//            self.present(nvc, animated: true, completion: nil)
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+//        alert.modalPresentationStyle = .fullScreen
+//        self.present(alert, animated: true, completion: nil)
+        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     private func openNewMessage() {
@@ -337,21 +338,6 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
         
     }
 }
-    
-    
-    
-    func sendFCM(token: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["mobile_device_token": token]]
-        sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
-            self.stopAnimating()
-            if isSuccess {
-                debugPrint("UPDATED_FCM_SUCCESSFULLY")
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
     
     //service call to change localization
     

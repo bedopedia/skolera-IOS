@@ -39,7 +39,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var answersHeightConstraint: NSLayoutConstraint!
     
     var quiz: FullQuiz!
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var courseGroupId: Int!
     var detailedQuiz: DetailedQuiz!
@@ -77,7 +77,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     
     func createSubmission() {
             startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-            let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.actableId!, "course_group_id": courseGroupId, "score": 0, "is_submitted": false]]
+            let parameters : Parameters = ["submission" : ["quiz_id": quiz.id!, "student_id": child.childId!, "course_group_id": courseGroupId, "score": 0, "is_submitted": false]]
             createSubmissionApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
                 if isSuccess {
                     if let result = response as? [String : AnyObject] {

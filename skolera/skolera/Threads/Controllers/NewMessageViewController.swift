@@ -23,7 +23,7 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var subjects: [Subject] = []
     var showTeachers: Bool = false
-    var child:Child!
+    var child: Actor!
     var selectedCoursePos: Int = -1
     
     override func viewDidLoad() {

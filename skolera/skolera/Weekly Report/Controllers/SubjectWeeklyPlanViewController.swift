@@ -14,61 +14,64 @@ class SubjectWeeklyPlanViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     
-    var dailyNote: DailyNote!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        titleLabel.text = dailyNote.title
-        tableView.register(UINib(nibName: "WeeklyInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyInfoTableViewCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-    }
-    
-    @IBAction func back() {
-        self.navigationController?.popViewController(animated: true)
-    }
-
-}
-
-extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyInfoTableViewCell", for: indexPath) as! WeeklyInfoTableViewCell
-        if indexPath.row == 0 {
-            cell.itemImage.image = #imageLiteral(resourceName: "knowledge1")
-            cell.itemTitle.text = "Classwork".localized
-            if !dailyNote.classWork.isEmpty {
-                cell.itemText.text = dailyNote.classWork.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
-            } else {
-                cell.itemText.text = "No classwork".localized
-            }
-            
-        } else if indexPath.row == 1 {
-            cell.itemImage.image = #imageLiteral(resourceName: "2")
-            cell.itemTitle.text = "Homework".localized
-            if !dailyNote.homework.isEmpty {
-                cell.itemText.text = dailyNote.homework.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
-            } else {
-                cell.itemText.text = "No Homework".localized
-            }
-            
-        } else if indexPath.row == 2 {
-            cell.itemImage.image = #imageLiteral(resourceName: "3")
-            cell.itemTitle.text = "Activity".localized
-            if !dailyNote.activities.isEmpty {
-                cell.itemText.text = dailyNote.activities.replacingOccurrences(of: "<br>", with: "\n").replacingOccurrences(of: "<P>", with: "\n").htmlToString
-            } else {
-                cell.itemText.text = "No Activity".localized
-            }
+        var dailyNote: DailyNote!
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+            titleLabel.text = dailyNote.title
+            tableView.register(UINib(nibName: "WeeklyInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "WeeklyInfoTableViewCell")
+            tableView.delegate = self
+            tableView.dataSource = self
             
         }
-        cell.selectionStyle = .none
-        return cell
+        
+        @IBAction func back() {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
     }
-    
-    
-}
+
+    extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataSource {
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return 3
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyInfoTableViewCell", for: indexPath) as! WeeklyInfoTableViewCell
+            if indexPath.row == 0 {
+                cell.itemImage.image = #imageLiteral(resourceName: "knowledge1")
+                cell.itemTitle.text = "Classwork".localized
+                if !dailyNote.classWork.isEmpty {
+                    cell.itemTextView.update(input: dailyNote.classWork)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No classwork".localized)</p>")
+                    
+                }
+                
+            } else if indexPath.row == 1 {
+                cell.itemImage.image = #imageLiteral(resourceName: "2")
+                cell.itemTitle.text = "Homework".localized
+                if !dailyNote.homework.isEmpty {
+                    cell.itemTextView.update(input: dailyNote.homework)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No homework".localized)</p>")
+                    
+                }
+                
+            } else if indexPath.row == 2 {
+                cell.itemImage.image = #imageLiteral(resourceName: "3")
+                cell.itemTitle.text = "Activity".localized
+                if !dailyNote.activities.isEmpty {
+                    cell.itemTextView.update(input: dailyNote.activities)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No activity".localized)</p>")
+                    
+                }
+                
+            }
+            cell.selectionStyle = .none
+            return cell
+        }
+        
+        
+    }

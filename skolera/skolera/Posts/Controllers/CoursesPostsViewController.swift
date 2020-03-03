@@ -19,7 +19,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var createPostButton: UIButton!
     @IBOutlet var headerView: UIView!
     
-    var child : Child!
+    var child : Actor!
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!
@@ -96,6 +96,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                 self.tableView.rowHeight = UITableViewAutomaticDimension
                 self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                 self.tableView.hideSkeleton()
+                self.posts = []
+                self.tableView.reloadData()
             }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {

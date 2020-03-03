@@ -11,6 +11,7 @@ import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
 import SkyFloatingLabelTextField
+import FirebaseInstanceID
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
@@ -19,6 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     let userDefault = UserDefaults.standard
     var showPassword = false
     
+    var token: String = ""
     
     //MARK: - Outlets
     
@@ -79,6 +81,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.schoolImageView.layer.cornerRadius = 6
         self.schoolImageView.clipsToBounds = true
         setUpFloatingText()
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instange ID: \(error)")
+            } else if let result = result {
+                print("Remote instance ID token: \(result.token)")
+                self.token =  result.token
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -198,53 +209,63 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     ///   - email: entered user email
     ///   - password: entered user password
     func authenticate( email: String, password: String) {
-            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-            let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
-            loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
-                if isSuccess {
-                    if let result = value as? [String : AnyObject] {
-                        let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                        debugPrint(parent.data.passwordChanged)
-    //                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
-                        self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
-                        self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
-                        self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
-                        self.userDefault.set(headers[UID] as! String, forKey: UID)
-                        if let passwordChanged = parent.data.passwordChanged, passwordChanged {
-                            UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                            self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
-                            self.userDefault.set(email, forKey: "email")
-                            self.userDefault.set(password, forKey: "password")
-                            self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                            self.userDefault.set(String(parent.data.id), forKey: ID)
-                            self.emailTextField.text = ""
-                            self.passwordTextField.text = ""
-                           self.updateLocale(parent: parent)
-                        } else {
-                            self.stopAnimating()
-                            let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            changePasswordVC.actableId = parent.data.actableId
-                            changePasswordVC.isFirstLogin = true
-                            self.present(changePasswordVC, animated: true, completion: nil)
-                        }
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true, "mobile_api": true]
+        loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+                    let parent : Actor = Actor.init(fromDictionary: result)
+                    
+                    self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
+                    self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
+                    self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
+                    self.userDefault.set(headers[UID] as! String, forKey: UID)
+                    if let passwordChanged = parent.passwordChanged, passwordChanged {
+                        UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
+                        self.userDefault.set(String(parent.childId), forKey: CHILD_ID)
+                        self.userDefault.set(String(parent.id), forKey: ID)
+                        self.userDefault.set(parent.userType, forKey: USER_TYPE)
+                        self.emailTextField.text = ""
+                        self.passwordTextField.text = ""
+                        self.updateLocale(parent: parent)
+                    } else {
+                        self.stopAnimating()
+                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        changePasswordVC.actableId = parent.childId
+                        changePasswordVC.isFirstLogin = true
+                        self.present(changePasswordVC, animated: true, completion: nil)
                     }
-                } else {
-                    self.stopAnimating()
-                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
                 }
+            } else {
+                self.stopAnimating()
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!, isLoginError: true)
             }
         }
+    }
     
-    func getChildren(parentId: Int, childId: Int) {
-        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
+    
+    
+    private func updateLocale(parent: Actor) {
+        var locale = ""
+        if Locale.current.languageCode!.elementsEqual("ar") {
+            locale = "ar"
+        } else {
+            locale = "en"
+        }
+        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, error) in
             if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    for childJson in result {
-                        let child = Child.init(fromDictionary: childJson)
+                if isParent() {
+                    self.stopAnimating()
+                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    let nvc = UINavigationController(rootViewController: childrenTVC)
+                    nvc.isNavigationBarHidden = true
+                    nvc.modalPresentationStyle = .fullScreen
+                    self.present(nvc, animated: true, completion: nil)
+                } else {
+                    if parent.userType.elementsEqual("student") {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         //                            for the child profile VC
-                        tabBarVC.child = child
+                        tabBarVC.child = parent
                         tabBarVC.assignmentsText = ""
                         tabBarVC.quizzesText = ""
                         tabBarVC.eventsText = ""
@@ -252,11 +273,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen
                         self.present(nvc, animated: true, completion: nil)
-                        break
+                    } else {
+                        let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        tabBarVC.actor = parent
+                        if !parent.userType.elementsEqual("teacher") {
+                            tabBarVC.otherUser = true
+                        }
+                        let nvc = UINavigationController(rootViewController: tabBarVC)
+                        nvc.isNavigationBarHidden = true
+                        nvc.modalPresentationStyle = .fullScreen
+                        self.present(nvc, animated: true, completion: nil)
                     }
                 }
-            }
-            else {
+            } else {
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
                     let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
                     self.navigationController?.pushViewController(schoolCodevc, animated: false)
@@ -264,48 +294,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }
     }
-
-private func updateLocale(parent: ParentResponse) {
-    var locale = ""
-    if Locale.current.languageCode!.elementsEqual("ar") {
-        locale = "ar"
-    } else {
-        locale = "en"
-    }
-    setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
-        if isSuccess {
-            if isParent() {
-                self.stopAnimating()
-                let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                let nvc = UINavigationController(rootViewController: childrenTVC)
-                nvc.isNavigationBarHidden = true
-                nvc.modalPresentationStyle = .fullScreen
-                self.present(nvc, animated: true, completion: nil)
-            } else {
-                if parent.data.userType.elementsEqual("student") {
-                    if let _ = parent.data.parentId {
-                        self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                    } else {
-                        self.stopAnimating()
-                        showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
-                    }
-                } else {
-                    self.stopAnimating()
-                    let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                    let nvc = UINavigationController(rootViewController: childrenTVC)
-                    nvc.isNavigationBarHidden = true
-                    nvc.modalPresentationStyle = .fullScreen
-                    self.present(nvc, animated: true, completion: nil)
-                }
-            }
-        } else {
-            self.stopAnimating()
-            showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-                let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                self.navigationController?.pushViewController(schoolCodevc, animated: false)
-            })
-        }
-    }
-}
-
 }
