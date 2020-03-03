@@ -139,6 +139,7 @@
                                                             <color key="titleColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
+                                                            <action selector="switchToLate" destination="vc4-n1-rAq" eventType="touchUpInside" id="DaE-Y0-XTr"/>
                                                             <action selector="switchToLate:" destination="vc4-n1-rAq" eventType="touchUpInside" id="vPE-tL-Nj9"/>
                                                         </connections>
                                                     </button>
@@ -185,6 +186,7 @@
                                                             <color key="titleColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
+                                                            <action selector="switchToExcused" destination="vc4-n1-rAq" eventType="touchUpInside" id="Fc3-4J-pRU"/>
                                                             <action selector="switchToExcused:" destination="vc4-n1-rAq" eventType="touchUpInside" id="cKe-XV-FMn"/>
                                                         </connections>
                                                     </button>
@@ -231,6 +233,7 @@
                                                             <color key="titleColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
+                                                            <action selector="switchToAbsent" destination="vc4-n1-rAq" eventType="touchUpInside" id="Yis-Ol-Twe"/>
                                                             <action selector="switchToAbsent:" destination="vc4-n1-rAq" eventType="touchUpInside" id="gtS-rl-JSl"/>
                                                         </connections>
                                                     </button>
