@@ -6,7 +6,7 @@ target 'skolera' do
   #for loading screens
   pod 'SVProgressHUD'
   #for calling apis
-  pod 'Alamofire'
+  pod 'Alamofire', '4.9.1'
   #scroll view to allow keyboard to appear correctly
   pod 'TPKeyboardAvoiding'
   #download and cache images
