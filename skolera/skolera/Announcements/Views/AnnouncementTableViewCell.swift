@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftDate
 
 class AnnouncementTableViewCell: UITableViewCell {
     @IBOutlet weak var itemImage: UIImageView!
@@ -22,8 +23,10 @@ class AnnouncementTableViewCell: UITableViewCell {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-            let date = dateFormatter.date(from: announcement.createdAt)!
-            dateFormatter.dateFormat = "hh:mm a"
+            dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+            let date = dateFormatter.date(from: announcement.endAt)!
+            dateFormatter.dateFormat = "dd MMM yyyy"
+            dateFormatter.timeZone = .current
             debugPrint(date)
             //showing date
             itemDate.text = dateFormatter.string(from: date)

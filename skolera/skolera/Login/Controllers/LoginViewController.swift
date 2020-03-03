@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
+import FirebaseInstanceID
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
@@ -22,6 +23,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var schoolImageView: UIImageView!
+    
+    var token: String = ""
     
     //MARK: - Life Cycle
     
@@ -38,6 +41,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.schoolImageView.kf.setImage(with: url)
             }
         }
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+                 if let error = error {
+                     print("Error fetching remote instange ID: \(error)")
+                 } else if let result = result {
+                     print("Remote instance ID token: \(result.token)")
+                    self.token =  result.token
+                 }
+             }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,21 +113,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     ///   - password: entered user password
     func authenticate( email: String, password: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true]
+        let parameters : Parameters = [(isValidEmail(testStr: email) ? "email": "username") : email, "password" : password, "mobile": true, "mobile_api": true]
         loginAPI(parameters: parameters) { (isSuccess, statusCode, value, headers, error) in
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
-                    let parent : ParentResponse = ParentResponse.init(fromDictionary: result)
-                    UIApplication.shared.applicationIconBadgeNumber = parent.data.unseenNotifications
-                    self.userDefault.set(email, forKey: "email")
-                    self.userDefault.set(password, forKey: "password")
+                    let parent : Actor = Actor.init(fromDictionary: result)
+                    UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
                     self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                     self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
                     self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
                     self.userDefault.set(headers[UID] as! String, forKey: UID)
-                    self.userDefault.set(String(parent.data.actableId), forKey: ACTABLE_ID)
-                    self.userDefault.set(String(parent.data.id), forKey: ID)
-                    self.userDefault.set(parent.data.userType, forKey: USER_TYPE)
+                    self.userDefault.set(String(parent.childId), forKey: CHILD_ID)
+                    self.userDefault.set(String(parent.id), forKey: ID)
+                    self.userDefault.set(parent.userType, forKey: USER_TYPE)
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
                     self.updateLocale(parent: parent)
@@ -127,44 +137,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         }
     }
     
-    func getChildren(parentId: Int, childId: Int) {
-        getChildrenAPI(parentId: parentId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    for childJson in result {
-                        let child = Child.init(fromDictionary: childJson)
-                        if child.id == childId {
-                            let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                            childProfileVC.child = child
-                            childProfileVC.assignmentsText = ""
-                            childProfileVC.quizzesText = ""
-                            childProfileVC.eventsText = ""
-                            let nvc = UINavigationController(rootViewController: childProfileVC)
-                            nvc.isNavigationBarHidden = true
-                            nvc.modalPresentationStyle = .fullScreen
-                            self.present(nvc, animated: true, completion: nil)
-                            break
-                        }
-                    }
-                }
-            } else {
-                showNetworkFailureError(viewController: self,statusCode: statusCode, error: error!, errorAction: {
-                    let schoolCodevc = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-                    self.navigationController?.pushViewController(schoolCodevc, animated: false)
-                })
-            }
-        }
-    }
     
-    private func updateLocale(parent: ParentResponse) {
+    private func updateLocale(parent: Actor) {
         var locale = ""
         if Locale.current.languageCode!.elementsEqual("ar") {
             locale = "ar"
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale) { (isSuccess, statusCode, result, error) in
+        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, error) in
             if isSuccess {
                 if isParent() {
                     self.stopAnimating()
@@ -174,21 +155,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     nvc.modalPresentationStyle = .fullScreen
                     self.present(nvc, animated: true, completion: nil)
                 } else {
-                    if parent.data.userType.elementsEqual("student") {
-                        if let _ = parent.data.parentId {
-                            self.getChildren(parentId: parent.data.parentId, childId: parent.data.actableId)
-                        } else {
-                            self.stopAnimating()
-                            showNetworkFailureError(viewController: self, statusCode: -1, error: NSError())
-                        }
+                    if parent.userType.elementsEqual("student") {
+                        let childProfileVC = ChildHomeViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        childProfileVC.child = parent
+                        childProfileVC.assignmentsText = ""
+                        childProfileVC.quizzesText = ""
+                        childProfileVC.eventsText = ""
+                        let nvc = UINavigationController(rootViewController: childProfileVC)
+                        nvc.isNavigationBarHidden = true
+                        nvc.modalPresentationStyle = .fullScreen
+                        self.present(nvc, animated: true, completion: nil)
                     } else {
                         self.stopAnimating()
-                        ///////
                         let childProfileVC = TeacherContainerViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        if !parent.data.userType.elementsEqual("teacher") {
+                        if !parent.userType.elementsEqual("teacher") {
                             childProfileVC.otherUser = true
                         }
-                        childProfileVC.actor = parent.data
+                        childProfileVC.actor = parent
                         let nvc = UINavigationController(rootViewController: childProfileVC)
                         nvc.isNavigationBarHidden = true
                         nvc.modalPresentationStyle = .fullScreen

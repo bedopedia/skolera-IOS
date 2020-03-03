@@ -31,8 +31,8 @@ func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int,
     }
 }
 
-func setLocaleAPI(_ locale: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-    let parameters: Parameters = ["user": ["language": locale]]
+func setLocaleAPI(_ locale: String, token: String, deviceId: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let parameters: Parameters = ["user": ["language": locale, "fcm_token": token, "device_id": deviceId]]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: EDIT_USER(), userId())
     Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -57,8 +57,21 @@ func loginAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, [
     }
 }
 
+func getProfileAPI(id: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: GET_PROFILE(),"\(id)")
+     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
+       switch response.result{
+         case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+         case .failure(let error):
+             completion(true, response.response?.statusCode ?? 0, response.result.value, error)
+         }
+     }
+}
+
 func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error?) -> ()) {
-    let parameters : Parameters = ["parent_id" : parentId]
+    let parameters : Parameters = ["parent_id" : parentId, "mobile_api" : true]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_CHILDREN(),"\(parentId)")
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -69,4 +82,16 @@ func getChildrenAPI(parentId: Int, completion: @escaping (Bool, Int, Any?, Error
             completion(true, response.response?.statusCode ?? 0, response.result.value, error)
         }
     }
+}
+
+func logoutAPI(parameter: Parameters,completion: @escaping (Bool, Int, Any?, Error?) -> ()){
+    let headers : HTTPHeaders? = getHeaders()
+        Alamofire.request(LOGOUT(), method: .delete, parameters: nil, headers: headers).validate().responseJSON { response in
+          switch response.result{
+            case .success(_):
+               completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+            case .failure(let error):
+                completion(true, response.response?.statusCode ?? 0, response.result.value, error)
+            }
+        }
 }

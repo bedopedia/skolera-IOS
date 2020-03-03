@@ -13,6 +13,7 @@ import Alamofire
 func getBehaviorNotesAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = GET_BEHAVIOR_NOTES()
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

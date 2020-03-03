@@ -25,7 +25,7 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
                 if getUserType() == UserType.teacher {
                     addActorImage()
                     childNameLabel.text = actor.name
-                    childGradeLabel.text = actor.actableType
+                    childGradeLabel.text = actor.userType
                     for child in childViewControllers {
                         if let actorTableViewController = child as? ActorFeaturesTableViewController {
                             actorTableViewController.actor = self.actor

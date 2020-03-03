@@ -17,7 +17,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     @IBOutlet weak var backButton: UIButton!
     
     
-    var child : Child!
+    var child : Actor!
     var courses = [QuizCourse]()
     
     var meta: Meta!

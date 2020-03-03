@@ -23,7 +23,7 @@ func showAlert(viewController: UIViewController, title: String, message: String,
 func showReauthenticateAlert(viewController: UIViewController) {
     let alertController = UIAlertController(title: "Session ended", message: "Please login again", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default, handler: {(ACTION: UIAlertAction) -> Void in
-        clearUserDefaults()
+        logOut()
         let nvc = UINavigationController()
         let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
         nvc.pushViewController(schoolCodeVC, animated: true)
@@ -41,7 +41,7 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
-    } else if statusCode == 401 || statusCode == 500 {
+    } else if statusCode == 401 {
         if isLoginError {
             showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
         } else {
@@ -54,19 +54,22 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
     }
 }
 //request helpers
-func getHeaders() -> [String : String] {
+func getHeaders(addMobileVersion: Bool = false) -> [String : String] {
     let userDefault = UserDefaults.standard
     var headers = [String : String]()
     headers[ACCESS_TOKEN] = userDefault.string(forKey: ACCESS_TOKEN) ?? ""
     headers[TOKEN_TYPE] = userDefault.string(forKey: TOKEN_TYPE) ?? ""
     headers[UID] = userDefault.string(forKey: UID) ?? ""
     headers[CLIENT] = userDefault.string(forKey: CLIENT) ?? ""
+    if addMobileVersion {
+        headers[MOBILE_VERSION] = "application/vnd.skolera.v1"
+    }
     return headers
 }
 
 func parentId() -> String {
     let userDefault = UserDefaults.standard
-    return userDefault.string(forKey: ACTABLE_ID)!
+    return userDefault.string(forKey: CHILD_ID)!
 }
 
 func userId() -> String {
@@ -122,14 +125,22 @@ func getMainColor() -> UIColor {
     }
 }
 
+func logOut() {
+    let params = ["device_id" : UIDevice.current.identifierForVendor!.uuidString]
+    logoutAPI(parameter: params) { (isSuccess, statusCode, value, error)  in
+        if isSuccess {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            clearUserDefaults()
+        }
+    }
+}
+
 func clearUserDefaults() {
     let userDefault = UserDefaults.standard
     userDefault.removeObject(forKey: ACCESS_TOKEN)
     userDefault.removeObject(forKey: CLIENT)
-    userDefault.removeObject(forKey: ACTABLE_ID)
+    userDefault.removeObject(forKey: CHILD_ID)
     userDefault.removeObject(forKey: ID)
-    userDefault.removeObject(forKey: "email")
-    userDefault.removeObject(forKey: "password")
     userDefault.removeObject(forKey: TOKEN_TYPE)
     userDefault.removeObject(forKey: UID)
     userDefault.removeObject(forKey: USER_TYPE)

@@ -28,7 +28,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var backButton: UIButton!
     
     //MARK: - Variables
-    var child: Child!
+    var child: Actor!
     var assignmentsText : String!
     var quizzesText : String!
     var eventsText : String!
@@ -190,7 +190,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
     func sendFCM(token: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        let parameters: Parameters = ["user": ["mobile_device_token": token]]
+        let parameters: Parameters = ["user": ["fcm_token": token, "device_id": UIDevice.current.identifierForVendor!.uuidString]]
         sendFCMTokenAPI(parameters: parameters) { (isSuccess, statusCode, error) in
             self.stopAnimating()
             if isSuccess {

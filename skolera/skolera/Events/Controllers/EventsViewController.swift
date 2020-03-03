@@ -33,7 +33,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
         case saturday = 6
     }
     
-    var child : Child!
+    let userDefault = UserDefaults.standard
+    
+    var child : Actor!
     let calendar = Calendar.current
     var currentBorderColor: UIColor = .black
     let today = Date()
@@ -121,7 +123,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
     
     func getEvents() {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getEventsAPI(userId: child.userId, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
+        getEventsAPI(userId: child.id, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
@@ -131,6 +133,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
                     self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
+                    self.filterEvents(position: self.selectedEventsPosition)
                     self.calendarView.reloadData()
                     self.tableView.reloadData()
                     self.eventsCollectionView.reloadData()
@@ -140,6 +143,24 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable {
             }
         }
     }
+    func filterEvents(position: Int) {
+        if position == 0 {
+                 currentBorderColor = .black
+             } else if position == 1 {
+                 filteredEvents = events.filter{ $0.type.elementsEqual("academic") }
+                 currentBorderColor = #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
+             } else if position == 2 {
+                 filteredEvents = events.filter{ $0.type.elementsEqual("event") }
+                 currentBorderColor = #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
+             } else if position == 3 {
+                 filteredEvents = events.filter{ $0.type.elementsEqual("vacations") }
+                 currentBorderColor = #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
+             } else {
+                 filteredEvents = events.filter{ $0.type.elementsEqual("personal") }
+                 currentBorderColor = #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
+             }
+    }
+    
 }
 
 extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -175,21 +196,7 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         oldSelectedEventsPosition = selectedEventsPosition
         selectedEventsPosition = indexPath.row
         filteredEvents = events
-        if indexPath.row == 0 {
-            currentBorderColor = .black
-        } else if indexPath.row == 1 {
-            filteredEvents = events.filter{ $0.type.elementsEqual("academic") }
-            currentBorderColor = #colorLiteral(red: 1, green: 0.7215686275, blue: 0.2666666667, alpha: 1)
-        } else if indexPath.row == 2 {
-            filteredEvents = events.filter{ $0.type.elementsEqual("event") }
-            currentBorderColor = #colorLiteral(red: 0.04705882353, green: 0.768627451, blue: 0.8, alpha: 1)
-        } else if indexPath.row == 3 {
-            filteredEvents = events.filter{ $0.type.elementsEqual("vacations") }
-            currentBorderColor = #colorLiteral(red: 0.4078431373, green: 0.737254902, blue: 0.4235294118, alpha: 1)
-        } else {
-            filteredEvents = events.filter{ $0.type.elementsEqual("personal") }
-            currentBorderColor = #colorLiteral(red: 0.4705882353, green: 0.3215686275, blue: 0.7490196078, alpha: 1)
-        }
+        filterEvents(position: indexPath.row)
         self.tableView.reloadData()
         collectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
     }
@@ -231,13 +238,14 @@ extension EventsViewController: JTAppleCalendarViewDataSource, JTAppleCalendarVi
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en")
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+            formatter.timeZone = TimeZone.init(identifier: "UTC")
 //            formatter.string(from: )
             let start: Date = formatter.date(from: event.startDate!)!
             let end: Date = formatter.date(from: event.endDate!)!
             guard start < end else {
                 return false
             }
-            let dateInterval: DateInterval = DateInterval(start: start, end: end)
+            let dateInterval: DateInterval = DateInterval(start: start.addingTimeInterval(-(60 * 60 * 24)), end: end)
 //            let dateIsInInterval: Bool = dateInterval.contains(date) // true
             return dateInterval.contains(date)
         }

@@ -20,18 +20,12 @@ class CourseGradeCell: UITableViewCell {
     //MARK: - Variables
     
     /// grade object acts as the cell data source. Once set, it fills the cell with its contents
-    var grade: PostCourse!{
+    var courseGroup: ShortCourseGroup!{
         didSet{
-            if grade != nil{
-                courseNameLabel.text = grade.courseName ?? ""
-//                if grade.grade.letter.elementsEqual("--") || grade.hideGrade{
-//                    courseGradeLabel.isHidden = true
-//                } else {
-//                    courseGradeLabel.text = grade.grade.letter
-//                }
+            if courseGroup != nil{
+                courseNameLabel.text = courseGroup.courseName ?? ""
                 courseGradeLabel.isHidden = true
                 courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-//                courseImageView.image = getCourseImage(courseName: grade.name)
                 courseImageView.isHidden = false
                 subjectImageLabel.clipsToBounds = false
                 
@@ -40,27 +34,27 @@ class CourseGradeCell: UITableViewCell {
                 courseImageView.layer.shadowOffset = CGSize.zero
                 courseImageView.layer.shadowRadius = 10
                 courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-                var courseName = self.grade.courseName?.split(separator: " ") as? [String]
+                let courseName = self.courseGroup.courseName?.split(separator: " ") as? [String]
                 if courseName?.count == 1 {
-                    courseImageView.childImageView(url: "", placeholder: "\(self.grade.courseName?.dropFirst(1)))", textSize: 14)
+                    courseImageView.childImageView(url: "", placeholder: "\(self.courseGroup.courseName?.dropFirst(1)))", textSize: 14)
                 } else {
                     courseImageView.childImageView(url: "", placeholder: "\(courseName?.first?.first)\(courseName?[1].first))", textSize: 14)
                 }
                 subjectImageLabel.textAlignment = .center
                 subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
                 subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
-                subjectImageLabel.text = getText(name: grade.courseName ?? "")
+                subjectImageLabel.text = getText(name: courseGroup.courseName ?? "")
             }
         }
     }
     
     func getText(name: String) -> String {
         let shortcut = name.replacingOccurrences(of: "&", with: "")
-        if shortcut.split(separator: " ").count == 1 {
+        if shortcut.split(separator: " ").count == 1 || (shortcut.split(separator: " ").count > 1 && shortcut.split(separator: " ")[1].first!.isPunctuation){
 //            return "\(shortcut.first!)"
             return String(shortcut.prefix(2))
         } else {
-            return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
+                return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
         }
         
     }

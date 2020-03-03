@@ -32,7 +32,7 @@ class QuizDetailsTableViewCell: UITableViewCell {
             quizDescriptionLabel.text = self.detailedQuiz.description ?? ""
             startDateLabel.text = self.formatDate(date: self.detailedQuiz.startDate!)
             endDateLabel.text = self.formatDate(date: self.detailedQuiz.endDate!)
-            durationLabel.text = "\(self.detailedQuiz.duration!)"
+            durationLabel.text = "\(self.detailedQuiz.duration!) " + "Minutes".localized
             totalScoreLabel.text = "\(self.detailedQuiz.totalScore!)"
             topicLabel.text = self.detailedQuiz.unit?.name ?? ""
             subtopicLabel.text = self.detailedQuiz.chapter?.name ?? ""

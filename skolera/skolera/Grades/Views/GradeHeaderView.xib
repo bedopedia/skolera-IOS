@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="GradeHeaderView" customModule="skolera" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sgj-gN-PUM">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kh-Ov-O8B">
+                            <rect key="frame" x="16" y="21" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFV-Xb-Odn">
+                            <rect key="frame" x="399" y="21" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="BFV-Xb-Odn" firstAttribute="centerY" secondItem="Sgj-gN-PUM" secondAttribute="centerY" id="4Ts-gU-Gy4"/>
+                        <constraint firstItem="8kh-Ov-O8B" firstAttribute="centerY" secondItem="Sgj-gN-PUM" secondAttribute="centerY" id="AzM-4f-DEi"/>
+                        <constraint firstItem="8kh-Ov-O8B" firstAttribute="leading" secondItem="Sgj-gN-PUM" secondAttribute="leading" constant="16" id="OVF-7r-E9i"/>
+                        <constraint firstAttribute="trailing" secondItem="BFV-Xb-Odn" secondAttribute="trailing" constant="15" id="oKT-aM-TD3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Sgj-gN-PUM" secondAttribute="bottom" id="A1d-lz-NgR"/>
+                <constraint firstItem="Sgj-gN-PUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Mz0-u1-DjG"/>
+                <constraint firstItem="Sgj-gN-PUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="W7L-Zu-0qR"/>
+                <constraint firstAttribute="trailing" secondItem="Sgj-gN-PUM" secondAttribute="trailing" id="c6z-CF-pW5"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="gradeLabel" destination="BFV-Xb-Odn" id="E9y-y6-gai"/>
+                <outlet property="headerView" destination="Sgj-gN-PUM" id="UMp-ja-nzt"/>
+                <outlet property="titleLabel" destination="8kh-Ov-O8B" id="X7X-D7-Ohb"/>
+            </connections>
+            <point key="canvasLocation" x="141" y="113"/>
+        </view>
+    </objects>
+</document>

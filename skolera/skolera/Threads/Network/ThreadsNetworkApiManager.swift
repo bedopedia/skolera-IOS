@@ -10,9 +10,9 @@ import Foundation
 import Alamofire
 
 
-func getSubjectsApi(parameters: Parameters, child: Child, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func getSubjectsApi(parameters: Parameters, child: Actor, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
-    let url = String(format: GET_THREADS_COURSE_GROUPS(),child.actableId)
+    let url = String(format: GET_THREADS_COURSE_GROUPS(), child.childId)
     debugPrint(url)
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
@@ -41,7 +41,7 @@ func getThreadsApi(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
 func getMessagesApi(threadId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_MESSAGES(), threadId)
-    debugPrint(url)
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

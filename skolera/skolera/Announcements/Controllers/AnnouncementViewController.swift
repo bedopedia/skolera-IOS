@@ -10,37 +10,38 @@ import UIKit
 import Lightbox
 
 class AnnouncementViewController: UIViewController {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     //    @IBOutlet weak var announcementHeader: UILabel!
-//    @IBOutlet weak var annnouncementBody: UILabel!
+    //    @IBOutlet weak var annnouncementBody: UILabel!
     @IBOutlet weak var announcementImage: UIImageView!
     @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var announcementWebView: UIWebView!
     
     var announcement: Announcement!
-    var weeklyNote: WeeklyNote!
+    var weeklyNote: GeneralNote!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-//        titleLabel.backgroundColor = .red
+        //        titleLabel.backgroundColor = .red
         if weeklyNote != nil {
             titleLabel.text = weeklyNote.title
             //        announcementHeader.text = announcement.title
             //        annnouncementBody.text = announcement.body.htmlToString
-            announcementWebView.loadHTMLString(weeklyNote.descriptionField, baseURL: nil)
+            announcementWebView.loadHTMLString(weeklyNote.description, baseURL: nil)
             
-            if weeklyNote.imageUrl == nil || weeklyNote.imageUrl.isEmpty {
-                self.announcementHeightConstraint.constant = 0
-                self.announcementImage.isHidden = true
-            } else {
+            if let image = weeklyNote.image, !image.isEmpty{
                 self.announcementHeightConstraint.constant = 192
                 self.announcementImage.isHidden = false
-                let url = URL(string: weeklyNote.imageUrl)
+                let url = URL(string: image)
                 announcementImage.kf.setImage(with: url)
-           }
+                
+            } else {
+                self.announcementHeightConstraint.constant = 0
+                self.announcementImage.isHidden = true
+            }
         } else {
             titleLabel.text = announcement.title
             //        announcementHeader.text = announcement.title
@@ -65,9 +66,18 @@ class AnnouncementViewController: UIViewController {
     }
     
     @IBAction func displayImage() {
-        if let url = URL(string: announcement.imageURL) {
+        var imageString = ""
+        var titleString = ""
+        if let myAnnouncement = announcement {
+            imageString = myAnnouncement.imageURL
+            titleString = myAnnouncement.title ?? ""
+        } else if let myWeeklyNote = weeklyNote {
+            imageString = myWeeklyNote.image ?? ""
+            titleString = weeklyNote.title
+        }
+        if let url = URL(string: imageString) {
             let images = [
-                LightboxImage(imageURL: url, text: announcement.title ?? "")
+                LightboxImage(imageURL: url, text: titleString)
             ]
             let controller = LightboxController(images: images)
             controller.pageDelegate = self
@@ -78,48 +88,38 @@ class AnnouncementViewController: UIViewController {
         }
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        debugPrint("parent: \(parent), \(parent?.parent)")
-//        if let parentVc = parent?.parent as? ChildHomeViewController {
-//            parentVc.headerHeightConstraint.constant = 0
-//            parentVc.headerView.isHidden = true
-//        }
-//        //        self.navigationController?.isNavigationBarHidden = true
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        debugPrint(parent?.parent)
-//        if let parentVC = parent?.parent as? ChildHomeViewController {
-//            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
-//            parentVC.headerView.isHidden = false
-//        }
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //        debugPrint("parent: \(parent), \(parent?.parent)")
+    //        if let parentVc = parent?.parent as? ChildHomeViewController {
+    //            parentVc.headerHeightConstraint.constant = 0
+    //            parentVc.headerView.isHidden = true
+    //        }
+    //        //        self.navigationController?.isNavigationBarHidden = true
+    //    }
+    //
+    //    override func viewWillDisappear(_ animated: Bool) {
+    //        super.viewWillDisappear(animated)
+    //        debugPrint(parent?.parent)
+    //        if let parentVC = parent?.parent as? ChildHomeViewController {
+    //            parentVC.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
+    //            parentVC.headerView.isHidden = false
+    //        }
+    //    }
+    
 }
 
 
 extension AnnouncementViewController: LightboxControllerPageDelegate {
-
-  func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
-    debugPrint(page)
-  }
+    
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        debugPrint(page)
+    }
 }
 
 extension AnnouncementViewController: LightboxControllerDismissalDelegate {
-
-  func lightboxControllerWillDismiss(_ controller: LightboxController) {
-//    dismiss(animated: false, completion: nil)
-  }
+    
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        //    dismiss(animated: false, completion: nil)
+    }
 }

@@ -11,10 +11,10 @@ import UIKit
 class GradesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //TODO:- REMAINING SCREEN FOR GRADES DETAILS
     //MARK: - Variables
-    var child : Child!
+    var child : Actor!
     
     /// date source for tableView
-    var grades = [PostCourse]()
+    var courseGroups = [ShortCourseGroup]()
     //MARK: - Outlets
     
     @IBOutlet var placeholderView: UIView!
@@ -31,7 +31,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if grades.isEmpty {
+        if courseGroups.isEmpty {
             placeholderView.isHidden = false
         } else {
             placeholderView.isHidden = true
@@ -49,7 +49,7 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return grades.count
+        return courseGroups.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Subjects".localized
@@ -60,15 +60,16 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
-        cell.grade = grades[indexPath.row]
+        cell.courseGroup = courseGroups[indexPath.row]
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! CourseGradeCell
-        let cgVC = CourseGradeViewController.instantiate(fromAppStoryboard: .Grades)
-        cgVC.child = child
-        cgVC.grade = cell.grade
-        self.navigationController?.pushViewController(cgVC, animated: true)
+        let selectGradingPeriodVC = SelectGradingPeriodViewController.instantiate(fromAppStoryboard: .Grades)
+        selectGradingPeriodVC.child = child
+        selectGradingPeriodVC.courseGroup = cell.courseGroup
+        self.navigationController?.pushViewController(selectGradingPeriodVC, animated: true)
     }
 
 }

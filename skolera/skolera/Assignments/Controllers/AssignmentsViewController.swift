@@ -20,7 +20,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var placeholderView: UIView!
     @IBOutlet var placeholderLabel: UILabel!
     
-    var child : Child!
+    var child : Actor!
     var isTeacher: Bool = false
     var courseName: String = ""
     var courseId: Int = 0

@@ -16,7 +16,7 @@ class TimetableViewController: UIViewController, EventDataSource{
     var tomorrow : Date!
     var todayEvents : [EventDescriptor]!    
     var tomorrowEvents : [EventDescriptor]!
-    var child : Child!
+    var child : Actor!
     var timeslots: [TimeSlot]!
     var actor: Actor!
     
