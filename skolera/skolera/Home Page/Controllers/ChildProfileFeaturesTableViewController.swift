@@ -34,6 +34,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     var weeklyPlannerDates: [String] = []
     var today: Date!
     var tomorrow: Date!
+    var shouldOpenBehaviorNotes: Bool = false
     /// Once set, get grades for this child
     var child : Actor!{
         didSet{
@@ -218,6 +219,15 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
                     self.otherBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.other!)"
+                    let good: Int = (behaviorNotesNumbersResponse.good ?? 0)
+                    let bad: Int = (behaviorNotesNumbersResponse.bad ?? 0)
+                    let other: Int = (behaviorNotesNumbersResponse.other ?? 0)
+                    let total = good + bad + other
+                    if total == 0 {
+                        self.shouldOpenBehaviorNotes = false
+                    } else {
+                        self.shouldOpenBehaviorNotes = true
+                    }
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -314,9 +324,11 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     func showBehaviorNotes() {
-        let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
-        bvc.child = child
-        self.navigationController?.pushViewController(bvc, animated: true)
+        if shouldOpenBehaviorNotes {
+            let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
+            bvc.child = child
+            self.navigationController?.pushViewController(bvc, animated: true)
+        }
     }
     func showWeeklyPlanner() {
 //        if !self.weeklyPlans.isEmpty {
