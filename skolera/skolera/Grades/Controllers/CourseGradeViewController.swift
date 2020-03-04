@@ -229,9 +229,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             let weightString: String = floor(gradeCategory.weight) == gradeCategory.weight ? String(Int(gradeCategory.weight)) : String(gradeCategory.weight)
                             let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
                             if mGradeView.contains("*") || Double(mGradeView) != nil {
-                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
+                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
                             } else {
-                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ? "\(mGradeView)" : "\(mGradeView)%"
+                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)" : "\(mGradeView)%"
                             }
             
                         }
@@ -252,9 +252,9 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             let weightString: String = floor(gradeCategory.weight) == gradeCategory.weight ? String(Int(gradeCategory.weight)) : String(gradeCategory.weight)
                             let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
                             if mGradeView.contains("*") || Double(mGradeView) != nil {
-                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
+                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
                             } else {
-                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ? "\(mGradeView)" : "\(mGradeView)%"
+                                gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)" : "\(mGradeView)%"
                             }
                         }
                         
