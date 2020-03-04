@@ -16,7 +16,7 @@ extension UIImageView {
         // setting up placeholder
         let temp = UILabel()
         temp.textAlignment = .center
-        temp.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+        temp.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: .clear)
         temp.font = UIFont.systemFont(ofSize: CGFloat(textSize), weight: UIFont.Weight.semibold)
         temp.text = placeholder
         //setting student image view to circle with green border
@@ -29,7 +29,7 @@ extension UIImageView {
         self.layer.borderWidth = CGFloat(borderWidth)
         self.layer.masksToBounds = true
         self.clipsToBounds = true
-        self.layer.borderColor = UIColor.appColors.green.cgColor
+        self.layer.borderColor = UIColor.clear.cgColor
         self.layer.cornerRadius = self.frame.height/2
     }
 }
