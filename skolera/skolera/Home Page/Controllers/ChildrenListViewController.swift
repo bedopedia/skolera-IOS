@@ -157,7 +157,7 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ChildrenTableViewCell
         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        tabBarVC.child = cell.child
+        tabBarVC.actor = cell.child
         tabBarVC.assignmentsText = ""
         tabBarVC.quizzesText = ""
         tabBarVC.eventsText = ""
