@@ -69,6 +69,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         eventsCollectionView.delegate = self
         eventsCollectionView.dataSource = self
         createEventButton.layer.borderColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
+        createEventButton.isHidden = true
         createEventButton.layer.borderWidth = 1
         tableView.rowHeight = 80
         tableView.delegate = self
@@ -116,6 +117,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.setUpEvents()
                     DispatchQueue.main.async {
                         commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
+                        self.createEventButton.isHidden = false
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.rowHeight = UITableViewAutomaticDimension

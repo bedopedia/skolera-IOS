@@ -12,7 +12,11 @@ import NVActivityIndicatorView
 import SkyFloatingLabelTextField
 
 class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
-
+    
+    enum Colors {
+        case error
+        case editing
+    }
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var whenDateTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var toDateTextField: SkyFloatingLabelTextField!
@@ -25,10 +29,12 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
     var whenISODate: String = ""
     var toISODate: String = ""
     var child : Actor!
+    var lineColor: UIColor!
+    var selectedLineColor: UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         backButton.setImage(backButton.image(for:.normal)?.flipIfNeeded(),for: .normal)
         subjectNameTextField.delegate = self
         addNotesTextField.delegate = self        
@@ -43,15 +49,13 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         toDatePickerView.datePickerMode = UIDatePicker.Mode.dateAndTime
         toDateTextField.inputView = toDatePickerView
         toDatePickerView.addTarget(self, action: #selector(toDatePickerFromValueChanged), for: UIControl.Event.valueChanged)
-        
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "d/M/y hh:mm a"
-//        whenDateTextField.placeholder = dateFormatter.string(from: Date())
-//        toDateTextField.placeholder = dateFormatter.string(from: Date())
-        
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
+        //        let dateFormatter = DateFormatter()
+        //        dateFormatter.dateFormat = "d/M/y hh:mm a"
+        //        whenDateTextField.placeholder = dateFormatter.string(from: Date())
+        //        toDateTextField.placeholder = dateFormatter.string(from: Date())
     }
     
     @objc func whenDatePickerFromValueChanged(sender:UIDatePicker) {
@@ -62,8 +66,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         dateFormatter.locale = Locale(identifier: "en")
         whenISODate = dateFormatter.string(from: sender.date)
-        whenDateTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-        whenDateTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+        update(fields: [whenDateTextField], with: .editing)
     }
     
     @objc func toDatePickerFromValueChanged(sender:UIDatePicker) {
@@ -74,11 +77,10 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         dateFormatter.locale = Locale(identifier: "en")
         toISODate = dateFormatter.string(from: sender.date)
-        toDateTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-        toDateTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+        update(fields: [toDateTextField], with: .editing)
     }
     
-    @IBAction func back(){
+    @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -90,24 +92,21 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             eventsParameters.removeValue(forKey: "start_date")
             isMissingData = true
-            whenDateTextField.lineColor = .red
-            whenDateTextField.selectedLineColor = .red
+            update(fields: [whenDateTextField], with: .error)
         }
         if !toISODate.isEmpty {
             eventsParameters["end_date"] = toISODate
         } else {
             eventsParameters.removeValue(forKey: "end_date")
             isMissingData = true
-            toDateTextField.lineColor = .red
-            toDateTextField.selectedLineColor = .red
+            update(fields: [toDateTextField], with: .error)
         }
         if let subjectNameText = subjectNameTextField.text, !subjectNameText.isEmpty {
             eventsParameters["title"] = subjectNameText
         } else {
             eventsParameters.removeValue(forKey: "title")
             isMissingData = true
-            subjectNameTextField.lineColor = .red
-            subjectNameTextField.selectedLineColor = .red
+            update(fields: [subjectNameTextField], with: .error)
         }
         
         if let notesText = addNotesTextField.text, !notesText.isEmpty {
@@ -115,15 +114,11 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             eventsParameters.removeValue(forKey: "description")
             isMissingData = true
-            addNotesTextField.lineColor = .red
-            addNotesTextField.selectedLineColor = .red
+            update(fields: [addNotesTextField], with: .error)
         }
         if !isMissingData{
             guard whenISODate < toISODate else {
-                whenDateTextField.lineColor = .red
-                whenDateTextField.selectedLineColor = .red
-                toDateTextField.lineColor = .red
-                toDateTextField.selectedLineColor = .red
+                update(fields: [whenDateTextField, toDateTextField], with: .error)
                 let alert = UIAlertController(title: "Skolera".localized, message: "Please enter correct dates".localized, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
@@ -146,7 +141,32 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
-            
+        }
+    }
+    
+    private func update(fields: [SkyFloatingLabelTextField], with: Colors) {
+        switch with {
+        case .editing:
+            lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+        case .error :
+            lineColor = .red
+            selectedLineColor = .red
+        }
+        for field in fields {
+            if field == whenDateTextField {
+                whenDateTextField.lineColor = lineColor
+                whenDateTextField.selectedLineColor = selectedLineColor
+            } else if field == toDateTextField {
+                toDateTextField.lineColor = lineColor
+                toDateTextField.selectedLineColor = selectedLineColor
+            } else if field == addNotesTextField {
+                addNotesTextField.lineColor = selectedLineColor
+                addNotesTextField.selectedLineColor = selectedLineColor
+            } else {
+                subjectNameTextField.lineColor = lineColor
+                subjectNameTextField.selectedLineColor = selectedLineColor
+            }
         }
     }
 }
@@ -157,6 +177,7 @@ extension CreateEventViewController: UITextFieldDelegate {
             addNotesTextField.becomeFirstResponder()
         } else {
             self.view.endEditing(true)
+            update(fields: [addNotesTextField], with: .editing)
             create()
         }
         return true
@@ -164,17 +185,9 @@ extension CreateEventViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == subjectNameTextField {
-            subjectNameTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-            subjectNameTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
-        } else if textField == addNotesTextField{
-            addNotesTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-            addNotesTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
-        } else if textField == whenDateTextField {
-            whenDateTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-            whenDateTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+            update(fields: [subjectNameTextField], with: .editing)
         } else {
-            toDateTextField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-            toDateTextField.selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+            update(fields: [addNotesTextField], with: .editing)
         }
     }
 }
