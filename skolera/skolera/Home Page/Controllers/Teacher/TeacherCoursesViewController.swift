@@ -18,7 +18,6 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         self.tableView.rowHeight = 80
         self.tableView.estimatedRowHeight = 80
         self.tableView.dataSource = self

@@ -90,7 +90,11 @@ func GET_TIME_TABLE() -> String
 {
     return "\(BASE_URL!)/api/students/%d/timetable"
 }
-
+//Attendances count
+func GET_ATTENDANCES_COUNT(childId: Int) -> String
+{
+    return "\(BASE_URL!)/api/attendances/percentage?by_student=\(childId)"
+}
 func GET_TEACHER_TIME_TABLE() -> String
 {
     return "\(BASE_URL!)/api/teachers/%d/timetable"

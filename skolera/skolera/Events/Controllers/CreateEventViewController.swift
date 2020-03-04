@@ -9,18 +9,19 @@
 import UIKit
 import Alamofire
 import NVActivityIndicatorView
+import SkyFloatingLabelTextField
 
 class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
-
+    
+    enum Colors {
+        case error
+        case editing
+    }
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var whenDateTextField: UITextField!
-    @IBOutlet weak var toDateTextField: UITextField!
-    @IBOutlet weak var subjectNameTextField: UITextField!
-    @IBOutlet weak var addNotesTextField: UITextField!
-    @IBOutlet weak var whenBottomBar: UIView!
-    @IBOutlet weak var toButtomBar: UIView!
-    @IBOutlet weak var subjectBottomBar: UIView!
-    @IBOutlet weak var notesBottomBar: UIView!
+    @IBOutlet weak var whenDateTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var toDateTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var subjectNameTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var addNotesTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var childImageView: UIImageView!
     
     let whenDatePickerView: UIDatePicker = UIDatePicker()
@@ -28,14 +29,15 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
     var whenISODate: String = ""
     var toISODate: String = ""
     var child : Actor!
+    var lineColor: UIColor!
+    var selectedLineColor: UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         backButton.setImage(backButton.image(for:.normal)?.flipIfNeeded(),for: .normal)
         subjectNameTextField.delegate = self
-        addNotesTextField.delegate = self
-        
+        addNotesTextField.delegate = self        
         let whenDatePickerView: UIDatePicker = UIDatePicker()
         whenDatePickerView.backgroundColor = .white
         whenDatePickerView.datePickerMode = UIDatePicker.Mode.dateAndTime
@@ -47,17 +49,13 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         toDatePickerView.datePickerMode = UIDatePicker.Mode.dateAndTime
         toDateTextField.inputView = toDatePickerView
         toDatePickerView.addTarget(self, action: #selector(toDatePickerFromValueChanged), for: UIControl.Event.valueChanged)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d/M/y hh:mm a"
-        whenDateTextField.placeholder = dateFormatter.string(from: Date())
-        toDateTextField.placeholder = dateFormatter.string(from: Date())
-        
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        
-        
+        //        let dateFormatter = DateFormatter()
+        //        dateFormatter.dateFormat = "d/M/y hh:mm a"
+        //        whenDateTextField.placeholder = dateFormatter.string(from: Date())
+        //        toDateTextField.placeholder = dateFormatter.string(from: Date())
     }
     
     @objc func whenDatePickerFromValueChanged(sender:UIDatePicker) {
@@ -68,7 +66,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         dateFormatter.locale = Locale(identifier: "en")
         whenISODate = dateFormatter.string(from: sender.date)
-        whenBottomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        update(fields: [whenDateTextField], with: .editing)
     }
     
     @objc func toDatePickerFromValueChanged(sender:UIDatePicker) {
@@ -79,10 +77,10 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         dateFormatter.locale = Locale(identifier: "en")
         toISODate = dateFormatter.string(from: sender.date)
-        toButtomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+        update(fields: [toDateTextField], with: .editing)
     }
     
-    @IBAction func back(){
+    @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -94,22 +92,21 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             eventsParameters.removeValue(forKey: "start_date")
             isMissingData = true
-            whenBottomBar.backgroundColor = .red
+            update(fields: [whenDateTextField], with: .error)
         }
         if !toISODate.isEmpty {
-            //todo: show error missing to date
             eventsParameters["end_date"] = toISODate
         } else {
             eventsParameters.removeValue(forKey: "end_date")
             isMissingData = true
-            toButtomBar.backgroundColor = .red
+            update(fields: [toDateTextField], with: .error)
         }
         if let subjectNameText = subjectNameTextField.text, !subjectNameText.isEmpty {
             eventsParameters["title"] = subjectNameText
         } else {
             eventsParameters.removeValue(forKey: "title")
             isMissingData = true
-            subjectBottomBar.backgroundColor = .red
+            update(fields: [subjectNameTextField], with: .error)
         }
         
         if let notesText = addNotesTextField.text, !notesText.isEmpty {
@@ -117,12 +114,11 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         } else {
             eventsParameters.removeValue(forKey: "description")
             isMissingData = true
-            notesBottomBar.backgroundColor = .red
+            update(fields: [addNotesTextField], with: .error)
         }
         if !isMissingData{
             guard whenISODate < toISODate else {
-                whenBottomBar.backgroundColor = .red
-                toButtomBar.backgroundColor = .red
+                update(fields: [whenDateTextField, toDateTextField], with: .error)
                 let alert = UIAlertController(title: "Skolera".localized, message: "Please enter correct dates".localized, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
                     NSLog("The \"OK\" alert occured.")
@@ -145,7 +141,32 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
-            
+        }
+    }
+    
+    private func update(fields: [SkyFloatingLabelTextField], with: Colors) {
+        switch with {
+        case .editing:
+            lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            selectedLineColor = #colorLiteral(red: 0, green: 0.8813343644, blue: 0.6430147886, alpha: 1)
+        case .error :
+            lineColor = .red
+            selectedLineColor = .red
+        }
+        for field in fields {
+            if field == whenDateTextField {
+                whenDateTextField.lineColor = lineColor
+                whenDateTextField.selectedLineColor = selectedLineColor
+            } else if field == toDateTextField {
+                toDateTextField.lineColor = lineColor
+                toDateTextField.selectedLineColor = selectedLineColor
+            } else if field == addNotesTextField {
+                addNotesTextField.lineColor = selectedLineColor
+                addNotesTextField.selectedLineColor = selectedLineColor
+            } else {
+                subjectNameTextField.lineColor = lineColor
+                subjectNameTextField.selectedLineColor = selectedLineColor
+            }
         }
     }
 }
@@ -156,6 +177,7 @@ extension CreateEventViewController: UITextFieldDelegate {
             addNotesTextField.becomeFirstResponder()
         } else {
             self.view.endEditing(true)
+            update(fields: [addNotesTextField], with: .editing)
             create()
         }
         return true
@@ -163,9 +185,9 @@ extension CreateEventViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == subjectNameTextField {
-            subjectBottomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            update(fields: [subjectNameTextField], with: .editing)
         } else {
-            notesBottomBar.backgroundColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
+            update(fields: [addNotesTextField], with: .editing)
         }
     }
 }

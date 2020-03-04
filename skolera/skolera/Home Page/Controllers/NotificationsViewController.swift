@@ -30,7 +30,6 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         } else {
             backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         }
-        headerView.addShadow()
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         tableView.refreshControl = refreshControl

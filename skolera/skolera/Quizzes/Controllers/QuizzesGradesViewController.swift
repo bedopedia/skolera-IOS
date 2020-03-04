@@ -26,7 +26,6 @@ class QuizzesGradesViewController: UIViewController, NVActivityIndicatorViewable
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self

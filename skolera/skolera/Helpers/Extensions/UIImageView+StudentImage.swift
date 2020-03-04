@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Kingfisher
-///get the circular view with a green border
+
 extension UIImageView {
     func childImageView(url : String, placeholder: String, textSize: Int, borderWidth: Int = 2)
     {
@@ -22,9 +22,7 @@ extension UIImageView {
         //setting student image view to circle with green border
         self.kf.setImage(with: getChildImageURL(urlString: url), placeholder: temp)
         setChildImageViewToCircle(borderWidth: borderWidth)
-
     }
-    
     fileprivate func setChildImageViewToCircle(borderWidth: Int = 2) {
         self.layer.borderWidth = CGFloat(borderWidth)
         self.layer.masksToBounds = true
@@ -33,7 +31,6 @@ extension UIImageView {
         self.layer.cornerRadius = self.frame.height/2
     }
 }
-
 extension UIImage {
     public func flippedImage() -> UIImage?{
         if let _cgImag = self.cgImage {
@@ -42,7 +39,6 @@ extension UIImage {
         }
         return nil
     }
-    
     public func flipIfNeeded() -> UIImage? {
         if (Locale.current.languageCode?.elementsEqual("ar"))! {
             return self.flippedImage()
