@@ -13,7 +13,6 @@ class SelectSlotsViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var didSelectSlot: ( (TimetableSlots) -> () )!
-//    var cancel: (() -> ())!
     var selectedIndex: Int!
     var selectedSlot: TimetableSlots!
     var timeTableSlots: [TimetableSlots]! {
@@ -28,7 +27,6 @@ class SelectSlotsViewController: UIViewController{
     }
     
     @IBAction func close() {
-//        cancel()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -56,7 +54,7 @@ extension SelectSlotsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 74
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
