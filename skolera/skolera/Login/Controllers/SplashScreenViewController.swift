@@ -67,7 +67,7 @@ class SplashScreenViewController: UIViewController {
                     if parent.userType.elementsEqual("student") {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         //                            for the child profile VC
-                        tabBarVC.child = parent
+                        tabBarVC.actor = parent
                         tabBarVC.assignmentsText = ""
                         tabBarVC.quizzesText = ""
                         tabBarVC.eventsText = ""

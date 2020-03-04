@@ -15,7 +15,6 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
 
     var actor: Actor!
     var otherUser: Bool = false
-    var child: Actor!
     var assignmentsText: String!
     var quizzesText: String!
     var eventsText: String!
@@ -70,12 +69,12 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                     actorViewController.actor = self.actor
                 }
                 else if let contactTeacherNVC = child as? ContactTeacherNVC {
-                    contactTeacherNVC.actor = self.actor
+                    contactTeacherNVC.student = self.actor
                 }
                 else if let announcementsNVC = child as? AnnouncementsTableViewNVC {
                     announcementsNVC.nameTabBarItem()
                 } else if let childProfileNVC = child as? ChildProfileFeaturesNVC {
-                    childProfileNVC.child = self.child
+                    childProfileNVC.child = self.actor
                     childProfileNVC.eventsText = ""
                     childProfileNVC.assignmentsText = ""
                     childProfileNVC.quizzesText = ""

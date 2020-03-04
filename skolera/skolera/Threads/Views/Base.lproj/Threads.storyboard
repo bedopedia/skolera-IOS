@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -87,6 +87,22 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="skN-qk-sTJ" customClass="CardView" customModule="skolera" customModuleProvider="target">
                                                     <rect key="frame" x="12" y="8" width="351" height="60"/>
                                                     <subviews>
+                                                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F1X-Lh-xuk" customClass="GradientView" customModule="skolera" customModuleProvider="target">
+                                                            <rect key="frame" x="16" y="2.5" width="55" height="55"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                                    <color key="value" red="0.14509803921568626" green="0.88235294117647056" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                                    <color key="value" red="0.066666666666666666" green="0.87058823529411766" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <real key="value" value="27.5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MGJ-Ui-EYr">
                                                             <rect key="frame" x="16" y="2.5" width="55" height="55"/>
                                                             <constraints>
@@ -163,10 +179,14 @@
                                                         <constraint firstItem="pz3-5n-3T1" firstAttribute="leading" secondItem="MGJ-Ui-EYr" secondAttribute="trailing" constant="16" id="Yyw-sT-6Vm"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="BEU-N3-k6A" secondAttribute="trailing" constant="99" id="eE4-DE-Yde"/>
                                                         <constraint firstItem="MGJ-Ui-EYr" firstAttribute="leading" secondItem="skN-qk-sTJ" secondAttribute="leading" constant="16" id="fLV-RR-gvK"/>
+                                                        <constraint firstItem="F1X-Lh-xuk" firstAttribute="centerY" secondItem="MGJ-Ui-EYr" secondAttribute="centerY" id="fUe-CX-QL2"/>
                                                         <constraint firstItem="1CK-jH-Bsy" firstAttribute="centerY" secondItem="skN-qk-sTJ" secondAttribute="centerY" id="gJi-bb-4Fe"/>
                                                         <constraint firstAttribute="trailing" secondItem="1CK-jH-Bsy" secondAttribute="trailing" constant="16" id="lTd-TY-QgH"/>
                                                         <constraint firstItem="BEU-N3-k6A" firstAttribute="top" secondItem="pz3-5n-3T1" secondAttribute="bottom" constant="4" id="onQ-qT-e3X"/>
+                                                        <constraint firstItem="F1X-Lh-xuk" firstAttribute="height" secondItem="MGJ-Ui-EYr" secondAttribute="height" id="q5j-KD-ygn"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="BEU-N3-k6A" secondAttribute="bottom" constant="3" id="r3C-1i-51d"/>
+                                                        <constraint firstItem="F1X-Lh-xuk" firstAttribute="centerX" secondItem="MGJ-Ui-EYr" secondAttribute="centerX" id="vhr-kR-Yba"/>
+                                                        <constraint firstItem="F1X-Lh-xuk" firstAttribute="width" secondItem="MGJ-Ui-EYr" secondAttribute="width" id="xdp-G1-GgC"/>
                                                         <constraint firstItem="pz3-5n-3T1" firstAttribute="top" secondItem="MGJ-Ui-EYr" secondAttribute="top" constant="4" id="yUx-3E-JCe"/>
                                                         <constraint firstItem="1CK-jH-Bsy" firstAttribute="leading" secondItem="pz3-5n-3T1" secondAttribute="trailing" constant="8" id="zfu-jz-lqu"/>
                                                     </constraints>
@@ -186,6 +206,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="imageBackgroundView" destination="F1X-Lh-xuk" id="nqW-K6-J1E"/>
                                             <outlet property="threadDate" destination="1CK-jH-Bsy" id="Rc4-xL-14d"/>
                                             <outlet property="threadImage" destination="MGJ-Ui-EYr" id="lCS-uz-IED"/>
                                             <outlet property="threadLatestMessage" destination="BEU-N3-k6A" id="Xsk-Md-lHD"/>

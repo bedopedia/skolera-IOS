@@ -15,6 +15,7 @@ class ThreadTableViewCell: UITableViewCell {
     @IBOutlet weak var threadDate: UILabel!
     @IBOutlet weak var unSeenView: UIView!
     @IBOutlet weak var unSeenCntLabel: UILabel!
+    @IBOutlet weak var imageBackgroundView: GradientView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +24,7 @@ class ThreadTableViewCell: UITableViewCell {
         unSeenView.layer.masksToBounds = true
         unSeenView.isHidden = true
         unSeenCntLabel.isHidden = true
+        imageBackgroundView.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
