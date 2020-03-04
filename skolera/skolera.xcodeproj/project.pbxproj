@@ -151,6 +151,7 @@
 		72A7CFAA240E861000ED4ED0 /* WeeklyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA6240E861000ED4ED0 /* WeeklyPlan.swift */; };
 		72A7CFAB240E861000ED4ED0 /* GeneralNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA7240E861000ED4ED0 /* GeneralNote.swift */; };
 		72AE80F4240FBE0700CF4F19 /* SelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AE80F3240FBE0700CF4F19 /* SelectionTableViewCell.swift */; };
+		72AE80F62410110B00CF4F19 /* GradeSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AE80F52410110A00CF4F19 /* GradeSelectionTableViewCell.swift */; };
 		72CE15F7240E8AE300AECC1C /* SelectGradingPeriodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15F6240E8AE300AECC1C /* SelectGradingPeriodViewController.swift */; };
 		72CE15FA240E8F1500AECC1C /* GradeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15F8240E8F1500AECC1C /* GradeHeaderView.swift */; };
 		72CE15FB240E8F1500AECC1C /* GradeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72CE15F9240E8F1500AECC1C /* GradeHeaderView.xib */; };
@@ -480,6 +481,7 @@
 		72A7CFA6240E861000ED4ED0 /* WeeklyPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyPlan.swift; sourceTree = "<group>"; };
 		72A7CFA7240E861000ED4ED0 /* GeneralNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralNote.swift; sourceTree = "<group>"; };
 		72AE80F3240FBE0700CF4F19 /* SelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewCell.swift; sourceTree = "<group>"; };
+		72AE80F52410110A00CF4F19 /* GradeSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		72CE15F6240E8AE300AECC1C /* SelectGradingPeriodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectGradingPeriodViewController.swift; sourceTree = "<group>"; };
 		72CE15F8240E8F1500AECC1C /* GradeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeHeaderView.swift; sourceTree = "<group>"; };
 		72CE15F9240E8F1500AECC1C /* GradeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GradeHeaderView.xib; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				8A3DE99420BED3C300BACD0E /* GradeDetailTableViewCell.swift */,
 				72CE15F8240E8F1500AECC1C /* GradeHeaderView.swift */,
 				72CE15F9240E8F1500AECC1C /* GradeHeaderView.xib */,
+				72AE80F52410110A00CF4F19 /* GradeSelectionTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2075,6 +2078,7 @@
 				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
 				54230E06205DA17C00EA7E62 /* String+CapitalizeFirstLetter.swift in Sources */,
 				8AAF1D7822DE035200B89A6D /* ChildHomeViewController.swift in Sources */,
+				72AE80F62410110B00CF4F19 /* GradeSelectionTableViewCell.swift in Sources */,
 				545BC0032018D4E800A1F858 /* Textfield+border.swift in Sources */,
 				543830B2204D711200ABF477 /* Label+Rounded.swift in Sources */,
 				547A37922022153B00794441 /* AdditionalParam.swift in Sources */,

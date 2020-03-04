@@ -8,6 +8,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SkeletonView
 
 class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     
@@ -25,16 +26,21 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     var child: Actor!
     var courseGroup: ShortCourseGroup!
     var selectedPeriodPos: Int = -1
+    var didLoad = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
-        getGradingPeriods()
+        
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
-        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        fixTableViewHeight()
+        tableView.showSkeleton()
+        tableView.reloadData()
+        getGradingPeriods()
         
     }
     
@@ -43,11 +49,16 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
     }
     
     
+    func fixTableViewHeight() {
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = 60
+    }
+    
+    
     func getGradingPeriods() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        
         getGradingPeriodApi(courseId: courseGroup.courseId!) { (isSuccess, statusCode, response, error) in
-            self.stopAnimating()
+            self.didLoad = true
+            self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = response as? [[String : AnyObject]] {
                     if result.count == 0 {
@@ -63,26 +74,37 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
                     }
                 }
             } else {
+                self.tableView.isHidden = false
+                self.placeholderView.isHidden = true
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showQuarter {
-            return self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes.count
+        if didLoad {
+            if showQuarter {
+                return self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes.count
+            } else {
+                return self.gradingPeriods.count
+            }
         } else {
-            return self.gradingPeriods.count
+            return 3
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GradeSelectionTableViewCell") as! GradeSelectionTableViewCell
         cell.selectionStyle = .none
-        if showQuarter {
-            cell.textLabel?.text = self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes[indexPath.row].name
+        if didLoad {
+            cell.isUserInteractionEnabled = true
+            if showQuarter {
+                cell.titleLabel.text = self.gradingPeriods[selectedPeriodPos].subGradingPeriodsAttributes[indexPath.row].name
+            } else {
+                cell.titleLabel.text = self.gradingPeriods[indexPath.row].name
+            }
         } else {
-            cell.textLabel?.text = self.gradingPeriods[indexPath.row].name
+            cell.isUserInteractionEnabled = false
         }
         
         return cell
