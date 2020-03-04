@@ -66,7 +66,6 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     func getSubjects() {
         let parameters : Parameters = ["source" : "home"]
         getSubjectsApi(parameters: parameters, child: child) { (isSuccess, statusCode, response, error) in
-            self.subjects = []
             self.didLoad = true
             self.resultTableView.hideSkeleton()
             if isSuccess {
