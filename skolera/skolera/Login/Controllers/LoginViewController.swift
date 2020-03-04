@@ -265,7 +265,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     if parent.userType.elementsEqual("student") {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         //                            for the child profile VC
-                        tabBarVC.child = parent
+                        tabBarVC.actor = parent
                         tabBarVC.assignmentsText = ""
                         tabBarVC.quizzesText = ""
                         tabBarVC.eventsText = ""

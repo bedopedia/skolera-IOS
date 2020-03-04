@@ -23,12 +23,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     var threads: [Threads]!
     var child: Actor!
-    var actor: Actor!
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
@@ -90,13 +88,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func logout() {
-//        let parentController = parent?.parent
-//        if let mainViewController = parentController as? TeacherContainerViewController {
-//            mainViewController.logout()
-//        }
-//        if let mainViewController = parentController as? ChildHomeViewController {
-//            mainViewController.openSettings()
-//        }
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         navigationController?.pushViewController(settingsVC, animated: true)
     }
@@ -121,6 +112,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         cell.selectionStyle = .none
         if threads != nil {
             cell.hideSkeleton()
+            cell.imageBackgroundView.isHidden = false
             let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
             let fullNameArr = fullName.components(separatedBy: " ")
             cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
@@ -293,11 +285,11 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func createNewThread(){
         let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        debugPrint(parent)
-        if let nvc = parent as? ContactTeacherNVC {
-            newMessageVC.child = nvc.child
+        if let _ = parent as? ContactTeacherNVC, let student = self.child {
+            newMessageVC.child = student
+            self.navigationController?.pushViewController(newMessageVC, animated: true)
         }
-        self.navigationController?.pushViewController(newMessageVC, animated: true)
+       
     }
     
     
