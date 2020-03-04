@@ -25,7 +25,6 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         // Do any additional setup after loading the view.
         tableView.delegate = self

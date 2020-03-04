@@ -56,7 +56,6 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         self.view.layoutIfNeeded()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.rowHeight = UITableViewAutomaticDimension

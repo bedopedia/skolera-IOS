@@ -264,6 +264,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
+                    self.timeslots = []
                     for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
                         timeslot.day.capitalizeFirstLetter()
@@ -324,7 +325,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     func showBehaviorNotes() {
-        if shouldOpenBehaviorNotes {
+        if shouldOpenBehaviorNotes && false {
             let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
             bvc.child = child
             self.navigationController?.pushViewController(bvc, animated: true)

@@ -28,7 +28,6 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     //MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }

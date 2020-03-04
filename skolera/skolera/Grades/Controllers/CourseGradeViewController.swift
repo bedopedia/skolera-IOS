@@ -36,7 +36,6 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
          backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
                 if let child = child {
                     childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
