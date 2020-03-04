@@ -326,7 +326,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     func showBehaviorNotes() {
-        if shouldOpenBehaviorNotes && false {
+        if shouldOpenBehaviorNotes {
             let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
             bvc.child = child
             self.navigationController?.pushViewController(bvc, animated: true)
