@@ -26,7 +26,6 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
