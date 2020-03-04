@@ -35,6 +35,7 @@ class BehaviorNotesViewController: UIViewController {
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
+        
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
@@ -53,6 +54,7 @@ class BehaviorNotesViewController: UIViewController {
                 statusSegmentControl.tintColor = #colorLiteral(red: 0.9931195378, green: 0.5081273317, blue: 0.4078431373, alpha: 1)
             }
         }
+        
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         refreshData()
@@ -94,7 +96,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
             return behaviorNote.type == "Good"
         }
         if result.isEmpty {
-            return nil
+            return []
         } else {
           return result
         }
@@ -104,7 +106,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
             return behaviorNote.type == "Bad"
         }
         if result.isEmpty {
-            return nil
+            return []
         } else {
           return result
         }
@@ -114,7 +116,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
             return behaviorNote.type == "Other"
         }
         if result.isEmpty {
-            return nil
+            return []
         } else {
           return result
         }
@@ -170,6 +172,17 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.statusSegmentControl.removeAllSegments()
+                    if self.positiveNotes.count > 0 {
+                        self.statusSegmentControl.insertSegment(withTitle: "Positive".localized, at: 0, animated: false)
+                    }
+                    if self.negativeNotes.count > 0 {
+                        self.statusSegmentControl.insertSegment(withTitle: "Negative".localized, at: 1, animated: false)
+                    }
+                    if self.otherNotes.count > 0 {
+                        self.statusSegmentControl.insertSegment(withTitle: "Other".localized, at: 1, animated: false)
+                    }
+                    self.statusSegmentControl.selectedSegmentIndex = 0
                     self.loadPositiveNotes()
                 }
             } else {
