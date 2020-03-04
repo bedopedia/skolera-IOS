@@ -3,7 +3,7 @@ platform :ios, '10.0'
 target 'skolera' do
   use_frameworks!
   
-  #for loading screens
+ #for loading screens
   pod 'SVProgressHUD'
   #for calling apis
   pod 'Alamofire', '4.9.1'
