@@ -320,6 +320,7 @@
 		DC5774EA23A1356600BDB769 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5774E923A1356600BDB769 /* Tabs.swift */; };
 		DC69E46023560A9800A6FDF4 /* GradesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */; };
 		DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */; };
+		DC72E9E6240FF915000818F9 /* SelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC72E9E5240FF915000818F9 /* SelectionTableViewCell.swift */; };
 		DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */; };
 		DC8536F8237BF63500B12476 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8536F7237BF63500B12476 /* UIView+Shadow.swift */; };
 		DC8FAAE9238194FD00B3B753 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */; };
@@ -666,6 +667,7 @@
 		DC69E45F23560A9800A6FDF4 /* GradesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesNetworkManager.swift; sourceTree = "<group>"; };
 		DC69E4622356132500A6FDF4 /* ThreadsNetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsNetworkApiManager.swift; sourceTree = "<group>"; };
 		DC6B2DFE2371888F00BF665A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Announcements.strings; sourceTree = "<group>"; };
+		DC72E9E5240FF915000818F9 /* SelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionTableViewCell.swift; sourceTree = "<group>"; };
 		DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+ContainsSameElements.swift"; sourceTree = "<group>"; };
 		DC8536F7237BF63500B12476 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		DC8FAAE8238194FD00B3B753 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
@@ -1351,6 +1353,7 @@
 		8A5F42DE20B1A5A700FF93D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC72E9E5240FF915000818F9 /* SelectionTableViewCell.swift */,
 				8A298CD62184CDB900A82FEA /* Threads.storyboard */,
 				8A5F42E720B1C5EA00FF93D1 /* ThreadTableViewCell.swift */,
 			);
@@ -2198,6 +2201,7 @@
 				8AA9307721E6507A00F886F4 /* ActorFeaturesTableViewController.swift in Sources */,
 				DC81DFEF2366DE1800CFAB72 /* Array+ContainsSameElements.swift in Sources */,
 				8A94E45B22DF828500A01B0C /* Post.swift in Sources */,
+				DC72E9E6240FF915000818F9 /* SelectionTableViewCell.swift in Sources */,
 				546356DD201F669B0072F066 /* Config.swift in Sources */,
 				8A7E305720BABF4F00BF2985 /* Teacher.swift in Sources */,
 				547A37962022153B00794441 /* Param.swift in Sources */,
