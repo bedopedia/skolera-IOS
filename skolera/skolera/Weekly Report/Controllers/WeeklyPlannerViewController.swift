@@ -168,22 +168,17 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
             let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
             let item = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
             cell.courseNameLabel.text = item.title
-            cell.courseGradeLabel.isHidden = true
-            
-            cell.courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-            //                courseImageView.image = getCourseImage(courseName: grade.name)
-            cell.courseImageView.isHidden = false
-            cell.subjectImageLabel.clipsToBounds = false
-            
-            cell.courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-            cell.courseImageView.layer.shadowOpacity = 0.3
-            cell.courseImageView.layer.shadowOffset = CGSize.zero
-            cell.courseImageView.layer.shadowRadius = 10
-            cell.courseImageView.layer.shadowPath = UIBezierPath(roundedRect: cell.courseImageView.bounds, cornerRadius: cell.courseImageView.frame.height/2 ).cgPath
-            cell.subjectImageLabel.textAlignment = .center
-            cell.subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-            cell.subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
-            cell.subjectImageLabel.text = cell.getText(name: item.title)
+//            cell.courseGradeLabel.isHidden = true
+//            
+//            cell.courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+//            //                courseImageView.image = getCourseImage(courseName: grade.name)
+//            cell.courseImageView.isHidden = false
+//            
+//            cell.courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
+//            cell.courseImageView.layer.shadowOpacity = 0.3
+//            cell.courseImageView.layer.shadowOffset = CGSize.zero
+//            cell.courseImageView.layer.shadowRadius = 10
+//            cell.courseImageView.layer.shadowPath = UIBezierPath(roundedRect: cell.courseImageView.bounds, cornerRadius: cell.courseImageView.frame.height/2 ).cgPath
             return cell
         }
         
