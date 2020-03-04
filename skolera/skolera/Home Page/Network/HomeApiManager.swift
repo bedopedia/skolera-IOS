@@ -106,6 +106,7 @@ func getTimeTableAPI(childActableId: Int, completion: @escaping ((Bool, Int, Any
 func getTeacherTimeTableAPI(teacherActableId: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_TEACHER_TIME_TABLE(), teacherActableId)
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
