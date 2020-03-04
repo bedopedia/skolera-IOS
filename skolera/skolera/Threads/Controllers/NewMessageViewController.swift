@@ -11,8 +11,9 @@ import NVActivityIndicatorView
 import Alamofire
 import Chatto
 import ChattoAdditions
+import SkeletonView
 
-class NewMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+class NewMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var selectTeacherView: UIView!
@@ -25,26 +26,29 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     var showTeachers: Bool = false
     var child: Actor!
     var selectedCoursePos: Int = -1
+    var didLoad = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        getSubjects()
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         resultTableView.delegate = self
         resultTableView.dataSource = self
-        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        fixTableViewHeight()
+        resultTableView.showAnimatedSkeleton()
+        resultTableView.reloadData()
+        getSubjects()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
- 
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-       
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -54,44 +58,60 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationController?.popViewController(animated: true)
     }
     
+    func fixTableViewHeight() {
+          resultTableView.estimatedRowHeight = 70
+          resultTableView.rowHeight = 70
+      }
+    
     func getSubjects() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["source" : "home"]
         getSubjectsApi(parameters: parameters, child: child) { (isSuccess, statusCode, response, error) in
-            self.stopAnimating()
+            self.subjects = []
+            self.didLoad = true
+            self.resultTableView.hideSkeleton()
             if isSuccess {
-               if let result = response as? [[String : AnyObject]] {
+                if let result = response as? [[String : AnyObject]] {
                     for subject in result
                     {
                         debugPrint("\(subject)\n")
                         self.subjects.append(Subject.init(fromDictionary: subject))
                     }
                     self.resultTableView.reloadData()
-                    self.resultTableView.isHidden = false
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showTeachers {
-            return self.subjects[selectedCoursePos].teachers.count
+        if didLoad {
+            if showTeachers {
+                return self.subjects[selectedCoursePos].teachers.count
+            } else {
+                return self.subjects.count
+            }
         } else {
-            return self.subjects.count
+            return 6
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SelectionTableViewCell") as! SelectionTableViewCell
         cell.selectionStyle = .none
-        if showTeachers {
-            cell.textLabel?.text = "\(self.subjects[selectedCoursePos].teachers[indexPath.row].firstname ?? "") \(self.subjects[selectedCoursePos].teachers[indexPath.row].lastname ?? "")"
-            cell.detailTextLabel?.text = self.subjects[selectedCoursePos].course.name
+        if didLoad {
+            cell.hideSkeleton()
+            cell.isUserInteractionEnabled = true
+            if showTeachers {
+                cell.titleLabel.text = "\(self.subjects[selectedCoursePos].teachers[indexPath.row].firstname ?? "") \(self.subjects[selectedCoursePos].teachers[indexPath.row].lastname ?? "")"
+                cell.subTitleLable.text = self.subjects[selectedCoursePos].course.name
+            } else {
+                cell.titleLabel.text = self.subjects[indexPath.row].course.name
+                cell.subTitleLable.text = self.subjects[indexPath.row].teachers.count == 1 ? "\(self.subjects[indexPath.row].teachers.count) teacher" : "\(self.subjects[indexPath.row].teachers.count) teachers"
+            }
         } else {
-            cell.textLabel?.text = self.subjects[indexPath.row].course.name
-            cell.detailTextLabel?.text = self.subjects[indexPath.row].teachers.count == 1 ? "\(self.subjects[indexPath.row].teachers.count) teacher" : "\(self.subjects[indexPath.row].teachers.count) teachers"
+            cell.isUserInteractionEnabled = false
         }
         
         return cell
@@ -109,41 +129,34 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
             self.navigationController?.isNavigationBarHidden = false
             self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
         } else {
-            selectedCoursePos = indexPath.row
-            showTeachers = true
-            resultTableViewTopConstraint.constant = 49
-            selectTeacherView.isHidden = false
-            self.resultTableView.reloadData()
-            UIView.animate(withDuration: 0.5) {
-                self.view.layoutIfNeeded()
+            if self.subjects[indexPath.row].teachers.count > 0 {
+                selectedCoursePos = indexPath.row
+                showTeachers = true
+                resultTableViewTopConstraint.constant = 49
+                selectTeacherView.isHidden = false
+                self.resultTableView.reloadData()
+                UIView.animate(withDuration: 0.5) {
+                    self.view.layoutIfNeeded()
+                }
+                self.selectCourseTextField.text = self.subjects[indexPath.row].course.name
             }
-            self.selectCourseTextField.text = self.subjects[indexPath.row].course.name
         }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "SelectionTableViewCell"
     }
     
     @IBAction func showCourses(){
         showTeachers = false
         resultTableViewTopConstraint.constant = 0
-        self.resultTableView.isHidden = false
         self.selectTeacherView.isHidden = true
+        self.selectCourseTextField.text = ""
         self.resultTableView.reloadData()
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
         }
     }
     
-
-
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
