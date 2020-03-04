@@ -15,7 +15,6 @@ class CourseGradeCell: UITableViewCell {
     @IBOutlet weak var courseImageView: UIImageView!
     @IBOutlet weak var courseNameLabel: UILabel!
     @IBOutlet weak var courseGradeLabel: UILabel!
-    @IBOutlet weak var subjectImageLabel: UILabel!
     
     //MARK: - Variables
     
@@ -25,25 +24,12 @@ class CourseGradeCell: UITableViewCell {
                 if courseGroup != nil{
                     courseNameLabel.text = courseGroup.courseName ?? ""
                     courseGradeLabel.isHidden = true
-                    courseGradeLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-                    courseImageView.isHidden = false
-                    subjectImageLabel.clipsToBounds = false
-                    
-                    courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-                    courseImageView.layer.shadowOpacity = 0.3
-                    courseImageView.layer.shadowOffset = CGSize.zero
-                    courseImageView.layer.shadowRadius = 10
-                    courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-                    let courseName = self.courseGroup.courseName?.split(separator: " ") as? [String]
-                    if courseName?.count == 1 {
-                        courseImageView.childImageView(url: "", placeholder: "\(self.courseGroup.courseName?.dropFirst(1)))", textSize: 14)
+                    let courseName = self.courseGroup.courseName?.components(separatedBy: " ")
+                    if let name = courseName, name.count == 1 {
+                        courseImageView.childImageView(url: "\(name[0].first ?? Character(""))", placeholder: "\(name[0].first ?? Character(""))", textSize: 20)
                     } else {
-                        courseImageView.childImageView(url: "", placeholder: "\(courseName?.first?.first)\(courseName?[1].first))", textSize: 14)
+                         courseImageView.childImageView(url: "\(courseName?[0].first ?? Character(""))\(courseName?[1].first ?? Character(""))", placeholder: "\(courseName?[0].first ?? Character(""))\(courseName?[1].first ?? Character(""))", textSize: 20)
                     }
-                    subjectImageLabel.textAlignment = .center
-                    subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-                    subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
-                    subjectImageLabel.text = getText(name: courseGroup.courseName ?? "")
                 }
             }
         }
@@ -69,6 +55,10 @@ class CourseGradeCell: UITableViewCell {
 
             // Configure the view for the selected state
         }
+    
+    override func prepareForReuse() {
+        courseImageView.childImageView(url: "" , placeholder: "", textSize: 20, borderWidth: 0)
+    }
         
         private func getCourseImage(courseName: String) -> UIImage {
             if courseName.contains("English") {
