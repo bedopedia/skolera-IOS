@@ -34,7 +34,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 100;
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        headerView.addShadow()
 //        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
 //        let backItem = UIBarButtonItem()
 //        backItem.title = nil

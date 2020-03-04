@@ -31,7 +31,6 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        headerView.addShadow()
         refreshData()
     }
     

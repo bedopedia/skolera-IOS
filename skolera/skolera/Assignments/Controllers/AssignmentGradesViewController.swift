@@ -27,7 +27,6 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = assignment.name
         tableView.delegate = self

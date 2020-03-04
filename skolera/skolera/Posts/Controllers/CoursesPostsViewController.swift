@@ -35,7 +35,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        headerView.addShadow()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
