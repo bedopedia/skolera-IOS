@@ -4,7 +4,7 @@ target 'skolera' do
   use_frameworks!
   
   #for loading screens
- pod 'SVProgressHUD'
+  pod 'SVProgressHUD'
   #for calling apis
   pod 'Alamofire', '4.9.1'
   #scroll view to allow keyboard to appear correctly

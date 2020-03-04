@@ -1701,7 +1701,7 @@
 				54EB92F82015ED1D001DD93F /* Resources */,
 				54F46E83203DBC7E003F21BB /* Increment Build */,
 				DC995506235471E500124F72 /* ShellScript */,
-				9DA214D8EE206FE96DB1F9B4 /* [CP] Embed Pods Frameworks */,
+				E94C2624A2A94C87D555BEDB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1900,7 +1900,24 @@
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
-		9DA214D8EE206FE96DB1F9B4 /* [CP] Embed Pods Frameworks */ = {
+		DC995506235471E500124F72 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n\n";
+		};
+		E94C2624A2A94C87D555BEDB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1981,23 +1998,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		DC995506235471E500124F72 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
