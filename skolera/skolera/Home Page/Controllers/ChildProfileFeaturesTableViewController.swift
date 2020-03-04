@@ -328,6 +328,12 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             let bvc = BehaviorNotesViewController.instantiate(fromAppStoryboard: .BehaviorNotes)
             bvc.child = child
             self.navigationController?.pushViewController(bvc, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Skolera", message: "No behavior Notes Avaliable".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
+            }))
+            alert.modalPresentationStyle = .fullScreen
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func showWeeklyPlanner() {
