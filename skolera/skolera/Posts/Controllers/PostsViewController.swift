@@ -45,7 +45,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        MARK: - Methods
     func getCourses() {
         tableView.showAnimatedSkeleton()
-        getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
+        getPostsCoursesApi(childId: child.childId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             self.courses = []
             if isSuccess {
