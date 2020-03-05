@@ -28,6 +28,8 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     @IBOutlet var placeHolderView: UIView!
     @IBOutlet var headerView: UIView!
     @IBOutlet var containerView: UIView!
+    @IBOutlet weak var topHeaderHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var topHeaderCenterYConstraints: NSLayoutConstraint!
     
     var child : Actor!
     
@@ -47,6 +49,8 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     var selectedDay: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        topHeaderHeightConstraint.constant = UIApplication.shared.statusBarFrame.height + 60
+        topHeaderCenterYConstraints.constant = UIApplication.shared.statusBarFrame.height/2
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
@@ -59,7 +63,7 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
             } else {
                 placeHolderView.isHidden = true
                 if let url = URL(string: weeklyPlanner.generalNote.image ?? "") {
-                    weeklyNoteImage.kf.setImage(with: url)
+                    weeklyNoteImage.kf.setImage(with: url, options: [.memoryCacheExpiration(.seconds(1))])
                 } else {
                     weeklyNoteImage.isHidden = true
                     weeklyNoteImageConstraint.constant = 0
@@ -150,8 +154,10 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     }
     
     @IBAction func seeMore(){
-        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+        let announcementsVc = 
+            AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
         announcementsVc.weeklyNote = self.weeklyPlanner.generalNote
+        announcementsVc.child = self.child
         self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
 }
