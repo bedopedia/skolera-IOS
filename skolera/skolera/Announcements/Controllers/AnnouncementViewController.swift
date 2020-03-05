@@ -18,18 +18,20 @@ class AnnouncementViewController: UIViewController {
     @IBOutlet weak var announcementImage: UIImageView!
     @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var announcementWebView: UIWebView!
+    @IBOutlet weak var childImageView: UIImageView!
     
     var announcement: Announcement!
     var weeklyNote: GeneralNote!
+    var child: Actor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        //        titleLabel.backgroundColor = .red
+        if let child = child {
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        }
         if weeklyNote != nil {
             titleLabel.text = weeklyNote.title
-            //        announcementHeader.text = announcement.title
-            //        annnouncementBody.text = announcement.body.htmlToString
             announcementWebView.loadHTMLString(weeklyNote.description, baseURL: nil)
             
             if let image = weeklyNote.image, !image.isEmpty{
@@ -44,8 +46,6 @@ class AnnouncementViewController: UIViewController {
             }
         } else {
             titleLabel.text = announcement.title
-            //        announcementHeader.text = announcement.title
-            //        annnouncementBody.text = announcement.body.htmlToString
             announcementWebView.loadHTMLString(announcement.body, baseURL: nil)
             
             if announcement.imageURL == nil || announcement.imageURL.isEmpty {
@@ -58,7 +58,6 @@ class AnnouncementViewController: UIViewController {
                 announcementImage.kf.setImage(with: url)
             }
         }
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func back() {
