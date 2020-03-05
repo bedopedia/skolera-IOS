@@ -48,8 +48,8 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     }
     
     fileprivate func fixTableViewHeight() {
-        tableView.rowHeight = 140
-        tableView.estimatedRowHeight = 140
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
     }
     
     func getCourses() {

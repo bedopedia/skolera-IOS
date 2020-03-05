@@ -18,6 +18,7 @@ class AssignmentCourse {
     let assignmentName: String!
     let assignmentState: String!
     let nextAssignmentStartDate: String!
+    let runningAssignmentsCount: Int!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -29,6 +30,7 @@ class AssignmentCourse {
         assignmentName = dict["assignment_name"] as? String
         assignmentState = dict["assignment_state"] as? String
         nextAssignmentStartDate = dict ["next_assignment_start_date"] as? String
+        runningAssignmentsCount = dict["running_assignments_count"] as? Int
     }
     
 }
