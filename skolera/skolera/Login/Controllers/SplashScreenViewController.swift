@@ -59,6 +59,7 @@ class SplashScreenViewController: UIViewController {
             if isSuccess {
                 if isParent() {
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    childrenTVC.kids = parent.children
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
                     nvc.modalPresentationStyle = .fullScreen
@@ -66,7 +67,7 @@ class SplashScreenViewController: UIViewController {
                 } else {
                     if parent.userType.elementsEqual("student") {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        //                            for the child profile VC
+                        //for the child profile VC
                         tabBarVC.actor = parent
                         tabBarVC.assignmentsText = ""
                         tabBarVC.quizzesText = ""

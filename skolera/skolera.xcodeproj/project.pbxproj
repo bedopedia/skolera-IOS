@@ -144,7 +144,7 @@
 		72A7CF9D240E826500ED4ED0 /* CourseGradingPeriods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF97240E826500ED4ED0 /* CourseGradingPeriods.swift */; };
 		72A7CF9E240E826500ED4ED0 /* CourseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF98240E826500ED4ED0 /* CourseGroup.swift */; };
 		72A7CF9F240E826500ED4ED0 /* GradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF99240E826500ED4ED0 /* GradingPeriod.swift */; };
-		72A7CFA1240E82F500ED4ED0 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA0240E82F500ED4ED0 /* Parent.swift */; };
+		72A7CFA1240E82F500ED4ED0 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA0240E82F500ED4ED0 /* Actor.swift */; };
 		72A7CFA3240E845900ED4ED0 /* HomeApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA2240E845900ED4ED0 /* HomeApiManager.swift */; };
 		72A7CFA8240E861000ED4ED0 /* DailyNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA4240E861000ED4ED0 /* DailyNote.swift */; };
 		72A7CFA9240E861000ED4ED0 /* WeeklyPlanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CFA5240E861000ED4ED0 /* WeeklyPlanResponse.swift */; };
@@ -474,7 +474,7 @@
 		72A7CF97240E826500ED4ED0 /* CourseGradingPeriods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseGradingPeriods.swift; sourceTree = "<group>"; };
 		72A7CF98240E826500ED4ED0 /* CourseGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseGroup.swift; sourceTree = "<group>"; };
 		72A7CF99240E826500ED4ED0 /* GradingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradingPeriod.swift; sourceTree = "<group>"; };
-		72A7CFA0240E82F500ED4ED0 /* Parent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parent.swift; sourceTree = "<group>"; };
+		72A7CFA0240E82F500ED4ED0 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		72A7CFA2240E845900ED4ED0 /* HomeApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeApiManager.swift; sourceTree = "<group>"; };
 		72A7CFA4240E861000ED4ED0 /* DailyNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyNote.swift; sourceTree = "<group>"; };
 		72A7CFA5240E861000ED4ED0 /* WeeklyPlanResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyPlanResponse.swift; sourceTree = "<group>"; };
@@ -901,7 +901,7 @@
 			children = (
 				547605A9202091E100369BE0 /* Attendance.swift */,
 				547605A8202091E100369BE0 /* TodayWorkloadStatus.swift */,
-				72A7CFA0240E82F500ED4ED0 /* Parent.swift */,
+				72A7CFA0240E82F500ED4ED0 /* Actor.swift */,
 				546356E8201F68E80072F066 /* Role.swift */,
 			);
 			path = Parent;
@@ -2164,7 +2164,7 @@
 				547A37942022153B00794441 /* Notification.swift in Sources */,
 				8AD1C6CD232FA974006DA3A0 /* AttendanceStudent.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
-				72A7CFA1240E82F500ED4ED0 /* Parent.swift in Sources */,
+				72A7CFA1240E82F500ED4ED0 /* Actor.swift in Sources */,
 				8A119505231BEAFF00691398 /* TeacherAttendanceViewController.swift in Sources */,
 				8A9181532341F84500E8F6AF /* QuizSubmissionViewController.swift in Sources */,
 				544216E7204C604000BEB167 /* GradesListViewController.swift in Sources */,

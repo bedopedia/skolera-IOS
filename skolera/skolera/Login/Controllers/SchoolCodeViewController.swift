@@ -40,12 +40,10 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        self.schoolCodeTextField.becomeFirstResponder()
+    
     }
     @objc func textFieldDidChange(_ textField: UITextField) {
-//        let count = Float(textField.text?.count ?? 0)
-//        progressView.trackTintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
-//        progressView.setProgress( count / 6 , animated: true)
-//        passwordErrorLabel.isHidden = true
         if let floatingField = textField as? SkyFloatingLabelTextField, let text = floatingField.text, text.count > 0 {
             floatingField.lineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
             floatingField.selectedLineColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1)
@@ -79,23 +77,22 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        textField.inactive()
         textField.resignFirstResponder()
+        pressContinue()
         return true
     }
     //MARK: - Actions
     
     /// action when user presses continue, shows alert message if the schoolcode field is empty, call the service to get the school base url otherwise
-    ///
-    /// - Parameter sender: continue button
-    @IBAction func pressContinue(_ sender: UIButton) {
+    @IBAction func pressContinue() {
         guard let schoolcode = schoolCodeTextField.text else { return }
-        if schoolcode.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = MISSING_SCHOOL_CODE
-            schoolCodeTextField.lineColor = UIColor.red
-            schoolCodeTextField.selectedLineColor = UIColor.red
-        } else {
-            getSchoolBy(code: schoolcode.replacingOccurrences(of: " ", with: ""))
-        }
+              if schoolcode.isEmpty {
+                  errorLabel.isHidden = false
+                  errorLabel.text = MISSING_SCHOOL_CODE
+                  schoolCodeTextField.lineColor = UIColor.red
+                  schoolCodeTextField.selectedLineColor = UIColor.red
+              } else {
+                  getSchoolBy(code: schoolcode.replacingOccurrences(of: " ", with: ""))
+              }
     }
     
     /// service call to get the school base url, shows alert messages on errors, otherwise saves base url on keychain and calls moveToLoginVC
@@ -105,7 +102,6 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["code" : code]
         getSchoolurlAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
@@ -113,9 +109,11 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
                     self.userDefault.set(BASE_URL, forKey: "BASE_URL")
                     self.moveToLoginVC(schoolInfo: herukoSchoolInfo)
                 } else {
+                    self.stopAnimating()
                     showAlert(viewController: self, title: INVALID, message: INVALID_SCHOOL_CODE, completion: nil)
                 }
             } else {
+                self.stopAnimating()
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
         }
@@ -125,7 +123,6 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     ///
     /// - Parameter schoolInfo: school Information come from heruko
     func moveToLoginVC(schoolInfo : HerukoSchoolInfo) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: #colorLiteral(red: 0.1568627451, green: 0.7333333333, blue: 0.3058823529, alpha: 1), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters : Parameters = ["code" : schoolInfo.code]
         getSchoolInfoAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
