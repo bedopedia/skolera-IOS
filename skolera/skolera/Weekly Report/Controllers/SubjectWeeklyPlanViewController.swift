@@ -50,7 +50,13 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
             if !dailyNote.classWork.isEmpty {
                 cell.itemTextView.update(input: dailyNote.classWork)
             } else {
-                cell.itemTextView.update(input: "<p>\("No classwork".localized)</p>")
+                if Language.language == .arabic {
+                    cell.itemTextView.update(input: """
+                        <div align="right"><style type="text/css">ul { direction: rtl; }ol { direction: rtl; }</style>\("No classwork".localized)</div>
+                        """)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No classwork".localized)</p>")
+                }
                 
             }
             
@@ -60,7 +66,13 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
             if !dailyNote.homework.isEmpty {
                 cell.itemTextView.update(input: dailyNote.homework)
             } else {
-                cell.itemTextView.update(input: "<p>\("No homework".localized)</p>")
+                if Language.language == .arabic {
+                    cell.itemTextView.update(input: """
+                        <div align="right"><style type="text/css">ul { direction: rtl; }ol { direction: rtl; }</style>\("No Homework".localized)</div>
+                        """)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No Homework".localized)</p>")
+                }
                 
             }
             
@@ -70,8 +82,13 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
             if !dailyNote.activities.isEmpty {
                 cell.itemTextView.update(input: dailyNote.activities)
             } else {
-                cell.itemTextView.update(input: "<p>\("No activity".localized)</p>")
-                
+                if Language.language == .arabic {
+                    cell.itemTextView.update(input: """
+                        <div align="right"><style type="text/css">ul { direction: rtl; }ol { direction: rtl; }</style>\("No Activity".localized)</div>
+                        """)
+                } else {
+                    cell.itemTextView.update(input: "<p>\("No Activity".localized)</p>")
+                }
             }
             
         }
