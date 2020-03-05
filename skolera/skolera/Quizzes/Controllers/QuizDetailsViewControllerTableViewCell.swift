@@ -11,7 +11,6 @@ import UIKit
 class QuizDetailsTableViewCell: UITableViewCell {
 
     
-    @IBOutlet weak var quizNameLabel: UILabel!
     @IBOutlet weak var quizDescriptionLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
@@ -23,13 +22,21 @@ class QuizDetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var objectivesLabel: UILabel!
     @IBOutlet weak var lessonLabel: UILabel!
     @IBOutlet weak var courseGroupsLabel: UILabel!
-
+    @IBOutlet var descriptionLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
     var detailedQuiz: DetailedQuiz! {
-        
-        didSet{
-            quizNameLabel.text = self.detailedQuiz.name ?? ""
-            quizDescriptionLabel.text = self.detailedQuiz.description ?? ""
+        didSet {
+            if let details = self.detailedQuiz.description, !details.isEmpty {
+                quizDescriptionLabel.isHidden = false
+                quizDescriptionLabel.text = self.detailedQuiz.description
+                descriptionLabelHeightConstraint.constant = 20
+                bottomConstraint.constant = 8
+            } else {
+                quizDescriptionLabel.isHidden = true
+                descriptionLabelHeightConstraint.constant = 0
+                bottomConstraint.constant = 0
+            }
             startDateLabel.text = self.formatDate(date: self.detailedQuiz.startDate!)
             endDateLabel.text = self.formatDate(date: self.detailedQuiz.endDate!)
             durationLabel.text = "\(self.detailedQuiz.duration!) " + "Minutes".localized

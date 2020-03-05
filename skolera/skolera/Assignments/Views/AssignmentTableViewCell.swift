@@ -13,12 +13,7 @@ class AssignmentTableViewCell: UITableViewCell {
     @IBOutlet weak var publishDateLabel: UILabel!
     @IBOutlet weak var dueDayLabel: UILabel!
     @IBOutlet weak var dueMonthLabel: UILabel!
-    @IBOutlet weak var assignmentDateView: UIView! {
-           didSet {
-               assignmentDateView.layer.cornerRadius = assignmentDateView.frame.height/2
-               assignmentDateView.layer.masksToBounds = true
-           }
-       }
+    @IBOutlet weak var assignmentDateView: UIView!
     @IBOutlet weak var assignmentClockImage: UIImageView!
     @IBOutlet weak var assignmentDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!

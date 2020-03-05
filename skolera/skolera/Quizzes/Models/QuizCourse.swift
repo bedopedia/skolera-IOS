@@ -7,8 +7,8 @@
 //
 
 import Foundation
+
 class QuizCourse {
-    
     let id: Int!
     let name: String!
     let courseName: String!
@@ -18,6 +18,7 @@ class QuizCourse {
     let quizName: String!
     let quizState: String!
     let nextQuizStartDate: String!
+    let runningQuizzesCount: Int!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -29,6 +30,7 @@ class QuizCourse {
         quizName = dict["quiz_name"] as? String
         quizState = dict["quiz_state"] as? String
         nextQuizStartDate = dict ["next_quiz_start_date"] as? String
+        runningQuizzesCount = dict["running_quizzes_count"] as? Int
     }
     
 }

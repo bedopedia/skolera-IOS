@@ -10,19 +10,14 @@ import UIKit
 
 class QuizTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var publishDateLabel: UILabel!
     @IBOutlet weak var dueDayLabel: UILabel!
     @IBOutlet weak var dueMonthLabel: UILabel!
-    @IBOutlet weak var quizDateView: UIView! {
-        didSet {
-            quizDateView.layer.cornerRadius = quizDateView.frame.height/2
-            quizDateView.layer.masksToBounds = true
-        }
-    }
+    @IBOutlet weak var quizDateView: UIView!
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var leftView: UIView!
     
     var quiz: FullQuiz! {
         didSet {
@@ -53,16 +48,20 @@ class QuizTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
                 let quizDate = dateFormatter.date(from: quizStringDate)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
+                newDateFormat.dateFormat = "h:mm a"
                 quizDateLabel.text = newDateFormat.string(from: quizDate!)
                 if quiz.state.elementsEqual("running") {
-                    quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                    quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                    quizClockImage.image = #imageLiteral(resourceName: "greenHour")
+                    quizDateLabel.textColor =  #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+                    dueDayLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+                    dueMonthLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+                    quizClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
+                    leftView.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 0.3)
                 } else {
-                    quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                    quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                    quizClockImage.image = #imageLiteral(resourceName: "1")
+                    quizDateLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
+                    quizClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
+                    dueDayLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
+                    dueMonthLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
+                    leftView.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 0.25)
                 }
             } else {
                 quizDateView.isHidden = true
@@ -71,15 +70,15 @@ class QuizTableViewCell: UITableViewCell {
             }
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-
+    
 }
