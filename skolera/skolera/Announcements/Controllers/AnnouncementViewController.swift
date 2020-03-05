@@ -19,6 +19,7 @@ class AnnouncementViewController: UIViewController {
     @IBOutlet weak var announcementHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var announcementWebView: UIWebView!
     @IBOutlet weak var childImageView: UIImageView!
+    @IBOutlet weak var childImageViewBackground: GradientView!
     
     var announcement: Announcement!
     var weeklyNote: GeneralNote!
@@ -28,6 +29,8 @@ class AnnouncementViewController: UIViewController {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child {
+            childImageView.isHidden = false
+            childImageViewBackground.isHidden = false
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         if weeklyNote != nil {
