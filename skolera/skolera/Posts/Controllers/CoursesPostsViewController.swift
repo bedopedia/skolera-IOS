@@ -75,8 +75,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     fileprivate func fixSkeletonHeight() {
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = 200
+        tableView.estimatedRowHeight = 124
+        tableView.rowHeight = 124
     }
 
     func getPosts(page: Int = 1){
@@ -103,6 +103,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
                         self.posts.append(contentsOf: postsArray.map({ Post($0) }))
                         self.meta = Meta(fromDictionary: result["meta"] as! [String : Any])
+                        self.tableView.rowHeight = UITableViewAutomaticDimension
+                        self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                         self.tableView.reloadData()
                     }
                 }
@@ -136,6 +138,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             cell.post = posts[indexPath.row]
             if indexPath.row == posts.count - 3  && !isRetrievingData {
                 if meta.currentPage != meta.totalPages{
+                    fixSkeletonHeight()
                     getPosts(page: (meta.currentPage)! + 1)
                 }
             }
