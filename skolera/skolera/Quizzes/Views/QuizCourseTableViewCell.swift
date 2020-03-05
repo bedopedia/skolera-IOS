@@ -14,12 +14,7 @@ class QuizCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectImageLabel: UILabel!
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var quizName: UILabel!
-    @IBOutlet weak var quizDateView: UIView! {
-        didSet {
-            quizDateView.layer.cornerRadius = quizDateView.frame.height / 2
-            quizDateView.layer.masksToBounds = true
-        }
-    }
+    @IBOutlet weak var quizDateView: UIView!
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var numberOfQuizLabel: UILabel!
@@ -31,7 +26,7 @@ class QuizCourseTableViewCell: UITableViewCell {
             subjectImageLabel.clipsToBounds = true
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            if let assignStringDate = course.nextQuizDate {
+            if let _ = course.nextQuizDate {
                 dateViewHeightConstraint.constant = 24
                 quizDateView.isHidden = false
                 quizDateLabel.isHidden = false
@@ -57,7 +52,7 @@ class QuizCourseTableViewCell: UITableViewCell {
                 quizClockImage.isHidden = true
             }
             if let count = course.runningQuizzesCount, count > 0 {
-                numberOfQuizLabel.text = course.quizName
+                quizName.text = course.quizName
                 numberOfQuizLabel.text = "\(count)"
             } else {
                 quizName.text = "No active quizzes currently".localized

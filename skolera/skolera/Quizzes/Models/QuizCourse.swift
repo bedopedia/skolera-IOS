@@ -30,7 +30,7 @@ class QuizCourse {
         quizName = dict["quiz_name"] as? String
         quizState = dict["quiz_state"] as? String
         nextQuizStartDate = dict ["next_quiz_start_date"] as? String
-        runningQuizzesCount = dict["running_assignments_count"] as? Int
+        runningQuizzesCount = dict["running_quizzes_count"] as? Int
     }
     
 }

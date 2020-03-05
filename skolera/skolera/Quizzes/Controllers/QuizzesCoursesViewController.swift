@@ -29,7 +29,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.refreshControl = refreshControl
@@ -45,8 +45,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 80
-        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
     }
     
     @IBAction func back() {
