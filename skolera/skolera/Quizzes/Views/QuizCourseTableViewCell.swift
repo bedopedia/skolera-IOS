@@ -42,7 +42,7 @@ class QuizCourseTableViewCell: UITableViewCell {
                     quizDateLabel.textColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
                 } else {
-                    quizDateLabel.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+                    quizDateLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
                 }
             } else {
