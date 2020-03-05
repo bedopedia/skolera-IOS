@@ -24,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     //MARK: - Outlets
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var schoolImageView: UIImageView!
@@ -59,10 +60,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-        //        self.emailTextField.underlined()
+        self.backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         self.emailTextField.clearButtonMode = .never
-        //        self.passwordTextField.underlined()
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         passwordTextField.rightViewMode = .always
@@ -72,14 +71,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         detailsButton.addTarget(self, action: #selector(togglePasswordFieldState(_:)), for: .touchUpInside)
         if let urlString = self.imageURL {
             if let url = URL(string: urlString) {
-                self.schoolImageView.kf.setImage(with: url)
+                self.schoolImageView.kf.setImage(with: url, placeholder: UIImage(named: "splash"))
             }
+        } else {
+            self.schoolImageView.image = UIImage(named: "splash")
         }
-        self.schoolImageView.layer.borderWidth = 2
-        self.schoolImageView.layer.masksToBounds = false
-        self.schoolImageView.layer.borderColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
-        self.schoolImageView.layer.cornerRadius = 6
-        self.schoolImageView.clipsToBounds = true
         setUpFloatingText()
         
         InstanceID.instanceID().instanceID { (result, error) in
@@ -93,7 +89,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.emailTextField.becomeFirstResponder()
     }
     
     fileprivate func setUpFloatingText() {
@@ -107,6 +103,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         passwordTextField.selectedTitleColor = #colorLiteral(red: 0.1561536491, green: 0.7316914201, blue: 0.3043381572, alpha: 1)
         passwordTextField.selectedLineHeight = 1
         passwordTextField.selectedLineColor = .clear
+    }
+    
+    @IBAction func back() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: - Keyboard Settings
@@ -130,6 +130,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             passwordTextField.becomeFirstResponder()
         case passwordTextField:
             textField.resignFirstResponder()
+            login()
         default:
             textField.resignFirstResponder()
         }
@@ -179,27 +180,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             setErrorView(textField: passwordTextField, label: passwordErrorLabel, errorText: "Password length should be more than 6 characters", isPassword: true)
         }
     }
+
     
-    /// - Parameter sender: login button
-    @IBAction func login(_ sender: UIButton) {
+    @IBAction func login(){
         guard let email = emailTextField.text else {return}
-        guard let password = passwordTextField.text else {return}
-        if email.isEmpty {
-            setErrorUi(.emptyName)
-        } else if password.isEmpty {
-            setErrorUi(.emptyPassword)
-        } else if passwordTextField.text?.count ?? 0 < 6 {
-            setErrorUi(.invalidPassword)
-        } else {
-            authenticate(email: email, password: password)
-        }
+           guard let password = passwordTextField.text else {return}
+           if email.isEmpty {
+               setErrorUi(.emptyName)
+           } else if password.isEmpty {
+               setErrorUi(.emptyPassword)
+           } else if passwordTextField.text?.count ?? 0 < 6 {
+               setErrorUi(.invalidPassword)
+           } else {
+               authenticate(email: email, password: password)
+           }
     }
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-        //        let buttonTitle = passwordTextField.isSecureTextEntry ? "show" : "hide"
         let buttonImage = passwordTextField.isSecureTextEntry ? #imageLiteral(resourceName: "show-password") : #imageLiteral(resourceName: "hide-password")
         sender.setImage(buttonImage, for: .normal)
-        //        sender.setTitle(buttonTitle, for: .normal)
     }
     
     //    MARK:- Network calls
@@ -257,6 +256,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 if isParent() {
                     self.stopAnimating()
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                    childrenTVC.kids = parent.children
                     let nvc = UINavigationController(rootViewController: childrenTVC)
                     nvc.isNavigationBarHidden = true
                     nvc.modalPresentationStyle = .fullScreen

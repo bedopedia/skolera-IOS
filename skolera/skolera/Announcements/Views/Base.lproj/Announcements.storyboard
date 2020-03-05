@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -84,6 +84,21 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjR-dj-RZp" customClass="CardView" customModule="skolera" customModuleProvider="target">
                                                     <rect key="frame" x="12" y="6" width="351" height="44"/>
                                                     <subviews>
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGp-fV-Ayz" customClass="GradientView" customModule="skolera" customModuleProvider="target">
+                                                            <rect key="frame" x="21.5" y="6" width="32" height="32"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                                    <color key="value" red="0.1450980392" green="0.88235294119999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                                    <color key="value" red="0.066666666669999999" green="0.87058823529999996" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="16"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0QI-UU-c9z">
                                                             <rect key="frame" x="20" y="4.5" width="35" height="35"/>
                                                             <constraints>
@@ -104,8 +119,8 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URj-Bn-MTv">
-                                                            <rect key="frame" x="66" y="11.5" width="127" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="66" y="12.5" width="122.5" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
@@ -116,12 +131,16 @@
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstItem="0QI-UU-c9z" firstAttribute="leading" secondItem="wjR-dj-RZp" secondAttribute="leading" constant="20" id="1Hj-3S-Ibe"/>
+                                                        <constraint firstItem="aGp-fV-Ayz" firstAttribute="width" secondItem="0QI-UU-c9z" secondAttribute="width" multiplier="0.914286" id="2nO-ur-74e"/>
+                                                        <constraint firstItem="URj-Bn-MTv" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="4Le-0w-oSK"/>
                                                         <constraint firstAttribute="trailing" secondItem="YfE-2E-5Uk" secondAttribute="trailing" constant="20" id="6fq-BJ-Zu0"/>
+                                                        <constraint firstItem="aGp-fV-Ayz" firstAttribute="height" secondItem="0QI-UU-c9z" secondAttribute="height" multiplier="0.914286" id="Czn-eg-Xsi"/>
                                                         <constraint firstItem="URj-Bn-MTv" firstAttribute="leading" secondItem="0QI-UU-c9z" secondAttribute="trailing" constant="11" id="Fko-PB-AEA"/>
+                                                        <constraint firstItem="aGp-fV-Ayz" firstAttribute="centerX" secondItem="0QI-UU-c9z" secondAttribute="centerX" id="Sdo-IZ-yvW"/>
+                                                        <constraint firstItem="aGp-fV-Ayz" firstAttribute="centerY" secondItem="0QI-UU-c9z" secondAttribute="centerY" id="WXG-rA-Qz8"/>
                                                         <constraint firstItem="YfE-2E-5Uk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="URj-Bn-MTv" secondAttribute="trailing" constant="8" id="aey-Z6-egs"/>
                                                         <constraint firstItem="YfE-2E-5Uk" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="pkg-TC-qi2"/>
                                                         <constraint firstItem="0QI-UU-c9z" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="xcl-Mv-jM4"/>
-                                                        <constraint firstItem="URj-Bn-MTv" firstAttribute="centerY" secondItem="0QI-UU-c9z" secondAttribute="centerY" id="ylG-6g-WgK"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
