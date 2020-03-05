@@ -338,21 +338,14 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
     func showWeeklyPlanner() {
-        //        if !self.weeklyPlans.isEmpty {
         let wvc = WeeklyPlannerViewController.instantiate(fromAppStoryboard: .WeeklyReport)
         wvc.child = child
         wvc.weeklyPlanner = self.weeklyPlan.first
         self.navigationController?.pushViewController(wvc, animated: true)
-        //        }
-        //    else {
-        //            let alert = UIAlertController(title: "Skolera", message: "No weekly planner available".localized, preferredStyle: .alert)
-        //            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
-        //            }))
-        //            alert.modalPresentationStyle = .fullScreen
-        //            self.present(alert, animated: true, completion: nil)
-        //        }
     }
+    
     func showTimetable() {
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))

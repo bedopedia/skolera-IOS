@@ -77,7 +77,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         self.menuView.menuViewDelegate = self
         // Calendar delegate [Required]
         self.calendarView.calendarDelegate = self
-        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
+//        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
         setUpAttendances()
@@ -247,7 +247,7 @@ extension AttendanceViewController {
     func toggleState (state: CalendarMode) {
         calendarView.changeMode(state)
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
-        calendarView!.changeDaysOutShowingState(shouldShow: true)
+//        calendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     
     func toggleMonthViewWithMonthOffset(offset: Int) {

@@ -240,23 +240,54 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yr-xa-0Lz">
-                                        <rect key="frame" x="52" y="15.5" width="315" height="29"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <rect key="frame" x="77.5" y="18" width="220" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="Uty-vf-fJ5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oeC-T2-JL6" customClass="GradientView" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="325" y="14" width="32" height="32"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                <color key="value" red="0.1450980392" green="0.88235294119999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                <color key="value" red="0.066666666669999999" green="0.87058823529999996" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j06-Vb-Za8">
+                                        <rect key="frame" x="325" y="14" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="Cby-cv-xwe"/>
+                                            <constraint firstAttribute="width" constant="32" id="WHb-bC-8Sn"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="j06-Vb-Za8" firstAttribute="centerY" secondItem="0yr-xa-0Lz" secondAttribute="centerY" id="0Cb-bk-Trt"/>
                                     <constraint firstItem="3FR-HN-cFV" firstAttribute="leading" secondItem="vmh-bK-LsU" secondAttribute="leading" id="768-4W-3h2"/>
+                                    <constraint firstItem="oeC-T2-JL6" firstAttribute="width" secondItem="j06-Vb-Za8" secondAttribute="width" id="7b6-ov-ogA"/>
+                                    <constraint firstItem="oeC-T2-JL6" firstAttribute="centerY" secondItem="j06-Vb-Za8" secondAttribute="centerY" id="9BG-fo-rNO"/>
                                     <constraint firstItem="JpJ-18-j9a" firstAttribute="leading" secondItem="vmh-bK-LsU" secondAttribute="leading" constant="18" id="ARH-xD-DvI"/>
+                                    <constraint firstItem="oeC-T2-JL6" firstAttribute="height" secondItem="j06-Vb-Za8" secondAttribute="height" id="Kmf-Yy-cZ4"/>
                                     <constraint firstAttribute="height" constant="60" id="NsU-ho-KeN"/>
                                     <constraint firstAttribute="bottom" secondItem="3FR-HN-cFV" secondAttribute="bottom" id="P44-fS-jMs"/>
+                                    <constraint firstItem="oeC-T2-JL6" firstAttribute="centerX" secondItem="j06-Vb-Za8" secondAttribute="centerX" id="Pgh-Ha-8gh"/>
                                     <constraint firstItem="JpJ-18-j9a" firstAttribute="centerY" secondItem="vmh-bK-LsU" secondAttribute="centerY" id="SeN-BG-vF8"/>
-                                    <constraint firstItem="0yr-xa-0Lz" firstAttribute="leading" secondItem="JpJ-18-j9a" secondAttribute="trailing" constant="4" id="Xsx-5d-IHw"/>
-                                    <constraint firstAttribute="trailing" secondItem="0yr-xa-0Lz" secondAttribute="trailing" constant="8" id="anB-o0-G3X"/>
+                                    <constraint firstItem="0yr-xa-0Lz" firstAttribute="centerY" secondItem="vmh-bK-LsU" secondAttribute="centerY" id="WXs-rM-nYv"/>
+                                    <constraint firstAttribute="trailing" secondItem="j06-Vb-Za8" secondAttribute="trailing" constant="18" id="hgT-V7-mzo"/>
                                     <constraint firstItem="0yr-xa-0Lz" firstAttribute="centerY" secondItem="JpJ-18-j9a" secondAttribute="centerY" id="pK1-vl-DhC"/>
                                     <constraint firstAttribute="trailing" secondItem="3FR-HN-cFV" secondAttribute="trailing" id="rS5-Cr-EgQ"/>
+                                    <constraint firstItem="0yr-xa-0Lz" firstAttribute="centerX" secondItem="vmh-bK-LsU" secondAttribute="centerX" id="wPh-Gn-syj"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -285,6 +316,7 @@
                         <outlet property="announcementImage" destination="XE1-ef-RoZ" id="ZO4-Wz-thl"/>
                         <outlet property="announcementWebView" destination="3oA-5h-Gyb" id="OJo-Ii-yxW"/>
                         <outlet property="backButton" destination="JpJ-18-j9a" id="3S3-A8-edd"/>
+                        <outlet property="childImageView" destination="j06-Vb-Za8" id="22v-2Q-PBR"/>
                         <outlet property="titleLabel" destination="0yr-xa-0Lz" id="AUh-ak-3Wd"/>
                     </connections>
                 </viewController>

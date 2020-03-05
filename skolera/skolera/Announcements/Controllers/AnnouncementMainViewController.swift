@@ -126,6 +126,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
         announcementsVc.announcement = announcements[indexPath.row]
+        
         self.navigationController?.pushViewController(announcementsVc, animated: true)
     }
     
