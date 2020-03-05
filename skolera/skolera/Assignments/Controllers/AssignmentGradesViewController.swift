@@ -22,7 +22,6 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     var courseId: Int = 0
     var courseGroupId: Int = 0
     var assignment: FullAssignment!
-    var assignmentId: Int!
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -48,12 +47,12 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 132
-        tableView.estimatedRowHeight = 132
+        tableView.rowHeight = 104
+        tableView.estimatedRowHeight = 104
     }
     
     private func getSubmissions() {
-        getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignmentId!) { (isSuccess, statusCode, value, error) in
+        getAssignmentSubmissionsApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String: Any]] {
@@ -72,18 +71,18 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["grade": grade,
                                       "student_id": submission.studentId ?? 0,
-                                      "assignment_id": assignmentId!,
+                                      "assignment_id": assignment.id!,
                                       "course_group_id": courseGroupId,
                                       "student_status": "present",
                                       "course_id": courseId
         ]
-        submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignmentId!, parameters: parameters) { (isSuccess, statusCode, value, error) in
+        submitAssignmentGradeApi(courseId: courseId, courseGroupId: courseGroupId, assignmentId: assignment.id!, parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
                 if feedback.isEmpty {
                     self.stopAnimating()
                     self.getSubmissions()
                 } else {
-                    self.submitFeedback(submissionId: self.assignmentId!, studentId: submission.studentId, feedback: feedback)
+                    self.submitFeedback(submissionId: self.assignment.id, studentId: submission.studentId, feedback: feedback)
                 }
             } else {
                 self.stopAnimating()

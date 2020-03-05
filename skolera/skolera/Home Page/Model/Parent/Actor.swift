@@ -13,7 +13,6 @@ class Actor : NSObject, NSCoding{
 	var actions : [AnyObject]!
 	var avatarUrl : String!
 	var childId : Int!
-	//var children : [Child]!
 	var city : AnyObject!
 	var country : AnyObject!
 	var dateofbirth : AnyObject!
@@ -50,6 +49,7 @@ class Actor : NSObject, NSCoding{
     var sectionName : String!
     var stageName : String!
     var todayWorkloadStatus : TodayWorkloadStatus!
+    var children: [Actor]!
     
     
     
@@ -62,13 +62,13 @@ class Actor : NSObject, NSCoding{
 		actions = dictionary["actions"] as? [AnyObject]
 		avatarUrl = dictionary["avatar_url"] as? String
 		childId = dictionary["child_id"] as? Int
-//		children = [Child]()
-//		if let childrenArray = dictionary["children"] as? [[String:Any]]{
-//			for dic in childrenArray{
-//				let value = Child(fromDictionary: dic)
-//				children.append(value)
-//			}
-//		}
+		children = [Actor]()
+		if let childrenArray = dictionary["children"] as? [[String:Any]]{
+			for dic in childrenArray{
+				let value = Actor(fromDictionary: dic)
+				children.append(value)
+			}
+		}
 		city = dictionary["city"] as AnyObject
 		country = dictionary["country"] as AnyObject
 		dateofbirth = dictionary["dateofbirth"] as AnyObject
@@ -76,11 +76,7 @@ class Actor : NSObject, NSCoding{
 		firstname = dictionary["firstname"] as? String
 		gender = dictionary["gender"] as? String
 		homeAddress = dictionary["home_address"] as AnyObject
-        if let userId = dictionary["user_id"] as? Int {
-            id = userId
-        } else {
-            id = dictionary["id"] as? Int
-        }
+        id = dictionary["id"] as? Int
 		isActive = dictionary["is_active"] as? Bool
 		lastSignInAt = dictionary["last_sign_in_at"] as? String
 		lastname = dictionary["lastname"] as? String
@@ -137,13 +133,13 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			dictionary["child_id"] = childId
 		}
-//		if children != nil{
-//			var dictionaryElements = [[String:Any]]()
-//			for childrenElement in children {
-//				dictionaryElements.append(childrenElement.toDictionary())
-//			}
-//			dictionary["children"] = dictionaryElements
-//		}
+		if children != nil{
+			var dictionaryElements = [[String:Any]]()
+			for childrenElement in children {
+				dictionaryElements.append(childrenElement.toDictionary())
+			}
+			dictionary["children"] = dictionaryElements
+		}
 		if city != nil{
 			dictionary["city"] = city
 		}
@@ -320,9 +316,9 @@ class Actor : NSObject, NSCoding{
 		if childId != nil{
 			aCoder.encode(childId, forKey: "child_id")
 		}
-//		if children != nil{
-//			aCoder.encode(children, forKey: "children")
-//		}
+		if children != nil{
+			aCoder.encode(children, forKey: "children")
+		}
 		if city != nil{
 			aCoder.encode(city, forKey: "city")
 		}

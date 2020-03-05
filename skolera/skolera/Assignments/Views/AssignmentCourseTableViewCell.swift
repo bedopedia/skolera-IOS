@@ -10,7 +10,11 @@ import UIKit
 
 class AssignmentCourseTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var courseImageView: UIImageView!
+    @IBOutlet weak var courseImageView: UIImageView! {
+        didSet {
+            self.courseImageView.layer.masksToBounds = true
+        }
+    }
     @IBOutlet weak var subjectImageLabel: UILabel!
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var assignmentName: UILabel!
@@ -23,23 +27,24 @@ class AssignmentCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var assignmentClockImage: UIImageView!
     @IBOutlet weak var assignmentDateLabel: UILabel!
     @IBOutlet weak var numberOfAssignmentLabel: UILabel!
+    @IBOutlet var dateViewHeightConstraint: NSLayoutConstraint!
     
     var course: AssignmentCourse!{
         didSet{
             courseImageView.isHidden = false
-            subjectImageLabel.clipsToBounds = false
-            courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-            courseImageView.layer.shadowOpacity = 0.3
-            courseImageView.layer.shadowOffset = CGSize.zero
-            courseImageView.layer.shadowRadius = 10
-            courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-            subjectImageLabel.textAlignment = .center
-            subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-            subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
+            subjectImageLabel.clipsToBounds = true
+            subjectImageLabel.layer.masksToBounds = true
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            assignmentName.text = course.assignmentName == nil ? "No active assignments currently".localized : course.assignmentName
-            if let assignStringDate = course.nextAssignmentDate {
+            if let count = course.runningAssignmentsCount, count > 0 {
+                assignmentName.text = course.assignmentName
+                numberOfAssignmentLabel.text = "\(count)"
+            } else {
+                assignmentName.text = "No active assignments currently".localized
+                numberOfAssignmentLabel.text = ""
+            }
+            if let _ = course.nextAssignmentDate {
+                dateViewHeightConstraint.constant = 24
                 assignmentDateView.isHidden = false
                 assignmentDateLabel.isHidden = false
                 assignmentClockImage.isHidden = false
@@ -51,22 +56,18 @@ class AssignmentCourseTableViewCell: UITableViewCell {
                 newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
                 assignmentDateLabel.text = newDateFormat.string(from: assignDate!)
                 if let status = course.assignmentState, status.elementsEqual("running") {
-                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                    assignmentDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                    assignmentClockImage.image = #imageLiteral(resourceName: "greenHour")
+                    assignmentDateLabel.textColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
                 } else {
-                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                    assignmentDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                    assignmentClockImage.image = #imageLiteral(resourceName: "1")
+                    assignmentDateLabel.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
                 }
             } else {
                 assignmentDateView.isHidden = true
                 assignmentDateLabel.isHidden = true
                 assignmentClockImage.isHidden = true
+                dateViewHeightConstraint.constant = 0
             }
-            
-            
-            numberOfAssignmentLabel.text = "\(course.assignmentsCount ?? 0)"
         }
     }
     

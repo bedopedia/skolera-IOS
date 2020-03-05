@@ -10,7 +10,6 @@ import UIKit
 
 class AssignmentTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var publishDateLabel: UILabel!
     @IBOutlet weak var dueDayLabel: UILabel!
     @IBOutlet weak var dueMonthLabel: UILabel!
@@ -23,6 +22,7 @@ class AssignmentTableViewCell: UITableViewCell {
     @IBOutlet weak var assignmentClockImage: UIImageView!
     @IBOutlet weak var assignmentDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var leftView: UIView!
     
     var assignment: FullAssignment! {
         didSet {
@@ -53,16 +53,20 @@ class AssignmentTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
                 let assignDate = dateFormatter.date(from: assignStringDate)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
+                newDateFormat.dateFormat = "h:mm a"
                 assignmentDateLabel.text = newDateFormat.string(from: assignDate!)
                 if assignment.state.elementsEqual("running") {
-                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                    assignmentDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                    assignmentClockImage.image = #imageLiteral(resourceName: "greenHour")
+                    assignmentDateLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
+                    leftView.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 0.3)
+                    dueDayLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+                    dueMonthLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
                 } else {
-                    assignmentDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                    assignmentDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                    assignmentClockImage.image = #imageLiteral(resourceName: "1")
+                    assignmentDateLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
+                    assignmentClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
+                    leftView.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 0.25)
+                    dueDayLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
+                    dueMonthLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
                 }
             } else {
                 assignmentDateView.isHidden = true

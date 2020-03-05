@@ -11,7 +11,6 @@ import Alamofire
 import Kingfisher
 import Firebase
 import NVActivityIndicatorView
-import SkeletonView
 
 class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
@@ -21,24 +20,16 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     @IBOutlet var headerView: UIView!
     /// children array acts as the data source for the tableView
     @IBOutlet weak var notificationButton: UIButton!
-//    @IBOutlet weak var signOutButton: UIBarButtonItem!
-    var kids = [Actor]()
+    var kids: [Actor]!
     var userId: Int!
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
-//        signOutButton.image = signOutButton.image?.flipIfNeeded()
-//        navigationController?.isNavigationBarHidden = false
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 100;
         self.tableView.rowHeight = UITableViewAutomaticDimension
-//        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-//        let backItem = UIBarButtonItem()
-//        backItem.title = nil
-//        navigationItem.backBarButtonItem = backItem
-        getChildren()
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -47,30 +38,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 
 
     // MARK: - Table view settings
-    
-    /// service call to get parent children, it adds them to the children array
-    @objc func getChildren() {
-        self.tableView.showAnimatedSkeleton()
-        getChildrenAPI(parentId: Int(parentId())!) { (isSuccess, statusCode, value, error) in
-            self.tableView.hideSkeleton()
-            if isSuccess {
-                if let result = value as? [[String : AnyObject]] {
-                    self.kids = []
-                    for child in result {
-                        self.kids.append(Actor.init(fromDictionary: child))
-                    }
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
-                    self.tableView.reloadData()
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }
-    
-    
-    
     func showChangeLanguageConfirmation(language: Language){
         let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
@@ -89,32 +56,6 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     ///
     /// - Parameter sender: logout button
     @IBAction func logout() {
-//        let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: "Switch Language to Arabic".localized, style: .default , handler:{ (UIAlertAction)in
-//            if Language.language == .arabic {
-//                self.showChangeLanguageConfirmation(language: .english)
-//            } else{
-//                self.showChangeLanguageConfirmation(language: .arabic)
-//            }
-//
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Logout".localized, style: .destructive , handler:{ (UIAlertAction)in
-//            if(self.isAnimating) {
-//                self.stopAnimating()
-//            }
-//            self.sendFCM(token: "")
-//            clearUserDefaults()
-//            let nvc = UINavigationController()
-//            let schoolCodeVC = SchoolCodeViewController.instantiate(fromAppStoryboard: .Login)
-//            nvc.pushViewController(schoolCodeVC, animated: true)
-//            nvc.modalPresentationStyle = .fullScreen
-//            self.present(nvc, animated: true, completion: nil)
-//        }))
-//        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-//        alert.modalPresentationStyle = .fullScreen
-//        self.present(alert, animated: true, completion: nil)
-        
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         navigationController?.pushViewController(settingsVC, animated: true)
     }
@@ -132,7 +73,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     }
 }
 
-extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
+extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -161,10 +102,6 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         tabBarVC.quizzesText = ""
         tabBarVC.eventsText = ""
         self.navigationController?.pushViewController(tabBarVC, animated: true)
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "childCell"
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
