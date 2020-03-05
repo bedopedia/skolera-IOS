@@ -169,8 +169,8 @@ class TimetableViewController: UIViewController, EventDataSource{
             let closingbracket = text.index(text.endIndex, offsetBy: -2)
             group = String(text[afteropeningbracket...closingbracket])
         }
-        let attributedCourseName = NSAttributedString(string: courseName, attributes: [NSAttributedStringKey.font : UIFont.init(name: "CircularStd-Bold" , size: 18), NSAttributedStringKey.foregroundColor : UIColor.appColors.dark])
-        let attributedGroup = NSAttributedString(string: "\nGroup : "+group, attributes: [NSAttributedStringKey.font : UIFont.init(name: "CircularStd-Book" , size: 14), NSAttributedStringKey.foregroundColor : UIColor.appColors.greyNotTaken])
+        let attributedCourseName = NSAttributedString(string: courseName, attributes: [NSAttributedStringKey.font :UIFont.systemFont(ofSize: 18, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.dark])
+        let attributedGroup = NSAttributedString(string: "\nGroup : "+group, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.greyNotTaken])
         let result = NSMutableAttributedString(attributedString: attributedCourseName)
             result.append(attributedGroup)
         return result.attributedSubstring(from: NSMakeRange(0, result.string.count))
