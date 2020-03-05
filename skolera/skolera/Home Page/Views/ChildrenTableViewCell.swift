@@ -54,9 +54,9 @@ class ChildrenTableViewCell: UITableViewCell {
                 attendanceLabel.text = child.todayWorkloadStatus.attendanceStatus
                 
                 //setting todays workload
-                quizzesLabel.text = "\(child.todayWorkloadStatus.quizzesCount!) \("Quizzes".localized)".localizedCapitalized
-                assignmentsLabel.text = "\(child.todayWorkloadStatus.assignmentsCount!) \("Assignments".localized)".localizedCapitalized
-                eventsLabel.text = "\(child.todayWorkloadStatus.eventsCount!) \("Events".localized)".localizedCapitalized
+                quizzesLabel.text = "\(child.todayWorkloadStatus.quizzesCount!)"
+                assignmentsLabel.text = "\(child.todayWorkloadStatus.assignmentsCount!)"
+                eventsLabel.text = "\(child.todayWorkloadStatus.eventsCount!)"
             }
         }
     }
