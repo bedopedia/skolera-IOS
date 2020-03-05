@@ -29,7 +29,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.refreshControl = refreshControl
