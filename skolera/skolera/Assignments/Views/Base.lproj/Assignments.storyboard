@@ -265,6 +265,26 @@
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YXB-dF-9Wo" customClass="GradientView" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="364" y="14" width="32" height="32"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="EPh-3N-qcu"/>
+                                            <constraint firstAttribute="height" constant="32" id="pp7-bt-JVe"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                <color key="value" red="0.1450980392" green="0.88235294119999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                <color key="value" red="0.066666666669999999" green="0.87058823529999996" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C5U-xi-hNA">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
                                         <constraints>
@@ -282,9 +302,11 @@
                                     <constraint firstItem="iz5-Mi-HU5" firstAttribute="leading" secondItem="1vc-Te-tjU" secondAttribute="leading" constant="18" id="EAc-MH-BK2"/>
                                     <constraint firstAttribute="bottom" secondItem="X2S-20-1sb" secondAttribute="bottom" id="EEO-nW-2mw"/>
                                     <constraint firstItem="UAQ-vX-Kqo" firstAttribute="centerX" secondItem="1vc-Te-tjU" secondAttribute="centerX" id="Eet-EL-7sM"/>
+                                    <constraint firstItem="YXB-dF-9Wo" firstAttribute="centerX" secondItem="C5U-xi-hNA" secondAttribute="centerX" id="JeH-Yd-x9P"/>
                                     <constraint firstItem="X2S-20-1sb" firstAttribute="leading" secondItem="1vc-Te-tjU" secondAttribute="leading" id="Wk9-fJ-vLL"/>
                                     <constraint firstAttribute="trailing" secondItem="C5U-xi-hNA" secondAttribute="trailing" constant="18" id="YKJ-I3-zSd"/>
                                     <constraint firstItem="C5U-xi-hNA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UAQ-vX-Kqo" secondAttribute="trailing" constant="8" id="axj-Aq-vnx"/>
+                                    <constraint firstItem="YXB-dF-9Wo" firstAttribute="centerY" secondItem="C5U-xi-hNA" secondAttribute="centerY" id="dzS-dy-JC7"/>
                                     <constraint firstItem="C5U-xi-hNA" firstAttribute="centerY" secondItem="UAQ-vX-Kqo" secondAttribute="centerY" id="rQj-vM-EuV"/>
                                     <constraint firstItem="iz5-Mi-HU5" firstAttribute="centerY" secondItem="1vc-Te-tjU" secondAttribute="centerY" id="zP8-me-Wak"/>
                                 </constraints>
@@ -480,6 +502,26 @@
                                         <color key="textColor" red="0.333293438" green="0.33335629109999998" blue="0.33328947419999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYc-rF-ADi" customClass="GradientView" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="364" y="14" width="32" height="32"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="g96-qR-vYG"/>
+                                            <constraint firstAttribute="height" constant="32" id="gcv-I6-558"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                                <color key="value" red="0.1450980392" green="0.88235294119999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                                <color key="value" red="0.066666666669999999" green="0.87058823529999996" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3hx-az-yPC">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
                                         <constraints>
@@ -495,12 +537,14 @@
                                     <constraint firstItem="eh6-6I-xMo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qmf-j8-IgC" secondAttribute="trailing" constant="8" id="Id0-nC-Mpb"/>
                                     <constraint firstAttribute="height" constant="60" id="OXX-12-mOB"/>
                                     <constraint firstItem="OaL-lA-2Z2" firstAttribute="leading" secondItem="WjP-Fp-eL2" secondAttribute="leading" id="SwJ-0v-gBF"/>
+                                    <constraint firstItem="aYc-rF-ADi" firstAttribute="centerX" secondItem="3hx-az-yPC" secondAttribute="centerX" id="eVd-8t-1Q2"/>
                                     <constraint firstItem="qmf-j8-IgC" firstAttribute="centerY" secondItem="WjP-Fp-eL2" secondAttribute="centerY" id="gKn-PN-g3I"/>
                                     <constraint firstItem="qmf-j8-IgC" firstAttribute="leading" secondItem="WjP-Fp-eL2" secondAttribute="leading" constant="18" id="ire-a8-9NM"/>
                                     <constraint firstItem="eh6-6I-xMo" firstAttribute="centerY" secondItem="qmf-j8-IgC" secondAttribute="centerY" id="jod-ce-ZAc"/>
                                     <constraint firstItem="3hx-az-yPC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eh6-6I-xMo" secondAttribute="trailing" constant="8" id="nfR-Wq-QtN"/>
                                     <constraint firstAttribute="bottom" secondItem="OaL-lA-2Z2" secondAttribute="bottom" id="nxf-ae-Ynr"/>
                                     <constraint firstAttribute="trailing" secondItem="3hx-az-yPC" secondAttribute="trailing" constant="18" id="sh0-oo-Rgg"/>
+                                    <constraint firstItem="aYc-rF-ADi" firstAttribute="centerY" secondItem="3hx-az-yPC" secondAttribute="centerY" id="xbK-qz-nWV"/>
                                     <constraint firstItem="3hx-az-yPC" firstAttribute="centerY" secondItem="eh6-6I-xMo" secondAttribute="centerY" id="xzx-Z8-FXS"/>
                                 </constraints>
                             </view>
