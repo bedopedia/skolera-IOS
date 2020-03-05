@@ -22,14 +22,13 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
     @IBOutlet weak var notificationButton: UIButton!
     var kids: [Actor]!
     var userId: Int!
+    var expendedPositions: [Int] = [0]
     //MARK: - Life Cycle
     /// sets basic screen defaults, dynamic row height, clears the back button
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.estimatedRowHeight = 100;
-        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -75,7 +74,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 
 extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return kids.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,6 +91,18 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "childCell", for: indexPath) as! ChildrenTableViewCell
         cell.hideSkeleton()
         cell.child = kids[indexPath.row]
+        cell.isExpanded = expendedPositions.contains(indexPath.row)
+        debugPrint("EXPAND:", expendedPositions)
+        cell.didExpandItem = {
+            if self.expendedPositions.contains(indexPath.row) {
+                if let index =  self.expendedPositions.index(of: indexPath.row) {
+                    self.expendedPositions.remove(at: index)
+                }
+            } else {
+                self.expendedPositions.append(indexPath.row)
+            }
+             self.tableView.reloadRows(at: [indexPath], with: .fade)
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -103,10 +114,7 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         tabBarVC.eventsText = ""
         self.navigationController?.pushViewController(tabBarVC, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
+
     
     
 }
