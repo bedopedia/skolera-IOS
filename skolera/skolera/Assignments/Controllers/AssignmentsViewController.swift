@@ -13,6 +13,7 @@ import SkeletonView
 
 class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, SkeletonTableViewDataSource {
 
+    @IBOutlet var gradientView: GradientView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -39,6 +40,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.dataSource = self
         if isTeacher {
             childImageView.isHidden = true
+            gradientView.isHidden = true
         } else {
             if let child = child{
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
