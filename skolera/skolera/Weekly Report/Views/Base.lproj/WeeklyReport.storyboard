@@ -139,43 +139,29 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anv-IM-0JI">
                                 <rect key="frame" x="0.0" y="68" width="375" height="395"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I7L-X3-4H9">
-                                        <rect key="frame" x="4" y="345" width="367" height="50"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="0eJ-YB-pEk"/>
-                                        </constraints>
-                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sTE-E5-b3B" customClass="ArabicCollectionFlow" customModule="skolera" customModuleProvider="target">
-                                            <size key="itemSize" width="50" height="50"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells/>
-                                    </collectionView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-sf-6Fj">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-sf-6Fj">
                                         <rect key="frame" x="12" y="15.5" width="351" height="305.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="uQ0-eY-WyZ">
-                                                <rect key="frame" x="0.0" y="114.5" width="351" height="24"/>
+                                                <rect key="frame" x="0.0" y="86" width="351" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" id="DVY-9x-xWN"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General Activities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XB-24-sCs">
-                                                <rect key="frame" x="12" y="150.5" width="133" height="21"/>
+                                                <rect key="frame" x="12" y="122" width="130.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="HO3-x5-qYg"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                 <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijZ-9v-8rF">
-                                                <rect key="frame" x="12" y="179.5" width="327" height="72"/>
+                                                <rect key="frame" x="12" y="151" width="327" height="100.5"/>
                                                 <string key="text">Dear Parents,
 MIS believes that Food, to a large extent, defines our life. It determines our mood, behaviors, and directs us towards specific actions. students will learn about "Healthy Food" on Thursday October 11, 2018.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -226,6 +212,20 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                                             <constraint firstAttribute="trailing" secondItem="HBh-81-Ros" secondAttribute="trailing" id="vyW-0N-Nyb"/>
                                         </constraints>
                                     </view>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I7L-X3-4H9">
+                                        <rect key="frame" x="4" y="345" width="367" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="0eJ-YB-pEk"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sTE-E5-b3B" customClass="ArabicCollectionFlow" customModule="skolera" customModuleProvider="target">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -349,7 +349,7 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                             <constraint firstItem="uct-pS-T91" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="gwm-UY-Und"/>
                             <constraint firstItem="FNQ-9L-PzD" firstAttribute="bottom" secondItem="uct-pS-T91" secondAttribute="bottom" id="ong-ri-Weo"/>
                             <constraint firstItem="Sg6-pn-dcl" firstAttribute="top" secondItem="ZEr-Ns-Ki8" secondAttribute="bottom" constant="8" id="pY6-n6-x59"/>
-                            <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="top" secondItem="FNQ-9L-PzD" secondAttribute="top" id="sAT-g8-5IP"/>
+                            <constraint firstItem="ZEr-Ns-Ki8" firstAttribute="top" secondItem="eGo-DH-emD" secondAttribute="top" id="sAT-g8-5IP"/>
                             <constraint firstItem="Sg6-pn-dcl" firstAttribute="leading" secondItem="FNQ-9L-PzD" secondAttribute="leading" id="zAi-Yg-Eha"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FNQ-9L-PzD"/>
@@ -366,6 +366,8 @@ MIS believes that Food, to a large extent, defines our life. It determines our m
                         <outlet property="placeHolderView" destination="Sg6-pn-dcl" id="Xh8-dm-Sru"/>
                         <outlet property="seeMoreFrame" destination="HBh-81-Ros" id="7KS-68-Q7S"/>
                         <outlet property="tableView" destination="uct-pS-T91" id="4ul-Mi-fdi"/>
+                        <outlet property="topHeaderCenterYConstraints" destination="atG-l3-B0A" id="QD6-rq-RBu"/>
+                        <outlet property="topHeaderHeightConstraint" destination="iy6-XC-DBy" id="V4E-Pf-QHd"/>
                         <outlet property="weeklyNoteBottomConstraint" destination="IUb-sF-7Gi" id="DrT-S0-MYR"/>
                         <outlet property="weeklyNoteImage" destination="uQ0-eY-WyZ" id="dAA-kk-hQx"/>
                         <outlet property="weeklyNoteImageConstraint" destination="DVY-9x-xWN" id="TzB-jt-UMC"/>
