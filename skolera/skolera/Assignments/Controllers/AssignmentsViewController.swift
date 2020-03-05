@@ -77,8 +77,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         self.navigationController?.popViewController(animated: true)
     }
     func fixTableViewHeight() {
-        tableView.rowHeight = 144
-        tableView.estimatedRowHeight = 144
+        tableView.rowHeight = 104
+        tableView.estimatedRowHeight = 104
     }
     @IBAction func changeDataSource(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -138,15 +138,14 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentTableViewCell") as! AssignmentTableViewCell
         cell.hideSkeleton()
-        cell.nameLabel.text = courseName
         cell.assignment = filteredAssignments[indexPath.row]
         return cell
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 144
-    }
-    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 80
+//    }
+//
     
     private func getAssignmentDetails(assignmentId: Int) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
