@@ -257,11 +257,8 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
             //            quizVC.courseGroupId = courseGroupId
             //            quizVC.quiz = filteredQuizzes[indexPath.row]
             //            self.navigationController?.pushViewController(quizVC, animated: true)
-            debugPrint("show quiz details")
             if !filteredQuizzes[indexPath.row].state.elementsEqual("running") {
-                let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-                quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
-                self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+                getQuizDetails(quizId: filteredQuizzes[indexPath.row].id)
             }
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
@@ -272,4 +269,23 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
             self.navigationController?.pushViewController(quizVC, animated: true)
         }
     }
+    
+    func getQuizDetails(quizId: Int) {
+        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
+        getQuizApi(quizId: quizId) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                if let result = value as? [String : AnyObject] {
+//                    self.detailedQuiz = DetailedQuiz(result)
+                    let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+                    quizDetailsVC.quizId = quizId
+                    quizDetailsVC.detailedQuiz = DetailedQuiz(result)
+                    self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+                }
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
 }
