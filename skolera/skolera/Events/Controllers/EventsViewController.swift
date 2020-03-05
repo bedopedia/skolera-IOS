@@ -111,7 +111,6 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
                     self.vacationsCount = self.events.filter{ $0.type.elementsEqual("vacations") }.count
                     self.personalCount = self.events.filter{ $0.type.elementsEqual("personal") }.count
-//                    select the first tab
                     self.selectAllEvents()
                     self.setUpEvents()
                     DispatchQueue.main.async {
@@ -136,11 +135,13 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.locale = Locale(identifier: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        let region = Region(calendar: Calendars.gregorian, zone: Zones.current, locale: Locales.english)
         for event in self.events {
-            if let startDate = dateFormatter.date(from: event.startDate), let endDate = dateFormatter.date(from: event.endDate) {
-                let difference =  Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+            if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toISODate(),
+            let end = event.endDate.toISODate() {
+                let difference = end.convertTo(region: region).day - start.convertTo(region: region).day
                 for index in 0...difference {
                     let daysOffset = startDate.add(.init(seconds: 0, minutes: 0, hours: 0, days: index, weeks: 0, months: 0, years: 0))
                     let dateString = formatter.string(from: daysOffset)
