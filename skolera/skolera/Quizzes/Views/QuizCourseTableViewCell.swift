@@ -23,6 +23,7 @@ class QuizCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var quizClockImage: UIImageView!
     @IBOutlet weak var quizDateLabel: UILabel!
     @IBOutlet weak var numberOfQuizLabel: UILabel!
+    @IBOutlet var dateViewHeightConstraint: NSLayoutConstraint!
     
     var course: QuizCourse!{
         didSet{
@@ -52,21 +53,27 @@ class QuizCourseTableViewCell: UITableViewCell {
                 quizDateLabel.text = newDateFormat.string(from: assignDate!)
                 if Date() < (assignDate ?? Date()) {
                     quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
-                    quizDateLabel.textColor = #colorLiteral(red: 0.1179271713, green: 0.2293994129, blue: 0.09987530857, alpha: 1)
-                    quizClockImage.image = #imageLiteral(resourceName: "greenHour")
+                    quizDateLabel.textColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
+                    quizClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
                 } else {
                     quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
-                    quizDateLabel.textColor = #colorLiteral(red: 0.4231846929, green: 0.243329376, blue: 0.1568627451, alpha: 1)
-                    quizClockImage.image = #imageLiteral(resourceName: "1")
+                    quizDateLabel.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+                    quizClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
                 }
             } else {
                 quizDateView.isHidden = true
                 quizDateLabel.isHidden = true
                 quizClockImage.isHidden = true
             }
-            
-            
             numberOfQuizLabel.text = "\(course.quizzesCount ?? 0)"
+            
+//            if let count = course.runningAssignmentsCount, count > 0 {
+//                assignmentName.text = course.assignmentName
+//                numberOfAssignmentLabel.text = "\(count)"
+//            } else {
+//                assignmentName.text = "No active assignments currently".localized
+//                numberOfAssignmentLabel.text = ""
+//            }
         }
     }
 

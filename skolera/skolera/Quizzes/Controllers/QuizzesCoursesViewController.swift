@@ -45,8 +45,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 124
-        tableView.estimatedRowHeight = 124
+        tableView.rowHeight = 104
+        tableView.estimatedRowHeight = 104
     }
     
     @IBAction func back() {
@@ -65,7 +65,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
                     let quizCourses: [QuizCourse] = result.map({ QuizCourse($0) })
                     self.courses = quizCourses
                     self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = 120
+                    self.tableView.estimatedRowHeight = 104
                     self.tableView.reloadData()
                 }
             } else {
