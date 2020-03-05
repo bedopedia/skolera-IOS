@@ -29,7 +29,7 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.refreshControl = refreshControl
@@ -48,8 +48,8 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
     }
     
     fileprivate func fixTableViewHeight() {
-        tableView.rowHeight = 140
-        tableView.estimatedRowHeight = 140
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
     }
     
     func getCourses() {

@@ -21,16 +21,6 @@ class StudentSubmissionTableViewCell: UITableViewCell {
     var studentSubmission: AssignmentStudentSubmission! {
         didSet {
             if studentSubmission != nil {
-                courseImageView.isHidden = false
-                subjectImageLabel.clipsToBounds = false
-                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-                courseImageView.layer.shadowOpacity = 0.3
-                courseImageView.layer.shadowOffset = CGSize.zero
-                courseImageView.layer.shadowRadius = 10
-                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-                subjectImageLabel.textAlignment = .center
-                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-                subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
                 subjectImageLabel.text = getText(name: studentSubmission.studentName)
                 itemNameLabel.text = studentSubmission.studentName
                 if let graded = studentSubmission.graded, graded {
