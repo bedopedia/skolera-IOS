@@ -19,7 +19,25 @@ class ChildrenTableViewCell: UITableViewCell {
     @IBOutlet weak var quizzesLabel: UILabel!
     @IBOutlet weak var assignmentsLabel: UILabel!
     @IBOutlet weak var eventsLabel: UILabel!
-    @IBOutlet weak var centerConstraint: NSLayoutConstraint!
+    @IBOutlet weak var expantionButton: UIButton!
+    @IBOutlet weak var expandableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var expandableView: UIStackView!
+    
+    var isExpanded = false {
+        didSet {
+            if isExpanded {
+                expandableViewHeight.constant = 50
+                expandableView.isHidden = false
+                expantionButton.rotate(byAngle: 180, ofType: .degrees)
+            } else {
+                expandableViewHeight.constant = 0
+                expandableView.isHidden = true
+                expantionButton.rotate(byAngle: 180, ofType: .degrees)
+            }
+        }
+    }
+    
+    var didExpandItem: (()->())!
     
     //MARK: - Variables
     
@@ -52,6 +70,12 @@ class ChildrenTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    @IBAction func expandButtonClicked() {
+        didExpandItem()
+        
+        
     }
     //MARK: - Methods
     
