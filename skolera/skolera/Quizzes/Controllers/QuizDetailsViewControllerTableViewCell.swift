@@ -31,7 +31,7 @@ class QuizDetailsTableViewCell: UITableViewCell {
                 quizDescriptionLabel.isHidden = false
                 quizDescriptionLabel.text = self.detailedQuiz.description
                 descriptionLabelHeightConstraint.constant = 20
-                bottomConstraint.constant = 12
+                bottomConstraint.constant = 8
             } else {
                 quizDescriptionLabel.isHidden = true
                 descriptionLabelHeightConstraint.constant = 0
