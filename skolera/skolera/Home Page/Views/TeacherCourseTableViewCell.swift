@@ -19,13 +19,13 @@ class TeacherCourseTableViewCell: UITableViewCell {
             if course != nil {
                 courseImageView.isHidden = false
                 subjectImageLabel.clipsToBounds = false
-                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-                courseImageView.layer.shadowOpacity = 0.3
-                courseImageView.layer.shadowOffset = CGSize.zero
-                courseImageView.layer.shadowRadius = 10
-                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
+//                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
+//                courseImageView.layer.shadowOpacity = 0.3
+//                courseImageView.layer.shadowOffset = CGSize.zero
+//                courseImageView.layer.shadowRadius = 10
+//                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
                 subjectImageLabel.textAlignment = .center
-                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: .clear)
                 subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
                 subjectImageLabel.text = getText(name: course.name)
                 courseTitle.text = course.name
@@ -38,13 +38,13 @@ class TeacherCourseTableViewCell: UITableViewCell {
             if courseGroup != nil {
                 courseImageView.isHidden = false
                 subjectImageLabel.clipsToBounds = false
-                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-                courseImageView.layer.shadowOpacity = 0.3
-                courseImageView.layer.shadowOffset = CGSize.zero
-                courseImageView.layer.shadowRadius = 10
-                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
+//                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
+//                courseImageView.layer.shadowOpacity = 0.3
+//                courseImageView.layer.shadowOffset = CGSize.zero
+//                courseImageView.layer.shadowRadius = 10
+//                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
                 subjectImageLabel.textAlignment = .center
-                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
+                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.clear)
                 subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
                 subjectImageLabel.text = getText(name: courseGroup.name)
                 courseTitle.text = courseGroup.name

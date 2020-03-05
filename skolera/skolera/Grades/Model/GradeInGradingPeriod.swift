@@ -23,7 +23,7 @@ class GradeInGradingPeriod {
     let categories: [GradeCategory]
     let total: Double
     let grade: String
-    let categoryIsNumeric: Bool
+    let categoryIsNumeric: Bool?
     let percentage: Double
     let gradeView: String
     let letterScale: String
@@ -49,7 +49,7 @@ class GradeInGradingPeriod {
         
         total = dict["total"] as! Double
         grade = dict["grade"] as! String
-        categoryIsNumeric = dict["category_is_numeric"] as! Bool
+        categoryIsNumeric = dict["category_is_numeric"] as? Bool
         percentage = dict["percentage"] as! Double
         gradeView = dict["grade_view"] as! String
         letterScale = dict["letter_scale"] as! String

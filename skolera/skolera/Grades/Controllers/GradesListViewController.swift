@@ -34,12 +34,6 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        fixTableViewHeight()
-    }
-    
-    func fixTableViewHeight() {
-        tableView.rowHeight = 85
-        tableView.estimatedRowHeight = 85
     }
     
     @IBAction func back() {
@@ -57,6 +51,13 @@ class GradesListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            view.textLabel?.textColor = #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)
+            view.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
