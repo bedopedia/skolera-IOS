@@ -121,7 +121,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
-                    self.eventsCollectionView.reloadData()
+//                    self.eventsCollectionView.reloadData()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -386,7 +386,7 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDelega
         oldSelectedEventsPosition = selectedEventsPosition
         selectedEventsPosition = 0
         eventsCollectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .left, animated: true)
-        eventsCollectionView.reloadItems(at: [.init(row: oldSelectedEventsPosition, section: 0), .init(row: selectedEventsPosition, section: 0)])
+        eventsCollectionView.reloadData()
     }
 }
 //MARK:- Collapse Extension
