@@ -107,7 +107,7 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.subTitleLable.text = self.subjects[selectedCoursePos].course.name
             } else {
                 cell.titleLabel.text = self.subjects[indexPath.row].course.name
-                cell.subTitleLable.text = self.subjects[indexPath.row].teachers.count == 1 ? "\(self.subjects[indexPath.row].teachers.count) teacher" : "\(self.subjects[indexPath.row].teachers.count) teachers"
+                cell.subTitleLable.text = self.subjects[indexPath.row].teachers.count == 1 ? "\(self.subjects[indexPath.row].teachers.count) \("teacher".localized)" : "\(self.subjects[indexPath.row].teachers.count) \("teachers".localized)"
             }
         } else {
             cell.isUserInteractionEnabled = false
