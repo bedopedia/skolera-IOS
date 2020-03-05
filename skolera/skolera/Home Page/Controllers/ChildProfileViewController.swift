@@ -18,6 +18,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
 //    @IBOutlet weak var settingsIcon: UIBarButtonItem!
     @IBOutlet weak var childImageOuterView: UIView!
+    @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var childNameLabel: UILabel!
     @IBOutlet weak var childGradeLabel: UILabel!
     @IBOutlet weak var quizzesLabel: UILabel!
@@ -101,19 +102,20 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     func addChildImage()
     {
         //sets outer view to generate the green glow
-        childImageOuterView.clipsToBounds = false
+        childImageOuterView.clipsToBounds = true
         childImageOuterView.layer.shadowColor = UIColor.appColors.green.cgColor
         childImageOuterView.layer.shadowOpacity = 0.5
         childImageOuterView.layer.shadowOffset = CGSize.zero
         childImageOuterView.layer.shadowRadius = 10
         childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect:  childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
+        childImageOuterView.layer.cornerRadius = childImageOuterView.frame.height / 2
         //gets inner child image view
-        let childImageView = UIImageView(frame: childImageOuterView.bounds)
+//        let childImageView = UIImageView(frame: childImageOuterView.bounds)
         childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 32)
         childImageOuterView.backgroundColor = nil
-        childImageOuterView.addSubview(childImageView)
+//        childImageOuterView.addSubview(childImageView)
         //sets image frame to the outer frame
-        NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
+//        NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
     }
     
     func addChildData() {
