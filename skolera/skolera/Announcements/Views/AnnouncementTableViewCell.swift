@@ -31,6 +31,8 @@ class AnnouncementTableViewCell: UITableViewCell {
                 itemDate.text = dateFormatter.string(from: date)
                 if announcement.imageURL != nil {
                      itemImage.kf.setImage(with: URL(string: announcement.imageURL))
+                } else {
+                    itemImage.childImageView(url: "", placeholder: "\(announcement.title.capitalizingFirstLetter().first!)", textSize: 16)
                 }
                
             }
