@@ -45,8 +45,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 104
-        tableView.estimatedRowHeight = 104
+        tableView.rowHeight = 80
+        tableView.estimatedRowHeight = 80
     }
     
     @IBAction func back() {
@@ -65,7 +65,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
                     let quizCourses: [QuizCourse] = result.map({ QuizCourse($0) })
                     self.courses = quizCourses
                     self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = 104
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -94,10 +94,6 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "QuizCourseTableViewCell"
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 124
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -28,19 +28,11 @@ class QuizCourseTableViewCell: UITableViewCell {
     var course: QuizCourse!{
         didSet{
             courseImageView.isHidden = false
-            subjectImageLabel.clipsToBounds = false
-            courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-            courseImageView.layer.shadowOpacity = 0.3
-            courseImageView.layer.shadowOffset = CGSize.zero
-            courseImageView.layer.shadowRadius = 10
-            courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-            subjectImageLabel.textAlignment = .center
-            subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-            subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
+            subjectImageLabel.clipsToBounds = true
             subjectImageLabel.text = getText(name: course.courseName)
             courseTitle.text = course.courseName
-            quizName.text = course.quizName == nil ? "No active quizzes currently".localized : course.quizName
             if let assignStringDate = course.nextQuizDate {
+                dateViewHeightConstraint.constant = 24
                 quizDateView.isHidden = false
                 quizDateLabel.isHidden = false
                 quizClockImage.isHidden = false
@@ -52,28 +44,25 @@ class QuizCourseTableViewCell: UITableViewCell {
                 newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
                 quizDateLabel.text = newDateFormat.string(from: assignDate!)
                 if Date() < (assignDate ?? Date()) {
-                    quizDateView.backgroundColor = #colorLiteral(red: 0.8247086406, green: 0.9359105229, blue: 0.8034248352, alpha: 1)
                     quizDateLabel.textColor = #colorLiteral(red: 0.1580090225, green: 0.7655162215, blue: 0.3781598806, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
                 } else {
-                    quizDateView.backgroundColor = #colorLiteral(red: 0.9988667369, green: 0.8780437112, blue: 0.8727210164, alpha: 1)
                     quizDateLabel.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
                 }
             } else {
+                dateViewHeightConstraint.constant = 0
                 quizDateView.isHidden = true
                 quizDateLabel.isHidden = true
                 quizClockImage.isHidden = true
             }
-            numberOfQuizLabel.text = "\(course.quizzesCount ?? 0)"
-            
-//            if let count = course.runningAssignmentsCount, count > 0 {
-//                assignmentName.text = course.assignmentName
-//                numberOfAssignmentLabel.text = "\(count)"
-//            } else {
-//                assignmentName.text = "No active assignments currently".localized
-//                numberOfAssignmentLabel.text = ""
-//            }
+            if let count = course.runningQuizzesCount, count > 0 {
+                numberOfQuizLabel.text = course.quizName
+                numberOfQuizLabel.text = "\(count)"
+            } else {
+                quizName.text = "No active quizzes currently".localized
+                numberOfQuizLabel.text = ""
+            }
         }
     }
 
