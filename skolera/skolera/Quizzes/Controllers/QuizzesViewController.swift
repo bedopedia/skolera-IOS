@@ -79,8 +79,8 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     @objc private func refreshData() {
-        tableView.rowHeight = 144
-        tableView.estimatedRowHeight = 144
+        tableView.rowHeight = 104
+        tableView.estimatedRowHeight = 104
         if isTeacher {
             getTeacherQuizzes()
         } else {
@@ -148,10 +148,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     func getQuizzes(pageId: Int) {
         if quizzes == nil {
             quizzes = []
+            self.tableView.showAnimatedSkeleton()
         }
-        self.tableView.showAnimatedSkeleton()
         getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
-            self.tableView.hideSkeleton()
+            if self.quizzes.isEmpty {
+                self.tableView.hideSkeleton()
+            }
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
@@ -202,10 +204,8 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func submitQuiz(parameters: Parameters) {
-        self.tableView.showAnimatedSkeleton()
         submitQuizApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.count -= 1
-            self.tableView.hideSkeleton()
             if isSuccess {
                 if self.count == 0 {
                     self.getQuizzes(pageId: self.pageId)
@@ -231,7 +231,6 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizTableViewCell") as! QuizTableViewCell
         cell.hideSkeleton()
-        cell.nameLabel.text = courseName
         cell.quiz = self.filteredQuizzes[indexPath.row]
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
@@ -250,24 +249,20 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 144  
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isTeacher {
-//            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
-//            quizVC.child = self.child
-//            quizVC.courseName = courseName
-//            quizVC.courseGroupId = courseGroupId
-//            quizVC.quiz = filteredQuizzes[indexPath.row]
-//            self.navigationController?.pushViewController(quizVC, animated: true)
+            //            let quizVC = QuizStatusViewController.instantiate(fromAppStoryboard: .Quizzes)
+            //            quizVC.child = self.child
+            //            quizVC.courseName = courseName
+            //            quizVC.courseGroupId = courseGroupId
+            //            quizVC.quiz = filteredQuizzes[indexPath.row]
+            //            self.navigationController?.pushViewController(quizVC, animated: true)
             debugPrint("show quiz details")
             if !filteredQuizzes[indexPath.row].state.elementsEqual("running") {
-                      let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
-                      quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
-                      self.navigationController?.pushViewController(quizDetailsVC, animated: true)
-                    }
+                let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
+                quizDetailsVC.quizId = filteredQuizzes[indexPath.row].id
+                self.navigationController?.pushViewController(quizDetailsVC, animated: true)
+            }
         } else {
             let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
             quizVC.quizName = courseName

@@ -84,7 +84,5 @@ class QuizCourseTableViewCell: UITableViewCell {
         } else {
             return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
         }
-        
     }
-
 }
