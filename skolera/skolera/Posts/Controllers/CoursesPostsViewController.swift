@@ -138,9 +138,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
-            if indexPath.row == posts.count - 3  && !isRetrievingData {
+            if indexPath.row == posts.count - 5  && !isRetrievingData {
                 if meta.currentPage != meta.totalPages{
-                    fixSkeletonHeight()
+//                    fixSkeletonHeight()
                     getPosts(page: (meta.currentPage)! + 1)
                 }
             }
