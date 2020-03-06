@@ -31,7 +31,6 @@ class ChildrenTableViewCell: UITableViewCell {
             } else {
                 expandableViewHeight.constant = 0
                 expandableView.isHidden = true
-                expantionButton.rotate(byAngle: 180, ofType: .degrees)
             }
         }
     }
