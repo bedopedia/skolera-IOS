@@ -74,7 +74,17 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     
     func setNotificationsSeen() {
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
-            self.tabBarItem.badgeValue = nil
+            
+            for subview in self.tabBarController?.tabBar.subviews ?? [] {
+                
+               if let subview = subview as? UIView {
+                    
+                    if subview.tag == 1234 {
+                        subview.removeFromSuperview()
+                        break
+                    }
+                }
+            }
             debugPrint("Notification is Seen")
         }
     }
