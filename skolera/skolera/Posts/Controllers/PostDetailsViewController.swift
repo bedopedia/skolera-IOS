@@ -19,6 +19,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var replyView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var gradientView: GradientView!
     
     var child : Actor!
     var courseName: String = ""
@@ -30,7 +31,10 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
+            gradientView.isHidden = false
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        } else {
+            gradientView.isHidden = true
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         let backItem = UIBarButtonItem()
@@ -74,6 +78,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailsTableViewCell") as! PostDetailsTableViewCell
         if indexPath.row == 0 {
+            cell.postImageView.image = nil
             cell.post = post
             cell.openAttachment = {
                 let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)

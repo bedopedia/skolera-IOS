@@ -25,6 +25,11 @@ class PostDetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var thirdAttachment: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyButtonHeight: NSLayoutConstraint!
+    @IBOutlet var firstFileSize: UILabel!
+    @IBOutlet var secondFileSize: UILabel!
+    @IBOutlet var gradientView: GradientView!
+    @IBOutlet var postImageView: UIImageView!
+    @IBOutlet var separatorView: UIView!
     
     var openAttachment: (() -> ())!
     var addPostReply: (() -> ())!
@@ -34,14 +39,12 @@ class PostDetailsTableViewCell: UITableViewCell {
         didSet {
             if post != nil {
                 postOwner.text = post.owner?.nameWithTitle
-                let htmlData = NSString(string: post?.content ?? "").data(using: String.Encoding.unicode.rawValue)
-                let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-                    NSAttributedString.DocumentType.html]
-                let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                                      options: options,
-                                                                      documentAttributes: nil)
-//                postContent.attributedText = attributedString
-                postContent.update(input: post.content ?? "")
+                if let content = post.content, !content.isEmpty {
+                    postContent.update(input: content)
+                } else {
+                    postContent.update(input: "No content available".localized)
+                }
+                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first! ?? Character.init("")) )\(String(post.owner?.lastname?.first! ?? Character.init("")))", textSize: 14)
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -51,14 +54,21 @@ class PostDetailsTableViewCell: UITableViewCell {
                 if let files = post.uploadedFiles, !files.isEmpty {
                     attachmentHeightConstraint.constant = 60
                     attachmentView.isHidden = false
+                    separatorView.isHidden = false
                     if files.count == 1 {
                         firstAttachmentView.isHidden = false
                         firstAttachment.text = files[0].name
+                        if let size = files[0].fileSize {
+                            firstFileSize.text = getSizeString(size: Double(size) / 8)
+                        }
                     } else if files.count == 2 {
                         firstAttachmentView.isHidden = false
                         firstAttachment.text = files[0].name
                         secondAttachmentView.isHidden = false
                         secondAttachment.text = files[1].name
+                        if let size = files[0].fileSize {
+                            secondFileSize.text = getSizeString(size: Double(size) / 8)
+                        }
                     } else {
                         firstAttachmentView.isHidden = false
                         firstAttachment.text = files[0].name
@@ -70,6 +80,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 } else {
                     attachmentHeightConstraint.constant = 40
                     attachmentView.isHidden = true
+                    separatorView.isHidden = true
                 }
                 
                 let dateFormatter = DateFormatter()
@@ -78,11 +89,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 let postUpdateDate = dateFormatter.date(from: post.updatedAt!)
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "dd MMM YYYY"
-                if Language.language == .arabic {
-                    postDate.text = "اخر تعديل " + newDateFormat.string(from: postUpdateDate!)
-                } else {
-                    postDate.text = "Last Updated \(newDateFormat.string(from: postUpdateDate!))"
-                }
+                postDate.text = newDateFormat.string(from: postUpdateDate!)
             }
         }
     }
@@ -90,15 +97,15 @@ class PostDetailsTableViewCell: UITableViewCell {
     var comment: PostComment! {
         didSet {
             if comment != nil {
+                separatorView.isHidden = true
+                postImageView.childImageView(url: self.comment.owner?.avatarUrl ?? "", placeholder: "\(String(comment.owner?.firstname?.first! ?? Character.init("")) )\(String(comment.owner?.lastname?.first! ?? Character.init("")))", textSize: 14)
+            
                 postOwner.text = comment.owner?.nameWithTitle
-                let htmlData = NSString(string: comment.content ?? "").data(using: String.Encoding.unicode.rawValue)
-                let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-                    NSAttributedString.DocumentType.html]
-                let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                                      options: options,
-                                                                      documentAttributes: nil)
-//                postContent.attributedText = attributedString
-                postContent.update(input: comment.content ?? "")
+                if let content = comment.content, !content.isEmpty {
+                    postContent.update(input: content)
+                } else {
+                    postContent.update(input: "No content available".localized)
+                }
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -114,9 +121,9 @@ class PostDetailsTableViewCell: UITableViewCell {
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "dd MMM YYYY"
                 if Language.language == .arabic {
-                    postDate.text = "اخر تعديل " + newDateFormat.string(from: postUpdateDate ?? Date())
+                    postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 } else {
-                    postDate.text = "Last Updated \(newDateFormat.string(from: postUpdateDate ?? Date()))"
+                    postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 }
             }
         }
@@ -132,6 +139,19 @@ class PostDetailsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func getSizeString(size: Double) -> String {
+        var fileSize: Double = 0
+        if size > (1024 * 1024) {
+            fileSize = size / (1024 * 1024)
+            fileSize = Double(round(100*fileSize)/100)
+            return "\(fileSize) MB"
+        } else {
+            fileSize = size / (1024)
+            fileSize = Double(round(100*fileSize)/100)
+            return "\(fileSize) KB"
+        }
     }
     
     @IBAction func openAttachments() {
