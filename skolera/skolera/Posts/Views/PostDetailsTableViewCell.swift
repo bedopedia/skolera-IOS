@@ -44,8 +44,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 } else {
                     postContent.update(input: "No content available".localized)
                 }
-                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(post.owner?.firstname?.first!)\(post.owner?.lastname?.first!)", textSize: 10)
-                
+                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first! ?? Character.init("")) )\(String(post.owner?.lastname?.first! ?? Character.init("")))", textSize: 12)
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -98,8 +97,15 @@ class PostDetailsTableViewCell: UITableViewCell {
     var comment: PostComment! {
         didSet {
             if comment != nil {
+                separatorView.isHidden = true
+                postImageView.childImageView(url: self.comment.owner?.avatarUrl ?? "", placeholder: "\(String(comment.owner?.firstname?.first! ?? Character.init("")) )\(String(comment.owner?.lastname?.first! ?? Character.init("")))", textSize: 12)
+            
                 postOwner.text = comment.owner?.nameWithTitle
-                postContent.update(input: comment.content ?? "")
+                if let content = comment.content, !content.isEmpty {
+                    postContent.update(input: content)
+                } else {
+                    postContent.update(input: "No content available".localized)
+                }
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -115,9 +121,9 @@ class PostDetailsTableViewCell: UITableViewCell {
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "dd MMM YYYY"
                 if Language.language == .arabic {
-                    postDate.text = "اخر تعديل " + newDateFormat.string(from: postUpdateDate ?? Date())
+                    postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 } else {
-                    postDate.text = "Last Updated \(newDateFormat.string(from: postUpdateDate ?? Date()))"
+                    postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 }
             }
         }

@@ -19,6 +19,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var replyView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var gradientView: GradientView!
     
     var child : Actor!
     var courseName: String = ""
@@ -30,7 +31,10 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child{
+            gradientView.isHidden = false
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        } else {
+            gradientView.isHidden = true
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         let backItem = UIBarButtonItem()

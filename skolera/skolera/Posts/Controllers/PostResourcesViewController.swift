@@ -15,6 +15,7 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var gradientView: GradientView!
     
     var child : Actor!
     var courseName: String = ""
@@ -26,8 +27,11 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
+            gradientView.isHidden = false
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        } else {
+            gradientView.isHidden = true
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         
