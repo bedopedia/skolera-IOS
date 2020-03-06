@@ -78,6 +78,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailsTableViewCell") as! PostDetailsTableViewCell
         if indexPath.row == 0 {
+            cell.postImageView.image = nil
             cell.post = post
             cell.openAttachment = {
                 let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)

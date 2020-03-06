@@ -135,7 +135,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
         if posts != nil {
             cell.hideSkeleton()
-            cell.postImageView.childImageView(url: "", placeholder: "", textSize: 10)
+            cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
             if indexPath.row == posts.count - 3  && !isRetrievingData {

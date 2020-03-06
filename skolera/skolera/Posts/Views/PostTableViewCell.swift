@@ -37,7 +37,7 @@ class PostTableViewCell: UITableViewCell {
                 } else {
                     postContent.update(input: "No content available".localized)
                 }
-                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first! ?? Character.init("")) )\(String(post.owner?.lastname?.first! ?? Character.init("")))", textSize: 12)
+                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first! ?? Character.init("")) )\(String(post.owner?.lastname?.first! ?? Character.init("")))", textSize: 14)
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
