@@ -14,8 +14,8 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     @IBOutlet weak var childImageOuterView: UIView!
     @IBOutlet weak var childNameLabel: UILabel!
     @IBOutlet weak var childGradeLabel: UILabel!
-    @IBOutlet weak var notificationButton: UIBarButtonItem!
-
+    @IBOutlet weak var childImageView: UIImageView!
+    
     
     var actorTableViewController: ActorFeaturesTableViewController!
     
@@ -72,16 +72,15 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
     
     private func addActorImage() {
         //sets outer view to generate the green glow
-        childImageOuterView.clipsToBounds = false
+        childImageOuterView.clipsToBounds = true
         childImageOuterView.layer.shadowColor = UIColor.appColors.green.cgColor
         childImageOuterView.layer.shadowOpacity = 0.5
         childImageOuterView.layer.shadowOffset = CGSize.zero
         childImageOuterView.layer.shadowRadius = 10
+        childImageOuterView.layer.cornerRadius = 48
         childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect: childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
         //gets inner child image view
-            let childImageView = UIImageView(frame: childImageOuterView.bounds)
             childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first!)\(actor.lastname.first!)", textSize: 32)
-            childImageOuterView.backgroundColor = nil
             childImageOuterView.addSubview(childImageView)
             //sets image frame to the outer frame
             NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])
