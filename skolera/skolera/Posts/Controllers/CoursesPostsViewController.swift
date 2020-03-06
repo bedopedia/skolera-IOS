@@ -76,11 +76,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     fileprivate func fixSkeletonHeight() {
-        tableView.estimatedRowHeight = 124
-        tableView.rowHeight = 124
+        tableView.estimatedRowHeight = 146
+        tableView.rowHeight = 146
     }
 
-    func getPosts(page: Int = 1){
+    func getPosts(page: Int = 1) {
         isRetrievingData = true
         var id: Int
         if isTeacher {
@@ -135,6 +135,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
         if posts != nil {
             cell.hideSkeleton()
+            cell.postImageView.childImageView(url: "", placeholder: "", textSize: 14)
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
             if indexPath.row == posts.count - 3  && !isRetrievingData {
