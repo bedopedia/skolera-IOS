@@ -32,9 +32,11 @@ class PostTableViewCell: UITableViewCell {
         didSet {
             if post != nil {
                 postOwner.text = post.owner?.nameWithTitle
-                
-                postContent.update(input: post.content ?? "")
-                
+                if let content = post.content, !content.isEmpty {
+                    postContent.update(input: content)
+                } else {
+                    postContent.update(input: "No content available".localized)
+                }
                 postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(post.owner?.firstname?.first!)\(post.owner?.lastname?.first!)", textSize: 10)
                
                 firstAttachmentView.isHidden = true
@@ -103,7 +105,7 @@ class PostTableViewCell: UITableViewCell {
     
     func getSizeString(size: Double) -> String {
         var fileSize: Double = 0
-        if size > 1024 {
+        if size > (1024 * 1024) {
             fileSize = size / (1024 * 1024)
             fileSize = Double(round(100*fileSize)/100)
             return "\(fileSize) MB"
