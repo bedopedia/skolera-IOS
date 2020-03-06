@@ -35,7 +35,7 @@ class PostTableViewCell: UITableViewCell {
                 
                 postContent.update(input: post.content ?? "")
                 
-                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(post.owner?.firstname?.first!)\(post.owner?.lastname?.first!)", textSize: 14)
+                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(post.owner?.firstname?.first!)\(post.owner?.lastname?.first!)", textSize: 10)
                
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
