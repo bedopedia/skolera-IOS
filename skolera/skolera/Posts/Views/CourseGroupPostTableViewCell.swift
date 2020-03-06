@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RichTextView
 
 class CourseGroupPostTableViewCell: UITableViewCell {
 
@@ -14,33 +15,31 @@ class CourseGroupPostTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectImageLabel: UILabel!
     @IBOutlet weak var courseTitle: UILabel!
     @IBOutlet weak var teacherName: UILabel!
-    @IBOutlet weak var postText: UILabel!
     @IBOutlet weak var numberOfPostsLabel: UILabel!
+    @IBOutlet var postContent: RichTextView!
+    @IBOutlet var postContentTopConstraint: NSLayoutConstraint!
     
     var course: PostCourse!{
         didSet {
             if course != nil {
                 courseImageView.isHidden = false
                 subjectImageLabel.clipsToBounds = false
-                courseImageView.layer.shadowColor = UIColor.appColors.green.cgColor
-                courseImageView.layer.shadowOpacity = 0.3
-                courseImageView.layer.shadowOffset = CGSize.zero
-                courseImageView.layer.shadowRadius = 10
-                courseImageView.layer.shadowPath = UIBezierPath(roundedRect: courseImageView.bounds, cornerRadius: courseImageView.frame.height/2 ).cgPath
-                subjectImageLabel.textAlignment = .center
-                subjectImageLabel.rounded(foregroundColor: UIColor.appColors.white, backgroundColor: UIColor.appColors.green)
-                subjectImageLabel.font = UIFont.systemFont(ofSize: CGFloat(18), weight: UIFont.Weight.semibold)
+
                 subjectImageLabel.text = getText(name: course.courseName ?? "")
                 courseTitle.text = course.courseName
-                numberOfPostsLabel.text = "\(course.postsCount ?? 0)"
-                teacherName.text = course.post?.owner?.nameWithTitle
-                let htmlData = NSString(string: course.post?.content ?? "").data(using: String.Encoding.unicode.rawValue)
-                let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-                    NSAttributedString.DocumentType.html]
-                let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                                      options: options,
-                                                                      documentAttributes: nil)
-                postText.attributedText = attributedString
+                if let count = course.postsCount, count > 0 {
+                    numberOfPostsLabel.text = "\(count)"
+                } else {
+                    numberOfPostsLabel.text = ""
+                }
+                if let name = course.post?.owner?.nameWithTitle, !name.isEmpty {
+                    teacherName.text = name
+                    postContentTopConstraint.constant = 4
+                } else {
+                    teacherName.text = "No recent posts currently".localized
+                    postContentTopConstraint.constant = -16
+                }
+                postContent.update(input: course.post?.content ?? "")
             } else {
                 courseImageView.layer.shadowColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
             }
@@ -49,10 +48,6 @@ class CourseGroupPostTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        courseImageView.layer.cornerRadius = 27.5
-        courseImageView.layer.borderWidth = 1
-        courseImageView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        courseImageView.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
