@@ -7,12 +7,11 @@
 //
 
 import UIKit
-
+import RichTextView
 class PostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var postOwner: UILabel!
     @IBOutlet weak var postDate: UILabel!
-    @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var attachmentView: UIView!
     @IBOutlet weak var attachmentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstAttachmentView: UIView!
@@ -21,23 +20,24 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var secondAttachment: UILabel!
     @IBOutlet weak var thirdAttachmentView: UIView!
     @IBOutlet weak var thirdAttachment: UILabel!
+    @IBOutlet var postContent: RichTextView!
+    @IBOutlet var gradientView: GradientView!
+    @IBOutlet var postImageView: UIImageView!
+    @IBOutlet var firstFileSize: UILabel!
+    @IBOutlet var secondFileSize: UILabel!
+    
     
     var openAttachment: (() -> ())!
-    
     var post: Post! {
         didSet {
             if post != nil {
                 postOwner.text = post.owner?.nameWithTitle
-                let htmlData = NSString(string: post?.content ?? "").data(using: String.Encoding.unicode.rawValue)
-                let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-                    NSAttributedString.DocumentType.html]
-                let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                                      options: options,
-                                                                      documentAttributes: nil)
-                postContent.attributedText = attributedString
-                firstAttachmentView.isHidden = true
-                secondAttachmentView.isHidden = true
-                thirdAttachmentView.isHidden = true
+             
+                postContent.update(input: post.content ?? "")
+                
+                firstAttachmentView.isHidden = false
+                secondAttachmentView.isHidden = false
+                thirdAttachmentView.isHidden = false
                 if let files = post.uploadedFiles, !files.isEmpty {
                     attachmentHeightConstraint.constant = 60
                     attachmentView.isHidden = false
