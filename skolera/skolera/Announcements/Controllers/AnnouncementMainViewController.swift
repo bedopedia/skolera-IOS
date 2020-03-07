@@ -42,6 +42,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     
     @objc private func refreshData() {
         fixTableViewHeight()
+        self.announcements = []
         tableView.showAnimatedSkeleton()
         getAnnouncements()
         refreshControl.endRefreshing()
@@ -141,7 +142,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return 80
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
