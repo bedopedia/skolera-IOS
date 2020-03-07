@@ -101,6 +101,9 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             setOpenedQuizzes()
         case 1:
             selectedSegment = 1
+            setOnHoldQuizzes()
+        case 2:
+            selectedSegment = 2
             setClosedQuizzes()
         default:
             setOpenedQuizzes()
@@ -123,6 +126,14 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
+    private func setOnHoldQuizzes() {
+           if quizzes != nil {
+               filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("on_hold") })
+               handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any on hold quizzes for now".localized)
+               self.tableView.reloadData()
+           }
+       }
+    
     func getTeacherQuizzes() {
         if quizzes == nil {
             quizzes = []
@@ -133,10 +144,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.quizzes = result.map({ FullQuiz($0) })
-                    if self.selectedSegment == 1 {
-                        self.setClosedQuizzes()
-                    } else {
+                    if self.selectedSegment == 0 {
                         self.setOpenedQuizzes()
+                    } else if self.selectedSegment == 1 {
+                        self.setOnHoldQuizzes()
+                    } else {
+                        self.setClosedQuizzes()
                     }
                 }
             } else {
@@ -157,14 +170,9 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let quizResponse = QuizzesResponse(result)
-                    if pageId == 1 {
-                        self.quizzes = quizResponse.quizzes
-                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
-                        self.meta = quizResponse.meta
-                    } else {
-                        self.quizzes.append(contentsOf: quizResponse.quizzes)
-                        self.checkQuizSubmission(quizzes: quizResponse.quizzes)
-                    }
+                    self.quizzes = quizResponse.quizzes
+                    self.checkQuizSubmission(quizzes: quizResponse.quizzes)
+//                    self.meta = quizResponse.meta
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
@@ -173,10 +181,12 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     fileprivate func presentQuizzes() {
-        if self.selectedSegment == 1 {
-            self.setClosedQuizzes()
-        } else {
+        if self.selectedSegment == 0 {
             self.setOpenedQuizzes()
+        } else if self.selectedSegment == 1 {
+            self.setOnHoldQuizzes()
+        } else {
+            self.setClosedQuizzes()
         }
     }
     
@@ -234,16 +244,17 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
         cell.quiz = self.filteredQuizzes[indexPath.row]
         if getUserType() != UserType.teacher {
             if indexPath.row >= filteredQuizzes.count - 2 {
-                if meta.totalPages > pageId {
-                    pageId += 1
-                    getQuizzes(pageId: pageId)
-                    if selectedSegment == 0 {
-                        setOpenedQuizzes()
-                    }
-                    if selectedSegment == 1 {
-                        setClosedQuizzes()
-                    }
-                }
+//                if meta.totalPages > pageId {
+//                    pageId += 1
+//                    getQuizzes(pageId: pageId)
+//                    if selectedSegment == 0 {
+//                        setOpenedQuizzes()
+//                    } else if selectedSegment == 2 {
+//                        setClosedQuizzes()
+//                    } else {
+//                        setOnHoldQuizzes()
+//                    }
+//                }
             }
         }
         return cell
@@ -257,7 +268,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
             //            quizVC.courseGroupId = courseGroupId
             //            quizVC.quiz = filteredQuizzes[indexPath.row]
             //            self.navigationController?.pushViewController(quizVC, animated: true)
-            if !filteredQuizzes[indexPath.row].state.elementsEqual("running") {
+            if filteredQuizzes[indexPath.row].state.elementsEqual("finished") {
                 getQuizDetails(quizId: filteredQuizzes[indexPath.row].id)
             }
         } else {

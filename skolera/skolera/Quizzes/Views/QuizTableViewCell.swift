@@ -19,6 +19,9 @@ class QuizTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var leftView: UIView!
     
+    let yellowColor = #colorLiteral(red: 0.5019607843, green: 0.3764705882, blue: 0.1803921569, alpha: 1)
+    let greenColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
+    
     var quiz: FullQuiz! {
         didSet {
             titleLabel.text = quiz.name
@@ -56,12 +59,18 @@ class QuizTableViewCell: UITableViewCell {
                     dueMonthLabel.textColor = #colorLiteral(red: 0.1450980392, green: 0.6588235294, blue: 0.2784313725, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_green")
                     leftView.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.937254902, blue: 0.8039215686, alpha: 0.3)
-                } else {
+                } else if quiz.state.elementsEqual("finished") {
                     quizDateLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
                     quizClockImage.image = #imageLiteral(resourceName: "ic_clock_red")
                     dueDayLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
                     dueMonthLabel.textColor = #colorLiteral(red: 0.8509803922, green: 0.1058823529, blue: 0.0862745098, alpha: 1)
                     leftView.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 0.25)
+                } else {
+                    quizDateLabel.textColor = yellowColor
+                    quizClockImage.image = #imageLiteral(resourceName: "yellowHour")
+                    dueDayLabel.textColor = yellowColor
+                    dueMonthLabel.textColor = yellowColor
+                    leftView.backgroundColor = #colorLiteral(red: 0.9098039216, green: 0.9098039216, blue: 0.8392156863, alpha: 0.3)
                 }
             } else {
                 quizDateView.isHidden = true

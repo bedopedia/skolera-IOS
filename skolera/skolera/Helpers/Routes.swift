@@ -164,7 +164,6 @@ func GET_ASSIGNMENT_DETAILS_URL() -> String {
 
 
 func GET_QUIZZES() -> String {
-//    return "\(BASE_URL!)/api/students/%d/quizzes?page=%d&per_page=1000&course_group_ids=[%d]"
     "\(BASE_URL!)/api/quizzes?page=%d&per_page=1000&by_course_group=%d&mobile=true"
 }
 
