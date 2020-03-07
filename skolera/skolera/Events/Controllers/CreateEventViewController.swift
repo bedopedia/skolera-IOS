@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 import SkyFloatingLabelTextField
+import SwiftDate
 
 class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -84,7 +85,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func create(){
+    @IBAction func create() {
         var isMissingData: Bool = false
         var eventsParameters: [String: Any] = [:]
         if !whenISODate.isEmpty {
@@ -117,7 +118,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
             update(fields: [addNotesTextField], with: .error)
         }
         if !isMissingData{
-            guard whenISODate < toISODate else {
+            guard let whenDate = whenISODate.toDate(), let toDate = toISODate.toDate(), whenDate.compare(toDate: toDate, granularity: .minute) == ComparisonResult.orderedAscending ,whenISODate < toISODate else {
                 update(fields: [whenDateTextField, toDateTextField], with: .error)
                 let alert = UIAlertController(title: "Skolera".localized, message: "Please enter correct dates".localized, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { _ in
