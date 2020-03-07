@@ -25,6 +25,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
     @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
     
+    @IBOutlet weak var attendanceImage: UIImageView!
+    
+    
     //MARK: - Variables
     
     /// courses grades for this child, segued to grades screen
@@ -383,4 +386,5 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
 }
