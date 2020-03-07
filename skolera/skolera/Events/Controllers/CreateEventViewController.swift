@@ -130,7 +130,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
             eventsParameters["type"] = "personal"
             eventsParameters["all_day"] = false
             eventsParameters["cancel"] = false
-            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : child.id!]]
+            eventsParameters["subscriptions_attributes"] = [["subscriber_type" : "User", "subscriber_id" : UserDefaults.standard.string(forKey: ID)!]]
             let parameters = [ "event": eventsParameters ]
             debugPrint(parameters)
             startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
