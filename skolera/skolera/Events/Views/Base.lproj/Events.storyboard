@@ -198,8 +198,40 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acN-nr-yeE">
+                                        <rect key="frame" x="0.0" y="386" width="414" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSN-8I-hm4">
+                                                <rect key="frame" x="95" y="13" width="224" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="224" id="UQa-Gr-gVH"/>
+                                                    <constraint firstAttribute="height" constant="40" id="bFl-Bt-X3C"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="12" maxY="0.0"/>
+                                                <state key="normal" title="+ Create personal event">
+                                                    <color key="titleColor" red="0.15686274510000001" green="0.73333333329999995" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="createNewEvent" destination="U3f-7Y-l45" eventType="touchUpInside" id="L2U-Hz-lsv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="XSN-8I-hm4" firstAttribute="centerX" secondItem="acN-nr-yeE" secondAttribute="centerX" id="VGZ-oc-h39"/>
+                                            <constraint firstAttribute="height" constant="66" id="YyV-7q-BdG"/>
+                                            <constraint firstItem="XSN-8I-hm4" firstAttribute="centerY" secondItem="acN-nr-yeE" secondAttribute="centerY" id="fVe-q1-KbN"/>
+                                        </constraints>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6ri-Q8-dll">
-                                        <rect key="frame" x="0.0" y="48" width="414" height="338"/>
+                                        <rect key="frame" x="0.0" y="48" width="414" height="404"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="attendanceCell" rowHeight="77" id="vT0-jB-vHb" customClass="AttendanceTableViewCell" customModule="skolera" customModuleProvider="target">
@@ -317,38 +349,6 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </tableView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acN-nr-yeE">
-                                        <rect key="frame" x="0.0" y="386" width="414" height="66"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSN-8I-hm4">
-                                                <rect key="frame" x="95" y="13" width="224" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="224" id="UQa-Gr-gVH"/>
-                                                    <constraint firstAttribute="height" constant="40" id="bFl-Bt-X3C"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                                <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="12" maxY="0.0"/>
-                                                <state key="normal" title="+ Create personal event">
-                                                    <color key="titleColor" red="0.15686274510000001" green="0.73333333329999995" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="6"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="createNewEvent" destination="U3f-7Y-l45" eventType="touchUpInside" id="L2U-Hz-lsv"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="XSN-8I-hm4" firstAttribute="centerX" secondItem="acN-nr-yeE" secondAttribute="centerX" id="VGZ-oc-h39"/>
-                                            <constraint firstAttribute="height" constant="66" id="YyV-7q-BdG"/>
-                                            <constraint firstItem="XSN-8I-hm4" firstAttribute="centerY" secondItem="acN-nr-yeE" secondAttribute="centerY" id="fVe-q1-KbN"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -357,7 +357,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Rho-NY-56l" secondAttribute="trailing" id="40S-EF-JnZ"/>
                                     <constraint firstAttribute="bottom" secondItem="acN-nr-yeE" secondAttribute="bottom" id="6Xt-Ui-YOP"/>
                                     <constraint firstItem="Rho-NY-56l" firstAttribute="top" secondItem="Pr9-nt-vHl" secondAttribute="top" id="HSD-gj-K85"/>
-                                    <constraint firstItem="acN-nr-yeE" firstAttribute="top" secondItem="6ri-Q8-dll" secondAttribute="bottom" id="LA1-Gv-oHE"/>
+                                    <constraint firstAttribute="bottom" secondItem="6ri-Q8-dll" secondAttribute="bottom" id="LA1-Gv-oHE"/>
                                     <constraint firstItem="6ri-Q8-dll" firstAttribute="leading" secondItem="Pr9-nt-vHl" secondAttribute="leading" id="SIw-Ds-ZvN"/>
                                     <constraint firstItem="acN-nr-yeE" firstAttribute="leading" secondItem="Pr9-nt-vHl" secondAttribute="leading" id="dc9-wO-Yro"/>
                                     <constraint firstAttribute="trailing" secondItem="6ri-Q8-dll" secondAttribute="trailing" id="gB8-Uq-9El"/>
@@ -399,6 +399,7 @@
                         <outlet property="headerView" destination="C6f-68-Lvn" id="fCW-s0-LtI"/>
                         <outlet property="menuView" destination="wbA-Cp-XBv" id="bk5-k5-z2d"/>
                         <outlet property="tableView" destination="6ri-Q8-dll" id="ItL-Ca-xJj"/>
+                        <outlet property="tableViewBottomConstaint" destination="LA1-Gv-oHE" id="IYV-UN-ARH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G1c-Ap-XXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
