@@ -13,7 +13,6 @@ class NotificationTableViewCell: UITableViewCell {
     //MARK: - Outlets
     @IBOutlet weak var notificationImageView: UIImageView!
     @IBOutlet weak var notificationDetailsLabel: UILabel!
-    @IBOutlet weak var studentNameLabel: UILabel!
     @IBOutlet weak var dateTimeLabel: UILabel!
     //MARK: - Variables
     /// notification variable contains cell data, once set it fills cell contents
@@ -21,14 +20,6 @@ class NotificationTableViewCell: UITableViewCell {
         didSet{
             //cell title and child name(if any)
             notificationDetailsLabel.text = notification.text
-            if let additionalParams = notification.additionalParams
-            {
-                studentNameLabel.text = additionalParams.studentNames.first
-            }
-            else
-            {
-                studentNameLabel.text = ""
-            }
             //notification image
             notificationImageView.image = getImage(type: notification.message)
             //parsing date
@@ -61,38 +52,38 @@ class NotificationTableViewCell: UITableViewCell {
     {
         if message.contains("graded")
         {
-            return #imageLiteral(resourceName: "grades")
+            return #imageLiteral(resourceName: "grade_icon")
         }
         else if message.contains("assignments")
         {
-            return #imageLiteral(resourceName: "assignmentsIco")
+            return #imageLiteral(resourceName: "assignment_icon")
         }
         else if message.contains("quizzes")
         {
-            return #imageLiteral(resourceName: "quizzesIco")
+            return #imageLiteral(resourceName: "quiz_icon")
         }
         else if message.contains("zones")
         {
-            return #imageLiteral(resourceName: "zones")
+            return #imageLiteral(resourceName: "zones_icon")
         }
         else if message.contains("events")
         {
-            return #imageLiteral(resourceName: "mydaysIco")
+            return #imageLiteral(resourceName: "event")
         }
         else if message.contains("virtual")
         {
-            return #imageLiteral(resourceName: "virtualclass")
+            return #imageLiteral(resourceName: "class_icon")
         }
         else
         {
-            return #imageLiteral(resourceName: "notifications")
+            return #imageLiteral(resourceName: "notification_light_icon")
         }
     }
     
     func showShimmer() {
         notificationImageView.showAnimatedSkeleton()
         notificationDetailsLabel.showAnimatedSkeleton()
-        studentNameLabel.showAnimatedSkeleton()
+//        studentNameLabel.showAnimatedSkeleton()
         dateTimeLabel.showAnimatedSkeleton()
 //        notificationImageView.showAnimatedGradientSkeleton()
 //        notificationDetailsLabel.showAnimatedGradientSkeleton()

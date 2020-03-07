@@ -74,7 +74,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
 
 extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return kids.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,10 +92,15 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         cell.hideSkeleton()
         cell.child = kids[indexPath.row]
         cell.isExpanded = expendedPositions.contains(indexPath.row)
+        if cell.isExpanded {
+            cell.expantionButton.setImage(#imageLiteral(resourceName: "arrow_down").rotatedImage(), for: .normal)
+        } else {
+            cell.expantionButton.setImage(#imageLiteral(resourceName: "arrow_down"), for: .normal)
+        }
         debugPrint("EXPAND:", expendedPositions)
         cell.didExpandItem = {
             if self.expendedPositions.contains(indexPath.row) {
-                if let index =  self.expendedPositions.index(of: indexPath.row) {
+                if let index = self.expendedPositions.index(of: indexPath.row) {
                     self.expendedPositions.remove(at: index)
                 }
             } else {
