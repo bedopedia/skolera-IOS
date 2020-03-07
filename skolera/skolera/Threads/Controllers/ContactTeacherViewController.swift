@@ -19,6 +19,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
     @IBOutlet weak var leftHeaderButton: UIButton!
+    @IBOutlet weak var rightHeaderButton: UIButton!
     @IBOutlet var headerView: UIView!
     
     var threads: [Threads]!
@@ -41,6 +42,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         let userType = getUserType()
         if (userType == UserType.teacher) || (userType == UserType.hod) || (userType == UserType.admin) {
             leftHeaderButton.isHidden = true
+        } else if userType == UserType.parent {
+            leftHeaderButton.setImage(UIImage.init(named: "chevronLeft"), for: .normal)
+            leftHeaderButton.setImage(leftHeaderButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+            rightHeaderButton.setImage(UIImage.init(named: "plusIcon"), for: .normal)
         }
         threadsTableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -87,11 +92,32 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    @IBAction func logout() {
-        let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
-        navigationController?.pushViewController(settingsVC, animated: true)
+    @IBAction func rightHeaderButtonClicked() {
+        if getUserType() == UserType.parent {
+            let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
+            if let _ = parent as? ContactTeacherNVC, let student = self.child {
+                newMessageVC.child = student
+                self.navigationController?.pushViewController(newMessageVC, animated: true)
+            }
+        } else {
+            let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
+            navigationController?.pushViewController(settingsVC, animated: true)
+        }
     }
-   
+    
+    @IBAction func leftHeaderButtonClicked() {
+        if getUserType() == UserType.parent {
+            self.navigationController?.navigationController?.popViewController(animated: true)
+        } else {
+            let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
+            if let _ = parent as? ContactTeacherNVC, let student = self.child {
+                newMessageVC.child = student
+                self.navigationController?.pushViewController(newMessageVC, animated: true)
+            }
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 96
     }
@@ -116,7 +142,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
             let fullNameArr = fullName.components(separatedBy: " ")
             cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
-                  
+            
             
             if self.threads[indexPath.row].courseName != nil {
                 cell.threadLatestMessage.text = self.threads[indexPath.row].courseName
@@ -282,17 +308,6 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         getMessages(thread: self.threads![indexPath.row])
         
     }
-    
-    @IBAction func createNewThread(){
-        let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
-        if let _ = parent as? ContactTeacherNVC, let student = self.child {
-            newMessageVC.child = student
-            self.navigationController?.pushViewController(newMessageVC, animated: true)
-        }
-       
-    }
-    
-    
 }
 
 extension UIImage {
