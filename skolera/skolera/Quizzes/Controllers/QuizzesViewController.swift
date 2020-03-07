@@ -120,7 +120,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     
     private func setClosedQuizzes() {
         if quizzes != nil {
-            filteredQuizzes = quizzes.filter({ !$0.state.elementsEqual("running") })
+            filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("finished") })
             handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any closed quizzes for now".localized)
             self.tableView.reloadData()
         }
@@ -272,12 +272,14 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
                 getQuizDetails(quizId: filteredQuizzes[indexPath.row].id)
             }
         } else {
-            let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
-            quizVC.quizName = courseName
-            quizVC.courseId = courseId
-            quizVC.courseGroupId = courseGroupId
-            quizVC.quiz = filteredQuizzes[indexPath.row]
-            self.navigationController?.pushViewController(quizVC, animated: true)
+            if filteredQuizzes[indexPath.row].state.elementsEqual("finished") {
+                let quizVC = QuizzesGradesViewController.instantiate(fromAppStoryboard: .Quizzes)
+                quizVC.quizName = courseName
+                quizVC.courseId = courseId
+                quizVC.courseGroupId = courseGroupId
+                quizVC.quiz = filteredQuizzes[indexPath.row]
+                self.navigationController?.pushViewController(quizVC, animated: true)
+            }
         }
     }
     
