@@ -150,7 +150,7 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             quizzes = []
             self.tableView.showAnimatedSkeleton()
         }
-        getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseId) { (isSuccess, statusCode, value, error) in
+        getQuizzesForChildApi(childId: child.id, pageId: pageId, courseId: courseGroupId) { (isSuccess, statusCode, value, error) in
             if self.quizzes.isEmpty {
                 self.tableView.hideSkeleton()
             }
