@@ -108,6 +108,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.events = result.map{ StudentEvent($0) }
+                    self.events = self.events.sorted { (first, second) -> Bool in
+                        first.startDate > second.startDate
+                    }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count

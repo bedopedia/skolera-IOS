@@ -67,7 +67,7 @@ class QuizTableViewCell: UITableViewCell {
                     leftView.backgroundColor = #colorLiteral(red: 1, green: 0.8784313725, blue: 0.8745098039, alpha: 0.25)
                 } else {
                     quizDateLabel.textColor = yellowColor
-                    quizClockImage.image = #imageLiteral(resourceName: "yellowHour")
+                    quizClockImage.image = #imageLiteral(resourceName: "ic_brown_clock")
                     dueDayLabel.textColor = yellowColor
                     dueMonthLabel.textColor = yellowColor
                     leftView.backgroundColor = #colorLiteral(red: 0.9098039216, green: 0.9098039216, blue: 0.8392156863, alpha: 0.3)
