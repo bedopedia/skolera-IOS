@@ -27,7 +27,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         tableView.dataSource = self
         tableView.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if UserDefaults.standard.string(forKey: USER_TYPE)?.elementsEqual("parent") ?? false {
+        if getUserType() == UserType.parent {
             backButton.isHidden = false
             settingsButton.isHidden = true
         } else {
