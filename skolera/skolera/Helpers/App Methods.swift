@@ -14,7 +14,6 @@ import CVCalendar
 //alert messages
 func showAlert(viewController: UIViewController, title: String, message: String,completion : ((UIAlertAction)->Void)?) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    
     let okAction = UIAlertAction(title: "OK", style: .default, handler: completion)
     alertController.addAction(okAction)
     alertController.modalPresentationStyle = .fullScreen
@@ -47,7 +46,7 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
-    } else if statusCode == 401 || statusCode == 500 {
+    } else if statusCode == 401 || statusCode == 500 || statusCode == 403 {
         if isLoginError {
             showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
         } else {
