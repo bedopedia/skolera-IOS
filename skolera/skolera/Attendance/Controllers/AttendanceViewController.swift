@@ -232,10 +232,10 @@ extension AttendanceViewController {
         return false
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
-        false
+        true
     }
     func shouldAutoSelectDayOnMonthChange() -> Bool {
-        false
+        true
     }
     func dotMarker(moveOffsetOnDayView dayView: DayView) -> CGFloat {
         return 16
@@ -258,25 +258,42 @@ extension AttendanceViewController {
         self.calendarView.toggleViewWithDate(resultDate)
     }
     func didShowNextMonthView(_ date: Date) {
+//        self.calendarView.presentedDate = CVDate.init(date: date)
     }
     
     func didShowPreviousMonthView(_ date: Date) {
+//        self.calendarView.presentedDate = CVDate.init(date: date)
     }
     
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
 //        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
 //        updateCurrentLabel()
+//        self.calendarView.presentedDate = startDayView.date
         
     }
     
     func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
 //        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
 //        updateCurrentLabel()
+//        self.calendarView.presentedDate = startDayView.date
     }
     func presentedDateUpdated(_ date: CVDate) {
         updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
     }
+    func shouldScrollOnOutDayViewSelection() -> Bool {
+        false
+    }
+
 }
+
+//extension AttendanceViewController: CVCalendarViewAppearanceDelegate {
+//    func dayLabelWeekdaySelectedBackgroundColor() -> UIColor {
+//        return .clear
+//    }
+//    func dayLabelWeekdaySelectedTextColor() -> UIColor {
+//        return .black
+//    }
+//}
 //MARK:- Collapse Extension
 
 extension AttendanceViewController {
