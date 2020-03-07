@@ -27,7 +27,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet var cVCalendarView: CVCalendarView!
     @IBOutlet var menuView: CVCalendarMenuView!
     @IBOutlet var collectionViewTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet var tableViewBottomConstaint: NSLayoutConstraint!
+
     enum weekDays : Int{
         case sunday = 0
         case monday = 1
@@ -91,6 +92,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
         updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+        if getUserType() == .parent {
+            tableViewBottomConstaint.constant = 0
+        } else {
+            tableViewBottomConstaint.constant = 66
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -119,7 +125,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.setUpEvents()
                     DispatchQueue.main.async {
                         commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
-                        self.createEventButton.isHidden = false
+                        if getUserType() == .student {
+                            self.createEventButton.isHidden = false
+                        }
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.rowHeight = UITableViewAutomaticDimension
