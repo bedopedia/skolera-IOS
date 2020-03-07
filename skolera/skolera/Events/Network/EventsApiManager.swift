@@ -25,7 +25,6 @@ func getEventsAPI(userId: Int, startDate: String, endDate: String, completion: @
 func createEventsAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = CREATE_STUDENT_EVENTS()
-    debugPrint(headers)
     Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
