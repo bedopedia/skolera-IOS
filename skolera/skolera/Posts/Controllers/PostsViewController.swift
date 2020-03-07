@@ -17,6 +17,7 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var gradientView: GradientView!
     
     var child : Actor!
     var courses: [PostCourse]!
@@ -26,26 +27,29 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            gradientView.isHidden = false
+        } else {
+            gradientView.isHidden = true
         }
         fixTableViewHeight()
+        tableView.showAnimatedSkeleton()
         getCourses()
     }
     
     fileprivate func fixTableViewHeight() {
-        tableView.rowHeight = 170
-        tableView.estimatedRowHeight = 170
-        tableView.reloadData()
+        tableView.rowHeight = 112
+        tableView.estimatedRowHeight = 112
+//        tableView.reloadData()
     }
     
-    @IBAction func back(){
+    @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
 //        MARK: - Methods
     func getCourses() {
-        tableView.showAnimatedSkeleton()
-        getPostsCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
+        getPostsCoursesApi(childId: child.childId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             self.courses = []
             if isSuccess {

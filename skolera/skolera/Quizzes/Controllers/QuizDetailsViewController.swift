@@ -17,11 +17,7 @@ class QuizDetailsViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var tableView: UITableView!
     
     var quizId: Int!
-    var detailedQuiz: DetailedQuiz! {
-        didSet {
-            titleLabel.text = self.detailedQuiz.name ?? ""
-        }
-    }
+    var detailedQuiz: DetailedQuiz!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,27 +25,12 @@ class QuizDetailsViewController: UIViewController, NVActivityIndicatorViewable {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
-        getQuizDetails()
+        titleLabel.text = self.detailedQuiz.name ?? ""
     }
     
     @IBAction func backAction() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    func getQuizDetails() {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        getQuizApi(quizId: quizId) { (isSuccess, statusCode, value, error) in
-            self.stopAnimating()
-            if isSuccess {
-                if let result = value as? [String : AnyObject] {
-                    self.detailedQuiz = DetailedQuiz(result)
-                    self.tableView.reloadData()
-                }
-            } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-            }
-        }
-    }    
 }
 
 extension QuizDetailsViewController: UITableViewDelegate, UITableViewDataSource {

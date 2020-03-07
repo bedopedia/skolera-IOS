@@ -18,6 +18,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var createPostButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet var gradientView: GradientView!
     
     var child : Actor!
     var courseName: String = ""
@@ -28,25 +29,25 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
     var isRetrievingData = true
-
+    
     
 //    MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
         if isTeacher {
             childImageView.isHidden = true
+            gradientView.isHidden = true
             let footerView = UIView.init(frame: .init(x: 0, y: 0, width: 10, height: 60))
             footerView.backgroundColor = .clear
             tableView.tableFooterView = footerView
         } else {
             createPostButton.isHidden = true
-            if let child = child{
+            if let child = child {
                 childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
             }
         }
@@ -75,11 +76,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     fileprivate func fixSkeletonHeight() {
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = 200
+        tableView.estimatedRowHeight = 146
+        tableView.rowHeight = 146
     }
 
-    func getPosts(page: Int = 1){
+    func getPosts(page: Int = 1) {
         isRetrievingData = true
         var id: Int
         if isTeacher {
@@ -103,6 +104,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
                         self.posts.append(contentsOf: postsArray.map({ Post($0) }))
                         self.meta = Meta(fromDictionary: result["meta"] as! [String : Any])
+                        self.tableView.rowHeight = UITableViewAutomaticDimension
+                        self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                         self.tableView.reloadData()
                     }
                 }
@@ -132,10 +135,12 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
         if posts != nil {
             cell.hideSkeleton()
+            cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
-            if indexPath.row == posts.count - 3  && !isRetrievingData {
+            if indexPath.row == posts.count - 5  && !isRetrievingData {
                 if meta.currentPage != meta.totalPages{
+//                    fixSkeletonHeight()
                     getPosts(page: (meta.currentPage)! + 1)
                 }
             }

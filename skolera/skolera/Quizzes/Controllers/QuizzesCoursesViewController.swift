@@ -29,7 +29,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
         }
         tableView.refreshControl = refreshControl
@@ -45,8 +45,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
     }
 
     func fixTableViewHeight() {
-        tableView.rowHeight = 124
-        tableView.estimatedRowHeight = 124
+        tableView.rowHeight = 100
+        tableView.estimatedRowHeight = 100
     }
     
     @IBAction func back() {
@@ -65,7 +65,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
                     let quizCourses: [QuizCourse] = result.map({ QuizCourse($0) })
                     self.courses = quizCourses
                     self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = 120
+                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
                 }
             } else {
@@ -94,10 +94,6 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "QuizCourseTableViewCell"
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 124
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
