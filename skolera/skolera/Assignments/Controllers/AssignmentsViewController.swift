@@ -190,7 +190,10 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
+        if !(isTeacher && !filteredAssignments[indexPath.row].state.elementsEqual("done")) {
+            getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
+        }
+        
     }
     
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
