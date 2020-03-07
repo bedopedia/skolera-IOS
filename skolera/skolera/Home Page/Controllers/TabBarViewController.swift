@@ -84,9 +84,66 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
     }
     
     fileprivate func updateBadgeNumber(arrayIndex: Int) {
-        if let notificationItem = tabBar.items?[arrayIndex] {
-            notificationItem.badgeValue = getBadgeValue()
+        if UIApplication.shared.applicationIconBadgeNumber == 0{
+            
+            for subview in tabBar.subviews {
+                
+                if let subview = subview as? UIView {
+                    
+                    if subview.tag == 1234 {
+                        subview.removeFromSuperview()
+                        break
+                    }
+                }
+            }
+        } else {
+            if let tabItem = tabBar.items?[arrayIndex] {
+                // In this case we want to modify the badge number of the third tab:
+                //            UITabBarItem.appearance().badgeColor = .green
+                //            UITabBarItem.appearance().badgeColo
+                //            let tabItem = tabItems[2]
+                //            tabItem.badgeValue = ""
+                for subview in tabBar.subviews {
+                    
+                    if let subview = subview as? UIView {
+                        
+                        if subview.tag == 1234 {
+                            subview.removeFromSuperview()
+                            break
+                        }
+                    }
+                }
+                
+                let RedDotRadius: CGFloat = 5
+                let RedDotDiameter = RedDotRadius * 2
+                
+                let TopMargin:CGFloat = 6
+                
+                let TabBarItemCount = CGFloat(tabBar.items!.count)
+                
+                let screenSize = UIScreen.main.bounds
+                let HalfItemWidth = (screenSize.width) / (TabBarItemCount * 2)
+                
+                let  xOffset = (HalfItemWidth * CGFloat(2 * 2 + 1)) - 18
+                
+                let imageHalfWidth: CGFloat = (tabItem.selectedImage!.size.width) / 2
+                
+                let redDot = UIView(frame: CGRect(x: xOffset + imageHalfWidth, y: TopMargin, width: RedDotDiameter, height: RedDotDiameter))
+                
+                redDot.tag = 1234
+                redDot.backgroundColor = getMainColor()
+                redDot.layer.cornerRadius = RedDotRadius
+                redDot.bringSubview(toFront: self.view)
+                
+                tabBar.addSubview(redDot)
+                
+            }
         }
+//        if let notificationItem = tabBar.items?[arrayIndex] {
+////            notificationItem.badgeValue = getBadgeValue()
+//
+//
+//        }
     }
     
     func getBadgeValue() -> String {
@@ -94,7 +151,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         if badgeNumber < 99 &&  badgeNumber > 0 {
             return "\(badgeNumber)"
         } else {
-            return "+99"
+            return " "
         }
     }
 
