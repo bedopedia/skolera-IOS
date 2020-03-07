@@ -115,13 +115,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if posts != nil {
-            if posts.isEmpty {
-                return 0
-            } else {
-                return posts.count
-            }
+            return posts.count
         } else {
-            return 6
+            return 0
         }
     }
     

@@ -81,7 +81,7 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
         if courses != nil {
          return courses.count
         }
-        return 6
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -135,13 +135,9 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if notifications != nil {
-            if !notifications.isEmpty {
-                return notifications.count
-            } else {
-                return 0
-            }
+            return notifications.count
         } else {
-            return 6
+            return 0
         }
     }
     
