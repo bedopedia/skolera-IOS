@@ -266,7 +266,7 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         gradeHeaderView.titleLabel.text = "Total(%)".localized + "(%)"
                         gradeHeaderView.gradeLabel.text = "\(gradingPeriodGrade.grade)%"
                     } else if semesterTitles[section].elementsEqual("Letter") {
-                        gradeHeaderView.titleLabel.text = semesterTitles[section]
+                        gradeHeaderView.titleLabel.text = "Letter".localized
                         gradeHeaderView.gradeLabel.text = gradingPeriodGrade.letterScale
                     } else {
                         gradeHeaderView.titleLabel.text = semesterTitles[section]
