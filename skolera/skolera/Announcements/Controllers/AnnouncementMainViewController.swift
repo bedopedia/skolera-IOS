@@ -14,6 +14,8 @@ import SwiftDate
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var headerView: UIView!
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     
     var announcements: [Announcement]!
     var meta: Meta?
@@ -21,10 +23,14 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if UserDefaults.standard.string(forKey: USER_TYPE)?.elementsEqual("parent") ?? false{
+            backButton.isHidden = false
+            settingsButton.isHidden = true
+        } else {
+            backButton.isHidden =  true
+            settingsButton.isHidden = false
+        }
         self.tableView.dataSource = self
         self.tableView.delegate = self
         tableView.refreshControl = refreshControl
@@ -91,9 +97,13 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     }
     
     @IBAction func logout() {
-
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         navigationController?.pushViewController(settingsVC, animated: true)
+    }
+    
+    @IBAction func back() {
+          //  self.navigationController?.popViewController(animated: true)
+        self.navigationController?.navigationController?.popViewController(animated: true)
     }
     
 }

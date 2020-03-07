@@ -15,6 +15,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet weak var settingsButton: UIButton!
     
     var fromChildrenList = false
     var notifications: [Notification]!
@@ -25,10 +26,13 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        if !fromChildrenList {
-           backButton.isHidden = true
+        backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if UserDefaults.standard.string(forKey: USER_TYPE)?.elementsEqual("parent") ?? false {
+            backButton.isHidden = false
+            settingsButton.isHidden = true
         } else {
-            backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+            settingsButton.isHidden = false
+            backButton.isHidden = true
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -44,7 +48,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         super.viewDidLayoutSubviews()
         tableView.layoutSkeletonIfNeeded()
     }
-  
+    
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         let enable = self.navigationController?.viewControllers.count ?? 0 > 1 && fromChildrenList
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = enable
@@ -53,14 +57,14 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
     
     @objc private func refreshData() {
         fixTableViewHeight()
         getNotifcations()
         refreshControl.endRefreshing()
     }
-
+    
     func fixTableViewHeight() {
         tableView.estimatedRowHeight = 124
         tableView.rowHeight = 124
@@ -77,7 +81,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
             
             for subview in self.tabBarController?.tabBar.subviews ?? [] {
                 
-               if let subview = subview as? UIView {
+                if let subview = subview as? UIView {
                     
                     if subview.tag == 1234 {
                         subview.removeFromSuperview()
@@ -120,15 +124,15 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     @IBAction func backButtonAction() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
 }
 
 extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewDelegate {
- 
+    
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "notificationCell"
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if notifications != nil {
             if !notifications.isEmpty {
@@ -159,7 +163,7 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 72
-//    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 72
+    //    }
 }
