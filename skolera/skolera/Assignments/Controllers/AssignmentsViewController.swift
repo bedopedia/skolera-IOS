@@ -89,6 +89,9 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             setOpenedAssignments()
         case 1:
             selectedSegment = 1
+            setOnHoldAssignments()
+        case 2:
+            selectedSegment = 2
             setClosedAssignments()
         default:
             setOpenedAssignments()
@@ -108,10 +111,16 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     private func setClosedAssignments() {
-        filteredAssignments = assignments.filter({ !$0.state.elementsEqual("running") })
+        filteredAssignments = assignments.filter({ $0.state.elementsEqual("done") })
         handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any closed assignments for now".localized)
         self.tableView.reloadData()
     }
+    
+    private func setOnHoldAssignments() {
+           filteredAssignments = assignments.filter({ $0.state.elementsEqual("on_hold") })
+           handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any on hold assignments for now".localized)
+           self.tableView.reloadData()
+       }
 
     func getAssignments() {
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
@@ -123,6 +132,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
+                    } else if self.selectedSegment == 1 {
+                        self.setOnHoldAssignments()
                     } else {
                         self.setClosedAssignments()
                     }
@@ -144,11 +155,6 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
 
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 80
-//    }
-//
-    
     private func getAssignmentDetails(assignmentId: Int) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
