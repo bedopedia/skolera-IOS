@@ -54,7 +54,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         }
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        self.tableView.showAnimatedSkeleton()
+        fixSkeletonHeight()
+        tableView.showAnimatedSkeleton()
         refreshData()
     }
     
@@ -71,8 +72,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
     @objc private func refreshData() {
         getPosts()
-        fixSkeletonHeight()
-        self.tableView.showAnimatedSkeleton()
         refreshControl.endRefreshing()
     }
     
@@ -89,24 +88,18 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             id = courseId
         }
-        getPostsForCourseApi(page: page,courseId: id) { (isSuccess, statusCode, value, error) in
+        getPostsForCourseApi(page: 1,courseId: id) { (isSuccess, statusCode, value, error) in
             if self.posts == nil {
                 self.posts = []
             }
-            if page == 1 {
-                self.tableView.rowHeight = UITableViewAutomaticDimension
-                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
-                self.tableView.hideSkeleton()
-                self.posts = []
-                self.tableView.reloadData()
-            }
+            self.tableView.hideSkeleton()
+            self.tableView.rowHeight = UITableViewAutomaticDimension
+            self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
                         self.posts.append(contentsOf: postsArray.map({ Post($0) }))
                         self.meta = Meta(fromDictionary: result["meta"] as! [String : Any])
-                        self.tableView.rowHeight = UITableViewAutomaticDimension
-                        self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                         self.tableView.reloadData()
                     }
                 }
@@ -139,12 +132,12 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
-            if indexPath.row == posts.count - 5  && !isRetrievingData {
-                if meta.currentPage != meta.totalPages{
-//                    fixSkeletonHeight()
-                    getPosts(page: (meta.currentPage)! + 1)
-                }
-            }
+//            if indexPath.row == posts.count - 5  && !isRetrievingData {
+//                if meta.currentPage != meta.totalPages{
+////                    fixSkeletonHeight()
+//                    getPosts(page: (meta.currentPage)! + 1)
+//                }
+//            }
         }
         
         cell.openAttachment = {
