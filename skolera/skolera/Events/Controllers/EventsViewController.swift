@@ -16,7 +16,6 @@ import SkeletonView
 
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
-    
     @IBOutlet weak var currentMonthLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
@@ -208,10 +207,10 @@ extension EventsViewController {
         }
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
-        false
+        true
     }
     func shouldAutoSelectDayOnMonthChange() -> Bool {
-        false
+        true
     }
     
     //        changes the default color (used for the current day in calendar)
