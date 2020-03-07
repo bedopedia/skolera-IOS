@@ -13,19 +13,19 @@ class SettingsTableTableViewController: UITableViewController {
     
     @IBOutlet var versionLabel: UILabel!
     @IBOutlet var languageLabel: UILabel!
-    @IBOutlet var changeLanguageImageView: UIImageView!
+//    @IBOutlet var changeLanguageImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if Language.language == .arabic {
             languageLabel.text = "اللغة (العربية)"
-            versionLabel.text = "اصدار 2.9.2"
-            changeLanguageImageView.image = #imageLiteral(resourceName: "backButton")
+//            versionLabel.text = "اصدار 2.9.2"
+//            changeLanguageImageView.image = #imageLiteral(resourceName: "backButton")
         } else {
             languageLabel.text = "Language (English)"
-            versionLabel.text = "Version 2.9.2"
+//            versionLabel.text = "Version 2.9.2"
             if #available(iOS 13.0, *) {
-                changeLanguageImageView.image = #imageLiteral(resourceName: "chevronRight")
+//                changeLanguageImageView.image = #imageLiteral(resourceName: "chevronRight")
             }
         }
     }
@@ -57,7 +57,8 @@ class SettingsTableTableViewController: UITableViewController {
         } else if indexPath.row == 3 {
             //            change password
             let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-            self.present(changePasswordVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(changePasswordVC, animated: true)
+//            self.present(changePasswordVC, animated: true, completion: nil)
             
         } else if indexPath.row == 4 {
             let alert = UIAlertController(title: "Settings".localized, message: nil, preferredStyle: .actionSheet)
