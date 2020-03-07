@@ -126,7 +126,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         if threads != nil {
             return threads.count
         } else {
-            return 6
+            return 0
         }
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {

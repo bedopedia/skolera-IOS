@@ -80,11 +80,7 @@ extension TeacherCoursesViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !courses.isEmpty {
-            return courses.count
-        } else {
-            return 6
-        }
+        courses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

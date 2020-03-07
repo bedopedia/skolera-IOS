@@ -126,11 +126,7 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if currentDataSource != nil {
-            if !currentDataSource.isEmpty {
-              return currentDataSource.count
-            } else {
-                return 0
-            }
+            return currentDataSource.count
         } else {
             return 0
         }

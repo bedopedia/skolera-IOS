@@ -21,7 +21,8 @@ class StudentSubmissionTableViewCell: UITableViewCell {
     var studentSubmission: AssignmentStudentSubmission! {
         didSet {
             if studentSubmission != nil {
-                subjectImageLabel.text = getText(name: studentSubmission.studentName)
+//                subjectImageLabel.text = getText(name: studentSubmission.studentName)
+                courseImageView.childImageView(url: self.studentSubmission.avatarUrl ?? "", placeholder: getText(name: studentSubmission.studentName), textSize: 14)
                 itemNameLabel.text = studentSubmission.studentName
                 if let graded = studentSubmission.graded, graded {
                     if !isQuiz {
@@ -73,8 +74,10 @@ class StudentSubmissionTableViewCell: UITableViewCell {
         let shortcut = name.replacingOccurrences(of: "&", with: "")
         if shortcut.split(separator: " ").count == 1 {
             //            return "\(shortcut.first!)"
+            debugPrint(String(shortcut.prefix(2)))
             return String(shortcut.prefix(2))
         } else {
+            debugPrint("\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)")
             return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
         }
         

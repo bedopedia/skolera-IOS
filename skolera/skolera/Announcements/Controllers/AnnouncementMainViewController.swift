@@ -114,7 +114,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
         if announcements != nil {
             return announcements.count
         } else {
-            return 6
+            return 0
         }
     }
     
