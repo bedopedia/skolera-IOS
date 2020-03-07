@@ -138,7 +138,7 @@ class SelectGradingPeriodViewController: UIViewController, UITableViewDelegate, 
         courseGradeVC.child = child
         courseGradeVC.courseGroup = courseGroup
         courseGradeVC.gradingPeriodId = gradingPeriodId
-        self.navigationController?.navigationController?.pushViewController(courseGradeVC, animated: true)
+        self.navigationController?.pushViewController(courseGradeVC, animated: true)
         
     }
     

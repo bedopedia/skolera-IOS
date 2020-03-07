@@ -35,7 +35,7 @@
                                         </constraints>
                                         <state key="normal" image="settings"/>
                                         <connections>
-                                            <action selector="logout" destination="AoI-bD-xlB" eventType="touchUpInside" id="mwq-rW-hfc"/>
+                                            <action selector="rightHeaderButtonClicked" destination="AoI-bD-xlB" eventType="touchUpInside" id="4kU-r5-3Ni"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dA-Bm-K6B">
@@ -53,7 +53,7 @@
                                         </constraints>
                                         <state key="normal" image="plusIcon"/>
                                         <connections>
-                                            <action selector="createNewThread" destination="AoI-bD-xlB" eventType="touchUpInside" id="UGl-e8-FwO"/>
+                                            <action selector="leftHeaderButtonClicked" destination="AoI-bD-xlB" eventType="touchUpInside" id="pRk-HG-9Jt"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -256,9 +256,6 @@
                         </view>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="6eS-hu-S5j">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="createNewThread" destination="AoI-bD-xlB" id="w0T-HE-EPk"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
@@ -267,6 +264,7 @@
                         <outlet property="headerView" destination="bVO-6d-zUR" id="8AJ-ok-c4z"/>
                         <outlet property="leftHeaderButton" destination="FEl-Wy-MTa" id="f1z-TV-1vm"/>
                         <outlet property="newThreadButton" destination="6eS-hu-S5j" id="Egx-4C-Rgd"/>
+                        <outlet property="rightHeaderButton" destination="r25-cI-h0k" id="AyQ-US-Bdt"/>
                         <outlet property="threadsTableView" destination="vZC-N4-wO4" id="i9c-aV-GhD"/>
                         <outlet property="titleLabel" destination="5Db-Kf-eRX" id="BiF-GM-ggQ"/>
                     </connections>

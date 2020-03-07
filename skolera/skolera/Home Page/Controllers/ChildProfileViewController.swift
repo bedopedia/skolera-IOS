@@ -28,6 +28,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var settingsButton: UIButton!
     
     //MARK: - Variables
     var child: Actor!
@@ -51,6 +52,8 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
                 featureTVC.tableView.showAnimatedSkeleton()
             }
             setLocalization()
+        } else {
+            settingsButton.isHidden = true
         }
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -86,8 +89,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         return true
     }
 
-    
-    @IBAction func settingsButton() {
+    @IBAction func settingsAction() {
         let settingsVC = SettingsViewController.instantiate(fromAppStoryboard: .HomeScreen)
         navigationController?.pushViewController(settingsVC, animated: true)
     }
