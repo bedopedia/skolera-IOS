@@ -39,6 +39,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
+        createPostButton.addShadow()
         if isTeacher {
             childImageView.isHidden = true
             gradientView.isHidden = true
