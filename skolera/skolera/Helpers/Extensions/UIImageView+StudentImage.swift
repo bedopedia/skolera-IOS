@@ -45,4 +45,12 @@ extension UIImage {
         }
         return self
     }
+    
+    public func rotatedImage() -> UIImage?{
+        if let _cgImag = self.cgImage {
+            let rotatedimg = UIImage(cgImage: _cgImag, scale: self.scale, orientation: .down)
+            return rotatedimg
+        }
+        return nil
+    }
 }
