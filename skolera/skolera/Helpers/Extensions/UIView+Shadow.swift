@@ -12,6 +12,8 @@ import UIKit
 
 extension UIView {
     
+    private static let kLayerNameGradientBorder = "GradientBorderLayer"
+    
     enum AngleUnit {
           /// degrees.
           case degrees
