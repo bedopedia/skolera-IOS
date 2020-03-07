@@ -49,6 +49,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
                 replyButton.isHidden = isParent()
+                replyButton.setTitleColor(getMainColor(), for: .normal)
                 replyButton.setTitle("reply".localized, for: .normal)
                 replyButtonHeight.constant = 24
                 if let files = post.uploadedFiles, !files.isEmpty {
