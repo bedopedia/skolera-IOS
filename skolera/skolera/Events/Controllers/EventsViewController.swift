@@ -16,7 +16,6 @@ import SkeletonView
 
 class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     
-    
     @IBOutlet weak var currentMonthLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var childImageView: UIImageView!
@@ -28,7 +27,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet var cVCalendarView: CVCalendarView!
     @IBOutlet var menuView: CVCalendarMenuView!
     @IBOutlet var collectionViewTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet var tableViewBottomConstaint: NSLayoutConstraint!
+
     enum weekDays : Int{
         case sunday = 0
         case monday = 1
@@ -92,6 +92,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         currentCalendar = Calendar.init(identifier: .gregorian)
         currentCalendar?.timeZone = TimeZone.current
         updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+        if getUserType() == .parent {
+            tableViewBottomConstaint.constant = 0
+        } else {
+            tableViewBottomConstaint.constant = 66
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -108,6 +113,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.events = result.map{ StudentEvent($0) }
+                    self.events = self.events.sorted { (first, second) -> Bool in
+                        first.startDate > second.startDate
+                    }
                     self.filteredEvents = self.events
                     self.academicCount = self.events.filter{ $0.type.elementsEqual("academic") }.count
                     self.eventsCount = self.events.filter{ $0.type.elementsEqual("event") }.count
@@ -117,7 +125,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.setUpEvents()
                     DispatchQueue.main.async {
                         commitCalendarViews(calendarView: self.cVCalendarView, menuView: self.menuView)
-                        self.createEventButton.isHidden = false
+                        if getUserType() == .student {
+                            self.createEventButton.isHidden = false
+                        }
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
                     self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -205,10 +215,10 @@ extension EventsViewController {
         }
     }
     func shouldAutoSelectDayOnWeekChange() -> Bool {
-        false
+        true
     }
     func shouldAutoSelectDayOnMonthChange() -> Bool {
-        false
+        true
     }
     
     //        changes the default color (used for the current day in calendar)

@@ -14,6 +14,7 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var notificationImageView: UIImageView!
     @IBOutlet weak var notificationDetailsLabel: UILabel!
     @IBOutlet weak var dateTimeLabel: UILabel!
+    @IBOutlet weak var gradientView: GradientView!
     //MARK: - Variables
     /// notification variable contains cell data, once set it fills cell contents
     var notification: Notification! {
@@ -85,6 +86,7 @@ class NotificationTableViewCell: UITableViewCell {
         notificationDetailsLabel.showAnimatedSkeleton()
 //        studentNameLabel.showAnimatedSkeleton()
         dateTimeLabel.showAnimatedSkeleton()
+        gradientView.showAnimatedSkeleton()
 //        notificationImageView.showAnimatedGradientSkeleton()
 //        notificationDetailsLabel.showAnimatedGradientSkeleton()
 //        studentNameLabel.showAnimatedGradientSkeleton()

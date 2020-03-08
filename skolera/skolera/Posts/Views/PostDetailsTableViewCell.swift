@@ -49,6 +49,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
                 replyButton.isHidden = isParent()
+                replyButton.setTitleColor(getMainColor(), for: .normal)
                 replyButton.setTitle("reply".localized, for: .normal)
                 replyButtonHeight.constant = 24
                 if let files = post.uploadedFiles, !files.isEmpty {
@@ -88,7 +89,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
                 let postUpdateDate = dateFormatter.date(from: post.updatedAt!)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "dd MMM YYYY"
+                newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
                 postDate.text = newDateFormat.string(from: postUpdateDate!)
             }
         }

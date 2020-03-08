@@ -26,6 +26,7 @@ class AssignmentStudentSubmission {
     let downloadsNumber: Int!
     let deletedAt: String!
     let studentStatus: String!
+    let avatarUrl: String!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -38,7 +39,7 @@ class AssignmentStudentSubmission {
         createdAt = dict["created_at"] as? String
         updatedAt = dict["updated_at"] as? String
         answers = dict["answers"] as? String
-        
+        avatarUrl = dict["avatar_url"] as? String
         if let fileDict = dict["file"] as? [String: Any] {
             file = FileModel(fileDict)
         } else {

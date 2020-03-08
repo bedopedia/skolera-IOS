@@ -151,7 +151,7 @@ func GET_SHORT_COURSE_GROUPS() -> String {
 }
 
 func GET_STUDENT_POSTS() -> String {
-    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=20"
+    return "\(BASE_URL!)/api/posts?access_by_entity=Course+Group+Posts&course_group_id=%d&page=%d&per_page=1000"
 }
 
 func COMMENTS_URL() -> String {
@@ -164,8 +164,7 @@ func GET_ASSIGNMENT_DETAILS_URL() -> String {
 
 
 func GET_QUIZZES() -> String {
-    return "\(BASE_URL!)/api/students/%d/quizzes?page=%d&per_page=1000&course_group_ids=[%d]"
-//    return "/api/students/" + studentId + "/quizzes?page=" + page + "&per_page=20&course_group_ids=[" + courseId + "]";
+    "\(BASE_URL!)/api/quizzes?page=%d&per_page=1000&by_course_group=%d&mobile=true"
 }
 
 func GET_TEACHER_QUIZZES() -> String {

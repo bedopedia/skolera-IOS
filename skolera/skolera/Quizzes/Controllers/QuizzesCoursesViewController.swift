@@ -57,7 +57,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         if courses == nil {
             courses = []
         }
-        getQuizzesCoursesApi(childId: child.id) { (isSuccess, statusCode, value, error) in
+        getQuizzesCoursesApi(childId: child.childId) { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
@@ -81,7 +81,7 @@ extension QuizzesCoursesViewController: UITableViewDataSource, UITableViewDelega
         if courses != nil {
          return courses.count
         }
-        return 6
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

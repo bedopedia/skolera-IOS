@@ -68,13 +68,9 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //    MARK: - Table View Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if courses != nil {
-            if !courses.isEmpty {
-                return courses.count
-            } else {
-                return 0
-            }
+            return courses.count
         }
-        return 6
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
