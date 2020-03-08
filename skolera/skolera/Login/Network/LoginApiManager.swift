@@ -72,7 +72,7 @@ func getProfileAPI(id: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> 
 
 func logoutAPI(parameter: Parameters,completion: @escaping (Bool, Int, Any?, Error?) -> ()){
     let headers : HTTPHeaders? = getHeaders()
-        Alamofire.request(LOGOUT(), method: .delete, parameters: nil, headers: headers).validate().responseJSON { response in
+        Alamofire.request(LOGOUT(), method: .delete, parameters: parameter, headers: headers).validate().responseJSON { response in
           switch response.result{
             case .success(_):
                completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
