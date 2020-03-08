@@ -120,7 +120,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
                 let postUpdateDate = dateFormatter.date(from: comment.updatedAt!)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "dd MMM YYYY"
+                newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
                 if Language.language == .arabic {
                     postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 } else {
