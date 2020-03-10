@@ -158,6 +158,7 @@
 		72CE15FD240E947C00AECC1C /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15FC240E947C00AECC1C /* AnnouncementViewController.swift */; };
 		72CE1600240EA0C800AECC1C /* WeeklyInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72CE15FE240EA0C700AECC1C /* WeeklyInfoTableViewCell.xib */; };
 		72CE1601240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CE15FF240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift */; };
+		72FA74F42417A70B00258DEF /* Double+RemoveTrailingZeros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FA74F32417A70A00258DEF /* Double+RemoveTrailingZeros.swift */; };
 		8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */; };
 		8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */; };
 		8A02C53E23097E2A005BBA04 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A02C53D23097E2A005BBA04 /* EventsViewController.swift */; };
@@ -488,6 +489,7 @@
 		72CE15FC240E947C00AECC1C /* AnnouncementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		72CE15FE240EA0C700AECC1C /* WeeklyInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeeklyInfoTableViewCell.xib; sourceTree = "<group>"; };
 		72CE15FF240EA0C800AECC1C /* WeeklyInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeeklyInfoTableViewCell.swift; sourceTree = "<group>"; };
+		72FA74F32417A70A00258DEF /* Double+RemoveTrailingZeros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+RemoveTrailingZeros.swift"; sourceTree = "<group>"; };
 		74BD16ACA8618A68C38BFEEB /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A01C90B22F9C33C00114607 /* FeedbackDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackDialogViewController.swift; sourceTree = "<group>"; };
 		8A01C90D22F9CCC900114607 /* QuizzesGradesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzesGradesViewController.swift; sourceTree = "<group>"; };
@@ -709,6 +711,7 @@
 				DC81DFEE2366DE1800CFAB72 /* Array+ContainsSameElements.swift */,
 				DC8536F7237BF63500B12476 /* UIView+Shadow.swift */,
 				DC1CA71323815FC900E79769 /* UITextField+Views.swift */,
+				72FA74F32417A70A00258DEF /* Double+RemoveTrailingZeros.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1255,9 +1258,9 @@
 			isa = PBXGroup;
 			children = (
 				8A97DFAB22FAECAC00B646CA /* Network */,
+				8A255BE222E5F578007A0766 /* Controllers */,
 				8A255BE422E5F5C4007A0766 /* Models */,
 				8A255BE322E5F5BE007A0766 /* Views */,
-				8A255BE222E5F578007A0766 /* Controllers */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -2216,6 +2219,7 @@
 				8A0607FA23312B7F003E6DE7 /* SlotAttendance.swift in Sources */,
 				8A01C90E22F9CCC900114607 /* QuizzesGradesViewController.swift in Sources */,
 				8AA44CD721904975007DB9C5 /* Localizable.swift in Sources */,
+				72FA74F42417A70B00258DEF /* Double+RemoveTrailingZeros.swift in Sources */,
 				547605A6202088C900369BE0 /* ChildrenTableViewCell.swift in Sources */,
 				8A6CA5EB22EF102A00DBE205 /* TeacherCoursesTableViewController.swift in Sources */,
 				8AF5119F21E74DF900106EF2 /* AnnouncementReceiver.swift in Sources */,
@@ -2503,7 +2507,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2526,7 +2530,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

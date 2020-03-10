@@ -44,7 +44,7 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
     }
     
     @IBAction func submit(){
-        if let grade = gradeTextField.text, isNumric(string: grade) {
+        if let grade = gradeTextField.text , !grade.isEmpty {
             didSubmitGrade(grade, feedbackTextView.text ?? "")
             close()
         } else {

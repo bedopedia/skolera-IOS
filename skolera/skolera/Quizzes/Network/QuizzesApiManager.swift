@@ -87,6 +87,7 @@ func submitQuizGradeApi(courseId: Int, courseGroupId: Int, quizId: Int, paramete
 func submitQuizFeedbackApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: SUBMIT_FEEDBACK_URL())
+    debugPrint(url, headers, parameters)
     Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

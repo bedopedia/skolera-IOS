@@ -126,16 +126,16 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let studentSubmission = self.submissions[indexPath.row]
-        if let graded = studentSubmission.graded, graded {
-            debugPrint("already graded")
-        } else {
+//        if let graded = studentSubmission.graded, graded {
+//            debugPrint("already graded")
+//        } else {
             let feedbackDialog = FeedbackDialogViewController.instantiate(fromAppStoryboard: .Assignments)
             feedbackDialog.didSubmitGrade = { grade, feedback in
                 self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
             }
             feedbackDialog.modalPresentationStyle = .overCurrentContext
             self.present(feedbackDialog, animated: true, completion: nil)
-        }
+//        }
         
     }
     

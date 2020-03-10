@@ -194,8 +194,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     private func getBehaviorNotesCount() {
-        let parameters : Parameters = ["student_id" : child.childId, "user_type" : "Parents"]
-        getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
+        getBehaviourNotesCountAPI() { (isSuccess, statusCode, value, error) in
             self.getTimeTable()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {

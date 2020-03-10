@@ -64,10 +64,10 @@ func getCourseGroupShortListApi(childId: Int, completion: @escaping ((Bool, Int,
   }
   
 
-func getBehaviourNotesCountAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func getBehaviourNotesCountAPI(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = GET_BEHAVIOR_NOTES_COUNT()
-    Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+    Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
