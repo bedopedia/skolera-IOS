@@ -12,14 +12,14 @@ let GET_SCHOOL_LINK = "https://bedopedia-schools.herokuapp.com/schools/get_by_co
 var BASE_URL : String!
 //Login
 func GET_SCHOOL_BY_CODE() -> String{
-  return "\(BASE_URL!)/api/get_school_by_code"
+    return "\(BASE_URL!)/api/get_school_by_code"
 }
 func SIGN_IN() -> String {
     return "\(BASE_URL!)/api/auth/sign_in"
 }
 
 func GET_PROFILE() -> String {
-     return "\(BASE_URL!)/api/users/%@/getProfile"
+    return "\(BASE_URL!)/api/users/%@/getProfile"
 }
 
 func EDIT_USER() -> String {
@@ -31,7 +31,7 @@ func GET_CHILDREN() ->String {
 }
 //Notifications
 func GET_NOTIFCATIONS() ->String {
-   return "\(BASE_URL!)/api/users/%@/notifications?page=%u"
+    return "\(BASE_URL!)/api/users/%@/notifications?page=%u"
 }
 
 func SET_SEEN_NOTIFICATIONS() -> String {
@@ -57,7 +57,7 @@ func GET_COURSE_GRADING_PERIODS() -> String
 func GET_STUDENT_GRADE_BOOK() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/grade_book_items/student?grading_period_id=%d&student_id=%d"
-
+    
 }
 
 func GET_GRADING_PERIODS() ->String {
@@ -67,7 +67,7 @@ func GET_GRADING_PERIODS() ->String {
 func GET_STUDENT_GRADE_AVG() -> String
 {
     return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade"
-//    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
+    //    return "\(BASE_URL!)/api/courses/%d/course_groups/%d/student_grade_book?student_id=%d"
 }
 
 //Behavior Notes
@@ -123,11 +123,16 @@ func SET_THREAD_IS_SEEN() -> String{
 }
 //Announcements
 func GET_ANNOUNCEMENTS() -> String {
-    return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
+    if getUserType() == .admin {
+        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true)"
+    }
+    else {
+        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
+    }
 }
 //Assignments
 func GET_ASSINGMENTS() -> String {
-//    return "\(BASE_URL!)/api/students/%d/assignments"
+    //    return "\(BASE_URL!)/api/students/%d/assignments"
     return "\(BASE_URL!)/api/courses/%d/assignments"
 }
 

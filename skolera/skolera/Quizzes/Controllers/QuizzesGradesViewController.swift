@@ -120,6 +120,12 @@ extension QuizzesGradesViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let feedbackDialog = FeedbackDialogViewController.instantiate(fromAppStoryboard: .Assignments)
+        if let score = submissions[indexPath.row].score {
+            feedbackDialog.grade = score
+        }
+        if let feedback = submissions[indexPath.row].feedback {
+            feedbackDialog.feedback = feedback.content ?? ""
+        }
         feedbackDialog.didSubmitGrade = { (grade, feedback) in
             self.submitGrade(submission: self.submissions[indexPath.row], grade: grade, feedback: feedback)
         }

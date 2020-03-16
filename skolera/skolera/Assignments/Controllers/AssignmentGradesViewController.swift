@@ -12,7 +12,7 @@ import Alamofire
 import SkeletonView
 
 class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewable {
-
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -45,7 +45,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         getSubmissions()
         refreshControl.endRefreshing()
     }
-
+    
     func fixTableViewHeight() {
         tableView.rowHeight = 104
         tableView.estimatedRowHeight = 104
@@ -99,7 +99,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
             "on_type": "Assignment",
             "to_id": studentId,
             "to_type": "Student"
-        ]]
+            ]]
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
@@ -109,7 +109,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
             }
         }
     }
-
+    
 }
 
 extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
@@ -126,16 +126,18 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let studentSubmission = self.submissions[indexPath.row]
-//        if let graded = studentSubmission.graded, graded {
-//            debugPrint("already graded")
-//        } else {
-            let feedbackDialog = FeedbackDialogViewController.instantiate(fromAppStoryboard: .Assignments)
-            feedbackDialog.didSubmitGrade = { grade, feedback in
-                self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
-            }
-            feedbackDialog.modalPresentationStyle = .overCurrentContext
-            self.present(feedbackDialog, animated: true, completion: nil)
-//        }
+        let feedbackDialog = FeedbackDialogViewController.instantiate(fromAppStoryboard: .Assignments)
+        if let grade = studentSubmission.grade {
+            feedbackDialog.grade = grade
+        }
+        if let feedback = studentSubmission.feedback {
+            feedbackDialog.feedback = feedback.content ?? ""
+        }
+        feedbackDialog.didSubmitGrade = { grade, feedback in
+            self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
+        }
+        feedbackDialog.modalPresentationStyle = .overCurrentContext
+        self.present(feedbackDialog, animated: true, completion: nil)
         
     }
     

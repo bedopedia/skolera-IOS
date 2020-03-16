@@ -11,7 +11,8 @@ import Alamofire
 
 func getAnnouncementsApi(page: Int, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
-    let url = String(format: GET_ANNOUNCEMENTS(),page,10)
+    let url = String(format: GET_ANNOUNCEMENTS(),page,1000)
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

@@ -18,7 +18,15 @@ class BehaviorNoteTableViewCell: UITableViewCell {
                 contentLabel.isHidden = false
                 categoryLabel.text = behaviorNote.category
                 senderLabel.text = behaviorNote.owner.name
-                contentLabel.text = behaviorNote.note.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en")
+                dateFormatter.dateFormat = "dd MMM yyyy"
+                dateLabel.text = dateFormatter.string(from: behaviorNote.createdAt)
+                if var consequence = behaviorNote.consequence, !consequence.isEmpty {
+                contentLabel.text = "\("Note".localized): \(behaviorNote.note.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))\n\("Location".localized): \(behaviorNote.location.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))\n\("Consequence".localized): \(consequence.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))"
+                } else {
+                  contentLabel.text = "\("Note".localized): \(behaviorNote.note.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))\n\("Location".localized): \(behaviorNote.location.withoutHTMLTags().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))"
+                }
             }
             
         }
@@ -28,6 +36,7 @@ class BehaviorNoteTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var senderLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
     override class func awakeFromNib() {
         super.awakeFromNib()

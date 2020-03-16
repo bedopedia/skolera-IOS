@@ -79,7 +79,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     @objc private func refreshData() {
         didLoad = false
         tableView.showAnimatedSkeleton()
-        //tableView.reloadData()
         getPosts()
         refreshControl.endRefreshing()
     }

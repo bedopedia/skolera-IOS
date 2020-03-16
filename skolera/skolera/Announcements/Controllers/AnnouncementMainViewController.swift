@@ -17,9 +17,10 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
-    var announcements: [Announcement]!
+    var announcements: [Announcement] = []
     var meta: Meta?
     private let refreshControl = UIRefreshControl()
+    var didLoad = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +38,15 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
         refreshData()
     }
     
     @objc private func refreshData() {
+        didLoad = false
+        announcements = []
         fixTableViewHeight()
-        self.announcements = []
+        tableView.reloadData()
         tableView.showAnimatedSkeleton()
         getAnnouncements()
         refreshControl.endRefreshing()
@@ -64,14 +68,10 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     
     func getAnnouncements(page: Int = 1) {
         getAnnouncementsApi(page: page) { (isSuccess, statusCode, value, error) in
-            if page == 1 {
-                self.tableView.hideSkeleton()
-                self.tableView.rowHeight = UITableViewAutomaticDimension
-                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
-            }
-            if self.announcements == nil {
-                self.announcements = []
-            }
+            self.didLoad = true
+            self.tableView.hideSkeleton()
+            self.tableView.rowHeight = UITableViewAutomaticDimension
+            self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
             if isSuccess {
                 if let result = value as? [String: AnyObject] {
                     if let metaResponse = result["meta"] as? [String: AnyObject] {
@@ -93,7 +93,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-            handleEmptyDate(tableView: self.tableView, dataSource: self.announcements ?? [], imageName: "announcmentsplaceholder", placeholderText: "You don't have any announcements for now".localized)
+            handleEmptyDate(tableView: self.tableView, dataSource: self.announcements, imageName: "announcmentsplaceholder", placeholderText: "You don't have any announcements for now".localized)
         }
     }
     
@@ -103,7 +103,7 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     }
     
     @IBAction func back() {
-          //  self.navigationController?.popViewController(animated: true)
+        //  self.navigationController?.popViewController(animated: true)
         self.navigationController?.navigationController?.popViewController(animated: true)
     }
     
@@ -111,16 +111,16 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if announcements != nil {
+        if didLoad {
             return announcements.count
         } else {
-            return 0
+            return 8
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
-        if announcements != nil {
+        if didLoad {
             cell.hideSkeleton()
             let announcement = announcements[indexPath.row]
             cell.announcement = announcement

@@ -37,13 +37,14 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     let minHeaderHeight: CGFloat = 50
     var previousScrollOffset: CGFloat = 0
     var weeklyPlanner: WeeklyPlan!
-    var dailyNotes: [String: [DailyNote]] = ["Saturday":[],
-                                             "Sunday": [],
-                                             "Monday": [],
-                                             "Tuesday": [],
-                                             "Wednesday": [],
-                                             "Thursday": [],
-                                             "Friday": []]
+//    var dailyNotes: [String: [DailyNote]] = ["Saturday":[],
+//                                             "Sunday": [],
+//                                             "Monday": [],
+//                                             "Tuesday": [],
+//                                             "Wednesday": [],
+//                                             "Thursday": [],
+//                                             "Friday": []]
+    var dailyNotes: [String: [DailyNote]] = [:]
     var dateStrings: [String] = []
     var activeDays: [String] = []
     var selectedDay: Int = 0
@@ -92,61 +93,75 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "TabCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TabCollectionViewCell")
-        getDatesOfCurrentWeek()
+        getDatesOfWeeklyPlanner()
         
         if weeklyPlanner != nil {
             for date in dateStrings {
                 if let myDailyNotes = self.weeklyPlanner.dailyNotes[date] {
-                    let formatter = DateFormatter()
-                    formatter.locale = Locale(identifier: "en")
-                    formatter.dateFormat = "yyyy-MM-dd"
-                    let date = formatter.date(from: date)
-                    formatter.dateFormat = "EEEE"
-                    let dayInWeek = formatter.string(from: date!)
-                    dailyNotes[dayInWeek] = myDailyNotes
+//                    let formatter = DateFormatter()
+//                    formatter.locale = Locale(identifier: "en")
+//                    formatter.dateFormat = "yyyy-MM-dd"
+//                    let date = formatter.date(from: date)
+//                    formatter.dateFormat = "EEEE"
+//                    let dayInWeek = formatter.string(from: date!)
+                    dailyNotes[date] = myDailyNotes
+                    self.activeDays.append(date)
                 }
             }
         }
-        if !dailyNotes["Saturday"]!.isEmpty {
-            self.activeDays.append("Saturday")
-        }
-        if !dailyNotes["Sunday"]!.isEmpty {
-            self.activeDays.append("Sunday")
-        }
-        if !dailyNotes["Monday"]!.isEmpty {
-            self.activeDays.append("Monday")
-        }
-        if !dailyNotes["Tuesday"]!.isEmpty {
-            self.activeDays.append("Tuesday")
-        }
-        if !dailyNotes["Wednesday"]!.isEmpty {
-            self.activeDays.append("Wednesday")
-        }
-        if !dailyNotes["Thursday"]!.isEmpty {
-            self.activeDays.append("Thursday")
-        }
-        if !dailyNotes["Friday"]!.isEmpty {
-            self.activeDays.append("Friday")
-        }
+//        if !dailyNotes["Saturday"]!.isEmpty {
+//            self.activeDays.append("Saturday")
+//        }
+//        if !dailyNotes["Sunday"]!.isEmpty {
+//            self.activeDays.append("Sunday")
+//        }
+//        if !dailyNotes["Monday"]!.isEmpty {
+//            self.activeDays.append("Monday")
+//        }
+//        if !dailyNotes["Tuesday"]!.isEmpty {
+//            self.activeDays.append("Tuesday")
+//        }
+//        if !dailyNotes["Wednesday"]!.isEmpty {
+//            self.activeDays.append("Wednesday")
+//        }
+//        if !dailyNotes["Thursday"]!.isEmpty {
+//            self.activeDays.append("Thursday")
+//        }
+//        if !dailyNotes["Friday"]!.isEmpty {
+//            self.activeDays.append("Friday")
+//        }
         self.collectionView.reloadData()
         
         tableView.delegate = self
         tableView.dataSource  = self
     }
     
-    func getDatesOfCurrentWeek() {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let dayOfWeek = calendar.component(.weekday, from: today)
-        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
-        let days = (weekdays.lowerBound ..< weekdays.upperBound)
-            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        for date in days {
-            let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
-            dateStrings.append(formatter.string(from: modifiedDate!))
+    func getDatesOfWeeklyPlanner() {
+         let dateFormatter = DateFormatter()
+               dateFormatter.locale = Locale(identifier: "en")
+               dateFormatter.dateFormat = "yyyy-MM-dd"
+        let startDate = dateFormatter.date(from: weeklyPlanner.startDate)!
+        let endDate = dateFormatter.date(from: weeklyPlanner.endDate)!
+
+        var date = startDate
+        while date <= endDate {
+            dateStrings.append(dateFormatter.string(from: date))
+            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
         }
+        debugPrint(dateStrings)
+        
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        let dayOfWeek = calendar.component(.weekday, from: today)
+//        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+//        let days = (weekdays.lowerBound ..< weekdays.upperBound)
+//            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd"
+//        for date in days {
+//            let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: date)
+//            dateStrings.append(formatter.string(from: modifiedDate!))
+//        }
     }
     
     @IBAction func back(){
@@ -164,11 +179,11 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
 
 extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.activeDays.isEmpty {
-            return 0
-        } else {
+//        if self.activeDays.isEmpty {
+//            return 0
+//        } else {
             return self.dailyNotes[self.activeDays[selectedDay]]!.count
-        }
+//        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
@@ -278,7 +293,7 @@ extension WeeklyPlannerViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TabCollectionViewCell", for: indexPath) as! TabCollectionViewCell
-        cell.dayLabel.text = self.activeDays[indexPath.row].localized
+        cell.dayLabel.text = getDateByName(date: self.activeDays[indexPath.row])
         if indexPath.row == selectedDay {
             cell.selectDay()
         } else {
