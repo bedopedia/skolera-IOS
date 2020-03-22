@@ -28,7 +28,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     @IBOutlet var menuView: CVCalendarMenuView!
     @IBOutlet var collectionViewTopConstraint: NSLayoutConstraint!
     @IBOutlet var tableViewBottomConstaint: NSLayoutConstraint!
-
+    
     enum weekDays : Int{
         case sunday = 0
         case monday = 1
@@ -240,13 +240,17 @@ extension EventsViewController {
     
     func dotsColors(dayView: DayView) -> [UIColor] {
         if let events = eventsDict[getDateString(dayView)], !events.isEmpty {
-            if events.count == 1 {
-                return [getEventColor(event: events.first!)]
-            } else if events.count == 2 {
-                return [getEventColor(event: events.first!), getEventColor(event: events[1])]
-            } else {
-                return [getEventColor(event: events.first!), getEventColor(event: events[1]), getEventColor(event: events[2])]
+            var colors: [UIColor] = []
+            for event in events {
+                if colors.count < 3 {
+                    if !colors.contains(getEventColor(event: event)) {
+                        colors.append(getEventColor(event: event))
+                    }
+                } else {
+                    break
+                }
             }
+            return colors
         } else {
             return []
         }

@@ -108,9 +108,12 @@
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:15 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfE-2E-5Uk">
-                                                            <rect key="frame" x="268.5" y="13" width="62.5" height="18"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="31 Nov 2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfE-2E-5Uk">
+                                                            <rect key="frame" x="256" y="15" width="75" height="14.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="75" id="MEc-Rf-lNi"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
@@ -118,7 +121,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy New Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URj-Bn-MTv">
-                                                            <rect key="frame" x="66" y="12.5" width="122.5" height="19.5"/>
+                                                            <rect key="frame" x="66" y="12.5" width="182" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -137,7 +140,7 @@
                                                         <constraint firstItem="URj-Bn-MTv" firstAttribute="leading" secondItem="0QI-UU-c9z" secondAttribute="trailing" constant="11" id="Fko-PB-AEA"/>
                                                         <constraint firstItem="aGp-fV-Ayz" firstAttribute="centerX" secondItem="0QI-UU-c9z" secondAttribute="centerX" id="Sdo-IZ-yvW"/>
                                                         <constraint firstItem="aGp-fV-Ayz" firstAttribute="centerY" secondItem="0QI-UU-c9z" secondAttribute="centerY" id="WXG-rA-Qz8"/>
-                                                        <constraint firstItem="YfE-2E-5Uk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="URj-Bn-MTv" secondAttribute="trailing" constant="8" id="aey-Z6-egs"/>
+                                                        <constraint firstItem="YfE-2E-5Uk" firstAttribute="leading" secondItem="URj-Bn-MTv" secondAttribute="trailing" constant="8" id="mzn-bL-Hkf"/>
                                                         <constraint firstItem="YfE-2E-5Uk" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="pkg-TC-qi2"/>
                                                         <constraint firstItem="0QI-UU-c9z" firstAttribute="centerY" secondItem="wjR-dj-RZp" secondAttribute="centerY" id="xcl-Mv-jM4"/>
                                                     </constraints>

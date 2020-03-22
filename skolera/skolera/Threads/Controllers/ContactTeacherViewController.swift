@@ -284,7 +284,8 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                     }
                 }
             } else {
-                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                self.stopAnimating()
+                showAlert(viewController: self, title: ERROR, message: SOMETHING_WRONG_IN_THREADS, completion: nil )
             }
         }
     }

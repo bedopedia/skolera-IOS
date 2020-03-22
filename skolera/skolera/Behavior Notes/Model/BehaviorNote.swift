@@ -19,7 +19,8 @@ class BehaviorNote : NSObject, NSCoding{
 	var owner : BehaviorNotesOwner!
 	var receivers : [BehaviorNotesReceiver]!
 	var student : Actor!
-
+    var location: String!
+    var consequence: String?
 
 	/**
 	 * Instantiate the instance using the passed dictionary values to set the properties values
@@ -30,6 +31,7 @@ class BehaviorNote : NSObject, NSCoding{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         createdAt = dateFormatter.date(from: (dictionary["created_at"] as? String)!)!
 		id = dictionary["id"] as? Int
 		note = dictionary["note"] as? String
@@ -49,6 +51,8 @@ class BehaviorNote : NSObject, NSCoding{
         if let type = dictionary["type"] as? String{
             self.type = type
         }
+        location = dictionary["location"] as? String
+        consequence = dictionary["consequence"] as? String
 	}
 
 	/**

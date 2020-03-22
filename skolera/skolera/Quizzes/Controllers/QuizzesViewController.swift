@@ -101,10 +101,11 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
             setOpenedQuizzes()
         case 1:
             selectedSegment = 1
-            setOnHoldQuizzes()
-        case 2:
-            selectedSegment = 2
-            setClosedQuizzes()
+             setClosedQuizzes()
+          //  setOnHoldQuizzes()
+//        case 2:
+//            selectedSegment = 2
+//            setClosedQuizzes()
         default:
             setOpenedQuizzes()
         }
@@ -126,13 +127,13 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-    private func setOnHoldQuizzes() {
-           if quizzes != nil {
-               filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("on_hold") })
-               handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any on hold quizzes for now".localized)
-               self.tableView.reloadData()
-           }
-       }
+//    private func setOnHoldQuizzes() {
+//           if quizzes != nil {
+//               filteredQuizzes = quizzes.filter({ $0.state.elementsEqual("on_hold") })
+//               handleEmptyDate(tableView: self.tableView, dataSource: self.filteredQuizzes, imageName: "quizzesplaceholder", placeholderText: "You don't have any on hold quizzes for now".localized)
+//               self.tableView.reloadData()
+//           }
+//       }
     
     func getTeacherQuizzes() {
         if quizzes == nil {
@@ -146,9 +147,11 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
                     self.quizzes = result.map({ FullQuiz($0) })
                     if self.selectedSegment == 0 {
                         self.setOpenedQuizzes()
-                    } else if self.selectedSegment == 1 {
-                        self.setOnHoldQuizzes()
-                    } else {
+                    }
+//                    else if self.selectedSegment == 1 {
+//                        self.setOnHoldQuizzes()
+//                    }
+                    else {
                         self.setClosedQuizzes()
                     }
                 }
@@ -183,9 +186,11 @@ class QuizzesViewController: UIViewController, NVActivityIndicatorViewable {
     fileprivate func presentQuizzes() {
         if self.selectedSegment == 0 {
             self.setOpenedQuizzes()
-        } else if self.selectedSegment == 1 {
-            self.setOnHoldQuizzes()
-        } else {
+        }
+//        else if self.selectedSegment == 1 {
+//            self.setOnHoldQuizzes()
+//        }
+        else {
             self.setClosedQuizzes()
         }
     }

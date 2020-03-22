@@ -46,7 +46,7 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
-    } else if statusCode == 401 || statusCode == 500 || statusCode == 403 {
+    } else if statusCode == 401 || statusCode == 403 {
         if isLoginError {
             showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
         } else {
@@ -228,6 +228,15 @@ func updateCurrentLabel(_ date: Date = Date(), currentCalendar: Calendar?, label
         label.text = CVDate(date: date, calendar: calendar).globalDescription
     }
 }
+
+func getDateByName(date: String) -> String {
+     let dateFormatter = DateFormatter()
+     dateFormatter.locale = Locale(identifier: "en")
+     dateFormatter.dateFormat = "yyyy-MM-dd"
+     let date = dateFormatter.date(from: date)!
+     dateFormatter.dateFormat = "EEE dd/MM"
+     return dateFormatter.string(from: date)
+ }
 
 func getDateString(_ dayView: DayView) -> String {
     var dateString = ""

@@ -193,15 +193,15 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         attendanceParam["status"] = status
         attendancesKey.append(attendanceParam)
         parameters["attendance"] = ["attendances": attendancesKey]
-        if let attendance = studentsMap[student.childId!]?.first {
-            if let statusString = attendance.status, statusString.elementsEqual(status) {
-                debugPrint("Skip this attendance")
-            } else {
-                createNewAttendance(parameters)
+                if let attendance = studentsMap[student.childId!]?.first {
+                    if let statusString = attendance.status, statusString.elementsEqual(status), let commentString = attendance.comment, commentString.elementsEqual(comment) {
+                        debugPrint("Skip this attendance")
+                    } else {
+                        createNewAttendance(parameters)
+                    }
+                } else {
+        createNewAttendance(parameters)
             }
-        } else {
-            createNewAttendance(parameters)
-        }
     }
     
     func submitBatchAttendance(status: String) {
@@ -417,6 +417,11 @@ extension TeacherAttendanceViewController: UITableViewDelegate, UITableViewDataS
             case .excused:
                 status = "excused"
                 let submitExcuse = SubmitExcuseViewController.instantiate(fromAppStoryboard: .Attendance)
+                if let attendance = self.studentsMap[selectedStudent.childId!]?.first {
+                    if let commentString = attendance.comment {
+                        submitExcuse.comment = commentString
+                    }
+                }
                 submitExcuse.didSubmit = { comment in
                     self.submitAttendance(student: selectedStudent, type: type, status: status, comment: comment)
                 }

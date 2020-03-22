@@ -28,7 +28,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
-    var isRetrievingData = true
+    var didLoad = false
     
     
 //    MARK: - Lifecycle
@@ -39,6 +39,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = UITableViewAutomaticDimension
         createPostButton.addShadow()
         if isTeacher {
             childImageView.isHidden = true
@@ -56,6 +58,10 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixSkeletonHeight()
         tableView.showAnimatedSkeleton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.showAnimatedSkeleton()
         refreshData()
     }
     
@@ -71,6 +77,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc private func refreshData() {
+        didLoad = false
+        tableView.showAnimatedSkeleton()
         getPosts()
         refreshControl.endRefreshing()
     }
@@ -81,7 +89,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func getPosts(page: Int = 1) {
-        isRetrievingData = true
         var id: Int
         if isTeacher {
             id = courseGroup.id
@@ -89,12 +96,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             id = courseId
         }
         getPostsForCourseApi(page: 1,courseId: id) { (isSuccess, statusCode, value, error) in
-            if self.posts == nil {
-                self.posts = []
-            }
+            self.didLoad = true
+            self.posts = []
             self.tableView.hideSkeleton()
-            self.tableView.rowHeight = UITableViewAutomaticDimension
-            self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     if let postsArray = result["posts"] as? [[String: AnyObject]] {
@@ -106,43 +110,37 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-            self.isRetrievingData = false
             handleEmptyDate(tableView: self.tableView, dataSource: self.posts ?? [], imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
         }
+        
     }
     
 //    MARK: -Table view
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if posts != nil {
+        if didLoad {
             return posts.count
         } else {
-            return 0
+            return 6
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
-        if posts != nil {
+        if didLoad {
             cell.hideSkeleton()
             cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
             cell.post = posts[indexPath.row]
-//            if indexPath.row == posts.count - 5  && !isRetrievingData {
-//                if meta.currentPage != meta.totalPages{
-////                    fixSkeletonHeight()
-//                    getPosts(page: (meta.currentPage)! + 1)
-//                }
-//            }
+            cell.openAttachment = {
+                       let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
+                       filesVC.child = self.child
+                       filesVC.courseName = self.courseName
+                       filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
+                       self.navigationController?.pushViewController(filesVC, animated: true)
+                   }
         }
-        
-        cell.openAttachment = {
-            let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
-            filesVC.child = self.child
-            filesVC.courseName = self.courseName
-            filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
-            self.navigationController?.pushViewController(filesVC, animated: true)
-        }
+       
         return cell
     }
     

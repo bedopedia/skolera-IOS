@@ -12,12 +12,13 @@ import SkeletonView
 
 
 class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorViewable {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet weak var imageViewBackground: GradientView!
     
     var child : Actor!
     var assignment: FullAssignment!
@@ -27,39 +28,29 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        if let child = child{
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+        if getUserType() == UserType.teacher {
+            childImageView.isHidden = true
+            imageViewBackground.isHidden = true
+        } else {
+            if let child = child{
+                childImageView.isHidden = false
+                imageViewBackground.isHidden = false
+                childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            }
         }
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.rowHeight = 100
         tableView.estimatedRowHeight = 100
-//        getAssignmentDetails(assignmentId: assignmentId!)
+        self.titleLabel.text = self.assignment.name
     }
     
     @IBAction func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
-//    private func getAssignmentDetails(assignmentId: Int) {
-//        self.tableView.showSkeleton()
-//        getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
-//            self.tableView.hideSkeleton()
-//            if isSuccess {
-//                if let result = value as? [String : AnyObject] {
-//                    self.assignment = FullAssignment(result)
-//                    self.titleLabel.text = self.assignment.name
-//                    self.tableView.rowHeight = UITableViewAutomaticDimension
-//                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
-//                    self.tableView.reloadData()
-//                }
-//            } else {
-//                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-//            }
-//        }
-//    }
-
+    
 }
 
 extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataSource, SkeletonTableViewDataSource {
@@ -75,10 +66,8 @@ extension AssignmentDetailsViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentContentTableViewCell") as! AssignmentContentTableViewCell
             if let content = self.assignment.content {
-//                cell.label.attributedText = content.htmlToAttributedString
                 cell.label.update(input: content)
             } else {
-//                cell.label.text = "No content".localized
                 cell.label.update(input: "No content".localized)
             }
             return cell

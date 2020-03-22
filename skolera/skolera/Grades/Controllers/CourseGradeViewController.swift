@@ -217,7 +217,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8078431373, green: 0.9098039216, blue: 1, alpha: 1)
                             gradeHeaderView.titleLabel.text = "Category Total".localized
                             let totalString: String = floor(gradeCategory.total) == gradeCategory.total ? String(Int(gradeCategory.total)) : String(gradeCategory.total)
-                            let mGrade = gradeCategory.grade.replacingOccurrences(of: ".0", with: "")
+                            var mGrade = ""
+                            if Double(gradeCategory.grade) != nil {
+                                mGrade = Double(gradeCategory.grade)!.stringWithoutZeroFraction
+                            } else {
+                                mGrade = gradeCategory.grade
+                            }
                             if mGrade.contains("*") || Double(mGrade) != nil {
                                 gradeHeaderView.gradeLabel.text = "\(mGrade)/\(totalString)"
                             } else {
@@ -227,7 +232,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8078431373, green: 0.9098039216, blue: 1, alpha: 1)
                             gradeHeaderView.titleLabel.text = semesterTitles[section]
                             let weightString: String = floor(gradeCategory.weight) == gradeCategory.weight ? String(Int(gradeCategory.weight)) : String(gradeCategory.weight)
-                            let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
+                            var mGradeView = ""
+                            if Double(gradeCategory.gradeView) != nil {
+                                mGradeView = Double(gradeCategory.gradeView)!.stringWithoutZeroFraction
+                            } else {
+                                mGradeView = gradeCategory.gradeView
+                            }
                             if mGradeView.contains("*") || Double(mGradeView) != nil {
                                 gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
                             } else {
@@ -240,7 +250,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1)
                             gradeHeaderView.titleLabel.text = "Total".localized
                             let totalString: String = floor(gradeCategory.total) == gradeCategory.total ? String(Int(gradeCategory.total)) : String(gradeCategory.total)
-                            let mGrade = gradeCategory.grade.replacingOccurrences(of: ".0", with: "")
+                             var mGrade = ""
+                            if Double(gradeCategory.grade) != nil {
+                                mGrade = Double(gradeCategory.grade)!.stringWithoutZeroFraction
+                            } else {
+                                mGrade = gradeCategory.grade
+                            }
                             if mGrade.contains("*") || Double(mGrade) != nil {
                                 gradeHeaderView.gradeLabel.text = "\(mGrade)/\(totalString)"
                             } else {
@@ -250,7 +265,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                             gradeHeaderView.headerView.backgroundColor = #colorLiteral(red: 0.8078431373, green: 1, blue: 0.8980392157, alpha: 1)
                             gradeHeaderView.titleLabel.text = semesterTitles[section]
                             let weightString: String = floor(gradeCategory.weight) == gradeCategory.weight ? String(Int(gradeCategory.weight)) : String(gradeCategory.weight)
-                            let mGradeView = gradeCategory.gradeView.replacingOccurrences(of: ".0", with: "")
+                            var mGradeView = ""
+                            if Double(gradeCategory.gradeView) != nil {
+                                mGradeView = Double(gradeCategory.gradeView)!.stringWithoutZeroFraction
+                            } else {
+                                mGradeView = gradeCategory.gradeView
+                            }
                             if mGradeView.contains("*") || Double(mGradeView) != nil {
                                 gradeHeaderView.gradeLabel.text = gradingPeriodGrade.categoryIsNumeric ?? false ? "\(mGradeView)/\(weightString)" : "\(mGradeView)% / \(weightString)%"
                             } else {
@@ -299,7 +319,12 @@ class CourseGradeViewController: UIViewController, UITableViewDelegate, UITableV
                         cell.TitleLabel.text = studentGrade.name
                         cell.avgGradeLabel.text = ""
                         let totalString: String = floor(studentGrade.total) == studentGrade.total ? String(Int(studentGrade.total)) : String(studentGrade.total)
-                        let mGradeView = studentGrade.gradeView.replacingOccurrences(of: ".0", with: "")
+                        var mGradeView = ""
+                        if Double(studentGrade.gradeView) != nil {
+                            mGradeView = Double(studentGrade.gradeView)!.stringWithoutZeroFraction
+                        } else {
+                            mGradeView = studentGrade.gradeView
+                        }
                         if mGradeView.contains("*") || Double(mGradeView) != nil {
                             cell.gradeLabel.text = "\(mGradeView)/\(totalString)"
                         } else {

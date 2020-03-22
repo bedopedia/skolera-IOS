@@ -180,20 +180,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             setErrorView(textField: passwordTextField, label: passwordErrorLabel, errorText: "Password length should be more than 6 characters", isPassword: true)
         }
     }
-
+    
     
     @IBAction func login(){
+        var shouldLogin = true
         guard let email = emailTextField.text else {return}
-           guard let password = passwordTextField.text else {return}
-           if email.isEmpty {
-               setErrorUi(.emptyName)
-           } else if password.isEmpty {
-               setErrorUi(.emptyPassword)
-           } else if passwordTextField.text?.count ?? 0 < 6 {
-               setErrorUi(.invalidPassword)
-           } else {
-               authenticate(email: email, password: password)
-           }
+        guard let password = passwordTextField.text else {return}
+        if email.isEmpty {
+            setErrorUi(.emptyName)
+            shouldLogin = false
+        }
+        if password.isEmpty {
+            setErrorUi(.emptyPassword)
+            shouldLogin = false
+        } else if passwordTextField.text?.count ?? 0 < 6 {
+            setErrorUi(.invalidPassword)
+            shouldLogin = false
+        }
+        if shouldLogin {
+            authenticate(email: email, password: password)
+        }
     }
     @objc func togglePasswordFieldState (_ sender: UIButton) {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry

@@ -22,7 +22,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     @IBOutlet weak var positiveBehaviorNotesLabel: UILabel!
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
-    @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
     @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
     
     @IBOutlet weak var attendanceImage: UIImageView!
@@ -124,15 +123,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         attendanceProgressBar.progressTintColors = [UIColor.appColors.progressBarColor1,UIColor.appColors.progressBarColor2]
     }
     
-    private func getDateByName(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from: date)!
-        dateFormatter.dateFormat = "EEE dd/MM"
-        return dateFormatter.string(from: date)
-    }
-    
     private func openPosts(){
         let postsVC = PostsViewController.instantiate(fromAppStoryboard: .Posts)
         postsVC.child = self.child
@@ -194,19 +184,16 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     private func getBehaviorNotesCount() {
-        let parameters : Parameters = ["student_id" : child.childId, "user_type" : "Parents"]
-        getBehaviourNotesCountAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
+        getBehaviourNotesCountAPI() { (isSuccess, statusCode, value, error) in
             self.getTimeTable()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
-                    self.otherBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.other!)"
                     let good: Int = (behaviorNotesNumbersResponse.good ?? 0)
                     let bad: Int = (behaviorNotesNumbersResponse.bad ?? 0)
-                    let other: Int = (behaviorNotesNumbersResponse.other ?? 0)
-                    let total = good + bad + other
+                    let total = good + bad
                     if total == 0 {
                         self.shouldOpenBehaviorNotes = false
                     } else {
@@ -228,9 +215,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     if !weeklyPlanResponse.weeklyPlan.isEmpty {
                         self.weeklyPlan = weeklyPlanResponse.weeklyPlan
                         if Language.language == .arabic {
-                            self.weeklyPlannerDateLabel.text = "تبدأ من \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) إلى \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            self.weeklyPlannerDateLabel.text = "تبدأ من \(getDateByName(date: self.weeklyPlan.first!.startDate)) إلى \(getDateByName(date: self.weeklyPlan.first!.endDate))"
                         } else {
-                            self.weeklyPlannerDateLabel.text = "Starts from \(self.getDateByName(date: self.weeklyPlan.first!.startDate)) to \(self.getDateByName(date: self.weeklyPlan.first!.endDate))"
+                            self.weeklyPlannerDateLabel.text = "Starts from \(getDateByName(date: self.weeklyPlan.first!.startDate)) to \(getDateByName(date: self.weeklyPlan.first!.endDate))"
                         }
                     } else {
                         self.weeklyPlannerDateLabel.text = "No Weekly Planner available".localized

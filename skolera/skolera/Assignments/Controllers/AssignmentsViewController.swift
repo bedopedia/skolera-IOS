@@ -89,10 +89,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             setOpenedAssignments()
         case 1:
             selectedSegment = 1
-            setOnHoldAssignments()
-        case 2:
-            selectedSegment = 2
             setClosedAssignments()
+//            setOnHoldAssignments()
+//        case 2:
+//            selectedSegment = 2
+//            setClosedAssignments()
         default:
             setOpenedAssignments()
         }
@@ -116,11 +117,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.reloadData()
     }
     
-    private func setOnHoldAssignments() {
-           filteredAssignments = assignments.filter({ $0.state.elementsEqual("on_hold") })
-           handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any on hold assignments for now".localized)
-           self.tableView.reloadData()
-       }
+//    private func setOnHoldAssignments() {
+//           filteredAssignments = assignments.filter({ $0.state.elementsEqual("on_hold") })
+//           handleEmptyDate(tableView: self.tableView, dataSource: self.filteredAssignments, imageName: "assignmentsplaceholder", placeholderText: "You don't have any on hold assignments for now".localized)
+//           self.tableView.reloadData()
+//       }
 
     func getAssignments() {
         getAssignmentForCourseApi(courseId: courseId) { (isSuccess, statusCode, value, error) in
@@ -132,9 +133,11 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
-                    } else if self.selectedSegment == 1 {
-                        self.setOnHoldAssignments()
-                    } else {
+                    }
+//                    else if self.selectedSegment == 1 {
+//                        self.setOnHoldAssignments()
+//                    }
+                    else {
                         self.setClosedAssignments()
                     }
                 }
@@ -155,14 +158,14 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
     }
 
-    private func getAssignmentDetails(assignmentId: Int) {
+    private func getAssignmentDetails(assignmentId: Int, state: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         getAssignmentDetailsApi(courseId: courseId, assignmentId: assignmentId) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let assignment = FullAssignment(result)
-                    if !self.isTeacher {
+                    if !self.isTeacher || (self.isTeacher && !state.elementsEqual("done")){
                         let content = assignment.content ?? ""
                         if !content.isEmpty || assignment.uploadedFilesCount > 0 {
                            let assignmentDetailsVC: AssignmentDetailsViewController = AssignmentDetailsViewController.instantiate(fromAppStoryboard: .Assignments)
@@ -190,9 +193,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !(isTeacher && !filteredAssignments[indexPath.row].state.elementsEqual("done")) {
-            getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id)
-        }
+            getAssignmentDetails(assignmentId: filteredAssignments[indexPath.row].id, state: filteredAssignments[indexPath.row].state)
+
         
     }
     

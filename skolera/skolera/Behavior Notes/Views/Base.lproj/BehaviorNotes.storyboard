@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,15 +31,15 @@
                                 <rect key="frame" x="0.0" y="123" width="375" height="544"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="behaviorNoteCell" rowHeight="107" id="g0V-5J-uya" customClass="BehaviorNoteTableViewCell" customModule="skolera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="107"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="behaviorNoteCell" id="g0V-5J-uya" customClass="BehaviorNoteTableViewCell" customModule="skolera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="119.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g0V-5J-uya" id="pum-CN-9N1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="107"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPR-8j-ZGY" customClass="CardView" customModule="skolera" customModuleProvider="target">
-                                                    <rect key="frame" x="12" y="8" width="351" height="91"/>
+                                                    <rect key="frame" x="12" y="8" width="351" height="103.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Sender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8B-Xh-1JB">
                                                             <rect key="frame" x="20" y="8" width="53.5" height="19.5"/>
@@ -51,7 +51,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybf-fO-o99">
-                                                            <rect key="frame" x="20" y="32.5" width="61" height="17"/>
+                                                            <rect key="frame" x="20" y="31.5" width="61" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                             <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -59,8 +59,17 @@
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDF-xA-hIi">
-                                                            <rect key="frame" x="20" y="54.5" width="311" height="14.5"/>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Note: bad Location: in class Consequences: opss" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDF-xA-hIi">
+                                                            <rect key="frame" x="20" y="52.5" width="311" height="43"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Feb 2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0aJ-UC-T0R">
+                                                            <rect key="frame" x="258.5" y="10.5" width="72.5" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -71,15 +80,17 @@
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="E8B-Xh-1JB" secondAttribute="trailing" constant="20" id="BlT-cR-yZf"/>
+                                                        <constraint firstItem="0aJ-UC-T0R" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E8B-Xh-1JB" secondAttribute="trailing" constant="4" id="BlT-cR-yZf"/>
                                                         <constraint firstItem="E8B-Xh-1JB" firstAttribute="leading" secondItem="kPR-8j-ZGY" secondAttribute="leading" constant="20" id="LRT-4g-Rd6"/>
+                                                        <constraint firstItem="0aJ-UC-T0R" firstAttribute="centerY" secondItem="E8B-Xh-1JB" secondAttribute="centerY" id="OKA-Vk-TQr"/>
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ybf-fO-o99" secondAttribute="trailing" constant="20" id="RMj-lp-4kY"/>
                                                         <constraint firstItem="Ybf-fO-o99" firstAttribute="leading" secondItem="E8B-Xh-1JB" secondAttribute="leading" id="Ry6-7W-dhQ"/>
-                                                        <constraint firstItem="Ybf-fO-o99" firstAttribute="top" secondItem="E8B-Xh-1JB" secondAttribute="bottom" constant="5" id="S5b-3N-08J"/>
+                                                        <constraint firstItem="Ybf-fO-o99" firstAttribute="top" secondItem="E8B-Xh-1JB" secondAttribute="bottom" constant="4" id="S5b-3N-08J"/>
                                                         <constraint firstItem="E8B-Xh-1JB" firstAttribute="top" secondItem="kPR-8j-ZGY" secondAttribute="top" constant="8" id="TsM-4r-sPD"/>
-                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uDF-xA-hIi" secondAttribute="bottom" constant="8" id="XhM-kg-AZd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="0aJ-UC-T0R" secondAttribute="trailing" constant="20" id="V23-Om-2rA"/>
+                                                        <constraint firstAttribute="bottom" secondItem="uDF-xA-hIi" secondAttribute="bottom" constant="8" id="XhM-kg-AZd"/>
                                                         <constraint firstItem="uDF-xA-hIi" firstAttribute="leading" secondItem="Ybf-fO-o99" secondAttribute="leading" id="abk-7l-Drp"/>
-                                                        <constraint firstItem="uDF-xA-hIi" firstAttribute="top" secondItem="Ybf-fO-o99" secondAttribute="bottom" constant="5" id="cae-dU-Gk3"/>
+                                                        <constraint firstItem="uDF-xA-hIi" firstAttribute="top" secondItem="Ybf-fO-o99" secondAttribute="bottom" constant="4" id="cae-dU-Gk3"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="91" id="jHQ-XZ-MNd"/>
                                                         <constraint firstAttribute="trailing" secondItem="uDF-xA-hIi" secondAttribute="trailing" constant="20" id="lvc-up-dwc"/>
                                                     </constraints>
@@ -104,6 +115,7 @@
                                         <connections>
                                             <outlet property="categoryLabel" destination="Ybf-fO-o99" id="b9T-iE-34c"/>
                                             <outlet property="contentLabel" destination="uDF-xA-hIi" id="jzL-DK-vnH"/>
+                                            <outlet property="dateLabel" destination="0aJ-UC-T0R" id="qxK-y0-Jcl"/>
                                             <outlet property="senderLabel" destination="E8B-Xh-1JB" id="Rbs-0r-vKP"/>
                                         </connections>
                                     </tableViewCell>

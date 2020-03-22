@@ -9,6 +9,7 @@
 import UIKit
 import CalendarKit
 import DateToolsSwift
+
 class TimetableViewController: UIViewController, EventDataSource{
     //MARK: - Variables
     let calendar = Calendar.current
@@ -73,22 +74,20 @@ class TimetableViewController: UIViewController, EventDataSource{
             }
             
         }
-
+        
     }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     //MARK :- Actions
     @IBAction func switchTimeTable(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
             dayView.state?.move(to: today)
-            print("switched to today")
         case 1:
             dayView.state?.move(to: tomorrow)
-            print("switched to tomorrow")
         default:
             dayView.state?.move(to: today)
         }
@@ -137,7 +136,6 @@ class TimetableViewController: UIViewController, EventDataSource{
         var result =  [EventDescriptor]()
         if timeslots != nil
         {
-            
             let slots = timeslots.filter { (timeslot) -> Bool in
                 timeslot.day == getTomorrowName()
             }
@@ -172,24 +170,17 @@ class TimetableViewController: UIViewController, EventDataSource{
         let attributedCourseName = NSAttributedString(string: courseName, attributes: [NSAttributedStringKey.font :UIFont.systemFont(ofSize: 18, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.dark])
         let attributedGroup = NSAttributedString(string: "\nGroup : "+group, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.greyNotTaken])
         let result = NSMutableAttributedString(attributedString: attributedCourseName)
-            result.append(attributedGroup)
+        result.append(attributedGroup)
         return result.attributedSubstring(from: NSMakeRange(0, result.string.count))
     }
     //MARK:- Delegates
     func eventsForDate(_ date: Date) -> [EventDescriptor] { //ui setting
-        
-        if (date.isToday)
-        {
+        if (date.isToday) {
             return todayEvents
-        }
-        else if (date.isTomorrow)
-        {
+        } else if (date.isTomorrow) {
             return tomorrowEvents
-        }
-        else
-        {
+        } else {
             return []
         }
     }
-
 }

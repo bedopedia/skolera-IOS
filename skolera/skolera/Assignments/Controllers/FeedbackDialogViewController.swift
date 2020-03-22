@@ -15,6 +15,9 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var feedbackTextView: KMPlaceholderTextView!
     
     var didSubmitGrade: ((String, String) -> ())!
+    var grade: Double?
+    var feedback = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,11 +25,15 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
         gradeTextField.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
         gradeTextField.layer.cornerRadius = 6
         gradeTextField.delegate = self
+        if let myGrade = grade {
+            gradeTextField.text = String(myGrade)
+        }
         
         feedbackTextView.layer.borderWidth = 1
         feedbackTextView.layer.borderColor = #colorLiteral(red: 0.6460315585, green: 0.6780731678, blue: 0.7072373629, alpha: 1)
         feedbackTextView.layer.cornerRadius = 6
         feedbackTextView.placeholder = "Write a feedback".localized
+        feedbackTextView.text = feedback
         
     }
     
@@ -44,7 +51,7 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
     }
     
     @IBAction func submit(){
-        if let grade = gradeTextField.text, isNumric(string: grade) {
+        if let grade = gradeTextField.text , !grade.isEmpty {
             didSubmitGrade(grade, feedbackTextView.text ?? "")
             close()
         } else {
