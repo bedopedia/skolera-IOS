@@ -22,7 +22,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     @IBOutlet weak var positiveBehaviorNotesLabel: UILabel!
     @IBOutlet weak var negativeBehaviorNotesLabel: UILabel!
     
-    @IBOutlet weak var otherBehaviorNotesLabel: UILabel!
     @IBOutlet weak var weeklyPlannerDateLabel: UILabel!
     
     @IBOutlet weak var attendanceImage: UIImageView!
@@ -192,11 +191,9 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                     let behaviorNotesNumbersResponse = BehaviorNotesNumbersResponse.init(fromDictionary: result)
                     self.positiveBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.good!)"
                     self.negativeBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.bad!)"
-                    self.otherBehaviorNotesLabel.text = "\(behaviorNotesNumbersResponse.other!)"
                     let good: Int = (behaviorNotesNumbersResponse.good ?? 0)
                     let bad: Int = (behaviorNotesNumbersResponse.bad ?? 0)
-                    let other: Int = (behaviorNotesNumbersResponse.other ?? 0)
-                    let total = good + bad + other
+                    let total = good + bad
                     if total == 0 {
                         self.shouldOpenBehaviorNotes = false
                     } else {
