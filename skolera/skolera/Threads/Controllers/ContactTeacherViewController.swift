@@ -194,94 +194,101 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                 DispatchQueue.global(qos: .userInitiated).async {
                     // Bounce back to the main thread to update the UI
                     if let result = response as? [String: Any], let messagesJsonArray = result["messages"] as? [[String: Any]] {
+                        debugPrint(messagesJsonArray)
                         let messages = messagesJsonArray.map{Message(fromDictionary: $0)}
                         thread.messages = messages
                     }
                     //////////////////////////////////////////
-                    let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
-                    var messages: [ChatItemProtocol] = []
-                    let threadsMessages = thread.messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
-                    
-                    for item in threadsMessages {
+                    DispatchQueue.main.async {
+                        let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
+                        var messages: [ChatItemProtocol] = []
+                        let threadsMessages = thread.messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
                         
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale(identifier: "en")
-                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
-                        let date = dateFormatter.date(from: item.createdAt)!
-                        if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
-                            if "\(item.user?.id ?? -1)".elementsEqual(userId()){
-                                let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
-                                let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
-                                messages.append(textModel)
+                        for item in threadsMessages {
+                            
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.locale = Locale(identifier: "en")
+                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+                            let date = dateFormatter.date(from: item.createdAt)!
+                            if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
+                                if "\(item.user?.id ?? -1)".elementsEqual(userId()){
+                                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
+                                    let body = item.body.htmlAttributedString()
+                                    if let bodyString = body?.string {
+                                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: bodyString)
+                                        messages.append(textModel)
+                                    }
+                                } else {
+                                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
+                                    let body = item.body.htmlAttributedString()
+                                    if let bodyString = body?.string {
+                                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: bodyString)
+                                        messages.append(textModel)
+                                    }
+                                }
                             } else {
-                                let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
-                                let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: item.body.htmlToString.decode())
-                                
-                                messages.append(textModel)
-                            }
-                        } else {
-                            let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user?.id ?? -1)".elementsEqual(userId()), date: date, status: .success)
-                            let size = CGSize(width: 2000.0, height: 1000.0)
-                            if item.ext == nil {
-                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("pdf") {
-                                let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("doc") || item.ext.contains("rtf") {
-                                let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("pp") {
-                                let image = UIImage(named: "ppt_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.contains("xl") {
-                                let image = UIImage(named: "xlsx_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
-                                let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
-                                let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
-                                let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
-                                messages.append(photoModel)
-                            } else if item.ext.elementsEqual("jpg") || item.ext.elementsEqual("jpeg") || item.ext.elementsEqual("png") {
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: CGSize(width: 1000, height: 1000), image: UIImage(), url: item.attachmentUrl, loadImage: true)
-                                messages.append(photoModel)
-                            } else {
-                                let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
-                                let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
-                                messages.append(photoModel)
+                                let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user?.id ?? -1)".elementsEqual(userId()), date: date, status: .success)
+                                let size = CGSize(width: 2000.0, height: 1000.0)
+                                if item.ext == nil {
+                                    let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                                    messages.append(photoModel)
+                                } else if item.ext.elementsEqual("pdf") {
+                                    let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.contains("doc") || item.ext.contains("rtf") {
+                                    let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.contains("pp") {
+                                    let image = UIImage(named: "ppt_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.contains("xl") {
+                                    let image = UIImage(named: "xlsx_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
+                                    let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
+                                    let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
+                                    let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                                    messages.append(photoModel)
+                                } else if item.ext.elementsEqual("jpg") || item.ext.elementsEqual("jpeg") || item.ext.elementsEqual("png") {
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: CGSize(width: 1000, height: 1000), image: UIImage(), url: item.attachmentUrl, loadImage: true)
+                                    messages.append(photoModel)
+                                } else {
+                                    let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                                    messages.append(photoModel)
+                                }
                             }
                         }
-                    }
-                    
-                    //        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })
-                    
-                    let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
-                    chatVC.dataSource = dataSource
-                    let fullName = thread.othersNames ?? thread.name
-                    var fullNameArr = fullName?.components(separatedBy: " ")
-                    chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
-                    chatVC.canSendMessage = !thread.participants.isEmpty
-                    chatVC.thread = thread
-                    
-                    DispatchQueue.main.async {
+                        
+                        let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
+                        chatVC.dataSource = dataSource
+                        let fullName = thread.othersNames ?? thread.name
+                        let fullNameArr = fullName?.components(separatedBy: " ")
+                        chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
+                        chatVC.canSendMessage = !thread.participants.isEmpty
+                        chatVC.thread = thread
                         self.stopAnimating()
                         //                self.navigationController?.isNavigationBarHidden = false
                         //                self.navigationController?.pushViewController(chatVC, animated: true)
                         self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
                     }
+                    
+                    //        let sortedMessages = messages.sorted(by: { $0.messageModel.date.compare($1.messageModel.date) == .orderedAscending })
+                    
+                    
                 }
             } else {
                 self.stopAnimating()
