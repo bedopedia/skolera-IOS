@@ -90,3 +90,17 @@ func submitAssignmentFeedbackApi(parameters: Parameters, completion: @escaping (
         }
     }
 }
+
+func updateFeedbackApi(feedbackId: Int, parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let headers : HTTPHeaders? = getHeaders()
+    let url = String(format: EDIT_FEEDBACK_URL(), feedbackId)
+    debugPrint(url, headers, parameters)
+    Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}

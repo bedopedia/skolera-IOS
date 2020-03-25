@@ -67,7 +67,7 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
         }
     }
     
-    private func submitGrade(submission: AssignmentStudentSubmission, grade: String, feedback: String) {
+    private func submitGrade(submission: AssignmentStudentSubmission, grade: String, feedback: String, feedbackId: Int) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         let parameters: Parameters = ["grade": grade,
                                       "student_id": submission.studentId ?? 0,
@@ -82,7 +82,11 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
                     self.stopAnimating()
                     self.getSubmissions()
                 } else {
-                    self.submitFeedback(submissionId: self.assignment.id, studentId: submission.studentId, feedback: feedback)
+                    if feedbackId == -1 {
+                        self.submitFeedback(submissionId: self.assignment.id, studentId: submission.studentId, feedback: feedback)
+                    } else {
+                        self.updateFeedback(submissionId: self.assignment.id, studentId: submission.studentId, feedback: feedback, feedbackId: feedbackId)
+                    }
                 }
             } else {
                 self.stopAnimating()
@@ -101,6 +105,25 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
             "to_type": "Student"
             ]]
         submitAssignmentFeedbackApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
+            self.stopAnimating()
+            if isSuccess {
+                self.getSubmissions()
+            } else {
+                showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+            }
+        }
+    }
+    
+    private func updateFeedback(submissionId: Int, studentId: Int, feedback: String, feedbackId: Int) {
+        let parameters: Parameters = ["feedback": [
+            "content": feedback,
+            "owner_id": userId(),
+            "on_id": submissionId,
+            "on_type": "Assignment",
+            "to_id": studentId,
+            "to_type": "Student"
+            ]]
+        updateFeedbackApi(feedbackId: feedbackId, parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 self.getSubmissions()
@@ -132,9 +155,10 @@ extension AssignmentGradesViewController: UITableViewDataSource, UITableViewDele
         }
         if let feedback = studentSubmission.feedback {
             feedbackDialog.feedback = feedback.content ?? ""
+            feedbackDialog.feedbackId = feedback.id ?? -1
         }
-        feedbackDialog.didSubmitGrade = { grade, feedback in
-            self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback)
+        feedbackDialog.didSubmitGrade = { grade, feedback, feedbackId in
+            self.submitGrade(submission: studentSubmission, grade: grade, feedback: feedback, feedbackId: feedbackId)
         }
         feedbackDialog.modalPresentationStyle = .overCurrentContext
         self.present(feedbackDialog, animated: true, completion: nil)

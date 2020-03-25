@@ -170,16 +170,19 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.statusSegmentControl.removeAllSegments()
                     if self.positiveNotes.count > 0 {
+                        self.loadPositiveNotes()
                         self.statusSegmentControl.insertSegment(withTitle: "Positive".localized, at: 0, animated: false)
                     }
                     if self.negativeNotes.count > 0 {
+                        if self.positiveNotes.isEmpty {
+                            self.loadNegativeNotes()
+                        }
                         self.statusSegmentControl.insertSegment(withTitle: "Negative".localized, at: 1, animated: false)
                     }
                     if self.otherNotes.count > 0 {
                         self.statusSegmentControl.insertSegment(withTitle: "Other".localized, at: 1, animated: false)
                     }
                     self.statusSegmentControl.selectedSegmentIndex = 0
-                    self.loadPositiveNotes()
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)

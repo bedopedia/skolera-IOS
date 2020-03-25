@@ -193,6 +193,10 @@ func SUBMIT_FEEDBACK_URL() -> String {
     return "\(BASE_URL!)/api/feedbacks"
 }
 
+func EDIT_FEEDBACK_URL() -> String {
+    return "\(BASE_URL!)/api/feedbacks/%d"
+}
+
 func GET_QUIZZES_SUBMISSIONS_URL() -> String {
     return "\(BASE_URL!)/api/quizzes/%d/submissions?course_group_id=%d"
 }

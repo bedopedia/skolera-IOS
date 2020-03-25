@@ -27,6 +27,7 @@ class Threads : NSObject, NSCoding{
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
+        debugPrint(dictionary)
         courseId = dictionary["course_id"] as? Int
         courseName = dictionary["course_name"] as? String
         id = dictionary["id"] as? Int

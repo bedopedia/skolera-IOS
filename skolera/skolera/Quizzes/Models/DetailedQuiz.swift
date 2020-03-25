@@ -21,7 +21,7 @@ class DetailedQuiz {
     let isQuestionsRandomized: Bool!
     let numOfQuestionsPerPage: Int!
     let state: String!
-    let totalScore: Int!
+    let totalScore: Double!
     let lessonId: Int!
     let studentSolved: Bool!
     let blooms: [String]!
@@ -76,7 +76,7 @@ class DetailedQuiz {
         isQuestionsRandomized = dict["is_questions_randomized"] as? Bool
         numOfQuestionsPerPage = dict["num_of_questions_per_page"] as? Int
         state = dict["state"] as? String
-        totalScore = dict["total_score"] as? Int
+        totalScore = dict["total_score"] as? Double
         lessonId = dict["lesson_id"] as? Int
         studentSolved = dict["student_solved"] as? Bool
         blooms = dict["blooms"] as? [String]

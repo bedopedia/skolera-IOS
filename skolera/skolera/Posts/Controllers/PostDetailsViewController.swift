@@ -12,6 +12,8 @@ import Alamofire
 
 class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, NVActivityIndicatorViewable {
     
+    @IBOutlet weak var headerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -43,6 +45,31 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         replyTextField.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    }
+
+    @objc func keyboardWillAppear(_ notification: NSNotification) {
+        //Do something here
+        if let userInfo = notification.userInfo,
+            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+               let inset = keyboardFrame.height // if scrollView is not aligned to bottom of screen, subtract offset
+            self.headerTopConstraint.constant = inset
+        }
+    }
+
+    @objc func keyboardWillDisappear(_ notification: NSNotification) {
+        //Do something here
+        self.headerTopConstraint.constant = 0
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     @IBAction func back(){

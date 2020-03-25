@@ -297,6 +297,7 @@ extension QuizzesViewController: UITableViewDataSource, UITableViewDelegate, Ske
 //                    self.detailedQuiz = DetailedQuiz(result)
                     let quizDetailsVC = QuizDetailsViewController.instantiate(fromAppStoryboard: .Quizzes)
                     quizDetailsVC.quizId = quizId
+                    debugPrint(result)
                     quizDetailsVC.detailedQuiz = DetailedQuiz(result)
                     self.navigationController?.pushViewController(quizDetailsVC, animated: true)
                 }
