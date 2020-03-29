@@ -20,6 +20,7 @@ class Threads : NSObject, NSCoding{
     var othersAvatars : [String]!
     var othersNames : String!
     var participants : [Participant]!
+    var participantsCount: Int = -1
     var tag : String!
     
     
@@ -44,6 +45,7 @@ class Threads : NSObject, NSCoding{
         othersAvatars = dictionary["others_avatars"] as? [String]
         othersNames = dictionary["others_names"] as? String
         participants = [Participant]()
+        participantsCount = dictionary["participants_count"] as? Int ?? 0
         if let participantsArray = dictionary["participants"] as? [[String:Any]]{
             for dic in participantsArray{
                 let value = Participant(fromDictionary: dic)

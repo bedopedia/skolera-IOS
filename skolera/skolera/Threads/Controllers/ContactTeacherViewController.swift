@@ -139,9 +139,15 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         if threads != nil {
             cell.hideSkeleton()
             cell.imageBackgroundView.isHidden = false
-            let fullName = self.threads[indexPath.row].name ?? self.threads[indexPath.row].othersNames ?? "Deleted user"
+//            if self.threads[indexPath.row].participantsCount > 2 {
+//                cell.threadTitle.text = "\(self.threads[indexPath.row].participants.first { $0.id != child.id }?.name ?? "User") & \(self.threads[indexPath.row].participantsCount - 1) others"
+//            } else {
+//                cell.threadTitle.text = self.threads[indexPath.row].participants.first { $0.id != child.id }?.name ?? "Conversation"
+//                cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr[0].first ?? Character(" "))\((fullNameArr.last ?? " ").first ?? Character(" "))", textSize: 20)
+//            }
+            let fullName = self.threads[indexPath.row].othersNames ?? "Deleted user"
             let fullNameArr = fullName.components(separatedBy: " ")
-            cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
+            cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")".trimmingCharacters(in: .whitespaces).isEmpty ? "Thread" : "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
             
             
             if self.threads[indexPath.row].courseName != nil {

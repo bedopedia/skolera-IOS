@@ -14,12 +14,14 @@ class Participant : NSObject, NSCoding{
     var threadId : Int!
     var userAvatarUrl : String!
     var userId : Int!
+    var id: Int = -1
     
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
+        id = dictionary["id"] as? Int ?? -1
         name = dictionary["name"] as? String
         threadId = dictionary["thread_id"] as? Int
         userAvatarUrl = dictionary["user_avatar_url"] as? String
