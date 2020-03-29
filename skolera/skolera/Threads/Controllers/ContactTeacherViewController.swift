@@ -147,7 +147,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 //            }
             let fullName = self.threads[indexPath.row].othersNames ?? "Deleted user"
             let fullNameArr = fullName.components(separatedBy: " ")
-            cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")".trimmingCharacters(in: .whitespaces).isEmpty ? "Thread" : "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
+            cell.threadTitle.text = "\(fullNameArr[0]) \(fullNameArr.last ?? "")".trimmingCharacters(in: .whitespaces).isEmpty ? "Thread".localized : "\(fullNameArr[0]) \(fullNameArr.last ?? "")"
             
             
             if self.threads[indexPath.row].courseName != nil {
