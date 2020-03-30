@@ -152,9 +152,9 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
         cell.courseNameLabel.text = item.title
         let courseName = item.title.components(separatedBy: " ")
         if  courseName.count == 1 {
-            cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(""))", placeholder: "\(courseName[0].first ?? Character(""))", textSize: 20)
+            cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(" "))", placeholder: "\(courseName[0].first ?? Character(" "))", textSize: 20)
         } else {
-            cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(""))\(courseName[1].first ?? Character(""))", placeholder: "\(courseName[0].first ?? Character(""))\(courseName[1].first ?? Character(""))", textSize: 20)
+            cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(" "))\(courseName[1].first ?? Character(" "))", placeholder: "\(courseName[0].first ?? Character(" "))\(courseName[1].first ?? Character(" "))", textSize: 20)
         }
         
         

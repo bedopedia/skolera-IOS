@@ -44,7 +44,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 } else {
                     postContent.update(input: "No content available".localized)
                 }
-                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first! ?? Character.init("")) )\(String(post.owner?.lastname?.first! ?? Character.init("")))", textSize: 14)
+                postImageView.childImageView(url: self.post.owner?.avatarUrl ?? "", placeholder: "\(String(post.owner?.firstname?.first ?? Character.init(" ")) )\(String(post.owner?.lastname?.first ?? Character.init(" ")))", textSize: 14)
                 firstAttachmentView.isHidden = true
                 secondAttachmentView.isHidden = true
                 thirdAttachmentView.isHidden = true
@@ -99,7 +99,7 @@ class PostDetailsTableViewCell: UITableViewCell {
         didSet {
             if comment != nil {
                 separatorView.isHidden = true
-                postImageView.childImageView(url: self.comment.owner?.avatarUrl ?? "", placeholder: "\(String(comment.owner?.firstname?.first! ?? Character.init("")) )\(String(comment.owner?.lastname?.first! ?? Character.init("")))", textSize: 14)
+                postImageView.childImageView(url: self.comment.owner?.avatarUrl ?? "", placeholder: "\(String(comment.owner?.firstname?.first ?? Character.init(" ")) )\(String(comment.owner?.lastname?.first ?? Character.init(" ")))", textSize: 14)
             
                 postOwner.text = comment.owner?.nameWithTitle
                 if let content = comment.content, !content.isEmpty {

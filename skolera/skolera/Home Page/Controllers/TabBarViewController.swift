@@ -142,7 +142,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 
                 let  xOffset = (HalfItemWidth * CGFloat(2 * arrayIndex + 1)) - 21
                 
-                let imageHalfWidth: CGFloat = (tabItem.selectedImage!.size.width) / 2
+                let imageHalfWidth: CGFloat = (52) / 2
                 
                 let redDot = UIView(frame: CGRect(x: xOffset + imageHalfWidth, y: TopMargin, width: RedDotDiameter, height: RedDotDiameter))
                 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -57,7 +57,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hii-FK-8os">
-                                                            <rect key="frame" x="340" y="34" width="30" height="30"/>
+                                                            <rect key="frame" x="340" y="32.5" width="30" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="VJP-Am-V4h"/>
@@ -137,13 +137,14 @@
                                                         <constraint firstItem="CFr-hL-d4L" firstAttribute="leading" secondItem="YGS-6g-zQw" secondAttribute="leading" id="1gI-MP-i0p"/>
                                                         <constraint firstItem="YGS-6g-zQw" firstAttribute="leading" secondItem="3ne-Ct-2EQ" secondAttribute="trailing" constant="16" id="9Oa-3V-UWw"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="centerX" secondItem="3ne-Ct-2EQ" secondAttribute="centerX" id="A4Z-Cj-jqL"/>
+                                                        <constraint firstItem="Hii-FK-8os" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CFr-hL-d4L" secondAttribute="trailing" constant="12" id="AIy-SI-SgN"/>
                                                         <constraint firstAttribute="bottom" secondItem="UUn-UX-ZlV" secondAttribute="bottom" constant="12" id="DFq-nu-KBj"/>
                                                         <constraint firstItem="HJI-s4-aPY" firstAttribute="centerX" secondItem="3ne-Ct-2EQ" secondAttribute="centerX" id="Ef3-tT-H1T"/>
                                                         <constraint firstItem="HJI-s4-aPY" firstAttribute="centerY" secondItem="3ne-Ct-2EQ" secondAttribute="centerY" id="Gon-Bo-Ygd"/>
                                                         <constraint firstItem="UUn-UX-ZlV" firstAttribute="top" secondItem="CFr-hL-d4L" secondAttribute="bottom" constant="4" id="K9U-oT-SfF"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="height" secondItem="3ne-Ct-2EQ" secondAttribute="height" id="OW6-Ed-M5b"/>
                                                         <constraint firstItem="3ne-Ct-2EQ" firstAttribute="leading" secondItem="gBd-2c-ooP" secondAttribute="leading" constant="16" id="Oy6-ID-rR7"/>
-                                                        <constraint firstItem="Hii-FK-8os" firstAttribute="centerY" secondItem="gBd-2c-ooP" secondAttribute="centerY" id="PLA-Dw-HzX"/>
+                                                        <constraint firstItem="Hii-FK-8os" firstAttribute="centerY" secondItem="CFr-hL-d4L" secondAttribute="centerY" id="PLQ-mn-jIO"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="Hii-FK-8os" secondAttribute="trailing" constant="12" id="QwE-Kq-e1D"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="centerY" secondItem="3ne-Ct-2EQ" secondAttribute="centerY" id="T8n-vd-dMI"/>
                                                         <constraint firstItem="bBY-g2-59r" firstAttribute="width" secondItem="3ne-Ct-2EQ" secondAttribute="width" id="YnF-yr-vTH"/>

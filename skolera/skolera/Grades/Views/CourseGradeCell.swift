@@ -26,9 +26,9 @@ class CourseGradeCell: UITableViewCell {
                     courseGradeLabel.isHidden = true
                     let courseName = self.courseGroup.courseName?.components(separatedBy: " ")
                     if let name = courseName, name.count == 1 {
-                        courseImageView.childImageView(url: "\(name[0].first ?? Character(""))", placeholder: "\(name[0].first ?? Character(""))", textSize: 20)
+                        courseImageView.childImageView(url: "\(name[0].first ?? Character(" "))", placeholder: "\(name[0].first ?? Character(" "))", textSize: 20)
                     } else {
-                         courseImageView.childImageView(url: "\(courseName?[0].first ?? Character(""))\(courseName?[1].first ?? Character(""))", placeholder: "\(courseName?[0].first ?? Character(""))\(courseName?[1].first ?? Character(""))", textSize: 20)
+                         courseImageView.childImageView(url: "\(courseName?[0].first ?? Character(" "))\(courseName?[1].first ?? Character(" "))", placeholder: "\(courseName?[0].first ?? Character(" "))\(courseName?[1].first ?? Character(" "))", textSize: 20)
                     }
                 }
             }
