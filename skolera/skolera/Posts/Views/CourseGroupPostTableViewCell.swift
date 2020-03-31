@@ -62,7 +62,7 @@ class CourseGroupPostTableViewCell: UITableViewCell {
             //            return "\(shortcut.first!)"
             return String(shortcut.prefix(2))
         } else {
-            return "\(shortcut.split(separator: " ")[0].first!)\(shortcut.split(separator: " ")[1].first!)"
+            return "\(shortcut.split(separator: " ")[0].first ?? Character(" "))\(shortcut.split(separator: " ")[1].first ?? Character(" "))"
         }
         
     }

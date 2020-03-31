@@ -51,7 +51,7 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         toDateTextField.inputView = toDatePickerView
         toDatePickerView.addTarget(self, action: #selector(toDatePickerFromValueChanged), for: UIControl.Event.valueChanged)
         if let child = child{
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         }
         //        let dateFormatter = DateFormatter()
         //        dateFormatter.dateFormat = "d/M/y hh:mm a"

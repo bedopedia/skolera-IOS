@@ -35,7 +35,7 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
             if let child = child{
                 childImageView.isHidden = false
                 imageViewBackground.isHidden = false
-                childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+                childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
             }
         }
         tableView.delegate = self

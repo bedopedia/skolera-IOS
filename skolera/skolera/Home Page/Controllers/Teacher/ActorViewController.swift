@@ -80,7 +80,7 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
         childImageOuterView.layer.cornerRadius = 48
         childImageOuterView.layer.shadowPath = UIBezierPath(roundedRect: childImageOuterView.bounds, cornerRadius: childImageOuterView.frame.height/2 ).cgPath
         //gets inner child image view
-        childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first!)\(actor.lastname.first ?? Character(" "))", textSize: 32)
+        childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first ?? Character(" "))\(actor.lastname.first ?? Character(" "))", textSize: 32)
             childImageOuterView.addSubview(childImageView)
             //sets image frame to the outer frame
             NSLayoutConstraint.activate([childImageView.leadingAnchor.constraint(equalTo: childImageOuterView.leadingAnchor),childImageView.topAnchor.constraint(equalTo: childImageOuterView.topAnchor)])

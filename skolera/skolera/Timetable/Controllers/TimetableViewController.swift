@@ -33,9 +33,9 @@ class TimetableViewController: UIViewController, EventDataSource{
         today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         } else {
-            childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first!)\(actor.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: actor.avatarUrl, placeholder: "\(actor.firstname.first ?? Character(" "))\(actor.lastname.first ?? Character(" "))", textSize: 14)
         }
         if (timeslots) != nil{
             todayEvents = getTodayEvents()

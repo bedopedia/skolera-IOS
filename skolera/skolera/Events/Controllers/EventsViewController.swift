@@ -63,7 +63,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         eventsDict = [:]
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if let child = child {
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         }
         eventsCollectionView.delegate = self
         eventsCollectionView.dataSource = self

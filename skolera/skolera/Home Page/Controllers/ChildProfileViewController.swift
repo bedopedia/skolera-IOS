@@ -113,7 +113,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         childImageOuterView.layer.cornerRadius = childImageOuterView.frame.height / 2
         //gets inner child image view
 //        let childImageView = UIImageView(frame: childImageOuterView.bounds)
-        childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 32)
+        childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 32)
         childImageOuterView.backgroundColor = nil
 //        childImageOuterView.addSubview(childImageView)
         //sets image frame to the outer frame

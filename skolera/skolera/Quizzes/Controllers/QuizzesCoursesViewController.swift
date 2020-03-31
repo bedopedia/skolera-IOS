@@ -30,7 +30,7 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
         tableView.delegate = self
         tableView.dataSource = self
         if let child = child {
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         }
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)

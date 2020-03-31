@@ -31,7 +31,7 @@ class AnnouncementViewController: UIViewController {
         if let child = child {
             childImageView.isHidden = false
             childImageViewBackground.isHidden = false
-            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 14)
+            childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         }
         if weeklyNote != nil {
             titleLabel.text = weeklyNote.title

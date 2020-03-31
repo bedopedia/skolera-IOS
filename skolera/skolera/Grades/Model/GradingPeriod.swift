@@ -30,8 +30,8 @@ class GradingPeriod {
             subGradingPeriodsAttributes = []
         }
         
-        publish = dict["publish"] as! Bool
-        lock = dict["lock"] as! Bool
+        publish = dict["publish"] as? Bool ?? true
+        lock = dict["lock"] as? Bool ?? false
     }
 
     func toDictionary() -> [String: Any] {

@@ -46,7 +46,7 @@ class ChildrenTableViewCell: UITableViewCell {
                 
                 studentNameLabel.text = child.name
                 StudentGradeLabel.text = child.levelName
-                studentImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first!)\(child.lastname.first!)", textSize: 18)
+                studentImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 18)
                 setAttendanceDotView()
                 //setting attendance Label
                 child.todayWorkloadStatus.attendanceStatus.capitalizeFirstLetter()
