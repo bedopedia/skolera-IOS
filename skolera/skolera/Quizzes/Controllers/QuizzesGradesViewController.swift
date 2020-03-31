@@ -150,6 +150,7 @@ extension QuizzesGradesViewController: UITableViewDataSource, UITableViewDelegat
         }
         if let feedback = submissions[indexPath.row].feedback {
             feedbackDialog.feedback = feedback.content ?? ""
+            feedbackDialog.feedbackId = feedback.id ?? -1
         }
         feedbackDialog.didSubmitGrade = { (grade, feedback, feedbackId) in
             self.submitGrade(submission: self.submissions[indexPath.row], grade: grade, feedback: feedback, feedbackId: feedbackId)
