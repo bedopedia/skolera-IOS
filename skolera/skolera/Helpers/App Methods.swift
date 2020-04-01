@@ -235,6 +235,7 @@ func getDateByName(date: String) -> String {
      dateFormatter.dateFormat = "yyyy-MM-dd"
      let date = dateFormatter.date(from: date)!
      dateFormatter.dateFormat = "EEE dd/MM"
+    dateFormatter.locale = Locale.current
      return dateFormatter.string(from: date)
  }
 

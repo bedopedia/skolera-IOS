@@ -50,7 +50,7 @@ class AttachmentTableViewCell: UITableViewCell {
                 newDateFormat.dateFormat = "dd MMM YYYY"
 //                attachmentDate.text = newDateFormat.string(from: fileDate!)
                 if let size = self.uploadedFile.fileSize {
-                    attachmentDate.text = getSizeString(size: Double(size) / 8)
+                    attachmentDate.text = getSizeString(size: Double(size))
                 }
                 
             }
@@ -118,12 +118,12 @@ class AttachmentTableViewCell: UITableViewCell {
     
     func getSizeString(size: Double) -> String {
         var fileSize: Double = 0
-        if size > (1024 * 1024) {
-            fileSize = size / (1024 * 1024)
+        if size > (1000 * 1000) {
+            fileSize = size / (1000 * 1000)
             fileSize = Double(round(100*fileSize)/100)
             return "\(fileSize) MB"
         } else {
-            fileSize = size / (1024)
+            fileSize = size / (1000)
             fileSize = Double(round(100*fileSize)/100)
             return "\(fileSize) KB"
         }

@@ -78,6 +78,7 @@ class QuizDetailsTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
         let quizDate = dateFormatter.date(from: date)
         let newDateFormat = DateFormatter()
         newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"
