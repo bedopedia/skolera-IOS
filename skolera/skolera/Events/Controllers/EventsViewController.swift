@@ -146,8 +146,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let region = Region(calendar: Calendars.gregorian, zone: Zones.current, locale: Locales.english)
         for event in self.events {
             if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toISODate(),
@@ -317,7 +316,6 @@ extension EventsViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy/MM/dd"
-        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
         return dateFormatter.string(from: dayView.date.convertedDate()!)
     }
 }

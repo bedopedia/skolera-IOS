@@ -28,7 +28,7 @@ class TimeSlot : NSObject, NSCoding{
         // change date format to just time format
         let dateFormatterFrom = DateFormatter()
         dateFormatterFrom.locale = Locale(identifier: "en")
-        dateFormatterFrom.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatterFrom.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let dateFrom = dateFormatterFrom.date(from: (dictionary["from"] as? String)!)!
         let dateTo = dateFormatterFrom.date(from: (dictionary["to"] as? String)!)!
         dateFormatterFrom.dateFormat = "HH:mm:ss"
@@ -38,7 +38,6 @@ class TimeSlot : NSObject, NSCoding{
         let dateFormatterTo = DateFormatter()
         dateFormatterTo.locale = Locale(identifier: "en")
         dateFormatterTo.dateFormat = "HH:mm:ss"
-        dateFormatterTo.timeZone = TimeZone.init(identifier: "UTC")
         from = dateFormatterTo.date(from: dateStringfrom)!
         to = dateFormatterTo.date(from: dateStringTo)!
         
@@ -87,7 +86,7 @@ class TimeSlot : NSObject, NSCoding{
         day = aDecoder.decodeObject(forKey: "day") as? String
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         from = dateFormatter.date(from: (aDecoder.decodeObject(forKey: "from") as? String)!)!
         to = dateFormatter.date(from: (aDecoder.decodeObject(forKey: "to") as? String)!)!
         id = aDecoder.decodeObject(forKey: "id") as? Int

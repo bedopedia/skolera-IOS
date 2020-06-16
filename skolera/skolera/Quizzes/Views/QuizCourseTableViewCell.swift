@@ -33,7 +33,7 @@ class QuizCourseTableViewCell: UITableViewCell {
                 quizClockImage.isHidden = false
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en")
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 let assignDate = dateFormatter.date(from: course.nextQuizDate)
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "d MMM, yyyy, h:mm a"

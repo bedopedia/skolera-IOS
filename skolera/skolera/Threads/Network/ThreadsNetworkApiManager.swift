@@ -12,7 +12,7 @@ import Alamofire
 
 func getSubjectsApi(parameters: Parameters, child: Actor, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
-    let url = String(format: GET_THREADS_COURSE_GROUPS(), child.childId)
+    let url = String(format: GET_THREADS_COURSE_GROUPS()    , child.childId)
     Alamofire.request(url, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
@@ -77,6 +77,9 @@ func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completio
         encodingCompletion: { encodingResult in
             switch encodingResult {
             case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                     print("Upload Progress: \(progress.fractionCompleted)")
+                })
                 upload.responseJSON { response in
                     let status = response.response!.statusCode
                     completion(true, status, nil)

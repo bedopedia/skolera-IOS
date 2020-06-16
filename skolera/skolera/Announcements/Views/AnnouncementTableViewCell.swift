@@ -21,11 +21,9 @@ class AnnouncementTableViewCell: UITableViewCell {
             //            itemBody.text = announcement.body.htmlToString.replacingOccurrences(of: "\n", with: " ")
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000'Z'"
-            dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             let date = dateFormatter.date(from: announcement.endAt)!
             dateFormatter.dateFormat = "dd MMM yyyy"
-            dateFormatter.timeZone = .current
             debugPrint(date)
             //showing date
             itemDate.text = dateFormatter.string(from: date)
