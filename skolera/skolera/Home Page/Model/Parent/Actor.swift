@@ -37,6 +37,7 @@ class Actor : NSObject, NSCoding{
 	var secondaryPhone : AnyObject!
 	var thumbUrl : String!
 	var unseenNotifications : Int!
+    var announcementCount: Int!
 	var userType : String!
 	var username : String!
     var passwordChanged: Bool!
@@ -95,6 +96,7 @@ class Actor : NSObject, NSCoding{
 		secondaryPhone = dictionary["secondary_phone"] as AnyObject
 		thumbUrl = dictionary["thumb_url"] as? String
 		unseenNotifications = dictionary["unseen_notifications"] as? Int
+        announcementCount = dictionary["running_announcements_count"] as? Int ?? 0
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
         passwordChanged = dictionary["password_changed"] as? Bool

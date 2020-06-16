@@ -42,9 +42,13 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
             }
             if Language.language == .arabic {
-                updateBadgeNumber(arrayIndex: 1)
+                updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 3, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
-                updateBadgeNumber(arrayIndex: 3)
+                updateBadgeNumber(arrayIndex: 3, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 1, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 3)
             }
             self.selectedIndex = 4
             tabBar.tintColor = getMainColor()
@@ -54,9 +58,13 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
             }
             if Language.language == .arabic {
-                updateBadgeNumber(arrayIndex: 1)
+                updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 0, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
-                updateBadgeNumber(arrayIndex: 2)
+                updateBadgeNumber(arrayIndex: 2, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 3, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 2)
             }
             tabBar.tintColor = getMainColor()
         case .parent:
@@ -64,17 +72,23 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             self.selectedIndex = 3
             tabBar.tintColor = getMainColor()
             if Language.language == .arabic {
-                updateBadgeNumber(arrayIndex: 1)
+                updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 3, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
-                updateBadgeNumber(arrayIndex: 2)
+                updateBadgeNumber(arrayIndex: 2, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 0, tag: 4321, count: actor.announcementCount)
+//                updateNotificationBadgeNumber(arrayIndex: 2)
             }
         default:
             viewControllers? = [announcementsVC,  messages, notificationsVC]
             tabBar.tintColor = getMainColor()
             if Language.language == .arabic {
-                updateBadgeNumber(arrayIndex: 1)
+                updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+//                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
-                updateBadgeNumber(arrayIndex: 2)
+                updateBadgeNumber(arrayIndex: 2, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+//                updateNotificationBadgeNumber(arrayIndex: 2)
             }
         }
         if let tabViewControllers = viewControllers {
@@ -99,14 +113,14 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         }
     }
     
-    fileprivate func updateBadgeNumber(arrayIndex: Int) {
-        if UIApplication.shared.applicationIconBadgeNumber == 0{
+    fileprivate func updateBadgeNumber(arrayIndex: Int, tag: Int, count: Int) {
+        if count == 0{
             
             for subview in tabBar.subviews {
                 
                 if let subview = subview as? UIView {
                     
-                    if subview.tag == 1234 {
+                    if subview.tag == tag {
                         subview.removeFromSuperview()
                         break
                     }
@@ -123,7 +137,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                     
                     if let subview = subview as? UIView {
                         
-                        if subview.tag == 1234 {
+                        if subview.tag == tag {
                             subview.removeFromSuperview()
                             break
                         }
@@ -140,13 +154,13 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 let screenSize = UIScreen.main.bounds
                 let HalfItemWidth = (screenSize.width) / (TabBarItemCount * 2)
                 
-                let  xOffset = (HalfItemWidth * CGFloat(2 * arrayIndex + 1)) - 21
+                let  xOffset = (HalfItemWidth * CGFloat(2 * arrayIndex + 1)) - 24
                 
                 let imageHalfWidth: CGFloat = (52) / 2
                 
                 let redDot = UIView(frame: CGRect(x: xOffset + imageHalfWidth, y: TopMargin, width: RedDotDiameter, height: RedDotDiameter))
                 
-                redDot.tag = 1234
+                redDot.tag = tag
                 redDot.backgroundColor = getMainColor()
                 redDot.layer.cornerRadius = RedDotRadius
                 redDot.bringSubview(toFront: self.view)
