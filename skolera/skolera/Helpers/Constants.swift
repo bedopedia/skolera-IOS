@@ -21,6 +21,7 @@ let NO_INTERNET = "No internet connection"
 let SOMETHING_WRONG = "Something went wrong, please try again".localized
 let SOMETHING_WRONG_IN_THREADS = "This thread is not available right now, check it on website".localized
 //Request Headers
+let TIMEZONE = "timezone"
 let ACCESS_TOKEN = "access-token"
 let CLIENT = "client"
 let TOKEN_TYPE = "token-type"
