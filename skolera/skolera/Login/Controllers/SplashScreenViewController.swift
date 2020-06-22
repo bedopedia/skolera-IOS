@@ -15,6 +15,7 @@ class SplashScreenViewController: UIViewController {
     
     let userDefault = UserDefaults.standard
     var token = ""
+    var openNotifiaction: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +68,8 @@ class SplashScreenViewController: UIViewController {
                 } else {
                     if parent.userType.elementsEqual("student") {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
+                        tabBarVC.openNotification = self.openNotifiaction
+                        self.openNotifiaction = false
                         //for the child profile VC
                         tabBarVC.actor = parent
                         tabBarVC.assignmentsText = ""
@@ -79,6 +82,8 @@ class SplashScreenViewController: UIViewController {
                     } else {
                         let tabBarVC = TabBarViewController.instantiate(fromAppStoryboard: .HomeScreen)
                         tabBarVC.actor = parent
+                        tabBarVC.openNotification = self.openNotifiaction
+                        self.openNotifiaction = false
                         if !parent.userType.elementsEqual("teacher") {
                             tabBarVC.otherUser = true
                         }
