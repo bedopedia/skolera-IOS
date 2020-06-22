@@ -23,7 +23,7 @@ class NotificationsTableViewController: UITableViewController, NVActivityIndicat
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         getNotifcations()
-//        setNotificationsSeen()
+        setNotificationsSeen()
     }
 
     // MARK: - Table view data source
@@ -33,6 +33,7 @@ class NotificationsTableViewController: UITableViewController, NVActivityIndicat
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         setNotificationSeenAPI { (isSuccess, statusCode, error) in
             self.stopAnimating()
+            UIApplication.shared.applicationIconBadgeNumber = 0
             debugPrint("Notification is Seen")
         }
     }

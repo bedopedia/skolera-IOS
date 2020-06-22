@@ -220,7 +220,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
                     let parent : Actor = Actor.init(fromDictionary: result)
-                    self.userDefault.set(headers[TIMEZONE] as! String, forKey: TIMEZONE)
+//                    self.userDefault.set(headers[TIMEZONE] as! String, forKey: TIMEZONE)
                     self.userDefault.set(headers[ACCESS_TOKEN] as! String, forKey: ACCESS_TOKEN)
                     self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
                     self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)

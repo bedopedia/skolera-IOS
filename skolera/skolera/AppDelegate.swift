@@ -56,7 +56,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        debugPrint("_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void")        
+        debugPrint("_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void")
+        
+        if application.applicationState != .active {
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let splash = SplashScreenViewController.instantiate(fromAppStoryboard: .Login)
+                splash.openNotifiaction = true
+                let navVc = UINavigationController(rootViewController: splash)
+                navVc.modalTransitionStyle = .crossDissolve
+                self.window?.rootViewController = navVc
+                self.window?.makeKeyAndVisible()
+                
+            })
+        }
         completionHandler(UIBackgroundFetchResult.newData)
     }
     

@@ -18,9 +18,11 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
     var assignmentsText: String!
     var quizzesText: String!
     var eventsText: String!
+    var openNotification = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         let userType = getUserType()
@@ -35,6 +37,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         let teacherProfile: ActorNvc = ActorNvc.instantiate(fromAppStoryboard: .HomeScreen)
         let teacherCourses: TeacherCoursesTableViewNVC = TeacherCoursesTableViewNVC.instantiate(fromAppStoryboard: .HomeScreen)
         let messages: ContactTeacherNVC = ContactTeacherNVC.instantiate(fromAppStoryboard: .Threads)
+        
         switch userType {
         case .teacher:
             viewControllers? = [teacherCourses, announcementsVC, messages, notificationsVC, teacherProfile]
@@ -42,15 +45,17 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 updateTabBarItem(tab: .announcements, tabBarItem: tabItem)
             }
             if Language.language == .arabic {
+                self.selectedIndex = 0
                 updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
                 updateBadgeNumber(arrayIndex: 3, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
+                self.selectedIndex = 4
                 updateBadgeNumber(arrayIndex: 3, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
                 updateBadgeNumber(arrayIndex: 1, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 3)
             }
-            self.selectedIndex = 4
+            
             tabBar.tintColor = getMainColor()
         case .student:
             viewControllers? = [childProfile, messages, notificationsVC, announcementsVC]
@@ -69,13 +74,15 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             tabBar.tintColor = getMainColor()
         case .parent:
             viewControllers? = [announcementsVC,  messages, notificationsVC, childProfile]
-            self.selectedIndex = 3
+            
             tabBar.tintColor = getMainColor()
             if Language.language == .arabic {
+                self.selectedIndex = 0
                 updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
                 updateBadgeNumber(arrayIndex: 3, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
+                self.selectedIndex = 3
                 updateBadgeNumber(arrayIndex: 2, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
                 updateBadgeNumber(arrayIndex: 0, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 2)
@@ -84,10 +91,12 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
             viewControllers? = [announcementsVC,  messages, notificationsVC]
             tabBar.tintColor = getMainColor()
             if Language.language == .arabic {
-                updateBadgeNumber(arrayIndex: 1, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 0, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 2, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 1)
             } else {
                 updateBadgeNumber(arrayIndex: 2, tag: 1234, count: UIApplication.shared.applicationIconBadgeNumber)
+                updateBadgeNumber(arrayIndex: 0, tag: 4321, count: actor.announcementCount)
 //                updateNotificationBadgeNumber(arrayIndex: 2)
             }
         }
@@ -230,6 +239,40 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         }))
         alert.modalPresentationStyle = .fullScreen
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let userType = getUserType()
+        if openNotification {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+            openNotification = false
+            switch userType {
+            case .teacher:
+                if Language.language == .arabic {
+                    selectedIndex = 1
+                } else {
+                    selectedIndex = 3
+                }
+            case .student:
+                if Language.language == .arabic {
+                    selectedIndex = 1
+                } else {
+                    selectedIndex = 2
+                }
+            case .parent:
+                if Language.language == .arabic {
+                    selectedIndex = 1
+                } else {
+                    selectedIndex = 2
+                }
+            default:
+                if Language.language == .arabic {
+                    selectedIndex = 0
+                } else {
+                    selectedIndex = 2
+                }
+            }
+        }
     }
     
     /*

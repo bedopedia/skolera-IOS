@@ -77,6 +77,7 @@ func logoutAPI(parameter: Parameters,completion: @escaping (Bool, Int, Any?, Err
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
+            debugPrint(error)
             completion(false, response.response?.statusCode ?? 0, response.result.value, error)
         }
     }

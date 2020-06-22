@@ -133,9 +133,11 @@ func getTeacherTimeTableAPI(teacherActableId: Int, completion: @escaping ((Bool,
 func setNotificationSeenAPI(completion: @escaping ((Bool, Int, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: SET_SEEN_NOTIFICATIONS(), userId())
+    
     Alamofire.request(url, method: .post, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
+            debugPrint(response.result.value)
             completion(true, response.response?.statusCode ?? 0, nil)
         case .failure(let error):
             completion(false, response.response?.statusCode ?? 0, error)
