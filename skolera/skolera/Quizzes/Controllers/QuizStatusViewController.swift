@@ -205,7 +205,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
     func setUpDatesUi() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let quizDate = dateFormatter.date(from: quiz.startDate)
         let endDate = dateFormatter.date(from: quiz.endDate)
         let newDateFormat = DateFormatter()
@@ -226,7 +226,7 @@ class QuizStatusViewController: UIViewController, NVActivityIndicatorViewable {
             
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             
             let quizDate = dateFormatter.date(from: quizStringDate)
             let newDateFormat = DateFormatter()

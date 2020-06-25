@@ -30,7 +30,7 @@ class BehaviorNote : NSObject, NSCoding{
 		category = dictionary["category"] as? String
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         createdAt = dateFormatter.date(from: (dictionary["created_at"] as? String)!)!
 		id = dictionary["id"] as? Int
 		note = dictionary["note"] as? String
@@ -104,7 +104,7 @@ class BehaviorNote : NSObject, NSCoding{
         category = aDecoder.decodeObject(forKey: "category") as? String
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         createdAt = dateFormatter.date(from: (aDecoder.decodeObject(forKey: "created_at") as? String)!)!
         id = aDecoder.decodeObject(forKey: "id") as? Int
         note = aDecoder.decodeObject(forKey: "note") as? String

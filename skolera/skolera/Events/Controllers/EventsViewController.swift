@@ -146,7 +146,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         formatter.dateFormat = "yyyy/MM/dd"
         formatter.timeZone = .current
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let region = Region(calendar: Calendars.gregorian, zone: Zones.current, locale: Locales.english)
         for event in self.events {
             if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toISODate(),

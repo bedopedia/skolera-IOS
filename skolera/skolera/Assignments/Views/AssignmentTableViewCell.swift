@@ -28,7 +28,7 @@ class AssignmentTableViewCell: UITableViewCell {
             titleLabel.text = assignment.name
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let assignDate = dateFormatter.date(from: assignment.startAt)
             let endDate = dateFormatter.date(from: assignment.endAt)
             let newDateFormat = DateFormatter()
@@ -49,7 +49,7 @@ class AssignmentTableViewCell: UITableViewCell {
                 assignmentClockImage.isHidden = false
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en")
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let assignDate = dateFormatter.date(from: assignStringDate)
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "h:mm a"

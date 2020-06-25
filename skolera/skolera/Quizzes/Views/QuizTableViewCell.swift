@@ -28,7 +28,7 @@ class QuizTableViewCell: UITableViewCell {
             titleLabel.text = quiz.name
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let quizDate = dateFormatter.date(from: quiz.startDate)
             let endDate = dateFormatter.date(from: quiz.endDate)
             let newDateFormat = DateFormatter()
@@ -36,6 +36,7 @@ class QuizTableViewCell: UITableViewCell {
             if Language.language == .arabic {
                 publishDateLabel.text = "نشر " + newDateFormat.string(from: quizDate!)
             } else {
+                debugPrint(quizDate)
                 publishDateLabel.text = "published \(newDateFormat.string(from: quizDate!))"
             }
             newDateFormat.dateFormat = "dd"
@@ -49,7 +50,7 @@ class QuizTableViewCell: UITableViewCell {
                 quizClockImage.isHidden = false
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en")
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let quizDate = dateFormatter.date(from: quizStringDate)
                 let newDateFormat = DateFormatter()
                 newDateFormat.dateFormat = "h:mm a"

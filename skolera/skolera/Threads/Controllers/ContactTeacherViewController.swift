@@ -214,7 +214,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                             
                             let dateFormatter = DateFormatter()
                             dateFormatter.locale = Locale(identifier: "en")
-                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
                             let date = dateFormatter.date(from: item.createdAt)!
                             if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
@@ -306,7 +306,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
     func getMessage(time: String) -> Date{
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
         let date = dateFormatter.date(from: time)!
         return date
