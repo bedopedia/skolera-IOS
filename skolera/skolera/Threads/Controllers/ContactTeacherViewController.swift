@@ -166,7 +166,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             cell.threadImage.childImageView(url: (self.threads[indexPath.row].othersAvatars ?? [""]).last ?? "" , placeholder: "\(fullNameArr[0].first ?? Character(" "))\((fullNameArr.last ?? " ").first ?? Character(" "))", textSize: 20)
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
             let date = dateFormatter.date(from: self.threads[indexPath.row].lastAddedDate)!
             if Calendar.current.isDateInToday(date){
