@@ -43,9 +43,12 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
     }
     
     @IBAction func close(){
-        self.view.endEditing(true)
-        self.dismiss(animated: true, completion: nil)
-        
+        if UIApplication.shared.isKeyboardPresented {
+            self.view.endEditing(true)
+        } else {
+            self.view.endEditing(true)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func submit(){
@@ -62,4 +65,14 @@ class FeedbackDialogViewController: UIViewController, UITextFieldDelegate{
         return !string.isEmpty && string.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
     
+}
+
+extension UIApplication {
+    var isKeyboardPresented: Bool {
+        if let keyboardWindowClass = NSClassFromString("UIRemoteKeyboardWindow"), self.windows.contains(where: { $0.isKind(of: keyboardWindowClass) }) {
+            return true
+        } else {
+            return false
+        }
+    }
 }

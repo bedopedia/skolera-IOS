@@ -245,7 +245,7 @@
                                                             <rect key="frame" x="12" y="8" width="390" height="61"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-Ba-yjD">
-                                                                    <rect key="frame" x="28" y="11" width="10.5" height="19.5"/>
+                                                                    <rect key="frame" x="33" y="11" width="10.5" height="19.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                                     <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -253,10 +253,10 @@
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-6L-9Zn">
-                                                                    <rect key="frame" x="20" y="37" width="26.5" height="17"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-6L-9Zn">
+                                                                    <rect key="frame" x="20" y="37" width="36" height="17"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="26.5" id="0Vl-cL-GGc"/>
+                                                                        <constraint firstAttribute="width" constant="36" id="0Vl-cL-GGc"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                                     <color key="textColor" red="0.32156862749999998" green="0.3803921569" blue="0.41960784309999999" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
@@ -266,7 +266,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B7G-8x-faU">
-                                                                    <rect key="frame" x="69.5" y="6" width="3" height="49"/>
+                                                                    <rect key="frame" x="79" y="6" width="3" height="49"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="3" id="0YR-at-S5t"/>
@@ -277,7 +277,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WBR-2d-N6Y">
-                                                                    <rect key="frame" x="84.5" y="6" width="293.5" height="49"/>
+                                                                    <rect key="frame" x="94" y="6" width="284" height="49"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3c-Li-qsV">
                                                                             <rect key="frame" x="0.0" y="0.0" width="29" height="20.5"/>
@@ -487,7 +487,7 @@
                                 <rect key="frame" x="24" y="116" width="366" height="62"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="From" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eAE-rT-wfV" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="12" width="366" height="21"/>
+                                        <rect key="frame" x="0.0" y="12" width="366" height="41.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
@@ -515,7 +515,7 @@
                                 <rect key="frame" x="24" y="196" width="366" height="62"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="To" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WFC-hK-F7t" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="12" width="366" height="21"/>
+                                        <rect key="frame" x="0.0" y="12" width="366" height="41.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
@@ -543,7 +543,7 @@
                                 <rect key="frame" x="24" y="276" width="366" height="62"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Subject name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ecx-W0-j0S" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="12" width="354" height="21"/>
+                                        <rect key="frame" x="0.0" y="12" width="354" height="41.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
@@ -571,7 +571,7 @@
                                 <rect key="frame" x="24" y="356" width="366" height="62"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add notes" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbA-I2-86A" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="12" width="354" height="21"/>
+                                        <rect key="frame" x="0.0" y="12" width="354" height="41.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
