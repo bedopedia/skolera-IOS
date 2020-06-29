@@ -58,9 +58,11 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixSkeletonHeight()
         tableView.showAnimatedSkeleton()
+        refreshData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         tableView.showAnimatedSkeleton()
         refreshData()
     }

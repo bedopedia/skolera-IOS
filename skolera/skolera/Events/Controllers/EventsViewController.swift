@@ -97,6 +97,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         } else {
             tableViewBottomConstaint.constant = 66
         }
+        self.tableView.showAnimatedSkeleton()
+        getEvents()
     }
     
     override func viewDidAppear(_ animated: Bool) {
