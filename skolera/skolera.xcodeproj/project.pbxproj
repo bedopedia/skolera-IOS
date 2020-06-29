@@ -137,6 +137,7 @@
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
+		72933ACF24AA2B1D004AC5B1 /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */; };
 		72A7CF93240E823D00ED4ED0 /* StudentGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */; };
 		72A7CF9A240E826500ED4ED0 /* GradeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF94240E826400ED4ED0 /* GradeCategory.swift */; };
 		72A7CF9B240E826500ED4ED0 /* GradeInGradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */; };
@@ -468,6 +469,7 @@
 		54EB93122015F88E001DD93F /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
+		72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
 		72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentGrade.swift; sourceTree = "<group>"; };
 		72A7CF94240E826400ED4ED0 /* GradeCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeCategory.swift; sourceTree = "<group>"; };
 		72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeInGradingPeriod.swift; sourceTree = "<group>"; };
@@ -1352,6 +1354,7 @@
 				8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */,
 				8A5F42E520B1B5C300FF93D1 /* ContactTeacherViewController.swift */,
 				8A6D35EF20B5848000DD0445 /* ChatViewController.swift */,
+				72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2131,6 +2134,7 @@
 				54640B0A20559A9800A13CCB /* AttendanceViewController.swift in Sources */,
 				8A5F42EC20B1CB3300FF93D1 /* Participant.swift in Sources */,
 				8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */,
+				72933ACF24AA2B1D004AC5B1 /* NewChatViewController.swift in Sources */,
 				547DC22F201F404E004B7FA2 /* Constants.swift in Sources */,
 				8A6D362720B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift in Sources */,
 				DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */,
