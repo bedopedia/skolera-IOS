@@ -11,7 +11,7 @@ import UIKit
 class ChildProfileFeaturesNVC: UINavigationController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     var child: Actor! {
         didSet {
-            if let childVc =  childViewControllers[0] as? ChildProfileViewController {
+            if let childVc =  children[0] as? ChildProfileViewController {
                 childVc.child = self.child
                 childVc.assignmentsText = self.assignmentsText
                 childVc.quizzesText = self.quizzesText

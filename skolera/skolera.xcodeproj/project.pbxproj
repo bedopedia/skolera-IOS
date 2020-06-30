@@ -137,7 +137,17 @@
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
-		72933ACF24AA2B1D004AC5B1 /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */; };
+		721A1A2B24AB6DFF00949404 /* ReceiverTextChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 721A1A2324AB6DFE00949404 /* ReceiverTextChatTableViewCell.xib */; };
+		721A1A2C24AB6DFF00949404 /* ReceiverImageChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 721A1A2424AB6DFE00949404 /* ReceiverImageChatTableViewCell.xib */; };
+		721A1A2D24AB6DFF00949404 /* SenderTextChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A2524AB6DFF00949404 /* SenderTextChatTableViewCell.swift */; };
+		721A1A2E24AB6DFF00949404 /* ReceiverTextChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A2624AB6DFF00949404 /* ReceiverTextChatTableViewCell.swift */; };
+		721A1A2F24AB6DFF00949404 /* ReceiverImageChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A2724AB6DFF00949404 /* ReceiverImageChatTableViewCell.swift */; };
+		721A1A3024AB6DFF00949404 /* SenderImageChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A2824AB6DFF00949404 /* SenderImageChatTableViewCell.swift */; };
+		721A1A3124AB6DFF00949404 /* SenderImageChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 721A1A2924AB6DFF00949404 /* SenderImageChatTableViewCell.xib */; };
+		721A1A3224AB6DFF00949404 /* SenderTextChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 721A1A2A24AB6DFF00949404 /* SenderTextChatTableViewCell.xib */; };
+		721A1A3424AB7B3800949404 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A3324AB7B3800949404 /* ChatMessage.swift */; };
+		721A1A3624AB82F400949404 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A1A3524AB82F400949404 /* UITableView.swift */; };
+		72933ACF24AA2B1D004AC5B1 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72933ACE24AA2B1D004AC5B1 /* ChatViewController.swift */; };
 		72A7CF93240E823D00ED4ED0 /* StudentGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */; };
 		72A7CF9A240E826500ED4ED0 /* GradeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF94240E826400ED4ED0 /* GradeCategory.swift */; };
 		72A7CF9B240E826500ED4ED0 /* GradeInGradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */; };
@@ -231,7 +241,7 @@
 		8A6CA5EF22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6CA5EE22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift */; };
 		8A6CA5F122EF4E5600DBE205 /* TeacherCourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6CA5F022EF4E5600DBE205 /* TeacherCourseDetailsViewController.swift */; };
 		8A6CA5F322EF4E7A00DBE205 /* TeacherCourseDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6CA5F222EF4E7A00DBE205 /* TeacherCourseDetailsTableViewController.swift */; };
-		8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D35EF20B5848000DD0445 /* ChatViewController.swift */; };
+		8A6D35F020B5848000DD0445 /* OldChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D35EF20B5848000DD0445 /* OldChatViewController.swift */; };
 		8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D360620B5965E00DD0445 /* DemoChatMessageSender.swift */; };
 		8A6D360920B5967D00DD0445 /* BaseMessagesSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D360820B5967D00DD0445 /* BaseMessagesSelector.swift */; };
 		8A6D360B20B5969E00DD0445 /* MessagesSelectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6D360A20B5969E00DD0445 /* MessagesSelectorProtocol.swift */; };
@@ -469,7 +479,17 @@
 		54EB93122015F88E001DD93F /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
-		72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
+		721A1A2324AB6DFE00949404 /* ReceiverTextChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverTextChatTableViewCell.xib; sourceTree = "<group>"; };
+		721A1A2424AB6DFE00949404 /* ReceiverImageChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverImageChatTableViewCell.xib; sourceTree = "<group>"; };
+		721A1A2524AB6DFF00949404 /* SenderTextChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderTextChatTableViewCell.swift; sourceTree = "<group>"; };
+		721A1A2624AB6DFF00949404 /* ReceiverTextChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverTextChatTableViewCell.swift; sourceTree = "<group>"; };
+		721A1A2724AB6DFF00949404 /* ReceiverImageChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverImageChatTableViewCell.swift; sourceTree = "<group>"; };
+		721A1A2824AB6DFF00949404 /* SenderImageChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderImageChatTableViewCell.swift; sourceTree = "<group>"; };
+		721A1A2924AB6DFF00949404 /* SenderImageChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderImageChatTableViewCell.xib; sourceTree = "<group>"; };
+		721A1A2A24AB6DFF00949404 /* SenderTextChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderTextChatTableViewCell.xib; sourceTree = "<group>"; };
+		721A1A3324AB7B3800949404 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		721A1A3524AB82F400949404 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		72933ACE24AA2B1D004AC5B1 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentGrade.swift; sourceTree = "<group>"; };
 		72A7CF94240E826400ED4ED0 /* GradeCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeCategory.swift; sourceTree = "<group>"; };
 		72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeInGradingPeriod.swift; sourceTree = "<group>"; };
@@ -575,7 +595,7 @@
 		8A6CA5EE22EF2A3800DBE205 /* TeacherCourseGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCourseGroupViewController.swift; sourceTree = "<group>"; };
 		8A6CA5F022EF4E5600DBE205 /* TeacherCourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCourseDetailsViewController.swift; sourceTree = "<group>"; };
 		8A6CA5F222EF4E7A00DBE205 /* TeacherCourseDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherCourseDetailsTableViewController.swift; sourceTree = "<group>"; };
-		8A6D35EF20B5848000DD0445 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8A6D35EF20B5848000DD0445 /* OldChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldChatViewController.swift; sourceTree = "<group>"; };
 		8A6D360620B5965E00DD0445 /* DemoChatMessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoChatMessageSender.swift; sourceTree = "<group>"; };
 		8A6D360820B5967D00DD0445 /* BaseMessagesSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessagesSelector.swift; sourceTree = "<group>"; };
 		8A6D360A20B5969E00DD0445 /* MessagesSelectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesSelectorProtocol.swift; sourceTree = "<group>"; };
@@ -714,6 +734,7 @@
 				DC8536F7237BF63500B12476 /* UIView+Shadow.swift */,
 				DC1CA71323815FC900E79769 /* UITextField+Views.swift */,
 				72FA74F32417A70A00258DEF /* Double+RemoveTrailingZeros.swift */,
+				721A1A3524AB82F400949404 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1343,6 +1364,7 @@
 				8A7E305620BABF4F00BF2985 /* Teacher.swift */,
 				8A7E305820BABF5D00BF2985 /* Stage.swift */,
 				8A7E305A20BABF7800BF2985 /* Course.swift */,
+				721A1A3324AB7B3800949404 /* ChatMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1353,8 +1375,8 @@
 				8A7C4A382327DCA100984A53 /* Nav Controllers */,
 				8A5F42E320B1AA0100FF93D1 /* NewMessageViewController.swift */,
 				8A5F42E520B1B5C300FF93D1 /* ContactTeacherViewController.swift */,
-				8A6D35EF20B5848000DD0445 /* ChatViewController.swift */,
-				72933ACE24AA2B1D004AC5B1 /* NewChatViewController.swift */,
+				8A6D35EF20B5848000DD0445 /* OldChatViewController.swift */,
+				72933ACE24AA2B1D004AC5B1 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1365,6 +1387,14 @@
 				8A298CD62184CDB900A82FEA /* Threads.storyboard */,
 				8A5F42E720B1C5EA00FF93D1 /* ThreadTableViewCell.swift */,
 				72AE80F3240FBE0700CF4F19 /* SelectionTableViewCell.swift */,
+				721A1A2724AB6DFF00949404 /* ReceiverImageChatTableViewCell.swift */,
+				721A1A2424AB6DFE00949404 /* ReceiverImageChatTableViewCell.xib */,
+				721A1A2624AB6DFF00949404 /* ReceiverTextChatTableViewCell.swift */,
+				721A1A2324AB6DFE00949404 /* ReceiverTextChatTableViewCell.xib */,
+				721A1A2824AB6DFF00949404 /* SenderImageChatTableViewCell.swift */,
+				721A1A2924AB6DFF00949404 /* SenderImageChatTableViewCell.xib */,
+				721A1A2524AB6DFF00949404 /* SenderTextChatTableViewCell.swift */,
+				721A1A2A24AB6DFF00949404 /* SenderTextChatTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1796,6 +1826,7 @@
 				5482DDF32056D4E500647D57 /* SFUIText-BoldItalicG2.otf in Resources */,
 				5482DDFD2056D50300647D57 /* SFUIText-Medium.otf in Resources */,
 				5482DE662056DAB100647D57 /* RobotoCondensed-BoldItalic.ttf in Resources */,
+				721A1A2C24AB6DFF00949404 /* ReceiverImageChatTableViewCell.xib in Resources */,
 				5482DE782056DAB100647D57 /* RobotoCondensed-Light.ttf in Resources */,
 				5482DE4D2056DAB100647D57 /* RobotoCondensed-Regular.ttf in Resources */,
 				5482DE8A2056DAB100647D57 /* Roboto-Light.ttf in Resources */,
@@ -1834,6 +1865,7 @@
 				5462A5AD2058401F00C6F5EE /* CircularStd-BoldItalic.otf in Resources */,
 				5482DE862056DAB100647D57 /* RobotoCondensed-LightItalic.ttf in Resources */,
 				5482DE672056DAB100647D57 /* Roboto Condensed Bold Italic.otf in Resources */,
+				721A1A3124AB6DFF00949404 /* SenderImageChatTableViewCell.xib in Resources */,
 				5482DDF82056D4F300647D57 /* SFUIText-ItalicG1.otf in Resources */,
 				8A1DDB5A22E9FE4F00DF9B9A /* Quizzes.storyboard in Resources */,
 				5462A5A52058401F00C6F5EE /* CircularStd-Bold.otf in Resources */,
@@ -1844,6 +1876,7 @@
 				5482DE4C2056DAB100647D57 /* RobotoMono-Medium.ttf in Resources */,
 				54EB93032015ED1D001DD93F /* Login.storyboard in Resources */,
 				5462A5AC2058401F00C6F5EE /* CircularStd-Black.otf in Resources */,
+				721A1A3224AB6DFF00949404 /* SenderTextChatTableViewCell.xib in Resources */,
 				72CE15FB240E8F1500AECC1C /* GradeHeaderView.xib in Resources */,
 				5482DDF52056D4EB00647D57 /* SFUIText-Heavy.otf in Resources */,
 				DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */,
@@ -1864,6 +1897,7 @@
 				5482DDF42056D4E800647D57 /* SFUIText-BoldItalicG3.otf in Resources */,
 				8A298CCA2184CD3600A82FEA /* Attendance.storyboard in Resources */,
 				5462A5AB2058401F00C6F5EE /* CircularStd-MediumItalic.otf in Resources */,
+				721A1A2B24AB6DFF00949404 /* ReceiverTextChatTableViewCell.xib in Resources */,
 				5482DE712056DAB100647D57 /* Roboto-Medium.ttf in Resources */,
 				5482DE852056DAB100647D57 /* RobotoCondensed-Italic.ttf in Resources */,
 				5482DE792056DAB100647D57 /* Roboto Black Italic.otf in Resources */,
@@ -1929,8 +1963,10 @@
 				"${BUILT_PRODUCTS_DIR}/DateToolsSwift/DateToolsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Device.swift/Device_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/KMPlaceholderTextView/KMPlaceholderTextView.framework",
@@ -1942,15 +1978,18 @@
 				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/ReverseExtension/ReverseExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
+				"${BUILT_PRODUCTS_DIR}/TLPhotoPicker/TLPhotoPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/TPKeyboardAvoiding/TPKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/YLProgressBar/YLProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/iosMath/iosMath.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1965,8 +2004,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateToolsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Device_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMPlaceholderTextView.framework",
@@ -1978,15 +2019,18 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReverseExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TLPhotoPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iosMath.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2040,6 +2084,7 @@
 				8A6D360720B5965E00DD0445 /* DemoChatMessageSender.swift in Sources */,
 				8A93357D22E0CD83007B287D /* PostDetailsViewController.swift in Sources */,
 				54970683208CECB50070CE46 /* TimeSlot.swift in Sources */,
+				721A1A2E24AB6DFF00949404 /* ReceiverTextChatTableViewCell.swift in Sources */,
 				8A5BBB092327FD220056B157 /* ActorNvc.swift in Sources */,
 				8A128C6922E0913200253A49 /* CoursesPostsViewController.swift in Sources */,
 				546356EC201F68E90072F066 /* Role.swift in Sources */,
@@ -2066,7 +2111,9 @@
 				8A7E305520BABD7900BF2985 /* Subject.swift in Sources */,
 				54CCF405206BFB5700824A3D /* BehaviorNoteTableViewCell.swift in Sources */,
 				8A842F5A22F04EAE000BA70B /* TeacherCourse.swift in Sources */,
+				721A1A3424AB7B3800949404 /* ChatMessage.swift in Sources */,
 				8A93357522E0B1B9007B287D /* UploadedFile.swift in Sources */,
+				721A1A2F24AB6DFF00949404 /* ReceiverImageChatTableViewCell.swift in Sources */,
 				8A6D361B20B598D400DD0445 /* SendingStatusModel.swift in Sources */,
 				54CCF402206BEBA600824A3D /* BehaviorNotesResponseMeta.swift in Sources */,
 				72CE15F7240E8AE300AECC1C /* SelectGradingPeriodViewController.swift in Sources */,
@@ -2079,6 +2126,7 @@
 				8A5F42E420B1AA0100FF93D1 /* NewMessageViewController.swift in Sources */,
 				8A94E45D22DF836200A01B0C /* PostOwner.swift in Sources */,
 				8A97DFAA22FAE87700B646CA /* AnnouncementsApiManager.swift in Sources */,
+				721A1A3624AB82F400949404 /* UITableView.swift in Sources */,
 				8AFA4719233A1ED900B861F4 /* NotificationsViewController.swift in Sources */,
 				8A6D361720B5983500DD0445 /* BaseMessageHandler.swift in Sources */,
 				8AA9307521E63ECD00F886F4 /* ActorViewController.swift in Sources */,
@@ -2097,6 +2145,7 @@
 				DCC414A12390274500E70EF6 /* SkeletonTableViewCell.swift in Sources */,
 				72A7CFA3240E845900ED4ED0 /* HomeApiManager.swift in Sources */,
 				8A06B6DD22F99B2000F5F85C /* StudentSubmissionTableViewCell.swift in Sources */,
+				721A1A2D24AB6DFF00949404 /* SenderTextChatTableViewCell.swift in Sources */,
 				8A253D5F22E87BE900AFB27E /* QuizCourse.swift in Sources */,
 				8A7EFF7B2327D2AB007D4842 /* ChildProfileFeaturesNVC.swift in Sources */,
 				8A680FA6226DD27A00E800AE /* AssignmentsViewController.swift in Sources */,
@@ -2134,7 +2183,7 @@
 				54640B0A20559A9800A13CCB /* AttendanceViewController.swift in Sources */,
 				8A5F42EC20B1CB3300FF93D1 /* Participant.swift in Sources */,
 				8A6A7C26222EAE9100F3EB85 /* TabsTableViewCell.swift in Sources */,
-				72933ACF24AA2B1D004AC5B1 /* NewChatViewController.swift in Sources */,
+				72933ACF24AA2B1D004AC5B1 /* ChatViewController.swift in Sources */,
 				547DC22F201F404E004B7FA2 /* Constants.swift in Sources */,
 				8A6D362720B59A9900DD0445 /* BaseMessageCollectionViewCellAvatarStyle.swift in Sources */,
 				DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */,
@@ -2167,7 +2216,7 @@
 				8AD1C6C4232F9B05006DA3A0 /* AttendanceApiManager.swift in Sources */,
 				8A6D361920B5985A00DD0445 /* DemoChatItemsDecorator.swift in Sources */,
 				8A6D363320B59B8900DD0445 /* TimeSeparatorCollectionViewCell.swift in Sources */,
-				8A6D35F020B5848000DD0445 /* ChatViewController.swift in Sources */,
+				8A6D35F020B5848000DD0445 /* OldChatViewController.swift in Sources */,
 				547A37942022153B00794441 /* Notification.swift in Sources */,
 				8AD1C6CD232FA974006DA3A0 /* AttendanceStudent.swift in Sources */,
 				8A6D362920B59AE800DD0445 /* DemoPhotoMessageViewModelBuilder.swift in Sources */,
@@ -2179,6 +2228,7 @@
 				72A7CF9C240E826500ED4ED0 /* ShortCourseGroup.swift in Sources */,
 				8A93357922E0BC58007B287D /* PostResourcesViewController.swift in Sources */,
 				8A119507231BFF3200691398 /* TeacherAttendanceTableViewCell.swift in Sources */,
+				721A1A3024AB6DFF00949404 /* SenderImageChatTableViewCell.swift in Sources */,
 				547DD3E7208D0C43008EED15 /* Date+Time.swift in Sources */,
 				8A7E305920BABF5D00BF2985 /* Stage.swift in Sources */,
 				8A01C90C22F9C33C00114607 /* FeedbackDialogViewController.swift in Sources */,
@@ -2516,7 +2566,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2538,7 +2588,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

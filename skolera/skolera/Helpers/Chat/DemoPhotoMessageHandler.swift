@@ -12,8 +12,8 @@ import Lightbox
 
 class DemoPhotoMessageHandler: BaseMessageInteractionHandlerProtocol {
     private let baseHandler: BaseMessageHandler
-    private let viewController: ChatViewController
-    init (baseHandler: BaseMessageHandler, viewController: ChatViewController) {
+    private let viewController: OldChatViewController
+    init (baseHandler: BaseMessageHandler, viewController: OldChatViewController) {
         self.baseHandler = baseHandler
         self.viewController = viewController
     }

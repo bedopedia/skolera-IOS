@@ -21,7 +21,7 @@ class NotificationsTableViewController: UITableViewController, NVActivityIndicat
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         getNotifcations()
         setNotificationsSeen()
     }

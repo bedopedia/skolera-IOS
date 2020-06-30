@@ -103,8 +103,8 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         getNotificationsAPI(page: page) { (isSuccess, statusCode, value, error) in
             if page == 1 {
                 self.tableView.hideSkeleton()
-                self.tableView.rowHeight = UITableViewAutomaticDimension
-                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.estimatedRowHeight = UITableView.automaticDimension
                 self.tableView.reloadData()
                 self.notifications = []
             }

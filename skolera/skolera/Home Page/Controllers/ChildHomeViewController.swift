@@ -63,7 +63,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if let childNvc = childViewControllers[0] as? ChildProfileFeaturesNVC, let childVc = childNvc.viewControllers[0] as? ChildProfileViewController{
+        if let childNvc = children[0] as? ChildProfileFeaturesNVC, let childVc = childNvc.viewControllers[0] as? ChildProfileViewController{
             childVc.child = self.child
             childVc.assignmentsText = self.assignmentsText
             childVc.quizzesText = self.quizzesText
@@ -72,7 +72,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
             childVc.addChildData()
         }
         
-        for child in childViewControllers {
+        for child in children {
             if let childNvc = child as? ContactTeacherNVC {
                 childNvc.student = self.child
             }
@@ -101,7 +101,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     }
     
     private func openNewMessage() {
-        for child in childViewControllers {
+        for child in children {
             if let contactTeacherNvc = child as? ContactTeacherNVC {
                 let newMessageVC = NewMessageViewController.instantiate(fromAppStoryboard: .Threads)
                 newMessageVC.child = self.child
@@ -144,7 +144,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     
     @IBAction func selectFirstTab(){
         
-        for child in childViewControllers {
+        for child in children {
             
             if isParent() {
                 if let nvc = child as? AnnouncementsTableViewNVC {
@@ -173,14 +173,14 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
         }
         
         if !moreView.isHidden {
-            for child in childViewControllers {
+            for child in children {
                 if let childProfileNvc = child as? ChildProfileFeaturesNVC {
                     childProfileNvc.popToRootViewController(animated: false)
                 }
             }
         }
         if !announcementsView.isHidden {
-            for child in childViewControllers {
+            for child in children {
                 if let announcementsNvc = child as? AnnouncementsTableViewNVC {
                     announcementsNvc.popToRootViewController(animated: false)
                 }
@@ -200,7 +200,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     }
     
     @IBAction func selectSecondTab(){
-        for child in childViewControllers {
+        for child in children {
             if let nvc = child as? ContactTeacherNVC {
                 if nvc.viewControllers.count == 1 {
 //                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
@@ -212,7 +212,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
             }
         }
         if !threadsView.isHidden {
-            for child in childViewControllers {
+            for child in children {
                 if let threadsNvc = child as? ContactTeacherNVC {
                     threadsNvc.popToRootViewController(animated: false)
                 }
@@ -241,7 +241,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
 //        self.headerView.isHidden = false
         unSelectAllTabs()
         notificationView.isHidden = false
-        for child in childViewControllers {
+        for child in children {
             if let notificationsTableViewController = child as? NotificationsTableViewController {
                 notificationsTableViewController.setNotificationsSeen()
             }
@@ -258,7 +258,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     
     @IBAction func selectFourthTab(){
         
-        for child in childViewControllers {
+        for child in children {
             
             if !isParent() {
                 if let nvc = child as? AnnouncementsTableViewNVC {
@@ -285,7 +285,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
             
         if moreView.isHidden == false {
             if isParent() {
-                for child in childViewControllers {
+                for child in children {
                     if let childProfileNvc = child as? ChildProfileFeaturesNVC {
                         childProfileNvc.popToRootViewController(animated: false)
                     }
@@ -294,7 +294,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
         }
         if announcementsView.isHidden == false {
             if !isParent() {
-                for child in childViewControllers {
+                for child in children {
                     if let announcementsNvc = child as? AnnouncementsTableViewNVC {
                         announcementsNvc.popToRootViewController(animated: false)
                     }
@@ -319,7 +319,7 @@ class ChildHomeViewController: UIViewController, UIGestureRecognizerDelegate, NV
     //service call to change localization
     
     func showChangeLanguageConfirmation(language: Language){
-        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
             Language.language = language
             exit(0);

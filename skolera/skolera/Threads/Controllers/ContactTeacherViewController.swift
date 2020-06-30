@@ -279,14 +279,14 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
                             }
                         }
                         
-                        let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
-                        chatVC.dataSource = dataSource
-                        let fullName = thread.othersNames ?? thread.name
-                        let fullNameArr = fullName?.components(separatedBy: " ")
-                        chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
-                        chatVC.canSendMessage = !thread.participants.isEmpty
-                        chatVC.thread = thread
-                        self.stopAnimating()
+//                        let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
+//                        chatVC.dataSource = dataSource
+//                        let fullName = thread.othersNames ?? thread.name
+//                        let fullNameArr = fullName?.components(separatedBy: " ")
+//                        chatVC.chatName = "\(fullNameArr![0]) \(fullNameArr?.last ?? "")"
+//                        chatVC.canSendMessage = !thread.participants.isEmpty
+//                        chatVC.thread = thread
+//                        self.stopAnimating()
                         //                self.navigationController?.isNavigationBarHidden = false
                         //                self.navigationController?.pushViewController(chatVC, animated: true)
                         self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
@@ -325,7 +325,7 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
 }
 
 extension UIImage {
-    func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIViewContentMode = .scaleAspectFit) -> UIImage {
+    func resizeImage(_ dimension: CGFloat, opaque: Bool, contentMode: UIView.ContentMode = .scaleAspectFit) -> UIImage {
         var width: CGFloat
         var height: CGFloat
         var newImage: UIImage

@@ -38,7 +38,7 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             gradientView.isHidden = true
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         let backItem = UIBarButtonItem()
         backItem.title = nil
         navigationItem.backBarButtonItem = backItem
@@ -49,14 +49,14 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
 
     @objc func keyboardWillAppear(_ notification: NSNotification) {
         //Do something here
         if let userInfo = notification.userInfo,
-            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                let inset = keyboardFrame.height // if scrollView is not aligned to bottom of screen, subtract offset
             self.headerTopConstraint.constant = inset
         }

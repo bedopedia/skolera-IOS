@@ -40,7 +40,7 @@ class AssignmentDetailsViewController: UIViewController, NVActivityIndicatorView
         }
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 100
         tableView.estimatedRowHeight = 100
         self.titleLabel.text = self.assignment.name

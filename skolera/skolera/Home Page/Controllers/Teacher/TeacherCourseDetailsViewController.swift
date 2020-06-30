@@ -20,7 +20,7 @@ class TeacherCourseDetailsViewController: UIViewController {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         titleLabel.text = courseGroup.name
-        for child in childViewControllers {
+        for child in children {
             if let teacherCourseDetailsTableViewController = child as? TeacherCourseDetailsTableViewController {
                 teacherCourseDetailsTableViewController.course = self.course
                 teacherCourseDetailsTableViewController.courseGroup = self.courseGroup

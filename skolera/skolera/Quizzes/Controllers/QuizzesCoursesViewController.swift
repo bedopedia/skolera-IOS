@@ -64,8 +64,8 @@ class QuizzesCoursesViewController: UIViewController, NVActivityIndicatorViewabl
                     debugPrint(result)
                     let quizCourses: [QuizCourse] = result.map({ QuizCourse($0) })
                     self.courses = quizCourses
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.tableView.reloadData()
                 }
             } else {

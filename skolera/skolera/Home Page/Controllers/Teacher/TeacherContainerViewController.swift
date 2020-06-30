@@ -57,7 +57,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        for child in childViewControllers {
+        for child in children {
             if let childNvc = child as? TeacherCoursesTableViewNVC, let coursesViewController = childNvc.viewControllers[0] as? TeacherCoursesViewController {
                 coursesViewController.actor = self.actor
             } else if let actorNvc = child as? ActorNvc, let actorViewController = actorNvc.viewControllers[0] as? ActorViewController {
@@ -89,7 +89,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectCourses() {
-        for child in childViewControllers {
+        for child in children {
             if let nvc = child as? TeacherCoursesTableViewNVC {
                 if nvc.viewControllers.count == 1 {
 //                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
@@ -101,7 +101,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
             }
         }
         if coursesContainer.isHidden == false {
-            for child in childViewControllers {
+            for child in children {
                 if let teacherCoursesTableViewNvc = child as? TeacherCoursesTableViewNVC {
                     teacherCoursesTableViewNvc.popToRootViewController(animated: false)
                 }
@@ -114,7 +114,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectAnnouncements() {
-        for child in childViewControllers {
+        for child in children {
             if let nvc = child as? AnnouncementsTableViewNVC {
                 if nvc.viewControllers.count == 1 {
 //                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
@@ -126,7 +126,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
             }
         }
         if announcmentContainer.isHidden == false {
-            for child in childViewControllers {
+            for child in children {
                 if let announcementsNvc = child as? AnnouncementsTableViewNVC {
                     announcementsNvc.popToRootViewController(animated: false)
                 }
@@ -139,7 +139,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectMessages() {
-        for child in childViewControllers {
+        for child in children {
             if let nvc = child as? ContactTeacherNVC {
                 if nvc.viewControllers.count == 1 {
 //                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
@@ -159,7 +159,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     @IBAction func selectNotification() {
 //        self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
 //        self.headerView.isHidden = false
-        for child in childViewControllers {
+        for child in children {
             if let notificationsViewController = child as? NotificationsViewController {
                 notificationsViewController.setNotificationsSeen()
             }
@@ -172,7 +172,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @IBAction func selectMenu() {
-        for child in childViewControllers {
+        for child in children {
             if let nvc = child as? ActorNvc {
                 if nvc.viewControllers.count == 1 {
 //                    self.headerHeightConstraint.constant = 60 + UIApplication.shared.statusBarFrame.height
@@ -184,7 +184,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
             }
         }
         if menuContainer.isHidden == false {
-            for child in childViewControllers {
+            for child in children {
                 if let actorNvc = child as? ActorNvc {
                     actorNvc.popToRootViewController(animated: false)
                 }
@@ -230,7 +230,7 @@ class TeacherContainerViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     func showChangeLanguageConfirmation(language: Language){
-        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
             Language.language = language
             exit(0);

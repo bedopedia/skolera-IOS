@@ -281,3 +281,10 @@ func clearUserDefaults() {
     userDefault.removeObject(forKey: UID)
     userDefault.removeObject(forKey: USER_TYPE)
 }
+
+func getMessageDate(timeInterval: Int) -> String {
+    let date = Date.init(timeIntervalSince1970: TimeInterval(timeInterval/1000))
+    let isoFormatter = DateFormatter()
+    isoFormatter.dateFormat = "hh:mm a, d MMM y"
+    return isoFormatter.string(from: date)
+}

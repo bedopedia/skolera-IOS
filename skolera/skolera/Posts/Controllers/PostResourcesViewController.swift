@@ -33,7 +33,7 @@ class PostResourcesViewController: UIViewController, UITableViewDataSource, UITa
         } else {
             gradientView.isHidden = true
         }
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         
         
         

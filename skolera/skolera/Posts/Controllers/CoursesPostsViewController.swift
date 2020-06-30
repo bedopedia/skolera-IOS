@@ -39,8 +39,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         titleLabel.text = courseName
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         createPostButton.addShadow()
         if isTeacher {
             childImageView.isHidden = true

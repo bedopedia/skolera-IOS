@@ -1,311 +1,279 @@
 //
-//  ChatViewController.swift
+//  NewChatViewController.swift
 //  skolera
 //
-//  Created by Yehia Beram on 5/23/18.
-//  Copyright © 2018 Skolera. All rights reserved.
+//  Created by Salma Medhat on 6/29/20.
+//  Copyright © 2020 Skolera. All rights reserved.
 //
 
 import UIKit
+import ReverseExtension
+import Firebase
+import FirebaseDatabase
+import TLPhotoPicker
+import Photos
+import Lightbox
+import IQKeyboardManagerSwift
 import NVActivityIndicatorView
-import Alamofire
-import Chatto
-import ChattoAdditions
 
-class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
+class ChatViewController: UIViewController, TLPhotosPickerViewControllerDelegate, UITextFieldDelegate, NVActivityIndicatorViewable  {
+
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var chatTableView: UITableView!
+    @IBOutlet weak var messageTextField: UITextField!
     
-    var messageSender: DemoChatMessageSender!
-    let messagesSelector = BaseMessagesSelector()
+    fileprivate lazy var storageRef: StorageReference = Storage.storage().reference(forURL: "")
     
-    var chatName: String = "Chat"
-    var thread: Threads!
-    var canSendMessage: Bool = true
-    var newThread:Bool = false
-    var courseId: Int = -1
-    var teacherId: Int = -1
-    var dataSource: DemoChatDataSource! {
-        didSet {
-            self.chatDataSource = self.dataSource
-            self.messageSender = self.dataSource.messageSender
-        }
-    }
+    var selectedAssets = [TLPHAsset]()
     
-    lazy private var baseMessageHandler: BaseMessageHandler = {
-        return BaseMessageHandler(messageSender: self.messageSender, messagesSelector: self.messagesSelector)
-    }()
+    var ref: DatabaseReference!
+    var threadRef: DatabaseReference!
+    
+    var messages: [ChatMessage] = []
+    
+    var channelName: String = ""
+    
+    var didOpenImagePicker: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false    //contact teacher nvc
-        self.title = chatName
-        self.messagesSelector.delegate = self
-        self.chatItemsDecorator = DemoChatItemsDecorator(messagesSelector: self.messagesSelector)
-        UIView.appearance().semanticContentAttribute = .forceLeftToRight
-        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
-        let backItem = UIBarButtonItem()
-        backItem.title = nil
-        navigationItem.backBarButtonItem = backItem
+        messageTextField.delegate = self
+        chatTableView.register(nibWithCellClass: ReceiverTextChatTableViewCell.self)
+        chatTableView.register(nibWithCellClass: ReceiverImageChatTableViewCell.self)
+        chatTableView.register(nibWithCellClass: SenderTextChatTableViewCell.self)
+        chatTableView.register(nibWithCellClass: SenderImageChatTableViewCell.self)
+        chatTableView.delegate = self
+        chatTableView.dataSource = self
+        let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 24))
+        headerView.backgroundColor = .clear
+        self.chatTableView.tableHeaderView = headerView
+        chatTableView.re.delegate = self
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = false    //contact teacher nvc
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.setThreadSeen()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        if Language.language == .arabic {
-            UIView.appearance().semanticContentAttribute = .forceRightToLeft
-        } else {
-            UIView.appearance().semanticContentAttribute = .forceLeftToRight
+        chatTableView.re.scrollViewDidReachTop = { scrollView in
+            print("scrollViewDidReachTop")
         }
-        
-    }
-    
-    
-    var chatInputPresenter: BasicChatInputBarPresenter!
-    override func createChatInputView() -> UIView {
-        if canSendMessage {
-            let chatInputView = ChatInputBar.loadNib()
-            var appearance = ChatInputBarAppearance()
-            appearance.sendButtonAppearance.title = "Send".localized
-            appearance.textInputAppearance.placeholderText = "Type a message".localized
-            self.chatInputPresenter = BasicChatInputBarPresenter(chatInputBar: chatInputView, chatInputItems: self.createChatInputItems(), chatInputBarAppearance: appearance)
-            chatInputView.maxCharactersCount = 1000
-            return chatInputView
-        } else {
-            return UIView.init(frame: .init(x: 0, y: 0, width: 0, height: 0))
+        chatTableView.re.scrollViewDidReachBottom = { scrollView in
+            print("scrollViewDidReachBottom")
         }
+        channelName = ""
+//        threadRef = Database.database().reference().child("Production-Threads").child(channelName)
+//        ref = threadRef.child("messages")
+//        
+//        
+//        ref.observe(.childAdded) { (snapshot) in
+//            let messageData = snapshot.value as! Dictionary<String, Any>
+//            self.messages.append(ChatMessage(messageData))
+//            self.messages = self.messages.sorted(by: { $0.messageTime > $1.messageTime })
+//            self.chatTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+//            self.threadRef.updateChildValues(["job_post_unseen_count": 0])
+//        }
+//        
+//        ref.observe(.childChanged) { (snapshot) in
+//            let messageData = snapshot.value as! Dictionary<String, Any>
+//            let item = ChatMessage(messageData)
+//            for (pos, message) in self.messages.enumerated() {
+//                if message.messageTime == item.messageTime {
+//                    message.content = item.content
+//                    self.chatTableView.reloadRows(at: [IndexPath(row: pos, section: 0)], with: .automatic)
+//                }
+//            }
+//            self.chatTableView.reloadData()
+//        }
+        
+        self.chatTableView.reloadData() // remove later
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     
-    override func createPresenterBuilders() -> [ChatItemType: [ChatItemPresenterBuilderProtocol]] {
-        
-        let chatColor = BaseMessageCollectionViewCellDefaultStyle.Colors(
-            incoming: UIColor.appColors.progressBarBackgroundColor, // white background for incoming
-            outgoing: UIColor.appColors.green // black background for outgoing
-        )
-        // used for base message background + text background
-        let baseMessageStyle = BaseMessageCollectionViewCellAvatarStyle(colors: chatColor)
-        
-        let textStyle = TextMessageCollectionViewCellDefaultStyle.TextStyle(
-            font: UIFont.systemFont(ofSize: 13),
-            incomingColor: UIColor.black, // black text for incoming
-            outgoingColor: UIColor.white, // white text for outgoing
-            incomingInsets: UIEdgeInsets(top: 10, left: 19, bottom: 10, right: 15),
-            outgoingInsets: UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 19)
-        )
-        
-        
-        let textCellStyle: TextMessageCollectionViewCellDefaultStyle = TextMessageCollectionViewCellDefaultStyle(
-            textStyle: textStyle,
-            baseStyle: baseMessageStyle) // without baseStyle, you won't have the right background
-        
-        let textMessagePresenter = TextMessagePresenterBuilder(
-            viewModelBuilder: DemoTextMessageViewModelBuilder(),
-            interactionHandler: DemoTextMessageHandler(baseHandler: self.baseMessageHandler)
-        )
-        //        textMessagePresenter.baseMessageStyle = BaseMessageCollectionViewCellAvatarStyle()
-        textMessagePresenter.baseMessageStyle = baseMessageStyle
-        textMessagePresenter.textCellStyle = textCellStyle
-        
-        let photoMessagePresenter = PhotoMessagePresenterBuilder(
-            viewModelBuilder: DemoPhotoMessageViewModelBuilder(),
-            interactionHandler: DemoPhotoMessageHandler(baseHandler: self.baseMessageHandler, viewController: self)
-        )
-        photoMessagePresenter.baseCellStyle = BaseMessageCollectionViewCellAvatarStyle()
-        return [
-            DemoTextMessageModel.chatItemType: [textMessagePresenter],
-            SendingStatusModel.chatItemType: [SendingStatusPresenterBuilder()],
-            TimeSeparatorModel.chatItemType: [TimeSeparatorPresenterBuilder()],
-            DemoPhotoMessageModel.chatItemType: [photoMessagePresenter]
-        ]
-    }
+    override func viewDidDisappear(_ animated: Bool) {
+          if !didOpenImagePicker {
+              ref.removeAllObservers()
+              NotificationCenter.default.removeObserver(self)
+          }
+      }
     
-    func createChatInputItems() -> [ChatInputItemProtocol] {
-        var items = [ChatInputItemProtocol]()
-        items.append(self.createTextInputItem())
-        items.append(self.createPhotoInputItem())
-        return items
-    }
     
-    private func createTextInputItem() -> TextChatInputItem {
-        let item = TextChatInputItem()
-        item.textInputHandler = { [weak self] text in
-            self?.send(message: text)
-            self?.collectionView.scrollToLast()
+    @objc func keyboardWillShow(notification: NSNotification) {
+//        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+//             UIView.animate(withDuration: 0.3) {
+//                 let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+//                let keyboardFrame: NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+//                 let keyboardRectangle = keyboardFrame.cgRectValue
+//                 let keyboardHeight = keyboardRectangle.height
+//                 self.headerTopConstraint.constant = keyboardHeight
+//                 self.view.layoutIfNeeded()
+//             }
+//         }
+     }
+//
+     @objc func keyboardWillHide(notification: NSNotification) {
+//         UIView.animate(withDuration: 0.3) {
+//             self.headerTopConstraint.constant = 0
+//             self.view.layoutIfNeeded()
+//         }
+//
+     }
+     
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+         sendMessage()
+         return true
+     }
+    
+    @IBAction func sendMessage() {
+//    //        self.view.endEditing(true)
+//            if let text = messageTextField.text, !text.isEmpty {
+//                let itemRef = ref.childByAutoId()
+//                let messageItem : [String: Any] = ["type": "text",
+//                                                   "content": text,
+//                                                   "message_time": Int(Date().timeIntervalSince1970 * 1000),
+//                                                   "sender_id": "job_post_\(superChozenJobPost.jobPostId)"]
+//                Database.database().reference().child("Devices").child("job_seeker_\(self.jobSeeker!.id)").observe(.childAdded) { (snapShot) in
+//                    let data = snapShot.value as! String
+//                    sendMessageNotification(name: getRecruiterUser().firstName, matchId: self.match.id, reciever: data, message: text)
+//                    Database.database().reference().child("Devices").child("job_seeker_\(self.jobSeeker!.id)").removeAllObservers()
+//                }
+//                itemRef.setValue(messageItem)
+//                updateUnSeenCount()
+//                messageTextField.text = ""
+//            }
         }
-        return item
+    
+    
+    private func updateUnSeenCount(){
+//        threadRef.child("seeker_unseen_count").observe(.value) { (snapShot) in
+//            self.threadRef.child("seeker_unseen_count").removeAllObservers()
+//            if snapShot.exists() {
+//                if let unSeenCount = snapShot.value as? Int {
+//                    self.threadRef.updateChildValues(["seeker_unseen_count": unSeenCount + 1])
+//                }
+//            } else {
+//                self.threadRef.updateChildValues(["seeker_unseen_count": 0])
+//            }
+//
+//        }
     }
     
-    private func createPhotoInputItem() -> PhotosChatInputItem {
-        
-        let item = PhotosChatInputItem(presentingController: self)
-        item.photoInputHandler = { [weak self] image in
-            self?.dataSource.addPhotoMessage(image)
-            self?.scaleImage(image: image)
-            self?.collectionView.scrollToLast()
-        }
-        return item
-    }
     
-    func setThreadSeen() {
-        if !newThread {
-            startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-            debugPrint(self.thread.id!)
-            let parameters : Parameters = ["thread_ids": [self.thread.id!]]
-            setThreadSeenApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
-                self.stopAnimating()
-                if isSuccess {
-                    debugPrint(response)
-                } else {
-                    //                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-                    if let err = error as? URLError, err.code  == URLError.Code.notConnectedToInternet {
-                        showAlert(viewController: self, title: ERROR, message: NO_INTERNET, completion: nil)
-                    } else if statusCode == 401 || statusCode == 500 {
-                        showReauthenticateAlert(viewController: self)
-                    } else {
-                        debugPrint(error)
-                    }
+    @IBAction func addAttachment() {
+//           didOpenImagePicker = true
+//           let viewController = TLPhotosPickerViewController()
+//           viewController.delegate = self
+//           var configure = TLPhotosPickerConfigure()
+//           configure.allowedVideo = false
+//           configure.allowedLivePhotos = false
+//           configure.allowedVideoRecording = false
+//           configure.singleSelectedMode = true
+//           viewController.configure = configure
+//           viewController.modalPresentationStyle = .fullScreen
+//           self.present(viewController, animated: true, completion: nil)
+       }
+    
+    //TLPhotosPickerViewControllerDelegate
+    func dismissPhotoPicker(withTLPHAssets: [TLPHAsset]) {
+        // use selected order, fullresolution image
+        didOpenImagePicker = false
+        if !withTLPHAssets.isEmpty {
+            let itemRef = ref.childByAutoId()
+            let messageItem : [String: Any] = ["type": "image",
+                                               "content": "NOTSET",
+                                               "message_time": Int(Date().timeIntervalSince1970 * 1000),
+                                               "sender_id": "job_post_"]
+            //"sender_id": "job_post_\(superChozenJobPost.jobPostId)
+            itemRef.setValue(messageItem)
+            Database.database().reference().child("Devices").child("job_seeker_").observe(.childAdded) { (snapShot) in
+                let data = snapShot.value as! String
+//                sendMessageNotification(name: getRecruiterUser().firstName, matchId: self.match.id, reciever: data, message: "📸 Sent an Image")
+                Database.database().reference().child("Devices").child("job_seeker_").removeAllObservers()
+            }
+            updateUnSeenCount()
+            self.storageRef.child(channelName).child("\(Int(Date().timeIntervalSince1970 * 1000)).jpeg").putData(withTLPHAssets[0].fullResolutionImage!.jpegData(compressionQuality: 0.5)!, metadata: nil) { (metadata, error) in
+                if let error = error {
+                    print("Error uploading photo: \(error.localizedDescription)")
+                    return
                 }
+                self.storageRef.child((metadata?.path)!).downloadURL(completion: { (url, error) in
+                    let itemKey = itemRef.key ?? ""
+                    self.ref.child(itemKey).updateChildValues(["content": url!.absoluteString])
+                })
             }
         }
     }
     
-    func send(message: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        if newThread {
-            let parameters : Parameters = [
-                "message_thread": [
-                    "course_id": courseId,
-                    "tag": ".",
-                    "name": ".",
-                    "messages_attributes": [[
-                        "body": message.encode(),
-                        "user_id": userId()
-                        ]]
-                ],
-                "user_ids": ["\(teacherId)", "\(userId())"]
+    func canSelectAsset(phAsset: PHAsset) -> Bool {
+        //Custom Rules & Display
+        //You can decide in which case the selection of the cell could be forbidden.
+        return true
+    }
+    
+    
+    func handleNoAlbumPermissions(picker: TLPhotosPickerViewController) {
+        // handle denied albums permissions case
+       // showErrorDialog(title: "Access denied", message: "You need to enable Album permissions to select an image")
+    }
+    func handleNoCameraPermissions(picker: TLPhotosPickerViewController) {
+        // handle denied camera permissions case
+//        showErrorDialog(title: "Access denied", message: "You need to enable camera permissions to take photo")
+    }
+    
+}
+
+extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.messages.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if messages[indexPath.row].type.elementsEqual("text") {
+            if messages[indexPath.row].senderId.contains("seeker") {
+                let cell = tableView.dequeueReusableCell(withClass: ReceiverTextChatTableViewCell.self, for: indexPath)
+                cell.messageTextLabel.text = messages[indexPath.row].content
+                cell.messageTimeLabel.text = getMessageDate(timeInterval: messages[indexPath.row].messageTime)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withClass: SenderTextChatTableViewCell.self, for: indexPath)
+                cell.messageTextLabel.text = messages[indexPath.row].content
+                cell.messageTimeLabel.text = getMessageDate(timeInterval: messages[indexPath.row].messageTime)
+                return cell
+            }
+        } else {
+            if messages[indexPath.row].senderId.contains("seeker") {
+                let cell = tableView.dequeueReusableCell(withClass: ReceiverImageChatTableViewCell.self, for: indexPath)
+                cell.messageImageView.isHidden = messages[indexPath.row].content.elementsEqual("NOTSET")
+                cell.messageTimeLabel.text = getMessageDate(timeInterval: messages[indexPath.row].messageTime)
+                if let url = URL(string: messages[indexPath.row].content) {
+                    cell.messageImageView.kf.setImage(with: url)
+                }
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withClass: SenderImageChatTableViewCell.self, for: indexPath)
+                cell.messageImageView.isHidden = messages[indexPath.row].content.elementsEqual("NOTSET")
+                cell.messageTimeLabel.text = getMessageDate(timeInterval: messages[indexPath.row].messageTime)
+                if let url = URL(string: messages[indexPath.row].content) {
+                    cell.messageImageView.kf.setImage(with: url)
+                }
+                return cell
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if messages[indexPath.row].type.elementsEqual("image") && !messages[indexPath.row].content.elementsEqual("NOTSET"){
+            let images = [
+                LightboxImage(imageURL: URL(string: messages[indexPath.row].content)!)
             ]
-            sendMessageApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
-                self.stopAnimating()
-                if isSuccess {
-                    self.dataSource.addTextMessage(message)
-                    self.newThread = false
-                } else {
-                    print(error!.localizedDescription)
-                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-                }
-            }
-        } else {
-            let parameters : Parameters = [
-                "message_thread": [
-                    "Id": "\(thread.id!)",
-                    "title": "\(thread.name!)",
-                    "messages_attributes": [[
-                        "body": message.encode(),
-                        "messageThreadId": "\(thread.id!)",
-                        "user_id": userId()
-                        ]]
-                ]
-            ]
-            replyToMessageApi(threadId: thread.id, parameters: parameters) { (isSuccess, statusCode, error) in
-                self.stopAnimating()
-                if isSuccess {
-                    debugPrint("success")
-                    self.dataSource.addTextMessage(message)
-                } else {
-                    self.dataSource.addTextMessage(message)
-                    showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
-                }
-            }
-        }
-    }
-    
-    private func scaleImage(image: UIImage) {
-        let newWidth:CGFloat = 400.0
-        let scale = newWidth / (image.size.width)
-        let newHeight = image.size.height * scale
-        UIGraphicsBeginImageContext(CGSize(width: newWidth, height:newHeight))
-        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        let imageData = NSData(data:UIImagePNGRepresentation(scaledImage!)!)
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        let docs: String = paths[0]
-        let d = Date()
-        let df = DateFormatter()
-        df.dateFormat = "yyyyMMddhhmmssSSSS"
-        df.string(from: d)
-        let fileName = df.string(from: d) + ".jpg"
-        let fullPath = docs.appendingFormat("/%@", fileName)
-        
-        _ = imageData.write(toFile: fullPath, atomically: true)
-        uploadImage(imageData: imageData as Data, imageName: fileName)
-        debugPrint(fullPath)
-        //        if let key = sendPhotoMessage() {
-        //            // 4
-        //            let imageFileURL = URL(string: "file://\(fullPath)")
-        //
-        //            // 5
-        ////            let path = "\(self.channel!.threadId)/\(fileName)"
-        //
-        //            // 6
-        //            DispatchQueue.global().async(execute: {
-        //
-        //                DispatchQueue.main.sync{
-        //                    print("main thread")
-        //
-        //                }
-        //            })
-        //
-        //        }
-        //
-    }
-    
-    private func uploadImage(imageData: Data, imageName: String) {
-        startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
-        if !newThread {
-            uploadImageApi(threadId: thread.id, imageData: imageData, imageName: imageName) { (isSuccess, statusCode, error) in
-                self.stopAnimating()
-                if isSuccess {
-                    debugPrint(statusCode)
-                } else {
-                    debugPrint(error!)
-                }
-            }
+            
+            // Create an instance of LightboxController.
+            let controller = LightboxController(images: images)
+            
+            // Use dynamic background.
+            controller.dynamicBackground = true
+            
+            // Present your controller.
+            present(controller, animated: true, completion: nil)
         }
     }
 }
 
-extension ChatViewController: MessagesSelectorDelegate {
-    func messagesSelector(_ messagesSelector: MessagesSelectorProtocol, didSelectMessage: MessageModelProtocol) {
-        self.enqueueModelUpdate(updateType: .normal)
-    }
-    
-    func messagesSelector(_ messagesSelector: MessagesSelectorProtocol, didDeselectMessage: MessageModelProtocol) {
-        self.enqueueModelUpdate(updateType: .normal)
-    }
-}
-
-extension UICollectionView {
-    func scrollToLast() {
-        guard numberOfSections > 0 else {
-            return
-        }
-        
-        let lastSection = numberOfSections - 1
-        
-        guard numberOfItems(inSection: lastSection) > 0 else {
-            return
-        }
-        
-        let lastItemIndexPath = IndexPath(item: numberOfItems(inSection: lastSection) - 1,
-                                          section: lastSection)
-        scrollToItem(at: lastItemIndexPath, at: .bottom, animated: true)
-    }
-}

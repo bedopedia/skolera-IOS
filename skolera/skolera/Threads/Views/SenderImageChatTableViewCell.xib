@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SenderImageChatTableViewCell" rowHeight="218" id="4DD-A2-N3A" customClass="SenderImageChatTableViewCell" customModule="skolera" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4DD-A2-N3A" id="hoW-dN-UCb">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Kk-aK-cUt">
+                        <rect key="frame" x="160" y="4" width="142" height="142.5"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="1kp-65-nfn">
+                                <rect key="frame" x="52.5" y="53" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="12" translatesAutoresizingMaskIntoConstraints="NO" id="9eD-JH-Zk0">
+                                <rect key="frame" x="4" y="4" width="134" height="134.5"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1kp-65-nfn" firstAttribute="centerX" secondItem="6Kk-aK-cUt" secondAttribute="centerX" id="0IG-16-UnY"/>
+                            <constraint firstItem="9eD-JH-Zk0" firstAttribute="top" secondItem="6Kk-aK-cUt" secondAttribute="top" constant="4" id="3v7-P6-8Bk"/>
+                            <constraint firstAttribute="height" constant="142.5" id="7XK-bI-NPU"/>
+                            <constraint firstItem="1kp-65-nfn" firstAttribute="centerY" secondItem="6Kk-aK-cUt" secondAttribute="centerY" id="UYw-4A-CKn"/>
+                            <constraint firstItem="9eD-JH-Zk0" firstAttribute="leading" secondItem="6Kk-aK-cUt" secondAttribute="leading" constant="4" id="V6E-me-jOk"/>
+                            <constraint firstAttribute="bottom" secondItem="9eD-JH-Zk0" secondAttribute="bottom" constant="4" id="XZc-qE-fCO"/>
+                            <constraint firstAttribute="width" constant="142" id="ekF-bc-69b"/>
+                            <constraint firstAttribute="trailing" secondItem="9eD-JH-Zk0" secondAttribute="trailing" constant="4" id="evL-lV-4ES"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:29 PM, 15 March 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOw-GA-KRi">
+                        <rect key="frame" x="209" y="150.5" width="93" height="10"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="8"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="6Kk-aK-cUt" secondAttribute="trailing" constant="18" id="2Zv-XC-jEY"/>
+                    <constraint firstAttribute="bottom" secondItem="6Kk-aK-cUt" secondAttribute="bottom" constant="22" id="BFC-6d-Gru"/>
+                    <constraint firstItem="6Kk-aK-cUt" firstAttribute="top" secondItem="hoW-dN-UCb" secondAttribute="top" constant="4" id="BMC-Wh-DDl"/>
+                    <constraint firstAttribute="bottom" secondItem="cOw-GA-KRi" secondAttribute="bottom" constant="4" id="CtV-s7-H1h"/>
+                    <constraint firstItem="cOw-GA-KRi" firstAttribute="trailing" secondItem="6Kk-aK-cUt" secondAttribute="trailing" id="He7-TY-aaI"/>
+                    <constraint firstItem="cOw-GA-KRi" firstAttribute="top" secondItem="6Kk-aK-cUt" secondAttribute="bottom" constant="4" id="qv4-tV-AZ5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="Vdf-S3-kD6"/>
+            <connections>
+                <outlet property="messageContainer" destination="6Kk-aK-cUt" id="SYc-1R-eX7"/>
+                <outlet property="messageImageView" destination="9eD-JH-Zk0" id="BpX-0D-53L"/>
+                <outlet property="messageTimeLabel" destination="cOw-GA-KRi" id="TtV-52-dwf"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="12" width="1600" height="1200"/>
+    </resources>
+</document>

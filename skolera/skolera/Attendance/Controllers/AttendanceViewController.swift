@@ -58,7 +58,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         loadLateDays()
         loadExcusedDays()
         loadAbsentDays()

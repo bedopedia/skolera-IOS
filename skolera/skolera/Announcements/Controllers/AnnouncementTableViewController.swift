@@ -19,7 +19,7 @@ class AnnouncementTableViewController: UITableViewController, NVActivityIndicato
         super.viewDidLoad()
 //        self.navigationController?.isNavigationBarHidden = false
         tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         getAnnouncements()
 //        self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
 //        let backItem = UIBarButtonItem()

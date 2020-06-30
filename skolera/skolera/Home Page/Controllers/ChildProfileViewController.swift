@@ -48,7 +48,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if !isParent() {
             backButton.isHidden = true
-            if let featureTVC = childViewControllers[0] as? ChildProfileFeaturesTableViewController {
+            if let featureTVC = children[0] as? ChildProfileFeaturesTableViewController {
                 featureTVC.tableView.showAnimatedSkeleton()
             }
             setLocalization()
@@ -134,7 +134,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
 //        if let eventsText = eventsText{
 //            eventsLabel.text = eventsText
 //        }
-        let featureTVC = childViewControllers[0] as! ChildProfileFeaturesTableViewController
+        let featureTVC = children[0] as! ChildProfileFeaturesTableViewController
         featureTVC.child = child
         featureTVC.scrollHandler = { y in
             let newHeaderViewHeight: CGFloat = self.heightConstraint.constant - y
@@ -164,7 +164,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     
     @IBAction func openThreads(){
         
-        if let threadsNvc = childViewControllers[0] as? ContactTeacherNVC {
+        if let threadsNvc = children[0] as? ContactTeacherNVC {
             let threadsVC = ContactTeacherViewController.instantiate(fromAppStoryboard: .Threads)
             threadsVC.child = self.child
 //            self.navigationController?.pushViewController(threadsVC, animated: true)
@@ -174,7 +174,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     }
     
     func showChangeLanguageConfirmation(language: Language){
-        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
             Language.language = language
             exit(0);

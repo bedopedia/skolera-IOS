@@ -23,6 +23,8 @@ target 'skolera' do
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
   # Pods for PodTest
   pod 'Fabric', '~> 1.10.2'
   pod 'Crashlytics', '~> 3.14.0'
@@ -49,4 +51,9 @@ target 'skolera' do
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'CVCalendar', '~> 1.6.2'
   pod "SkeletonView"
+  pod 'IQKeyboardManagerSwift'
+  #Image picker for chat
+  pod 'TLPhotoPicker'
+  #Reverse table view
+  pod 'ReverseExtension'
 end

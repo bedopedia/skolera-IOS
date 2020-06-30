@@ -129,8 +129,8 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.assignments = result.map({ FullAssignment($0) })
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     if self.selectedSegment == 0 {
                         self.setOpenedAssignments()
                     }
@@ -173,7 +173,7 @@ class AssignmentsViewController: UIViewController, UITableViewDelegate, UITableV
                             assignmentDetailsVC.assignment = assignment
                             self.navigationController?.pushViewController(assignmentDetailsVC, animated: true)
                         } else {
-                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertControllerStyle.alert)
+                            let alert = UIAlertController(title: "Skolera", message: "No content available".localized, preferredStyle: UIAlertController.Style.alert)
                             alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
                             alert.modalPresentationStyle = .fullScreen
                             self.present(alert, animated: true, completion: nil)

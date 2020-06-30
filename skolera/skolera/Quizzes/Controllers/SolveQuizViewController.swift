@@ -114,12 +114,12 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
             isTimerRunning = true
             runTimer()
         }
-        NotificationCenter.default.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: nil) { (notification) in
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { (notification) in
             debugPrint("Background mode")
             UserDefaults.standard.set(Date().second, forKey: "timerDuration")
         }
         
-        NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: nil) { (notification) in
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { (notification) in
             if let timerDuration = UserDefaults.standard.string(forKey: "timerDuration") {
                 self.duration -= ( Date().second - Int(timerDuration)! )
                 debugPrint("Background time is:", Date().second - Int(timerDuration)!)
@@ -134,7 +134,7 @@ class SolveQuizViewController: UIViewController, NVActivityIndicatorViewable {
                                      selector: (#selector(self.updateTimer)),
                                      userInfo: nil,
                                      repeats: true)
-        RunLoop.current.add(timer, forMode: .commonModes)
+        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
         timer.tolerance = 0.1
     }
     

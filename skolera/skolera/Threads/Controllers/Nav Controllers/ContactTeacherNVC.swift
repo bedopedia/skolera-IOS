@@ -12,7 +12,7 @@ class ContactTeacherNVC: UINavigationController {
 
     var student: Actor! {
         didSet {
-            for child in childViewControllers {
+            for child in children {
                 if let contactTeacher = child as? ContactTeacherViewController {
                     contactTeacher.child = self.student
                     updateTabBarItem(tab: .messages, tabBarItem: tabBarItem)

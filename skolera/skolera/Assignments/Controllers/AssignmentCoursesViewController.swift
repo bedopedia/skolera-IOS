@@ -63,8 +63,8 @@ class AssignmentCoursesViewController: UIViewController, UITableViewDelegate, UI
                     debugPrint(result)
                     let assignmentCourses: [AssignmentCourse] = result.map({ AssignmentCourse($0) })
                     self.courses = assignmentCourses
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.tableView.reloadData()
                 }
             } else {

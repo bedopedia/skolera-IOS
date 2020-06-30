@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Firebase
 import UserNotifications
-import IQKeyboardManager
+import IQKeyboardManagerSwift
 import FirebaseMessaging
 
 @UIApplicationMain
@@ -18,11 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
-        IQKeyboardManager.shared().isEnableAutoToolbar = false
-        IQKeyboardManager.shared().shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 30
+        
+//        IQKeyboardManager.shared().isEnableAutoToolbar = false
+//        IQKeyboardManager.shared().shouldResignOnTouchOutside = true
         
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)

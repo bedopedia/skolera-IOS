@@ -268,8 +268,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
                 } else {
                     self.disableTimeTable = true
                 }
-                self.tableView.rowHeight = UITableViewAutomaticDimension
-                self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.estimatedRowHeight = UITableView.automaticDimension
 //                self.tableView.reloadData()
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)

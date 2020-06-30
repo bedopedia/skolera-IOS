@@ -95,7 +95,7 @@ class SettingsTableTableViewController: UITableViewController {
     }
     
     func showChangeLanguageConfirmation(language: Language){
-        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
             Language.language = language
             exit(0);

@@ -26,7 +26,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self as? UIGestureRecognizerDelegate
         let userType = getUserType()
-        let fontAttributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 10.0), NSAttributedStringKey.backgroundColor: UIColor.black]
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10.0), NSAttributedString.Key.backgroundColor: UIColor.black]
         UIBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
         tabBar.unselectedItemTintColor = .black
         tabBar.itemPositioning = .centered
@@ -172,7 +172,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
                 redDot.tag = tag
                 redDot.backgroundColor = getMainColor()
                 redDot.layer.cornerRadius = RedDotRadius
-                redDot.bringSubview(toFront: self.view)
+                redDot.bringSubviewToFront(self.view)
                 
                 tabBar.addSubview(redDot)
                 
@@ -229,7 +229,7 @@ class TabBarViewController: UITabBarController, NVActivityIndicatorViewable {
     }
     
     func showChangeLanguageConfirmation(language: Language){
-        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Restart Required".localized, message: "This requires restarting the Application.\nAre you sure you want to close the app now?".localized, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "YES".localized, style: .default, handler: { action in
             Language.language = language
             exit(0);

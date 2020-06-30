@@ -58,8 +58,8 @@ class AssignmentGradesViewController: UIViewController, NVActivityIndicatorViewa
                 if let result = value as? [[String: Any]] {
                     debugPrint(result)
                     self.submissions = result.map { AssignmentStudentSubmission($0) }
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.tableView.reloadData()
                 }
             } else {

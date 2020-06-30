@@ -302,7 +302,7 @@
                                         </constraints>
                                         <state key="normal" image="chevronLeft"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Announcement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7F6-0I-uY4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7F6-0I-uY4">
                                         <rect key="frame" x="77.5" y="18" width="220" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="220" id="Arg-A4-lii"/>
@@ -357,7 +357,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yig-zU-WPo" userLabel="ChatView">
                                 <rect key="frame" x="0.0" y="60" width="375" height="557"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="skA-wP-fq8">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="skA-wP-fq8">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="557"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
@@ -381,6 +381,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.066666666666666666" green="0.87058823529411766" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="btnSend"/>
+                                        <connections>
+                                            <action selector="sendMessage" destination="q8x-FT-0MF" eventType="touchUpInside" id="n9x-fZ-hCG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUB-jr-S0m">
                                         <rect key="frame" x="278" y="14" width="21" height="22"/>
@@ -389,6 +392,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.066666666669999999" green="0.87058823529999996" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="btnAttach"/>
+                                        <connections>
+                                            <action selector="addAttachment" destination="q8x-FT-0MF" eventType="touchUpInside" id="344-Rc-rnZ"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your messages" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vVo-XK-T0y">
                                         <rect key="frame" x="24" y="14.5" width="246" height="21"/>
@@ -431,6 +437,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C8W-Y9-FaW"/>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="gTs-uL-ej1" id="e43-zR-d6n"/>
+                        <outlet property="chatTableView" destination="skA-wP-fq8" id="gF3-DZ-GlM"/>
+                        <outlet property="messageTextField" destination="vVo-XK-T0y" id="b1x-19-Jss"/>
+                        <outlet property="nameLabel" destination="7F6-0I-uY4" id="pBy-KA-PJ8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iz2-IK-Mjg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

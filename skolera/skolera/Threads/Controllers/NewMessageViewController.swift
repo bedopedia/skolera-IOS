@@ -118,13 +118,15 @@ class NewMessageViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if showTeachers {
+//            let chatVC = OldChatViewController.instantiate(fromAppStoryboard: .Threads)
+//            let dataSource = DemoChatDataSource(messages: [], pageSize: 50)
+//            chatVC.dataSource = dataSource
+//            chatVC.chatName = "New Message".localized
+//            chatVC.courseId = self.subjects[selectedCoursePos].courseId
+//            chatVC.teacherId = self.subjects[selectedCoursePos].teachers[indexPath.row].actableId
+//            chatVC.newThread = true
             let chatVC = ChatViewController.instantiate(fromAppStoryboard: .Threads)
-            let dataSource = DemoChatDataSource(messages: [], pageSize: 50)
-            chatVC.dataSource = dataSource
-            chatVC.chatName = "New Message".localized
-            chatVC.courseId = self.subjects[selectedCoursePos].courseId
-            chatVC.teacherId = self.subjects[selectedCoursePos].teachers[indexPath.row].actableId
-            chatVC.newThread = true
+            //chatVC.messages = ChatMessage.init(<#T##dic: [String : Any]##[String : Any]#>)
             self.navigationController?.isNavigationBarHidden = false
             self.navigationController?.navigationController?.pushViewController(chatVC, animated: true)
         } else {

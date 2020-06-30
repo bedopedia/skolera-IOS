@@ -34,7 +34,7 @@ extension UIImageView {
 extension UIImage {
     public func flippedImage() -> UIImage?{
         if let _cgImag = self.cgImage {
-            let flippedimg = UIImage(cgImage: _cgImag, scale:self.scale , orientation: UIImageOrientation.upMirrored)
+            let flippedimg = UIImage(cgImage: _cgImag, scale:self.scale , orientation: UIImage.Orientation.upMirrored)
             return flippedimg
         }
         return nil

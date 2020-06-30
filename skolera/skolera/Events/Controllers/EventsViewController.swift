@@ -132,8 +132,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                         }
                     }
                     self.cVCalendarView.contentController.refreshPresentedMonth()
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.tableView.reloadData()
                 }
             } else {

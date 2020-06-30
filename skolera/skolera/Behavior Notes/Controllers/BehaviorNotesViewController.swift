@@ -166,8 +166,8 @@ extension BehaviorNotesViewController: UITableViewDelegate, UITableViewDataSourc
                 if let result = value as? [String : AnyObject] {
                     let behaviorNotesResponse = BehaviorNotesResponse.init(fromDictionary: result)
                     self.behaviorNotes = behaviorNotesResponse.behaviorNotes
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.statusSegmentControl.removeAllSegments()
                     if self.positiveNotes.count > 0 {
                         self.loadPositiveNotes()

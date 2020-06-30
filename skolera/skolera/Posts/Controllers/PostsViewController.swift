@@ -55,8 +55,8 @@ class PostsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
                     self.courses = result.map({ PostCourse($0) })
-                    self.tableView.rowHeight = UITableViewAutomaticDimension
-                    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+                    self.tableView.rowHeight = UITableView.automaticDimension
+                    self.tableView.estimatedRowHeight = UITableView.automaticDimension
                     self.tableView.reloadData()
                 }
             } else {

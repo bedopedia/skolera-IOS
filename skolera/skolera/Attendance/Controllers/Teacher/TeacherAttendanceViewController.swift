@@ -324,7 +324,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             print("User click present button")
             self.submitBatchAttendance(status: "present")
         })
-        presentAction.setValue(presentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        presentAction.setValue(presentImage.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
         presentAction.setValue(#colorLiteral(red: 0.4, green: 0.7333333333, blue: 0.4156862745, alpha: 1), forKey: "titleTextColor")
         alert.addAction(presentAction)
         
@@ -333,7 +333,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             print("User click late button")
             self.submitBatchAttendance(status: "late")
         })
-        lateAction.setValue(lateImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        lateAction.setValue(lateImage.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
         lateAction.setValue(#colorLiteral(red: 0.9843137255, green: 0.7529411765, blue: 0.1764705882, alpha: 1), forKey: "titleTextColor")
         alert.addAction(lateAction)
         
@@ -342,7 +342,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
             print("User click absent button")
             self.submitBatchAttendance(status: "absent")
         })
-        absentAction.setValue(absentImage.withRenderingMode(UIImageRenderingMode.alwaysOriginal), forKey: "image")
+        absentAction.setValue(absentImage.withRenderingMode(UIImage.RenderingMode.alwaysOriginal), forKey: "image")
         absentAction.setValue(#colorLiteral(red: 0.9921568627, green: 0.5098039216, blue: 0.4078431373, alpha: 1), forKey: "titleTextColor")
         alert.addAction(absentAction)
         

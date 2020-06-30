@@ -24,7 +24,7 @@ class QuizDetailsViewController: UIViewController, NVActivityIndicatorViewable {
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         titleLabel.text = self.detailedQuiz.name ?? ""
     }
     
