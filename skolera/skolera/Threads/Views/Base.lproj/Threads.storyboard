@@ -301,6 +301,9 @@
                                             <constraint firstAttribute="width" constant="30" id="kjT-hN-EmR"/>
                                         </constraints>
                                         <state key="normal" image="chevronLeft"/>
+                                        <connections>
+                                            <action selector="back" destination="q8x-FT-0MF" eventType="touchUpInside" id="04i-aw-I0A"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7F6-0I-uY4">
                                         <rect key="frame" x="77.5" y="18" width="220" height="24"/>
@@ -398,7 +401,7 @@
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your messages" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vVo-XK-T0y">
                                         <rect key="frame" x="24" y="14.5" width="246" height="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                         <userDefinedRuntimeAttributes>
@@ -440,6 +443,7 @@
                     <connections>
                         <outlet property="backButton" destination="gTs-uL-ej1" id="e43-zR-d6n"/>
                         <outlet property="chatTableView" destination="skA-wP-fq8" id="gF3-DZ-GlM"/>
+                        <outlet property="headerTopConstraint" destination="fTE-yD-jQ9" id="nHV-L5-QyL"/>
                         <outlet property="messageTextField" destination="vVo-XK-T0y" id="b1x-19-Jss"/>
                         <outlet property="nameLabel" destination="7F6-0I-uY4" id="pBy-KA-PJ8"/>
                     </connections>
