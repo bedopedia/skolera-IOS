@@ -28,12 +28,9 @@ class NotificationTableViewCell: UITableViewCell {
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = dateFormatter.date(from: notification.createdAt)!
-            //showing date
-//            dateFormatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            dateFormatter.doesRelativeDateFormatting = false
-            dateTimeLabel.text = dateFormatter.string(from: date)
+            let newDateFormat = DateFormatter()
+            newDateFormat.dateFormat = "dd MMM yyyy"
+            dateTimeLabel.text = newDateFormat.string(from: date)
         }
     }
     //MARK: -Life Cycle

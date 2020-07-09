@@ -169,25 +169,10 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
             let date = dateFormatter.date(from: self.threads[indexPath.row].lastAddedDate)!
-            if Calendar.current.isDateInToday(date){
-                
-                if Locale.current.languageCode!.elementsEqual("ar") {
-                    cell.threadDate.text = "اليوم"
-                } else {
-                    cell.threadDate.text = "Today"
-                }
-            } else if Calendar.current.isDateInYesterday(date){
-                if Locale.current.languageCode!.elementsEqual("ar") {
-                    cell.threadDate.text = "الامس"
-                } else {
-                    cell.threadDate.text = "Yesterday"
-                }
-            } else {
                 let formatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en")
                 formatter.dateFormat = "dd/MM/yyyy"
                 cell.threadDate.text = formatter.string(from: date)
-            }
         }
         return cell
     }
