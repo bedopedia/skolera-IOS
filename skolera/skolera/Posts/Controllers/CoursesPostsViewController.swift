@@ -61,8 +61,9 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         refreshData()
+        super.viewDidAppear(animated)
+        
     }
     
     @IBAction func back(){
