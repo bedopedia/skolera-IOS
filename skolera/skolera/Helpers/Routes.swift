@@ -124,7 +124,7 @@ func SET_THREAD_IS_SEEN() -> String{
 //Announcements
 func GET_ANNOUNCEMENTS() -> String {
     if getUserType() == .admin {
-        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true)"
+        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true"
     }
     else {
         return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
