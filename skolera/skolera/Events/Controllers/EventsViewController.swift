@@ -98,17 +98,17 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             tableViewBottomConstaint.constant = 66
         }
         self.tableView.showAnimatedSkeleton()
-        getEvents()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.tableView.showAnimatedSkeleton()
+    override func viewWillAppear(_ animated: Bool) {
         getEvents()
     }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         commitCalendarViews(calendarView: cVCalendarView, menuView: menuView)
     }
+    
     func getEvents() {
         getEventsAPI(userId: child.id, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
