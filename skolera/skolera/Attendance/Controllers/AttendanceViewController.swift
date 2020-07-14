@@ -79,7 +79,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         self.calendarView.calendarDelegate = self
 //        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
         currentCalendar = Calendar.init(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone.current
+        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
         setUpAttendances()
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
     }
@@ -96,7 +96,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     func setUpAttendances() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
-        formatter.timeZone = .current
+        formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
         for attendance in self.child.attendances {
             let dateString = formatter.string(from: attendance.date)
             if let priorAttendances = attendancesDict[dateString] {
