@@ -110,7 +110,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     }
     
     func getEvents() {
-        getEventsAPI(userId: child.id, startDate: "", endDate: "") { (isSuccess, statusCode, value, error) in
+        getEventsAPI(userId: child.id, startDate: "2010-01-01T00:00:00Z", endDate: "2050-12-31T00:00:00Z") { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
