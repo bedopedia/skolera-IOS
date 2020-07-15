@@ -1055,6 +1055,9 @@ attachment.</string>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="vQW-Gv-s2c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DLm-jw-B2Q"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="i3B-p2-qpb" id="p4y-x9-Zi7"/>
@@ -1631,23 +1634,23 @@ attachment.</string>
                                 <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Reply" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0TN-iF-Khd">
-                                        <rect key="frame" x="16" y="5" width="340" height="34"/>
+                                        <rect key="frame" x="16" y="5" width="331" height="34"/>
                                         <color key="textColor" red="0.31962397694587708" green="0.37985637784004211" blue="0.42162775993347168" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="send"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noU-gc-GU7">
-                                        <rect key="frame" x="372" y="9" width="26" height="26"/>
+                                        <rect key="frame" x="363" y="4.5" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.99311953783035278" green="0.50812733173370361" blue="0.40747183561325073" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="Eat-et-RtB"/>
-                                            <constraint firstAttribute="width" constant="26" id="b23-tb-WPq"/>
+                                            <constraint firstAttribute="height" constant="35" id="Eat-et-RtB"/>
+                                            <constraint firstAttribute="width" constant="35" id="b23-tb-WPq"/>
                                         </constraints>
                                         <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="send"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="13"/>
+                                                <real key="value" value="17.5"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>

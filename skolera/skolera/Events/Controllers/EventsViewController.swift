@@ -87,10 +87,10 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         
         // Calendar delegate [Required]
         self.cVCalendarView.calendarDelegate = self
-        
-        //        self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
+       
+       // self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
         currentCalendar = Calendar.init(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone.current
+        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
         updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
         if getUserType() == .parent {
             tableViewBottomConstaint.constant = 0
@@ -98,19 +98,19 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             tableViewBottomConstaint.constant = 66
         }
         self.tableView.showAnimatedSkeleton()
-        getEvents()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.tableView.showAnimatedSkeleton()
+    override func viewWillAppear(_ animated: Bool) {
         getEvents()
     }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         commitCalendarViews(calendarView: cVCalendarView, menuView: menuView)
     }
+    
     func getEvents() {
-        getEventsAPI(userId: child.id, startDate: "2010-03-04T00:00:00.000Z", endDate: "2030-03-04T00:00:00.000Z") { (isSuccess, statusCode, value, error) in
+        getEventsAPI(userId: child.id, startDate: "2010-01-01T00:00:00Z", endDate: "2050-12-31T00:00:00Z") { (isSuccess, statusCode, value, error) in
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
@@ -146,10 +146,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         eventsDict = [:]
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
-        formatter.timeZone = .current
+        formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let region = Region(calendar: Calendars.gregorian, zone: Zones.current, locale: Locales.english)
+        dateFormatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
+        let region = Region(calendar: Calendars.gregorian, locale: Locales.english)
         for event in self.events {
             if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toISODate(),
                 let end = event.endDate.toISODate() {

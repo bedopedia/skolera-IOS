@@ -25,9 +25,9 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
     
     var courseGroupId: Int!
     var timeTableSlots: [TimetableSlots]!
-    var day = Date().day
-    var month = Date().month
-    var year = Date().year
+    var day = ""
+    var month = ""
+    var year = ""
     var isFullDay: Bool!
     var selectedSlot: TimetableSlots!
     var selectedStudents: [Int] = [] {
@@ -63,11 +63,11 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         selectedStudents = []
         currentStudents = []
         
-        day = Date().day
-        month = Date().month
-        year = Date().year
+        day = getTodayDay()
+        month = getTodayMonth()
+        year = getTodayYear()
         isFullDay = true
-        leftLabel.text = "\(getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
+        leftLabel.text = "\(getTodayName().capitalizingFirstLetter().localized) \(day)"
         studentsMap = [:]
         self.tableView.rowHeight = 124
         self.tableView.estimatedRowHeight = 124
@@ -120,7 +120,7 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
                     return attendance.studentId == student.childId
                 })
                 self.highlightFullDayUi()
-                self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter().localized) \(Date().day)"
+                self.leftLabel.text = "\(self.getTodayName().capitalizingFirstLetter().localized) \(day)"
                 self.calendarImageView.isHidden = false
             }
         } else {
@@ -150,9 +150,38 @@ class TeacherAttendanceViewController: UIViewController, NVActivityIndicatorView
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en")
         formatter.dateFormat = "EEEE"
+        formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
         let dayInWeek = formatter.string(from: Date())
         return dayInWeek
     }
+    
+    private func getTodayMonth() -> String {
+          let formatter = DateFormatter()
+          formatter.locale = Locale(identifier: "en")
+          formatter.dateFormat = "MM"
+          formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
+          let month = formatter.string(from: Date())
+          return month
+      }
+    
+    private func getTodayDay() -> String {
+           let formatter = DateFormatter()
+           formatter.locale = Locale(identifier: "en")
+           formatter.dateFormat = "dd"
+           formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
+           let day = formatter.string(from: Date())
+           return day
+       }
+    
+    private func getTodayYear() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en")
+        formatter.dateFormat = "yyyy"
+        formatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
+        let year = formatter.string(from: Date())
+        return year
+    }
+     
     
     func presentSlotsViewController() {
         if self.timeTableSlots.contains(where: {$0.day.elementsEqual(self.getTodayName().lowercased())}) {

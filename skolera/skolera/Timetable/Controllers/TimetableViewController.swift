@@ -30,7 +30,9 @@ class TimetableViewController: UIViewController, EventDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
+        
+        today = Date().convertTimeZone(from: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, to: TimeZone.init(identifier: "UTC")!)
+        debugPrint("TODAY: ", today)
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
@@ -98,6 +100,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         formatter.locale = Locale(identifier: "en")
         formatter.dateFormat = "EEEE"
         let dayInWeek = formatter.string(from: today)
+        debugPrint("Today name: " , dayInWeek)
         return dayInWeek
     }
     
@@ -121,7 +124,9 @@ class TimetableViewController: UIViewController, EventDataSource{
             for timeslot in slots {
                 let event = Event()
                 event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today) + 1)))
+                debugPrint("Start Date: ", event.startDate)
                 event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today) + 1)))
+                debugPrint("End Date: ",  timeslot.courseName)
                 event.attributedText = getAttributedString(text: timeslot.courseName)
                 event.color = UIColor.appColors.timeSlotsColors[randomIndex]
                 randomIndex += 1

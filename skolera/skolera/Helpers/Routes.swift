@@ -124,7 +124,7 @@ func SET_THREAD_IS_SEEN() -> String{
 //Announcements
 func GET_ANNOUNCEMENTS() -> String {
     if getUserType() == .admin {
-        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true)"
+        return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true"
     }
     else {
         return "\(BASE_URL!)/api/announcements?page=%u&per_page=%u&running_announcement=true&user_type=\(getUserType())"
@@ -206,7 +206,7 @@ func SUBMIT_STUDENT_QUIZ_GRADE_URL() -> String {
 }
 
 func GET_STUDENT_EVENTS(uid: Int, startDate: String, endDate: String) -> String {
-    return "\(BASE_URL!)/api/events?by_subscriber%5Bsubscriber_id%5D=\(uid)&by_subscriber%5Bsubscriber_type%5D=user&start_date_between%5Bend_date%5D=\(endDate)&start_date_between%5Bstart_date%5D=\(startDate)"
+    return "\(BASE_URL!)/api/events?by_subscriber%5Bsubscriber_id%5D=\(uid)&by_subscriber%5Bsubscriber_type%5D=user&event_is_between%5Bend_date%5D=\(endDate)&event_is_between%5Bstart_date%5D=\(startDate)"
 }
 
 func CREATE_STUDENT_EVENTS() -> String {

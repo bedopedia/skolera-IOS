@@ -111,16 +111,13 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
 
 extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if didLoad {
             return announcements.count
-        } else {
-            return 8
-        }
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnouncementTableViewCell", for: indexPath) as! AnnouncementTableViewCell
-        if didLoad {
+   
             cell.hideSkeleton()
             let announcement = announcements[indexPath.row]
             cell.announcement = announcement
@@ -130,7 +127,7 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
                     getAnnouncements(page: (meta?.currentPage)! + 1)
                 }
             }
-        }
+        
         return cell
     }
     

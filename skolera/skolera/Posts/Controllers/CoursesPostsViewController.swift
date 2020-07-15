@@ -24,7 +24,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     var courseName: String = ""
     var courseId: Int = 0
     var courseGroup: CourseGroup!
-    var posts: [Post]!
+    var posts: [Post] = []
     var meta: Meta!
     var isTeacher: Bool = false
     private let refreshControl = UIRefreshControl()
@@ -58,13 +58,12 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         fixSkeletonHeight()
         tableView.showAnimatedSkeleton()
-        refreshData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tableView.showAnimatedSkeleton()
         refreshData()
+        super.viewDidAppear(animated)
+        
     }
     
     @IBAction func back(){
@@ -80,6 +79,8 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
     
     @objc private func refreshData() {
         didLoad = false
+        self.posts = []
+        tableView.reloadData()
         tableView.showAnimatedSkeleton()
         getPosts()
         refreshControl.endRefreshing()
@@ -99,7 +100,6 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         }
         getPostsForCourseApi(page: 1,courseId: id) { (isSuccess, statusCode, value, error) in
             self.didLoad = true
-            self.posts = []
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
@@ -112,24 +112,20 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
-            handleEmptyDate(tableView: self.tableView, dataSource: self.posts ?? [], imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
+            handleEmptyDate(tableView: self.tableView, dataSource: self.posts , imageName: "postsplaceholder", placeholderText: "You don't have any posts for now".localized)
         }
         
     }
     
 //    MARK: -Table view
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if didLoad {
             return posts.count
-        } else {
-            return 6
-        }
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
-        if didLoad {
             cell.hideSkeleton()
             cell.postImageView.image = nil
             cell.attachmentView.isHidden = false
@@ -140,7 +136,7 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                        filesVC.courseName = self.courseName
                        filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
                        self.navigationController?.pushViewController(filesVC, animated: true)
-                   }
+
         }
        
         return cell
