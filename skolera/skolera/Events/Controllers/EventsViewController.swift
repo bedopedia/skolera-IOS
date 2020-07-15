@@ -73,6 +73,8 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         tableView.rowHeight = 80
         tableView.delegate = self
         tableView.dataSource = self
+        currentCalendar = Calendar.init(identifier: .gregorian)
+        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
         //        tableView.refreshControl = refreshControl
         //        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
@@ -87,10 +89,10 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         
         // Calendar delegate [Required]
         self.cVCalendarView.calendarDelegate = self
+        
        
        // self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
-        currentCalendar = Calendar.init(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
+        
         updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
         if getUserType() == .parent {
             tableViewBottomConstaint.constant = 0
@@ -320,6 +322,10 @@ extension EventsViewController {
         dateFormatter.locale = Locale(identifier: "en")
         dateFormatter.dateFormat = "yyyy/MM/dd"
         return dateFormatter.string(from: dayView.date.convertedDate()!)
+    }
+    
+    func calendar() -> Calendar? {
+        return currentCalendar
     }
 }
 //MARK: - Calendar appearance delegate

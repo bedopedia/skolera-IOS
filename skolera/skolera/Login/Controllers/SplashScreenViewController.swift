@@ -56,8 +56,9 @@ class SplashScreenViewController: UIViewController {
         } else {
             locale = "en"
         }
-        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, error) in
+        setLocaleAPI(locale, token: self.token, deviceId: UIDevice.current.identifierForVendor!.uuidString) { (isSuccess, statusCode, result, headers, error)  in
             if isSuccess {
+                self.userDefault.set(headers[TIMEZONE] as! String, forKey: TIMEZONE)
                 if isParent() {
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     childrenTVC.kids = parent.children

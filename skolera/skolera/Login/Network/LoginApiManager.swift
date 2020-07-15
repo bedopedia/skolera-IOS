@@ -31,16 +31,16 @@ func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int,
     }
 }
 
-func setLocaleAPI(_ locale: String, token: String, deviceId: String, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func setLocaleAPI(_ locale: String, token: String, deviceId: String, completion: @escaping ((Bool, Int, Any?, [AnyHashable: Any], Error?) -> ())) {
     let parameters: Parameters = ["user": ["language": locale, "fcm_token": token, "device_id": deviceId]]
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: EDIT_USER(), userId())
     Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
-            completion(true, response.response?.statusCode ?? 0,response.result.value, nil)
+            completion(true, response.response?.statusCode ?? 0,response.result.value, response.response?.allHeaderFields ?? [:], nil)
         case .failure(let error):
-            completion(false, response.response?.statusCode ?? 0, nil, error)
+            completion(false, response.response?.statusCode ?? 0, nil, [:], error)
         }
     }
 }
