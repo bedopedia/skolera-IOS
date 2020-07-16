@@ -31,7 +31,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         
-        today = Date().convertTimeZone(from: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, to: TimeZone.init(identifier: "UTC")!)
+        today = Date()
         debugPrint("TODAY: ", today)
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
@@ -123,10 +123,10 @@ class TimetableViewController: UIViewController, EventDataSource{
             var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))
             for timeslot in slots {
                 let event = Event()
-                event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today) + 1)))
+                event.startDate = timeslot.from.dateBySet([.year: today.dateComponents.year ?? 0, .month: today.dateComponents.month ?? 0, .day: today.dateComponents.day ?? 0]) ?? Date()
                 debugPrint("Start Date: ", event.startDate)
-                event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today) + 1)))
-                debugPrint("End Date: ",  timeslot.courseName)
+                event.endDate = timeslot.to.dateBySet([.year: 2020, .month: 7, .day: 16]) ?? Date()
+                debugPrint("End Date: ",  event.endDate)
                 event.attributedText = getAttributedString(text: timeslot.courseName)
                 event.color = UIColor.appColors.timeSlotsColors[randomIndex]
                 randomIndex += 1
@@ -147,8 +147,8 @@ class TimetableViewController: UIViewController, EventDataSource{
             for timeslot in slots
             {
                 let event = Event()
-                event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today) + 2)))
-                event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today) + 2)))
+                event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today))))
+                event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today))))
                 event.attributedText = getAttributedString(text: timeslot.courseName)
                 //random index to start from
                 var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))

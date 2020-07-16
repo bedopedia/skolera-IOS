@@ -23,27 +23,31 @@ class TimeSlot : NSObject, NSCoding{
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
+        debugPrint(dictionary)
         courseName = dictionary["course_name"] as? String
         day = dictionary["day"] as? String
-        // change date format to just time format
-        let dateFormatterFrom = DateFormatter()
-        dateFormatterFrom.locale = Locale(identifier: "en")
-        dateFormatterFrom.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateFrom = dateFormatterFrom.date(from: (dictionary["from"] as? String)!)!
-        let dateTo = dateFormatterFrom.date(from: (dictionary["to"] as? String)!)!
-        dateFormatterFrom.dateFormat = "HH:mm:ss"
-        let dateStringfrom = dateFormatterFrom.string(from: dateFrom)
-        let dateStringTo = dateFormatterFrom.string(from: dateTo)
-        
-        let dateFormatterTo = DateFormatter()
-        dateFormatterTo.locale = Locale(identifier: "en")
-        dateFormatterTo.dateFormat = "HH:mm:ss"
-        from = dateFormatterTo.date(from: dateStringfrom)!
-        to = dateFormatterTo.date(from: dateStringTo)!
-        
         id = dictionary["id"] as? Int
         schoolUnit = dictionary["school_unit"] as? String
         slotNo = dictionary["slot_no"] as? Int
+        guard let fromDateString = dictionary["from"] as? String, let toDateString = dictionary["to"] as? String else { return }
+        from = fromDateString.toDate("yyyy-MM-dd HH:mm:ss")?.date
+        to = toDateString.toDate("yyyy-MM-dd HH:mm:ss")?.date
+//        let dateFormatterFrom = DateFormatter()
+//        dateFormatterFrom.locale = Locale(identifier: "en")
+//        dateFormatterFrom.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        let dateFrom = dateFormatterFrom.date(from: (dictionary["from"] as? String)!)!
+//        let dateTo = dateFormatterFrom.date(from: (dictionary["to"] as? String)!)!
+//        dateFormatterFrom.dateFormat = "HH:mm:ss"
+//        let dateStringfrom = dateFormatterFrom.string(from: dateFrom)
+//        let dateStringTo = dateFormatterFrom.string(from: dateTo)
+//
+//        let dateFormatterTo = DateFormatter()
+//        dateFormatterTo.locale = Locale(identifier: "en")
+//        dateFormatterTo.dateFormat = "HH:mm:ss"
+//        from = dateFormatterTo.date(from: dateStringfrom)!
+//        to = dateFormatterTo.date(from: dateStringTo)!
+        
+        
     }
     
     /**

@@ -66,6 +66,8 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         offDays.insert(.saturday)
         tableView.delegate = self
         tableView.dataSource = self
+        currentCalendar = Calendar.init(identifier: .gregorian)
+        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         }
@@ -78,8 +80,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         // Calendar delegate [Required]
         self.calendarView.calendarDelegate = self
 //        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
-        currentCalendar = Calendar.init(identifier: .gregorian)
-        currentCalendar?.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!
+        
         setUpAttendances()
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
     }
@@ -282,6 +283,10 @@ extension AttendanceViewController {
     }
     func shouldScrollOnOutDayViewSelection() -> Bool {
         false
+    }
+    
+    func calendar() -> Calendar? {
+        return currentCalendar
     }
 
 }

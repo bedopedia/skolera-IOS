@@ -234,7 +234,6 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             self.getWeeklyPlanner()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]], result.count > 0 {
-                    debugPrint(value)
                     self.timeslots = []
                     for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
