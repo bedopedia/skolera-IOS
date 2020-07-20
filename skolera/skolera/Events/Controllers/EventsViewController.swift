@@ -152,12 +152,11 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)
-        let region = Region(calendar: Calendars.gregorian, locale: Locales.english)
         for event in self.events {
-            if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toISODate(),
-                let end = event.endDate.toISODate() {
-                let difference = end.convertTo(region: region).day - start.convertTo(region: region).day
-                for index in 0...difference {
+            if let startDate = dateFormatter.date(from: event.startDate), let _ = dateFormatter.date(from: event.endDate), let start = event.startDate.toDate("yyyy-MM-dd HH:mm:ss", region: .current)?.date,
+                let end = event.endDate.toDate("yyyy-MM-dd HH:mm:ss", region: .current)?.date {
+                let difference = Calendar.current.dateComponents([.day], from: start, to: end)
+                for index in 0...(difference.day ?? 0) {
                     let daysOffset = startDate.add(.init(seconds: 0, minutes: 0, hours: 0, days: index, weeks: 0, months: 0, years: 0))
                     let dateString = formatter.string(from: daysOffset)
                     if let priorEvents = eventsDict[dateString] {

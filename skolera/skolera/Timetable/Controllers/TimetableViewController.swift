@@ -125,7 +125,7 @@ class TimetableViewController: UIViewController, EventDataSource{
                 let event = Event()
                 event.startDate = timeslot.from.dateBySet([.year: today.dateComponents.year ?? 0, .month: today.dateComponents.month ?? 0, .day: today.dateComponents.day ?? 0]) ?? Date()
                 debugPrint("Start Date: ", event.startDate)
-                event.endDate = timeslot.to.dateBySet([.year: 2020, .month: 7, .day: 16]) ?? Date()
+                event.endDate = timeslot.to.dateBySet([.year: today.dateComponents.year ?? 0, .month: today.dateComponents.month ?? 0, .day: today.dateComponents.day ?? 0]) ?? Date()
                 debugPrint("End Date: ",  event.endDate)
                 event.attributedText = getAttributedString(text: timeslot.courseName)
                 event.color = UIColor.appColors.timeSlotsColors[randomIndex]
@@ -147,8 +147,8 @@ class TimetableViewController: UIViewController, EventDataSource{
             for timeslot in slots
             {
                 let event = Event()
-                event.startDate = timeslot.from.add(TimeChunk.dateComponents(days:(timeslot.from.daysEarlier(than: today))))
-                event.endDate = timeslot.to.add(TimeChunk.dateComponents(days:(timeslot.to.daysEarlier(than: today))))
+                event.startDate = timeslot.from.dateBySet([.year: tomorrow.dateComponents.year ?? 0, .month: tomorrow.dateComponents.month ?? 0, .day: tomorrow.dateComponents.day ?? 0]) ?? Date()
+                event.endDate = timeslot.to.dateBySet([.year: tomorrow.dateComponents.year ?? 0, .month: tomorrow.dateComponents.month ?? 0, .day: tomorrow.dateComponents.day ?? 0]) ?? Date()
                 event.attributedText = getAttributedString(text: timeslot.courseName)
                 //random index to start from
                 var randomIndex = Int(arc4random_uniform(UInt32(UIColor.appColors.timeSlotsColors.count)))

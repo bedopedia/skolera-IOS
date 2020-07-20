@@ -30,8 +30,8 @@ class TimeSlot : NSObject, NSCoding{
         schoolUnit = dictionary["school_unit"] as? String
         slotNo = dictionary["slot_no"] as? Int
         guard let fromDateString = dictionary["from"] as? String, let toDateString = dictionary["to"] as? String else { return }
-        from = fromDateString.toDate("yyyy-MM-dd HH:mm:ss")?.date
-        to = toDateString.toDate("yyyy-MM-dd HH:mm:ss")?.date
+        from = fromDateString.toDate("yyyy-MM-dd HH:mm:ss", region: .current)?.date
+        to = toDateString.toDate("yyyy-MM-dd HH:mm:ss", region: .current)?.date
 //        let dateFormatterFrom = DateFormatter()
 //        dateFormatterFrom.locale = Locale(identifier: "en")
 //        dateFormatterFrom.dateFormat = "yyyy-MM-dd HH:mm:ss"
