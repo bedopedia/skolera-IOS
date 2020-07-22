@@ -28,6 +28,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet var separatorView: UIView!
     
     var openAttachment: (() -> ())!
+    var clickedOnCard: (() -> ())!
+    
     var post: Post! {
         didSet {
             if post != nil {
@@ -118,5 +120,10 @@ class PostTableViewCell: UITableViewCell {
     @IBAction func openAttachments() {
         openAttachment()
     }
+    
+    @IBAction func cardClicked(){
+        clickedOnCard()
+    }
+    
 
 }

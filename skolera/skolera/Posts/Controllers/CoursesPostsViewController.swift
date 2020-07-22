@@ -60,11 +60,15 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.showAnimatedSkeleton()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         refreshData()
-        super.viewDidAppear(animated)
-        
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        refreshData()
+//        super.viewDidAppear(animated)
+//        
+//    }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
@@ -137,6 +141,13 @@ class CoursesPostsViewController: UIViewController, UITableViewDelegate, UITable
                        filesVC.attachments = self.posts[indexPath.row].uploadedFiles ?? []
                        self.navigationController?.pushViewController(filesVC, animated: true)
 
+        }
+        cell.clickedOnCard = {
+            let postVC = PostDetailsViewController.instantiate(fromAppStoryboard: .Posts)
+            postVC.child = self.child
+            postVC.courseName = self.courseName
+            postVC.post = self.posts[indexPath.row]
+            self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
         }
        
         return cell

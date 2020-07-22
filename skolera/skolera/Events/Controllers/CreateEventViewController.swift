@@ -65,7 +65,6 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.locale = Locale(identifier: "en")
         whenDateTextField.text = dateFormatter.string(from: sender.date)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
         dateFormatter.locale = Locale(identifier: "en")
         whenISODate = dateFormatter.string(from: sender.date)
         update(fields: [whenDateTextField], with: .editing)
@@ -77,7 +76,6 @@ class CreateEventViewController: UIViewController, NVActivityIndicatorViewable {
         dateFormatter.locale = Locale(identifier: "en")
         toDateTextField.text = dateFormatter.string(from: sender.date)
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone.init(identifier: "UTC")
         dateFormatter.locale = Locale(identifier: "en")
         toISODate = dateFormatter.string(from: sender.date)
         update(fields: [toDateTextField], with: .editing)

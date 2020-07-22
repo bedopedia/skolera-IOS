@@ -852,6 +852,13 @@ attachment.</string>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaE-q9-87L">
+                                                            <rect key="frame" x="172" y="108" width="46" height="30"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <connections>
+                                                                <action selector="cardClicked" destination="4e5-kk-VsO" eventType="touchUpInside" id="Yqn-Aa-SMr"/>
+                                                            </connections>
+                                                        </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Eg-bb-vtV">
                                                             <rect key="frame" x="0.0" y="178" width="390" height="1"/>
                                                             <color key="backgroundColor" red="0.91873669619999998" green="0.92898041009999999" blue="0.95237499479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -882,6 +889,7 @@ attachment.</string>
                                                         <constraint firstItem="8Eg-bb-vtV" firstAttribute="centerX" secondItem="TE2-rl-pID" secondAttribute="centerX" id="4Yk-tu-QdB"/>
                                                         <constraint firstItem="0j0-Tc-ILC" firstAttribute="top" secondItem="O9F-Ph-WOR" secondAttribute="top" constant="12" id="C21-8L-Z0c"/>
                                                         <constraint firstItem="Lhw-1M-3QA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0j0-Tc-ILC" secondAttribute="trailing" constant="12" id="EbQ-sy-zgN"/>
+                                                        <constraint firstItem="MaE-q9-87L" firstAttribute="trailing" secondItem="kiP-hc-29O" secondAttribute="trailing" id="Iii-Fo-zzH"/>
                                                         <constraint firstItem="TE2-rl-pID" firstAttribute="leading" secondItem="O9F-Ph-WOR" secondAttribute="leading" id="NIq-5y-Fd9"/>
                                                         <constraint firstAttribute="bottom" secondItem="TE2-rl-pID" secondAttribute="bottom" id="Qqt-U9-I5s"/>
                                                         <constraint firstItem="8Eg-bb-vtV" firstAttribute="top" secondItem="kiP-hc-29O" secondAttribute="bottom" constant="8" id="RDJ-HU-7Vl"/>
@@ -889,11 +897,14 @@ attachment.</string>
                                                         <constraint firstItem="kiP-hc-29O" firstAttribute="leading" secondItem="O9F-Ph-WOR" secondAttribute="leading" constant="16" id="TlT-ci-e8q"/>
                                                         <constraint firstItem="gcR-1n-SWb" firstAttribute="leading" secondItem="O9F-Ph-WOR" secondAttribute="leading" constant="12" id="XGe-an-W4S"/>
                                                         <constraint firstItem="Lhw-1M-3QA" firstAttribute="centerY" secondItem="0j0-Tc-ILC" secondAttribute="centerY" id="XcE-Zj-Hwm"/>
+                                                        <constraint firstItem="MaE-q9-87L" firstAttribute="leading" secondItem="kiP-hc-29O" secondAttribute="leading" id="Ybx-y1-C0r"/>
                                                         <constraint firstItem="gcR-1n-SWb" firstAttribute="centerY" secondItem="0j0-Tc-ILC" secondAttribute="centerY" id="aZc-6g-P1m"/>
+                                                        <constraint firstItem="MaE-q9-87L" firstAttribute="top" secondItem="kiP-hc-29O" secondAttribute="top" id="dOM-6N-1zf"/>
                                                         <constraint firstAttribute="trailing" secondItem="Lhw-1M-3QA" secondAttribute="trailing" constant="12" id="e17-1W-zFh"/>
                                                         <constraint firstItem="kiP-hc-29O" firstAttribute="top" secondItem="04W-xQ-eZ4" secondAttribute="bottom" constant="12" id="eZN-TU-DnA"/>
                                                         <constraint firstItem="04W-xQ-eZ4" firstAttribute="centerX" secondItem="gcR-1n-SWb" secondAttribute="centerX" id="hGP-Pc-HQW"/>
                                                         <constraint firstItem="TE2-rl-pID" firstAttribute="top" secondItem="8Eg-bb-vtV" secondAttribute="bottom" constant="4" id="iGA-SP-z90"/>
+                                                        <constraint firstItem="MaE-q9-87L" firstAttribute="bottom" secondItem="kiP-hc-29O" secondAttribute="bottom" id="iad-Qz-X7e"/>
                                                         <constraint firstItem="04W-xQ-eZ4" firstAttribute="centerY" secondItem="gcR-1n-SWb" secondAttribute="centerY" id="rBe-b0-6hq"/>
                                                         <constraint firstAttribute="trailing" secondItem="kiP-hc-29O" secondAttribute="trailing" constant="16" id="vvt-Ff-Dr6"/>
                                                         <constraint firstItem="8Eg-bb-vtV" firstAttribute="width" secondItem="TE2-rl-pID" secondAttribute="width" id="z9w-Mk-tVC"/>
