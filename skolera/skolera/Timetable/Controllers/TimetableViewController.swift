@@ -9,6 +9,7 @@
 import UIKit
 import CalendarKit
 import DateToolsSwift
+import SwiftDate
 
 class TimetableViewController: UIViewController, EventDataSource{
     //MARK: - Variables
@@ -30,9 +31,10 @@ class TimetableViewController: UIViewController, EventDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        
-        today = Date()
-        debugPrint("TODAY: ", today)
+        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: UserDefaults.standard.string(forKey: TIMEZONE)!)!, locale: Locales.english)
+        let dateInRegion = DateInRegion().convertTo(region: region)
+        today = dateInRegion.date.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
+        debugPrint("TODAY: ", today.dateComponents.day, dateInRegion.dateComponents.hour, dateInRegion.dateComponents.day, region.timeZone)
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
@@ -187,5 +189,12 @@ class TimetableViewController: UIViewController, EventDataSource{
         } else {
             return []
         }
+    }
+}
+
+extension Date {
+    func to(timeZone outputTimeZone: TimeZone, from inputTimeZone: TimeZone) -> Date {
+         let delta = TimeInterval(outputTimeZone.secondsFromGMT(for: self) - inputTimeZone.secondsFromGMT(for: self))
+         return addingTimeInterval(delta)
     }
 }

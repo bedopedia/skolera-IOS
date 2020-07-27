@@ -44,6 +44,7 @@ func addPostReplyApi(parameters: Parameters, completion: @escaping ((Bool, Int, 
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
+            
             completion(false, response.response?.statusCode ?? 0, nil, error)
         }
     }

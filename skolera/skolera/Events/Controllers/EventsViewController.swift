@@ -116,7 +116,9 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
             self.tableView.hideSkeleton()
             if isSuccess {
                 if let result = value as? [[String : AnyObject]] {
+                    debugPrint(result)
                     self.events = result.map{ StudentEvent($0) }
+                    
                     self.events = self.events.sorted { (first, second) -> Bool in
                         first.startDate > second.startDate
                     }
@@ -196,7 +198,7 @@ extension EventsViewController {
             }
             if let arrayIndex = index {
                 if self.filteredEvents.count > arrayIndex {
-                    self.tableView.scrollToRow(at: IndexPath(row: arrayIndex, section: 0), at: .middle, animated: true)
+//                    self.tableView.scrollToRow(at: IndexPath(row: arrayIndex, section: 0), at: .middle, animated: true)
                 }
             }
         }
@@ -501,9 +503,10 @@ extension EventsViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
+            
             self.cVCalendarView.changeMode(percentage == 0 ? .weekView : .monthView)
             //            self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
-            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+//            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
             self.cVCalendarView.contentController.refreshPresentedMonth()
             UIView.setAnimationsEnabled(true)
         }

@@ -185,7 +185,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                     "tag": ".",
                     "name": ".",
                     "messages_attributes": [[
-                        "body": message.encode(),
+                        "body": message,
                         "user_id": userId()
                         ]]
                 ],
@@ -207,7 +207,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                     "Id": "\(thread.id!)",
                     "title": "\(thread.name!)",
                     "messages_attributes": [[
-                        "body": message.encode(),
+                        "body": message,
                         "messageThreadId": "\(thread.id!)",
                         "user_id": userId()
                         ]]
