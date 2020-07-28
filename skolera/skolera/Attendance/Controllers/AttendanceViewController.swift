@@ -79,7 +79,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
         self.menuView.menuViewDelegate = self
         // Calendar delegate [Required]
         self.calendarView.calendarDelegate = self
-//        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
+        //        self.calendarView!.changeDaysOutShowingState(shouldShow: true)
         
         setUpAttendances()
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
@@ -114,7 +114,7 @@ class AttendanceViewController: UIViewController, CVCalendarViewDelegate, CVCale
     
     @IBAction func toggleToToday() {
         self.calendarView.toggleCurrentDayView()
-//        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
+        //        updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
     }
     
     @IBAction func switchToLate() {
@@ -198,9 +198,9 @@ extension AttendanceViewController {
         }
     }
     
-//    func dotMarkerColor() -> UIColor {
-//        return .black
-//    }
+    //    func dotMarkerColor() -> UIColor {
+    //        return .black
+    //    }
     
     func dotMarker(colorOnDayView dayView: DayView) -> [UIColor] {
         return dotsColors(dayView: dayView)
@@ -248,7 +248,7 @@ extension AttendanceViewController {
     func toggleState (state: CalendarMode) {
         calendarView.changeMode(state)
         updateCurrentLabel(currentCalendar: currentCalendar, label: currentMonthLabel)
-//        calendarView!.changeDaysOutShowingState(shouldShow: true)
+        //        calendarView!.changeDaysOutShowingState(shouldShow: true)
     }
     
     func toggleMonthViewWithMonthOffset(offset: Int) {
@@ -259,24 +259,24 @@ extension AttendanceViewController {
         self.calendarView.toggleViewWithDate(resultDate)
     }
     func didShowNextMonthView(_ date: Date) {
-//        self.calendarView.presentedDate = CVDate.init(date: date)
+        //        self.calendarView.presentedDate = CVDate.init(date: date)
     }
     
     func didShowPreviousMonthView(_ date: Date) {
-//        self.calendarView.presentedDate = CVDate.init(date: date)
+        //        self.calendarView.presentedDate = CVDate.init(date: date)
     }
     
     func didShowNextWeekView(from startDayView: DayView, to endDayView: DayView) {
-//        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
-//        updateCurrentLabel()
-//        self.calendarView.presentedDate = startDayView.date
+        //        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+        //        updateCurrentLabel()
+        //        self.calendarView.presentedDate = startDayView.date
         
     }
     
     func didShowPreviousWeekView(from startDayView: DayView, to endDayView: DayView) {
-//        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
-//        updateCurrentLabel()
-//        self.calendarView.presentedDate = startDayView.date
+        //        print("Showing Week: from \(startDayView.date.day) to \(endDayView.date.day)")
+        //        updateCurrentLabel()
+        //        self.calendarView.presentedDate = startDayView.date
     }
     func presentedDateUpdated(_ date: CVDate) {
         updateCurrentLabel(date.convertedDate()!, currentCalendar: currentCalendar, label: currentMonthLabel)
@@ -288,7 +288,7 @@ extension AttendanceViewController {
     func calendar() -> Calendar? {
         return currentCalendar
     }
-
+    
 }
 
 //extension AttendanceViewController: CVCalendarViewAppearanceDelegate {
@@ -392,12 +392,12 @@ extension AttendanceViewController {
         calendarHeightConstraint.constant = minHeight + (range * percentage)
         DispatchQueue.main.async {
             UIView.setAnimationsEnabled(false)
+            
             self.calendarView.changeMode(percentage == 0 ? .weekView : .monthView)
-            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+            //            self.cVCalendarView!.changeDaysOutShowingState(shouldShow: true)
+            //            updateCurrentLabel(currentCalendar: self.currentCalendar, label: self.currentMonthLabel)
+            self.calendarView.contentController.refreshPresentedMonth()
             UIView.setAnimationsEnabled(true)
         }
-        //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0))) {
-        //            UIView.setAnimationsEnabled(true)
-        //        }
     }
 }
