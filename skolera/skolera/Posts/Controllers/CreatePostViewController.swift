@@ -52,12 +52,17 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                         //                    self.uploadFile(file: self.attachments.first!, fileName: self.attachments.first?.lastPathComponent ?? "cannot get file name")
                         if !self.attachments.isEmpty {
                             self.uploadAllFiles()
+                        } else {
+                            self.close()
                         }
+                    } else {
+                        self.close()
                     }
                 } else {
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
+                    self.close()
                 }
-                self.close()
+                
             }
         } else {
             debugPrint("empty content")
@@ -139,12 +144,13 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
+            if self.attachments.isEmpty {
+                self.close()
+            } else {
+                self.uploadAllFiles()
+            }
         }
-        if attachments.isEmpty {
-            return
-        } else {
-            uploadAllFiles()
-        }
+        
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
