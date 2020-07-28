@@ -31,10 +31,12 @@ class TimetableViewController: UIViewController, EventDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
-        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: UserDefaults.standard.string(forKey: TIMEZONE)!)!, locale: Locales.english)
-        let dateInRegion = DateInRegion().convertTo(region: region)
-        today = dateInRegion.date.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
-        debugPrint("TODAY: ", today.dateComponents.day, dateInRegion.dateComponents.hour, dateInRegion.dateComponents.day, region.timeZone)
+        debugPrint(UserDefaults.standard.string(forKey: TIMEZONE)!)
+        
+//        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: "Africa/Cairo")!, locale: Locales.english)
+//        let dateInRegion = DateInRegion().convertTo(region: region)
+        today = Date().to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
+        tomorrow = today.dateByAdding(1, .day).date
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
@@ -78,8 +80,18 @@ class TimetableViewController: UIViewController, EventDataSource{
             }
             
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            
+            self.dayView.state?.move(to: self.today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
+        }
+        
         
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        statusSegmentControl.selectedSegmentIndex = 0
+//    }
     
     @IBAction func back(){
         self.navigationController?.popViewController(animated: true)
@@ -89,9 +101,11 @@ class TimetableViewController: UIViewController, EventDataSource{
     @IBAction func switchTimeTable(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
-            dayView.state?.move(to: today)
+            debugPrint(today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
+            dayView.state?.move(to: today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
         case 1:
-            dayView.state?.move(to: tomorrow)
+            debugPrint(tomorrow)
+            dayView.state?.move(to: tomorrow.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
         default:
             dayView.state?.move(to: today)
         }
@@ -182,9 +196,13 @@ class TimetableViewController: UIViewController, EventDataSource{
     }
     //MARK:- Delegates
     func eventsForDate(_ date: Date) -> [EventDescriptor] { //ui setting
-        if (date.isToday) {
+//        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: UserDefaults.standard.string(forKey: TIMEZONE)!)!, locale: Locales.english)
+//        let dateInRegion = DateInRegion().convertTo(region: region)
+        let customDate = date.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
+        debugPrint(customDate.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current).dateComponents.day, customDate.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current).isSameDay(date: today))
+        if (customDate.isSameDay(date: today)) {
             return todayEvents
-        } else if (date.isTomorrow) {
+        } else if (customDate.isSameDay(date: tomorrow)) {
             return tomorrowEvents
         } else {
             return []
