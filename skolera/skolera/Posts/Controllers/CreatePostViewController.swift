@@ -44,7 +44,6 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
             let parameters : Parameters = ["post": ["content": postContentTextView.text!, "owner_id": userId(), "postable_id": self.courseGroup.id, "postable_type": "CourseGroup","video_preview": "",
                                                     "videoURL": ""]]
             createPostApi(parameters: parameters) { (isSuccess, statusCode, value, error) in
-                self.stopAnimating()
                 if isSuccess {
                     debugPrint("createPostApi success")
                     if let result = value as? [String : AnyObject] {
@@ -53,12 +52,15 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
                         if !self.attachments.isEmpty {
                             self.uploadAllFiles()
                         } else {
+                            self.stopAnimating()
                             self.close()
                         }
                     } else {
+                        self.stopAnimating()
                         self.close()
                     }
                 } else {
+                    self.stopAnimating()
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                     self.close()
                 }
@@ -140,11 +142,11 @@ class CreatePostViewController: UIViewController,UIDocumentMenuDelegate,UIDocume
         uploadFileApi(file: attachment,postId: createdPost.id!, fileName: attachment.lastPathComponent) { (isSuccess, statusCode, error) in
             if isSuccess {
                 debugPrint("file upload success")
-                
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
             }
             if self.attachments.isEmpty {
+                self.stopAnimating()
                 self.close()
             } else {
                 self.uploadAllFiles()
