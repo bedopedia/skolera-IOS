@@ -35,9 +35,10 @@ class TimetableViewController: UIViewController, EventDataSource{
         
 //        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: "Africa/Cairo")!, locale: Locales.english)
 //        let dateInRegion = DateInRegion().convertTo(region: region)
-        today = Date().to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
+        today = Date().to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!)
         tomorrow = today.dateByAdding(1, .day).date
         tomorrow = today.add(TimeChunk.dateComponents(days: 1))
+        debugPrint(UserDefaults.standard.string(forKey: TIMEZONE)!, today, tomorrow)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         } else {
@@ -82,7 +83,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             
-            self.dayView.state?.move(to: self.today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
+            self.dayView.state?.move(to: self.today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!))
         }
         
         
@@ -101,11 +102,11 @@ class TimetableViewController: UIViewController, EventDataSource{
     @IBAction func switchTimeTable(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
-            debugPrint(today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
-            dayView.state?.move(to: today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
+            debugPrint(today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!))
+            dayView.state?.move(to: today.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!))
         case 1:
             debugPrint(tomorrow)
-            dayView.state?.move(to: tomorrow.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current))
+            dayView.state?.move(to: tomorrow.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!))
         default:
             dayView.state?.move(to: today)
         }
@@ -198,8 +199,7 @@ class TimetableViewController: UIViewController, EventDataSource{
     func eventsForDate(_ date: Date) -> [EventDescriptor] { //ui setting
 //        let region = Region(calendar: Calendars.gregorian, zone: Zones.init(rawValue: UserDefaults.standard.string(forKey: TIMEZONE)!)!, locale: Locales.english)
 //        let dateInRegion = DateInRegion().convertTo(region: region)
-        let customDate = date.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current)
-        debugPrint(customDate.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current).dateComponents.day, customDate.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: .current).isSameDay(date: today))
+        let customDate = date.to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!)
         if (customDate.isSameDay(date: today)) {
             return todayEvents
         } else if (customDate.isSameDay(date: tomorrow)) {
