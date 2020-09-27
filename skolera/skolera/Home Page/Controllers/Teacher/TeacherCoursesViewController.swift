@@ -11,6 +11,7 @@ import SkeletonView
 
 class TeacherCoursesViewController: UIViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     var courses: [TeacherCourse] = []
@@ -18,6 +19,9 @@ class TeacherCoursesViewController: UIViewController, UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
         self.tableView.rowHeight = 80
         self.tableView.estimatedRowHeight = 80
         self.tableView.dataSource = self

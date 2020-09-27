@@ -17,6 +17,7 @@ class SchoolInfo : NSObject, NSCoding{
 	var id : Int!
 	var name : String!
 	var schoolDescription : String!
+    var headerUrl: String!
 
 
 	/**
@@ -32,6 +33,7 @@ class SchoolInfo : NSObject, NSCoding{
 		id = dictionary["id"] as? Int
 		name = dictionary["name"] as? String
 		schoolDescription = dictionary["school_description"] as? String
+        headerUrl = dictionary["header_url"] as? String
 	}
 
 	/**

@@ -21,6 +21,7 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
     @IBOutlet weak var childImageView: UIImageView!
     @IBOutlet weak var childNameLabel: UILabel!
     @IBOutlet weak var childGradeLabel: UILabel!
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var quizzesLabel: UILabel!
     @IBOutlet weak var assignmentsLabel: UILabel!
     @IBOutlet weak var eventsLabel: UILabel!
@@ -46,6 +47,9 @@ class ChildProfileViewController: UIViewController, NVActivityIndicatorViewable,
         super.viewDidLoad()
         headerHeightConstraint.constant =  UIApplication.shared.statusBarFrame.height + 60
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
         if !isParent() {
             backButton.isHidden = true
             if let featureTVC = childViewControllers[0] as? ChildProfileFeaturesTableViewController {

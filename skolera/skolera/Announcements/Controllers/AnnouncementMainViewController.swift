@@ -12,6 +12,7 @@ import SkeletonView
 import SwiftDate
 
 class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var settingsButton: UIButton!
@@ -24,6 +25,9 @@ class AnnouncementMainViewController: UIViewController, NVActivityIndicatorViewa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
         if getUserType() == UserType.parent {
             backButton.isHidden = false

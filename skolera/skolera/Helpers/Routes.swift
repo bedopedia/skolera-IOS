@@ -8,7 +8,7 @@
 
 import Foundation
 
-let GET_SCHOOL_LINK = "https://bedopedia-schools.herokuapp.com/schools/get_by_code"
+let GET_SCHOOL_LINK = "https://schools.skoleralms.com/api/get_school_by_code?code="
 var BASE_URL : String!
 //Login
 func GET_SCHOOL_BY_CODE() -> String{
@@ -103,6 +103,10 @@ func GET_TEACHER_TIME_TABLE() -> String
 func GET_THREADS() -> String
 {
     return "\(BASE_URL!)/api/threads"
+}
+func COMPOSE_THREAD() -> String
+{
+    return "\(BASE_URL!)/api/teacher_hub/compose"
 }
 // for the uploaded files
 func GET_MESSAGES() -> String

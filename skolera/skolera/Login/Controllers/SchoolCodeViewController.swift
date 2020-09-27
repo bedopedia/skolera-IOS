@@ -103,7 +103,8 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
         let parameters : Parameters = ["code" : code]
         getSchoolurlAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             if isSuccess {
-                if let result = value as? [String : AnyObject] {
+                debugPrint(value as? [String : Any])
+                if let result = value as? [String : Any] {
                     let herukoSchoolInfo : HerukoSchoolInfo = HerukoSchoolInfo.init(fromDictionary: result)
                     BASE_URL = herukoSchoolInfo.url!
                     self.userDefault.set(BASE_URL, forKey: "BASE_URL")
@@ -123,16 +124,18 @@ class SchoolCodeViewController: UIViewController, UITextFieldDelegate, NVActivit
     ///
     /// - Parameter schoolInfo: school Information come from heruko
     func moveToLoginVC(schoolInfo : HerukoSchoolInfo) {
-        let parameters : Parameters = ["code" : schoolInfo.code]
+        let parameters : Parameters = ["code" : schoolInfo.code ?? ""]
         getSchoolInfoAPI(parameters: parameters) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
                 if let result = value as? [String: Any] {
+                    debugPrint(result)
                     self.schoolCodeTextField.text = ""
                     let schoolInfo: SchoolInfo = SchoolInfo(fromDictionary: result)
                     let loginVC = LoginViewController.instantiate(fromAppStoryboard: .Login)
                     loginVC.title = schoolInfo.name
                     loginVC.imageURL = schoolInfo.avatarUrl
+                    loginVC.headerURL = schoolInfo.headerUrl
                     self.navigationController?.pushViewController(loginVC, animated: true)
                 }
             } else {

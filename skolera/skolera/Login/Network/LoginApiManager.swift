@@ -10,7 +10,8 @@ import Foundation
 import Alamofire
 
 func getSchoolurlAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
-    Alamofire.request(GET_SCHOOL_LINK, method: .get, parameters: parameters, headers: nil).validate().responseJSON { response in
+    debugPrint(GET_SCHOOL_LINK + "\(parameters["code"] ?? "")")
+    Alamofire.request(GET_SCHOOL_LINK + "\(parameters["code"] ?? "")", method: .get, parameters: [:], headers: nil).validate().responseJSON { response in
         switch response.result{
         case .success(_):
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
@@ -21,6 +22,7 @@ func getSchoolurlAPI(parameters: Parameters, completion: @escaping ((Bool, Int, 
 }
 
 func getSchoolInfoAPI(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    debugPrint(GET_SCHOOL_BY_CODE(), parameters)
     Alamofire.request(GET_SCHOOL_BY_CODE(), method: .get, parameters: parameters, headers: nil).validate().responseJSON { response in
         switch response.result{
         case .success(_):

@@ -11,6 +11,7 @@ import NVActivityIndicatorView
 
 class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var childImageOuterView: UIView!
     @IBOutlet weak var childNameLabel: UILabel!
     @IBOutlet weak var childGradeLabel: UILabel!
@@ -41,6 +42,10 @@ class ActorViewController: UIViewController, NVActivityIndicatorViewable, UINavi
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if actor != nil {
+            
+            if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+                headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+            }
             addActorImage()
             childNameLabel.text = actor.name
             childGradeLabel.text = actor.userType

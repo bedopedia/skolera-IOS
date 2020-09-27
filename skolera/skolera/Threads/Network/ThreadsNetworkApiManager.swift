@@ -26,6 +26,7 @@ func getSubjectsApi(parameters: Parameters, child: Actor, completion: @escaping 
 func getThreadsApi(completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let headers : HTTPHeaders? = getHeaders()
     let url = String(format: GET_THREADS())
+    debugPrint(url, headers)
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
@@ -95,6 +96,23 @@ func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completio
 func sendMessageApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let url = String(format: GET_THREADS())
     let headers : HTTPHeaders? = getHeaders()
+    debugPrint(url, parameters, headers)
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            debugPrint(response)
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            print(error.localizedDescription)
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
+}
+
+func createThreadApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let url = String(format: COMPOSE_THREAD())
+    let headers : HTTPHeaders? = getHeaders()
+    debugPrint(url, parameters, headers)
     Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):

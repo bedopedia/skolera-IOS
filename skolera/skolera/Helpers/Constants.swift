@@ -31,4 +31,4 @@ let MOBILE_VERSION = "Mobile-Version"
 let CHILD_ID = "child_id"
 let ID = "id"
 let USER_TYPE = "user_type"
-
+let HEADER_URL = "header_url"

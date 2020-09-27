@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     //MARKL - Variables
     var imageURL: String?
+    var headerURL: String?
     let userDefault = UserDefaults.standard
     var showPassword = false
     
@@ -225,21 +226,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     self.userDefault.set(headers[CLIENT] as! String, forKey: CLIENT)
                     self.userDefault.set(headers[TOKEN_TYPE] as! String, forKey: TOKEN_TYPE)
                     self.userDefault.set(headers[UID] as! String, forKey: UID)
-                    if let passwordChanged = parent.passwordChanged, passwordChanged {
-                        UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
-                        self.userDefault.set(String(parent.childId), forKey: CHILD_ID)
-                        self.userDefault.set(String(parent.id), forKey: ID)
-                        self.userDefault.set(parent.userType, forKey: USER_TYPE)
-                        self.emailTextField.text = ""
-                        self.passwordTextField.text = ""
-                        self.updateLocale(parent: parent)
-                    } else {
-                        self.stopAnimating()
-                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
-                        changePasswordVC.actableId = parent.childId
-                        changePasswordVC.isFirstLogin = true
-                        self.present(changePasswordVC, animated: true, completion: nil)
-                    }
+                    UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
+                    self.userDefault.set(String(parent.childId), forKey: CHILD_ID)
+                    self.userDefault.set(String(parent.id), forKey: ID)
+                    self.userDefault.set(parent.userType, forKey: USER_TYPE)
+                    self.userDefault.set(self.headerURL, forKey: HEADER_URL)
+                    self.emailTextField.text = ""
+                    self.passwordTextField.text = ""
+                    self.updateLocale(parent: parent)
+//                    if let passwordChanged = parent.passwordChanged, passwordChanged {
+//                        UIApplication.shared.applicationIconBadgeNumber = parent.unseenNotifications
+//                        self.userDefault.set(String(parent.childId), forKey: CHILD_ID)
+//                        self.userDefault.set(String(parent.id), forKey: ID)
+//                        self.userDefault.set(parent.userType, forKey: USER_TYPE)
+//                        self.emailTextField.text = ""
+//                        self.passwordTextField.text = ""
+//                        self.updateLocale(parent: parent)
+//                    } else {
+//                        self.stopAnimating()
+//                        let changePasswordVC = ChangePasswordViewController.instantiate(fromAppStoryboard: .HomeScreen)
+//                        changePasswordVC.actableId = parent.childId
+//                        changePasswordVC.isFirstLogin = true
+//                        self.present(changePasswordVC, animated: true, completion: nil)
+//                    }
                 }
             } else {
                 self.stopAnimating()

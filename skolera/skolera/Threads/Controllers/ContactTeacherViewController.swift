@@ -15,6 +15,7 @@ import AlamofireImage
 import SkeletonView
 
 class ContactTeacherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SkeletonTableViewDataSource, NVActivityIndicatorViewable {
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var threadsTableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newThreadButton: UIBarButtonItem!
@@ -30,6 +31,9 @@ class ContactTeacherViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         threadsTableView.delegate = self
         threadsTableView.dataSource = self
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
         self.navigationController?.navigationBar.tintColor = UIColor.appColors.dark
         let backItem = UIBarButtonItem()
         backItem.title = nil

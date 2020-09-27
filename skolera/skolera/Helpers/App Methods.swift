@@ -46,16 +46,18 @@ func showNetworkFailureError(viewController: UIViewController, statusCode: Int, 
         showAlert(viewController: viewController, title: ERROR, message: NO_INTERNET, completion: {action in
             errorAction()
         })
-    } else if statusCode == 401 || statusCode == 403 {
+    } else if statusCode == 401 {
         if isLoginError {
             showAlert(viewController: viewController, title: INVALID, message: INVALID_USER_INFO, completion: nil)
         } else {
             showReauthenticateAlert(viewController: viewController)
         }
-    } else {
+    } else if statusCode != 403{
         showAlert(viewController: viewController, title: ERROR, message: SOMETHING_WRONG, completion: {action in
             errorAction()
         })
+    } else {
+        // do nothing
     }
 }
 //request helpers

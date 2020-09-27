@@ -15,6 +15,7 @@ import NVActivityIndicatorView
 class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet var headerView: UIView!
@@ -29,6 +30,9 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)

@@ -15,6 +15,7 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var backButton: UIButton!
     @IBOutlet var headerView: UIView!
+    @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var settingsButton: UIButton!
     
     var fromChildrenList = false
@@ -27,6 +28,9 @@ class NotificationsViewController: UIViewController,  UIGestureRecognizerDelegat
         tableView.dataSource = self
         tableView.delegate = self
         backButton.setImage(backButton.image(for: .normal)?.flipIfNeeded(), for: .normal)
+        if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
+            headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
+        }
         if getUserType() == UserType.parent {
             backButton.isHidden = false
             settingsButton.isHidden = true

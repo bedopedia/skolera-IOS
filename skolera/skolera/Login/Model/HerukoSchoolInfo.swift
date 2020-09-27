@@ -11,10 +11,10 @@ import Foundation
 class HerukoSchoolInfo : NSObject, NSCoding{
 
 	var code : String!
-	var createdAt : String!
+	var createdAt : String?
 	var id : Int!
 	var name : String!
-	var updatedAt : String!
+	var updatedAt : String?
 	var url : String!
 
 

@@ -23,6 +23,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     var newThread:Bool = false
     var courseId: Int = -1
     var teacherId: Int = -1
+    
     var dataSource: DemoChatDataSource! {
         didSet {
             self.chatDataSource = self.dataSource
@@ -69,6 +70,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     
     
     var chatInputPresenter: BasicChatInputBarPresenter!
+    
     override func createChatInputView() -> UIView {
         if canSendMessage {
             let chatInputView = ChatInputBar.loadNib()
@@ -135,9 +137,10 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     
     private func createTextInputItem() -> TextChatInputItem {
         let item = TextChatInputItem()
-        item.textInputHandler = { [weak self] text in
-            self?.send(message: text)
-            self?.collectionView.scrollToLast()
+        item.textInputHandler = { text in
+//            guard let self = self else { return }
+            self.send(message: text)
+            self.collectionView.scrollToLast()
         }
         return item
     }
@@ -191,9 +194,19 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                 ],
                 "user_ids": ["\(teacherId)", "\(userId())"]
             ]
+            
             sendMessageApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
                 self.stopAnimating()
                 if isSuccess {
+//                    if let result = response as? [String: AnyObject] {
+//                        debugPrint(result)
+////                        if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
+////                            for thread in threadsJson {
+////                                self.threads.append(Threads.init(fromDictionary: thread))
+////                            }
+////                            self.threadsTableView.reloadData()
+////                        }
+//                    }
                     self.dataSource.addTextMessage(message)
                     self.newThread = false
                 } else {
