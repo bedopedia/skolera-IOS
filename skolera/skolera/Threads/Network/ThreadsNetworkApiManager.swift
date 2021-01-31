@@ -44,6 +44,7 @@ func getMessagesApi(threadId: Int, completion: @escaping ((Bool, Int, Any?, Erro
     Alamofire.request(url, method: .get, parameters: nil, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
+            debugPrint(response)
             completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
             completion(false, response.response?.statusCode ?? 0, nil, error)
@@ -83,6 +84,7 @@ func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completio
                      print("Upload Progress: \(progress.fractionCompleted)")
                 })
                 upload.responseJSON { response in
+                    debugPrint(response)
                     let status = response.response!.statusCode
                     completion(true, status, nil)
                 }
@@ -91,6 +93,22 @@ func uploadImageApi(threadId: Int, imageData: Data, imageName: String, completio
                 completion(false, -1, encodingError)
             }
     })
+}
+
+func composeMessageApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+    let url = String(format: COMPOSE_THREAD())
+    let headers : HTTPHeaders? = getHeaders()
+    debugPrint(url, parameters, headers)
+    Alamofire.request(url, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+        switch response.result{
+        case .success(_):
+            debugPrint(response)
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
+        case .failure(let error):
+            print(error.localizedDescription)
+            completion(false, response.response?.statusCode ?? 0, nil, error)
+        }
+    }
 }
 
 func sendMessageApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
@@ -109,7 +127,7 @@ func sendMessageApi(parameters: Parameters,completion: @escaping ((Bool, Int, An
     }
 }
 
-func createThreadApi(parameters: Parameters,completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
+func createThreadApi(parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let url = String(format: COMPOSE_THREAD())
     let headers : HTTPHeaders? = getHeaders()
     debugPrint(url, parameters, headers)
@@ -125,15 +143,16 @@ func createThreadApi(parameters: Parameters,completion: @escaping ((Bool, Int, A
     }
 }
 
-func replyToMessageApi(threadId: Int, parameters: Parameters,completion: @escaping ((Bool, Int, Error?) -> ())) {
+func replyToMessageApi(threadId: Int, parameters: Parameters, completion: @escaping ((Bool, Int, Any?, Error?) -> ())) {
     let url = String(format: SEND_MESSAGE(),threadId)
     let headers : HTTPHeaders? = getHeaders()
     Alamofire.request(url, method: .put, parameters: parameters, headers: headers).validate().responseJSON { response in
         switch response.result{
         case .success(_):
-            completion(true, response.response?.statusCode ?? 0, nil)
+            debugPrint(response)
+            completion(true, response.response?.statusCode ?? 0, response.result.value, nil)
         case .failure(let error):
-            completion(false, response.response?.statusCode ?? 0, error)
+            completion(false, response.response?.statusCode ?? 0, nil, error)
         }
     }
 }

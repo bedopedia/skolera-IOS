@@ -131,7 +131,10 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     func createChatInputItems() -> [ChatInputItemProtocol] {
         var items = [ChatInputItemProtocol]()
         items.append(self.createTextInputItem())
-        items.append(self.createPhotoInputItem())
+        if !newThread {
+            items.append(self.createPhotoInputItem())
+        }
+        
         return items
     }
     
@@ -149,9 +152,15 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
         
         let item = PhotosChatInputItem(presentingController: self)
         item.photoInputHandler = { [weak self] image in
-            self?.dataSource.addPhotoMessage(image)
-            self?.scaleImage(image: image)
-            self?.collectionView.scrollToLast()
+            guard let self = self else { return }
+            if self.newThread {
+                showAlert(viewController: self, title: ERROR, message: "You can't send Image to a new thread".localized, completion: nil)
+            } else {
+                self.dataSource.addPhotoMessage(image)
+                self.scaleImage(image: image)
+                self.collectionView.scrollToLast()
+            }
+            
         }
         return item
     }
@@ -182,22 +191,42 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
     func send(message: String) {
         startAnimating(CGSize(width: 150, height: 150), message: "", type: .ballScaleMultiple, color: getMainColor(), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).withAlphaComponent(0.5), fadeInAnimation: nil)
         if newThread {
-            let parameters : Parameters = [
+//            let parameters : Parameters = [
+//                "message_thread": [
+//                    "course_id": courseId,
+//                    "tag": ".",
+//                    "name": ".",
+//                    "messages_attributes": [[
+//                        "body": message,
+//                        "user_id": userId()
+//                        ]]
+//                ],
+//                "user_ids": ["\(teacherId)", "\(userId())"]
+//            ]
+//
+            let parameters: Parameters = [
                 "message_thread": [
-                    "course_id": courseId,
-                    "tag": ".",
-                    "name": ".",
-                    "messages_attributes": [[
-                        "body": message,
-                        "user_id": userId()
-                        ]]
-                ],
-                "user_ids": ["\(teacherId)", "\(userId())"]
+                    "creater_id": userId(),
+                    "messages_attributes": [
+                        ["user_id": userId(),
+                         "body": message,
+                         "attachment": ""]
+                    ],
+                    "name": "sent from mobile",
+                    "tag": "Question",
+                    "participants_attributes": [["user_id": "\(teacherId)"], ["user_id": "\(userId())"]]
+                ]
             ]
-            
-            sendMessageApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
+            debugPrint(parameters)
+            composeMessageApi(parameters: parameters) { (isSuccess, statusCode, response, error) in
                 self.stopAnimating()
                 if isSuccess {
+                    if let result = response as? [String: AnyObject] {
+                        debugPrint(result)
+                        let newThread = Threads(fromDictionary: result)
+                        self.thread = newThread
+                        self.updateDataSource()
+                    }
 //                    if let result = response as? [String: AnyObject] {
 //                        debugPrint(result)
 ////                        if let threadsJson = result["message_threads"] as? [[String : AnyObject]] {
@@ -207,7 +236,7 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
 ////                            self.threadsTableView.reloadData()
 ////                        }
 //                    }
-                    self.dataSource.addTextMessage(message)
+//                    self.dataSource.addTextMessage(message)
                     self.newThread = false
                 } else {
                     print(error!.localizedDescription)
@@ -226,17 +255,108 @@ class ChatViewController: BaseChatViewController, NVActivityIndicatorViewable {
                         ]]
                 ]
             ]
-            replyToMessageApi(threadId: thread.id, parameters: parameters) { (isSuccess, statusCode, error) in
+            replyToMessageApi(threadId: thread.id, parameters: parameters) { (isSuccess, statusCode, response, error)  in
                 self.stopAnimating()
                 if isSuccess {
                     debugPrint("success")
-                    self.dataSource.addTextMessage(message)
+                    if let result = response as? [String: AnyObject] {
+                        debugPrint(result)
+                        let newThread = Threads(fromDictionary: result)
+                        self.thread = newThread
+                        self.updateDataSource()
+                    }
                 } else {
                     self.dataSource.addTextMessage(message)
                     showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
                 }
             }
         }
+    }
+    
+    private func updateDataSource(){
+        var messages: [ChatItemProtocol] = []
+        let threadsMessages = thread.messages.sorted(by: { self.getMessage(time: $0.createdAt).compare(self.getMessage(time: $1.createdAt)) == .orderedAscending })
+        
+        for item in threadsMessages {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+            let date = dateFormatter.date(from: item.createdAt)!
+            if item.attachmentUrl == nil || item.attachmentUrl.isEmpty {
+                if "\(item.user?.id ?? -1)".elementsEqual(userId()){
+                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: false, date: date, status: .success)
+                    let body = item.body.htmlAttributedString()
+                    if let bodyString = body?.string {
+                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: bodyString)
+                        messages.append(textModel)
+                    }
+                } else {
+                    let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: TextMessageModel<MessageModel>.chatItemType, isIncoming: true, date: date, status: .success)
+                    let body = item.body.htmlAttributedString()
+                    if let bodyString = body?.string {
+                        let textModel: DemoTextMessageModel = DemoTextMessageModel(messageModel: messageModel, text: bodyString)
+                        messages.append(textModel)
+                    }
+                }
+            } else {
+                let messageModel: MessageModel = MessageModel.init(uid: NSUUID().uuidString, senderId: "\(item.user?.id ?? -1)", type: PhotoMessageModel<MessageModel>.chatItemType, isIncoming: !"\(item.user?.id ?? -1)".elementsEqual(userId()), date: date, status: .success)
+                let size = CGSize(width: 2000.0, height: 1000.0)
+                if item.ext == nil {
+                    let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                    messages.append(photoModel)
+                } else if item.ext.elementsEqual("pdf") {
+                    let image = UIImage(named: "pdf_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.contains("doc") || item.ext.contains("rtf") {
+                    let image = UIImage(named: "doc_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.contains("pp") {
+                    let image = UIImage(named: "ppt_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.contains("xl") {
+                    let image = UIImage(named: "xlsx_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.elementsEqual("rar") || item.ext.elementsEqual("zip") {
+                    let image = UIImage(named: "zip_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.elementsEqual("mp3") || item.ext.elementsEqual("wav") {
+                    let image = UIImage(named: "audio_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.elementsEqual("mp4") || item.ext.elementsEqual("3gp") {
+                    let image = UIImage(named: "video_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: false)
+                    messages.append(photoModel)
+                } else if item.ext.elementsEqual("jpg") || item.ext.elementsEqual("jpeg") || item.ext.elementsEqual("png") {
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: CGSize(width: 1000, height: 1000), image: UIImage(), url: item.attachmentUrl, loadImage: true)
+                    messages.append(photoModel)
+                } else {
+                    let image = UIImage(named: "file_icon")!.af_imageAspectScaled(toFit: size)
+                    let photoModel: DemoPhotoMessageModel = DemoPhotoMessageModel(messageModel: messageModel, imageSize: image.size, image: image, url: item.attachmentUrl, loadImage: true)
+                    messages.append(photoModel)
+                }
+            }
+        }
+        
+        let dataSource = DemoChatDataSource(messages: messages, pageSize: 50)
+        self.chatDataSource = dataSource
+    }
+    
+    func getMessage(time: String) -> Date{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale?
+        let date = dateFormatter.date(from: time)!
+        return date
     }
     
     private func scaleImage(image: UIImage) {

@@ -296,6 +296,10 @@
 		8ABACE82222EB3F200EBC1F0 /* TabCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */; };
 		8ABACE84222EC33A00EBC1F0 /* CustomGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */; };
 		8ABACE86222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */; };
+		8ABB13C225AED5A600EDA4D7 /* SchoolFeesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB13C125AED5A600EDA4D7 /* SchoolFeesViewController.swift */; };
+		8ABB13C525AED7AB00EDA4D7 /* SchoolFeesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB13C425AED7AB00EDA4D7 /* SchoolFeesResponse.swift */; };
+		8ABB13C825AED7C500EDA4D7 /* SchoolFees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB13C725AED7C500EDA4D7 /* SchoolFees.swift */; };
+		8ABB13CB25AEE1D700EDA4D7 /* SchoolFeesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABB13CA25AEE1D700EDA4D7 /* SchoolFeesTableViewCell.swift */; };
 		8ACB900821EC944700CE2473 /* AnnouncementTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */; };
 		8AD1C6C4232F9B05006DA3A0 /* AttendanceApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */; };
 		8AD1C6C7232FA783006DA3A0 /* FullDayAttendances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */; };
@@ -642,6 +646,10 @@
 		8ABACE80222EB3F200EBC1F0 /* TabCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ABACE83222EC33A00EBC1F0 /* CustomGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGradientView.swift; sourceTree = "<group>"; };
 		8ABACE85222FC19200EBC1F0 /* SubjectWeeklyPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectWeeklyPlanViewController.swift; sourceTree = "<group>"; };
+		8ABB13C125AED5A600EDA4D7 /* SchoolFeesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFeesViewController.swift; sourceTree = "<group>"; };
+		8ABB13C425AED7AB00EDA4D7 /* SchoolFeesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFeesResponse.swift; sourceTree = "<group>"; };
+		8ABB13C725AED7C500EDA4D7 /* SchoolFees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFees.swift; sourceTree = "<group>"; };
+		8ABB13CA25AEE1D700EDA4D7 /* SchoolFeesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFeesTableViewCell.swift; sourceTree = "<group>"; };
 		8ACB900721EC944700CE2473 /* AnnouncementTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewController.swift; sourceTree = "<group>"; };
 		8AD1C6C3232F9B05006DA3A0 /* AttendanceApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceApiManager.swift; sourceTree = "<group>"; };
 		8AD1C6C6232FA783006DA3A0 /* FullDayAttendances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullDayAttendances.swift; sourceTree = "<group>"; };
@@ -831,6 +839,8 @@
 				8A842F5822F04E9E000BA70B /* Teacher */,
 				547A378A2022150000794441 /* Notifications */,
 				547A3789202214EE00794441 /* Parent */,
+				8ABB13C425AED7AB00EDA4D7 /* SchoolFeesResponse.swift */,
+				8ABB13C725AED7C500EDA4D7 /* SchoolFees.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -876,6 +886,7 @@
 				547605A4202088C900369BE0 /* ChildrenTableViewCell.swift */,
 				547A3787202210CB00794441 /* NotificationTableViewCell.swift */,
 				8A842F5B22F0592E000BA70B /* TeacherCourseTableViewCell.swift */,
+				8ABB13CA25AEE1D700EDA4D7 /* SchoolFeesTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -895,6 +906,7 @@
 				DC47E72723A63A3C002A1FEE /* SettingsTableTableViewController.swift */,
 				DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */,
 				DCC69662239D190B0087682C /* TabBarViewController.swift */,
+				8ABB13C125AED5A600EDA4D7 /* SchoolFeesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2119,6 +2131,7 @@
 				54E0A7842095320300D02F19 /* BehaviorNotesNumbersResponse.swift in Sources */,
 				54847C63205A87D50000588E /* AttendanceViewController+TabelViewDelegates.swift in Sources */,
 				544216E9204C77B500BEB167 /* CourseGradeCell.swift in Sources */,
+				8ABB13CB25AEE1D700EDA4D7 /* SchoolFeesTableViewCell.swift in Sources */,
 				8ADABB7A230AEAF7001509EF /* Event.swift in Sources */,
 				8A3923EB233CF4FB0001963A /* SolveQuizViewController.swift in Sources */,
 				DC47E72823A63A3C002A1FEE /* SettingsTableTableViewController.swift in Sources */,
@@ -2136,6 +2149,7 @@
 				DC69E4632356132500A6FDF4 /* ThreadsNetworkApiManager.swift in Sources */,
 				72A7CF9A240E826500ED4ED0 /* GradeCategory.swift in Sources */,
 				8A3923E9233CC7710001963A /* Answers.swift in Sources */,
+				8ABB13C825AED7C500EDA4D7 /* SchoolFees.swift in Sources */,
 				547A37912022153B00794441 /* NotifcationResponse.swift in Sources */,
 				8AF6664723390ADE009C4EF2 /* TeacherCoursesViewController.swift in Sources */,
 				8A94E45722DF569E00A01B0C /* CourseGroupPostTableViewCell.swift in Sources */,
@@ -2172,6 +2186,7 @@
 				8A9181532341F84500E8F6AF /* QuizSubmissionViewController.swift in Sources */,
 				544216E7204C604000BEB167 /* GradesListViewController.swift in Sources */,
 				8A48DA5B22B1583A00260C7D /* AssignmentCourse.swift in Sources */,
+				8ABB13C225AED5A600EDA4D7 /* SchoolFeesViewController.swift in Sources */,
 				72A7CF9C240E826500ED4ED0 /* ShortCourseGroup.swift in Sources */,
 				8A93357922E0BC58007B287D /* PostResourcesViewController.swift in Sources */,
 				8A119507231BFF3200691398 /* TeacherAttendanceTableViewCell.swift in Sources */,
@@ -2227,6 +2242,7 @@
 				8A32B7FC2312DF6C00317A79 /* QuizDetailsViewController.swift in Sources */,
 				8A680FAE226DD4F800E800AE /* FullAssignment.swift in Sources */,
 				8A48DA5722B1509500260C7D /* AssignmentCoursesViewController.swift in Sources */,
+				8ABB13C525AED7AB00EDA4D7 /* SchoolFeesResponse.swift in Sources */,
 				54CCF401206BEBA600824A3D /* BehaviorNotesOwner.swift in Sources */,
 				8A3923E7233CC7520001963A /* Questions.swift in Sources */,
 				8A255BE822E5F728007A0766 /* QuizzesCoursesViewController.swift in Sources */,
@@ -2507,7 +2523,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2530,7 +2546,7 @@
 				INFOPLIST_FILE = skolera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.6;
+				MARKETING_VERSION = 3.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.skolera.skolera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

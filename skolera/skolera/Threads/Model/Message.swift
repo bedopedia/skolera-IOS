@@ -34,6 +34,8 @@ class Message : NSObject, NSCoding{
         updatedAt = dictionary["updated_at"] as? String
         if let userData = dictionary["sender_data"] as? [String:Any] {
             user = User(fromDictionary: userData)
+        } else if let userData = dictionary["user"] as? [String: Any] {
+            user = User(fromDictionary: userData)
         }
         if let uploadedFiles = dictionary["uploaded_files"] as? [[String: Any]], let uploadedFile = uploadedFiles.first, uploadedFile.count > 0 {
             debugPrint(uploadedFile)

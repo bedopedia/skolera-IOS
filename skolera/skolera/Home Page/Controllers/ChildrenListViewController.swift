@@ -74,6 +74,11 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         notificationsVC.fromChildrenList = true
         self.navigationController?.pushViewController(notificationsVC, animated: true)
     }
+    
+    @IBAction func openSchoolFees() {
+        let schoolFeesVC = SchoolFeesViewController.instantiate(fromAppStoryboard: .HomeScreen)
+        self.navigationController?.pushViewController(schoolFeesVC, animated: true)
+    }
 }
 
 extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource {

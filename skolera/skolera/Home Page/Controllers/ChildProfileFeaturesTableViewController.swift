@@ -211,6 +211,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
             self.getAttendancesCount()
             if isSuccess {
                 if let result = value as? [String : AnyObject] {
+                    debugPrint(result)
                     let weeklyPlanResponse = WeeklyPlanResponse(result)
                     if !weeklyPlanResponse.weeklyPlan.isEmpty {
                         self.weeklyPlan = weeklyPlanResponse.weeklyPlan

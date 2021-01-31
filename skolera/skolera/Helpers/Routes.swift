@@ -102,7 +102,7 @@ func GET_TEACHER_TIME_TABLE() -> String
 //Chat
 func GET_THREADS() -> String
 {
-    return "\(BASE_URL!)/api/threads"
+    return "\(BASE_URL!)/api/threads?mobile=true"
 }
 func COMPOSE_THREAD() -> String
 {
@@ -111,7 +111,7 @@ func COMPOSE_THREAD() -> String
 // for the uploaded files
 func GET_MESSAGES() -> String
 {
-    return "\(BASE_URL!)/api/threads/%d/messages"
+    return "\(BASE_URL!)/api/threads/%d/messages?mobile=true"
 }
 
 func GET_THREADS_COURSE_GROUPS() -> String
@@ -120,7 +120,7 @@ func GET_THREADS_COURSE_GROUPS() -> String
 }
 func SEND_MESSAGE() -> String
 {
-    return "\(BASE_URL!)/api/threads/%d"
+    return "\(BASE_URL!)/api/threads/%d?mobile=true"
 }
 func SET_THREAD_IS_SEEN() -> String{
     return "\(BASE_URL!)/api/thread_participants/bulk_mark_as_read"
@@ -280,4 +280,8 @@ func CHANGE_PASSWORD(userId: Int) -> String {
 
 func LOGOUT() -> String {
     return "\(BASE_URL!)/api/auth/sign_out"
+}
+
+func GET_SCHOOL_FEES() -> String {
+    return "\(BASE_URL!)/api/school_fees?page=%u"
 }

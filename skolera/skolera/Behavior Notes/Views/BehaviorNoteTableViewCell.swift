@@ -31,6 +31,7 @@ class BehaviorNoteTableViewCell: UITableViewCell {
             
         }
     }
+    
     //MARK:- Outlets
     
     @IBOutlet weak var contentLabel: UILabel!
