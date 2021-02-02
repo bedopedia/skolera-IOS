@@ -283,3 +283,16 @@ func clearUserDefaults() {
     userDefault.removeObject(forKey: UID)
     userDefault.removeObject(forKey: USER_TYPE)
 }
+
+func openUrlInDescription(description: String) {
+   // guard let description = filteredEvents[row].description else {return}
+    let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+    let matches = detector.matches(in: description, options: [], range: NSRange(location: 0, length: description.utf16.count))
+    for match in matches {
+        guard let range = Range(match.range, in: description) else { continue }
+        if let url = URL(string: String(description[range])) {
+            UIApplication.shared.open(url)
+        }
+        break
+    }
+}

@@ -526,6 +526,12 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource, Skel
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let description = filteredEvents[indexPath.row].description else {return}
+        openUrlInDescription(description: description)
+    }
+    
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "attendanceCell"
     }

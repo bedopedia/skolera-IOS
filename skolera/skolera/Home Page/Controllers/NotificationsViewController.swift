@@ -163,6 +163,10 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        openUrlInDescription(description: notifications[indexPath.row].text)
+    }
+    
     //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     //        return 72
     //    }
