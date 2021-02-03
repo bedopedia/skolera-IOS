@@ -17,7 +17,7 @@ class Param : NSObject, NSCoding{
 	var quizName : String!
 	var studentId : Int!
 	var studentName : String!
-    var zoomMeetingId: Int!
+    var zoomMeetingId: Int?
 
 
 	/**

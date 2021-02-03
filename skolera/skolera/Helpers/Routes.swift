@@ -281,3 +281,7 @@ func CHANGE_PASSWORD(userId: Int) -> String {
 func LOGOUT() -> String {
     return "\(BASE_URL!)/api/auth/sign_out"
 }
+
+func ZOOM_PARTICIPANT(zoomMeetingID: Int) -> String {
+    return "\(BASE_URL!)/api/zoom_meetings/\(zoomMeetingID)/join_participant"
+}

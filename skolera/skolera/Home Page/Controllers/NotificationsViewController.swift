@@ -164,7 +164,10 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        openUrlInDescription(description: notifications[indexPath.row].text)
+        if let url = urlFrom(description: notifications[indexPath.row].text) {
+            UIApplication.shared.open(url)
+            setParticipateZoom(zoomID: notifications[indexPath.row].params.zoomMeetingId ?? 0)
+        }
     }
     
     //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
