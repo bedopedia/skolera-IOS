@@ -15,6 +15,7 @@ import NVActivityIndicatorView
 class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate, NVActivityIndicatorViewable {
     //MARK: - Variables
     
+    @IBOutlet weak var checkSchoolFeesButton: UIButton!
     @IBOutlet weak var headerLogo: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -33,6 +34,7 @@ class ChildrenListViewController: UIViewController, UIGestureRecognizerDelegate,
         if let url = URL.init(string: UserDefaults.standard.string(forKey: HEADER_URL) ?? "") {
             headerLogo.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "logo"))
         }
+        checkSchoolFeesButton.isHidden = !UserDefaults.standard.bool(forKey: SHOW_SCHOOL_FEES)
     }
     override func viewWillAppear(_ animated: Bool) {
         notificationButton.setImage(UIImage(named: UIApplication.shared.applicationIconBadgeNumber == 0 ? "notifications" :  "unSeenNotification")?.withRenderingMode(.alwaysOriginal), for: .normal)

@@ -271,6 +271,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.userDefault.set(headers[TIMEZONE] as! String, forKey: TIMEZONE)
                 if isParent() {
                     self.stopAnimating()
+                    self.userDefault.set(parent.showSchoolFees, forKey: SHOW_SCHOOL_FEES)
                     let childrenTVC = ChildrenListViewController.instantiate(fromAppStoryboard: .HomeScreen)
                     childrenTVC.kids = parent.children
                     let nvc = UINavigationController(rootViewController: childrenTVC)
