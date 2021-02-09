@@ -41,6 +41,7 @@ class Actor : NSObject, NSCoding{
 	var userType : String!
 	var username : String!
     var passwordChanged: Bool!
+    var showSchoolFees: Bool?
     //child ++
     var attendances : [Attendance]!
     var badges : [AnyObject]!
@@ -100,6 +101,7 @@ class Actor : NSObject, NSCoding{
 		userType = dictionary["user_type"] as? String
 		username = dictionary["username"] as? String
         passwordChanged = dictionary["password_changed"] as? Bool
+        showSchoolFees = dictionary["show_school_fees"] as? Bool
         
         attendances = [Attendance]()
         if let attendancesArray = dictionary["attendances"] as? [[String:Any]]{
