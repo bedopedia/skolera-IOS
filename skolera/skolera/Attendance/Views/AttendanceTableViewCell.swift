@@ -63,7 +63,7 @@ class AttendanceTableViewCell: UITableViewCell {
                 formatter.locale = Locale(identifier: "en")
                 formatter.dateFormat = "MMM"
                 monthLabel.text = formatter.string(from: date!)
-                if let description = event.description, description.isEmpty {
+                if let description = event.description, !description.isEmpty {
                     messageLabel.isHidden = false
                     messageLabel.text = description
                 } else {

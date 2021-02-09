@@ -17,6 +17,7 @@ class Param : NSObject, NSCoding{
 	var quizName : String!
 	var studentId : Int!
 	var studentName : String!
+    var zoomMeetingId: Int?
 
 
 	/**
@@ -30,6 +31,7 @@ class Param : NSObject, NSCoding{
 		quizName = dictionary["quizName"] as? String
 		studentId = dictionary["studentId"] as? Int
 		studentName = dictionary["studentName"] as? String
+        zoomMeetingId = dictionary["zoomMeetingId"] as? Int
 	}
 
 	/**
@@ -59,6 +61,9 @@ class Param : NSObject, NSCoding{
 		if studentName != nil{
 			dictionary["studentName"] = studentName
 		}
+        if zoomMeetingId != nil{
+            dictionary["zoomMeetingId"] = zoomMeetingId
+        }
 		return dictionary
 	}
 
@@ -75,6 +80,7 @@ class Param : NSObject, NSCoding{
          quizName = aDecoder.decodeObject(forKey: "quizName") as? String
          studentId = aDecoder.decodeObject(forKey: "studentId") as? Int
          studentName = aDecoder.decodeObject(forKey: "studentName") as? String
+         zoomMeetingId = aDecoder.decodeObject(forKey: "zoomMeetingId") as? Int
 
 	}
 
@@ -105,6 +111,9 @@ class Param : NSObject, NSCoding{
 		if studentName != nil{
 			aCoder.encode(studentName, forKey: "studentName")
 		}
+        if zoomMeetingId != nil{
+            aCoder.encode(studentName, forKey: "zoomMeetingId")
+        }
 
 	}
 

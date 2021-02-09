@@ -285,3 +285,7 @@ func LOGOUT() -> String {
 func GET_SCHOOL_FEES() -> String {
     return "\(BASE_URL!)/api/school_fees?page=%u"
 }
+
+func ZOOM_PARTICIPANT(zoomMeetingID: Int) -> String {
+    return "\(BASE_URL!)/api/zoom_meetings/\(zoomMeetingID)/join_participant"
+}

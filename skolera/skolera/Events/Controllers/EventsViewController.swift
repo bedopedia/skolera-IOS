@@ -526,6 +526,15 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource, Skel
         //        cell.attendance = currentDataSource[indexPath.row]
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let description = filteredEvents[indexPath.row].description else {return}
+        if let url = urlFrom(description: description) {
+            UIApplication.shared.open(url)
+            setParticipateZoom(zoomID: filteredEvents[indexPath.row].zoomMeetingId)
+        }
+    }
+    
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "attendanceCell"
     }

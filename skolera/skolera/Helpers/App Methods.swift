@@ -283,3 +283,24 @@ func clearUserDefaults() {
     userDefault.removeObject(forKey: UID)
     userDefault.removeObject(forKey: USER_TYPE)
 }
+
+func urlFrom(description: String) -> URL? {
+    let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+    let matches = detector.matches(in: description, options: [], range: NSRange(location: 0, length: description.utf16.count))
+    if !matches.isEmpty {
+        guard let range = Range(matches.first!.range, in: description) else {return nil}
+            return URL(string: String(description[range]))
+    } else {
+        return nil
+    }
+}
+
+func setParticipateZoom(zoomID: Int) {
+    zoomParticipateAPI(zoomMeetingID: zoomID) { (isSuccess, statusCode, value, error) in
+        if isSuccess {
+            debugPrint("Success")
+        } else {
+            debugPrint(error?.localizedDescription ?? "Error")
+        }
+    }
+}

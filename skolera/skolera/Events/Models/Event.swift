@@ -17,6 +17,7 @@ class StudentEvent {
     let description: String!
     let title: String!
     let ownerId: Int!
+    let zoomMeetingId: Int!
     
     init(_ dict: [String: Any]) {
         id = dict["id"] as? Int
@@ -26,6 +27,7 @@ class StudentEvent {
         description = dict["description"] as? String
         title = dict["title"] as? String
         ownerId = dict["owner_id"] as? Int
+        zoomMeetingId = dict["zoom_meeting_id"] as? Int
     }
     
 }
