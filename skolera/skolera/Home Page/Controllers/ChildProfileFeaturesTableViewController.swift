@@ -148,6 +148,13 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         self.navigationController?.pushViewController(eventsVC, animated: true)
     }
     
+    public func openCalendarAtEvent(id: Int){
+        let eventsVC = EventsViewController.instantiate(fromAppStoryboard: .Events)
+        eventsVC.child = self.child
+        self.navigationController?.pushViewController(eventsVC, animated: true)
+        eventsVC.needToScrollToEvent = id
+    }
+    
     //    MARK:- Network Calls
     
     /// service call to get total courses grades, average grade is set on completion
