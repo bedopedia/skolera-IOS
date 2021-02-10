@@ -163,11 +163,20 @@ extension NotificationsViewController: SkeletonTableViewDataSource, UITableViewD
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let url = urlFrom(description: notifications[indexPath.row].text) {
-            UIApplication.shared.open(url)
-            setParticipateZoom(zoomID: notifications[indexPath.row].params.zoomMeetingId ?? 0)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+        if let eventId = notifications[indexPath.row].params.eventId {
+            if let CPFeaturesNVC = self.tabBarController?.viewControllers?[0] as? ChildProfileFeaturesNVC
+{
+                self.tabBarController?.selectedIndex = 0
+                if let childVc =  CPFeaturesNVC.childViewControllers[0] as? ChildProfileViewController {
+                    if let featureTVC = childVc.childViewControllers[0] as? ChildProfileFeaturesTableViewController {
+                        featureTVC.openCalendarAtEvent(id: eventId)
+                    }
+                }
+            }
         }
+        
+        
     }
     
     //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

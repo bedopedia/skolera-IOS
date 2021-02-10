@@ -57,6 +57,7 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
     var currentCalendar: Calendar?
     var eventsDict: [String: [StudentEvent]] = [:]
     var firstScroll = true
+    var needToScrollToEvent: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +140,17 @@ class EventsViewController: UIViewController, NVActivityIndicatorViewable, CVCal
                     self.tableView.rowHeight = UITableViewAutomaticDimension
                     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
                     self.tableView.reloadData()
+                    if let id = self.needToScrollToEvent {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            if let index = self.filteredEvents.firstIndex(where: { $0.id == id })
+                            {
+                                let indexPath = IndexPath(row: index, section: 0)
+                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                                self.needToScrollToEvent = nil
+                            }
+                        }
+                    }
+                    
                 }
             } else {
                 showNetworkFailureError(viewController: self, statusCode: statusCode, error: error!)
