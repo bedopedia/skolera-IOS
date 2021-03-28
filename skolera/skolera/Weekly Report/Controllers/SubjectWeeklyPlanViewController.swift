@@ -47,8 +47,8 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 0 {
             cell.itemImage.image = #imageLiteral(resourceName: "knowledge1")
             cell.itemTitle.text = "Classwork".localized
-            if !dailyNote.classWork.isEmpty {
-                cell.itemTextView.update(input: dailyNote.classWork)
+            if !(dailyNote.classWork?.isEmpty ?? true) {
+                cell.itemTextView.update(input: dailyNote.classWork ?? "")
             } else {
                 if Language.language == .arabic {
                     cell.itemTextView.update(input: """
@@ -63,8 +63,8 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
         } else if indexPath.row == 1 {
             cell.itemImage.image = #imageLiteral(resourceName: "2")
             cell.itemTitle.text = "Homework".localized
-            if !dailyNote.homework.isEmpty {
-                cell.itemTextView.update(input: dailyNote.homework)
+            if !(dailyNote.homework?.isEmpty ?? true) {
+                cell.itemTextView.update(input: dailyNote.homework ?? "")
             } else {
                 if Language.language == .arabic {
                     cell.itemTextView.update(input: """
@@ -79,8 +79,8 @@ extension SubjectWeeklyPlanViewController: UITableViewDelegate, UITableViewDataS
         } else if indexPath.row == 2 {
             cell.itemImage.image = #imageLiteral(resourceName: "3")
             cell.itemTitle.text = "Activity".localized
-            if !dailyNote.activities.isEmpty {
-                cell.itemTextView.update(input: dailyNote.activities)
+            if !(dailyNote.activities?.isEmpty ?? true) {
+                cell.itemTextView.update(input: dailyNote.activities ?? "")
             } else {
                 if Language.language == .arabic {
                     cell.itemTextView.update(input: """
