@@ -26,13 +26,15 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     var child : Actor!
     var courseName: String = ""
     var post: Post!
-
+    var isAnnouncementDetails = false
+    var announcement: Announcement!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = courseName
+        titleLabel.text = isAnnouncementDetails ? announcement.title : courseName
         tableView.delegate = self
         tableView.dataSource = self
-        if let child = child{
+        if let child = child {
             gradientView.isHidden = false
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
         } else {
@@ -99,25 +101,36 @@ class PostDetailsViewController: UIViewController, UITableViewDelegate, UITableV
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + (post.comments?.count ?? 0)
+        
+        return isAnnouncementDetails ? 1: 1 + (post.comments?.count ?? 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailsTableViewCell") as! PostDetailsTableViewCell
         if indexPath.row == 0 {
             cell.postImageView.image = nil
-            cell.post = post
-            cell.openAttachment = {
-                let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
-                filesVC.child = self.child
-                filesVC.courseName = self.courseName
-                filesVC.attachments = self.post.uploadedFiles ?? []
-                self.navigationController?.pushViewController(filesVC, animated: true)
-            }
-            cell.addPostReply = {
-                debugPrint("Add reply")
-                self.replyView.isHidden = false
-                self.replyTextField.becomeFirstResponder()
+            if isAnnouncementDetails {
+                cell.announcement = announcement
+                cell.openAttachment = {
+                    let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
+                    filesVC.courseName = self.announcement.title ?? ""
+                    filesVC.attachments = self.announcement?.uploadedFiles ?? []
+                    self.navigationController?.pushViewController(filesVC, animated: true)
+                }
+            } else {
+                cell.post = post
+                cell.openAttachment = {
+                    let filesVC = PostResourcesViewController.instantiate(fromAppStoryboard: .Posts)
+                    filesVC.child = self.child
+                    filesVC.courseName = self.courseName
+                    filesVC.attachments = self.post?.uploadedFiles ?? []
+                    self.navigationController?.pushViewController(filesVC, animated: true)
+                }
+                cell.addPostReply = {
+                    debugPrint("Add reply")
+                    self.replyView.isHidden = false
+                    self.replyTextField.becomeFirstResponder()
+                }
             }
         } else {
             cell.comment = post.comments![indexPath.row - 1]

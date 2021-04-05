@@ -131,6 +131,77 @@ class PostDetailsTableViewCell: UITableViewCell {
         
     }
     
+    var announcement: Announcement! {
+        didSet {
+            guard let announcement = self.announcement else { return }
+            postOwner.text = announcement.title
+            if let content = announcement.body, !content.isEmpty {
+                postContent.update(input: content)
+            } else {
+                postContent.update(input: "No content available".localized)
+            }
+            postImageView.childImageView(url: "", placeholder: "\(self.announcement.title.prefix(2).uppercased())", textSize: 14)
+            firstAttachmentView.isHidden = true
+            secondAttachmentView.isHidden = true
+            thirdAttachmentView.isHidden = true
+            replyButton.isHidden = true
+            replyButtonHeight.constant = 24
+            if let files = announcement.uploadedFiles, !files.isEmpty {
+                attachmentHeightConstraint.constant = 60
+                attachmentView.isHidden = false
+                separatorView.isHidden = false
+                if files.count == 1 {
+                    firstAttachmentView.isHidden = false
+                    firstAttachment.text = files[0].name
+                    if let size = files[0].fileSize {
+                        firstFileSize.text = getSizeString(size: Double(size))
+                    }
+                } else if files.count == 2 {
+                    firstAttachmentView.isHidden = false
+                    firstAttachment.text = files[0].name
+                    secondAttachmentView.isHidden = false
+                    secondAttachment.text = files[1].name
+                    if let size = files[0].fileSize {
+                        secondFileSize.text = getSizeString(size: Double(size))
+                    }
+                } else {
+                    firstAttachmentView.isHidden = false
+                    firstAttachment.text = files[0].name
+                    secondAttachmentView.isHidden = false
+                    secondAttachment.text = files[1].name
+                    thirdAttachmentView.isHidden = false
+                    thirdAttachment.text = "\(files.count - 2)"
+                }
+            } else {
+                attachmentHeightConstraint.constant = 40
+                attachmentView.isHidden = true
+                separatorView.isHidden = true
+            }
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let newDateFormat = DateFormatter()
+            newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
+            if let date = announcement.createdAt, let annoucementDate = dateFormatter.date(from: date) {
+                postDate.isHidden = false
+                postDate.text = newDateFormat.string(from: annoucementDate)
+            } else {
+                postDate.isHidden = true
+            }
+        }
+    }
+    
+//    func getText(name: String) -> String {
+//        let shortcut = name.replacingOccurrences(of: "&", with: "")
+//        if shortcut.split(separator: " ").count == 1 {
+//            //            return "\(shortcut.first!)"
+//            return String(shortcut.prefix(2))
+//        } else {
+//            return "\(shortcut.split(separator: " ")[0].first ?? Character(" "))\(shortcut.split(separator: " ")[1].first ?? Character(" "))"
+//        }
+//        
+//    }
+//    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
