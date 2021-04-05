@@ -149,8 +149,8 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
         let item = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
-        cell.courseNameLabel.text = item.title
         let title = item.title ?? ""
+        cell.courseNameLabel.text = title
         let courseName = title.components(separatedBy: " ")
         if  courseName.count == 1 {
             cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(" "))", placeholder: "\(courseName[0].first ?? Character(" "))", textSize: 20)
