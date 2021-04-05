@@ -130,6 +130,7 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     }
     
     @IBAction func seeMore(){
+        // announcements view here is used for it's views only (not as an annoncement)
         let announcementsVc = 
             AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
         announcementsVc.weeklyNote = self.weeklyPlanner.generalNote
