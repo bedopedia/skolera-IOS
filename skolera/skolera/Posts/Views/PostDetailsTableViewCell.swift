@@ -182,7 +182,7 @@ class PostDetailsTableViewCell: UITableViewCell {
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let newDateFormat = DateFormatter()
             newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
-            if let date = announcement.createdAt, let annoucementDate = dateFormatter.date(from: date) {
+            if let date = announcement.endAt, let annoucementDate = dateFormatter.date(from: date) {
                 postDate.isHidden = false
                 postDate.text = newDateFormat.string(from: annoucementDate)
             } else {
