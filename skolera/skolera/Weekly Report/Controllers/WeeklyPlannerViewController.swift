@@ -130,6 +130,7 @@ class WeeklyPlannerViewController: UIViewController, NVActivityIndicatorViewable
     }
     
     @IBAction func seeMore(){
+        // announcements view here is used for it's views only (not as an annoncement)
         let announcementsVc = 
             AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
         announcementsVc.weeklyNote = self.weeklyPlanner.generalNote
@@ -149,8 +150,9 @@ extension WeeklyPlannerViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "courseGradeCell", for: indexPath) as! CourseGradeCell
         let item = self.dailyNotes[self.activeDays[selectedDay]]![indexPath.row]
-        cell.courseNameLabel.text = item.title
-        let courseName = item.title.components(separatedBy: " ")
+        let title = item.title ?? ""
+        cell.courseNameLabel.text = title
+        let courseName = title.components(separatedBy: " ")
         if  courseName.count == 1 {
             cell.courseImageView.childImageView(url: "\(courseName[0].first ?? Character(" "))", placeholder: "\(courseName[0].first ?? Character(" "))", textSize: 20)
         } else {

@@ -136,10 +136,14 @@ extension AnnouncementMainViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
-        announcementsVc.announcement = announcements[indexPath.row]
-        
-        self.navigationController?.pushViewController(announcementsVc, animated: true)
+//        let announcementsVc = AnnouncementViewController.instantiate(fromAppStoryboard: .Announcements)
+//        announcementsVc.announcement = announcements[indexPath.row]
+//
+//        self.navigationController?.pushViewController(announcementsVc, animated: true)
+        let postVC = PostDetailsViewController.instantiate(fromAppStoryboard: .Posts)
+        postVC.isAnnouncementDetails = true
+        postVC.announcement = announcements[indexPath.row]
+        self.navigationController?.navigationController?.pushViewController(postVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

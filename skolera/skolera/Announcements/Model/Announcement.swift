@@ -18,7 +18,7 @@ class Announcement : NSObject, NSCoding{
     var createdAt: String!
     var imageURL: String!
     var announcementReceivers : [AnnouncementReceiver]!
-    
+    let uploadedFiles: [UploadedFile]?
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -39,6 +39,11 @@ class Announcement : NSObject, NSCoding{
             }
         }
         
+        if let uploadedFilesDictArray = dictionary["uploaded_files"] as? [[String: Any]] {
+            uploadedFiles = uploadedFilesDictArray.map { UploadedFile($0) }
+        } else {
+            uploadedFiles = nil
+        }
     }
     
     /**
@@ -75,6 +80,7 @@ class Announcement : NSObject, NSCoding{
             }
             dictionary["announcement_receivers"] = dictionaryElements
         }
+        dictionary["uploaded_files"] = uploadedFiles
         return dictionary
     }
     
@@ -92,7 +98,7 @@ class Announcement : NSObject, NSCoding{
         createdAt = aDecoder.decodeObject(forKey: "created_at") as? String
         imageURL = aDecoder.decodeObject(forKey: "image_url") as? String
         announcementReceivers = aDecoder.decodeObject(forKey :"announcement_receivers") as? [AnnouncementReceiver]
-        
+        uploadedFiles = aDecoder.decodeObject(forKey: "uploaded_files") as? [UploadedFile]
     }
     
     /**
