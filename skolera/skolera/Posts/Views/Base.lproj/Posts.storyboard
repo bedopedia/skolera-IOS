@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -75,7 +76,7 @@
                                                         </label>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJI-s4-aPY" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                                             <rect key="frame" x="16" y="24" width="50" height="50"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="50" id="adR-DE-sEc"/>
                                                                 <constraint firstAttribute="width" constant="50" id="eX4-G8-LJX"/>
@@ -221,7 +222,7 @@
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Il8-6W-zdV" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="CFM-IY-Wfr"/>
                                             <constraint firstAttribute="height" constant="32" id="NLc-y9-w1b"/>
@@ -266,6 +267,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="9Oa-zj-QXy"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9Oa-zj-QXy" firstAttribute="trailing" secondItem="1Jc-Zw-oyl" secondAttribute="trailing" id="KQY-ij-xRc"/>
@@ -276,7 +278,6 @@
                             <constraint firstItem="9Oa-zj-QXy" firstAttribute="bottom" secondItem="DLk-xp-u5i" secondAttribute="bottom" id="sAe-e5-tFA"/>
                             <constraint firstItem="DLk-xp-u5i" firstAttribute="leading" secondItem="9Oa-zj-QXy" secondAttribute="leading" id="uoc-8v-AI3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="9Oa-zj-QXy"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -303,7 +304,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Post" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sC2-8a-7jw">
-                                <rect key="frame" x="16" y="130" width="104.5" height="29"/>
+                                <rect key="frame" x="16" y="130" width="105" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="PGb-wu-3sn"/>
                                 </constraints>
@@ -360,7 +361,7 @@
                                     <action selector="close" destination="ol9-4m-4og" eventType="touchUpInside" id="rTt-Gm-QBA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDz-rs-IDA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDz-rs-IDA">
                                 <rect key="frame" x="304" y="366" width="94" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Xzi-6A-nGW"/>
@@ -384,7 +385,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-I3-se3" userLabel="By clicking the add button you will add a new  attachment.">
-                                        <rect key="frame" x="62" y="228" width="258.5" height="29"/>
+                                        <rect key="frame" x="62" y="228" width="258" height="29"/>
                                         <string key="text">By clicking the add button you will add a new 
 attachment.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -435,7 +436,7 @@ attachment.</string>
                                                             <color key="textColor" red="0.65292328600000005" green="0.71725344660000001" blue="0.75491112469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v32-BJ-xOX">
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v32-BJ-xOX">
                                                             <rect key="frame" x="330" y="20" width="30" height="49"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="49" id="Xws-fg-TzM"/>
@@ -449,7 +450,7 @@ attachment.</string>
                                                             </connections>
                                                         </button>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstItem="3Ow-1C-UuA" firstAttribute="leading" secondItem="w91-HK-QOe" secondAttribute="leading" constant="20" id="4Fh-X3-2dg"/>
                                                         <constraint firstItem="697-er-wqf" firstAttribute="top" secondItem="w91-HK-QOe" secondAttribute="topMargin" constant="16" id="5EH-7E-G1t"/>
@@ -480,7 +481,7 @@ attachment.</string>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gj-VK-iWl">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gj-VK-iWl">
                                 <rect key="frame" x="232" y="792" width="166" height="46"/>
                                 <color key="backgroundColor" red="0.0" green="0.4941176471" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -501,6 +502,7 @@ attachment.</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="JsS-jc-y6E"/>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="iMJ-k9-MBV" firstAttribute="leading" secondItem="sC2-8a-7jw" secondAttribute="leading" id="1as-aV-44g"/>
@@ -529,7 +531,6 @@ attachment.</string>
                             <constraint firstItem="24e-5Y-EDk" firstAttribute="trailing" secondItem="TDz-rs-IDA" secondAttribute="trailing" id="qUR-AC-vCN"/>
                             <constraint firstItem="i2B-7c-407" firstAttribute="top" secondItem="hFA-wn-esq" secondAttribute="bottom" constant="6" id="rZl-pb-IzV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="JsS-jc-y6E"/>
                     </view>
                     <connections>
                         <outlet property="addAttachmentsView" destination="hhC-Nu-gpo" id="K1q-qU-nuz"/>
@@ -575,7 +576,7 @@ attachment.</string>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Updated 2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhw-1M-3QA">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Last Updated 2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhw-1M-3QA">
                                                             <rect key="frame" x="237" y="13.5" width="141" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.73842471840000001" green="0.7389929891" blue="0.73851269480000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -795,7 +796,7 @@ attachment.</string>
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUL-32-9dv">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUL-32-9dv">
                                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="64"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -824,7 +825,7 @@ attachment.</string>
                                                         </view>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04W-xQ-eZ4" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                                             <rect key="frame" x="12" y="6.5" width="28" height="28"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="28" id="C4u-69-ZVT"/>
                                                                 <constraint firstAttribute="width" constant="28" id="u3z-cb-YbV"/>
@@ -844,7 +845,7 @@ attachment.</string>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kiP-hc-29O" customClass="RichTextView" customModule="RichTextView">
                                                             <rect key="frame" x="16" y="46.5" width="358" height="123.5"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="EaM-Em-749"/>
                                                             </constraints>
@@ -852,7 +853,7 @@ attachment.</string>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaE-q9-87L">
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaE-q9-87L">
                                                             <rect key="frame" x="172" y="108" width="46" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
@@ -987,7 +988,7 @@ attachment.</string>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zIc-rj-yoS" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="da1-6E-4YM"/>
                                             <constraint firstAttribute="height" constant="32" id="xTj-8l-ZSB"/>
@@ -1053,6 +1054,7 @@ attachment.</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="DLm-jw-B2Q"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="DLm-jw-B2Q" firstAttribute="bottom" secondItem="O80-2d-tY9" secondAttribute="bottom" id="0cn-sL-kCF"/>
@@ -1065,7 +1067,6 @@ attachment.</string>
                             <constraint firstItem="M23-Aa-G1T" firstAttribute="top" secondItem="DLm-jw-B2Q" secondAttribute="top" id="mSF-we-e9G"/>
                             <constraint firstItem="O80-2d-tY9" firstAttribute="leading" secondItem="DLm-jw-B2Q" secondAttribute="leading" id="vQW-Gv-s2c"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DLm-jw-B2Q"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -1126,7 +1127,7 @@ attachment.</string>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="0Gj-AC-Kt5" secondAttribute="trailing" constant="20" id="6C8-fs-o8R"/>
                                                         <constraint firstItem="0Gj-AC-Kt5" firstAttribute="top" secondItem="2Lx-rU-L8C" secondAttribute="topMargin" constant="16" id="Q1i-Fj-EXc"/>
@@ -1185,7 +1186,7 @@ attachment.</string>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i2v-nR-zxd" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="vtw-0B-dPv"/>
                                             <constraint firstAttribute="width" constant="32" id="zQ6-Ff-lzK"/>
@@ -1230,6 +1231,7 @@ attachment.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="rV5-xq-uGN"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rV5-xq-uGN" firstAttribute="bottom" secondItem="GPW-UV-mvd" secondAttribute="bottom" id="5TH-KO-lwa"/>
@@ -1240,7 +1242,6 @@ attachment.</string>
                             <constraint firstItem="wpN-nr-lTr" firstAttribute="top" secondItem="rV5-xq-uGN" secondAttribute="top" id="bHp-A0-YUa"/>
                             <constraint firstItem="GPW-UV-mvd" firstAttribute="leading" secondItem="rV5-xq-uGN" secondAttribute="leading" id="vRx-l6-Ffm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="rV5-xq-uGN"/>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="y6l-Yy-Lys" id="Tyy-dc-fsP"/>
@@ -1286,7 +1287,7 @@ attachment.</string>
                                                             <color key="textColor" red="0.33300891519999998" green="0.333286792" blue="0.33305191989999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Updated 2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyf-xC-i3V">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Last Updated 2 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyf-xC-i3V">
                                                             <rect key="frame" x="237" y="13.5" width="141" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.73842471840000001" green="0.7389929891" blue="0.73851269480000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1303,10 +1304,10 @@ attachment.</string>
                                                             <rect key="frame" x="0.0" y="163" width="390" height="60"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sFJ-gE-8j0">
-                                                                    <rect key="frame" x="20" y="-6" width="296" height="54"/>
+                                                                    <rect key="frame" x="20" y="-6" width="295" height="54"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RVR-SE-nBD">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="144" height="54"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="143.5" height="54"/>
                                                                             <subviews>
                                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-RC-vdH">
                                                                                     <rect key="frame" x="-6" y="12" width="30" height="30"/>
@@ -1332,7 +1333,7 @@ attachment.</string>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parachuting.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apu-xl-DCn">
-                                                                                    <rect key="frame" x="30" y="12" width="106" height="14.5"/>
+                                                                                    <rect key="frame" x="30" y="12" width="105.5" height="14.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <color key="textColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1372,7 +1373,7 @@ attachment.</string>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IuE-rF-FoA">
-                                                                            <rect key="frame" x="152" y="0.0" width="144" height="54"/>
+                                                                            <rect key="frame" x="151.5" y="0.0" width="143.5" height="54"/>
                                                                             <subviews>
                                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LIb-N5-Sux">
                                                                                     <rect key="frame" x="-5" y="13" width="28" height="28"/>
@@ -1398,7 +1399,7 @@ attachment.</string>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parachuting.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbO-ng-fqG">
-                                                                                    <rect key="frame" x="30" y="13" width="106" height="14.5"/>
+                                                                                    <rect key="frame" x="30" y="13" width="105.5" height="14.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                     <color key="textColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1440,7 +1441,7 @@ attachment.</string>
                                                                     </subviews>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-Jg-TuN">
-                                                                    <rect key="frame" x="320" y="-6" width="62" height="54"/>
+                                                                    <rect key="frame" x="319" y="-6" width="63" height="54"/>
                                                                     <subviews>
                                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e5f-x5-NzS">
                                                                             <rect key="frame" x="-6" y="12" width="30" height="30"/>
@@ -1466,7 +1467,7 @@ attachment.</string>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pa" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzd-aF-LE4">
-                                                                            <rect key="frame" x="30" y="12" width="28" height="14.5"/>
+                                                                            <rect key="frame" x="30" y="12" width="29" height="14.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <color key="textColor" red="0.29411764709999999" green="0.29411764709999999" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -1475,7 +1476,7 @@ attachment.</string>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="more" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CPP-gu-5Ml">
-                                                                            <rect key="frame" x="30" y="18" width="28" height="34"/>
+                                                                            <rect key="frame" x="30" y="18" width="29" height="34"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -1506,7 +1507,7 @@ attachment.</string>
                                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZd-OG-Jhv">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZd-OG-Jhv">
                                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
                                                                     <connections>
                                                                         <action selector="openAttachments" destination="NeR-4I-OXP" eventType="touchUpInside" id="fSU-Ol-uhA"/>
@@ -1529,11 +1530,11 @@ attachment.</string>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V88-yL-bWE" customClass="RichTextView" customModule="RichTextView">
                                                             <rect key="frame" x="18" y="46.5" width="354" height="103.5"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         </view>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qml-PX-jfS" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                                             <rect key="frame" x="12" y="6.5" width="28" height="28"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="28" id="Hcv-Ap-yC2"/>
                                                                 <constraint firstAttribute="height" constant="28" id="Npi-im-Uva"/>
@@ -1595,7 +1596,7 @@ attachment.</string>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwI-4Y-vsn">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwI-4Y-vsn">
                                                     <rect key="frame" x="370" y="233" width="32" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="HCg-2j-BiU"/>
@@ -1716,7 +1717,7 @@ attachment.</string>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nW-3j-FRC" customClass="GradientView" customModule="skolera" customModuleProvider="target">
                                         <rect key="frame" x="364" y="14" width="32" height="32"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="m9o-gq-4FM"/>
                                             <constraint firstAttribute="height" constant="32" id="vOT-sF-cey"/>
@@ -1761,6 +1762,7 @@ attachment.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="3Ah-gY-ksm"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Ah-gY-ksm" firstAttribute="trailing" secondItem="OzV-9J-j59" secondAttribute="trailing" id="5FN-lt-LHH"/>
@@ -1774,7 +1776,6 @@ attachment.</string>
                             <constraint firstItem="2nF-0f-QtH" firstAttribute="top" secondItem="OzV-9J-j59" secondAttribute="bottom" id="mBv-hK-X2a"/>
                             <constraint firstItem="3Ah-gY-ksm" firstAttribute="trailing" secondItem="2nF-0f-QtH" secondAttribute="trailing" id="oYB-3U-F5k"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="3Ah-gY-ksm"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
@@ -1802,5 +1803,8 @@ attachment.</string>
         <image name="group3-1" width="85" height="85"/>
         <image name="pinFile" width="18" height="18"/>
         <image name="send" width="18" height="18"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

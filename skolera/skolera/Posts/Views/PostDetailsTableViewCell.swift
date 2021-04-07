@@ -89,7 +89,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let postUpdateDate = dateFormatter.date(from: post.updatedAt!)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
+                newDateFormat.dateFormat = "dd MMM 'at' hh:mm a"
                 postDate.text = newDateFormat.string(from: postUpdateDate!)
             }
         }
@@ -120,7 +120,7 @@ class PostDetailsTableViewCell: UITableViewCell {
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let postUpdateDate = dateFormatter.date(from: comment.updatedAt!)
                 let newDateFormat = DateFormatter()
-                newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
+                newDateFormat.dateFormat = "dd MMM 'at' hh:mm a"
                 if Language.language == .arabic {
                     postDate.text = newDateFormat.string(from: postUpdateDate ?? Date())
                 } else {
@@ -181,7 +181,7 @@ class PostDetailsTableViewCell: UITableViewCell {
             dateFormatter.locale = Locale(identifier: "en")
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let newDateFormat = DateFormatter()
-            newDateFormat.dateFormat = "dd MMM 'at' HH:mm a"
+            newDateFormat.dateFormat = "dd MMM 'at' hh:mm a"
             if let date = announcement.endAt, let annoucementDate = dateFormatter.date(from: date) {
                 postDate.isHidden = false
                 postDate.text = newDateFormat.string(from: annoucementDate)
