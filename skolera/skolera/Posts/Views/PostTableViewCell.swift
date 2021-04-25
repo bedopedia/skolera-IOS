@@ -59,6 +59,9 @@ class PostTableViewCell: UITableViewCell {
                         secondAttachmentView.isHidden = false
                         secondAttachment.text = files[1].name
                         if let size = files[0].fileSize {
+                            firstFileSize.text = getSizeString(size: Double(size))
+                        }
+                        if let size = files[1].fileSize {
                             secondFileSize.text = getSizeString(size: Double(size))
                         }
                     } else {
@@ -124,6 +127,5 @@ class PostTableViewCell: UITableViewCell {
     @IBAction func cardClicked(){
         clickedOnCard()
     }
-    
 
 }
