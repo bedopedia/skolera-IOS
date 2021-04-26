@@ -74,6 +74,12 @@ class PostDetailsTableViewCell: UITableViewCell {
                             secondFileSize.text = getSizeString(size: Double(size))
                         }
                     } else {
+                        if let size = files[0].fileSize {
+                            firstFileSize.text = getSizeString(size: Double(size))
+                        }
+                        if let size = files[1].fileSize {
+                            secondFileSize.text = getSizeString(size: Double(size))
+                        }
                         firstAttachmentView.isHidden = false
                         firstAttachment.text = files[0].name
                         secondAttachmentView.isHidden = false
@@ -171,6 +177,12 @@ class PostDetailsTableViewCell: UITableViewCell {
                         secondFileSize.text = getSizeString(size: Double(size))
                     }
                 } else {
+                    if let size = files[0].fileSize {
+                        firstFileSize.text = getSizeString(size: Double(size))
+                    }
+                    if let size = files[1].fileSize {
+                        secondFileSize.text = getSizeString(size: Double(size))
+                    }
                     firstAttachmentView.isHidden = false
                     firstAttachment.text = files[0].name
                     secondAttachmentView.isHidden = false
