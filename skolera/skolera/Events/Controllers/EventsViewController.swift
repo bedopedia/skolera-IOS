@@ -541,7 +541,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource, Skel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let description = filteredEvents[indexPath.row].description else {return}
-        if let url = urlFrom(description: description) {
+        if let url = urlFrom(description: description), getUserType() == .student {
             UIApplication.shared.open(url)
             setParticipateZoom(zoomID: filteredEvents[indexPath.row].zoomMeetingId)
         }
