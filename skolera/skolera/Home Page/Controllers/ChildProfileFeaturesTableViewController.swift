@@ -241,7 +241,7 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
         getTimeTableAPI(childActableId: child.childId!) { (isSuccess, statusCode, value, error) in
             self.getWeeklyPlanner()
             if isSuccess {
-                if let result = value as? [[String : AnyObject]], result.count > 0 {
+                if let dict = value as? [String : AnyObject], let result = dict["slots"] as? [[String: AnyObject]], result.count > 0 {
                     self.timeslots = []
                     for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)

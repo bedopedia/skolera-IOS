@@ -55,6 +55,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         let calendarStyle = CalendarStyle()
         calendarStyle.timeline.dateStyle = .twelveHour
         calendarStyle.timeline.timeIndicator.dateStyle = .twelveHour
+        debugPrint(calendarStyle.timeline.font)
         dayView.updateStyle(calendarStyle)
         dayView.scrollToFirstEventIfNeeded()
         statusSegmentControl.setTitleTextAttributes([.foregroundColor: getMainColor(), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)], for: .normal)
@@ -189,8 +190,8 @@ class TimetableViewController: UIViewController, EventDataSource{
             let closingbracket = text.index(text.endIndex, offsetBy: -2)
             group = String(text[afteropeningbracket...closingbracket])
         }
-        let attributedCourseName = NSAttributedString(string: courseName, attributes: [NSAttributedStringKey.font :UIFont.systemFont(ofSize: 18, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.dark])
-        let attributedGroup = NSAttributedString(string: "\nGroup : "+group, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.greyNotTaken])
+        let attributedCourseName = NSAttributedString(string: courseName, attributes: [NSAttributedStringKey.font :UIFont.systemFont(ofSize: 13, weight: .bold), NSAttributedStringKey.foregroundColor : UIColor.appColors.dark])
+        let attributedGroup = NSAttributedString(string: " Group : "+group, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11, weight: .semibold), NSAttributedStringKey.foregroundColor : UIColor.appColors.greyNotTaken])
         let result = NSMutableAttributedString(attributedString: attributedCourseName)
         result.append(attributedGroup)
         return result.attributedSubstring(from: NSMakeRange(0, result.string.count))

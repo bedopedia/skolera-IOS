@@ -31,7 +31,7 @@ class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicat
         getTeacherTimeTableAPI(teacherActableId: actor.childId!) { (isSuccess, statusCode, value, error) in
             self.stopAnimating()
             if isSuccess {
-                if let result = value as? [[String : AnyObject]], result.count > 0 {
+                if let dict = value as? [String : AnyObject], let result = dict["slots"] as? [[String: AnyObject]], result.count > 0 {
                     for timeslotDictionary in result {
                         let timeslot = TimeSlot.init(fromDictionary: timeslotDictionary)
                         timeslot.day.capitalizeFirstLetter()
