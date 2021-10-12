@@ -1,16 +1,19 @@
-platform :ios, '10.0'
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
 
 target 'skolera' do
+  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  
- #for loading screens
+
+  # Pods for skolera
+	 #for loading screens
   pod 'SVProgressHUD'
   #for calling apis
   pod 'Alamofire', '4.9.1'
   #scroll view to allow keyboard to appear correctly
   pod 'TPKeyboardAvoiding'
   #download and cache images
-  pod 'Kingfisher'
+  pod 'Kingfisher', '5.13.2'
   #saving key/value info like access token to the keychain
   pod 'KeychainSwift'
   #Custom Progress Bar
@@ -41,12 +44,12 @@ target 'skolera' do
   #textView with placeholder
   pod 'KMPlaceholderTextView', '~> 1.4.0'
   #NVActivity loader
-  pod 'NVActivityIndicatorView'
+  pod 'NVActivityIndicatorView', '~> 4.8.0'
   #RichText
   pod 'RichTextView'
   pod 'SwiftDate', '~> 5.0'
   pod 'Lightbox'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'CVCalendar', '~> 1.6.2'
-  pod "SkeletonView"
+  pod 'SkeletonView'
 end

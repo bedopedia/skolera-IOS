@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
-import FirebaseInstanceID
+import FirebaseMessaging
 
 class SplashScreenViewController: UIViewController {
     
@@ -21,12 +21,12 @@ class SplashScreenViewController: UIViewController {
         super.viewDidLoad()
         checkUpdate(for: "1346646110")
         navigationController?.isNavigationBarHidden = true
-        InstanceID.instanceID().instanceID { (result, error) in
+        Messaging.messaging().token { (token, error) in
             if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                print("Remote instance ID token: \(result.token)")
-                self.token =  result.token
+                print("Error fetching remote instance ID: \(error.localizedDescription)")
+            } else if let token = token {
+                print("Token is \(token)")
+                self.token = token
             }
         }
     }

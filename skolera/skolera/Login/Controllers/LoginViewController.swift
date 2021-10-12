@@ -11,7 +11,7 @@ import Kingfisher
 import Alamofire
 import NVActivityIndicatorView
 import SkyFloatingLabelTextField
-import FirebaseInstanceID
+import FirebaseMessaging
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
     
@@ -78,13 +78,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             self.schoolImageView.image = UIImage(named: "splash")
         }
         setUpFloatingText()
+//
+//        InstanceID.instanceID().instanceID { (result, error) in
+//            if let error = error {
+//                print("Error fetching remote instange ID: \(error)")
+//            } else if let result = result {
+//                print("Remote instance ID token: \(result.token)")
+//                self.token =  result.token
+//            }
+//        }
         
-        InstanceID.instanceID().instanceID { (result, error) in
+        Messaging.messaging().token { (token, error) in
             if let error = error {
-                print("Error fetching remote instange ID: \(error)")
-            } else if let result = result {
-                print("Remote instance ID token: \(result.token)")
-                self.token =  result.token
+                print("Error fetching remote instance ID: \(error.localizedDescription)")
+            } else if let token = token {
+                print("Token is \(token)")
+                self.token = token
             }
         }
     }

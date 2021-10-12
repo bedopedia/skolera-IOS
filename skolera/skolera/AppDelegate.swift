@@ -47,9 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        debugPrint("_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage")
-    }
+//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+//        debugPrint("_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage")
+//    }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         debugPrint("_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]")
