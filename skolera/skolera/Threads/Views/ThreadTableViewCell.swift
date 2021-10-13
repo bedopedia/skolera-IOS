@@ -20,7 +20,7 @@ class ThreadTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        unSeenView.layer.cornerRadius = unSeenView.width/2
+        unSeenView.layer.cornerRadius = unSeenView.frame.width/2
         unSeenView.layer.masksToBounds = true
         unSeenView.isHidden = true
         unSeenCntLabel.isHidden = true

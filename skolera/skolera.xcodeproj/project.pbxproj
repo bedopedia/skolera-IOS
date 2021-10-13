@@ -136,7 +136,6 @@
 		54EB93132015F88E001DD93F /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93122015F88E001DD93F /* Routes.swift */; };
 		54EB93152015F90E001DD93F /* AppStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EB93142015F90E001DD93F /* AppStoryboard.swift */; };
 		54F46E85203DC3FA003F21BB /* UIColor+AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */; };
-		6D2C904F58B260CC1610B20C /* Pods_skolera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 974A057B89287AA777091ED8 /* Pods_skolera.framework */; };
 		72A7CF93240E823D00ED4ED0 /* StudentGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */; };
 		72A7CF9A240E826500ED4ED0 /* GradeCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF94240E826400ED4ED0 /* GradeCategory.swift */; };
 		72A7CF9B240E826500ED4ED0 /* GradeInGradingPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */; };
@@ -337,6 +336,7 @@
 		DCC414A22390274500E70EF6 /* SkeletonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */; };
 		DCC69663239D190B0087682C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC69662239D190B0087682C /* TabBarViewController.swift */; };
 		DCCB70B623A66B1600F09AD5 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */; };
+		E37B8D0DB341D8D1C2AACAE3 /* Pods_skolera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB27029C44BE193E9E6FFF51 /* Pods_skolera.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -471,7 +471,7 @@
 		54EB93122015F88E001DD93F /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		54EB93142015F90E001DD93F /* AppStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoryboard.swift; sourceTree = "<group>"; };
 		54F46E84203DC3FA003F21BB /* UIColor+AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+AppColors.swift"; sourceTree = "<group>"; };
-		61289081971EE1CCDEB99CE4 /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
+		728504823C58354C41F7662B /* Pods-skolera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.debug.xcconfig"; path = "Target Support Files/Pods-skolera/Pods-skolera.debug.xcconfig"; sourceTree = "<group>"; };
 		72A7CF92240E823D00ED4ED0 /* StudentGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentGrade.swift; sourceTree = "<group>"; };
 		72A7CF94240E826400ED4ED0 /* GradeCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeCategory.swift; sourceTree = "<group>"; };
 		72A7CF95240E826500ED4ED0 /* GradeInGradingPeriod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradeInGradingPeriod.swift; sourceTree = "<group>"; };
@@ -668,8 +668,7 @@
 		8AF8F73A22E9EB3100544744 /* QuizStudentSubmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStudentSubmission.swift; sourceTree = "<group>"; };
 		8AFA4718233A1ED900B861F4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		8AFD9EB722E354C80084FD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Posts.storyboard; sourceTree = "<group>"; };
-		974A057B89287AA777091ED8 /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB2C8F2DD56E53E1359B2F9E /* Pods-skolera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.release.xcconfig"; path = "Target Support Files/Pods-skolera/Pods-skolera.release.xcconfig"; sourceTree = "<group>"; };
+		AE5D85863C7919C3A787B1A3 /* Pods-skolera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skolera.release.xcconfig"; path = "Target Support Files/Pods-skolera/Pods-skolera.release.xcconfig"; sourceTree = "<group>"; };
 		DC168462238D64AF004828F8 /* DummyEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyEvents.swift; sourceTree = "<group>"; };
 		DC1CA711237DA26000E79769 /* PlaceHolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTableViewCell.swift; sourceTree = "<group>"; };
 		DC1CA71323815FC900E79769 /* UITextField+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Views.swift"; sourceTree = "<group>"; };
@@ -690,6 +689,7 @@
 		DCC414A02390274500E70EF6 /* SkeletonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonTableViewCell.xib; sourceTree = "<group>"; };
 		DCC69662239D190B0087682C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		DCCB70B523A66B1500F09AD5 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		FB27029C44BE193E9E6FFF51 /* Pods_skolera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_skolera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -697,7 +697,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D2C904F58B260CC1610B20C /* Pods_skolera.framework in Frameworks */,
+				E37B8D0DB341D8D1C2AACAE3 /* Pods_skolera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,8 +707,8 @@
 		01996832AB44CC8114A1ABD8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				61289081971EE1CCDEB99CE4 /* Pods-skolera.debug.xcconfig */,
-				AB2C8F2DD56E53E1359B2F9E /* Pods-skolera.release.xcconfig */,
+				728504823C58354C41F7662B /* Pods-skolera.debug.xcconfig */,
+				AE5D85863C7919C3A787B1A3 /* Pods-skolera.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1120,7 +1120,7 @@
 				54EB92FC2015ED1D001DD93F /* skolera */,
 				54EB92FB2015ED1D001DD93F /* Products */,
 				01996832AB44CC8114A1ABD8 /* Pods */,
-				830627904455D582C1868AB9 /* Frameworks */,
+				A9CF347C788C6451BB00A28E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1186,14 +1186,6 @@
 				DC5774E923A1356600BDB769 /* Tabs.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		830627904455D582C1868AB9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				974A057B89287AA777091ED8 /* Pods_skolera.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		8A02C53623097233005BBA04 /* Events */ = {
@@ -1693,6 +1685,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A9CF347C788C6451BB00A28E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB27029C44BE193E9E6FFF51 /* Pods_skolera.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DC69E45E23560A6A00A6FDF4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1716,13 +1716,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 54EB930C2015ED1D001DD93F /* Build configuration list for PBXNativeTarget "skolera" */;
 			buildPhases = (
-				B4ACE94DA5B1C3F6B21AF840 /* [CP] Check Pods Manifest.lock */,
+				D6AF41A8CA60418A2C0C0ED1 /* [CP] Check Pods Manifest.lock */,
 				54EB92F62015ED1D001DD93F /* Sources */,
 				54EB92F72015ED1D001DD93F /* Frameworks */,
 				54EB92F82015ED1D001DD93F /* Resources */,
 				54F46E83203DBC7E003F21BB /* Increment Build */,
 				DC995506235471E500124F72 /* ShellScript */,
-				1AE89B506F0B9A80800D6A48 /* [CP] Embed Pods Frameworks */,
+				D17BAF81E02A09089BBEDAB7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1889,7 +1889,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AE89B506F0B9A80800D6A48 /* [CP] Embed Pods Frameworks */ = {
+		54F46E83203DBC7E003F21BB /* Increment Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+		};
+		D17BAF81E02A09089BBEDAB7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1921,7 +1935,6 @@
 				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NRAppUpdate/NRAppUpdate.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/Neon/Neon.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/RichTextView/RichTextView.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
@@ -1961,7 +1974,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NRAppUpdate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Neon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichTextView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
@@ -1979,21 +1991,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-skolera/Pods-skolera-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		54F46E83203DBC7E003F21BB /* Increment Build */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
-		};
-		B4ACE94DA5B1C3F6B21AF840 /* [CP] Check Pods Manifest.lock */ = {
+		D6AF41A8CA60418A2C0C0ED1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2524,7 +2522,7 @@
 		};
 		54EB930D2015ED1D001DD93F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 61289081971EE1CCDEB99CE4 /* Pods-skolera.debug.xcconfig */;
+			baseConfigurationReference = 728504823C58354C41F7662B /* Pods-skolera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = skolera/skolera.entitlements;
@@ -2547,7 +2545,7 @@
 		};
 		54EB930E2015ED1D001DD93F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB2C8F2DD56E53E1359B2F9E /* Pods-skolera.release.xcconfig */;
+			baseConfigurationReference = AE5D85863C7919C3A787B1A3 /* Pods-skolera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = skolera/skolera.entitlements;

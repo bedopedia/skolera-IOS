@@ -37,7 +37,7 @@ class TimetableViewController: UIViewController, EventDataSource{
 //        let dateInRegion = DateInRegion().convertTo(region: region)
         today = Date().to(timeZone: TimeZone.init(identifier: UserDefaults.standard.string(forKey: TIMEZONE)!)!, from: TimeZone.init(identifier: "UTC")!)
         tomorrow = today.dateByAdding(1, .day).date
-        tomorrow = today.add(TimeChunk.dateComponents(days: 1))
+        tomorrow = today.add(1.days)
         debugPrint(UserDefaults.standard.string(forKey: TIMEZONE)!, today, tomorrow)
         if let child = child{
             childImageView.childImageView(url: child.avatarUrl, placeholder: "\(child.firstname.first ?? Character(" "))\(child.lastname.first ?? Character(" "))", textSize: 14)
@@ -52,7 +52,7 @@ class TimetableViewController: UIViewController, EventDataSource{
         dayView.reloadData()
         dayView.autoScrollToFirstEvent = true
         dayView.isHeaderViewVisible = false
-        let calendarStyle = CalendarStyle()
+        var calendarStyle = CalendarStyle()
         calendarStyle.timeline.dateStyle = .twelveHour
         calendarStyle.timeline.timeIndicator.dateStyle = .twelveHour
         debugPrint(calendarStyle.timeline.font)

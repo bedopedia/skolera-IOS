@@ -92,8 +92,8 @@ class ActorFeaturesTableViewController: UITableViewController, NVActivityIndicat
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
            var flag = false
-            today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
-            tomorrow = today.add(TimeChunk.dateComponents(days: 1))
+            today = Date().start(of: .day).add(2.hours)
+            tomorrow = today.add(1.days)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE"
             let todayString = dateFormatter.string(from: today)

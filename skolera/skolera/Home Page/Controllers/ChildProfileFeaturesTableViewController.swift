@@ -345,8 +345,8 @@ class ChildProfileFeaturesTableViewController: UITableViewController, NVActivity
     }
     
     func showTimetable() {
-        today = Date().start(of: .day).add(TimeChunk.dateComponents(hours: 2))
-        tomorrow = today.add(TimeChunk.dateComponents(days: 1))
+        today = Date().start(of: .day).add(2.hours)
+        tomorrow = today.add(1.days)
         var flag = false
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
